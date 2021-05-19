@@ -70,3 +70,9 @@ Unfortunately these files are not packaged in the releases.
 
 Using the message pack files, I converted all the API data to [EmmyLua annotations](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations)
 and make them available for the [Sumneko LSP](https://github.com/sumneko/lua-language-server) as a workspace library.
+
+## 🗒️ Limitations
+
+* `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated.
+* function return types are always `any`, since that information is missing
+
