@@ -134,7 +134,7 @@ function M.intro(fd)
 end
 
 function M.get_functions(mpack)
-  mpack = "mpack/" .. mpack
+  mpack = "data/" .. mpack
   local data = vim.fn.msgpackparse(vim.fn.readfile(mpack, "b"))
   local ret = {}
   for _, functions in pairs(data) do
@@ -194,7 +194,7 @@ function M.parse(mpack, prefix, exclude)
 end
 
 function M.options()
-  local data = vim.fn.json_decode(vim.fn.readfile("mpack/builtin-docs.json"))
+  local data = vim.fn.json_decode(vim.fn.readfile("data/builtin-docs.json"))
   local docs = data.documents.options
 
   local ret = { o = {}, wo = {}, bo = {} }
@@ -235,7 +235,7 @@ function M.options()
 end
 
 function M.functions()
-  local data = vim.fn.json_decode(vim.fn.readfile("mpack/builtin-docs.json"))
+  local data = vim.fn.json_decode(vim.fn.readfile("data/builtin-docs.json"))
   local functions = data.signatureHelp
   local docs = data.documents.functions
 
