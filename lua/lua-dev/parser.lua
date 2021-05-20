@@ -200,7 +200,8 @@ function M.options()
       ret.bo[name] = option.default
     elseif option.scope == "win" then
       ret.wo[name] = option.default
-    else
+    end
+    if option.scope == "global" or option.global_local then
       ret.o[name] = option.default
     end
   end
@@ -210,7 +211,6 @@ function M.options()
   for k, v in pairs(ret) do
     str = str .. "vim." .. k .. " = " .. vim.inspect(v) .. "\n\n"
   end
-  str = str .. "vim.o = vim.wo\nvim.o = vim.bo\n"
   uv.fs_write(fd, str, -1)
   uv.fs_close(fd)
 end
