@@ -3,79 +3,129 @@ local M = {}
 
 function M.comment(str, comment_str)
   comment_str = comment_str or "--"
-  return comment_str .. " " .. str:gsub("[\n]", "\n" .. comment_str .. " ")
+  return comment_str .. " " .. vim.fn.trim(str):gsub("[\n]", "\n" .. comment_str .. " "):gsub("%s+\n", "\n")
 end
 
-function M.infer_type(doc, param, param_type)
-  local type = param_type or "any"
+function M.infer_type(param)
+  local type = param.type or "any"
   if type == "" then
     type = "any"
   end
 
-  if param == "fn" then
-    type = "fun(...)"
-  elseif param == "args" or param == "list" then
-    type = "any[]"
-  elseif param == "dict" then
-    type = "dictionary"
-  elseif type == "arrayof(string)" then
-    type = "string[]"
-  end
-
-  local ret = ""
-  if param then
-    if param == "end" then
-      param = "_end"
+  if type == "any" then
+    if param.name == "fn" then
+      type = "fun(...)"
+    elseif param.name == "args" or param.name == "list" then
+      type = "any[]"
+    elseif param.name == "dict" then
+      type = "dictionary"
     end
-    ret = ret .. param .. " "
   end
-  if type then
-    ret = ret .. type .. " "
+  if type == "arrayof(string)" then
+    type = "string[]"
+  elseif type == "arrayof(integer, 2)" then
+    type = "number[]"
+  elseif type == "dictionaryof(luaref)" then
+    type = "table<string, luaref>"
   end
-  return ret .. "#" .. doc
+  return type
 end
 
-function M.emmy(name, fun, prefix)
+function M.emmy_param(param, is_return)
+  local type = M.infer_type(param)
+  local parts = {}
+  if param.name and param.name ~= "..." then
+    table.insert(parts, param.name)
+  end
+  if type then
+    table.insert(parts, type)
+  end
+  if param.doc then
+    table.insert(parts, "#" .. param.doc)
+  end
+
+  if not param.doc and type == "any" then
+    return ""
+  end
+  local ret = table.concat(parts, " ")
+  if is_return then
+    return M.comment("@return " .. ret, "---") .. "\n"
+  elseif param.name == "..." then
+    return M.comment("@vararg " .. ret, "---") .. "\n"
+  else
+    return M.comment("@param " .. ret, "---") .. "\n"
+  end
+end
+
+--- @return ApiFunction
+function M.process(name, fun, prefix)
+  --- @class ApiFunction
+  local ret = {
+    doc = (fun.doc and fun.doc[1]) and fun.doc[1] or "",
+    name = name,
+    fqname = prefix .. "." .. name,
+    params = {},
+    ["return"] = {},
+  }
+
+  for _, r in pairs(fun["return"]) do
+    table.insert(ret["return"], { doc = r })
+  end
+
+  local param_docs = {}
+  for param, doc in pairs(fun.parameters_doc or {}) do
+    param_docs[param] = doc
+  end
+
+  for i, p in ipairs(fun.parameters or {}) do
+    local type, pname = unpack(p)
+    local param = { name = pname }
+    if type ~= "" then
+      param.type = type:lower()
+    end
+    if param_docs[pname] then
+      param.doc = param_docs[pname]
+    end
+    if param.name == "end" then
+      param.name = "end_"
+    end
+    -- only include err param if it's documented
+    -- most nvim_ functions have an err param at the end, but these should not be included
+    local skip = i == #fun.parameters and (pname == "err" or pname == "error")
+    -- skip self params
+    if param.name == "self" or param.name == "" then
+      skip = true
+    end
+    if not skip then
+      table.insert(ret.params, param)
+    end
+  end
+  if name == "on_publish_diagnostics" then
+    dump({ fun, ret })
+  end
+  return ret
+end
+
+--- @param fun ApiFunction
+function M.emmy(fun)
   local ret = ""
-  if fun.doc and fun.doc[1] then
-    ret = ret .. (M.comment(fun.doc[1])) .. "\n"
-  end
-  local have_err = false
-  if fun.parameters_doc then
-    local types = {}
-    for _, param in pairs(fun.parameters or {}) do
-      if param[1] then
-        types[param[2]] = string.lower(param[1])
-      end
-    end
-    for param, param_doc in pairs(fun.parameters_doc) do
-      if param == "err" then
-        have_err = true
-      end
-      if param ~= "self" then
-        ret = ret .. M.comment("@param " .. M.infer_type(param_doc, param, types[param]), "---") .. "\n"
-      end
-    end
-  end
-  if fun["return"] and fun["return"][1] then
-    ret = ret .. M.comment("@return " .. M.infer_type(fun["return"][1]), "---") .. "\n"
+  if fun.doc ~= "" then
+    ret = ret .. (M.comment(fun.doc)) .. "\n"
   end
 
-  local signature = "function %s.%s(%s) end"
   local params = {}
-  for i, param in ipairs(fun.parameters or {}) do
-    param = param[2]
-    if param == "end" then
-      param = "_end"
-    end
-    if have_err or not (i == #fun.parameters and param == "err") then
-      if param ~= "self" then
-        table.insert(params, param)
-      end
-    end
+
+  for _, param in pairs(fun.params) do
+    table.insert(params, param.name)
+    ret = ret .. M.emmy_param(param)
+  end
+  for _, r in pairs(fun["return"]) do
+    ret = ret .. M.emmy_param(r, true)
   end
 
-  ret = ret .. signature:format(prefix, name, table.concat(params, ", "))
+  local signature = "function %s(%s) end"
+
+  ret = ret .. signature:format(fun.fqname, table.concat(params, ", "))
   return ret .. "\n\n"
 end
 
@@ -131,7 +181,7 @@ function M.parse(mpack, prefix, exclude)
 ]]):format(prefix .. "." .. parts[1], prefix .. "." .. parts[1]), -1)
         classes[parts[1]] = true
       end
-      local emmy = M.emmy(name, fun, prefix)
+      local emmy = M.emmy(M.process(name, fun, prefix))
       size = size + #emmy
       uv.fs_write(fd, emmy, -1)
 

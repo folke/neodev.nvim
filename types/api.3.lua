@@ -1,6 +1,24 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Gets the paths contained in 'runtimepath'.
+--- @return any #List of paths
+function vim.api.nvim_list_runtime_paths() end
+
+-- Gets the current list of tabpage handles.
+--- @return any #List of tabpage handles
+function vim.api.nvim_list_tabpages() end
+
+-- Gets a list of dictionaries representing attached UIs.
+--- @return any #Array of UI dictionaries, each with these keys:
+---     • "height" Requested height of the UI
+---     • "width" Requested width of the UI
+---     • "rgb" true if the UI uses RGB colors (false implies
+---       |cterm-colors|)
+---     • "ext_..." Requested UI extensions, see |ui-option|
+---     • "chan" Channel id of remote UI (not present for TUI)
+function vim.api.nvim_list_uis() end
+
 -- Gets the current list of window handles.
 --- @return any #List of window handles
 function vim.api.nvim_list_wins() end
@@ -10,8 +28,8 @@ function vim.api.nvim_list_wins() end
 function vim.api.nvim_load_context(dict) end
 
 -- Notify the user with a message
---- @param log_level integer #The log level
 --- @param msg string #Message to display to the user
+--- @param log_level integer #The log level
 --- @param opts dictionary #Reserved for future use.
 function vim.api.nvim_notify(msg, log_level, opts) end
 
@@ -22,6 +40,7 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 function vim.api.nvim_open_term(buffer, opts) end
 
 -- Open a new window.
+--- @param buffer buffer #Buffer to display, or 0 for current buffer
 --- @param enter boolean #Enter the window (make it the current window)
 --- @param config dictionary #Map defining the window configuration. Keys:
 ---               • `relative`: Sets the window layout to "floating", placed
@@ -30,7 +49,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                 • "win" Window given by the `win` field, or
 ---                   current window.
 ---                 • "cursor" Cursor position in current window.
---- 
+---
 ---               • `win` : |window-ID| for relative="win".
 ---               • `anchor`: Decides which corner of the float to place
 ---                 at (row,col):
@@ -38,7 +57,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                 • "NE" northeast
 ---                 • "SW" southwest
 ---                 • "SE" southeast
---- 
+---
 ---               • `width` : Window width (in character cells).
 ---                 Minimum of 1.
 ---               • `height` : Window height (in character cells).
@@ -76,7 +95,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                   `eob` flag of 'fillchars' to a space char,
 ---                   and clearing the |EndOfBuffer| region in
 ---                   'winhighlight'.
---- 
+---
 ---               • `border`: style of (optional) window border. This can
 ---                 either be a string or an array. the string
 ---                 values are:
@@ -104,7 +123,6 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                   when not defined. It could also be specified
 ---                   by character: [ {"+", "MyCorner"}, {"x",
 ---                   "MyBorder"} ]
---- @param buffer buffer #Buffer to display, or 0 for current buffer
 --- @return any #Window handle, or 0 on error
 function vim.api.nvim_open_win(buffer, enter, config) end
 
@@ -115,14 +133,8 @@ function vim.api.nvim_open_win(buffer, enter, config) end
 function vim.api.nvim_out_write(str) end
 
 -- Parse a VimL expression.
---- @param highlight boolean #If true, return value will also include
----                  "highlight" key containing array of 4-tuples
----                  (arrays) (Integer, Integer, Integer, String),
----                  where first three numbers define the
----                  highlighted region and represent line,
----                  starting column and ending column (latter
----                  exclusive: one should highlight region
----                  [start_col, end_col)).
+--- @param expr string #Expression to parse. Always treated as a
+---                  single line.
 --- @param flags string #Flags:
 ---                  • "m" if multiple expressions in a row are
 ---                    allowed (only the first one will be
@@ -139,8 +151,14 @@ function vim.api.nvim_out_write(str) end
 ---                  • "E" to parse like for "<C-r>=".
 ---                  • empty string for ":call".
 ---                  • "lm" to parse for ":let".
---- @param expr string #Expression to parse. Always treated as a
----                  single line.
+--- @param highlight boolean #If true, return value will also include
+---                  "highlight" key containing array of 4-tuples
+---                  (arrays) (Integer, Integer, Integer, String),
+---                  where first three numbers define the
+---                  highlighted region and represent line,
+---                  starting column and ending column (latter
+---                  exclusive: one should highlight region
+---                  [start_col, end_col)).
 --- @return any #
 ---     • AST: top-level dictionary with these keys:
 ---       • "error": Dictionary with error, present only if parser
@@ -148,7 +166,7 @@ function vim.api.nvim_out_write(str) end
 ---         • "message": String, error message in printf format,
 ---           translated. Must contain exactly one "%.*s".
 ---         • "arg": String, error message argument.
---- 
+---
 ---       • "len": Amount of bytes successfully parsed. With flags
 ---         equal to "" that should be equal to the length of expr
 ---         string. (“Sucessfully parsed” here means “participated
@@ -171,8 +189,8 @@ function vim.api.nvim_out_write(str) end
 ---           not be present if node has no children. Maximum
 ---           number of children may be found in node_maxchildren
 ---           array.
---- 
---- 
+---
+---
 ---     • Local values (present only for certain nodes):
 ---       • "scope": a single Integer, specifies scope for
 ---         "Option" and "PlainIdentifier" nodes. For "Option" it
@@ -202,7 +220,5 @@ function vim.api.nvim_out_write(str) end
 ---         nodes.
 ---       • "svalue": String, value for "SingleQuotedString" and
 ---         "DoubleQuotedString" nodes.
---- 
---- 
 function vim.api.nvim_parse_expression(expr, flags, highlight) end
 

@@ -1,11 +1,6 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- Lists all the items that are called by the symbol under the
--- cursor in the |quickfix| window. If the symbol can resolve to
--- multiple items, the user can pick one in the |inputlist|.
-function vim.lsp.outgoing_calls() end
-
 -- Parses snippets in a completion entry.
 --- @param input any #(string) unparsed snippet
 --- @return any #(string) parsed snippet
@@ -23,11 +18,11 @@ function vim.lsp.preview_location(location) end
 function vim.lsp.progress_handler(_, _, params, client_id) end
 
 -- Performs |vim.lsp.buf.code_action()| for a given range.
+--- @param context any #(table, optional) Valid `CodeActionContext`
+---                  object
 --- @param start_pos any #({number, number}, optional) mark-indexed
 ---                  position. Defaults to the start of the last
 ---                  visual selection.
---- @param context any #(table, optional) Valid `CodeActionContext`
----                  object
 --- @param end_pos any #({number, number}, optional) mark-indexed
 ---                  position. Defaults to the end of the last
 ---                  visual selection.
@@ -59,17 +54,17 @@ function vim.lsp.rename(old_fname, new_fname, opts) end
 
 -- Sends a request to the LSP server and runs {callback} upon
 -- response.
---- @param callback any #(function) Callback to invoke
---- @param params any #(table) Parameters for the invoked LSP method
 --- @param method any #(string) The invoked LSP method
+--- @param params any #(table) Parameters for the invoked LSP method
+--- @param callback any #(function) Callback to invoke
 --- @return any #(bool, number) `(true, message_id)` if request could be
 ---     sent, `false` if not
 function vim.lsp.request(method, params, callback) end
 
 -- Clear diagnotics and diagnostic cache
+--- @param client_id any #number
 --- @param buffer_client_map any #table map of buffers to active
 ---                          clients
---- @param client_id any #number
 function vim.lsp.reset(client_id, buffer_client_map) end
 
 function vim.lsp.reset_buf(client, bufnr) end
@@ -95,11 +90,11 @@ function vim.lsp.set_level(level) end
 
 -- Replaces text in a range with new text.
 --- @param lines any #(table) Original list of strings
---- @param new_lines any #A list of strings to replace the original
---- @param B any #(table) End position; a 2-tuple of {line,
----                  col} numbers
 --- @param A any #(table) Start position; a 2-tuple of {line,
 ---                  col} numbers
+--- @param B any #(table) End position; a 2-tuple of {line,
+---                  col} numbers
+--- @param new_lines any #A list of strings to replace the original
 --- @return any #(table) The modified {lines} object
 function vim.lsp.set_lines(lines, A, B, new_lines) end
 
@@ -116,31 +111,33 @@ function vim.lsp.set_qflist(items) end
 -- Set signs for given diagnostics
 --- @param diagnostics any #Diagnostic []
 --- @param bufnr any #number The buffer number
+--- @param client_id any #number the client id
+--- @param sign_ns any #number|nil
 --- @param opts any #table Configuration for signs. Keys:
 ---                    • priority: Set the priority of the signs.
 ---                    • severity_limit (DiagnosticSeverity):
 ---                      • Limit severity of diagnostics found.
 ---                        E.g. "Warning" means { "Error",
 ---                        "Warning" } will be valid.
---- @param sign_ns any #number|nil
---- @param client_id any #number the client id
 function vim.lsp.set_signs(diagnostics, bufnr, client_id, sign_ns, opts) end
 
 -- Set underline for given diagnostics
 --- @param diagnostics any #Diagnostic []
 --- @param bufnr any #number: The buffer number
+--- @param client_id any #number: The client id
+--- @param diagnostic_ns any #number|nil: The namespace
 --- @param opts any #table: Configuration table:
 ---                      • severity_limit (DiagnosticSeverity):
 ---                        • Limit severity of diagnostics found.
 ---                          E.g. "Warning" means { "Error",
 ---                          "Warning" } will be valid.
---- @param diagnostic_ns any #number|nil: The namespace
---- @param client_id any #number: The client id
 function vim.lsp.set_underline(diagnostics, bufnr, client_id, diagnostic_ns, opts) end
 
 -- Set virtual text given diagnostics
 --- @param diagnostics any #Diagnostic []
 --- @param bufnr any #number
+--- @param client_id any #number
+--- @param diagnostic_ns any #number
 --- @param opts any #table Options on how to display virtual
 ---                      text. Keys:
 ---                      • prefix (string): Prefix to display
@@ -151,8 +148,6 @@ function vim.lsp.set_underline(diagnostics, bufnr, client_id, diagnostic_ns, opt
 ---                        • Limit severity of diagnostics found.
 ---                          E.g. "Warning" means { "Error",
 ---                          "Warning" } will be valid.
---- @param diagnostic_ns any #number
---- @param client_id any #number
 function vim.lsp.set_virtual_text(diagnostics, bufnr, client_id, diagnostic_ns, opts) end
 
 -- Checks whether the level is sufficient for logging.
@@ -164,8 +159,8 @@ function vim.lsp.should_log(level) end
 --- @param opts any #table Configuration table
 ---                  • show_header (boolean, default true): Show
 ---                    "Diagnostics:" header.
---- @param line_nr any #number The line number
 --- @param bufnr any #number The buffer number
+--- @param line_nr any #number The line number
 --- @param client_id any #number|nil the client id
 --- @return any #table {popup_bufnr, win_id}
 function vim.lsp.show_line_diagnostics(opts, bufnr, line_nr, client_id) end
@@ -180,6 +175,8 @@ function vim.lsp.signature_help(_, method, result, _, bufnr, config) end
 -- object to interact with it.
 --- @param cmd any #(string) Command to start the LSP
 ---                           server.
+--- @param cmd_args any #(table) List of additional string
+---                           arguments to pass to {cmd}.
 --- @param dispatchers any #(table, optional) Dispatchers for
 ---                           LSP message types. Valid dispatcher
 ---                           names are:
@@ -195,9 +192,14 @@ function vim.lsp.signature_help(_, method, result, _, bufnr, config) end
 ---                           • {env} (table) Additional
 ---                             environment variables for LSP
 ---                             server process
---- @param cmd_args any #(table) List of additional string
----                           arguments to pass to {cmd}.
 --- @return any #Client RPC object.
+--- @return any #Methods:
+---     • `notify()` |vim.lsp.rpc.notify()|
+---     • `request()` |vim.lsp.rpc.request()|
+--- @return any #Members:
+---     • {pid} (number) The LSP server's PID.
+---     • {handle} A handle for low-level interaction with the LSP
+---       server process |vim.loop|.
 function vim.lsp.start(cmd, cmd_args, dispatchers, extra_spawn_params) end
 
 -- Converts symbols to quickfix list items.
@@ -206,12 +208,12 @@ function vim.lsp.symbols_to_items(symbols, bufnr) end
 
 -- Turns the result of a `textDocument/completion` request into
 -- vim-compatible |complete-items|.
---- @param prefix any #(string) the prefix to filter the completion
----               items
 --- @param result any #The result of a `textDocument/completion` call,
 ---               e.g. from |vim.lsp.buf.completion()|, which may
 ---               be one of `CompletionItem[]` , `CompletionList`
 ---               or `null`
+--- @param prefix any #(string) the prefix to filter the completion
+---               items
 --- @return any #{ matches = complete-items table, incomplete = bool }
 function vim.lsp.text_document_completion_list_to_complete_items(result, prefix) end
 
@@ -225,8 +227,4 @@ function vim.lsp.trim_empty_lines(lines) end
 --- @param lines any #(table) list of lines
 --- @return any #(string) filetype or 'markdown' if it was unchanged.
 function vim.lsp.try_trim_markdown_code_blocks(lines) end
-
--- Jumps to the definition of the type of the symbol under the
--- cursor.
-function vim.lsp.type_definition() end
 

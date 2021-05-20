@@ -16,7 +16,6 @@ function vim.lsp.apply_text_document_edit(text_document_edit, index) end
 
 -- Applies a list of text edits to a buffer.
 --- @param text_edits any #(table) list of `TextEdit` objects
---- @param buf_nr any #(number) Buffer id
 function vim.lsp.apply_text_edits(text_edits, bufnr) end
 
 -- Applies a `WorkspaceEdit` .
@@ -35,19 +34,19 @@ function vim.lsp.buf_highlight_references(bufnr, references) end
 
 -- Returns the UTF-32 and UTF-16 offsets for a position in a
 -- certain buffer.
+--- @param buf any #buffer id (0 for current)
 --- @param row any #0-indexed line
 --- @param col any #0-indexed byte offset in line
---- @param buf any #buffer id (0 for current)
 --- @return any #(number, number) UTF-32 and UTF-16 index of the character
 ---     in line {row} column {col} in buffer {buf}
 function vim.lsp.character_offset(buf, row, col) end
 
 -- Clears the currently displayed diagnostics
+--- @param bufnr any #number The buffer number
+--- @param client_id any #number the client id
 --- @param diagnostic_ns any #number|nil Associated diagnostic
 ---                      namespace
 --- @param sign_ns any #number|nil Associated sign namespace
---- @param bufnr any #number The buffer number
---- @param client_id any #number the client id
 function vim.lsp.clear(bufnr, client_id, diagnostic_ns, sign_ns) end
 
 -- Removes document highlights from current buffer.
@@ -55,8 +54,8 @@ function vim.lsp.clear_references() end
 
 -- Creates autocommands to close a preview window when events
 -- happen.
---- @param winnr any #(number) window id of preview window
 --- @param events any #(table) list of events
+--- @param winnr any #(number) window id of preview window
 function vim.lsp.close_preview_autocmd(events, winnr) end
 
 -- Selects a code action from the input list that is available at
@@ -77,13 +76,13 @@ function vim.lsp.completion(context) end
 -- Returns the range table for the difference between old and new
 -- lines
 --- @param old_lines any #table list of lines
---- @param offset_encoding any #string encoding requested by language
----                        server
---- @param end_line_idx any #int line to begin search for last
----                        difference
 --- @param new_lines any #table list of lines
 --- @param start_line_idx any #int line to begin search for first
 ---                        difference
+--- @param end_line_idx any #int line to begin search for last
+---                        difference
+--- @param offset_encoding any #string encoding requested by language
+---                        server
 --- @return any #table start_line_idx and start_col_idx of range
 function vim.lsp.compute_diff(old_lines, new_lines, start_line_idx, end_line_idx, offset_encoding) end
 
@@ -92,10 +91,10 @@ function vim.lsp.compute_diff(old_lines, new_lines, start_line_idx, end_line_idx
 -- markdown. Useful to populate the hover window for
 -- `textDocument/hover` , for parsing the result of
 -- `textDocument/signatureHelp` , and potentially others.
---- @param contents any #(table, optional, default `{}` ) List of
----                 strings to extend with converted lines
 --- @param input any #( `MarkedString` | `MarkedString[]` |
 ---                 `MarkupContent` )
+--- @param contents any #(table, optional, default `{}` ) List of
+---                 strings to extend with converted lines
 --- @return any #{contents}, extended with lines of converted markdown.
 function vim.lsp.convert_input_to_markdown_lines(input, contents) end
 
@@ -111,7 +110,6 @@ function vim.lsp.create_file(change) end
 -- Note:
 --     Many servers do not implement this method. Generally, see
 --     |vim.lsp.buf.definition()| instead.
--- 
 function vim.lsp.declaration() end
 
 -- Jumps to the definition of the symbol under the cursor.
@@ -193,9 +191,8 @@ function vim.lsp.focusable_float(unique_name, fn) end
 function vim.lsp.focusable_preview(unique_name, fn) end
 
 -- Constructs an error message from an LSP error object.
---- @param err any #(table) The error object
 --- @return any #(string) The formatted error message
-function vim.lsp.format_rpc_error(err) end
+function vim.lsp.format_rpc_error() end
 
 -- Formats the current buffer.
 --- @param options any #(optional, table) Can be used to specify
@@ -208,18 +205,18 @@ function vim.lsp.formatting(options) end
 -- formatting from attached clients.
 --- @param options any #(optional, table) `FormattingOptions`
 ---                   entries
+--- @param timeout_ms any #(optional, number) Request timeout
 --- @param order any #(optional, table) List of client names.
 ---                   Formatting is requested from clients in the
 ---                   following order: first all clients that are
 ---                   not in the `order` list, then the remaining
 ---                   clients in the order as they occur in the
 ---                   `order` list.
---- @param timeout_ms any #(optional, number) Request timeout
 function vim.lsp.formatting_seq_sync(options, timeout_ms, order) end
 
 -- Performs |vim.lsp.buf.formatting()| synchronously.
---- @param timeout_ms any #(number) Request timeout
 --- @param options any #Table with valid `FormattingOptions` entries
+--- @param timeout_ms any #(number) Request timeout
 function vim.lsp.formatting_sync(options, timeout_ms) end
 
 -- Return associated diagnostics for bufnr
@@ -228,4 +225,8 @@ function vim.lsp.formatting_sync(options, timeout_ms) end
 ---                  diagnostics. Else, return just the
 ---                  diagnostics associated with the client_id.
 function vim.lsp.get(bufnr, client_id) end
+
+-- Get all diagnostics for all clients
+--- @return any #{bufnr:Diagnostic[]}
+function vim.lsp.get_all() end
 

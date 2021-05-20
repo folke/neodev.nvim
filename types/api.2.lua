@@ -1,10 +1,25 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Creates a new, empty, unnamed buffer.
+--- @param listed boolean #Sets 'buflisted'
+--- @param scratch boolean #Creates a "throwaway" |scratch-buffer| for
+---                temporary work (always 'nomodified'). Also sets
+---                'nomodeline' on the buffer.
+--- @return any #Buffer handle, or 0 on error
+function vim.api.nvim_create_buf(listed, scratch) end
+
+-- Creates a new namespace, or gets an existing one.
+--- @param name string #Namespace name or empty string
+--- @return any #Namespace id
+function vim.api.nvim_create_namespace(name) end
+
 -- Deletes the current line.
 function vim.api.nvim_del_current_line() end
 
 -- Unmaps a global |mapping| for the given mode.
+--- @param mode string
+--- @param lhs string
 function vim.api.nvim_del_keymap(mode, lhs) end
 
 -- Removes a global (g:) variable.
@@ -39,27 +54,27 @@ function vim.api.nvim_eval(expr) end
 
 -- Executes Vimscript (multiline block of Ex-commands), like
 -- anonymous |:source|.
+--- @param src string #Vimscript code
 --- @param output boolean #Capture and return all (non-error, non-shell
 ---               |:!|) output
---- @param src string #Vimscript code
 --- @return any #Output (non-error, non-shell |:!|) if `output` is true,
 ---     else empty string.
 function vim.api.nvim_exec(src, output) end
 
 -- Execute Lua code. Parameters (if any) are available as `...`
 -- inside the chunk. The chunk can return a value.
---- @param args any[] #Arguments to the code
 --- @param code string #Lua code to execute
+--- @param args array #Arguments to the code
 --- @return any #Return value of Lua code if present or NIL.
 function vim.api.nvim_exec_lua(code, args) end
 
 -- Sends input-keys to Nvim, subject to various quirks controlled
 -- by `mode` flags. This is a blocking call, unlike
 -- |nvim_input()|.
+--- @param keys string #to be typed
 --- @param mode string #behavior flags, see |feedkeys()|
 --- @param escape_csi boolean #If true, escape K_SPECIAL/CSI bytes in
 ---                   `keys`
---- @param keys string #to be typed
 function vim.api.nvim_feedkeys(keys, mode, escape_csi) end
 
 -- Gets the option information for all options.
@@ -72,19 +87,20 @@ function vim.api.nvim_get_all_options_info() end
 function vim.api.nvim_get_api_info() end
 
 -- Get information about a channel.
+--- @param chan integer
 --- @return any #Dictionary describing a channel, with these keys:
 ---     • "stream" the stream underlying the channel
 ---       • "stdio" stdin and stdout of this Nvim instance
 ---       • "stderr" stderr of this Nvim instance
 ---       • "socket" TCP/IP socket or named pipe
 ---       • "job" job with communication over its stdio
---- 
+---
 ---     • "mode" how data received on the channel is interpreted
 ---       • "bytes" send and receive raw bytes
 ---       • "terminal" a |terminal| instance interprets ASCII
 ---         sequences
 ---       • "rpc" |RPC| communication on the channel is active
---- 
+---
 ---     • "pty" Name of pseudoterminal, if one is used (optional).
 ---       On a POSIX system, this will be a device path like
 ---       /dev/pts/1. Even if the name is unknown, the key will
@@ -95,7 +111,6 @@ function vim.api.nvim_get_api_info() end
 ---     • "client" information about the client on the other end
 ---       of the RPC channel, if it has added it using
 ---       |nvim_set_client_info()|. (optional)
---- 
 function vim.api.nvim_get_chan_info(chan) end
 
 -- Returns the 24-bit RGB value of a |nvim_get_color_map()| color
@@ -139,18 +154,19 @@ function vim.api.nvim_get_current_tabpage() end
 function vim.api.nvim_get_current_win() end
 
 -- Gets a highlight definition by id. |hlID()|
---- @param rgb boolean #Export RGB colors
 --- @param hl_id integer #Highlight id as returned by |hlID()|
+--- @param rgb boolean #Export RGB colors
 --- @return any #Highlight definition map
 function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
 
 -- Gets a highlight definition by name.
---- @param rgb boolean #Export RGB colors
 --- @param name string #Highlight group name
+--- @param rgb boolean #Export RGB colors
 --- @return any #Highlight definition map
 function vim.api.nvim_get_hl_by_name(name, rgb) end
 
 -- Gets a highlight group by name
+--- @param name string
 function vim.api.nvim_get_hl_id_by_name(name) end
 
 -- Gets a list of global (non-buffer-local) |mapping|
@@ -180,10 +196,12 @@ function vim.api.nvim_get_option(name) end
 function vim.api.nvim_get_option_info(name) end
 
 -- Gets info describing process `pid` .
+--- @param pid integer
 --- @return any #Map of process properties, or NIL if process not found.
 function vim.api.nvim_get_proc(pid) end
 
 -- Gets the immediate children of process `pid` .
+--- @param pid integer
 --- @return any #Array of child process ids, empty if process not found.
 function vim.api.nvim_get_proc_children(pid) end
 
@@ -212,22 +230,22 @@ function vim.api.nvim_get_vvar(name) end
 function vim.api.nvim_input(keys) end
 
 -- Send mouse event from GUI.
+--- @param button string #Mouse button: one of "left", "right",
+---                 "middle", "wheel".
+--- @param action string #For ordinary buttons, one of "press", "drag",
+---                 "release". For the wheel, one of "up", "down",
+---                 "left", "right".
 --- @param modifier string #String of modifiers each represented by a
 ---                 single char. The same specifiers are used as
 ---                 for a key press, except that the "-" separator
 ---                 is optional, so "C-A-", "c-a" and "CA" can all
 ---                 be used to specify Ctrl+Alt+click.
---- @param action string #For ordinary buttons, one of "press", "drag",
----                 "release". For the wheel, one of "up", "down",
----                 "left", "right".
+--- @param grid integer #Grid number if the client uses |ui-multigrid|,
+---                 else 0.
 --- @param row integer #Mouse row-position (zero-based, like redraw
 ---                 events)
 --- @param col integer #Mouse column-position (zero-based, like redraw
 ---                 events)
---- @param grid integer #Grid number if the client uses |ui-multigrid|,
----                 else 0.
---- @param button string #Mouse button: one of "left", "right",
----                 "middle", "wheel".
 function vim.api.nvim_input_mouse(button, action, modifier, grid, row, col) end
 
 -- Gets the current list of buffer handles
@@ -238,23 +256,4 @@ function vim.api.nvim_list_bufs() end
 --- @return any #Array of Dictionaries, each describing a channel with the
 ---     format specified at |nvim_get_chan_info()|.
 function vim.api.nvim_list_chans() end
-
--- Gets the paths contained in 'runtimepath'.
---- @return any #List of paths
-function vim.api.nvim_list_runtime_paths() end
-
--- Gets the current list of tabpage handles.
---- @return any #List of tabpage handles
-function vim.api.nvim_list_tabpages() end
-
--- Gets a list of dictionaries representing attached UIs.
---- @return any #Array of UI dictionaries, each with these keys:
----     • "height" Requested height of the UI
----     • "width" Requested width of the UI
----     • "rgb" true if the UI uses RGB colors (false implies
----       |cterm-colors|)
----     • "ext_..." Requested UI extensions, see |ui-option|
----     • "chan" Channel id of remote UI (not present for TUI)
---- 
-function vim.api.nvim_list_uis() end
 

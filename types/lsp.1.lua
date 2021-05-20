@@ -1,13 +1,9 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- Get all diagnostics for all clients
---- @return any #{bufnr:Diagnostic[]}
-function vim.lsp.get_all() end
-
 -- Get the counts for a particular severity
---- @param severity any #DiagnosticSeverity
 --- @param bufnr any #number The buffer number
+--- @param severity any #DiagnosticSeverity
 --- @param client_id any #number the client id
 function vim.lsp.get_count(bufnr, severity, client_id) end
 
@@ -22,17 +18,17 @@ function vim.lsp.get_effective_tabstop(bufnr) end
 function vim.lsp.get_filename() end
 
 -- Get the diagnostics by line
+--- @param bufnr any #number The buffer number
+--- @param line_nr any #number The line number
 --- @param opts any #table|nil Configuration keys
 ---                  • severity: (DiagnosticSeverity, default nil)
 ---                    • Only return diagnostics with this
 ---                      severity. Overrides severity_limit
---- 
+---
 ---                  • severity_limit: (DiagnosticSeverity, default nil)
 ---                    • Limit severity of diagnostics found. E.g.
 ---                      "Warning" means { "Error", "Warning" }
 ---                      will be valid.
---- @param line_nr any #number The line number
---- @param bufnr any #number The buffer number
 --- @param client_id any #number the client id
 --- @return any #table Table with map of line number to list of
 ---     diagnostics.
@@ -64,11 +60,11 @@ function vim.lsp.get_prev_pos(opts) end
 function vim.lsp.get_progress_messages() end
 
 -- Default function to get text chunks to display using `nvim_buf_set_virtual_text` .
---- @param line_diags any #Diagnostic [] The diagnostics associated with the line
---- @param line any #number The line number to display the
----                   virtual text on
 --- @param bufnr any #number The buffer to display the virtual
 ---                   text in
+--- @param line any #number The line number to display the
+---                   virtual text on
+--- @param line_diags any #Diagnostic [] The diagnostics associated with the line
 --- @param opts any #table See {opts} from
 ---                   |vim.lsp.diagnostic.set_virtual_text()|
 --- @return any #table chunks, as defined by |nvim_buf_set_virtual_text()|
@@ -79,33 +75,33 @@ function vim.lsp.get_virtual_text_chunks_for_line(bufnr, line, line_diags, opts)
 ---             • {client_id}: (number)
 ---               • If nil, will consider all clients attached to
 ---                 buffer.
---- 
+---
 ---             • {cursor_position}: (Position, default current
 ---               position)
 ---               • See |nvim_win_get_cursor()|
---- 
+---
 ---             • {wrap}: (boolean, default true)
 ---               • Whether to loop around file or not. Similar to
 ---                 'wrapscan'
---- 
+---
 ---             • {severity}: (DiagnosticSeverity)
 ---               • Exclusive severity to consider. Overrides
 ---                 {severity_limit}
---- 
+---
 ---             • {severity_limit}: (DiagnosticSeverity)
 ---               • Limit severity of diagnostics found. E.g.
 ---                 "Warning" means { "Error", "Warning" } will be
 ---                 valid.
---- 
+---
 ---             • {enable_popup}: (boolean, default true)
 ---               • Call
 ---                 |vim.lsp.diagnostic.show_line_diagnostics()|
 ---                 on jump
---- 
+---
 ---             • {popup_opts}: (table)
 ---               • Table to pass as {opts} parameter to
 ---                 |vim.lsp.diagnostic.show_line_diagnostics()|
---- 
+---
 ---             • {win_id}: (number, default 0)
 ---               • Window ID
 function vim.lsp.goto_next(opts) end
@@ -149,9 +145,9 @@ function vim.lsp.locations_to_items(locations) end
 
 -- Helper function to return nested values in language server
 -- settings
+--- @param settings any #a table of language server settings
 --- @param section any #a string indicating the field of the settings
 ---                 table
---- @param settings any #a table of language server settings
 --- @return any #(table or string) The value of settings accessed via
 ---     section
 function vim.lsp.lookup_section(settings, section) end
@@ -162,8 +158,8 @@ function vim.lsp.make_client_capabilities() end
 
 -- Creates a table with sensible default options for a floating
 -- window. The table can be passed to |nvim_open_win()|.
---- @param height any #(number) window height (in character cells)
 --- @param width any #(number) window width (in character cells)
+--- @param height any #(number) window height (in character cells)
 --- @param opts any #(table, optional)
 --- @return any #(table) Options
 function vim.lsp.make_floating_popup_options(width, height, opts) end
@@ -206,13 +202,13 @@ function vim.lsp.make_range_params() end
 function vim.lsp.make_text_document_params() end
 
 -- Create the workspace params
---- @param removed any #
 --- @param added any #
+--- @param removed any #
 function vim.lsp.make_workspace_params(added, removed) end
 
 -- Sends a notification to the LSP server.
---- @param params any #(table): Parameters for the invoked LSP method
 --- @param method any #(string) The invoked LSP method
+--- @param params any #(table): Parameters for the invoked LSP method
 --- @return any #(bool) `true` if notification could be sent, `false` if
 ---     not
 function vim.lsp.notify(method, params) end
@@ -222,19 +218,19 @@ function vim.lsp.notify(method, params) end
 ---               • underline: (default=true)
 ---                 • Apply underlines to diagnostics.
 ---                 • See |vim.lsp.diagnostic.set_underline()|
---- 
+---
 ---               • virtual_text: (default=true)
 ---                 • Apply virtual text to line endings.
 ---                 • See |vim.lsp.diagnostic.set_virtual_text()|
---- 
+---
 ---               • signs: (default=true)
 ---                 • Apply signs for diagnostics.
 ---                 • See |vim.lsp.diagnostic.set_signs()|
---- 
+---
 ---               • update_in_insert: (default=false)
 ---                 • Update diagnostics in InsertMode or wait
 ---                   until InsertLeave
---- 
+---
 ---               • severity_sort: (default=false)
 ---                 • Sort diagnostics (and thus signs and virtual
 ---                   text)
@@ -247,4 +243,9 @@ function vim.lsp.on_publish_diagnostics(_, _, params, client_id, _, config) end
 --- @return any #bufnr,winnr buffer and window number of the newly created
 ---     floating preview window
 function vim.lsp.open_floating_preview(contents, syntax, opts) end
+
+-- Lists all the items that are called by the symbol under the
+-- cursor in the |quickfix| window. If the symbol can resolve to
+-- multiple items, the user can pick one in the |inputlist|.
+function vim.lsp.outgoing_calls() end
 

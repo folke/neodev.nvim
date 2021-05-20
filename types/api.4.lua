@@ -4,54 +4,75 @@
 -- Pastes at cursor, in any mode.
 --- @param data string #Multiline input. May be binary (containing NUL
 ---              bytes).
+--- @param crlf boolean #Also break lines at CR and CRLF.
 --- @param phase integer #-1: paste in a single call (i.e. without
 ---              streaming). To "stream" a paste, call `nvim_paste` sequentially with these `phase` values:
 ---              • 1: starts the paste (exactly once)
 ---              • 2: continues the paste (zero or more times)
 ---              • 3: ends the paste (exactly once)
---- @param crlf boolean #Also break lines at CR and CRLF.
 --- @return any #
 ---     • true: Client may continue pasting.
 ---     • false: Client must cancel the paste.
---- 
 function vim.api.nvim_paste(data, crlf, phase) end
 
 -- Puts text at cursor, in any mode.
---- @param after boolean #If true insert after cursor (like |p|), or
----               before (like |P|).
+--- @param lines string[] #|readfile()|-style list of lines.
+---               |channel-lines|
 --- @param type string #Edit behavior: any |getregtype()| result, or:
 ---               • "b" |blockwise-visual| mode (may include
 ---                 width, e.g. "b3")
 ---               • "c" |charwise| mode
 ---               • "l" |linewise| mode
 ---               • "" guess by contents, see |setreg()|
---- @param lines string[] #|readfile()|-style list of lines.
----               |channel-lines|
+--- @param after boolean #If true insert after cursor (like |p|), or
+---               before (like |P|).
 --- @param follow boolean #If true place cursor at end of inserted text.
 function vim.api.nvim_put(lines, type, after, follow) end
 
 -- Replaces terminal codes and |keycodes| (<CR>, <Esc>, ...) in a
 -- string with the internal representation.
 --- @param str string #String to be converted.
---- @param special boolean #Replace |keycodes|, e.g. <CR> becomes a "\n"
----                  char.
 --- @param from_part boolean #Legacy Vim parameter. Usually true.
 --- @param do_lt boolean #Also translate <lt>. Ignored if `special` is
 ---                  false.
+--- @param special boolean #Replace |keycodes|, e.g. <CR> becomes a "\n"
+---                  char.
 function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 
 -- Selects an item in the completion popupmenu.
---- @param insert boolean #Whether the selection should be inserted in the
----               buffer.
 --- @param item integer #Index (zero-based) of the item to select. Value
 ---               of -1 selects nothing and restores the original
 ---               text.
+--- @param insert boolean #Whether the selection should be inserted in the
+---               buffer.
 --- @param finish boolean #Finish the completion and dismiss the popupmenu.
 ---               Implies `insert` .
 --- @param opts dictionary #Optional parameters. Reserved for future use.
 function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 
 -- Self-identifies the client.
+--- @param name string #Short name for the connected client
+--- @param version dictionary #Dictionary describing the version, with
+---                   these (optional) keys:
+---                   • "major" major version (defaults to 0 if
+---                     not set, for no release yet)
+---                   • "minor" minor version
+---                   • "patch" patch number
+---                   • "prerelease" string describing a
+---                     prerelease, like "dev" or "beta1"
+---                   • "commit" hash or similar identifier of
+---                     commit
+--- @param type string #Must be one of the following values. Client
+---                   libraries should default to "remote" unless
+---                   overridden by the user.
+---                   • "remote" remote client connected to Nvim.
+---                   • "ui" gui frontend
+---                   • "embedder" application using Nvim as a
+---                     component (for example, IDE/editor
+---                     implementing a vim mode).
+---                   • "host" plugin host, typically started by
+---                     nvim
+---                   • "plugin" single plugin, started by nvim
 --- @param methods dictionary #Builtin methods in the client. For a host,
 ---                   this does not include plugin methods which
 ---                   will be discovered later. The key should be
@@ -67,17 +88,6 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 ---                   • "nargs" Number of arguments. Could be a
 ---                     single integer or an array of two
 ---                     integers, minimum and maximum inclusive.
---- @param name string #Short name for the connected client
---- @param version dictionary #Dictionary describing the version, with
----                   these (optional) keys:
----                   • "major" major version (defaults to 0 if
----                     not set, for no release yet)
----                   • "minor" minor version
----                   • "patch" patch number
----                   • "prerelease" string describing a
----                     prerelease, like "dev" or "beta1"
----                   • "commit" hash or similar identifier of
----                     commit
 --- @param attributes dictionary #Arbitrary string:string map of informal
 ---                   client properties. Suggested keys:
 ---                   • "website": Client homepage URL (e.g.
@@ -87,17 +97,6 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 ---                   • "logo": URI or path to image, preferably
 ---                     small logo or icon. .png or .svg format is
 ---                     preferred.
---- @param type string #Must be one of the following values. Client
----                   libraries should default to "remote" unless
----                   overridden by the user.
----                   • "remote" remote client connected to Nvim.
----                   • "ui" gui frontend
----                   • "embedder" application using Nvim as a
----                     component (for example, IDE/editor
----                     implementing a vim mode).
----                   • "host" plugin host, typically started by
----                     nvim
----                   • "plugin" single plugin, started by nvim
 function vim.api.nvim_set_client_info(name, version, type, methods, attributes) end
 
 -- Sets the current buffer.
@@ -122,7 +121,7 @@ function vim.api.nvim_set_current_win(window) end
 
 -- Set or change decoration provider for a namespace
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param opts dictionaryof(luaref) #Callbacks invoked during redraw:
+--- @param opts table<string, luaref> #Callbacks invoked during redraw:
 ---              • on_start: called first on each screen redraw
 ---                ["start", tick]
 ---              • on_buf: called for each buffer being redrawn
@@ -138,20 +137,20 @@ function vim.api.nvim_set_current_win(window) end
 function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 
 -- Set a highlight group.
+--- @param ns_id integer #number of namespace for this highlight
 --- @param name string #highlight group name, like ErrorMsg
 --- @param val dictionary #highlight definiton map, like
 ---              |nvim_get_hl_by_name|. in addition the following
 ---              keys are also recognized: `default` : don't
 ---              override existing definition, like `hi default`
---- @param ns_id integer #number of namespace for this highlight
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
 -- Sets a global |mapping| for the given mode.
---- @param lhs string #Left-hand-side |{lhs}| of the mapping.
---- @param rhs string #Right-hand-side |{rhs}| of the mapping.
 --- @param mode string #Mode short-name (map command prefix: "n", "i",
 ---             "v", "x", …) or "!" for |:map!|, or empty string
 ---             for |:map|.
+--- @param lhs string #Left-hand-side |{lhs}| of the mapping.
+--- @param rhs string #Right-hand-side |{rhs}| of the mapping.
 --- @param opts dictionary #Optional parameters map. Accepts all
 ---             |:map-arguments| as keys excluding |<buffer>| but
 ---             including |noremap|. Values are Booleans. Unknown
@@ -159,18 +158,18 @@ function vim.api.nvim_set_hl(ns_id, name, val) end
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
 -- Sets an option value.
---- @param value object #New option value
 --- @param name string #Option name
+--- @param value object #New option value
 function vim.api.nvim_set_option(name, value) end
 
 -- Sets a global (g:) variable.
---- @param value object #Variable value
 --- @param name string #Variable name
+--- @param value object #Variable value
 function vim.api.nvim_set_var(name, value) end
 
 -- Sets a v: variable, if it is not readonly.
---- @param value object #Variable value
 --- @param name string #Variable name
+--- @param value object #Variable value
 function vim.api.nvim_set_vvar(name, value) end
 
 -- Calculates the number of display cells occupied by `text` .
@@ -215,14 +214,14 @@ function vim.api.nvim_tabpage_is_valid(tabpage) end
 function vim.api.nvim_tabpage_list_wins(tabpage) end
 
 -- Sets a tab-scoped (t:) variable
---- @param name string #Variable name
 --- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
+--- @param name string #Variable name
 --- @param value object #Variable value
 function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 
 -- Activates UI events on the channel.
+--- @param width integer #Requested screen columns
 --- @param height integer #Requested screen rows
 --- @param options dictionary #|ui-option| map
---- @param width integer #Requested screen columns
 function vim.api.nvim_ui_attach(width, height, options) end
 

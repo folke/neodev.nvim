@@ -21,11 +21,11 @@ function vim.treesitter.LanguageTree:destroy() end
 
 -- Invokes the callback for each LanguageTree and it's children
 -- recursively
---- @param include_self any #Whether to include the invoking tree in
----                     the results.
 --- @param fn fun(...) #The function to invoke. This is invoked
 ---                     with arguments (tree: LanguageTree, lang:
 ---                     string)
+--- @param include_self any #Whether to include the invoking tree in
+---                     the results.
 function vim.treesitter.LanguageTree:for_each_child(fn, include_self) end
 
 -- Invokes the callback for each treesitter trees recursively.
@@ -86,20 +86,22 @@ function vim.treesitter.LanguageTree:trees() end
 vim.treesitter.Query = {}
 
 -- Iterate over all captures from all matches inside {node}
---- @param stop any #The stopping line of the search (end-exclusive)
---- @param start any #The starting line of the search
 --- @param node any #The node under which the search will occur
 --- @param source any #The source buffer or string to exctract text
 ---               from
+--- @param start any #The starting line of the search
+--- @param stop any #The stopping line of the search (end-exclusive)
 --- @return any #The matching capture id
+--- @return any #The captured node
 function vim.treesitter.Query:iter_captures(node, source, start, stop) end
 
 -- Iterates the matches of self on a given range.
---- @param stop any #The stopping line of the search (end-exclusive)
---- @param start any #The starting line of the search
 --- @param node any #The node under which the search will occur
 --- @param source any #The source buffer or string to search
+--- @param start any #The starting line of the search
+--- @param stop any #The stopping line of the search (end-exclusive)
 --- @return any #The matching pattern id
+--- @return any #The matching match
 function vim.treesitter.Query:iter_matches(node, source, start, stop) end
 
 --- @class vim.treesitter.TSHighlighter
@@ -122,14 +124,9 @@ function vim.treesitter.list_parsers() end
 -- Represents a single treesitter parser for a language. The
 -- language can contain child languages with in its range, hence
 -- the tree.
---- @param opts any #Options table
---- @param opts.injections any #A table of language to injection query
----                        strings. This is useful for overriding
----                        the built-in runtime file searching for
----                        the injection language query per
----                        language.
---- @param lang any #The language this tree represents
 --- @param source any #Can be a bufnr or a string of text to
 ---                        parse
+--- @param lang any #The language this tree represents
+--- @param opts any #Options table
 function vim.treesitter.new(source, lang, opts) end
 

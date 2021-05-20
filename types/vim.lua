@@ -3,11 +3,10 @@
 ---@alias tabpage number
 ---@alias list any[]
 ---@alias array any[]
----@alias dictionary table
+---@alias dictionary table<string, any>
 ---@alias object any
 ---@alias float number
----@alias dictionaryof table
----@alias arrayof any[]
+---@alias luaref fun()
 
 vim = require("vim.shared")
 vim = require("vim.uri")

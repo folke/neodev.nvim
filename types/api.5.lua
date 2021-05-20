@@ -6,10 +6,10 @@ function vim.api.nvim_ui_detach() end
 
 -- Tells Nvim the geometry of the popumenu, to align floating
 -- windows with an external popup menu.
---- @param row float #Popupmenu row.
---- @param col float #Popupmenu height.
 --- @param width float #Popupmenu width.
 --- @param height float #Popupmenu height.
+--- @param row float #Popupmenu row.
+--- @param col float #Popupmenu height.
 function vim.api.nvim_ui_pum_set_bounds(width, height, row, col) end
 
 -- Tells Nvim the number of elements displaying in the popumenu,
@@ -17,16 +17,20 @@ function vim.api.nvim_ui_pum_set_bounds(width, height, row, col) end
 --- @param height integer #Popupmenu height, must be greater than zero.
 function vim.api.nvim_ui_pum_set_height(height) end
 
-function vim.api.nvim_ui_set_option(name, value, error) end
+--- @param name string
+--- @param value object
+function vim.api.nvim_ui_set_option(name, value) end
 
+--- @param width integer
+--- @param height integer
 function vim.api.nvim_ui_try_resize(width, height) end
 
 -- Tell Nvim to resize a grid. Triggers a grid_resize event with
 -- the requested grid size or the maximum size if it exceeds size
 -- limits.
---- @param height integer #The new requested height.
---- @param width integer #The new requested width.
 --- @param grid integer #The handle of the grid to be changed.
+--- @param width integer #The new requested width.
+--- @param height integer #The new requested height.
 function vim.api.nvim_ui_try_resize_grid(grid, width, height) end
 
 -- Unsubscribes to event broadcasts.
@@ -34,11 +38,11 @@ function vim.api.nvim_ui_try_resize_grid(grid, width, height) end
 function vim.api.nvim_unsubscribe(event) end
 
 -- Closes the window (like |:close| with a |window-ID|).
+--- @param window window #Window handle, or 0 for current window
 --- @param force boolean #Behave like `:close!` The last window of a
 ---               buffer with unwritten changes can be closed. The
 ---               buffer will become hidden, even if 'hidden' is
 ---               not set.
---- @param window window #Window handle, or 0 for current window
 function vim.api.nvim_win_close(window, force) end
 
 -- Removes a window-scoped (w:) variable
@@ -112,46 +116,46 @@ function vim.api.nvim_win_hide(window) end
 function vim.api.nvim_win_is_valid(window) end
 
 -- Sets the current buffer in a window, without side-effects
---- @param buffer buffer #Buffer handle
 --- @param window window #Window handle, or 0 for current window
+--- @param buffer buffer #Buffer handle
 function vim.api.nvim_win_set_buf(window, buffer) end
 
 -- Configures window layout. Currently only for floating and
 -- external windows (including changing a split window to those
 -- layouts).
+--- @param window window #Window handle, or 0 for current window
 --- @param config dictionary #Map defining the window configuration, see
 ---               |nvim_open_win()|
---- @param window window #Window handle, or 0 for current window
 function vim.api.nvim_win_set_config(window, config) end
 
 -- Sets the (1,0)-indexed cursor position in the window.
 -- |api-indexing|
---- @param pos arrayof(integer, 2) #(row, col) tuple representing the new position
 --- @param window window #Window handle, or 0 for current window
+--- @param pos number[] #(row, col) tuple representing the new position
 function vim.api.nvim_win_set_cursor(window, pos) end
 
 -- Sets the window height. This will only succeed if the screen
 -- is split horizontally.
---- @param height integer #Height as a count of rows
 --- @param window window #Window handle, or 0 for current window
+--- @param height integer #Height as a count of rows
 function vim.api.nvim_win_set_height(window, height) end
 
 -- Sets a window option value. Passing 'nil' as value deletes the
 -- option(only works if there's a global fallback)
---- @param name string #Option name
 --- @param window window #Window handle, or 0 for current window
+--- @param name string #Option name
 --- @param value object #Option value
 function vim.api.nvim_win_set_option(window, name, value) end
 
 -- Sets a window-scoped (w:) variable
---- @param name string #Variable name
 --- @param window window #Window handle, or 0 for current window
+--- @param name string #Variable name
 --- @param value object #Variable value
 function vim.api.nvim_win_set_var(window, name, value) end
 
 -- Sets the window width. This will only succeed if the screen is
 -- split vertically.
---- @param width integer #Width as a count of columns
 --- @param window window #Window handle, or 0 for current window
+--- @param width integer #Width as a count of columns
 function vim.api.nvim_win_set_width(window, width) end
 
