@@ -36,10 +36,6 @@ function M.library()
     add("$VIMRUNTIME")
   end
 
-  if Config.options.library.vimconfig then
-    add(M.config_path())
-  end
-
   if Config.options.library.plugins then
     for _, site in pairs(vim.split(vim.o.packpath, ",")) do
       add(site .. "/pack/*/opt/*", Config.options.library.plugins)
