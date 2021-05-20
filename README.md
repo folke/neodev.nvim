@@ -50,6 +50,10 @@ Plug 'folke/lua-dev.nvim'
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
+  -- pass any additional options that will be merged in the final lsp config
+  lspconfig = {
+    -- cmd = {"lua-language-server"}
+  },
 }
 ```
 
@@ -57,9 +61,11 @@ Plug 'folke/lua-dev.nvim'
 
 
 ```lua
-
 local luadev = require("lua-dev").setup({
- -- add any options here, or leave empty to use the default settings
+  -- add any options here, or leave empty to use the default settings
+  -- lspconfig = {
+  --   cmd = {"lua-language-server"}
+  -- },
 })
 
 local lspconfig = require('lspconfig')

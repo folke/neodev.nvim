@@ -9,6 +9,10 @@ M.defaults = {
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
+  -- pass any additional options that will be merged in the final lsp config
+  lspconfig = {
+    -- cmd = {"lua-language-server"}
+  },
 }
 
 --- @type LuaApiOptions
