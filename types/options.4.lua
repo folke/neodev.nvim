@@ -1,43 +1,23 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- string	(default "")
--- 			global or local to buffer |global-local|
--- 	List of file names, separated by commas, that are used to lookup words
--- 	for thesaurus completion commands |i_CTRL-X_CTRL-T|.
-vim.o.thesaurus = ""
--- boolean	(default on)
--- 			global or local to buffer |global-local|
--- 	When a file has been detected to have been changed outside of Vim and
--- 	it has not been changed inside of Vim, automatically read it again.
--- 	When the file has been deleted this is not done, so you have the text
--- 	from before it was deleted.  When it appears again then it is read.
--- 	|timestamp|
--- 	If this option has a local value, use this command to switch back to
--- 	using the global value: >
--- 		:set autoread<
--- <
--- 				 *'autowrite'* *'aw'* *'noautowrite'* *'noaw'*
-vim.o.autoread = "true"
--- string	(default "")
+-- number	(default 1)
 -- 			global
--- 	These values can be used:
--- 	msg	Error messages that would otherwise be omitted will be given
--- 		anyway.
--- 	throw	Error messages that would otherwise be omitted will be given
--- 		anyway and also throw an exception and set |v:errmsg|.
--- 	beep	A message will be given when otherwise only a beep would be
--- 		produced.
--- 	The values can be combined, separated by a comma.
--- 	"msg" and "throw" are useful for debugging 'foldexpr', 'formatexpr' or
--- 	'indentexpr'.
-vim.o.debug = ""
--- string	(default "SHNHH HUnhsh")
+-- 	The value of this option specifies when the line with tab page labels
+-- 	will be displayed:
+-- 		0: never
+-- 		1: only if there are at least two tab pages
+-- 		2: always
+-- 	This is both for the GUI and non-GUI implementation of the tab pages
+-- 	line.
+-- 	See |tab-page| for more information about tab pages.
+vim.o.showtabline = "1"
+-- number	(default 15)
 -- 			global
--- 	Specifies the nroff macros that separate sections.  These are pairs of
--- 	two letters (See |object-motions|).  The default makes a section start
--- 	at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
-vim.o.sections = "SHNHH HUnhsh"
+-- 	Minimum width for the popup menu (|ins-completion-menu|).  If the
+-- 	cursor column + 'pumwidth' exceeds screen width, the popup menu is
+-- 	nudged to fit on the screen.
+vim.o.pumwidth = "15"
 -- string (default: "manual")
 -- 			local to window
 -- 	The kind of folding used for the current window.  Possible values:
@@ -48,24 +28,16 @@ vim.o.sections = "SHNHH HUnhsh"
 -- 	|fold-syntax|	syntax	    Syntax highlighting items specify folds.
 -- 	|fold-diff|	diff	    Fold text that is not changed.
 vim.wo.foldmethod = "manual"
--- boolean	(default on)
+-- number (default: 1)
 -- 			local to window
--- 	This option changes how text is displayed.  It doesn't change the text
--- 	in the buffer, see 'textwidth' for that.
--- 	When on, lines longer than the width of the window will wrap and
--- 	displaying continues on the next line.  When off lines will not wrap
--- 	and only part of long lines will be displayed.  When the cursor is
--- 	moved to a part that is not shown, the screen will scroll
--- 	horizontally.
--- 	The line will be broken in the middle of a word if necessary.  See
--- 	'linebreak' to get the break at a word boundary.
--- 	To make scrolling horizontally a bit more useful, try this: >
--- 		:set sidescroll=5
--- 		:set listchars+=precedes:<,extends:>
--- <	See 'sidescroll', 'listchars' and |wrap-off|.
--- 	This option can't be set from a |modeline| when the 'diff' option is
--- 	on.
-vim.wo.wrap = "true"
+-- 	Sets the number of screen lines above which a fold can be displayed
+-- 	closed.  Also for manually closed folds.  With the default value of
+-- 	one a fold can only be closed if it takes up two or more screen lines.
+-- 	Set to zero to be able to close folds of just one screen line.
+-- 	Note that this only has an effect on what is displayed.  After using
+-- 	"zc" to close a fold, which is displayed open because it's smaller
+-- 	than 'foldminlines', a following "zc" may close a containing fold.
+vim.wo.foldminlines = "1"
 -- string	(default "")
 -- 			local to window
 -- 	'colorcolumn' is a comma separated list of screen columns that are
@@ -74,11 +46,16 @@ vim.wo.wrap = "true"
 -- 	The screen column can be an absolute number, or a number preceded with
 -- 	'+' or '-', which is added to or subtracted from 'textwidth'. >
 vim.wo.colorcolumn = ""
--- string (default: "foldtext()")
+-- string (default: "")
 -- 			local to window
--- 	An expression which is used to specify the text displayed for a closed
--- 	fold.  See |fold-foldtext|.
-vim.wo.foldtext = "foldtext()"
+-- 	Sets the modes in which text in the cursor line can also be concealed.
+-- 	When the current mode is listed then concealing happens just like in
+-- 	other lines.
+-- 	  n		Normal mode
+-- 	  v		Visual mode
+-- 	  i		Insert mode
+-- 	  c		Command line editing, for 'incsearch'
+vim.wo.concealcursor = ""
 -- number (default 0)
 -- 			local to window
 -- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
@@ -256,6 +233,25 @@ vim.wo.winfixwidth = "false"
 -- 	the window.  Only built-in |highlight-groups| are supported, not
 -- 	syntax highlighting (use |:ownsyntax| for that).
 vim.wo.winhighlight = ""
+-- number (default 0)
+-- 			global or local to window |global-local|
+-- 	The minimal number of screen columns to keep to the left and to the
+-- 	right of the cursor if 'nowrap' is set.  Setting this option to a
+-- 	value greater than 0 while having |'sidescroll'| also at a non-zero
+-- 	value makes some context visible in the line you are scrolling in
+-- 	horizontally (except at beginning of the line).  Setting this option
+-- 	to a large value (like 999) has the effect of keeping the cursor
+-- 	horizontally centered in the window, as long as one does not come too
+-- 	close to the beginning of the line.
+-- 	After using the local value, go back the global value with one of
+-- 	these two: >
+-- 		setlocal sidescrolloff<
+-- 		setlocal sidescrolloff=-1
+-- <
+-- 	Example: Try this together with 'sidescroll' and 'listchars' as
+-- 		 in the following example to never allow the cursor to move
+-- 		 onto the "extends" character: >
+vim.wo.sidescrolloff = "0"
 -- boolean  (default off)
 -- 			local to window
 -- 	When this option is set, as the cursor in the current
@@ -290,16 +286,61 @@ vim.wo.cursorline = "false"
 -- 	Join the current window in the group of windows that shows differences
 -- 	between files.  See |diff-mode|.
 vim.wo.diff = "false"
--- number (default: 1)
+-- boolean	(default on)
 -- 			local to window
--- 	Sets the number of screen lines above which a fold can be displayed
--- 	closed.  Also for manually closed folds.  With the default value of
--- 	one a fold can only be closed if it takes up two or more screen lines.
--- 	Set to zero to be able to close folds of just one screen line.
--- 	Note that this only has an effect on what is displayed.  After using
--- 	"zc" to close a fold, which is displayed open because it's smaller
--- 	than 'foldminlines', a following "zc" may close a containing fold.
-vim.wo.foldminlines = "1"
+-- 	This option changes how text is displayed.  It doesn't change the text
+-- 	in the buffer, see 'textwidth' for that.
+-- 	When on, lines longer than the width of the window will wrap and
+-- 	displaying continues on the next line.  When off lines will not wrap
+-- 	and only part of long lines will be displayed.  When the cursor is
+-- 	moved to a part that is not shown, the screen will scroll
+-- 	horizontally.
+-- 	The line will be broken in the middle of a word if necessary.  See
+-- 	'linebreak' to get the break at a word boundary.
+-- 	To make scrolling horizontally a bit more useful, try this: >
+-- 		:set sidescroll=5
+-- 		:set listchars+=precedes:<,extends:>
+-- <	See 'sidescroll', 'listchars' and |wrap-off|.
+-- 	This option can't be set from a |modeline| when the 'diff' option is
+-- 	on.
+vim.wo.wrap = "true"
+-- string (default: "foldtext()")
+-- 			local to window
+-- 	An expression which is used to specify the text displayed for a closed
+-- 	fold.  See |fold-foldtext|.
+vim.wo.foldtext = "foldtext()"
+-- number (default: 20)
+-- 			local to window
+-- 	Sets the maximum nesting of folds for the "indent" and "syntax"
+-- 	methods.  This avoids that too many folds will be created.  Using more
+-- 	than 20 doesn't work, because the internal limit is 20.
+vim.wo.foldnestmax = "20"
+-- string (default: "0")
+-- 			local to window
+-- 	The expression used for when 'foldmethod' is "expr".  It is evaluated
+-- 	for each line to obtain its fold level.  See |fold-expr|.
+vim.wo.foldexpr = "0"
+-- string	(default "")
+-- 			global or local to window |global-local|
+-- 	Characters to fill the statuslines and vertical separators.
+-- 	It is a comma separated list of items:
+vim.wo.fillchars = ""
+-- boolean (default off)
+-- 			local to window
+-- 	Every wrapped line will continue visually indented (same amount of
+-- 	space as the beginning of that line), thus preserving horizontal blocks
+-- 	of text.
+vim.wo.breakindent = "false"
+-- boolean (default off)
+-- 			local to window
+-- 	This option can be set to start editing Arabic text.
+-- 	Setting this option will:
+-- 	- Set the 'rightleft' option, unless 'termbidi' is set.
+-- 	- Set the 'arabicshape' option, unless 'termbidi' is set.
+-- 	- Set the 'keymap' option to "arabic"; in Insert mode CTRL-^ toggles
+-- 	  between typing English and Arabic key mapping.
+-- 	- Set the 'delcombine' option
+vim.wo.arabic = "false"
 -- string (default "0")
 -- 			local to window
 -- 	When and how to draw the foldcolumn. Valid values are:
@@ -320,34 +361,6 @@ vim.wo.foldcolumn = "0"
 -- 	This option is set by commands that create a new fold or close a fold.
 -- 	See |folding|.
 vim.wo.foldenable = "true"
--- string (default: "#")
--- 			local to window
--- 	Used only when 'foldmethod' is "indent".  Lines starting with
--- 	characters in 'foldignore' will get their fold level from surrounding
--- 	lines.  White space is skipped before checking for this character.
--- 	The default "#" works well for C programs.  See |fold-indent|.
-vim.wo.foldignore = "#"
--- number (default: 20)
--- 			local to window
--- 	Sets the maximum nesting of folds for the "indent" and "syntax"
--- 	methods.  This avoids that too many folds will be created.  Using more
--- 	than 20 doesn't work, because the internal limit is 20.
-vim.wo.foldnestmax = "20"
--- string	(default "")
--- 			global or local to window |global-local|
--- 	Characters to fill the statuslines and vertical separators.
--- 	It is a comma separated list of items:
-vim.wo.fillchars = ""
--- string (default: "")
--- 			local to window
--- 	Sets the modes in which text in the cursor line can also be concealed.
--- 	When the current mode is listed then concealing happens just like in
--- 	other lines.
--- 	  n		Normal mode
--- 	  v		Visual mode
--- 	  i		Insert mode
--- 	  c		Command line editing, for 'incsearch'
-vim.wo.concealcursor = ""
 -- string (default empty)
 -- 			local to window
 -- 	Settings for 'breakindent'. It can consist of the following optional
@@ -366,46 +379,13 @@ vim.wo.concealcursor = ""
 -- 			    additional indent.
 -- 	The default value for min is 20 and shift is 0.
 vim.wo.breakindentopt = ""
--- boolean (default off)
+-- string (default: "#")
 -- 			local to window
--- 	This option can be set to start editing Arabic text.
--- 	Setting this option will:
--- 	- Set the 'rightleft' option, unless 'termbidi' is set.
--- 	- Set the 'arabicshape' option, unless 'termbidi' is set.
--- 	- Set the 'keymap' option to "arabic"; in Insert mode CTRL-^ toggles
--- 	  between typing English and Arabic key mapping.
--- 	- Set the 'delcombine' option
-vim.wo.arabic = "false"
--- boolean (default off)
--- 			local to window
--- 	Every wrapped line will continue visually indented (same amount of
--- 	space as the beginning of that line), thus preserving horizontal blocks
--- 	of text.
-vim.wo.breakindent = "false"
--- string (default: "0")
--- 			local to window
--- 	The expression used for when 'foldmethod' is "expr".  It is evaluated
--- 	for each line to obtain its fold level.  See |fold-expr|.
-vim.wo.foldexpr = "0"
--- number (default 0)
--- 			global or local to window |global-local|
--- 	The minimal number of screen columns to keep to the left and to the
--- 	right of the cursor if 'nowrap' is set.  Setting this option to a
--- 	value greater than 0 while having |'sidescroll'| also at a non-zero
--- 	value makes some context visible in the line you are scrolling in
--- 	horizontally (except at beginning of the line).  Setting this option
--- 	to a large value (like 999) has the effect of keeping the cursor
--- 	horizontally centered in the window, as long as one does not come too
--- 	close to the beginning of the line.
--- 	After using the local value, go back the global value with one of
--- 	these two: >
--- 		setlocal sidescrolloff<
--- 		setlocal sidescrolloff=-1
--- <
--- 	Example: Try this together with 'sidescroll' and 'listchars' as
--- 		 in the following example to never allow the cursor to move
--- 		 onto the "extends" character: >
-vim.wo.sidescrolloff = "0"
+-- 	Used only when 'foldmethod' is "indent".  Lines starting with
+-- 	characters in 'foldignore' will get their fold level from surrounding
+-- 	lines.  White space is skipped before checking for this character.
+-- 	The default "#" works well for C programs.  See |fold-indent|.
+vim.wo.foldignore = "#"
 -- number (default: 0)
 -- 			local to window
 -- 	Sets the fold level: Folds with a higher level will be closed.
