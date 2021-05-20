@@ -196,17 +196,22 @@ end
 function M.options()
   local ret = { o = {}, wo = {}, bo = {} }
   for name, option in pairs(vim.api.nvim_get_all_options_info()) do
-    ret.o[name] = option.default
     if option.scope == "buf" then
       ret.bo[name] = option.default
-    end
-    if option.scope == "win" then
+    elseif option.scope == "win" then
       ret.wo[name] = option.default
+    else
+      ret.o[name] = option.default
     end
   end
   local fd = uv.fs_open("types/options.lua", "w+", 420)
   M.intro(fd)
-  uv.fs_write(fd, "vim = " .. vim.inspect(ret), -1)
+  local str = ""
+  for k, v in pairs(ret) do
+    str = str .. "vim." .. k .. " = " .. vim.inspect(v) .. "\n\n"
+  end
+  str = str .. "vim.o = vim.wo\nvim.o = vim.bo\n"
+  uv.fs_write(fd, str, -1)
   uv.fs_close(fd)
 end
 
