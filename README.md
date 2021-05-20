@@ -52,7 +52,8 @@ Plug 'folke/lua-dev.nvim'
   },
   -- pass any additional options that will be merged in the final lsp config
   lspconfig = {
-    -- cmd = {"lua-language-server"}
+    -- cmd = {"lua-language-server"},
+    -- on_attach = ...
   },
 }
 ```
@@ -86,3 +87,6 @@ and make them available for the [Sumneko LSP](https://github.com/sumneko/lua-lan
 * [x] `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
 * function return types are always `any`, since that information is missing
 
+## ⭐ Acknowledgment
+
+* docs for options and functions are based on the work of [vim-lsp](https://github.com/prabirshrestha/vim-lsp)

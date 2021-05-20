@@ -25,6 +25,7 @@ function M.library()
             end
           end
         end
+        if p:find("/test/") then skip = true end
         if not skip then
           ret[p] = true
         end
