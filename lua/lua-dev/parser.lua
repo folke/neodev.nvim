@@ -11,7 +11,6 @@ function M.infer_type(param)
   if type == "" then
     type = "any"
   end
-
   if type == "any" then
     if param.name == "fn" then
       type = "fun(...)"
@@ -99,9 +98,6 @@ function M.process(name, fun, prefix)
     if not skip then
       table.insert(ret.params, param)
     end
-  end
-  if name == "on_publish_diagnostics" then
-    dump({ fun, ret })
   end
   return ret
 end
@@ -197,7 +193,25 @@ function M.parse(mpack, prefix, exclude)
   uv.fs_close(fd)
 end
 
+function M.options()
+  local ret = { o = {}, wo = {}, bo = {} }
+  for name, option in pairs(vim.api.nvim_get_all_options_info()) do
+    ret.o[name] = option.default
+    if option.scope == "buf" then
+      ret.bo[name] = option.default
+    end
+    if option.scope == "win" then
+      ret.wo[name] = option.default
+    end
+  end
+  local fd = uv.fs_open("types/options.lua", "w+", 420)
+  M.intro(fd)
+  uv.fs_write(fd, "vim = " .. vim.inspect(ret), -1)
+  uv.fs_close(fd)
+end
+
 function M.build()
+  M.options()
   M.parse("lua.mpack", "vim", { "vim.shared", "vim.uri", "vim.inspect" })
   M.parse("api.mpack", "vim.api")
   M.parse("lsp.mpack", "vim.lsp", { "vim.lsp" })
