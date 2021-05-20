@@ -1,26 +1,54 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- Gets extmarks in "traversal order" from a |charwise| region
--- defined by buffer positions (inclusive, 0-indexed
--- |api-indexing|).
+-- Return a tuple (row,col) representing the position of the
+-- named mark.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param _end object #End of range, given as (row, col) or valid
----               extmark id (whose position defines the bound)
---- @param start object #Start of range, given as (row, col) or valid
----               extmark id (whose position defines the bound)
---- @param opts dictionary #Optional parameters. Keys:
----               • limit: Maximum number of marks to return
----               • details Whether to include the details dict
---- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @return any #List of [extmark_id, row, col] tuples in "traversal
----     order".
-function vim.api.nvim_buf_get_extmarks(buffer, ns_id, start, _end, opts) end
+--- @param name string #Mark name
+--- @return any #(row, col) tuple
+function vim.api.nvim_buf_get_mark(buffer, name) end
+
+-- Gets the full file name for the buffer
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @return any #Buffer name
+function vim.api.nvim_buf_get_name(buffer) end
+
+-- Returns the byte offset of a line (0-indexed). |api-indexing|
+--- @param index integer #Line index
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @return any #Integer byte offset, or -1 for unloaded buffer.
+function vim.api.nvim_buf_get_offset(buffer, index) end
+
+-- Gets a buffer option value
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @param name string #Option name
+--- @return any #Option value
+function vim.api.nvim_buf_get_option(buffer, name) end
+
+-- Gets a buffer-scoped (b:) variable.
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @param name string #Variable name
+--- @return any #Variable value
+function vim.api.nvim_buf_get_var(buffer, name) end
+
+-- Checks if a buffer is valid and loaded. See |api-buffer| for
+-- more info about unloaded buffers.
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @return any #true if the buffer is valid and loaded, false otherwise.
+function vim.api.nvim_buf_is_loaded(buffer) end
+
+-- Checks if a buffer is valid.
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @return any #true if the buffer is valid, false otherwise.
+function vim.api.nvim_buf_is_valid(buffer) end
+
+-- Gets the buffer line count
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @return any #Line count, or 0 for unloaded buffer. |api-buffer|
+function vim.api.nvim_buf_line_count(buffer) end
 
 -- Creates or updates an extmark.
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param line integer #Line number where to place the mark
 --- @param opts dictionary #Optional parameters.
 ---               • id : id of the extmark to edit.
 ---               • end_line : ending line of the mark, 0-based
@@ -77,43 +105,54 @@ function vim.api.nvim_buf_get_extmarks(buffer, ns_id, start, _end, opts) end
 ---                 group. For example treesitter highlighting
 ---                 uses a value of 100.
 --- @param col integer #Column where to place the mark
+--- @param line integer #Line number where to place the mark
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @return any #Id of the created/updated extmark
 function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 
--- Removes an extmark.
---- @param id integer #Extmark id
---- @param ns_id integer #Namespace id from |nvim_create_namespace()|
+-- Sets a buffer-local |mapping| for the given mode.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @return any #true if the extmark was found, else false
-function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
+function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 
--- Adds a highlight to buffer.
---- @param ns_id integer #namespace to use or -1 for ungrouped
----                  highlight
---- @param hl_group string #Name of the highlight group to use
+-- Sets (replaces) a line-range in the buffer.
+--- @param replacement string[] #Array of lines to use as replacement
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param col_start integer #Start of (byte-indexed) column range to
----                  highlight
---- @param col_end integer #End of (byte-indexed) column range to
----                  highlight, or -1 to highlight to end of line
---- @param line integer #Line to highlight (zero-indexed)
---- @return any #The ns_id that was used
-function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start, col_end) end
+--- @param _end integer #Last line index (exclusive)
+--- @param strict_indexing boolean #Whether out-of-bounds should be an
+---                        error.
+--- @param start integer #First line index
+function vim.api.nvim_buf_set_lines(buffer, start, _end, strict_indexing, replacement) end
 
--- Clears namespaced objects (highlights, extmarks, virtual text)
--- from a region.
+-- Sets the full file name for a buffer
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param ns_id integer #Namespace to clear, or -1 to clear all
----                   namespaces.
---- @param line_start integer #Start of range of lines to clear
---- @param line_end integer #End of range of lines to clear (exclusive)
----                   or -1 to clear to end of buffer.
-function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) end
+--- @param name string #Buffer name
+function vim.api.nvim_buf_set_name(buffer, name) end
+
+-- Sets a buffer option value. Passing 'nil' as value deletes the
+-- option (only works if there's a global fallback)
+--- @param name string #Option name
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @param value object #Option value
+function vim.api.nvim_buf_set_option(buffer, name, value) end
+
+-- Sets (replaces) a range in the buffer
+--- @param replacement string[] #Array of lines to use as replacement
+--- @param end_row integer #Last line index
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @param start_column any #Last column
+--- @param end_column any #Last column
+--- @param start_row integer #First line index
+function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_col, replacement) end
+
+-- Sets a buffer-scoped (b:) variable
+--- @param name string #Variable name
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @param value object #Variable value
+function vim.api.nvim_buf_set_var(buffer, name, value) end
 
 -- Set the virtual text (annotation) for a buffer line.
 --- @param ns_id any #Namespace to use or 0 to create a namespace, or
 ---               -1 for a ungrouped annotation
---- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param opts dictionary #Optional parameters. Currently not used.
 --- @param chunks array #A list of [text, hl_group] arrays, each
 ---               representing a text chunk with specified
@@ -121,105 +160,60 @@ function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) e
 ---               no highlight.
 --- @param line integer #Line to annotate with virtual text
 ---               (zero-indexed)
+--- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @return any #The ns_id that was used
 function vim.api.nvim_buf_set_virtual_text(buffer, src_id, line, chunks, opts) end
 
--- call a function with buffer as temporary current buffer
---- @param fun luaref #Function to call inside the buffer (currently
----               lua callable only)
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @return any #Return value of function. NB: will deepcopy lua values
----     currently, use upvalues to send lua references in and out.
-function vim.api.nvim_buf_call(buffer, fun) end
+-- Calls many API methods atomically.
+--- @param calls array #an array of calls, where each call is described
+---              by an array with two elements: the request name,
+---              and an array of arguments.
+--- @return any #Array of two elements. The first is an array of return
+---     values. The second is NIL if all calls succeeded. If a
+---     call resulted in an error, it is a three-element array
+---     with the zero-based index of the call which resulted in an
+---     error, the error type and the error message. If an error
+---     occurred, the values from all preceding calls will still
+---     be returned.
+function vim.api.nvim_call_atomic(calls) end
 
-function vim.api.nvim__buf_stats(buffer) end
+-- Calls a VimL |Dictionary-function| with the given arguments.
+--- @param dict dictionary #Dictionary, or String evaluating to a VimL |self|
+---             dict
+--- @param args any[] #Function arguments packed in an Array
+--- @param fn fun(...) #Name of the function defined on the VimL dict
+--- @return any #Result of the function call
+function vim.api.nvim_call_dict_function(dict, fn, args) end
 
--- Gets the windows in a tabpage
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
---- @return any #List of windows in `tabpage`
-function vim.api.nvim_tabpage_list_wins(tabpage) end
+-- Calls a VimL function with the given arguments.
+--- @param args any[] #Function arguments packed in an Array
+--- @param fn fun(...) #Function to call
+--- @return any #Result of the function call
+function vim.api.nvim_call_function(fn, args) end
 
--- Gets a tab-scoped (t:) variable
---- @param name string #Variable name
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
---- @return any #Variable value
-function vim.api.nvim_tabpage_get_var(tabpage, name) end
-
--- Sets a tab-scoped (t:) variable
---- @param value object #Variable value
---- @param name string #Variable name
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
-function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
-
--- Removes a tab-scoped (t:) variable
---- @param name string #Variable name
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
-function vim.api.nvim_tabpage_del_var(tabpage, name) end
-
--- Gets the current window in a tabpage
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
---- @return any #Window handle
-function vim.api.nvim_tabpage_get_win(tabpage) end
-
--- Gets the tabpage number
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
---- @return any #Tabpage number
-function vim.api.nvim_tabpage_get_number(tabpage) end
-
--- Checks if a tabpage is valid
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
---- @return any #true if the tabpage is valid, false otherwise
-function vim.api.nvim_tabpage_is_valid(tabpage) end
-
--- Executes Vimscript (multiline block of Ex-commands), like
--- anonymous |:source|.
---- @param output boolean #Capture and return all (non-error, non-shell
----               |:!|) output
---- @param src string #Vimscript code
---- @return any #Output (non-error, non-shell |:!|) if `output` is true,
----     else empty string.
-function vim.api.nvim_exec(src, output) end
+-- Send data to channel `id` . For a job, it writes it to the
+-- stdin of the process. For the stdio channel |channel-stdio|,
+-- it writes to Nvim's stdout. For an internal terminal instance
+-- (|nvim_open_term()|) it writes directly to terimal output. See
+-- |channel-bytes| for more information.
+--- @param chan integer #id of the channel
+--- @param data string #data to write. 8-bit clean: can contain NUL bytes.
+function vim.api.nvim_chan_send(chan, data) end
 
 -- Executes an ex-command.
 --- @param command string #Ex-command string
 function vim.api.nvim_command(command) end
 
--- Activates UI events on the channel.
---- @param width integer #Requested screen columns
---- @param options dictionary #|ui-option| map
---- @param height integer #Requested screen rows
-function vim.api.nvim_ui_attach(width, height, options) end
+-- Creates a new, empty, unnamed buffer.
+--- @param scratch boolean #Creates a "throwaway" |scratch-buffer| for
+---                temporary work (always 'nomodified'). Also sets
+---                'nomodeline' on the buffer.
+--- @param listed boolean #Sets 'buflisted'
+--- @return any #Buffer handle, or 0 on error
+function vim.api.nvim_create_buf(listed, scratch) end
 
--- Gets a highlight definition by id. |hlID()|
---- @param hl_id integer #Highlight id as returned by |hlID()|
---- @param rgb boolean #Export RGB colors
---- @return any #Highlight definition map
-function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
-
--- Gets a highlight group by name
-function vim.api.nvim_get_hl_id_by_name(name) end
-
-function vim.api.nvim__get_hl_defs(ns_id) end
-
--- Set a highlight group.
---- @param val dictionary #highlight definiton map, like
----              |nvim_get_hl_by_name|. in addition the following
----              keys are also recognized: `default` : don't
----              override existing definition, like `hi default`
---- @param name string #highlight group name, like ErrorMsg
---- @param ns_id integer #number of namespace for this highlight
-function vim.api.nvim_set_hl(ns_id, name, val) end
-
--- Set active namespace for highlights.
---- @param ns_id integer #the namespace to activate
-function vim.api.nvim__set_hl_ns(ns_id) end
-
--- Sends input-keys to Nvim, subject to various quirks controlled
--- by `mode` flags. This is a blocking call, unlike
--- |nvim_input()|.
---- @param escape_csi boolean #If true, escape K_SPECIAL/CSI bytes in
----                   `keys`
---- @param mode string #behavior flags, see |feedkeys()|
---- @param keys string #to be typed
-function vim.api.nvim_feedkeys(keys, mode, escape_csi) end
+-- Creates a new namespace, or gets an existing one.
+--- @param name string #Namespace name or empty string
+--- @return any #Namespace id
+function vim.api.nvim_create_namespace(name) end
 

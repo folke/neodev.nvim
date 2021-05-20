@@ -87,6 +87,21 @@ function M.intro(fd)
 ]], -1)
 end
 
+function M.get_functions(mpack)
+  mpack = "mpack/" .. mpack
+  local data = vim.fn.msgpackparse(vim.fn.readfile(mpack, "b"))
+  local ret = {}
+  for _, functions in pairs(data) do
+    for name, fun in pairs(functions) do
+      table.insert(ret, { name, fun })
+    end
+  end
+  table.sort(ret, function(a, b)
+    return a[1] < b[1]
+  end)
+  return ret
+end
+
 function M.parse(mpack, prefix, exclude)
   -- exclude signatures for functions that are existing lua sources
   local skip = {}
@@ -96,9 +111,7 @@ function M.parse(mpack, prefix, exclude)
     end
   end
   prefix = prefix or "vim"
-  mpack = "mpack/" .. mpack
   local fname = vim.fn.fnamemodify(mpack, ":t:r")
-  local data = vim.fn.msgpackparse(vim.fn.readfile(mpack, "b"))
 
   local fnum = 0
   local fd = uv.fs_open("types/" .. fname .. ".lua", "w+", 420)
@@ -106,33 +119,28 @@ function M.parse(mpack, prefix, exclude)
   local size = 0
 
   local classes = {}
-  for _, functions in pairs(data) do
-    for name, fun in pairs(functions) do
-      if not skip[name] then
-        local parts = vim.fn.split(name, ":")
-        if #parts > 1 and not classes[parts[1]] then
-          uv.fs_write(
-            fd,
-            ([[
+  for _, f in pairs(M.get_functions(mpack)) do
+    local name, fun = unpack(f)
+    if not skip[name] then
+      local parts = vim.fn.split(name, ":")
+      if #parts > 1 and not classes[parts[1]] then
+        uv.fs_write(fd, ([[
 --- @class %s
 %s = {}
 
-]]):format(prefix .. "." .. parts[1], prefix .. "." .. parts[1]),
-            -1
-          )
-          classes[parts[1]] = true
-        end
-        local emmy = M.emmy(name, fun, prefix)
-        size = size + #emmy
-        uv.fs_write(fd, emmy, -1)
+]]):format(prefix .. "." .. parts[1], prefix .. "." .. parts[1]), -1)
+        classes[parts[1]] = true
+      end
+      local emmy = M.emmy(name, fun, prefix)
+      size = size + #emmy
+      uv.fs_write(fd, emmy, -1)
 
-        if size > 1024 * 10 then
-          uv.fs_close(fd)
-          fnum = fnum + 1
-          size = 0
-          fd = uv.fs_open("types/" .. fname .. "." .. fnum .. ".lua", "w+", 420)
-          M.intro(fd)
-        end
+      if size > 1024 * 10 then
+        uv.fs_close(fd)
+        fnum = fnum + 1
+        size = 0
+        fd = uv.fs_open("types/" .. fname .. "." .. fnum .. ".lua", "w+", 420)
+        M.intro(fd)
       end
     end
   end

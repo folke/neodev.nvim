@@ -1,145 +1,128 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- Gets the current list of tabpage handles.
---- @return any #List of tabpage handles
-function vim.api.nvim_list_tabpages() end
+-- Gets the current list of window handles.
+--- @return any #List of window handles
+function vim.api.nvim_list_wins() end
 
--- Gets the current tabpage.
---- @return any #Tabpage handle
-function vim.api.nvim_get_current_tabpage() end
+-- Sets the current editor state from the given |context| map.
+--- @param dict dictionary #|Context| map.
+function vim.api.nvim_load_context(dict) end
 
--- Sets the current tabpage.
---- @param tabpage tabpage #Tabpage handle
-function vim.api.nvim_set_current_tabpage(tabpage) end
+-- Notify the user with a message
+--- @param log_level integer #The log level
+--- @param msg string #Message to display to the user
+--- @param opts dictionary #Reserved for future use.
+function vim.api.nvim_notify(msg, log_level, opts) end
 
--- Creates a new namespace, or gets an existing one.
---- @param name string #Namespace name or empty string
---- @return any #Namespace id
-function vim.api.nvim_create_namespace(name) end
+-- Open a terminal instance in a buffer
+--- @param buffer buffer #the buffer to use (expected to be empty)
+--- @param opts dictionary #Optional parameters. Reserved for future use.
+--- @return any #Channel id, or 0 on error
+function vim.api.nvim_open_term(buffer, opts) end
 
--- Gets existing, non-anonymous namespaces.
---- @return any #dict that maps from names to namespace ids.
-function vim.api.nvim_get_namespaces() end
-
--- Pastes at cursor, in any mode.
---- @param phase integer #-1: paste in a single call (i.e. without
----              streaming). To "stream" a paste, call `nvim_paste` sequentially with these `phase` values:
----              • 1: starts the paste (exactly once)
----              • 2: continues the paste (zero or more times)
----              • 3: ends the paste (exactly once)
---- @param data string #Multiline input. May be binary (containing NUL
----              bytes).
---- @param crlf boolean #Also break lines at CR and CRLF.
---- @return any #
----     • true: Client may continue pasting.
----     • false: Client must cancel the paste.
+-- Open a new window.
+--- @param enter boolean #Enter the window (make it the current window)
+--- @param config dictionary #Map defining the window configuration. Keys:
+---               • `relative`: Sets the window layout to "floating", placed
+---                 at (row,col) coordinates relative to:
+---                 • "editor" The global editor grid
+---                 • "win" Window given by the `win` field, or
+---                   current window.
+---                 • "cursor" Cursor position in current window.
 --- 
-function vim.api.nvim_paste(data, crlf, phase) end
-
--- Puts text at cursor, in any mode.
---- @param lines string[] #|readfile()|-style list of lines.
----               |channel-lines|
---- @param type string #Edit behavior: any |getregtype()| result, or:
----               • "b" |blockwise-visual| mode (may include
----                 width, e.g. "b3")
----               • "c" |charwise| mode
----               • "l" |linewise| mode
----               • "" guess by contents, see |setreg()|
---- @param after boolean #If true insert after cursor (like |p|), or
----               before (like |P|).
---- @param follow boolean #If true place cursor at end of inserted text.
-function vim.api.nvim_put(lines, type, after, follow) end
-
--- Returns the 24-bit RGB value of a |nvim_get_color_map()| color
--- name or "#rrggbb" hexadecimal string.
---- @param name string #Color name or "#rrggbb" string
---- @return any #24-bit RGB value, or -1 for invalid argument.
-function vim.api.nvim_get_color_by_name(name) end
-
--- Returns a map of color names and RGB values.
---- @return any #Map of color names and RGB values.
-function vim.api.nvim_get_color_map() end
-
--- Gets a map of the current editor state.
---- @param opts dictionary #Optional parameters.
----             • types: List of |context-types| ("regs", "jumps",
----               "bufs", "gvars", …) to gather, or empty for
----               "all".
---- @return any #map of global |context|.
-function vim.api.nvim_get_context(opts) end
-
--- Tells Nvim the number of elements displaying in the popumenu,
--- to decide <PageUp> and <PageDown> movement.
---- @param height integer #Popupmenu height, must be greater than zero.
-function vim.api.nvim_ui_pum_set_height(height) end
-
--- Gets the current mode. |mode()| "blocking" is true if Nvim is
--- waiting for input.
---- @return any #Dictionary { "mode": String, "blocking": Boolean }
-function vim.api.nvim_get_mode() end
-
--- Gets a list of global (non-buffer-local) |mapping|
--- definitions.
---- @param mode string #Mode short-name ("n", "i", "v", ...)
---- @return any #Array of maparg()-like dictionaries describing mappings.
----     The "buffer" key is always zero.
-function vim.api.nvim_get_keymap(mode) end
-
--- Sets a global |mapping| for the given mode.
---- @param opts dictionary #Optional parameters map. Accepts all
----             |:map-arguments| as keys excluding |<buffer>| but
----             including |noremap|. Values are Booleans. Unknown
----             key is an error.
---- @param rhs string #Right-hand-side |{rhs}| of the mapping.
---- @param lhs string #Left-hand-side |{lhs}| of the mapping.
---- @param mode string #Mode short-name (map command prefix: "n", "i",
----             "v", "x", …) or "!" for |:map!|, or empty string
----             for |:map|.
-function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
-
--- Unmaps a global |mapping| for the given mode.
-function vim.api.nvim_del_keymap(mode, lhs) end
-
--- Gets a map of global (non-buffer-local) Ex commands.
---- @param opts dictionary #Optional parameters. Currently only supports
----             {"builtin":false}
---- @return any #Map of maps describing commands.
-function vim.api.nvim_get_commands(opts) end
-
--- Get information about a channel.
---- @return any #Dictionary describing a channel, with these keys:
----     • "stream" the stream underlying the channel
----       • "stdio" stdin and stdout of this Nvim instance
----       • "stderr" stderr of this Nvim instance
----       • "socket" TCP/IP socket or named pipe
----       • "job" job with communication over its stdio
+---               • `win` : |window-ID| for relative="win".
+---               • `anchor`: Decides which corner of the float to place
+---                 at (row,col):
+---                 • "NW" northwest (default)
+---                 • "NE" northeast
+---                 • "SW" southwest
+---                 • "SE" southeast
 --- 
----     • "mode" how data received on the channel is interpreted
----       • "bytes" send and receive raw bytes
----       • "terminal" a |terminal| instance interprets ASCII
----         sequences
----       • "rpc" |RPC| communication on the channel is active
+---               • `width` : Window width (in character cells).
+---                 Minimum of 1.
+---               • `height` : Window height (in character cells).
+---                 Minimum of 1.
+---               • `bufpos` : Places float relative to buffer
+---                 text (only when relative="win"). Takes a tuple
+---                 of zero-indexed [line, column]. `row` and
+---                 `col` if given are applied relative to this
+---                 position, else they default to `row=1` and
+---                 `col=0` (thus like a tooltip near the buffer
+---                 text).
+---               • `row` : Row position in units of "screen cell
+---                 height", may be fractional.
+---               • `col` : Column position in units of "screen
+---                 cell width", may be fractional.
+---               • `focusable` : Enable focus by user actions
+---                 (wincmds, mouse events). Defaults to true.
+---                 Non-focusable windows can be entered by
+---                 |nvim_set_current_win()|.
+---               • `external` : GUI should display the window as
+---                 an external top-level window. Currently
+---                 accepts no other positioning configuration
+---                 together with this.
+---               • `style`: Configure the appearance of the window.
+---                 Currently only takes one non-empty value:
+---                 • "minimal" Nvim will display the window with
+---                   many UI options disabled. This is useful
+---                   when displaying a temporary float where the
+---                   text should not be edited. Disables
+---                   'number', 'relativenumber', 'cursorline',
+---                   'cursorcolumn', 'foldcolumn', 'spell' and
+---                   'list' options. 'signcolumn' is changed to
+---                   `auto` and 'colorcolumn' is cleared. The
+---                   end-of-buffer region is hidden by setting
+---                   `eob` flag of 'fillchars' to a space char,
+---                   and clearing the |EndOfBuffer| region in
+---                   'winhighlight'.
 --- 
----     • "pty" Name of pseudoterminal, if one is used (optional).
----       On a POSIX system, this will be a device path like
----       /dev/pts/1. Even if the name is unknown, the key will
----       still be present to indicate a pty is used. This is
----       currently the case when using winpty on windows.
----     • "buffer" buffer with connected |terminal| instance
----       (optional)
----     • "client" information about the client on the other end
----       of the RPC channel, if it has added it using
----       |nvim_set_client_info()|. (optional)
---- 
-function vim.api.nvim_get_chan_info(chan) end
+---               • `border`: style of (optional) window border. This can
+---                 either be a string or an array. the string
+---                 values are:
+---                 • "none" No border. This is the default
+---                 • "single" a single line box
+---                 • "double" a double line box
+---                 • "shadow" a drop shadow effect by blending
+---                   with the background. If it is an array it
+---                   should be an array of eight items or any
+---                   divisor of eight. The array will specifify
+---                   the eight chars building up the border in a
+---                   clockwise fashion starting with the top-left
+---                   corner. As, an example, the double box style
+---                   could be specified as: [ "╔", "═" ,"╗", "║",
+---                   "╝", "═", "╚", "║" ] if the number of chars
+---                   are less than eight, they will be repeated.
+---                   Thus an ASCII border could be specified as:
+---                   [ "/", "-", "\\", "|" ] or all chars the
+---                   same as: [ "x" ] An empty string can be used
+---                   to turn off a specific border, for instance:
+---                   [ "", "", "", ">", "", "", "", "<" ] will
+---                   only make vertical borders but not
+---                   horizontal ones. By default `FloatBorder`
+---                   highlight is used which links to `VertSplit`
+---                   when not defined. It could also be specified
+---                   by character: [ {"+", "MyCorner"}, {"x",
+---                   "MyBorder"} ]
+--- @param buffer buffer #Buffer to display, or 0 for current buffer
+--- @return any #Window handle, or 0 on error
+function vim.api.nvim_open_win(buffer, enter, config) end
 
--- Get information about all open channels.
---- @return any #Array of Dictionaries, each describing a channel with the
----     format specified at |nvim_get_chan_info()|.
-function vim.api.nvim_list_chans() end
+-- Writes a message to the Vim output buffer. Does not append
+-- "\n", the message is buffered (won't display) until a linefeed
+-- is written.
+--- @param str string #Message
+function vim.api.nvim_out_write(str) end
 
 -- Parse a VimL expression.
+--- @param highlight boolean #If true, return value will also include
+---                  "highlight" key containing array of 4-tuples
+---                  (arrays) (Integer, Integer, Integer, String),
+---                  where first three numbers define the
+---                  highlighted region and represent line,
+---                  starting column and ending column (latter
+---                  exclusive: one should highlight region
+---                  [start_col, end_col)).
 --- @param flags string #Flags:
 ---                  • "m" if multiple expressions in a row are
 ---                    allowed (only the first one will be
@@ -156,14 +139,6 @@ function vim.api.nvim_list_chans() end
 ---                  • "E" to parse like for "<C-r>=".
 ---                  • empty string for ":call".
 ---                  • "lm" to parse for ":let".
---- @param highlight boolean #If true, return value will also include
----                  "highlight" key containing array of 4-tuples
----                  (arrays) (Integer, Integer, Integer, String),
----                  where first three numbers define the
----                  highlighted region and represent line,
----                  starting column and ending column (latter
----                  exclusive: one should highlight region
----                  [start_col, end_col)).
 --- @param expr string #Expression to parse. Always treated as a
 ---                  single line.
 --- @return any #
