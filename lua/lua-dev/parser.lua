@@ -205,17 +205,59 @@ function M.options()
       ret.o[name] = option.default
     end
   end
-  local fd = uv.fs_open("types/options.lua", "w+", 420)
-  M.intro(fd)
   local str = ""
   for k, v in pairs(ret) do
     str = str .. "vim." .. k .. " = " .. vim.inspect(v) .. "\n\n"
   end
+  local fd = uv.fs_open("types/options.lua", "w+", 420)
+  M.intro(fd)
   uv.fs_write(fd, str, -1)
   uv.fs_close(fd)
 end
 
+function M.functions()
+  local data = vim.fn.json_decode(vim.fn.readfile("mpack/builtin-docs.json"))
+  local functions = data.signatureHelp
+  local docs = data.documents.functions
+
+  local fd = uv.fs_open("types/vim.fn.lua", "w+", 420)
+  M.intro(fd)
+  local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
+  for name, props in pairs(functions) do
+    if vim.fn[name] and not vim.api[name] and not exclude[name] then
+      local fun = {
+        name = name,
+        fqname = "vim.fn." .. name,
+        doc = table.concat(docs[name] or {}, "\n"),
+        params = {},
+        ["return"] = {},
+      }
+      if props[2] ~= "" then
+        fun["return"] = { { type = props[2]:lower() } }
+      end
+      if props[1] ~= "" then
+        for _, param in pairs(vim.split(props[1], ",")) do
+          param = vim.trim(param:gsub("[{}%]%[]", ""))
+          param = param:gsub("-", "_")
+          if exclude[param] or tonumber(param) ~= nil then
+            param = "_" .. param
+          end
+          if param:find("%.%.%.") then
+            param = "..."
+          end
+          table.insert(fun.params, { name = param })
+        end
+      end
+      local emmy = M.emmy(fun)
+      uv.fs_write(fd, emmy, -1)
+    end
+  end
+
+  uv.fs_close(fd)
+end
+
 function M.build()
+  M.functions()
   M.options()
   M.parse("lua.mpack", "vim", { "vim.shared", "vim.uri", "vim.inspect" })
   M.parse("api.mpack", "vim.api")
