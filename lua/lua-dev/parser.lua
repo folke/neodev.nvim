@@ -159,38 +159,25 @@ function M.parse(mpack, prefix, exclude)
   prefix = prefix or "vim"
   local fname = vim.fn.fnamemodify(mpack, ":t:r")
 
-  local fnum = 0
-  local fd = uv.fs_open("types/" .. fname .. ".lua", "w+", 420)
-  M.intro(fd)
-  local size = 0
-
+  local writer = M.writer("types/" .. fname)
   local classes = {}
   for _, f in pairs(M.get_functions(mpack)) do
     local name, fun = unpack(f)
     if not skip[name] then
       local parts = vim.fn.split(name, ":")
       if #parts > 1 and not classes[parts[1]] then
-        uv.fs_write(fd, ([[
+        writer.write(([[
 --- @class %s
 %s = {}
 
-]]):format(prefix .. "." .. parts[1], prefix .. "." .. parts[1]), -1)
+]]):format(prefix .. "." .. parts[1], prefix .. "." .. parts[1]))
         classes[parts[1]] = true
       end
       local emmy = M.emmy(M.process(name, fun, prefix))
-      size = size + #emmy
-      uv.fs_write(fd, emmy, -1)
-
-      if size > 1024 * 10 then
-        uv.fs_close(fd)
-        fnum = fnum + 1
-        size = 0
-        fd = uv.fs_open("types/" .. fname .. "." .. fnum .. ".lua", "w+", 420)
-        M.intro(fd)
-      end
+      writer.write(emmy)
     end
   end
-  uv.fs_close(fd)
+  writer.close()
 end
 
 function M.options()
@@ -209,10 +196,7 @@ function M.options()
     end
   end
 
-  local fd = uv.fs_open("types/options.lua", "w+", 420)
-  M.intro(fd)
-  local fnum = 0
-  local size = 0
+  local writer = M.writer("types/options")
   for scope, options in pairs(ret) do
     for key, value in pairs(options) do
       local str = ("vim.%s.%s = %q\n"):format(scope, key, value)
@@ -220,18 +204,33 @@ function M.options()
       if doc then
         str = M.comment(doc) .. "\n" .. str
       end
+      writer.write(str)
+    end
+  end
+  writer.close()
+end
+
+function M.writer(file)
+  local fd = uv.fs_open(file .. ".lua", "w+", 420)
+  local size = 0
+  local fnum = 0
+  M.intro(fd)
+  return {
+    write = function(str)
       uv.fs_write(fd, str, -1)
       size = size + #str
       if size > 1024 * 50 then
         uv.fs_close(fd)
         fnum = fnum + 1
         size = 0
-        fd = uv.fs_open("types/options." .. fnum .. ".lua", "w+", 420)
+        fd = uv.fs_open(file .. "." .. fnum .. ".lua", "w+", 420)
         M.intro(fd)
       end
-    end
-  end
-  uv.fs_close(fd)
+    end,
+    close = function()
+      uv.fs_close(fd)
+    end,
+  }
 end
 
 function M.functions()
@@ -239,10 +238,7 @@ function M.functions()
   local functions = data.signatureHelp
   local docs = data.documents.functions
 
-  local fd = uv.fs_open("types/vim.fn.lua", "w+", 420)
-  M.intro(fd)
-  local size = 0
-  local fnum = 0
+  local writer = M.writer("types/vim.fn")
   local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
   for name, props in pairs(functions) do
     if vim.fn[name] and not vim.api[name] and not exclude[name] then
@@ -269,23 +265,22 @@ function M.functions()
           table.insert(fun.params, { name = param })
         end
       end
-      local emmy = M.emmy(fun)
-      size = size + #emmy
-      uv.fs_write(fd, emmy, -1)
-      if size > 1024 * 50 then
-        uv.fs_close(fd)
-        fnum = fnum + 1
-        size = 0
-        fd = uv.fs_open("types/vim.fn." .. fnum .. ".lua", "w+", 420)
-        M.intro(fd)
-      end
+      writer.write(M.emmy(fun))
     end
   end
+  writer.close()
+end
 
-  uv.fs_close(fd)
+function M.clean()
+  for _, f in pairs(vim.fn.expand("types/*.lua", false, true)) do
+    if f ~= "types/vim.lua" then
+      uv.fs_unlink(f)
+    end
+  end
 end
 
 function M.build()
+  M.clean()
   M.functions()
   M.options()
   M.parse("lua.mpack", "vim", { "vim.shared", "vim.uri", "vim.inspect" })

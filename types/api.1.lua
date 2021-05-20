@@ -1,218 +1,199 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- Gets a line-range from the buffer.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param start integer #First line index
---- @param end_ integer #Last line index (exclusive)
---- @param strict_indexing boolean #Whether out-of-bounds should be an
----                        error.
---- @return any #Array of lines, or empty array for unloaded buffer.
-function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
+-- Gets the tabpage number
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
+--- @return any #Tabpage number
+function vim.api.nvim_tabpage_get_number(tabpage) end
 
--- Return a tuple (row,col) representing the position of the
--- named mark.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param name string #Mark name
---- @return any #(row, col) tuple
-function vim.api.nvim_buf_get_mark(buffer, name) end
-
--- Gets the full file name for the buffer
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @return any #Buffer name
-function vim.api.nvim_buf_get_name(buffer) end
-
--- Returns the byte offset of a line (0-indexed). |api-indexing|
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param index integer #Line index
---- @return any #Integer byte offset, or -1 for unloaded buffer.
-function vim.api.nvim_buf_get_offset(buffer, index) end
-
--- Gets a buffer option value
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param name string #Option name
---- @return any #Option value
-function vim.api.nvim_buf_get_option(buffer, name) end
-
--- Gets a buffer-scoped (b:) variable.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
+-- Gets a tab-scoped (t:) variable
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
 --- @param name string #Variable name
 --- @return any #Variable value
-function vim.api.nvim_buf_get_var(buffer, name) end
+function vim.api.nvim_tabpage_get_var(tabpage, name) end
 
--- Checks if a buffer is valid and loaded. See |api-buffer| for
--- more info about unloaded buffers.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @return any #true if the buffer is valid and loaded, false otherwise.
-function vim.api.nvim_buf_is_loaded(buffer) end
+-- Gets the current window in a tabpage
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
+--- @return any #Window handle
+function vim.api.nvim_tabpage_get_win(tabpage) end
 
--- Checks if a buffer is valid.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @return any #true if the buffer is valid, false otherwise.
-function vim.api.nvim_buf_is_valid(buffer) end
+-- Checks if a tabpage is valid
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
+--- @return any #true if the tabpage is valid, false otherwise
+function vim.api.nvim_tabpage_is_valid(tabpage) end
 
--- Gets the buffer line count
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @return any #Line count, or 0 for unloaded buffer. |api-buffer|
-function vim.api.nvim_buf_line_count(buffer) end
+-- Gets the windows in a tabpage
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
+--- @return any #List of windows in `tabpage`
+function vim.api.nvim_tabpage_list_wins(tabpage) end
 
--- Creates or updates an extmark.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param line integer #Line number where to place the mark
---- @param col integer #Column where to place the mark
---- @param opts dictionary #Optional parameters.
----               • id : id of the extmark to edit.
----               • end_line : ending line of the mark, 0-based
----                 inclusive.
----               • end_col : ending col of the mark, 0-based
----                 inclusive.
----               • hl_group : name of the highlight group used to
----                 highlight this mark.
----               • virt_text : virtual text to link to this mark.
----               • virt_text_pos : positioning of virtual text.
----                 Possible values:
----                 • "eol": right after eol character (default)
----                 • "overlay": display over the specified
----                   column, without shifting the underlying
----                   text.
----                 • "right_align": display right aligned in the
----                   window.
----
----               • virt_text_win_col : position the virtual text
----                 at a fixed window column (starting from the
----                 first text column)
----               • virt_text_hide : hide the virtual text when
----                 the background text is selected or hidden due
----                 to horizontal scroll 'nowrap'
----               • hl_mode : control how highlights are combined
----                 with the highlights of the text. Currently
----                 only affects virt_text highlights, but might
----                 affect`hl_group`in later versions.
----                 • "replace": only show the virt_text color.
----                   This is the default
----                 • "combine": combine with background text
----                   color
----                 • "blend": blend with background text color.
----
----               • hl_eol : when true, for a multiline highlight
----                 covering the EOL of a line, continue the
----                 highlight for the rest of the screen line
----                 (just like for diff and cursorline highlight).
----               • ephemeral : for use with
----                 |nvim_set_decoration_provider| callbacks. The
----                 mark will only be used for the current redraw
----                 cycle, and not be permantently stored in the
----                 buffer.
----               • right_gravity : boolean that indicates the
----                 direction the extmark will be shifted in when
----                 new text is inserted (true for right, false
----                 for left). defaults to true.
----               • end_right_gravity : boolean that indicates the
----                 direction the extmark end position (if it
----                 exists) will be shifted in when new text is
----                 inserted (true for right, false for left).
----                 Defaults to false.
----               • priority: a priority value for the highlight
----                 group. For example treesitter highlighting
----                 uses a value of 100.
---- @return any #Id of the created/updated extmark
-function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
-
--- Sets a buffer-local |mapping| for the given mode.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param mode string
---- @param lhs string
---- @param rhs string
---- @param opts dictionary
-function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
-
--- Sets (replaces) a line-range in the buffer.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param start integer #First line index
---- @param end_ integer #Last line index (exclusive)
---- @param strict_indexing boolean #Whether out-of-bounds should be an
----                        error.
---- @param replacement string[] #Array of lines to use as replacement
-function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replacement) end
-
--- Sets the full file name for a buffer
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param name string #Buffer name
-function vim.api.nvim_buf_set_name(buffer, name) end
-
--- Sets a buffer option value. Passing 'nil' as value deletes the
--- option (only works if there's a global fallback)
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param name string #Option name
---- @param value object #Option value
-function vim.api.nvim_buf_set_option(buffer, name, value) end
-
--- Sets (replaces) a range in the buffer
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param start_row integer #First line index
---- @param start_col integer
---- @param end_row integer #Last line index
---- @param end_col integer
---- @param replacement string[] #Array of lines to use as replacement
-function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_col, replacement) end
-
--- Sets a buffer-scoped (b:) variable
---- @param buffer buffer #Buffer handle, or 0 for current buffer
+-- Sets a tab-scoped (t:) variable
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
 --- @param name string #Variable name
 --- @param value object #Variable value
-function vim.api.nvim_buf_set_var(buffer, name, value) end
+function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 
--- Set the virtual text (annotation) for a buffer line.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param src_id integer
---- @param line integer #Line to annotate with virtual text
----               (zero-indexed)
---- @param chunks array #A list of [text, hl_group] arrays, each
----               representing a text chunk with specified
----               highlight. `hl_group` element can be omitted for
----               no highlight.
---- @param opts dictionary #Optional parameters. Currently not used.
---- @return any #The ns_id that was used
-function vim.api.nvim_buf_set_virtual_text(buffer, src_id, line, chunks, opts) end
+-- Activates UI events on the channel.
+--- @param width integer #Requested screen columns
+--- @param height integer #Requested screen rows
+--- @param options dictionary #|ui-option| map
+function vim.api.nvim_ui_attach(width, height, options) end
 
--- Calls many API methods atomically.
---- @param calls array #an array of calls, where each call is described
----              by an array with two elements: the request name,
----              and an array of arguments.
---- @return any #Array of two elements. The first is an array of return
----     values. The second is NIL if all calls succeeded. If a
----     call resulted in an error, it is a three-element array
----     with the zero-based index of the call which resulted in an
----     error, the error type and the error message. If an error
----     occurred, the values from all preceding calls will still
----     be returned.
-function vim.api.nvim_call_atomic(calls) end
+-- Deactivates UI events on the channel.
+function vim.api.nvim_ui_detach() end
 
--- Calls a VimL |Dictionary-function| with the given arguments.
---- @param dict object #Dictionary, or String evaluating to a VimL |self|
----             dict
---- @param fn string #Name of the function defined on the VimL dict
---- @param args array #Function arguments packed in an Array
---- @return any #Result of the function call
-function vim.api.nvim_call_dict_function(dict, fn, args) end
+-- Tells Nvim the geometry of the popumenu, to align floating
+-- windows with an external popup menu.
+--- @param width float #Popupmenu width.
+--- @param height float #Popupmenu height.
+--- @param row float #Popupmenu row.
+--- @param col float #Popupmenu height.
+function vim.api.nvim_ui_pum_set_bounds(width, height, row, col) end
 
--- Calls a VimL function with the given arguments.
---- @param fn string #Function to call
---- @param args array #Function arguments packed in an Array
---- @return any #Result of the function call
-function vim.api.nvim_call_function(fn, args) end
+-- Tells Nvim the number of elements displaying in the popumenu,
+-- to decide <PageUp> and <PageDown> movement.
+--- @param height integer #Popupmenu height, must be greater than zero.
+function vim.api.nvim_ui_pum_set_height(height) end
 
--- Send data to channel `id` . For a job, it writes it to the
--- stdin of the process. For the stdio channel |channel-stdio|,
--- it writes to Nvim's stdout. For an internal terminal instance
--- (|nvim_open_term()|) it writes directly to terimal output. See
--- |channel-bytes| for more information.
---- @param chan integer #id of the channel
---- @param data string #data to write. 8-bit clean: can contain NUL bytes.
-function vim.api.nvim_chan_send(chan, data) end
+--- @param name string
+--- @param value object
+function vim.api.nvim_ui_set_option(name, value) end
 
--- Executes an ex-command.
---- @param command string #Ex-command string
-function vim.api.nvim_command(command) end
+--- @param width integer
+--- @param height integer
+function vim.api.nvim_ui_try_resize(width, height) end
+
+-- Tell Nvim to resize a grid. Triggers a grid_resize event with
+-- the requested grid size or the maximum size if it exceeds size
+-- limits.
+--- @param grid integer #The handle of the grid to be changed.
+--- @param width integer #The new requested width.
+--- @param height integer #The new requested height.
+function vim.api.nvim_ui_try_resize_grid(grid, width, height) end
+
+-- Unsubscribes to event broadcasts.
+--- @param event string #Event type string
+function vim.api.nvim_unsubscribe(event) end
+
+-- Closes the window (like |:close| with a |window-ID|).
+--- @param window window #Window handle, or 0 for current window
+--- @param force boolean #Behave like `:close!` The last window of a
+---               buffer with unwritten changes can be closed. The
+---               buffer will become hidden, even if 'hidden' is
+---               not set.
+function vim.api.nvim_win_close(window, force) end
+
+-- Removes a window-scoped (w:) variable
+--- @param window window #Window handle, or 0 for current window
+--- @param name string #Variable name
+function vim.api.nvim_win_del_var(window, name) end
+
+-- Gets the current buffer in a window
+--- @param window window #Window handle, or 0 for current window
+--- @return any #Buffer handle
+function vim.api.nvim_win_get_buf(window) end
+
+-- Gets window configuration.
+--- @param window window #Window handle, or 0 for current window
+--- @return any #Map defining the window configuration, see
+---     |nvim_open_win()|
+function vim.api.nvim_win_get_config(window) end
+
+-- Gets the (1,0)-indexed cursor position in the window.
+-- |api-indexing|
+--- @param window window #Window handle, or 0 for current window
+--- @return any #(row, col) tuple
+function vim.api.nvim_win_get_cursor(window) end
+
+-- Gets the window height
+--- @param window window #Window handle, or 0 for current window
+--- @return any #Height as a count of rows
+function vim.api.nvim_win_get_height(window) end
+
+-- Gets the window number
+--- @param window window #Window handle, or 0 for current window
+--- @return any #Window number
+function vim.api.nvim_win_get_number(window) end
+
+-- Gets a window option value
+--- @param window window #Window handle, or 0 for current window
+--- @param name string #Option name
+--- @return any #Option value
+function vim.api.nvim_win_get_option(window, name) end
+
+-- Gets the window position in display cells. First position is
+-- zero.
+--- @param window window #Window handle, or 0 for current window
+--- @return any #(row, col) tuple with the window position
+function vim.api.nvim_win_get_position(window) end
+
+-- Gets the window tabpage
+--- @param window window #Window handle, or 0 for current window
+--- @return any #Tabpage that contains the window
+function vim.api.nvim_win_get_tabpage(window) end
+
+-- Gets a window-scoped (w:) variable
+--- @param window window #Window handle, or 0 for current window
+--- @param name string #Variable name
+--- @return any #Variable value
+function vim.api.nvim_win_get_var(window, name) end
+
+-- Gets the window width
+--- @param window window #Window handle, or 0 for current window
+--- @return any #Width as a count of columns
+function vim.api.nvim_win_get_width(window) end
+
+-- Closes the window and hide the buffer it contains (like
+-- |:hide| with a |window-ID|).
+--- @param window window #Window handle, or 0 for current window
+function vim.api.nvim_win_hide(window) end
+
+-- Checks if a window is valid
+--- @param window window #Window handle, or 0 for current window
+--- @return any #true if the window is valid, false otherwise
+function vim.api.nvim_win_is_valid(window) end
+
+-- Sets the current buffer in a window, without side-effects
+--- @param window window #Window handle, or 0 for current window
+--- @param buffer buffer #Buffer handle
+function vim.api.nvim_win_set_buf(window, buffer) end
+
+-- Configures window layout. Currently only for floating and
+-- external windows (including changing a split window to those
+-- layouts).
+--- @param window window #Window handle, or 0 for current window
+--- @param config dictionary #Map defining the window configuration, see
+---               |nvim_open_win()|
+function vim.api.nvim_win_set_config(window, config) end
+
+-- Sets the (1,0)-indexed cursor position in the window.
+-- |api-indexing|
+--- @param window window #Window handle, or 0 for current window
+--- @param pos number[] #(row, col) tuple representing the new position
+function vim.api.nvim_win_set_cursor(window, pos) end
+
+-- Sets the window height. This will only succeed if the screen
+-- is split horizontally.
+--- @param window window #Window handle, or 0 for current window
+--- @param height integer #Height as a count of rows
+function vim.api.nvim_win_set_height(window, height) end
+
+-- Sets a window option value. Passing 'nil' as value deletes the
+-- option(only works if there's a global fallback)
+--- @param window window #Window handle, or 0 for current window
+--- @param name string #Option name
+--- @param value object #Option value
+function vim.api.nvim_win_set_option(window, name, value) end
+
+-- Sets a window-scoped (w:) variable
+--- @param window window #Window handle, or 0 for current window
+--- @param name string #Variable name
+--- @param value object #Variable value
+function vim.api.nvim_win_set_var(window, name, value) end
+
+-- Sets the window width. This will only succeed if the screen is
+-- split vertically.
+--- @param window window #Window handle, or 0 for current window
+--- @param width integer #Width as a count of columns
+function vim.api.nvim_win_set_width(window, width) end
 

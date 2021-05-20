@@ -25,7 +25,6 @@ function M.library()
             end
           end
         end
-        if p:find("/test/") then skip = true end
         if not skip then
           ret[p] = true
         end
@@ -66,7 +65,6 @@ end
 function M.setup()
   local library
   local path = M.path()
-
   return {
     on_new_config = function(config, root)
       if not library then
@@ -82,17 +80,19 @@ function M.setup()
     end,
     settings = {
       Lua = {
+        awakened = { cat = true },
         runtime = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
           -- Setup your lua path
           path = path,
         },
-        -- completion = { callSnippet = "Both" },
+        completion = { callSnippet = "Both" },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
           globals = { "vim" },
         },
+        -- hint = { enable = true },
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = {},
