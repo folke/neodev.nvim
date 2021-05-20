@@ -194,6 +194,9 @@ function M.parse(mpack, prefix, exclude)
 end
 
 function M.options()
+  local data = vim.fn.json_decode(vim.fn.readfile("mpack/builtin-docs.json"))
+  local docs = data.documents.options
+
   local ret = { o = {}, wo = {}, bo = {} }
   for name, option in pairs(vim.api.nvim_get_all_options_info()) do
     if option.scope == "buf" then
@@ -205,13 +208,29 @@ function M.options()
       ret.o[name] = option.default
     end
   end
-  local str = ""
-  for k, v in pairs(ret) do
-    str = str .. "vim." .. k .. " = " .. vim.inspect(v) .. "\n\n"
-  end
+
   local fd = uv.fs_open("types/options.lua", "w+", 420)
   M.intro(fd)
-  uv.fs_write(fd, str, -1)
+  local fnum = 0
+  local size = 0
+  for scope, options in pairs(ret) do
+    for key, value in pairs(options) do
+      local str = ("vim.%s.%s = %q\n"):format(scope, key, value)
+      local doc = docs[key] and table.concat(docs[key], "\n") or nil
+      if doc then
+        str = M.comment(doc) .. "\n" .. str
+      end
+      uv.fs_write(fd, str, -1)
+      size = size + #str
+      if size > 1024 * 50 then
+        uv.fs_close(fd)
+        fnum = fnum + 1
+        size = 0
+        fd = uv.fs_open("types/options." .. fnum .. ".lua", "w+", 420)
+        M.intro(fd)
+      end
+    end
+  end
   uv.fs_close(fd)
 end
 
@@ -222,6 +241,8 @@ function M.functions()
 
   local fd = uv.fs_open("types/vim.fn.lua", "w+", 420)
   M.intro(fd)
+  local size = 0
+  local fnum = 0
   local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
   for name, props in pairs(functions) do
     if vim.fn[name] and not vim.api[name] and not exclude[name] then
@@ -249,7 +270,15 @@ function M.functions()
         end
       end
       local emmy = M.emmy(fun)
+      size = size + #emmy
       uv.fs_write(fd, emmy, -1)
+      if size > 1024 * 50 then
+        uv.fs_close(fd)
+        fnum = fnum + 1
+        size = 0
+        fd = uv.fs_open("types/vim.fn." .. fnum .. ".lua", "w+", 420)
+        M.intro(fd)
+      end
     end
   end
 

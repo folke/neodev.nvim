@@ -83,6 +83,6 @@ and make them available for the [Sumneko LSP](https://github.com/sumneko/lua-lan
 
 ## 🗒️ Limitations
 
-* `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated.
+* [x] `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
 * function return types are always `any`, since that information is missing
 
