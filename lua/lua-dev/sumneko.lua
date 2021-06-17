@@ -13,7 +13,7 @@ function M.library()
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p then
-        p = vim.fn.fnamemodify(p, ":h")
+        -- p = vim.fn.fnamemodify(p, ":h")
         local skip = false
         if type(filter) == "table" then
           local name = vim.fn.fnamemodify(p, ":t")
@@ -47,7 +47,7 @@ function M.library()
 end
 
 function M.path()
-  local path = vim.split(package.path, ";")
+  local path = {} --vim.split(package.path, ";")
   table.insert(path, "lua/?.lua")
   table.insert(path, "lua/?/init.lua")
   return path
@@ -59,28 +59,14 @@ end
 
 function M.types()
   local f = debug.getinfo(1, "S").source:sub(2)
-  return vim.loop.fs_realpath(vim.fn.fnamemodify(f, ':h:h:h') .. '/types')
+  return vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
 end
 
 function M.setup()
-  local library
   local path = M.path()
   return {
-    on_new_config = function(config, root)
-      if not library then
-        library = M.library()
-      end
-
-      root = vim.loop.fs_realpath(root)
-      -- delete root from workspace to make sure we don't trigger duplicate warnings
-      local libs = vim.tbl_deep_extend("force", {}, library)
-      libs[root] = nil
-      config.settings.Lua.workspace.library = libs
-      return config
-    end,
     settings = {
       Lua = {
-        awakened = { cat = true },
         runtime = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
@@ -95,7 +81,7 @@ function M.setup()
         -- hint = { enable = true },
         workspace = {
           -- Make the server aware of Neovim runtime files
-          library = {},
+          library = M.library(),
           maxPreload = 2000,
           preloadFileSize = 150,
         },
