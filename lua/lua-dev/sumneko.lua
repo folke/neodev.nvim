@@ -50,6 +50,10 @@ function M.path()
   local path = {} --vim.split(package.path, ";")
   table.insert(path, "lua/?.lua")
   table.insert(path, "lua/?/init.lua")
+  for lib, _ in pairs(M.library()) do
+    table.insert(path, lib .. "/?.lua")
+    table.insert(path, lib .. "/?/init.lua")
+  end
   return path
 end
 
@@ -90,7 +94,7 @@ function M.setup()
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = library,
-          maxPreload = 2000,
+          maxPreload = 1000,
           preloadFileSize = 150,
         },
         -- Do not send telemetry data containing a randomized but unique identifier
