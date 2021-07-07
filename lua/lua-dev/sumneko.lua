@@ -73,7 +73,7 @@ function M.setup()
           -- Setup your lua path
           path = path,
         },
-        -- completion = { callSnippet = "Both" },
+        completion = { callSnippet = "Replace" },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
           globals = { "vim" },
