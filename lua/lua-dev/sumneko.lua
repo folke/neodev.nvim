@@ -51,8 +51,8 @@ function M.path()
   table.insert(path, "lua/?.lua")
   table.insert(path, "lua/?/init.lua")
   for lib, _ in pairs(M.library()) do
-    table.insert(path, lib .. "/?.lua")
-    table.insert(path, lib .. "/?/init.lua")
+    -- table.insert(path, lib .. "/?.lua")
+    -- table.insert(path, lib .. "/?/init.lua")
   end
   return path
 end
