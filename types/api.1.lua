@@ -1,6 +1,36 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Sets an option value.
+--- @param name string #Option name
+--- @param value object #New option value
+function vim.api.nvim_set_option(name, value) end
+
+-- Sets a global (g:) variable.
+--- @param name string #Variable name
+--- @param value object #Variable value
+function vim.api.nvim_set_var(name, value) end
+
+-- Sets a v: variable, if it is not readonly.
+--- @param name string #Variable name
+--- @param value object #Variable value
+function vim.api.nvim_set_vvar(name, value) end
+
+-- Calculates the number of display cells occupied by `text` .
+-- <Tab> counts as one cell.
+--- @param text string #Some text
+--- @return any #Number of cells
+function vim.api.nvim_strwidth(text) end
+
+-- Subscribes to event broadcasts.
+--- @param event string #Event type string
+function vim.api.nvim_subscribe(event) end
+
+-- Removes a tab-scoped (t:) variable
+--- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
+--- @param name string #Variable name
+function vim.api.nvim_tabpage_del_var(tabpage, name) end
+
 -- Gets the tabpage number
 --- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
 --- @return any #Tabpage number
@@ -74,6 +104,14 @@ function vim.api.nvim_ui_try_resize_grid(grid, width, height) end
 -- Unsubscribes to event broadcasts.
 --- @param event string #Event type string
 function vim.api.nvim_unsubscribe(event) end
+
+-- Calls a function with window as temporary current window.
+--- @param window window #Window handle, or 0 for current window
+--- @param fun luaref #Function to call inside the window (currently
+---               lua callable only)
+--- @return any #Return value of function. NB: will deepcopy lua values
+---     currently, use upvalues to send lua references in and out.
+function vim.api.nvim_win_call(window, fun) end
 
 -- Closes the window (like |:close| with a |window-ID|).
 --- @param window window #Window handle, or 0 for current window

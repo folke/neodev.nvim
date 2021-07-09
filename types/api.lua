@@ -287,14 +287,14 @@ function vim.api.nvim_buf_line_count(buffer) end
 -- Creates or updates an extmark.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param line integer #Line number where to place the mark
---- @param col integer #Column where to place the mark
+--- @param line integer #Line where to place the mark, 0-based
+--- @param col integer #Column where to place the mark, 0-based
 --- @param opts dictionary #Optional parameters.
 ---               • id : id of the extmark to edit.
 ---               • end_line : ending line of the mark, 0-based
 ---                 inclusive.
 ---               • end_col : ending col of the mark, 0-based
----                 inclusive.
+---                 exclusive.
 ---               • hl_group : name of the highlight group used to
 ---                 highlight this mark.
 ---               • virt_text : virtual text to link to this mark.
@@ -780,6 +780,17 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                 an external top-level window. Currently
 ---                 accepts no other positioning configuration
 ---                 together with this.
+---               • `zindex`: Stacking order. floats with higher`zindex`go on top on floats with lower indices. Must
+---                 be larger than zero. The following screen
+---                 elements have hard-coded z-indices:
+---                 • 100: insert completion popupmenu
+---                 • 200: message scrollback
+---                 • 250: cmdline completion popupmenu (when
+---                   wildoptions+=pum) The default value for
+---                   floats are 50. In general, values below 100
+---                   are recommended, unless there is a good
+---                   reason to overshadow builtin elements.
+---
 ---               • `style`: Configure the appearance of the window.
 ---                 Currently only takes one non-empty value:
 ---                 • "minimal" Nvim will display the window with
@@ -795,33 +806,42 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                   and clearing the |EndOfBuffer| region in
 ---                   'winhighlight'.
 ---
----               • `border`: style of (optional) window border. This can
----                 either be a string or an array. the string
----                 values are:
----                 • "none" No border. This is the default
----                 • "single" a single line box
----                 • "double" a double line box
----                 • "shadow" a drop shadow effect by blending
----                   with the background. If it is an array it
----                   should be an array of eight items or any
----                   divisor of eight. The array will specifify
----                   the eight chars building up the border in a
----                   clockwise fashion starting with the top-left
----                   corner. As, an example, the double box style
----                   could be specified as: [ "╔", "═" ,"╗", "║",
----                   "╝", "═", "╚", "║" ] if the number of chars
----                   are less than eight, they will be repeated.
----                   Thus an ASCII border could be specified as:
----                   [ "/", "-", "\\", "|" ] or all chars the
----                   same as: [ "x" ] An empty string can be used
----                   to turn off a specific border, for instance:
----                   [ "", "", "", ">", "", "", "", "<" ] will
----                   only make vertical borders but not
----                   horizontal ones. By default `FloatBorder`
----                   highlight is used which links to `VertSplit`
----                   when not defined. It could also be specified
----                   by character: [ {"+", "MyCorner"}, {"x",
----                   "MyBorder"} ]
+---               • `border`: Style of (optional) window border. This can
+---                 either be a string or an array. The string
+---                 values are
+---                 • "none": No border (default).
+---                 • "single": A single line box.
+---                 • "double": A double line box.
+---                 • "rounded": Like "single", but with rounded
+---                   corners ("╭" etc.).
+---                 • "solid": Adds padding by a single whitespace
+---                   cell.
+---                 • "shadow": A drop shadow effect by blending
+---                   with the background.
+---                 • If it is an array, it should have a length
+---                   of eight or any divisor of eight. The array
+---                   will specifify the eight chars building up
+---                   the border in a clockwise fashion starting
+---                   with the top-left corner. As an example, the
+---                   double box style could be specified as [
+---                   "╔", "═" ,"╗", "║", "╝", "═", "╚", "║" ]. If
+---                   the number of chars are less than eight,
+---                   they will be repeated. Thus an ASCII border
+---                   could be specified as [ "/", "-", "\\", "|"
+---                   ], or all chars the same as [ "x" ]. An
+---                   empty string can be used to turn off a
+---                   specific border, for instance, [ "", "", "",
+---                   ">", "", "", "", "<" ] will only make
+---                   vertical borders but not horizontal ones. By
+---                   default, `FloatBorder` highlight is used,
+---                   which links to `VertSplit` when not defined.
+---                   It could also be specified by character: [
+---                   {"+", "MyCorner"}, {"x", "MyBorder"} ].
+---
+---               • `noautocmd` : If true then no buffer-related
+---                 autocommand events such as |BufEnter|,
+---                 |BufLeave| or |BufWinEnter| may fire from
+---                 calling this function.
 --- @return any #Window handle, or 0 on error
 function vim.api.nvim_open_win(buffer, enter, config) end
 
@@ -868,8 +888,9 @@ function vim.api.nvim_out_write(str) end
 ---
 ---       • "len": Amount of bytes successfully parsed. With flags
 ---         equal to "" that should be equal to the length of expr
----         string. (“Sucessfully parsed” here means “participated
----         in AST creation”, not “till the first error”.)
+---         string. (“Successfully parsed” here means
+---         “participated in AST creation”, not “till the first
+---         error”.)
 ---       • "ast": AST, either nil or a dictionary with these
 ---         keys:
 ---         • "type": node type, one of the value names from
@@ -1059,10 +1080,16 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 -- Set a highlight group.
 --- @param ns_id integer #number of namespace for this highlight
 --- @param name string #highlight group name, like ErrorMsg
---- @param val dictionary #highlight definiton map, like
+--- @param val dictionary #highlight definition map, like
 ---              |nvim_get_hl_by_name|. in addition the following
 ---              keys are also recognized: `default` : don't
 ---              override existing definition, like `hi default`
+---              `ctermfg` : sets foreground of cterm color
+---              `ctermbg` : sets background of cterm color
+---              `cterm` : cterm attribute map. sets attributed
+---              for cterm colors. similer to `hi cterm` Note: by
+---              default cterm attributes are same as attributes
+---              of gui color
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
 -- Sets a global |mapping| for the given mode.
@@ -1076,34 +1103,4 @@ function vim.api.nvim_set_hl(ns_id, name, val) end
 ---             including |noremap|. Values are Booleans. Unknown
 ---             key is an error.
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
-
--- Sets an option value.
---- @param name string #Option name
---- @param value object #New option value
-function vim.api.nvim_set_option(name, value) end
-
--- Sets a global (g:) variable.
---- @param name string #Variable name
---- @param value object #Variable value
-function vim.api.nvim_set_var(name, value) end
-
--- Sets a v: variable, if it is not readonly.
---- @param name string #Variable name
---- @param value object #Variable value
-function vim.api.nvim_set_vvar(name, value) end
-
--- Calculates the number of display cells occupied by `text` .
--- <Tab> counts as one cell.
---- @param text string #Some text
---- @return any #Number of cells
-function vim.api.nvim_strwidth(text) end
-
--- Subscribes to event broadcasts.
---- @param event string #Event type string
-function vim.api.nvim_subscribe(event) end
-
--- Removes a tab-scoped (t:) variable
---- @param tabpage tabpage #Tabpage handle, or 0 for current tabpage
---- @param name string #Variable name
-function vim.api.nvim_tabpage_del_var(tabpage, name) end
 

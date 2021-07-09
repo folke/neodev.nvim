@@ -22,6 +22,10 @@ function vim.lsp.apply_text_edits(text_edits, bufnr) end
 --- @param workspace_edit any #(table) `WorkspaceEdit`
 function vim.lsp.apply_workspace_edit(workspace_edit) end
 
+function vim.lsp.border_height(id) end
+
+function vim.lsp.border_width(id) end
+
 -- Removes document highlights from a buffer.
 --- @param bufnr any #buffer id
 function vim.lsp.buf_clear_references(bufnr) end
@@ -32,14 +36,15 @@ function vim.lsp.buf_clear_references(bufnr) end
 ---                   highlight
 function vim.lsp.buf_highlight_references(bufnr, references) end
 
+function vim.lsp.buf_lines(bufnr) end
+
 -- Returns the UTF-32 and UTF-16 offsets for a position in a
 -- certain buffer.
---- @param buf any #buffer id (0 for current)
 --- @param row any #0-indexed line
 --- @param col any #0-indexed byte offset in line
 --- @return any #(number, number) UTF-32 and UTF-16 index of the character
 ---     in line {row} column {col} in buffer {buf}
-function vim.lsp.character_offset(buf, row, col) end
+function vim.lsp.character_offset(bufnr, row, col) end
 
 -- Clears the currently displayed diagnostics
 --- @param bufnr any #number The buffer number
@@ -101,8 +106,14 @@ function vim.lsp.convert_input_to_markdown_lines(input, contents) end
 -- Converts `textDocument/SignatureHelp` response to markdown
 -- lines.
 --- @param signature_help any #Response of `textDocument/SignatureHelp`
+--- @param ft any #optional filetype that will be use as
+---                       the `lang` for the label markdown code
+---                       block
+--- @param triggers any #optional list of trigger characters from
+---                       the lsp server. used to better determine
+---                       parameter offsets
 --- @return any #list of lines of converted markdown.
-function vim.lsp.convert_signature_help_to_markdown_lines(signature_help) end
+function vim.lsp.convert_signature_help_to_markdown_lines(signature_help, ft, triggers) end
 
 function vim.lsp.create_file(change) end
 
@@ -116,6 +127,21 @@ function vim.lsp.declaration() end
 function vim.lsp.definition() end
 
 function vim.lsp.delete_file(change) end
+
+-- Convert diagnostics grouped by bufnr to a list of items for
+-- use in the quickfix or location list.
+--- @param diagnostics_by_bufnr any #table bufnr -> Diagnostic []
+--- @param predicate any #an optional function to filter the
+---                             diagnostics.
+--- @return any #table (A list of items)
+function vim.lsp.diagnostics_to_items(diagnostics_by_bufnr, predicate) end
+
+-- Display the lenses using virtual text
+--- @param lenses any #table of lenses to display ( `CodeLens[] |
+---                  null` )
+--- @param bufnr any #number
+--- @param client_id any #number
+function vim.lsp.display(lenses, bufnr, client_id) end
 
 -- Send request to the server to resolve document highlights for
 -- the current text document position. This request can be
@@ -137,58 +163,8 @@ function vim.lsp.execute_command(command) end
 --- @return any #(table) List of completion items
 function vim.lsp.extract_completion_items(result) end
 
--- Converts markdown into syntax highlighted regions by stripping
--- the code blocks and converting them into highlighted code.
--- This will by default insert a blank line separator after those
--- code block regions to improve readability. The result is shown
--- in a floating preview.
---- @param contents any #table of lines to show in window
---- @param opts any #dictionary with optional fields
----                 • height of floating window
----                 • width of floating window
----                 • wrap_at character to wrap at for computing
----                   height
----                 • max_width maximal width of floating window
----                 • max_height maximal height of floating window
----                 • pad_left number of columns to pad contents
----                   at left
----                 • pad_right number of columns to pad contents
----                   at right
----                 • pad_top number of lines to pad contents at
----                   top
----                 • pad_bottom number of lines to pad contents
----                   at bottom
----                 • separator insert separator after code block
---- @return any #width,height size of float
-function vim.lsp.fancy_floating_markdown(contents, opts) end
-
 -- Flushes any outstanding change notification.
 function vim.lsp.flush(client) end
-
--- Enters/leaves the focusable window associated with the current
--- buffer via the.
---- @param unique_name any #(string) Window variable
---- @param fn fun(...) #(function) should return create a new
----                    window and return a tuple of
----                    ({focusable_buffer_id}, {window_id}). if
----                    {focusable_buffer_id} is a valid buffer id,
----                    the newly created window will be the new
----                    focus associated with the current buffer
----                    via the tag `unique_name` .
---- @return any #(pbufnr, pwinnr) if `fn()` has created a new window; nil
----     otherwise
-function vim.lsp.focusable_float(unique_name, fn) end
-
--- Focuses/unfocuses the floating preview window associated with
--- the current buffer via the window variable `unique_name` . If
--- no such preview window exists, makes a new one.
---- @param unique_name any #(string) Window variable
---- @param fn fun(...) #(function) The return values of this
----                    function will be passed directly to
----                    |vim.lsp.util.open_floating_preview()|, in
----                    the case that a new floating window should
----                    be created
-function vim.lsp.focusable_preview(unique_name, fn) end
 
 -- Constructs an error message from an LSP error object.
 --- @return any #(string) The formatted error message
@@ -226,9 +202,12 @@ function vim.lsp.formatting_sync(options, timeout_ms) end
 ---                  diagnostics associated with the client_id.
 function vim.lsp.get(bufnr, client_id) end
 
--- Get all diagnostics for all clients
---- @return any #{bufnr:Diagnostic[]}
-function vim.lsp.get_all() end
+-- Get all diagnostics for clients
+--- @param client_id any #number Restrict included diagnostics to the
+---                  client If nil, diagnostics of all clients are
+---                  included.
+--- @return any #table with diagnostics grouped by bufnr (bufnr:Diagnostic[])
+function vim.lsp.get_all(client_id) end
 
 -- Get the counts for a particular severity
 --- @param bufnr any #number The buffer number
@@ -246,6 +225,11 @@ function vim.lsp.get_effective_tabstop(bufnr) end
 --- @return any #(string) log filename
 function vim.lsp.get_filename() end
 
+--- @param uri any #string uri of the resource to get the line from
+--- @param row any #number zero-indexed line number
+--- @return any #string the line at row in filename
+function vim.lsp.get_line(uri, row) end
+
 -- Get the diagnostics by line
 --- @param bufnr any #number The buffer number
 --- @param line_nr any #number The line number
@@ -262,6 +246,13 @@ function vim.lsp.get_filename() end
 --- @return any #table Table with map of line number to list of
 ---     diagnostics.
 function vim.lsp.get_line_diagnostics(bufnr, line_nr, opts, client_id) end
+
+--- @param uri any #string uri of the resource to get the lines from
+--- @param rows any #number[] zero-indexed line numbers
+--- @return any #table<number string> a table mapping rows to lines
+function vim.lsp.get_lines(uri, rows) end
+
+function vim.lsp.get_markdown_fences() end
 
 -- Get the next diagnostic closest to the cursor_position
 --- @param opts any #table See |vim.lsp.diagnostic.goto_next()|
@@ -442,6 +433,9 @@ function vim.lsp.make_workspace_params(added, removed) end
 ---     not
 function vim.lsp.notify(method, params) end
 
+-- |lsp-handler| for the method `textDocument/codeLens`
+function vim.lsp.on_codelens(err, _, result, client_id, bufnr) end
+
 -- |lsp-handler| for the method "textDocument/publishDiagnostics"
 --- @param config any #table Configuration table.
 ---               • underline: (default=true)
@@ -469,6 +463,28 @@ function vim.lsp.on_publish_diagnostics(_, _, params, client_id, _, config) end
 --- @param contents any #table of lines to show in window
 --- @param syntax any #string of syntax to set for opened buffer
 --- @param opts any #dictionary with optional fields
+---                 • height of floating window
+---                 • width of floating window
+---                 • wrap boolean enable wrapping of long lines
+---                   (defaults to true)
+---                 • wrap_at character to wrap at for computing
+---                   height when wrap is enabled
+---                 • max_width maximal width of floating window
+---                 • max_height maximal height of floating window
+---                 • pad_left number of columns to pad contents
+---                   at left
+---                 • pad_right number of columns to pad contents
+---                   at right
+---                 • pad_top number of lines to pad contents at
+---                   top
+---                 • pad_bottom number of lines to pad contents
+---                   at bottom
+---                 • focus_id if a popup with this id is opened,
+---                   then focus it
+---                 • close_events list of events that closes the
+---                   floating window
+---                 • focusable (boolean, default true): Make
+---                   float focusable
 --- @return any #bufnr,winnr buffer and window number of the newly created
 ---     floating preview window
 function vim.lsp.open_floating_preview(contents, syntax, opts) end
@@ -490,7 +506,7 @@ function vim.lsp.prepare(bufnr, firstline, new_lastline, changedtick) end
 --- @param location any #a single `Location` or `LocationLink`
 --- @return any #(bufnr,winnr) buffer and window number of floating window
 ---     or nil
-function vim.lsp.preview_location(location) end
+function vim.lsp.preview_location(location, opts) end
 
 function vim.lsp.progress_handler(_, _, params, client_id) end
 
@@ -519,6 +535,9 @@ function vim.lsp.range_formatting(options, start_pos, end_pos) end
 -- quickfix window.
 --- @param context any #(table) Context for the request
 function vim.lsp.references(context) end
+
+-- Refresh the codelens for the current buffer
+function vim.lsp.refresh() end
 
 -- Remove the folder at path from the workspace folders. If
 -- {path} is not provided, the user will be prompted for a path
@@ -550,11 +569,19 @@ function vim.lsp.reset_buf(client, bufnr) end
 -- capabilities.
 function vim.lsp.resolve_capabilities(server_capabilities) end
 
+--- @param last any #number last line that was changed
+function vim.lsp.restore_extmarks(bufnr, last) end
+
+-- Run the code lens in the current line
+function vim.lsp.run() end
+
 -- Save diagnostics to the current buffer.
 --- @param diagnostics any #Diagnostic []
 --- @param bufnr any #number
 --- @param client_id any #number
 function vim.lsp.save(diagnostics, bufnr, client_id) end
+
+function vim.lsp.save_extmarks(bufnr, client_id) end
 
 -- Checks whether the language servers attached to the current
 -- buffer are ready.
@@ -575,10 +602,11 @@ function vim.lsp.set_level(level) end
 --- @return any #(table) The modified {lines} object
 function vim.lsp.set_lines(lines, A, B, new_lines) end
 
--- Fills current window's location list with given list of items.
+-- Fills target window's location list with given list of items.
 -- Can be obtained with e.g. |vim.lsp.util.locations_to_items()|.
+-- Defaults to current window.
 --- @param items any #(table) list of items
-function vim.lsp.set_loclist(items) end
+function vim.lsp.set_loclist(items, win_id) end
 
 -- Fills quickfix list with given list of items. Can be obtained
 -- with e.g. |vim.lsp.util.locations_to_items()|.
@@ -636,6 +664,10 @@ function vim.lsp.should_log(level) end
 --- @param opts any #table Configuration table
 ---                  • show_header (boolean, default true): Show
 ---                    "Diagnostics:" header.
+---                  • Plus all the opts for
+---                    |vim.lsp.diagnostic.get_line_diagnostics()|
+---                    and |vim.lsp.util.open_floating_preview()|
+---                    can be used here.
 --- @param bufnr any #number The buffer number
 --- @param line_nr any #number The line number
 --- @param client_id any #number|nil the client id
@@ -646,7 +678,7 @@ function vim.lsp.show_line_diagnostics(opts, bufnr, line_nr, client_id) end
 ---               • border: (default=nil)
 ---                 • Add borders to the floating window
 ---                 • See |vim.api.nvim_open_win()|
-function vim.lsp.signature_help(_, method, result, _, bufnr, config) end
+function vim.lsp.signature_help(_, method, result, client_id, bufnr, config) end
 
 -- Starts an LSP server process and create an LSP RPC client
 -- object to interact with it.
@@ -678,6 +710,30 @@ function vim.lsp.signature_help(_, method, result, _, bufnr, config) end
 ---     • {handle} A handle for low-level interaction with the LSP
 ---       server process |vim.loop|.
 function vim.lsp.start(cmd, cmd_args, dispatchers, extra_spawn_params) end
+
+-- Converts markdown into syntax highlighted regions by stripping
+-- the code blocks and converting them into highlighted code.
+-- This will by default insert a blank line separator after those
+-- code block regions to improve readability.
+--- @param contents any #table of lines to show in window
+--- @param opts any #dictionary with optional fields
+---                 • height of floating window
+---                 • width of floating window
+---                 • wrap_at character to wrap at for computing
+---                   height
+---                 • max_width maximal width of floating window
+---                 • max_height maximal height of floating window
+---                 • pad_left number of columns to pad contents
+---                   at left
+---                 • pad_right number of columns to pad contents
+---                   at right
+---                 • pad_top number of lines to pad contents at
+---                   top
+---                 • pad_bottom number of lines to pad contents
+---                   at bottom
+---                 • separator insert separator after code block
+--- @return any #width,height size of float
+function vim.lsp.stylize_markdown(bufnr, contents, opts) end
 
 -- Converts symbols to quickfix list items.
 --- @param symbols any #DocumentSymbol[] or SymbolInformation[]
