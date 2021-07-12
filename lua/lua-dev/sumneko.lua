@@ -68,10 +68,9 @@ end
 
 function M.setup()
   local path = M.path()
-  local library = M.library()
   return {
     on_new_config = function(config, root_dir)
-      local lib = vim.tbl_deep_extend("force", {}, library)
+      local lib = vim.tbl_deep_extend("force", {}, config.settings.Lua.workspace.library)
       lib[vim.loop.fs_realpath(root_dir) .. "/lua"] = nil
       lib[vim.loop.fs_realpath(root_dir)] = nil
       config.settings.Lua.workspace.library = lib
@@ -93,7 +92,7 @@ function M.setup()
         -- hint = { enable = true },
         workspace = {
           -- Make the server aware of Neovim runtime files
-          library = library,
+          library = M.library(),
           maxPreload = 1000,
           preloadFileSize = 150,
         },
