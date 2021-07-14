@@ -1,0 +1,8 @@
+{
+  "lua-dev": {
+    "library": { "plugins": ["workspace.nvim"] }
+  },
+  "lspconfig": {
+    "sumneko_lua": { "settings": {} }
+  }
+}

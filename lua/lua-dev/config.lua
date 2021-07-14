@@ -2,6 +2,7 @@ local M = {}
 
 --- @class LuaApiOptions
 M.defaults = {
+  config_name = "sumneko_lua", -- name of the lspconfig config
   library = {
     vimruntime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
