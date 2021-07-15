@@ -14,21 +14,7 @@ function M.library(opts)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p then
-        -- p = vim.fn.fnamemodify(p, ":h")
-        local skip = false
-        if type(filter) == "table" then
-          local name = vim.fn.fnamemodify(p, ":h:t")
-          skip = true
-          for _, f in pairs(filter) do
-            if name == f then
-              skip = false
-              break
-            end
-          end
-        end
-        if not skip then
-          ret[p] = true
-        end
+        ret[p] = not filter or filter[vim.fn.fnamemodify(p, ":h:t")]
       end
     end
   end
@@ -38,9 +24,16 @@ function M.library(opts)
   end
 
   if opts.library.plugins then
+    local filter
+    if type(opts.library.plugins) == "table" then
+      filter = {}
+      for _, p in pairs(opts.library.plugins) do
+        filter[p] = true
+      end
+    end
     for _, site in pairs(vim.split(vim.o.packpath, ",")) do
-      add(site .. "/pack/*/opt/*", opts.library.plugins)
-      add(site .. "/pack/*/start/*", opts.library.plugins)
+      add(site .. "/pack/*/opt/*", filter)
+      add(site .. "/pack/*/start/*", filter)
     end
   end
 
