@@ -35,13 +35,12 @@ function M.setup_workspace()
       -- * the local workspace settings have lua-dev.enabled = true
       local is_vim_config = ws:has_file(sumneko.config_path())
       local enabled = is_vim_config or ws:has_file(ws.root_dir .. "/lua") or local_settings:get("lua-dev.enabled")
-
       if enabled then
         -- enable plugins by default only for nvim configs
         if not is_vim_config and not local_settings:get("lua-dev.library.plugins") then
           opts.library.plugins = false
         end
-        local settings = sumneko.get(opts).setup().settings
+        local settings = sumneko.setup(opts).settings
         ws.settings:merge(settings, "lspconfig." .. opts.config_name .. ".settings")
       end
     end,
