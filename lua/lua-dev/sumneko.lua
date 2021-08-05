@@ -61,7 +61,6 @@ function M.types()
 end
 
 function M.setup(opts)
-  local path = M.path()
   return {
     settings = {
       Lua = {
@@ -69,7 +68,7 @@ function M.setup(opts)
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
           -- Setup your lua path
-          path = path,
+          path = M.path(),
         },
         completion = { callSnippet = "Replace" },
         -- diagnostics = {
@@ -89,4 +88,5 @@ function M.setup(opts)
     },
   }
 end
+
 return M
