@@ -8,18 +8,18 @@ Dev setup for init.lua and plugin development with full signature help, docs and
 
 ## ✨ Features
 
-* [EmmyLua](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations) library for the nvim lua API for:
-  + completion
-  + hover docs
-  + function signatures
-* properly configures the `require` path with `lua/?.lua` and `lua/?/init.lua`.
-* adds all plugins in `opt` and `start` to the workspace so you get completion for all installed plugins
-* properly configure the vim runtime
+- [EmmyLua](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations) library for the nvim lua API for:
+  - completion
+  - hover docs
+  - function signatures
+- properly configures the `require` path with `lua/?.lua` and `lua/?/init.lua`.
+- adds all plugins in `opt` and `start` to the workspace so you get completion for all installed plugins
+- properly configure the vim runtime
 
 ## ⚡️ Requirements
 
-* Neovim >= 0.5.0
-* completion plugin like [nvim-compe](https://github.com/hrsh7th/nvim-compe) or [completion-nvim](https://github.com/nvim-lua/completion-nvim)
+- Neovim >= 0.5.0
+- completion plugin like [nvim-compe](https://github.com/hrsh7th/nvim-compe) or [completion-nvim](https://github.com/nvim-lua/completion-nvim)
 
 ## 📦 Installation
 
@@ -37,7 +37,7 @@ use "folke/lua-dev.nvim"
 Plug 'folke/lua-dev.nvim'
 ```
 
-## ⚙️  Configuration
+## ⚙️ Configuration
 
 **lua-dev** comes with the following defaults:
 
@@ -60,6 +60,8 @@ Plug 'folke/lua-dev.nvim'
 
 ## 🚀 Setup
 
+Be aware that this will configure Sumneko to work for Neovim init.lua and plugin development.
+This setup is **NOT** intended to be used for any other types of projects.
 
 ```lua
 local luadev = require("lua-dev").setup({
@@ -84,9 +86,9 @@ and make them available for the [Sumneko LSP](https://github.com/sumneko/lua-lan
 
 ## 🗒️ Limitations
 
-* [x] `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
-* function return types are always `any`, since that information is missing
+- [x] `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
+- function return types are always `any`, since that information is missing
 
 ## ⭐ Acknowledgment
 
-* docs for options and functions are based on the work of [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
+- docs for options and functions are based on the work of [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
