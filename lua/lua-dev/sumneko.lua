@@ -23,6 +23,10 @@ function M.library(opts)
     add("$VIMRUNTIME")
   end
 
+  if opts.library.nvim_cfg then
+    add("$HOME/.config/nvim")
+  end
+
   if opts.library.plugins then
     local filter
     if type(opts.library.plugins) == "table" then
