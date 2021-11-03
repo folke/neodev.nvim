@@ -717,7 +717,7 @@ function vim.fn.matchdelete(id) end
 -- 		available from |getmatches()|.  All matches can be deleted in
 -- 		one operation by |clearmatches()|.
 --- @return number
-function vim.fn.matchadd(group, pattern, priority, id) end
+function vim.fn.matchadd(group, pattern, priority, id, dict) end
 
 -- Return byte index of the {nr}'th character in the string
 -- 		{expr}.  Use zero for the first character, it returns zero.
