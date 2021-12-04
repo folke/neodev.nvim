@@ -11,7 +11,7 @@ function vim.treesitter.LanguageTree:add_child(lang) end
 -- Returns a map of language to child tree.
 function vim.treesitter.LanguageTree:children() end
 
--- Determines wether This goes down the tree to recursively check childs.
+-- Determines whether This goes down the tree to recursively check children.
 --- @param range any #A range, that is a `{ start_line, start_col,
 ---              end_line, end_col }` table.
 function vim.treesitter.LanguageTree:contains(range) end
@@ -87,8 +87,7 @@ vim.treesitter.Query = {}
 
 -- Iterate over all captures from all matches inside {node}
 --- @param node any #The node under which the search will occur
---- @param source any #The source buffer or string to exctract text
----               from
+--- @param source any #The source buffer or string to extract text from
 --- @param start any #The starting line of the search
 --- @param stop any #The stopping line of the search (end-exclusive)
 --- @return any #The matching capture id
@@ -113,13 +112,6 @@ function vim.treesitter.TSHighlighter:destroy() end
 -- Gets the query used for
 --- @param lang any #A language used by the highlighter.
 function vim.treesitter.TSHighlighter:get_query(lang) end
-
--- Performs a healthcheck for treesitter integration.
-function vim.treesitter.check_health() end
-
--- Lists the parsers currently installed
---- @return any #A list of parsers
-function vim.treesitter.list_parsers() end
 
 -- Represents a single treesitter parser for a language. The
 -- language can contain child languages with in its range, hence

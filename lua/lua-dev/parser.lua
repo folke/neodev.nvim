@@ -126,11 +126,15 @@ function M.emmy(fun)
 end
 
 function M.intro(fd)
-  uv.fs_write(fd, [[
+  uv.fs_write(
+    fd,
+    [[
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
-]], -1)
+]],
+    -1
+  )
 end
 
 function M.get_functions(mpack)
@@ -285,6 +289,7 @@ function M.build()
   M.options()
   M.parse("lua.mpack", "vim", { "vim.shared", "vim.uri", "vim.inspect" })
   M.parse("api.mpack", "vim.api")
+  M.parse("diagnostic.mpack", "vim.diagnostic")
   M.parse("lsp.mpack", "vim.lsp", { "vim.lsp" })
   M.parse("treesitter.mpack", "vim.treesitter", { "vim.treesitter" })
 end

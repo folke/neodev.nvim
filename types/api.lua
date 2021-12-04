@@ -14,6 +14,13 @@ function vim.api.nvim__get_hl_defs(ns_id) end
 
 function vim.api.nvim__get_lib_dir() end
 
+-- Find files in runtime directories
+--- @param pat array #pattern of files to search for
+--- @param all boolean #whether to return all matches or only the first
+--- @param opts dict(runtime) *
+--- @return any #list of absolute paths to the found files
+function vim.api.nvim__get_runtime(pat, all, opts) end
+
 -- Returns object given as argument.
 --- @param obj object #Object to return.
 --- @return any #its argument.
@@ -40,6 +47,8 @@ function vim.api.nvim__id_float(flt) end
 --- @param row integer
 --- @param col integer
 function vim.api.nvim__inspect_cell(grid, row, col) end
+
+function vim.api.nvim__runtime_inspect() end
 
 --- @param path string
 function vim.api.nvim__screenshot(path) end
@@ -76,7 +85,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 ---                    callbacks.
 --- @param opts table<string, luaref> #Optional parameters.
 ---                    • on_lines: Lua callback invoked on change.
----                      Return`true`to detach. Args:
+---                      Return `true` to detach. Args:
 ---                      • the string "lines"
 ---                      • buffer handle
 ---                      • b:changedtick
@@ -92,7 +101,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 ---                    • on_bytes: lua callback invoked on change.
 ---                      This callback receives more granular
 ---                      information about the change compared to
----                      on_lines. Return`true`to detach. Args:
+---                      on_lines. Return `true` to detach. Args:
 ---                      • the string "bytes"
 ---                      • buffer handle
 ---                      • b:changedtick
@@ -166,6 +175,12 @@ function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
 --- @param lhs string
 function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 
+-- Deletes a named mark in the buffer. See |mark-motions|.
+--- @param buffer buffer #Buffer to set the mark on
+--- @param name string #Mark name
+--- @return any #true if the mark was deleted, else false.
+function vim.api.nvim_buf_del_mark(buffer, name) end
+
 -- Removes a buffer-scoped (b:) variable
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param name string #Variable name
@@ -193,17 +208,18 @@ function vim.api.nvim_buf_get_changedtick(buffer) end
 
 -- Gets a map of buffer-local |user-commands|.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param opts dictionary #Optional parameters. Currently not used.
+--- @param opts dict(get_commands) * #Optional parameters. Currently not used.
 --- @return any #Map of maps describing commands.
 function vim.api.nvim_buf_get_commands(buffer, opts) end
 
--- Returns position for a given extmark id
+-- Gets the position (0-indexed) of an extmark.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
 --- @param id integer #Extmark id
 --- @param opts dictionary #Optional parameters. Keys:
 ---               • details: Whether to include the details dict
---- @return any #(row, col) tuple or empty list () if extmark id was absent
+--- @return any #0-indexed (row, col) tuple or empty list () if extmark id
+---     was absent
 function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 
 -- Gets extmarks in "traversal order" from a |charwise| region
@@ -211,10 +227,12 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- |api-indexing|).
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param start object #Start of range, given as (row, col) or valid
----               extmark id (whose position defines the bound)
---- @param end_ object #End of range, given as (row, col) or valid
----               extmark id (whose position defines the bound)
+--- @param start object #Start of range: a 0-indexed (row, col) or valid
+---               extmark id (whose position defines the bound).
+---               |api-indexing|
+--- @param end_ object #End of range (inclusive): a 0-indexed (row, col)
+---               or valid extmark id (whose position defines the
+---               bound). |api-indexing|
 --- @param opts dictionary #Optional parameters. Keys:
 ---               • limit: Maximum number of marks to return
 ---               • details Whether to include the details dict
@@ -238,11 +256,12 @@ function vim.api.nvim_buf_get_keymap(buffer, mode) end
 --- @return any #Array of lines, or empty array for unloaded buffer.
 function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 
--- Return a tuple (row,col) representing the position of the
--- named mark.
+-- Returns a tuple (row,col) representing the position of the
+-- named mark. See |mark-motions|.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param name string #Mark name
---- @return any #(row, col) tuple
+--- @return any #(row, col) tuple, (0, 0) if the mark is not set, or is an
+---     uppercase/file mark set in another buffer.
 function vim.api.nvim_buf_get_mark(buffer, name) end
 
 -- Gets the full file name for the buffer
@@ -287,9 +306,11 @@ function vim.api.nvim_buf_line_count(buffer) end
 -- Creates or updates an extmark.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param line integer #Line where to place the mark, 0-based
---- @param col integer #Column where to place the mark, 0-based
---- @param opts dictionary #Optional parameters.
+--- @param line integer #Line where to place the mark, 0-based.
+---               |api-indexing|
+--- @param col integer #Column where to place the mark, 0-based.
+---               |api-indexing|
+--- @param opts dict(set_extmark) * #Optional parameters.
 ---               • id : id of the extmark to edit.
 ---               • end_line : ending line of the mark, 0-based
 ---                 inclusive.
@@ -297,8 +318,21 @@ function vim.api.nvim_buf_line_count(buffer) end
 ---                 exclusive.
 ---               • hl_group : name of the highlight group used to
 ---                 highlight this mark.
+---               • hl_eol : when true, for a multiline highlight
+---                 covering the EOL of a line, continue the
+---                 highlight for the rest of the screen line
+---                 (just like for diff and cursorline highlight).
 ---               • virt_text : virtual text to link to this mark.
----               • virt_text_pos : positioning of virtual text.
+---                 A list of [text, highlight] tuples, each
+---                 representing a text chunk with specified
+---                 highlight. `highlight` element can either be a
+---                 a single highlight group, or an array of
+---                 multiple highlight groups that will be stacked
+---                 (highest priority last). A highlight group can
+---                 be supplied either as a string or as an
+---                 integer, the latter which can be obtained
+---                 using |nvim_get_hl_id_by_name|.
+---               • virt_text_pos : position of virtual text.
 ---                 Possible values:
 ---                 • "eol": right after eol character (default)
 ---                 • "overlay": display over the specified
@@ -316,17 +350,30 @@ function vim.api.nvim_buf_line_count(buffer) end
 ---               • hl_mode : control how highlights are combined
 ---                 with the highlights of the text. Currently
 ---                 only affects virt_text highlights, but might
----                 affect`hl_group`in later versions.
+---                 affect `hl_group` in later versions.
 ---                 • "replace": only show the virt_text color.
 ---                   This is the default
 ---                 • "combine": combine with background text
 ---                   color
 ---                 • "blend": blend with background text color.
 ---
----               • hl_eol : when true, for a multiline highlight
----                 covering the EOL of a line, continue the
----                 highlight for the rest of the screen line
----                 (just like for diff and cursorline highlight).
+---               • virt_lines : virtual lines to add next to this
+---                 mark This should be an array over lines, where
+---                 each line in turn is an array over [text,
+---                 highlight] tuples. In general, buffer and
+---                 window options do not affect the display of
+---                 the text. In particular 'wrap' and 'linebreak'
+---                 options do not take effect, so the number of
+---                 extra screen lines will always match the size
+---                 of the array. However the 'tabstop' buffer
+---                 option is still used for hard tabs. By default
+---                 lines are placed below the buffer line
+---                 containing the mark.
+---               • virt_lines_above: place virtual lines above
+---                 instead.
+---               • virt_lines_leftcol: Place extmarks in the
+---                 leftmost column of the window, bypassing sign
+---                 and number columns.
 ---               • ephemeral : for use with
 ---                 |nvim_set_decoration_provider| callbacks. The
 ---                 mark will only be used for the current redraw
@@ -352,7 +399,7 @@ function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 --- @param mode string
 --- @param lhs string
 --- @param rhs string
---- @param opts dictionary
+--- @param opts dict(keymap) *
 function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 
 -- Sets (replaces) a line-range in the buffer.
@@ -363,6 +410,16 @@ function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 ---                        error.
 --- @param replacement string[] #Array of lines to use as replacement
 function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replacement) end
+
+-- Sets a named mark in the given buffer, all marks are allowed
+-- file/uppercase, visual, last change, etc. See |mark-motions|.
+--- @param buffer buffer #Buffer to set the mark on
+--- @param name string #Mark name
+--- @param line integer #Line number
+--- @param col integer #Column/row number
+--- @param opts dictionary #Optional parameters. Reserved for future use.
+--- @return any #true if the mark was set, else false.
+function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 
 -- Sets the full file name for a buffer
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
@@ -390,19 +447,6 @@ function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_co
 --- @param name string #Variable name
 --- @param value object #Variable value
 function vim.api.nvim_buf_set_var(buffer, name, value) end
-
--- Set the virtual text (annotation) for a buffer line.
---- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param src_id integer
---- @param line integer #Line to annotate with virtual text
----               (zero-indexed)
---- @param chunks array #A list of [text, hl_group] arrays, each
----               representing a text chunk with specified
----               highlight. `hl_group` element can be omitted for
----               no highlight.
---- @param opts dictionary #Optional parameters. Currently not used.
---- @return any #The ns_id that was used
-function vim.api.nvim_buf_set_virtual_text(buffer, src_id, line, chunks, opts) end
 
 -- Calls many API methods atomically.
 --- @param calls array #an array of calls, where each call is described
@@ -452,7 +496,7 @@ function vim.api.nvim_command(command) end
 --- @return any #Buffer handle, or 0 on error
 function vim.api.nvim_create_buf(listed, scratch) end
 
--- Creates a new namespace, or gets an existing one.
+-- Creates a new *namespace* or gets an existing one.
 --- @param name string #Namespace name or empty string
 --- @return any #Namespace id
 function vim.api.nvim_create_namespace(name) end
@@ -464,6 +508,11 @@ function vim.api.nvim_del_current_line() end
 --- @param mode string
 --- @param lhs string
 function vim.api.nvim_del_keymap(mode, lhs) end
+
+-- Deletes a uppercase/file named mark. See |mark-motions|.
+--- @param name string #Mark name
+--- @return any #true if the mark was deleted, else false.
+function vim.api.nvim_del_mark(name) end
 
 -- Removes a global (g:) variable.
 --- @param name string #Variable name
@@ -494,6 +543,32 @@ function vim.api.nvim_err_writeln(str) end
 --- @param expr string #VimL expression string
 --- @return any #Evaluation result or expanded object
 function vim.api.nvim_eval(expr) end
+
+-- Evaluates statusline string.
+--- @param str string #Statusline string (see 'statusline').
+--- @param opts dict(eval_statusline) * #Optional parameters.
+---             • winid: (number) |window-ID| of the window to use
+---               as context for statusline.
+---             • maxwidth: (number) Maximum width of statusline.
+---             • fillchar: (string) Character to fill blank
+---               spaces in the statusline (see 'fillchars').
+---             • highlights: (boolean) Return highlight
+---               information.
+---             • use_tabline: (boolean) Evaluate tabline instead
+---               of statusline. When |TRUE|, {winid} is ignored.
+--- @return any #Dictionary containing statusline information, with these
+---     keys:
+---     • str: (string) Characters that will be displayed on the
+---       statusline.
+---     • width: (number) Display width of the statusline.
+---     • highlights: Array containing highlight information of
+---       the statusline. Only included when the "highlights" key
+---       in {opts} is |TRUE|. Each element of the array is a
+---       |Dictionary| with these keys:
+---       • start: (number) Byte index (0-based) of first
+---         character that uses the highlight.
+---       • group: (string) Name of highlight group.
+function vim.api.nvim_eval_statusline(str, opts) end
 
 -- Executes Vimscript (multiline block of Ex-commands), like
 -- anonymous |:source|.
@@ -529,31 +604,32 @@ function vim.api.nvim_get_all_options_info() end
 --- @return any #2-tuple [{channel-id}, {api-metadata}]
 function vim.api.nvim_get_api_info() end
 
--- Get information about a channel.
+-- Gets information about a channel.
 --- @param chan integer
 --- @return any #Dictionary describing a channel, with these keys:
----     • "stream" the stream underlying the channel
+---     • "id" Channel id.
+---     • "argv" (optional) Job arguments list.
+---     • "stream" Stream underlying the channel.
 ---       • "stdio" stdin and stdout of this Nvim instance
 ---       • "stderr" stderr of this Nvim instance
 ---       • "socket" TCP/IP socket or named pipe
----       • "job" job with communication over its stdio
+---       • "job" Job with communication over its stdio.
 ---
----     • "mode" how data received on the channel is interpreted
----       • "bytes" send and receive raw bytes
----       • "terminal" a |terminal| instance interprets ASCII
----         sequences
----       • "rpc" |RPC| communication on the channel is active
+---     • "mode" How data received on the channel is interpreted.
+---       • "bytes" Send and receive raw bytes.
+---       • "terminal" |terminal| instance interprets ASCII
+---         sequences.
+---       • "rpc" |RPC| communication on the channel is active.
 ---
----     • "pty" Name of pseudoterminal, if one is used (optional).
----       On a POSIX system, this will be a device path like
----       /dev/pts/1. Even if the name is unknown, the key will
----       still be present to indicate a pty is used. This is
----       currently the case when using winpty on windows.
----     • "buffer" buffer with connected |terminal| instance
----       (optional)
----     • "client" information about the client on the other end
----       of the RPC channel, if it has added it using
----       |nvim_set_client_info()|. (optional)
+---     • "pty" (optional) Name of pseudoterminal. On a POSIX
+---       system this is a device path like "/dev/pts/1". If the
+---       name is unknown, the key will still be present if a pty
+---       is used (e.g. for winpty on Windows).
+---     • "buffer" (optional) Buffer with connected |terminal|
+---       instance.
+---     • "client" (optional) Info about the peer (client on the
+---       other end of the RPC channel), if provided by it via
+---       |nvim_set_client_info()|.
 function vim.api.nvim_get_chan_info(chan) end
 
 -- Returns the 24-bit RGB value of a |nvim_get_color_map()| color
@@ -567,13 +643,13 @@ function vim.api.nvim_get_color_by_name(name) end
 function vim.api.nvim_get_color_map() end
 
 -- Gets a map of global (non-buffer-local) Ex commands.
---- @param opts dictionary #Optional parameters. Currently only supports
+--- @param opts dict(get_commands) * #Optional parameters. Currently only supports
 ---             {"builtin":false}
 --- @return any #Map of maps describing commands.
 function vim.api.nvim_get_commands(opts) end
 
 -- Gets a map of the current editor state.
---- @param opts dictionary #Optional parameters.
+--- @param opts dict(context) * #Optional parameters.
 ---             • types: List of |context-types| ("regs", "jumps",
 ---               "bufs", "gvars", …) to gather, or empty for
 ---               "all".
@@ -618,6 +694,14 @@ function vim.api.nvim_get_hl_id_by_name(name) end
 --- @return any #Array of maparg()-like dictionaries describing mappings.
 ---     The "buffer" key is always zero.
 function vim.api.nvim_get_keymap(mode) end
+
+-- Return a tuple (row, col, buffer, buffername) representing the
+-- position of the uppercase/file named mark. See |mark-motions|.
+--- @param name string #Mark name
+--- @param opts dictionary #Optional parameters. Reserved for future use.
+--- @return any #4-tuple (row, col, buffer, buffername), (0, 0, 0, '') if
+---     the mark is not set.
+function vim.api.nvim_get_mark(name, opts) end
 
 -- Gets the current mode. |mode()| "blocking" is true if Nvim is
 -- waiting for input.
@@ -734,53 +818,65 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 
 -- Open a terminal instance in a buffer
 --- @param buffer buffer #the buffer to use (expected to be empty)
---- @param opts dictionary #Optional parameters. Reserved for future use.
+--- @param opts table<string, luaref> #Optional parameters.
+---               • on_input: lua callback for input sent, i e
+---                 keypresses in terminal mode. Note: keypresses
+---                 are sent raw as they would be to the pty
+---                 master end. For instance, a carriage return is
+---                 sent as a "\r", not as a "\n". |textlock|
+---                 applies. It is possible to call
+---                 |nvim_chan_send| directly in the callback
+---                 however. ["input", term, bufnr, data]
 --- @return any #Channel id, or 0 on error
 function vim.api.nvim_open_term(buffer, opts) end
 
 -- Open a new window.
 --- @param buffer buffer #Buffer to display, or 0 for current buffer
 --- @param enter boolean #Enter the window (make it the current window)
---- @param config dictionary #Map defining the window configuration. Keys:
----               • `relative`: Sets the window layout to "floating", placed
----                 at (row,col) coordinates relative to:
+--- @param config dict(float_config) * #Map defining the window configuration. Keys:
+---               • relative: Sets the window layout to
+---                 "floating", placed at (row,col) coordinates
+---                 relative to:
 ---                 • "editor" The global editor grid
 ---                 • "win" Window given by the `win` field, or
 ---                   current window.
 ---                 • "cursor" Cursor position in current window.
 ---
----               • `win` : |window-ID| for relative="win".
----               • `anchor`: Decides which corner of the float to place
----                 at (row,col):
+---               • win: |window-ID| for relative="win".
+---               • anchor: Decides which corner of the float to
+---                 place at (row,col):
 ---                 • "NW" northwest (default)
 ---                 • "NE" northeast
 ---                 • "SW" southwest
 ---                 • "SE" southeast
 ---
----               • `width` : Window width (in character cells).
+---               • width: Window width (in character cells).
 ---                 Minimum of 1.
----               • `height` : Window height (in character cells).
+---               • height: Window height (in character cells).
 ---                 Minimum of 1.
----               • `bufpos` : Places float relative to buffer
----                 text (only when relative="win"). Takes a tuple
----                 of zero-indexed [line, column]. `row` and
----                 `col` if given are applied relative to this
----                 position, else they default to `row=1` and
----                 `col=0` (thus like a tooltip near the buffer
----                 text).
----               • `row` : Row position in units of "screen cell
+---               • bufpos: Places float relative to buffer text
+---                 (only when relative="win"). Takes a tuple of
+---                 zero-indexed [line, column]. `row` and `col` if given are applied relative to this
+---                 position, else they default to:
+---                 • `row=1` and `col=0` if `anchor` is "NW" or
+---                   "NE"
+---                 • `row=0` and `col=0` if `anchor` is "SW" or
+---                   "SE" (thus like a tooltip near the buffer
+---                   text).
+---
+---               • row: Row position in units of "screen cell
 ---                 height", may be fractional.
----               • `col` : Column position in units of "screen
----                 cell width", may be fractional.
----               • `focusable` : Enable focus by user actions
+---               • col: Column position in units of "screen cell
+---                 width", may be fractional.
+---               • focusable: Enable focus by user actions
 ---                 (wincmds, mouse events). Defaults to true.
 ---                 Non-focusable windows can be entered by
 ---                 |nvim_set_current_win()|.
----               • `external` : GUI should display the window as
----                 an external top-level window. Currently
----                 accepts no other positioning configuration
----                 together with this.
----               • `zindex`: Stacking order. floats with higher`zindex`go on top on floats with lower indices. Must
+---               • external: GUI should display the window as an
+---                 external top-level window. Currently accepts
+---                 no other positioning configuration together
+---                 with this.
+---               • zindex: Stacking order. floats with higher `zindex` go on top on floats with lower indices. Must
 ---                 be larger than zero. The following screen
 ---                 elements have hard-coded z-indices:
 ---                 • 100: insert completion popupmenu
@@ -791,7 +887,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                   are recommended, unless there is a good
 ---                   reason to overshadow builtin elements.
 ---
----               • `style`: Configure the appearance of the window.
+---               • style: Configure the appearance of the window.
 ---                 Currently only takes one non-empty value:
 ---                 • "minimal" Nvim will display the window with
 ---                   many UI options disabled. This is useful
@@ -806,9 +902,9 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                   and clearing the |EndOfBuffer| region in
 ---                   'winhighlight'.
 ---
----               • `border`: Style of (optional) window border. This can
----                 either be a string or an array. The string
----                 values are
+---               • border: Style of (optional) window border.
+---                 This can either be a string or an array. The
+---                 string values are
 ---                 • "none": No border (default).
 ---                 • "single": A single line box.
 ---                 • "double": A double line box.
@@ -838,7 +934,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 ---                   It could also be specified by character: [
 ---                   {"+", "MyCorner"}, {"x", "MyBorder"} ].
 ---
----               • `noautocmd` : If true then no buffer-related
+---               • noautocmd: If true then no buffer-related
 ---                 autocommand events such as |BufEnter|,
 ---                 |BufLeave| or |BufWinEnter| may fire from
 ---                 calling this function.
@@ -1039,68 +1135,4 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 ---                     small logo or icon. .png or .svg format is
 ---                     preferred.
 function vim.api.nvim_set_client_info(name, version, type, methods, attributes) end
-
--- Sets the current buffer.
---- @param buffer buffer #Buffer handle
-function vim.api.nvim_set_current_buf(buffer) end
-
--- Changes the global working directory.
---- @param dir string #Directory path
-function vim.api.nvim_set_current_dir(dir) end
-
--- Sets the current line.
---- @param line string #Line contents
-function vim.api.nvim_set_current_line(line) end
-
--- Sets the current tabpage.
---- @param tabpage tabpage #Tabpage handle
-function vim.api.nvim_set_current_tabpage(tabpage) end
-
--- Sets the current window.
---- @param window window #Window handle
-function vim.api.nvim_set_current_win(window) end
-
--- Set or change decoration provider for a namespace
---- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param opts table<string, luaref> #Callbacks invoked during redraw:
----              • on_start: called first on each screen redraw
----                ["start", tick]
----              • on_buf: called for each buffer being redrawn
----                (before window callbacks) ["buf", bufnr, tick]
----              • on_win: called when starting to redraw a
----                specific window. ["win", winid, bufnr, topline,
----                botline_guess]
----              • on_line: called for each buffer line being
----                redrawn. (The interation with fold lines is
----                subject to change) ["win", winid, bufnr, row]
----              • on_end: called at the end of a redraw cycle
----                ["end", tick]
-function vim.api.nvim_set_decoration_provider(ns_id, opts) end
-
--- Set a highlight group.
---- @param ns_id integer #number of namespace for this highlight
---- @param name string #highlight group name, like ErrorMsg
---- @param val dictionary #highlight definition map, like
----              |nvim_get_hl_by_name|. in addition the following
----              keys are also recognized: `default` : don't
----              override existing definition, like `hi default`
----              `ctermfg` : sets foreground of cterm color
----              `ctermbg` : sets background of cterm color
----              `cterm` : cterm attribute map. sets attributed
----              for cterm colors. similer to `hi cterm` Note: by
----              default cterm attributes are same as attributes
----              of gui color
-function vim.api.nvim_set_hl(ns_id, name, val) end
-
--- Sets a global |mapping| for the given mode.
---- @param mode string #Mode short-name (map command prefix: "n", "i",
----             "v", "x", …) or "!" for |:map!|, or empty string
----             for |:map|.
---- @param lhs string #Left-hand-side |{lhs}| of the mapping.
---- @param rhs string #Right-hand-side |{rhs}| of the mapping.
---- @param opts dictionary #Optional parameters map. Accepts all
----             |:map-arguments| as keys excluding |<buffer>| but
----             including |noremap|. Values are Booleans. Unknown
----             key is an error.
-function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 

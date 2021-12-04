@@ -1,6 +1,70 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Sets the current buffer.
+--- @param buffer buffer #Buffer handle
+function vim.api.nvim_set_current_buf(buffer) end
+
+-- Changes the global working directory.
+--- @param dir string #Directory path
+function vim.api.nvim_set_current_dir(dir) end
+
+-- Sets the current line.
+--- @param line string #Line contents
+function vim.api.nvim_set_current_line(line) end
+
+-- Sets the current tabpage.
+--- @param tabpage tabpage #Tabpage handle
+function vim.api.nvim_set_current_tabpage(tabpage) end
+
+-- Sets the current window.
+--- @param window window #Window handle
+function vim.api.nvim_set_current_win(window) end
+
+-- Set or change decoration provider for a namespace
+--- @param ns_id integer #Namespace id from |nvim_create_namespace()|
+--- @param opts table<string, luaref> #Callbacks invoked during redraw:
+---              • on_start: called first on each screen redraw
+---                ["start", tick]
+---              • on_buf: called for each buffer being redrawn
+---                (before window callbacks) ["buf", bufnr, tick]
+---              • on_win: called when starting to redraw a
+---                specific window. ["win", winid, bufnr, topline,
+---                botline_guess]
+---              • on_line: called for each buffer line being
+---                redrawn. (The interaction with fold lines is
+---                subject to change) ["win", winid, bufnr, row]
+---              • on_end: called at the end of a redraw cycle
+---                ["end", tick]
+function vim.api.nvim_set_decoration_provider(ns_id, opts) end
+
+-- Set a highlight group.
+--- @param ns_id integer #number of namespace for this highlight
+--- @param name string #highlight group name, like ErrorMsg
+--- @param val dictionary #highlight definition map, like
+---              |nvim_get_hl_by_name|. in addition the following
+---              keys are also recognized: `default` : don't
+---              override existing definition, like `hi default`
+---              `ctermfg` : sets foreground of cterm color
+---              `ctermbg` : sets background of cterm color
+---              `cterm` : cterm attribute map. sets attributed
+---              for cterm colors. similer to `hi cterm` Note: by
+---              default cterm attributes are same as attributes
+---              of gui color
+function vim.api.nvim_set_hl(ns_id, name, val) end
+
+-- Sets a global |mapping| for the given mode.
+--- @param mode string #Mode short-name (map command prefix: "n", "i",
+---             "v", "x", …) or "!" for |:map!|, or empty string
+---             for |:map|.
+--- @param lhs string #Left-hand-side |{lhs}| of the mapping.
+--- @param rhs string #Right-hand-side |{rhs}| of the mapping.
+--- @param opts dict(keymap) * #Optional parameters map. Accepts all
+---             |:map-arguments| as keys excluding |<buffer>| but
+---             including |noremap|. Values are Booleans. Unknown
+---             key is an error.
+function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
+
 -- Sets an option value.
 --- @param name string #Option name
 --- @param value object #New option value
@@ -200,7 +264,7 @@ function vim.api.nvim_win_set_buf(window, buffer) end
 -- external windows (including changing a split window to those
 -- layouts).
 --- @param window window #Window handle, or 0 for current window
---- @param config dictionary #Map defining the window configuration, see
+--- @param config dict(float_config) * #Map defining the window configuration, see
 ---               |nvim_open_win()|
 function vim.api.nvim_win_set_config(window, config) end
 
