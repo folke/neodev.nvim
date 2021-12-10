@@ -1,6 +1,55 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Self-identifies the client.
+--- @param name string #Short name for the connected client
+--- @param version dictionary #Dictionary describing the version, with
+---                   these (optional) keys:
+---                   • "major" major version (defaults to 0 if
+---                     not set, for no release yet)
+---                   • "minor" minor version
+---                   • "patch" patch number
+---                   • "prerelease" string describing a
+---                     prerelease, like "dev" or "beta1"
+---                   • "commit" hash or similar identifier of
+---                     commit
+--- @param type string #Must be one of the following values. Client
+---                   libraries should default to "remote" unless
+---                   overridden by the user.
+---                   • "remote" remote client connected to Nvim.
+---                   • "ui" gui frontend
+---                   • "embedder" application using Nvim as a
+---                     component (for example, IDE/editor
+---                     implementing a vim mode).
+---                   • "host" plugin host, typically started by
+---                     nvim
+---                   • "plugin" single plugin, started by nvim
+--- @param methods dictionary #Builtin methods in the client. For a host,
+---                   this does not include plugin methods which
+---                   will be discovered later. The key should be
+---                   the method name, the values are dicts with
+---                   these (optional) keys (more keys may be
+---                   added in future versions of Nvim, thus
+---                   unknown keys are ignored. Clients must only
+---                   use keys defined in this or later versions
+---                   of Nvim):
+---                   • "async" if true, send as a notification.
+---                     If false or unspecified, use a blocking
+---                     request
+---                   • "nargs" Number of arguments. Could be a
+---                     single integer or an array of two
+---                     integers, minimum and maximum inclusive.
+--- @param attributes dictionary #Arbitrary string:string map of informal
+---                   client properties. Suggested keys:
+---                   • "website": Client homepage URL (e.g.
+---                     GitHub repository)
+---                   • "license": License description ("Apache
+---                     2", "GPLv3", "MIT", …)
+---                   • "logo": URI or path to image, preferably
+---                     small logo or icon. .png or .svg format is
+---                     preferred.
+function vim.api.nvim_set_client_info(name, version, type, methods, attributes) end
+
 -- Sets the current buffer.
 --- @param buffer buffer #Buffer handle
 function vim.api.nvim_set_current_buf(buffer) end
@@ -65,10 +114,21 @@ function vim.api.nvim_set_hl(ns_id, name, val) end
 ---             key is an error.
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
--- Sets an option value.
+-- Sets the global value of an option.
 --- @param name string #Option name
 --- @param value object #New option value
 function vim.api.nvim_set_option(name, value) end
+
+-- Sets the value of an option. The behavior of this function
+-- matches that of |:set|: for global-local options, both the
+-- global and local value are set unless otherwise specified with
+-- {scope}.
+--- @param name string #Option name
+--- @param value object #New option value
+--- @param opts dict(option) * #Optional parameters
+---              • scope: One of 'global' or 'local'. Analagous to
+---                |:setglobal| and |:setlocal|, respectively.
+function vim.api.nvim_set_option_value(name, value, opts) end
 
 -- Sets a global (g:) variable.
 --- @param name string #Variable name

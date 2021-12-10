@@ -435,6 +435,9 @@ function vim.lsp.request(method, params, callback, notify_reply_callback) end
 
 -- Creates a normalized object describing LSP server
 -- capabilities.
+--- @param server_capabilities any #table Table of capabilities
+---                            supported by the server
+--- @return any #table Normalized table of capabilities
 function vim.lsp.resolve_capabilities(server_capabilities) end
 
 -- Run the code lens in the current line

@@ -312,7 +312,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 ---               |api-indexing|
 --- @param opts dict(set_extmark) * #Optional parameters.
 ---               • id : id of the extmark to edit.
----               • end_line : ending line of the mark, 0-based
+---               • end_row : ending line of the mark, 0-based
 ---                 inclusive.
 ---               • end_col : ending col of the mark, 0-based
 ---                 exclusive.
@@ -712,7 +712,7 @@ function vim.api.nvim_get_mode() end
 --- @return any #dict that maps from names to namespace ids.
 function vim.api.nvim_get_namespaces() end
 
--- Gets an option value string.
+-- Gets the global value of an option.
 --- @param name string #Option name
 --- @return any #Option value (global)
 function vim.api.nvim_get_option(name) end
@@ -721,6 +721,20 @@ function vim.api.nvim_get_option(name) end
 --- @param name string #Option name
 --- @return any #Option Information
 function vim.api.nvim_get_option_info(name) end
+
+-- Gets the value of an option. The behavior of this function
+-- matches that of |:set|: the local value of an option is
+-- returned if it exists; otherwise, the global value is
+-- returned. Local values always correspond to the current buffer
+-- or window. To get a buffer-local or window-local option for a
+-- specific buffer or window, use |nvim_buf_get_option()| or
+-- |nvim_win_get_option()|.
+--- @param name string #Option name
+--- @param opts dict(option) * #Optional parameters
+---             • scope: One of 'global' or 'local'. Analagous to
+---               |:setglobal| and |:setlocal|, respectively.
+--- @return any #Option value
+function vim.api.nvim_get_option_value(name, opts) end
 
 -- Gets info describing process `pid` .
 --- @param pid integer
@@ -1086,53 +1100,4 @@ function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 ---               Implies `insert` .
 --- @param opts dictionary #Optional parameters. Reserved for future use.
 function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
-
--- Self-identifies the client.
---- @param name string #Short name for the connected client
---- @param version dictionary #Dictionary describing the version, with
----                   these (optional) keys:
----                   • "major" major version (defaults to 0 if
----                     not set, for no release yet)
----                   • "minor" minor version
----                   • "patch" patch number
----                   • "prerelease" string describing a
----                     prerelease, like "dev" or "beta1"
----                   • "commit" hash or similar identifier of
----                     commit
---- @param type string #Must be one of the following values. Client
----                   libraries should default to "remote" unless
----                   overridden by the user.
----                   • "remote" remote client connected to Nvim.
----                   • "ui" gui frontend
----                   • "embedder" application using Nvim as a
----                     component (for example, IDE/editor
----                     implementing a vim mode).
----                   • "host" plugin host, typically started by
----                     nvim
----                   • "plugin" single plugin, started by nvim
---- @param methods dictionary #Builtin methods in the client. For a host,
----                   this does not include plugin methods which
----                   will be discovered later. The key should be
----                   the method name, the values are dicts with
----                   these (optional) keys (more keys may be
----                   added in future versions of Nvim, thus
----                   unknown keys are ignored. Clients must only
----                   use keys defined in this or later versions
----                   of Nvim):
----                   • "async" if true, send as a notification.
----                     If false or unspecified, use a blocking
----                     request
----                   • "nargs" Number of arguments. Could be a
----                     single integer or an array of two
----                     integers, minimum and maximum inclusive.
---- @param attributes dictionary #Arbitrary string:string map of informal
----                   client properties. Suggested keys:
----                   • "website": Client homepage URL (e.g.
----                     GitHub repository)
----                   • "license": License description ("Apache
----                     2", "GPLv3", "MIT", …)
----                   • "logo": URI or path to image, preferably
----                     small logo or icon. .png or .svg format is
----                     preferred.
-function vim.api.nvim_set_client_info(name, version, type, methods, attributes) end
 
