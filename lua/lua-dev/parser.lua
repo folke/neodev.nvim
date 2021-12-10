@@ -153,10 +153,12 @@ function M.get_functions(mpack)
 end
 
 function M.parse(mpack, prefix, exclude)
+  print(prefix)
   -- exclude signatures for functions that are existing lua sources
   local skip = {}
   for _, value in pairs(exclude or {}) do
     for key, _ in pairs(require(value)) do
+      print("skipping " .. value .. ": " .. key)
       skip[key] = true
     end
   end
@@ -287,7 +289,7 @@ function M.build()
   M.clean()
   M.functions()
   M.options()
-  M.parse("lua.mpack", "vim", { "vim.shared", "vim.uri", "vim.inspect" })
+  M.parse("lua.mpack", "vim", { "vim.uri", "vim.inspect" })
   M.parse("api.mpack", "vim.api")
   M.parse("diagnostic.mpack", "vim.diagnostic")
   M.parse("lsp.mpack", "vim.lsp", { "vim.lsp" })
