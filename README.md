@@ -50,6 +50,7 @@ Plug 'folke/lua-dev.nvim'
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
+  runtime_path = false, -- enable this to get completion in require strings. Slow!
   -- pass any additional options that will be merged in the final lsp config
   lspconfig = {
     -- cmd = {"lua-language-server"},
