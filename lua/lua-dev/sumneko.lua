@@ -7,14 +7,14 @@ function M.library(opts)
   local ret = {}
 
   if opts.library.types then
-    ret[M.types()] = true
+    table.insert(ret, M.types())
   end
 
   local function add(lib, filter)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
-      if p then
-        ret[p] = not filter or filter[vim.fn.fnamemodify(p, ":h:t")]
+      if not filter or filter[vim.fn.fnamemodify(p, ":h:t")] then
+        table.insert(ret, p)
       end
     end
   end
@@ -42,14 +42,14 @@ end
 
 function M.path(opts)
   local path = {} --vim.split(package.path, ";")
-  table.insert(path, "lua/?.lua")
-  table.insert(path, "lua/?/init.lua")
-  if opts and opts.runtime_path then
-    for lib, _ in pairs(M.library()) do
-      table.insert(path, lib .. "/?.lua")
-      table.insert(path, lib .. "/?/init.lua")
-    end
-  end
+  table.insert(path, "?.lua")
+  table.insert(path, "?/init.lua")
+  -- if opts and opts.runtime_path then
+  --   for lib, _ in pairs(M.library()) do
+  --     table.insert(path, lib .. "/?.lua")
+  --     table.insert(path, lib .. "/?/init.lua")
+  --   end
+  -- end
   return path
 end
 
