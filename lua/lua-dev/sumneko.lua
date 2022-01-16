@@ -7,14 +7,14 @@ function M.library(opts)
   local ret = {}
 
   if opts.library.types then
-    table.insert(ret, M.types())
+    ret[M.types()] = true
   end
 
   local function add(lib, filter)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if not filter or filter[vim.fn.fnamemodify(p, ":h:t")] then
-        table.insert(ret, p)
+        ret[p] = true
       end
     end
   end
