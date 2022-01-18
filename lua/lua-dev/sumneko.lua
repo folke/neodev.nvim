@@ -13,7 +13,7 @@ function M.library(opts)
   local function add(lib, filter)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
-      if not filter or filter[vim.fn.fnamemodify(p, ":h:t")] then
+      if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
         ret[p] = true
       end
     end
