@@ -7,14 +7,14 @@ function M.library(opts)
   local ret = {}
 
   if opts.library.types then
-    table.insert(ret, M.types())
+    ret[M.types()] = true
   end
 
   local function add(lib, filter)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if not filter or filter[vim.fn.fnamemodify(p, ":h:t")] then
-        table.insert(ret, p)
+        ret[p] = true
       end
     end
   end
@@ -63,16 +63,20 @@ function M.types()
 end
 
 function M.setup(opts)
+  local lspconfig = require("lspconfig")
   return {
-    on_new_config = function(config, root_dir)
-      -- remove the root_dir from the workspace, otherwise diagnostics break. See #21
-      -- Should no longer be needed with workspace.nvim
-      local lib = vim.tbl_deep_extend("force", {}, config.settings.Lua.workspace.library)
-      lib[vim.loop.fs_realpath(root_dir) .. "/lua"] = nil
-      lib[vim.loop.fs_realpath(root_dir)] = nil
-      config.settings.Lua.workspace.library = lib
-      return config
-    end,
+    on_new_config = lspconfig.util.add_hook_after(
+      lspconfig.util.default_config.on_new_config,
+      function(config, root_dir)
+        -- remove the root_dir from the workspace, otherwise diagnostics break. See #21
+        -- Should no longer be needed with workspace.nvim
+        local lib = vim.tbl_deep_extend("force", {}, config.settings.Lua.workspace.library)
+        lib[vim.loop.fs_realpath(root_dir) .. "/lua"] = nil
+        lib[vim.loop.fs_realpath(root_dir)] = nil
+        config.settings.Lua.workspace.library = lib
+        return config
+      end
+    ),
     settings = {
       Lua = {
         runtime = {
