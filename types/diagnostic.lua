@@ -3,8 +3,9 @@
 
 -- Configure diagnostic options globally or for a specific
 -- diagnostic namespace.
---- @param opts any #table Configuration table with the following
----                  keys:
+--- @param opts any #table|nil When omitted or "nil", retrieve the
+---                  current configuration. Otherwise, a
+---                  configuration table with the following keys:
 ---                  • underline: (default true) Use underline for
 ---                    diagnostics. Options:
 ---                    • severity: Only underline diagnostics
@@ -12,13 +13,24 @@
 ---                      |diagnostic-severity|
 ---
 ---                  • virtual_text: (default true) Use virtual
----                    text for diagnostics. Options:
+---                    text for diagnostics. If multiple
+---                    diagnostics are set for a namespace, one
+---                    prefix per diagnostic + the last diagnostic
+---                    message are shown. Options:
 ---                    • severity: Only show virtual text for
 ---                      diagnostics matching the given severity
 ---                      |diagnostic-severity|
----                    • source: (string) Include the diagnostic
----                      source in virtual text. One of "always"
----                      or "if_many".
+---                    • source: (boolean or string) Include the
+---                      diagnostic source in virtual text. Use
+---                      "if_many" to only show sources if there
+---                      is more than one diagnostic source in the
+---                      buffer. Otherwise, any truthy value means
+---                      to always show the diagnostic source.
+---                    • spacing: (number) Amount of empty spaces
+---                      inserted at the beginning of the virtual
+---                      text.
+---                    • prefix: (string) Prepend diagnostic
+---                      message with prefix.
 ---                    • format: (function) A function that takes
 ---                      a diagnostic as input and returns a
 ---                      string. The return value is the text used
@@ -209,9 +221,12 @@ function vim.diagnostic.match(str, pat, groups, severity_map, defaults) end
 ---               is interpreted as a [text, hl_group] tuple.
 ---               Overrides the setting from
 ---               |vim.diagnostic.config()|.
----             • source: (string) Include the diagnostic source
----               in the message. One of "always" or "if_many".
----               Overrides the setting from
+---             • source: (boolean or string) Include the
+---               diagnostic source in the message. Use "if_many"
+---               to only show sources if there is more than one
+---               source of diagnostics in the buffer. Otherwise,
+---               any truthy value means to always show the
+---               diagnostic source. Overrides the setting from
 ---               |vim.diagnostic.config()|.
 ---             • format: (function) A function that takes a
 ---               diagnostic as input and returns a string. The
