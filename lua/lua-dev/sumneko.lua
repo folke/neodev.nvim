@@ -63,6 +63,7 @@ function M.types()
 end
 
 function M.setup(opts)
+  opts = opts or Config.options
   return {
     settings = {
       Lua = {
@@ -72,7 +73,7 @@ function M.setup(opts)
           -- Setup your lua path
           path = M.path(),
         },
-        completion = { callSnippet = "Replace" },
+        completion = opts.snippet and { callSnippet = "Replace" } or nil,
         -- diagnostics = {
         --   -- Get the language server to recognize the `vim` global
         --   globals = { "vim" },
