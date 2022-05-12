@@ -19,7 +19,7 @@ Dev setup for init.lua and plugin development with full signature help, docs and
 ## ⚡️ Requirements
 
 - Neovim >= 0.5.0
-- completion plugin like [nvim-compe](https://github.com/hrsh7th/nvim-compe) or [completion-nvim](https://github.com/nvim-lua/completion-nvim)
+- completion plugin like [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 ## 📦 Installation
 
