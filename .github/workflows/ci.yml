@@ -1,0 +1,38 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Run this once a week
+    - cron: '0 0 * * 0'
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo add-apt-repository -y ppa:neovim-ppa/unstable
+          sudo apt-get -y update
+          sudo apt-get -y install neovim python3-dev python3-pip
+          pip3 install msgpack
+          # We need Doxygen >= 1.9.0
+          wget -qO /tmp/doxygen.tar.gz https://www.doxygen.nl/files/doxygen-1.9.4.linux.bin.tar.gz
+          tar -C /tmp/ -xf /tmp/doxygen.tar.gz
+          cd /tmp/doxygen-1.9.4
+          sudo make install
+      - name: Clone Neovim's repo and run gen_vimdoc.py
+        run: |
+          git clone --depth=1 https://github.com/neovim/neovim.git /tmp/neovim-repo
+          cd /tmp/neovim-repo
+          # (Upstream issue) This will fail :(
+          ./scripts/gen_vimdoc.py
+      - uses: actions/checkout@v2
+      - name: Generate new docs
+        run: |
+          cp /tmp/neovim-repo/runtime/doc/*.mpack ./data/
+          nvim -c "luafile %" -c "q" ./lua/lua-dev/parser.lua
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update docs"
