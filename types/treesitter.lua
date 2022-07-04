@@ -58,7 +58,7 @@ function vim.treesitter.LanguageTree:language_for_range(range) end
 function vim.treesitter.LanguageTree:parse() end
 
 -- Registers callbacks for the parser.
---- @param cbs any #table An |nvim_buf_attach()|-like table argument
+--- @param cbs any #(table) An |nvim_buf_attach()|-like table argument
 ---             with the following keys :
 ---             • `on_bytes` : see |nvim_buf_attach()|, but this will be
 ---               called after the parsers callback.
@@ -80,8 +80,8 @@ function vim.treesitter.LanguageTree:remove_child(lang) end
 -- Sets the included regions that should be parsed by this
 -- parser. A region is a set of nodes and/or ranges that will be
 -- parsed in the same context.
---- @param regions any #A list of regions this tree should manage and
----                parse.
+--- @param regions any #(table) list of regions this tree should manage
+---                and parse.
 function vim.treesitter.LanguageTree:set_included_regions(regions) end
 
 -- Returns the source content of the language tree (bufnr or

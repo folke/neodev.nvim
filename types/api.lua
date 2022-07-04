@@ -41,8 +41,6 @@ function vim.api.nvim__id_dictionary(dct) end
 --- @return any #its argument.
 function vim.api.nvim__id_float(flt) end
 
--- NB: if your UI doesn't use hlstate, this will not return
--- hlstate first time.
 --- @param grid integer
 --- @param row integer
 --- @param col integer
@@ -60,6 +58,9 @@ function vim.api.nvim__set_hl_ns(ns_id) end
 -- Gets internal stats.
 --- @return any #Map of various internal stats.
 function vim.api.nvim__stats() end
+
+--- @param str string
+function vim.api.nvim__unpack(str) end
 
 -- Adds a highlight to buffer.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
@@ -263,7 +264,7 @@ function vim.api.nvim_buf_get_keymap(buffer, mode) end
 -- Gets a line-range from the buffer.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param start integer #First line index
---- @param end_ integer #Last line index (exclusive)
+--- @param end_ integer #Last line index, exclusive
 --- @param strict_indexing boolean #Whether out-of-bounds should be an
 ---                        error.
 --- @return any #Array of lines, or empty array for unloaded buffer.
@@ -297,9 +298,10 @@ function vim.api.nvim_buf_get_option(buffer, name) end
 -- Gets a range from the buffer.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param start_row integer #First line index
---- @param start_col integer #Starting byte offset of first line
---- @param end_row integer #Last line index
---- @param end_col integer #Ending byte offset of last line (exclusive)
+--- @param start_col integer #Starting column (byte offset) on first line
+--- @param end_row integer #Last line index, inclusive
+--- @param end_col integer #Ending column (byte offset) on last line,
+---                  exclusive
 --- @param opts dictionary #Optional parameters. Currently unused.
 --- @return any #Array of lines, or empty array for unloaded buffer.
 function vim.api.nvim_buf_get_text(buffer, start_row, start_col, end_row, end_col, opts) end
@@ -466,7 +468,7 @@ function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 -- Sets (replaces) a line-range in the buffer.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param start integer #First line index
---- @param end_ integer #Last line index (exclusive)
+--- @param end_ integer #Last line index, exclusive
 --- @param strict_indexing boolean #Whether out-of-bounds should be an
 ---                        error.
 --- @param replacement string[] #Array of lines to use as replacement
@@ -497,9 +499,10 @@ function vim.api.nvim_buf_set_option(buffer, name, value) end
 -- Sets (replaces) a range in the buffer
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param start_row integer #First line index
---- @param start_col integer #First column
---- @param end_row integer #Last line index
---- @param end_col integer #Last column
+--- @param start_col integer #Starting column (byte offset) on first line
+--- @param end_row integer #Last line index, inclusive
+--- @param end_col integer #Ending column (byte offset) on last line,
+---                    exclusive
 --- @param replacement string[] #Array of lines to use as replacement
 function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_col, replacement) end
 
@@ -571,8 +574,21 @@ function vim.api.nvim_chan_send(chan, data) end
 ---               • NOTE: If not passed, will only delete autocmds not in any group.
 function vim.api.nvim_clear_autocmds(opts) end
 
--- Executes an ex-command.
---- @param command string #Ex-command string
+-- Executes an Ex command.
+--- @param cmd dict(cmd) * #Command to execute. Must be a Dictionary that can
+---             contain the same values as the return value of
+---             |nvim_parse_cmd()| except "addr", "nargs" and
+---             "nextcmd" which are ignored if provided. All
+---             values except for "cmd" are optional.
+--- @param opts dict(cmd_opts) * #Optional parameters.
+---             • output: (boolean, default false) Whether to
+---               return command output.
+--- @return any #Command output (non-error, non-shell |:!|) if `output` is
+---     true, else empty string.
+function vim.api.nvim_cmd(cmd, opts) end
+
+-- Executes an Ex command.
+--- @param command string #Ex command string
 function vim.api.nvim_command(command) end
 
 -- Create or get an autocommand group |autocmd-groups|.
@@ -616,6 +632,8 @@ function vim.api.nvim_create_augroup(name, opts) end
 ---                • buf: (number) the expanded value of |<abuf>|
 ---                • file: (string) the expanded value of
 ---                  |<afile>|
+---                • data: (any) arbitrary data passed to
+---                  |nvim_exec_autocmds()|
 ---
 ---              • command (string) optional: Vim command to
 ---                execute on event. Cannot be used with
@@ -666,6 +684,9 @@ function vim.api.nvim_create_namespace(name) end
 ---                  specified |<reg>|
 ---                • mods: (string) Command modifiers, if any
 ---                  |<mods>|
+---                • smods: (table) Command modifiers in a
+---                  structured format. Has the same structure as
+---                  the "mods" key of |nvim_parse_cmd()|.
 --- @param opts dict(user_command) * #Optional command attributes. See
 ---                |command-attributes| for more details. To use
 ---                boolean attributes (such as |:command-bang| or
@@ -680,6 +701,8 @@ function vim.api.nvim_create_namespace(name) end
 ---                  when a Lua function is used for {command}.
 ---                • force: (boolean, default true) Override any
 ---                  previous definition.
+---                • preview: (function) Preview callback for
+---                  'inccommand' |:command-preview|
 function vim.api.nvim_create_user_command(name, command, opts) end
 
 -- Delete an autocommand group by id.
@@ -752,8 +775,11 @@ function vim.api.nvim_eval(expr) end
 ---               Treated as single-width even if it isn't.
 ---             • highlights: (boolean) Return highlight
 ---               information.
+---             • use_winbar: (boolean) Evaluate winbar instead of
+---               statusline.
 ---             • use_tabline: (boolean) Evaluate tabline instead
 ---               of statusline. When |TRUE|, {winid} is ignored.
+---               Mutually exclusive with {use_winbar}.
 --- @return any #Dictionary containing statusline information, with these
 ---     keys:
 ---     • str: (string) Characters that will be displayed on the
@@ -768,7 +794,7 @@ function vim.api.nvim_eval(expr) end
 ---       • group: (string) Name of highlight group.
 function vim.api.nvim_eval_statusline(str, opts) end
 
--- Executes Vimscript (multiline block of Ex-commands), like
+-- Executes Vimscript (multiline block of Ex commands), like
 -- anonymous |:source|.
 --- @param src string #Vimscript code
 --- @param output boolean #Capture and return all (non-error, non-shell
@@ -793,6 +819,9 @@ function vim.api.nvim_exec(src, output) end
 ---              • modeline (bool) optional: defaults to true.
 ---                Process the modeline after the autocommands
 ---                |<nomodeline>|.
+---              • data (any): arbitrary data to send to the
+---                autocommand callback. See
+---                |nvim_create_autocmd()| for details.
 function vim.api.nvim_exec_autocmds(event, opts) end
 
 -- Execute Lua code. Parameters (if any) are available as `...`
@@ -835,9 +864,14 @@ function vim.api.nvim_get_api_info() end
 ---     • id (number): the autocommand id (only when defined with
 ---       the API).
 ---     • group (integer): the autocommand group id.
+---     • group_name (string): the autocommand group name.
 ---     • desc (string): the autocommand description.
 ---     • event (string): the autocommand event.
----     • command (string): the autocommand command.
+---     • command (string): the autocommand command. Note: this
+---       will be empty if a callback is set.
+---     • callback (function|string|nil): Lua function or name of
+---       a Vim script function which is executed when this
+---       autocommand is triggered.
 ---     • once (boolean): whether the autocommand is only run
 ---       once.
 ---     • pattern (string): the autocommand pattern. If the
@@ -969,13 +1003,15 @@ function vim.api.nvim_get_option_info(name) end
 -- matches that of |:set|: the local value of an option is
 -- returned if it exists; otherwise, the global value is
 -- returned. Local values always correspond to the current buffer
--- or window. To get a buffer-local or window-local option for a
--- specific buffer or window, use |nvim_buf_get_option()| or
--- |nvim_win_get_option()|.
+-- or window, unless "buf" or "win" is set in {opts}.
 --- @param name string #Option name
 --- @param opts dict(option) * #Optional parameters
----             • scope: One of 'global' or 'local'. Analogous to
+---             • scope: One of "global" or "local". Analogous to
 ---               |:setglobal| and |:setlocal|, respectively.
+---             • win: |window-ID|. Used for getting window local
+---               options.
+---             • buf: Buffer number. Used for getting buffer
+---               local options. Implies {scope} is "local".
 --- @return any #Option value
 function vim.api.nvim_get_option_value(name, opts) end
 
@@ -1058,144 +1094,4 @@ function vim.api.nvim_list_tabpages() end
 ---     • "ext_..." Requested UI extensions, see |ui-option|
 ---     • "chan" Channel id of remote UI (not present for TUI)
 function vim.api.nvim_list_uis() end
-
--- Gets the current list of window handles.
---- @return any #List of window handles
-function vim.api.nvim_list_wins() end
-
--- Sets the current editor state from the given |context| map.
---- @param dict dictionary #|Context| map.
-function vim.api.nvim_load_context(dict) end
-
--- Notify the user with a message
---- @param msg string #Message to display to the user
---- @param log_level integer #The log level
---- @param opts dictionary #Reserved for future use.
-function vim.api.nvim_notify(msg, log_level, opts) end
-
--- Open a terminal instance in a buffer
---- @param buffer buffer #the buffer to use (expected to be empty)
---- @param opts table<string, luaref> #Optional parameters.
----               • on_input: lua callback for input sent, i e
----                 keypresses in terminal mode. Note: keypresses
----                 are sent raw as they would be to the pty
----                 master end. For instance, a carriage return is
----                 sent as a "\r", not as a "\n". |textlock|
----                 applies. It is possible to call
----                 |nvim_chan_send| directly in the callback
----                 however. ["input", term, bufnr, data]
---- @return any #Channel id, or 0 on error
-function vim.api.nvim_open_term(buffer, opts) end
-
--- Open a new window.
---- @param buffer buffer #Buffer to display, or 0 for current buffer
---- @param enter boolean #Enter the window (make it the current window)
---- @param config dict(float_config) * #Map defining the window configuration. Keys:
----               • relative: Sets the window layout to
----                 "floating", placed at (row,col) coordinates
----                 relative to:
----                 • "editor" The global editor grid
----                 • "win" Window given by the `win` field, or
----                   current window.
----                 • "cursor" Cursor position in current window.
----
----               • win: |window-ID| for relative="win".
----               • anchor: Decides which corner of the float to
----                 place at (row,col):
----                 • "NW" northwest (default)
----                 • "NE" northeast
----                 • "SW" southwest
----                 • "SE" southeast
----
----               • width: Window width (in character cells).
----                 Minimum of 1.
----               • height: Window height (in character cells).
----                 Minimum of 1.
----               • bufpos: Places float relative to buffer text
----                 (only when relative="win"). Takes a tuple of
----                 zero-indexed [line, column]. `row` and `col` if given are applied relative to this
----                 position, else they default to:
----                 • `row=1` and `col=0` if `anchor` is "NW" or
----                   "NE"
----                 • `row=0` and `col=0` if `anchor` is "SW" or
----                   "SE" (thus like a tooltip near the buffer
----                   text).
----
----               • row: Row position in units of "screen cell
----                 height", may be fractional.
----               • col: Column position in units of "screen cell
----                 width", may be fractional.
----               • focusable: Enable focus by user actions
----                 (wincmds, mouse events). Defaults to true.
----                 Non-focusable windows can be entered by
----                 |nvim_set_current_win()|.
----               • external: GUI should display the window as an
----                 external top-level window. Currently accepts
----                 no other positioning configuration together
----                 with this.
----               • zindex: Stacking order. floats with higher `zindex` go on top on floats with lower indices. Must
----                 be larger than zero. The following screen
----                 elements have hard-coded z-indices:
----                 • 100: insert completion popupmenu
----                 • 200: message scrollback
----                 • 250: cmdline completion popupmenu (when
----                   wildoptions+=pum) The default value for
----                   floats are 50. In general, values below 100
----                   are recommended, unless there is a good
----                   reason to overshadow builtin elements.
----
----               • style: Configure the appearance of the window.
----                 Currently only takes one non-empty value:
----                 • "minimal" Nvim will display the window with
----                   many UI options disabled. This is useful
----                   when displaying a temporary float where the
----                   text should not be edited. Disables
----                   'number', 'relativenumber', 'cursorline',
----                   'cursorcolumn', 'foldcolumn', 'spell' and
----                   'list' options. 'signcolumn' is changed to
----                   `auto` and 'colorcolumn' is cleared. The
----                   end-of-buffer region is hidden by setting
----                   `eob` flag of 'fillchars' to a space char,
----                   and clearing the |EndOfBuffer| region in
----                   'winhighlight'.
----
----               • border: Style of (optional) window border.
----                 This can either be a string or an array. The
----                 string values are
----                 • "none": No border (default).
----                 • "single": A single line box.
----                 • "double": A double line box.
----                 • "rounded": Like "single", but with rounded
----                   corners ("╭" etc.).
----                 • "solid": Adds padding by a single whitespace
----                   cell.
----                 • "shadow": A drop shadow effect by blending
----                   with the background.
----                 • If it is an array, it should have a length
----                   of eight or any divisor of eight. The array
----                   will specifify the eight chars building up
----                   the border in a clockwise fashion starting
----                   with the top-left corner. As an example, the
----                   double box style could be specified as [
----                   "╔", "═" ,"╗", "║", "╝", "═", "╚", "║" ]. If
----                   the number of chars are less than eight,
----                   they will be repeated. Thus an ASCII border
----                   could be specified as [ "/", "-", "\\", "|"
----                   ], or all chars the same as [ "x" ]. An
----                   empty string can be used to turn off a
----                   specific border, for instance, [ "", "", "",
----                   ">", "", "", "", "<" ] will only make
----                   vertical borders but not horizontal ones. By
----                   default, `FloatBorder` highlight is used,
----                   which links to `WinSeparator` when not
----                   defined. It could also be specified by
----                   character: [ {"+", "MyCorner"}, {"x",
----                   "MyBorder"} ].
----
----               • noautocmd: If true then no buffer-related
----                 autocommand events such as |BufEnter|,
----                 |BufLeave| or |BufWinEnter| may fire from
----                 calling this function.
---- @return any #Window handle, or 0 on error
-function vim.api.nvim_open_win(buffer, enter, config) end
 

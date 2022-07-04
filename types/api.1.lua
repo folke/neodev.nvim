@@ -1,6 +1,146 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Gets the current list of window handles.
+--- @return any #List of window handles
+function vim.api.nvim_list_wins() end
+
+-- Sets the current editor state from the given |context| map.
+--- @param dict dictionary #|Context| map.
+function vim.api.nvim_load_context(dict) end
+
+-- Notify the user with a message
+--- @param msg string #Message to display to the user
+--- @param log_level integer #The log level
+--- @param opts dictionary #Reserved for future use.
+function vim.api.nvim_notify(msg, log_level, opts) end
+
+-- Open a terminal instance in a buffer
+--- @param buffer buffer #the buffer to use (expected to be empty)
+--- @param opts table<string, luaref> #Optional parameters.
+---               • on_input: lua callback for input sent, i e
+---                 keypresses in terminal mode. Note: keypresses
+---                 are sent raw as they would be to the pty
+---                 master end. For instance, a carriage return is
+---                 sent as a "\r", not as a "\n". |textlock|
+---                 applies. It is possible to call
+---                 |nvim_chan_send| directly in the callback
+---                 however. ["input", term, bufnr, data]
+--- @return any #Channel id, or 0 on error
+function vim.api.nvim_open_term(buffer, opts) end
+
+-- Open a new window.
+--- @param buffer buffer #Buffer to display, or 0 for current buffer
+--- @param enter boolean #Enter the window (make it the current window)
+--- @param config dict(float_config) * #Map defining the window configuration. Keys:
+---               • relative: Sets the window layout to
+---                 "floating", placed at (row,col) coordinates
+---                 relative to:
+---                 • "editor" The global editor grid
+---                 • "win" Window given by the `win` field, or
+---                   current window.
+---                 • "cursor" Cursor position in current window.
+---
+---               • win: |window-ID| for relative="win".
+---               • anchor: Decides which corner of the float to
+---                 place at (row,col):
+---                 • "NW" northwest (default)
+---                 • "NE" northeast
+---                 • "SW" southwest
+---                 • "SE" southeast
+---
+---               • width: Window width (in character cells).
+---                 Minimum of 1.
+---               • height: Window height (in character cells).
+---                 Minimum of 1.
+---               • bufpos: Places float relative to buffer text
+---                 (only when relative="win"). Takes a tuple of
+---                 zero-indexed [line, column]. `row` and `col` if given are applied relative to this
+---                 position, else they default to:
+---                 • `row=1` and `col=0` if `anchor` is "NW" or
+---                   "NE"
+---                 • `row=0` and `col=0` if `anchor` is "SW" or
+---                   "SE" (thus like a tooltip near the buffer
+---                   text).
+---
+---               • row: Row position in units of "screen cell
+---                 height", may be fractional.
+---               • col: Column position in units of "screen cell
+---                 width", may be fractional.
+---               • focusable: Enable focus by user actions
+---                 (wincmds, mouse events). Defaults to true.
+---                 Non-focusable windows can be entered by
+---                 |nvim_set_current_win()|.
+---               • external: GUI should display the window as an
+---                 external top-level window. Currently accepts
+---                 no other positioning configuration together
+---                 with this.
+---               • zindex: Stacking order. floats with higher `zindex` go on top on floats with lower indices. Must
+---                 be larger than zero. The following screen
+---                 elements have hard-coded z-indices:
+---                 • 100: insert completion popupmenu
+---                 • 200: message scrollback
+---                 • 250: cmdline completion popupmenu (when
+---                   wildoptions+=pum) The default value for
+---                   floats are 50. In general, values below 100
+---                   are recommended, unless there is a good
+---                   reason to overshadow builtin elements.
+---
+---               • style: Configure the appearance of the window.
+---                 Currently only takes one non-empty value:
+---                 • "minimal" Nvim will display the window with
+---                   many UI options disabled. This is useful
+---                   when displaying a temporary float where the
+---                   text should not be edited. Disables
+---                   'number', 'relativenumber', 'cursorline',
+---                   'cursorcolumn', 'foldcolumn', 'spell' and
+---                   'list' options. 'signcolumn' is changed to
+---                   `auto` and 'colorcolumn' is cleared. The
+---                   end-of-buffer region is hidden by setting
+---                   `eob` flag of 'fillchars' to a space char,
+---                   and clearing the |EndOfBuffer| region in
+---                   'winhighlight'.
+---
+---               • border: Style of (optional) window border.
+---                 This can either be a string or an array. The
+---                 string values are
+---                 • "none": No border (default).
+---                 • "single": A single line box.
+---                 • "double": A double line box.
+---                 • "rounded": Like "single", but with rounded
+---                   corners ("╭" etc.).
+---                 • "solid": Adds padding by a single whitespace
+---                   cell.
+---                 • "shadow": A drop shadow effect by blending
+---                   with the background.
+---                 • If it is an array, it should have a length
+---                   of eight or any divisor of eight. The array
+---                   will specifify the eight chars building up
+---                   the border in a clockwise fashion starting
+---                   with the top-left corner. As an example, the
+---                   double box style could be specified as [
+---                   "╔", "═" ,"╗", "║", "╝", "═", "╚", "║" ]. If
+---                   the number of chars are less than eight,
+---                   they will be repeated. Thus an ASCII border
+---                   could be specified as [ "/", "-", "\\", "|"
+---                   ], or all chars the same as [ "x" ]. An
+---                   empty string can be used to turn off a
+---                   specific border, for instance, [ "", "", "",
+---                   ">", "", "", "", "<" ] will only make
+---                   vertical borders but not horizontal ones. By
+---                   default, `FloatBorder` highlight is used,
+---                   which links to `WinSeparator` when not
+---                   defined. It could also be specified by
+---                   character: [ {"+", "MyCorner"}, {"x",
+---                   "MyBorder"} ].
+---
+---               • noautocmd: If true then no buffer-related
+---                 autocommand events such as |BufEnter|,
+---                 |BufLeave| or |BufWinEnter| may fire from
+---                 calling this function.
+--- @return any #Window handle, or 0 on error
+function vim.api.nvim_open_win(buffer, enter, config) end
+
 -- Writes a message to the Vim output buffer. Does not append
 -- "\n", the message is buffered (won't display) until a linefeed
 -- is written.
@@ -13,11 +153,18 @@ function vim.api.nvim_out_write(str) end
 --- @return any #Dictionary containing command information, with these
 ---     keys:
 ---     • cmd: (string) Command name.
----     • line1: (number) Starting line of command range. Only
----       applicable if command can take a range.
----     • line2: (number) Final line of command range. Only
----       applicable if command can take a range.
----     • bang: (boolean) Whether command contains a bang (!)
+---     • range: (array) Command <range>. Can have 0-2 elements
+---       depending on how many items the range contains. Has no
+---       elements if command doesn't accept a range or if no
+---       range was specified, one element if only a single range
+---       item was specified and two elements if both range items
+---       were specified.
+---     • count: (number) Any |<count>| that was supplied to the
+---       command. -1 if command cannot take a count.
+---     • reg: (number) The optional command |<register>|, if
+---       specified. Empty string if not specified or if command
+---       cannot take a register.
+---     • bang: (boolean) Whether command contains a |<bang>| (!)
 ---       modifier.
 ---     • args: (array) Command arguments.
 ---     • addr: (string) Value of |:command-addr|. Uses short
@@ -36,8 +183,14 @@ function vim.api.nvim_out_write(str) end
 ---         is treated as the start of a comment.
 ---
 ---     • mods: (dictionary) |:command-modifiers|.
+---       • filter: (dictionary) |:filter|.
+---         • pattern: (string) Filter pattern. Empty string if
+---           there is no filter.
+---         • force: (boolean) Whether filter is inverted or not.
+---
 ---       • silent: (boolean) |:silent|.
 ---       • emsg_silent: (boolean) |:silent!|.
+---       • unsilent: (boolean) |:unsilent|.
 ---       • sandbox: (boolean) |:sandbox|.
 ---       • noautocmd: (boolean) |:noautocmd|.
 ---       • browse: (boolean) |:browse|.
@@ -50,7 +203,7 @@ function vim.api.nvim_out_write(str) end
 ---       • lockmarks: (boolean) |:lockmarks|.
 ---       • noswapfile: (boolean) |:noswapfile|.
 ---       • tab: (integer) |:tab|.
----       • verbose: (integer) |:verbose|.
+---       • verbose: (integer) |:verbose|. -1 when omitted.
 ---       • vertical: (boolean) |:vertical|.
 ---       • split: (string) Split modifier string, is an empty
 ---         string when there's no split modifier. If there is a
@@ -292,8 +445,27 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 ---              |nvim_create_namespace()|. Use 0 to set a
 ---              highlight group globally |:highlight|.
 --- @param name string #Highlight group name, e.g. "ErrorMsg"
---- @param val dict(highlight) * #Highlight definition map, like |synIDattr()|. In
----              addition, the following keys are recognized:
+--- @param val dict(highlight) * #Highlight definition map, accepts the following
+---              keys:
+---              • fg (or foreground): color name or "#RRGGBB",
+---                see note.
+---              • bg (or background): color name or "#RRGGBB",
+---                see note.
+---              • sp (or special): color name or "#RRGGBB"
+---              • blend: integer between 0 and 100
+---              • bold: boolean
+---              • standout: boolean
+---              • underline: boolean
+---              • undercurl: boolean
+---              • underdouble: boolean
+---              • underdotted: boolean
+---              • underdashed: boolean
+---              • strikethrough: boolean
+---              • italic: boolean
+---              • reverse: boolean
+---              • nocombine: boolean
+---              • link: name of another highlight group to link
+---                to, see |:hi-link|.
 ---              • default: Don't override existing definition
 ---                |:hi-default|
 ---              • ctermfg: Sets foreground of cterm color
@@ -301,8 +473,9 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 ---              • ctermbg: Sets background of cterm color
 ---                |highlight-ctermbg|
 ---              • cterm: cterm attribute map, like
----                |highlight-args|. Note: Attributes default to
----                those set for `gui` if not set.
+---                |highlight-args|. If not set, cterm attributes
+---                will match those from the attribute map
+---                documented above.
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
 -- Sets a global |mapping| for the given mode.
@@ -311,13 +484,15 @@ function vim.api.nvim_set_hl(ns_id, name, val) end
 ---             for |:map|.
 --- @param lhs string #Left-hand-side |{lhs}| of the mapping.
 --- @param rhs string #Right-hand-side |{rhs}| of the mapping.
---- @param opts dict(keymap) * #Optional parameters map. Accepts all
----             |:map-arguments| as keys excluding |<buffer>| but
----             including |noremap| and "desc". "desc" can be used
----             to give a description to keymap. When called from
----             Lua, also accepts a "callback" key that takes a
----             Lua function to call when the mapping is executed.
----             Values are Booleans. Unknown key is an error.
+--- @param opts dict(keymap) * #Optional parameters map: keys are
+---             |:map-arguments|, values are booleans (default
+---             false). Accepts all |:map-arguments| as keys
+---             excluding |<buffer>| but including |noremap| and
+---             "desc". Unknown key is an error. "desc" can be
+---             used to give a description to the mapping. When
+---             called from Lua, also accepts a "callback" key
+---             that takes a Lua function to call when the mapping
+---             is executed.
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
 -- Sets the global value of an option.
@@ -334,6 +509,10 @@ function vim.api.nvim_set_option(name, value) end
 --- @param opts dict(option) * #Optional parameters
 ---              • scope: One of 'global' or 'local'. Analogous to
 ---                |:setglobal| and |:setlocal|, respectively.
+---              • win: |window-ID|. Used for setting window local
+---                option.
+---              • buf: Buffer number. Used for setting buffer
+---                local option.
 function vim.api.nvim_set_option_value(name, value, opts) end
 
 -- Sets a global (g:) variable.
@@ -347,7 +526,7 @@ function vim.api.nvim_set_var(name, value) end
 function vim.api.nvim_set_vvar(name, value) end
 
 -- Calculates the number of display cells occupied by `text`.
--- <Tab> counts as one cell.
+-- Control characters including <Tab> count as one cell.
 --- @param text string #Some text
 --- @return any #Number of cells
 function vim.api.nvim_strwidth(text) end
