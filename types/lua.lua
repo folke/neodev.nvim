@@ -1,11 +1,6 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
--- Add new filetype mappings.
---- @param filetypes any #table A table containing new filetype maps
----                  (see example).
-function vim.add(filetypes) end
-
 function vim.connection_failure_errmsg(consequence) end
 
 -- Deep compare values for equality
@@ -31,19 +26,6 @@ function vim.deepcopy(orig) end
 --- @return any #timer luv timer object
 function vim.defer_fn(fn, timeout) end
 
--- Remove an existing mapping. Examples: >
---
---    vim.keymap.del('n', 'lhs')
---
---    vim.keymap.del({'n', 'i', 'v'}, '<leader>w', { buffer = 5 })
---
--- <
---- @param opts any #table A table of optional arguments:
----             • buffer: (number or boolean) Remove a mapping
----               from the given buffer. When "true" or 0, use the
----               current buffer.
-function vim.del(modes, lhs, opts) end
-
 -- Display a deprecation notification to the user.
 --- @param name any #string Deprecated function.
 --- @param alternative any #string|nil Preferred alternative function.
@@ -59,6 +41,18 @@ function vim.deprecate(name, alternative, version, plugin) end
 --- @return any #(boolean) true if `suffix` is a suffix of s
 function vim.endswith(s, suffix) end
 
+-- Add new filetype mappings.
+--- @param filetypes any #table A table containing new filetype maps
+---                  (see example).
+function vim.filetype.add(filetypes) end
+
+-- Set the filetype for the given buffer from a file name.
+--- @param name any #string File name (can be an absolute or relative
+---              path)
+--- @param bufnr any #number|nil The buffer to set the filetype for.
+---              Defaults to the current buffer.
+function vim.filetype.match(name, bufnr) end
+
 -- Splits a string at each instance of a separator.
 --- @param s any #String to split
 --- @param sep any #Separator string or pattern
@@ -67,30 +61,66 @@ function vim.endswith(s, suffix) end
 --- @return any #Iterator over the split components
 function vim.gsplit(s, sep, plain) end
 
--- Prompts the user for input
---- @param opts any #table Additional options. See |input()|
----                   • prompt (string|nil) Text of the prompt.
----                     Defaults to `Input:`.
----                   • default (string|nil) Default reply to the
----                     input
----                   • completion (string|nil) Specifies type of
----                     completion supported for input. Supported
----                     types are the same that can be supplied to
----                     a user-defined command using the
----                     "-complete=" argument. See
----                     |:command-completion|
----                   • highlight (function) Function that will be
----                     used for highlighting user inputs.
---- @param on_confirm any #function ((input|nil) -> ()) Called once the
----                   user confirms or abort the input. `input` is
----                   what the user typed. `nil` if the user
----                   aborted the dialog.
-function vim.input(opts, on_confirm) end
-
 -- Returns true if object `f` can be called as a function.
 --- @param f any #Any object
 --- @return any #true if `f` is callable, else false
 function vim.is_callable(f) end
+
+-- Remove an existing mapping. Examples: >
+--
+--    vim.keymap.del('n', 'lhs')
+--
+--    vim.keymap.del({'n', 'i', 'v'}, '<leader>w', { buffer = 5 })
+--
+-- <
+--- @param opts any #table A table of optional arguments:
+---             • buffer: (number or boolean) Remove a mapping
+---               from the given buffer. When "true" or 0, use the
+---               current buffer.
+function vim.keymap.del(modes, lhs, opts) end
+
+-- Add a new |mapping|. Examples: >
+--
+--    -- Can add mapping to Lua functions
+--    vim.keymap.set('n', 'lhs', function() print("real lua function") end)
+--
+--    -- Can use it to map multiple modes
+--    vim.keymap.set({'n', 'v'}, '<leader>lr', vim.lsp.buf.references, { buffer=true })
+--
+--    -- Can add mapping for specific buffer
+--    vim.keymap.set('n', '<leader>w', "<cmd>w<cr>", { silent = true, buffer = 5 })
+--
+--    -- Expr mappings
+--    vim.keymap.set('i', '<Tab>', function()
+--      return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
+--    end, { expr = true })
+--    -- <Plug> mappings
+--    vim.keymap.set('n', '[%', '<Plug>(MatchitNormalMultiBackward)')
+--
+-- <
+--- @param mode any #string|table Same mode short names as
+---             |nvim_set_keymap()|. Can also be list of modes to
+---             create mapping on multiple modes.
+--- @param lhs any #string Left-hand side |{lhs}| of the mapping.
+--- @param rhs any #string|function Right-hand side |{rhs}| of the
+---             mapping. Can also be a Lua function. If a Lua
+---             function and `opts.expr == true`, returning `nil`
+---             is equivalent to an empty string.
+--- @param opts any #table A table of |:map-arguments| such as
+---             "silent". In addition to the options listed in
+---             |nvim_set_keymap()|, this table also accepts the
+---             following keys:
+---             • buffer: (number or boolean) Add a mapping to the
+---               given buffer. When "true" or 0, use the current
+---               buffer.
+---             • replace_keycodes: (boolean, default true) When
+---               both this and expr is "true",
+---               |nvim_replace_termcodes()| is applied to the
+---               result of Lua expr maps.
+---             • remap: (boolean) Make the mapping recursive.
+---               This is the inverse of the "noremap" option from
+---               |nvim_set_keymap()|. Default `false`.
+function vim.keymap.set(mode, lhs, rhs, opts) end
 
 -- Extends a list-like table with the values of another list-like
 -- table.
@@ -108,13 +138,6 @@ function vim.list_extend(dst, src, start, finish) end
 --- @param finish any #integer End range of slice
 --- @return any #Copy of table sliced from start to finish (inclusive)
 function vim.list_slice(list, start, finish) end
-
--- Set the filetype for the given buffer from a file name.
---- @param name any #string File name (can be an absolute or relative
----              path)
---- @param bufnr any #number|nil The buffer to set the filetype for.
----              Defaults to the current buffer.
-function vim.match(name, bufnr) end
 
 -- Display a notification to the user.
 --- @param msg any #string Content of the notification to show to the
@@ -187,70 +210,6 @@ function vim.region(bufnr, pos1, pos2, regtype, inclusive) end
 
 -- Defers callback `cb` until the Nvim API is safe to call.
 function vim.schedule_wrap(cb) end
-
--- Prompts the user to pick a single item from a collection of
--- entries
---- @param items any #table Arbitrary items
---- @param opts any #table Additional options
----                  • prompt (string|nil) Text of the prompt.
----                    Defaults to `Select one of:`
----                  • format_item (function item -> text)
----                    Function to format an individual item from
----                    `items`. Defaults to `tostring`.
----                  • kind (string|nil) Arbitrary hint string
----                    indicating the item shape. Plugins
----                    reimplementing `vim.ui.select` may wish to
----                    use this to infer the structure or
----                    semantics of `items`, or the context in
----                    which select() was called.
---- @param on_choice any #function ((item|nil, idx|nil) -> ()) Called
----                  once the user made a choice. `idx` is the
----                  1-based index of `item` within `items`. `nil`
----                  if the user aborted the dialog.
-function vim.select(items, opts, on_choice) end
-
--- Add a new |mapping|. Examples: >
---
---    -- Can add mapping to Lua functions
---    vim.keymap.set('n', 'lhs', function() print("real lua function") end)
---
---    -- Can use it to map multiple modes
---    vim.keymap.set({'n', 'v'}, '<leader>lr', vim.lsp.buf.references, { buffer=true })
---
---    -- Can add mapping for specific buffer
---    vim.keymap.set('n', '<leader>w', "<cmd>w<cr>", { silent = true, buffer = 5 })
---
---    -- Expr mappings
---    vim.keymap.set('i', '<Tab>', function()
---      return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
---    end, { expr = true })
---    -- <Plug> mappings
---    vim.keymap.set('n', '[%', '<Plug>(MatchitNormalMultiBackward)')
---
--- <
---- @param mode any #string|table Same mode short names as
----             |nvim_set_keymap()|. Can also be list of modes to
----             create mapping on multiple modes.
---- @param lhs any #string Left-hand side |{lhs}| of the mapping.
---- @param rhs any #string|function Right-hand side |{rhs}| of the
----             mapping. Can also be a Lua function. If a Lua
----             function and `opts.expr == true`, returning `nil`
----             is equivalent to an empty string.
---- @param opts any #table A table of |:map-arguments| such as
----             "silent". In addition to the options listed in
----             |nvim_set_keymap()|, this table also accepts the
----             following keys:
----             • buffer: (number or boolean) Add a mapping to the
----               given buffer. When "true" or 0, use the current
----               buffer.
----             • replace_keycodes: (boolean, default true) When
----               both this and expr is "true",
----               |nvim_replace_termcodes()| is applied to the
----               result of Lua expr maps.
----             • remap: (boolean) Make the mapping recursive.
----               This is the inverse of the "noremap" option from
----               |nvim_set_keymap()|. Default `false`.
-function vim.set(mode, lhs, rhs, opts) end
 
 -- Splits a string at each instance of a separator.
 --- @param s any #String to split
@@ -359,6 +318,47 @@ function vim.tbl_values(t) end
 --- @return any #String with whitespace removed from its beginning and end
 function vim.trim(s) end
 
+-- Prompts the user for input
+--- @param opts any #table Additional options. See |input()|
+---                   • prompt (string|nil) Text of the prompt.
+---                     Defaults to `Input:`.
+---                   • default (string|nil) Default reply to the
+---                     input
+---                   • completion (string|nil) Specifies type of
+---                     completion supported for input. Supported
+---                     types are the same that can be supplied to
+---                     a user-defined command using the
+---                     "-complete=" argument. See
+---                     |:command-completion|
+---                   • highlight (function) Function that will be
+---                     used for highlighting user inputs.
+--- @param on_confirm any #function ((input|nil) -> ()) Called once the
+---                   user confirms or abort the input. `input` is
+---                   what the user typed. `nil` if the user
+---                   aborted the dialog.
+function vim.ui.input(opts, on_confirm) end
+
+-- Prompts the user to pick a single item from a collection of
+-- entries
+--- @param items any #table Arbitrary items
+--- @param opts any #table Additional options
+---                  • prompt (string|nil) Text of the prompt.
+---                    Defaults to `Select one of:`
+---                  • format_item (function item -> text)
+---                    Function to format an individual item from
+---                    `items`. Defaults to `tostring`.
+---                  • kind (string|nil) Arbitrary hint string
+---                    indicating the item shape. Plugins
+---                    reimplementing `vim.ui.select` may wish to
+---                    use this to infer the structure or
+---                    semantics of `items`, or the context in
+---                    which select() was called.
+--- @param on_choice any #function ((item|nil, idx|nil) -> ()) Called
+---                  once the user made a choice. `idx` is the
+---                  1-based index of `item` within `items`. `nil`
+---                  if the user aborted the dialog.
+function vim.ui.select(items, opts, on_choice) end
+
 -- Validates a parameter specification (types and values).
 --- @param opt any #table of parameter names to validations. Each key
 ---            is a parameter name; each value is a tuple in one
@@ -382,4 +382,3 @@ function vim.trim(s) end
 ---               • msg: (optional) error string if validation
 ---                 fails
 function vim.validate(opt) end
-
