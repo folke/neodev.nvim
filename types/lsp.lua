@@ -84,18 +84,8 @@ function vim.lsp.completion(context) end
 
 -- Returns the range table for the difference between prev and
 -- curr lines
---- @param prev_lines any #(table) list of lines
---- @param curr_lines any #(table) list of lines
---- @param firstline any #(number) line to begin search for first
----                        difference
---- @param lastline any #(number) line to begin search in
----                        old_lines for last difference
---- @param new_lastline any #(number) line to begin search in
----                        new_lines for last difference
---- @param offset_encoding any #(string) encoding requested by language
----                        server
 --- @return any #(table) TextDocumentContentChangeEvent see https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentContentChangeEvent
-function vim.lsp.compute_diff(prev_lines, curr_lines, firstline, lastline, new_lastline, offset_encoding, line_ending) end
+function vim.lsp.compute_diff(___MissingCloseParenHere___) end
 
 -- Converts any of `MarkedString` | `MarkedString[]` |
 -- `MarkupContent` into a list of lines containing valid

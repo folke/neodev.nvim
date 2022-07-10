@@ -1,6 +1,35 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- string	(default "make")
+-- 			global or local to buffer |global-local|
+-- 	Program to use for the ":make" command.  See |:make_makeprg|.
+-- 	This option may contain '%' and '#' characters (see  |:_%| and |:_#|),
+-- 	which are expanded to the current and alternate file name.  Use |::S|
+-- 	to escape file names in case they contain special characters.
+-- 	Environment variables are expanded |:set_env|.  See |option-backslash|
+-- 	about including spaces and backslashes.
+-- 	Note that a '|' must be escaped twice: once for ":set" and once for
+-- 	the interpretation of a command.  When you use a filter called
+-- 	"myfilter" do it like this: >
+-- 	    :set makeprg=gmake\ \\\|\ myfilter
+-- <	The placeholder "$*" can be given (even multiple times) to specify
+-- 	where the arguments will be included, for example: >
+-- 	    :set makeprg=latex\ \\\\nonstopmode\ \\\\input\\{$*}
+-- <	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+vim.o.makeprg = "make"
+-- number	(default depends on the build)
+-- 			global
+-- 	Specifies the python version used for pyx* functions and commands
+-- 	|python_x|.  The default value is as follows:
+vim.o.pyxversion = "3"
+-- boolean (default: off)
+-- 			global
+-- 	When on allow some options that are an expression to be set in the
+-- 	modeline.  Check the option for whether it is affected by
+-- 	'modelineexpr'.  Also see |modeline|.
+vim.o.modelineexpr = "false"
 -- string	(default: "-c"; Windows: "/s /c")
 -- 			global
 -- 	Flag passed to the shell to execute "!" and ":!" commands; e.g.,
@@ -15,24 +44,20 @@
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.o.shellcmdflag = "-c"
--- boolean (default: off)
+-- string	(default: see below)
 -- 			global
--- 	When on allow some options that are an expression to be set in the
--- 	modeline.  Check the option for whether it is affected by
--- 	'modelineexpr'.  Also see |modeline|.
-vim.o.modelineexpr = "false"
--- number	(default 1)
+-- 	Expression used to print the PostScript produced with |:hardcopy|.
+-- 	See |pexpr-option|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+vim.o.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"
+-- boolean	(default off)
 -- 			global
--- 	The minimal height of a window, when it's not the current window.
--- 	This is a hard minimum, windows will never become smaller.
--- 	When set to zero, windows may be "squashed" to zero lines (i.e. just a
--- 	status bar) if necessary.  They will return to at least one line when
--- 	they become active (since the cursor has to have somewhere to go.)
--- 	Use 'winheight' to set the minimal height of the current window.
--- 	This option is only checked when making a window smaller.  Don't use a
--- 	large number, it will cause errors when opening more than a few
--- 	windows.  A value of 0 to 3 is reasonable.
-vim.o.winminheight = "1"
+-- 	Makes the 'g' and 'c' flags of the ":substitute" command to be
+-- 	toggled each time the flag is given.  See |complex-change|.  See
+-- 	also 'gdefault' option.
+-- 	Switching this option on may break plugins!
+vim.o.edcompatible = "false"
 -- boolean	(default on)
 -- 			global
 -- 	Allows for mappings to work recursively.  If you do not want this for

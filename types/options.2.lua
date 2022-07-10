@@ -1,6 +1,98 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- boolean	(default off)
+-- 			global
+-- 			{only for Windows}
+-- 	Enable reading and writing from devices.  This may get Vim stuck on a
+-- 	device that can be opened but doesn't actually do the I/O.  Therefore
+-- 	it is off by default.
+-- 	Note that on Windows editing "aux.h", "lpt1.txt" and the like also
+-- 	result in editing a device.
+vim.o.opendevice = "false"
+-- string	(default "pum,tagfile")
+-- 			global
+-- 	List of words that change how |cmdline-completion| is done.
+-- 	  pum		Display the completion matches using the popupmenu
+-- 			in the same style as the |ins-completion-menu|.
+-- 	  tagfile	When using CTRL-D to list matching tags, the kind of
+-- 			tag and the file of the tag is listed.	Only one match
+-- 			is displayed per line.  Often used tag kinds are:
+-- 				d	#define
+-- 				f	function
+vim.o.wildoptions = "pum,tagfile"
+-- string	(default ""; with GTK+ GUI: "utf-8"; with
+-- 						    Macintosh GUI: "macroman")
+-- 			global
+-- 	Encoding used for the terminal.  This specifies what character
+-- 	encoding the keyboard produces and the display will understand.  For
+-- 	the GUI it only applies to the keyboard ('encoding' is used for the
+-- 	display).  Except for the Mac when 'macatsui' is off, then
+-- 	'termencoding' should be "macroman".
+-- 								*E617*
+-- 	Note: This does not apply to the GTK+ GUI.  After the GUI has been
+-- 	successfully initialized, 'termencoding' is forcibly set to "utf-8".
+-- 	Any attempts to set a different value will be rejected, and an error
+-- 	message is shown.
+-- 	For the Win32 GUI and console versions 'termencoding' is not used,
+-- 	because the Win32 system always passes Unicode characters.
+-- 	When empty, the same encoding is used as for the 'encoding' option.
+-- 	This is the normal value.
+-- 	Not all combinations for 'termencoding' and 'encoding' are valid.  See
+-- 	|encoding-table|.
+-- 	The value for this option must be supported by internal conversions or
+-- 	iconv().  When this is not possible no conversion will be done and you
+-- 	will probably experience problems with non-ASCII characters.
+-- 	Example: You are working with the locale set to euc-jp (Japanese) and
+-- 	want to edit a UTF-8 file: >
+-- 		:let &termencoding = &encoding
+-- 		:set encoding=utf-8
+-- <	You need to do this when your system has no locale support for UTF-8.
+vim.o.termencoding = ""
+-- string	(default $SHELL or "sh",
+-- 					Windows: "cmd.exe")
+-- 			global
+-- 	Name of the shell to use for ! and :! commands.  When changing the
+-- 	value also check these options: 'shellpipe', 'shellslash'
+-- 	'shellredir', 'shellquote', 'shellxquote' and 'shellcmdflag'.
+-- 	It is allowed to give an argument to the command, e.g.  "csh -f".
+-- 	See |option-backslash| about including spaces and backslashes.
+-- 	Environment variables are expanded |:set_env|.
+-- 	If the name of the shell contains a space, you might need to enclose
+-- 	it in quotes.  Example: >
+-- 		:set shell=\"c:\program\ files\unix\sh.exe\"\ -f
+-- <	Note the backslash before each quote (to avoid starting a comment) and
+-- 	each space (to avoid ending the option value), so better use |:let-&|
+-- 	like this: >
+-- 		:let &shell='"C:\Program Files\unix\sh.exe" -f'
+-- <	Also note that the "-f" is not inside the quotes, because it is not
+-- 	part of the command name.
+-- 							*shell-unquoting*
+-- 	Rules regarding quotes:
+-- 	1. Option is split on space and tab characters that are not inside
+-- 	   quotes: "abc def" runs shell named "abc" with additional argument
+-- 	   "def", '"abc def"' runs shell named "abc def" with no additional
+-- 	   arguments (here and below: additional means “additional to
+-- 	   'shellcmdflag'”).
+-- 	2. Quotes in option may be present in any position and any number:
+-- 	   '"abc"', '"a"bc', 'a"b"c', 'ab"c"' and '"a"b"c"' are all equivalent
+-- 	   to just "abc".
+-- 	3. Inside quotes backslash preceding backslash means one backslash.
+-- 	   Backslash preceding quote means one quote. Backslash preceding
+-- 	   anything else means backslash and next character literally:
+-- 	   '"a\\b"' is the same as "a\b", '"a\\"b"' runs shell named literally
+-- 	   'a"b', '"a\b"' is the same as "a\b" again.
+-- 	4. Outside of quotes backslash always means itself, it cannot be used
+-- 	   to escape quote: 'a\"b"' is the same as "a\b".
+-- 	Note that such processing is done after |:set| did its own round of
+-- 	unescaping, so to keep yourself sane use |:let-&| like shown above.
+-- 							*shell-powershell*
+-- 	To use powershell: >
+-- 		let &shell = has('win32') ? 'powershell' : 'pwsh'
+-- 		set shellquote= shellpipe=\| shellxquote=
+-- 		set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
+-- 		set shellredir=\|\ Out-File\ -Encoding\ UTF8
+vim.o.shell = "sh"
 -- string	(default "")
 -- 			global
 -- 	This option controls the behavior when switching between buffers.
@@ -309,14 +401,23 @@ vim.o.magic = "true"
 -- 	Ambiguous (such as Euro, Registered Sign, Copyright Sign, Greek
 -- 	letters, Cyrillic letters).
 vim.o.ambiwidth = "single"
--- string	(default "")
+-- string	(default "lastline,msgsep", Vi default: "")
 -- 			global
--- 	A comma separated list of these words:
--- 	    block	Allow virtual editing in Visual block mode.
--- 	    insert	Allow virtual editing in Insert mode.
--- 	    all		Allow virtual editing in all modes.
--- 	    onemore	Allow the cursor to move just past the end of the line
-vim.o.virtualedit = ""
+-- 	Change the way text is displayed.  This is comma separated list of
+-- 	flags:
+-- 	lastline	When included, as much as possible of the last line
+-- 			in a window will be displayed.  "@@@" is put in the
+-- 			last columns of the last screen line to indicate the
+-- 			rest of the line is not displayed.
+-- 	truncate	Like "lastline", but "@@@" is displayed in the first
+-- 			column of the last screen line.  Overrules "lastline".
+-- 	uhex		Show unprintable characters hexadecimal as <xx>
+-- 			instead of using ^C and ~C.
+-- 	msgsep		When showing messages longer than 'cmdheight', only
+-- 			scroll the message lines, not the entire screen. The
+-- 			separator line is decorated by |hl-MsgSeparator| and
+-- 			the "msgsep" flag of 'fillchars'.
+vim.o.display = "lastline,msgsep"
 -- string  (default "%<%f%h%m%=Page %N")
 -- 			global
 -- 	The format of the header produced in |:hardcopy| output.
@@ -600,15 +701,18 @@ vim.o.pumwidth = "15"
 -- 	The CJK character set to be used for CJK output from |:hardcopy|.
 -- 	See |pmbcs-option|.
 vim.o.printmbcharset = ""
--- string	(default: "")
+-- number	(default 1)
 -- 			global
--- 	When non-empty, overrides the file name used for |shada| (viminfo).
--- 	When equal to "NONE" no shada file will be read or written.
--- 	This option can be set with the |-i| command line flag.  The |--clean|
--- 	command line flag sets it to "NONE".
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.o.shadafile = ""
+-- 	The minimal height of a window, when it's not the current window.
+-- 	This is a hard minimum, windows will never become smaller.
+-- 	When set to zero, windows may be "squashed" to zero lines (i.e. just a
+-- 	status bar) if necessary.  They will return to at least one line when
+-- 	they become active (since the cursor has to have somewhere to go.)
+-- 	Use 'winheight' to set the minimal height of the current window.
+-- 	This option is only checked when making a window smaller.  Don't use a
+-- 	large number, it will cause errors when opening more than a few
+-- 	windows.  A value of 0 to 3 is reasonable.
+vim.o.winminheight = "1"
 -- boolean	(default on)
 -- 			global
 -- 	When on, the |tagstack| is used normally.  When off, a ":tag" or
@@ -708,23 +812,10 @@ vim.o.fileignorecase = "false"
 -- 	All are optional.  Items must be separated by a comma.
 vim.o.diffopt = "internal,filler,closeoff"
 vim.o.termpastefilter = "BS,HT,ESC,DEL"
--- string	(default: "folds,options,cursor,curdir")
+-- boolean	(default off)
 -- 			global
--- 	Changes the effect of the |:mkview| command.  It is a comma separated
--- 	list of words.  Each word enables saving and restoring something:
--- 	   word		save and restore ~
--- 	   cursor	cursor position in file and in window
--- 	   curdir	local current directory, if set with |:lcd|
--- 	   folds	manually created folds, opened/closed folds and local
--- 			fold options
--- 	   options	options and mappings local to a window or buffer (not
--- 			global values for local options)
--- 	   localoptions same as "options"
--- 	   slash	backslashes in file names replaced with forward
--- 			slashes
--- 	   unix		with Unix end-of-line format (single <NL>), even when
--- 			on Windows or DOS
-vim.o.viewoptions = "folds,cursor,curdir"
+-- 	When on: The tilde command "~" behaves like an operator.
+vim.o.tildeop = "false"
 -- number	(default 0)
 -- 			global
 -- 	Enables pseudo-transparency for the |popup-menu|. Valid values are in
@@ -950,108 +1041,3 @@ vim.o.keymodel = ""
 -- 	typed.  Also, updating the window title is postponed.  To force an
 -- 	update use |:redraw|.
 vim.o.lazyredraw = "false"
--- string	(default "%f:%l:%m,%f:%l%m,%f  %l%m")
--- 			global
--- 	Format to recognize for the ":grep" command output.
--- 	This is a scanf-like string that uses the same format as the
--- 	'errorformat' option: see |errorformat|.
-vim.o.grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
--- boolean (default off)
--- 			global
--- 			{not available when compiled without the |+cscope|
--- 			feature}
--- 	Give messages when adding a cscope database.  See |cscopeverbose|.
--- 	NOTE: This option is reset when 'compatible' is set.
-vim.o.cscopeverbose = "true"
--- number	(default depends on the build)
--- 			global
--- 	Specifies the python version used for pyx* functions and commands
--- 	|python_x|.  The default value is as follows:
-vim.o.pyxversion = "3"
--- number (default 12)
--- 			global
--- 	Default height for a preview window.  Used for |:ptag| and associated
--- 	commands.  Used for |CTRL-W_}| when no count is given.
-vim.o.previewheight = "12"
--- boolean (default off)
--- 			global
--- 	Enables the reading of .vimrc, .exrc and .gvimrc in the current
--- 	directory.
-vim.o.exrc = "false"
--- string	(default "egmrLT"   (MS-Windows))
--- 			global
--- 	This option only has an effect in the GUI version of Vim.  It is a
--- 	sequence of letters which describes what components and options of the
--- 	GUI should be used.
--- 	To avoid problems with flags that are added in the future, use the
--- 	"+=" and "-=" feature of ":set" |add-option-flags|.
-vim.o.guioptions = ""
--- string (default "")
--- 			global
--- 	When set to "all", a fold is closed when the cursor isn't in it and
--- 	its level is higher than 'foldlevel'.  Useful if you want folds to
--- 	automatically close when moving out of them.
-vim.o.foldclose = ""
--- boolean	(Vim default: on, Vi default: off)
--- 			global
--- 	If in Insert, Replace or Visual mode put a message on the last line.
--- 	The |hl-ModeMsg| highlight group determines the highlighting.
-vim.o.showmode = "true"
--- number	(default 1000)
--- 			global
--- 	Time in milliseconds to wait for a mapped sequence to complete.
-vim.o.timeoutlen = "1000"
--- string	(default "inclusive")
--- 			global
--- 	This option defines the behavior of the selection.  It is only used
--- 	in Visual and Select mode.
--- 	Possible values:
--- 	   value	past line     inclusive ~
--- 	   old		   no		yes
--- 	   inclusive	   yes		yes
--- 	   exclusive	   yes		no
--- 	"past line" means that the cursor is allowed to be positioned one
--- 	character past the line.
--- 	"inclusive" means that the last character of the selection is included
--- 	in an operation.  For example, when "x" is used to delete the
--- 	selection.
--- 	When "old" is used and 'virtualedit' allows the cursor to move past
--- 	the end of line the line break still isn't included.
--- 	Note that when "exclusive" is used and selecting from the end
--- 	backwards, you cannot include the last character of a line, when
--- 	starting in Normal mode and 'virtualedit' empty.
-vim.o.selection = "inclusive"
--- boolean	(default off, on when title can be restored)
--- 			global
--- 	When on, the icon text of the window will be set to the value of
--- 	'iconstring' (if it is not empty), or to the name of the file
--- 	currently being edited.  Only the last part of the name is used.
--- 	Overridden by the 'iconstring' option.
--- 	Only works if the terminal supports setting window icons.
-vim.o.icon = "false"
--- number	(default 1)
--- 			global
--- 	Minimal number of lines for the current window.  This is not a hard
--- 	minimum, Vim will use fewer lines if there is not enough room.  If the
--- 	focus goes to a window that is smaller, its size is increased, at the
--- 	cost of the height of other windows.
--- 	Set 'winheight' to a small number for normal editing.
--- 	Set it to 999 to make the current window fill most of the screen.
--- 	Other windows will be only 'winminheight' high.  This has the drawback
--- 	that ":all" will create only two windows.  To avoid "vim -o 1 2 3 4"
--- 	to create only two windows, set the option after startup is done,
--- 	using the |VimEnter| event: >
--- 		au VimEnter * set winheight=999
--- <	Minimum value is 1.
--- 	The height is not adjusted after one of the commands that change the
--- 	height of the current window.
--- 	'winheight' applies to the current window.  Use 'winminheight' to set
--- 	the minimal height for other windows.
-vim.o.winheight = "1"
--- boolean	(default off)
--- 			global
--- 	Makes the 'g' and 'c' flags of the ":substitute" command to be
--- 	toggled each time the flag is given.  See |complex-change|.  See
--- 	also 'gdefault' option.
--- 	Switching this option on may break plugins!
-vim.o.edcompatible = "false"

@@ -209,14 +209,100 @@ vim.o.include = "^\\s*#\\s*include"
 -- 		:let &guitabtooltip = "line one\nline two"
 -- <
 vim.o.guitabtooltip = ""
--- string	(default "")
+-- string	(Vi default: "", Vim default for MS-DOS,
+-- 				   Windows and OS/2: '100,<50,s10,h,rA:,rB:,
+-- 				   for Amiga: '100,<50,s10,h,rdf0:,rdf1:,rdf2:
+-- 				   for others: '100,<50,s10,h)
 -- 			global
--- 	This is a list of fonts which will be used for the GUI version of Vim.
--- 	In its simplest form the value is just one font name.  When
--- 	the font cannot be found you will get an error message.  To try other
--- 	font names a list can be specified, font names separated with commas.
--- 	The first valid font is used.
-vim.o.guifont = ""
+-- 			{not available when compiled without the |+viminfo|
+-- 			feature}
+-- 	When non-empty, the viminfo file is read upon startup and written
+-- 	when exiting Vim (see |viminfo-file|). Except when 'viminfofile' is
+-- 	"NONE".
+-- 	The string should be a comma separated list of parameters, each
+-- 	consisting of a single character identifying the particular parameter,
+-- 	followed by a number or string which specifies the value of that
+-- 	parameter.  If a particular character is left out, then the default
+-- 	value is used for that parameter.  The following is a list of the
+-- 	identifying characters and the effect of their value.
+-- 	CHAR	VALUE	~
+-- 							*viminfo-!*
+-- 	!	When included, save and restore global variables that start
+-- 		with an uppercase letter, and don't contain a lowercase
+-- 		letter.  Thus "KEEPTHIS and "K_L_M" are stored, but "KeepThis"
+-- 		and "_K_L_M" are not.  Nested List and Dict items may not be
+-- 		read back correctly, you end up with an empty item.
+-- 							*viminfo-quote*
+-- 	"	Maximum number of lines saved for each register.  Old name of
+-- 		the '<' item, with the disadvantage that you need to put a
+-- 		backslash before the ", otherwise it will be recognized as the
+-- 		start of a comment!
+-- 							*viminfo-%*
+-- 	%	When included, save and restore the buffer list.  If Vim is
+-- 		started with a file name argument, the buffer list is not
+-- 		restored.  If Vim is started without a file name argument, the
+-- 		buffer list is restored from the viminfo file.  Quickfix
+-- 		('buftype'), unlisted ('buflisted'), unnamed and buffers on
+-- 		removable media (|viminfo-r|) are not saved.
+-- 		When followed by a number, the number specifies the maximum
+-- 		number of buffers that are stored.  Without a number all
+-- 		buffers are stored.
+-- 							*viminfo-'*
+-- 	'	Maximum number of previously edited files for which the marks
+-- 		are remembered.  This parameter must always be included when
+-- 		'viminfo' is non-empty.
+-- 		Including this item also means that the |jumplist| and the
+-- 		|changelist| are stored in the viminfo file.
+-- 							*viminfo-/*
+-- 	/	Maximum number of items in the search pattern history to be
+-- 		saved.  If non-zero, then the previous search and substitute
+-- 		patterns are also saved.  When not included, the value of
+-- 		'history' is used.
+-- 							*viminfo-:*
+-- 	:	Maximum number of items in the command-line history to be
+-- 		saved.  When not included, the value of 'history' is used.
+-- 							*viminfo-<*
+-- 	<	Maximum number of lines saved for each register.  If zero then
+-- 		registers are not saved.  When not included, all lines are
+-- 		saved.  '"' is the old name for this item.
+-- 		Also see the 's' item below: limit specified in Kbyte.
+-- 							*viminfo-@*
+-- 	@	Maximum number of items in the input-line history to be
+-- 		saved.  When not included, the value of 'history' is used.
+-- 							*viminfo-c*
+-- 	c	When included, convert the text in the viminfo file from the
+-- 		'encoding' used when writing the file to the current
+-- 		'encoding'.  See |viminfo-encoding|.
+-- 							*viminfo-f*
+-- 	f	Whether file marks need to be stored.  If zero, file marks ('0
+-- 		to '9, 'A to 'Z) are not stored.  When not present or when
+-- 		non-zero, they are all stored.  '0 is used for the current
+-- 		cursor position (when exiting or when doing ":wviminfo").
+-- 							*viminfo-h*
+-- 	h	Disable the effect of 'hlsearch' when loading the viminfo
+-- 		file.  When not included, it depends on whether ":nohlsearch"
+-- 		has been used since the last search command.
+-- 							*viminfo-n*
+-- 	n	Name of the viminfo file.  The name must immediately follow
+-- 		the 'n'.  Must be at the end of the option!  If the
+-- 		'viminfofile' option is set, that file name overrides the one
+-- 		given here with 'viminfo'.  Environment variables are
+-- 		expanded when opening the file, not when setting the option.
+-- 							*viminfo-r*
+-- 	r	Removable media.  The argument is a string (up to the next
+-- 		',').  This parameter can be given several times.  Each
+-- 		specifies the start of a path for which no marks will be
+-- 		stored.  This is to avoid removable media.  For MS-DOS you
+-- 		could use "ra:,rb:", for Amiga "rdf0:,rdf1:,rdf2:".  You can
+-- 		also use it for temp files, e.g., for Unix: "r/tmp".  Case is
+-- 		ignored.  Maximum length of each 'r' argument is 50
+-- 		characters.
+-- 							*viminfo-s*
+-- 	s	Maximum size of an item in Kbyte.  If zero then registers are
+-- 		not saved.  Currently only applies to registers.  The default
+-- 		"s10" will exclude registers with more than 10 Kbyte of text.
+-- 		Also see the '<' item above: line count limit.
+vim.o.viminfo = ""
 -- number (default: -1)
 -- 			global
 -- 	Sets 'foldlevel' when starting to edit another buffer in a window.
@@ -413,6 +499,7 @@ vim.o.define = "^\\s*#\\s*define"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.o.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
+vim.o.mousescroll = "ver:3,hor:6"
 -- boolean	(default off)
 -- 			global
 -- 	Ring the bell (beep or screen flash) for error messages.  This only
@@ -512,11 +599,24 @@ vim.o.redrawtime = "2000"
 -- 	doesn't know where a file name starts or ends when doing completion.
 -- 	It most likely works better without a space in 'isfname'.
 vim.o.isfname = "@,48-57,/,.,-,_,+,,,#,$,%,~,="
--- string	(default empty, except for some systems)
+-- string	(default "menu")
 -- 			global
--- 	Sets the character encoding used when printing.
--- 	See |penc-option|.
-vim.o.printencoding = ""
+-- 			{only used in Win32}
+-- 	Some GUI versions allow the access to menu entries by using the ALT
+-- 	key in combination with a character that appears underlined in the
+-- 	menu.  This conflicts with the use of the ALT key for mappings and
+-- 	entering special characters.  This option tells what to do:
+-- 	  no	Don't use ALT keys for menus.  ALT key combinations can be
+-- 		mapped, but there is no automatic handling.
+-- 	  yes	ALT key handling is done by the windowing system.  ALT key
+-- 		combinations cannot be mapped.
+-- 	  menu	Using ALT in combination with a character that is a menu
+-- 		shortcut key, will be handled by the windowing system.  Other
+-- 		keys can be mapped.
+-- 	If the menu is disabled by excluding 'm' from 'guioptions', the ALT
+-- 	key is never used for the menu.
+-- 	This option is not used for <F10>; on Win32.
+vim.o.winaltkeys = "menu"
 -- boolean	(default on)
 -- 			global
 -- 	When there is a previous search pattern, highlight all its matches.
@@ -757,20 +857,8 @@ vim.o.matchtime = "5"
 -- 	For the ":substitute" command the number of substitutions is used
 -- 	instead of the number of lines.
 vim.o.report = "2"
--- string (default "")
--- 			global or local to buffer |global-local|
--- 	The name of an external program that will be used to format the lines
--- 	selected with the |gq| operator.  The program must take the input on
--- 	stdin and produce the output on stdout.  The Unix program "fmt" is
--- 	such a program.
--- 	If the 'formatexpr' option is not empty it will be used instead.
--- 	Otherwise, if 'formatprg' option is an empty string, the internal
--- 	format function will be used |C-indenting|.
--- 	Environment variables are expanded |:set_env|.  See |option-backslash|
--- 	about including spaces and backslashes.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.o.formatprg = ""
+-- Removed. |vim-differences|
+vim.o.ttyfast = "true"
 -- number	(default 0)
 -- 			global
 -- 	Maximum number of items to show in the popup menu
@@ -956,95 +1044,3 @@ vim.o.writedelay = "0"
 -- 	WARNING: It's easy to forget that you have changes in hidden buffers.
 -- 	Think twice when using ":q!" or ":qa!".
 vim.o.hidden = "true"
--- boolean	(default off)
--- 			global
--- 			{only for Windows}
--- 	Enable reading and writing from devices.  This may get Vim stuck on a
--- 	device that can be opened but doesn't actually do the I/O.  Therefore
--- 	it is off by default.
--- 	Note that on Windows editing "aux.h", "lpt1.txt" and the like also
--- 	result in editing a device.
-vim.o.opendevice = "false"
--- string	(default "pum,tagfile")
--- 			global
--- 	List of words that change how |cmdline-completion| is done.
--- 	  pum		Display the completion matches using the popupmenu
--- 			in the same style as the |ins-completion-menu|.
--- 	  tagfile	When using CTRL-D to list matching tags, the kind of
--- 			tag and the file of the tag is listed.	Only one match
--- 			is displayed per line.  Often used tag kinds are:
--- 				d	#define
--- 				f	function
-vim.o.wildoptions = "pum,tagfile"
--- string	(default ""; with GTK+ GUI: "utf-8"; with
--- 						    Macintosh GUI: "macroman")
--- 			global
--- 	Encoding used for the terminal.  This specifies what character
--- 	encoding the keyboard produces and the display will understand.  For
--- 	the GUI it only applies to the keyboard ('encoding' is used for the
--- 	display).  Except for the Mac when 'macatsui' is off, then
--- 	'termencoding' should be "macroman".
--- 								*E617*
--- 	Note: This does not apply to the GTK+ GUI.  After the GUI has been
--- 	successfully initialized, 'termencoding' is forcibly set to "utf-8".
--- 	Any attempts to set a different value will be rejected, and an error
--- 	message is shown.
--- 	For the Win32 GUI and console versions 'termencoding' is not used,
--- 	because the Win32 system always passes Unicode characters.
--- 	When empty, the same encoding is used as for the 'encoding' option.
--- 	This is the normal value.
--- 	Not all combinations for 'termencoding' and 'encoding' are valid.  See
--- 	|encoding-table|.
--- 	The value for this option must be supported by internal conversions or
--- 	iconv().  When this is not possible no conversion will be done and you
--- 	will probably experience problems with non-ASCII characters.
--- 	Example: You are working with the locale set to euc-jp (Japanese) and
--- 	want to edit a UTF-8 file: >
--- 		:let &termencoding = &encoding
--- 		:set encoding=utf-8
--- <	You need to do this when your system has no locale support for UTF-8.
-vim.o.termencoding = ""
--- string	(default $SHELL or "sh",
--- 					Windows: "cmd.exe")
--- 			global
--- 	Name of the shell to use for ! and :! commands.  When changing the
--- 	value also check these options: 'shellpipe', 'shellslash'
--- 	'shellredir', 'shellquote', 'shellxquote' and 'shellcmdflag'.
--- 	It is allowed to give an argument to the command, e.g.  "csh -f".
--- 	See |option-backslash| about including spaces and backslashes.
--- 	Environment variables are expanded |:set_env|.
--- 	If the name of the shell contains a space, you might need to enclose
--- 	it in quotes.  Example: >
--- 		:set shell=\"c:\program\ files\unix\sh.exe\"\ -f
--- <	Note the backslash before each quote (to avoid starting a comment) and
--- 	each space (to avoid ending the option value), so better use |:let-&|
--- 	like this: >
--- 		:let &shell='"C:\Program Files\unix\sh.exe" -f'
--- <	Also note that the "-f" is not inside the quotes, because it is not
--- 	part of the command name.
--- 							*shell-unquoting*
--- 	Rules regarding quotes:
--- 	1. Option is split on space and tab characters that are not inside
--- 	   quotes: "abc def" runs shell named "abc" with additional argument
--- 	   "def", '"abc def"' runs shell named "abc def" with no additional
--- 	   arguments (here and below: additional means “additional to
--- 	   'shellcmdflag'”).
--- 	2. Quotes in option may be present in any position and any number:
--- 	   '"abc"', '"a"bc', 'a"b"c', 'ab"c"' and '"a"b"c"' are all equivalent
--- 	   to just "abc".
--- 	3. Inside quotes backslash preceding backslash means one backslash.
--- 	   Backslash preceding quote means one quote. Backslash preceding
--- 	   anything else means backslash and next character literally:
--- 	   '"a\\b"' is the same as "a\b", '"a\\"b"' runs shell named literally
--- 	   'a"b', '"a\b"' is the same as "a\b" again.
--- 	4. Outside of quotes backslash always means itself, it cannot be used
--- 	   to escape quote: 'a\"b"' is the same as "a\b".
--- 	Note that such processing is done after |:set| did its own round of
--- 	unescaping, so to keep yourself sane use |:let-&| like shown above.
--- 							*shell-powershell*
--- 	To use powershell: >
--- 		let &shell = has('win32') ? 'powershell' : 'pwsh'
--- 		set shellquote= shellpipe=\| shellxquote=
--- 		set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
--- 		set shellredir=\|\ Out-File\ -Encoding\ UTF8
-vim.o.shell = "sh"
