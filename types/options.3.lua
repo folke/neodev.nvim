@@ -592,7 +592,7 @@ vim.o.autowriteall = "false"
 -- 	right click	    extend selection	popup menu (place cursor)
 -- 	right drag	    extend selection	-
 -- 	middle click	    paste		paste
-vim.o.mousemodel = "extend"
+vim.o.mousemodel = "popup_setpos"
 -- string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
 -- 	Specifies the nroff macros that separate paragraphs.  These are pairs
@@ -733,7 +733,7 @@ vim.o.thesaurus = ""
 vim.o.tags = "./tags;,tags"
 -- string	(default "")
 -- 			global
-vim.o.mouse = ""
+vim.o.mouse = "nvi"
 -- string	(default ".,$XDG_DATA_HOME/nvim/backup")
 -- 			global
 -- 	List of directories for the backup file, separated with commas.

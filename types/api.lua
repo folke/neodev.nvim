@@ -758,6 +758,10 @@ function vim.api.nvim_err_write(str) end
 --- @param str string #Message
 function vim.api.nvim_err_writeln(str) end
 
+--- @param lvl integer
+--- @param data string
+function vim.api.nvim_error_event(lvl, data) end
+
 -- Evaluates a VimL |expression|. Dictionaries and Lists are
 -- recursively expanded.
 --- @param expr string #VimL expression string
