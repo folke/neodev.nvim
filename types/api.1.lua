@@ -492,7 +492,12 @@ function vim.api.nvim_set_hl(ns_id, name, val) end
 ---             used to give a description to the mapping. When
 ---             called from Lua, also accepts a "callback" key
 ---             that takes a Lua function to call when the mapping
----             is executed.
+---             is executed. When "expr" is true,
+---             "replace_keycodes" (boolean) can be used to
+---             replace keycodes in the resulting string (see
+---             |nvim_replace_termcodes()|), and a Lua callback
+---             returning `nil` is equivalent to returning an
+---             empty string.
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
 -- Sets the global value of an option.
@@ -725,8 +730,8 @@ function vim.api.nvim_win_set_cursor(window, pos) end
 --- @param height integer #Height as a count of rows
 function vim.api.nvim_win_set_height(window, height) end
 
--- Sets a window option value. Passing 'nil' as value deletes the
--- option(only works if there's a global fallback)
+-- Sets a window option value. Passing `nil` as value deletes the
+-- option (only works if there's a global fallback)
 --- @param window window #Window handle, or 0 for current window
 --- @param name string #Option name
 --- @param value object #Option value

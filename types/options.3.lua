@@ -362,7 +362,7 @@ vim.o.scrollopt = "ver,jump"
 -- 			on Windows or DOS
 -- 	   winpos	position of the whole Vim window
 -- 	   winsize	window sizes
-vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize"
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
 -- string	(default: "")
 -- 			global
 -- 			{not available when compiled without the |+viminfo|

@@ -257,7 +257,7 @@ function vim.api.nvim_buf_get_extmarks(buffer, ns_id, start, end_, opts) end
 -- Gets a list of buffer-local |mapping| definitions.
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param mode string #Mode short-name ("n", "i", "v", ...)
---- @return any #Array of maparg()-like dictionaries describing mappings.
+--- @return any #Array of |maparg()|-like dictionaries describing mappings.
 ---     The "buffer" key holds the associated buffer handle.
 function vim.api.nvim_buf_get_keymap(buffer, mode) end
 
@@ -489,7 +489,7 @@ function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 --- @param name string #Buffer name
 function vim.api.nvim_buf_set_name(buffer, name) end
 
--- Sets a buffer option value. Passing 'nil' as value deletes the
+-- Sets a buffer option value. Passing `nil` as value deletes the
 -- option (only works if there's a global fallback)
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
 --- @param name string #Option name
@@ -972,7 +972,7 @@ function vim.api.nvim_get_hl_id_by_name(name) end
 -- Gets a list of global (non-buffer-local) |mapping|
 -- definitions.
 --- @param mode string #Mode short-name ("n", "i", "v", ...)
---- @return any #Array of maparg()-like dictionaries describing mappings.
+--- @return any #Array of |maparg()|-like dictionaries describing mappings.
 ---     The "buffer" key is always zero.
 function vim.api.nvim_get_keymap(mode) end
 
