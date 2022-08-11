@@ -327,9 +327,7 @@ function vim.select(items, opts, on_choice) end
 ---             create mapping on multiple modes.
 --- @param lhs any #(string) Left-hand side |{lhs}| of the mapping.
 --- @param rhs any #string|function Right-hand side |{rhs}| of the
----             mapping. Can also be a Lua function. If a Lua
----             function and `opts.expr == true`, returning `nil`
----             is equivalent to an empty string.
+---             mapping. Can also be a Lua function.
 --- @param opts any #(table) A table of |:map-arguments| such as
 ---             "silent". In addition to the options listed in
 ---             |nvim_set_keymap()|, this table also accepts the
@@ -337,13 +335,11 @@ function vim.select(items, opts, on_choice) end
 ---             • buffer: (number or boolean) Add a mapping to the
 ---               given buffer. When "true" or 0, use the current
 ---               buffer.
----             • replace_keycodes: (boolean, default true) When
----               both this and expr is "true",
----               |nvim_replace_termcodes()| is applied to the
----               result of Lua expr maps.
 ---             • remap: (boolean) Make the mapping recursive.
 ---               This is the inverse of the "noremap" option from
 ---               |nvim_set_keymap()|. Default `false`.
+---             • replace_keycodes: (boolean) defaults to true if
+---               "expr" is true.
 function vim.set(mode, lhs, rhs, opts) end
 
 -- Splits a string at each instance of a separator.
