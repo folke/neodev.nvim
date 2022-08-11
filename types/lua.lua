@@ -254,7 +254,7 @@ function vim.parents(start) end
 --- @return any #false if client should cancel the paste.
 function vim.paste(lines, phase) end
 
--- Escapes magic chars in a Lua pattern.
+-- Escapes magic chars in |lua-patterns|.
 --- @param s any #(string) String to escape
 --- @return any #(string) %-escaped pattern string
 function vim.pesc(s) end
