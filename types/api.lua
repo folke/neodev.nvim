@@ -51,10 +51,6 @@ function vim.api.nvim__runtime_inspect() end
 --- @param path string
 function vim.api.nvim__screenshot(path) end
 
--- Set active namespace for highlights.
---- @param ns_id integer #the namespace to activate
-function vim.api.nvim__set_hl_ns(ns_id) end
-
 -- Gets internal stats.
 --- @return any #Map of various internal stats.
 function vim.api.nvim__stats() end

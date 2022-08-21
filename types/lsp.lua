@@ -107,7 +107,7 @@ function vim.lsp.convert_signature_help_to_markdown_lines(signature_help, ft, tr
 ---                • reuse_win: (boolean) Jump to existing window if buffer is
 ---                  already open.
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.declaration(options) end
 
 -- Jumps to the definition of the symbol under the cursor.
@@ -115,7 +115,7 @@ function vim.lsp.declaration(options) end
 ---                • reuse_win: (boolean) Jump to existing window if buffer is
 ---                  already open.
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.definition(options) end
 
 -- Display the lenses using virtual text
@@ -132,7 +132,7 @@ function vim.lsp.document_highlight() end
 -- Lists all symbols in the current buffer in the quickfix window.
 --- @param options any #(table|nil) additional options
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.document_symbol(options) end
 
 -- Executes an LSP server command.
@@ -246,7 +246,7 @@ function vim.lsp.hover(_, result, ctx, config) end
 -- quickfix window.
 --- @param options any #(table|nil) additional options
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.implementation(options) end
 
 -- Lists all the call sites of the symbol under the cursor in the |quickfix|
@@ -429,7 +429,7 @@ function vim.lsp.range_formatting(options, start_pos, end_pos) end
 --- @param context any #(table) Context for the request
 --- @param options any #(table|nil) additional options
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.references(context, options) end
 
 -- Refresh the codelens for the current buffer
@@ -558,13 +558,13 @@ function vim.lsp.try_trim_markdown_code_blocks(lines) end
 ---                • reuse_win: (boolean) Jump to existing window if buffer is
 ---                  already open.
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.type_definition(options) end
 
 -- Lists all symbols in the current workspace in the quickfix window.
 --- @param query any #(string, optional)
 --- @param options any #(table|nil) additional options
 ---                • on_list: (function) handler for list results. See
----                  |on-list-handler|
+---                  |lsp-on-list-handler|
 function vim.lsp.workspace_symbol(query, options) end
 

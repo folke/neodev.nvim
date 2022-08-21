@@ -288,6 +288,15 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 ---                map documented above.
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
+-- Set active namespace for highlights. This can be set for a single window,
+-- see |nvim_win_set_hl_ns|.
+--- @param ns_id integer #the namespace to use
+function vim.api.nvim_set_hl_ns(ns_id) end
+
+-- Set active namespace for highlights while redrawing.
+--- @param ns_id integer #the namespace to activate
+function vim.api.nvim_set_hl_ns_fast(ns_id) end
+
 -- Sets a global |mapping| for the given mode.
 --- @param mode string #Mode short-name (map command prefix: "n", "i", "v", "x", …) or
 ---             "!" for |:map!|, or empty string for |:map|.
@@ -523,6 +532,12 @@ function vim.api.nvim_win_set_cursor(window, pos) end
 --- @param window window #Window handle, or 0 for current window
 --- @param height integer #Height as a count of rows
 function vim.api.nvim_win_set_height(window, height) end
+
+-- Set highlight namespace for a window. This will use highlights defined in
+-- this namespace, but fall back to global highlights (ns=0) when missing.
+--- @param window window
+--- @param ns_id integer #the namespace to use
+function vim.api.nvim_win_set_hl_ns(window, ns_id) end
 
 -- Sets a window option value. Passing `nil` as value deletes the option
 -- (only works if there's a global fallback)
