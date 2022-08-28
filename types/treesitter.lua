@@ -46,6 +46,11 @@ function vim.treesitter.LanguageTree:lang() end
 --- @param range any #A text range, see |LanguageTree:contains|
 function vim.treesitter.LanguageTree:language_for_range(range) end
 
+-- Gets the smallest named node that contains {range}
+--- @param range any #(table) A text range
+--- @param opts any #(table) Options table
+function vim.treesitter.LanguageTree:named_node_for_range(range, opts) end
+
 -- Parses all defined regions using a treesitter parser for the language this
 -- tree represents. This will run the injection query for this language to
 -- determine if any child languages should be created.
@@ -76,6 +81,11 @@ function vim.treesitter.LanguageTree:set_included_regions(regions) end
 
 -- Returns the source content of the language tree (bufnr or string).
 function vim.treesitter.LanguageTree:source() end
+
+-- Gets the tree that contains {range}
+--- @param range any #(table) A text range
+--- @param opts any #(table) Options table
+function vim.treesitter.LanguageTree:tree_for_range(range, opts) end
 
 -- Returns all trees this language tree contains. Does not include child
 -- languages.

@@ -254,8 +254,9 @@ function vim.api.nvim_buf_get_mark(buffer, name) end
 
 -- Gets the full file name for the buffer
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
+--- @param arena arena *
 --- @return any #Buffer name
-function vim.api.nvim_buf_get_name(buffer) end
+function vim.api.nvim_buf_get_name(buffer, arena) end
 
 -- Returns the byte offset of a line (0-indexed). |api-indexing|
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
@@ -456,13 +457,14 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 --- @param calls array #an array of calls, where each call is described by an array
 ---              with two elements: the request name, and an array of
 ---              arguments.
+--- @param arena arena *
 --- @return any #Array of two elements. The first is an array of return values. The
 ---     second is NIL if all calls succeeded. If a call resulted in an error,
 ---     it is a three-element array with the zero-based index of the call
 ---     which resulted in an error, the error type and the error message. If
 ---     an error occurred, the values from all preceding calls will still be
 ---     returned.
-function vim.api.nvim_call_atomic(calls) end
+function vim.api.nvim_call_atomic(calls, arena) end
 
 -- Calls a VimL |Dictionary-function| with the given arguments.
 --- @param dict object #Dictionary, or String evaluating to a VimL |self| dict
@@ -700,14 +702,14 @@ function vim.api.nvim_eval(expr) end
 ---             • highlights: (boolean) Return highlight information.
 ---             • use_winbar: (boolean) Evaluate winbar instead of statusline.
 ---             • use_tabline: (boolean) Evaluate tabline instead of
----               statusline. When |TRUE|, {winid} is ignored. Mutually
+---               statusline. When true, {winid} is ignored. Mutually
 ---               exclusive with {use_winbar}.
 --- @return any #Dictionary containing statusline information, with these keys:
 ---     • str: (string) Characters that will be displayed on the statusline.
 ---     • width: (number) Display width of the statusline.
 ---     • highlights: Array containing highlight information of the
 ---       statusline. Only included when the "highlights" key in {opts} is
----       |TRUE|. Each element of the array is a |Dictionary| with these keys:
+---       true. Each element of the array is a |Dictionary| with these keys:
 ---       • start: (number) Byte index (0-based) of first character that uses
 ---         the highlight.
 ---       • group: (string) Name of highlight group.
@@ -759,8 +761,9 @@ function vim.api.nvim_get_all_options_info() end
 
 -- Returns a 2-tuple (Array), where item 0 is the current channel id and item
 -- 1 is the |api-metadata| map (Dictionary).
+--- @param arena arena *
 --- @return any #2-tuple [{channel-id}, {api-metadata}]
-function vim.api.nvim_get_api_info() end
+function vim.api.nvim_get_api_info(arena) end
 
 -- Get all autocommands that match the corresponding {opts}.
 --- @param opts dict(get_autocmds) * #Dictionary with at least one of the following:
