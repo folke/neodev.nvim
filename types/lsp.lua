@@ -80,6 +80,13 @@ function vim.lsp.completion(context) end
 --- @return any #(table) TextDocumentContentChangeEvent see https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocumentContentChangeEvent
 function vim.lsp.compute_diff(___MissingCloseParenHere___) end
 
+-- Create a LSP RPC client factory that connects via TCP to the given host
+-- and port
+--- @param host any #(string)
+--- @param port any #(number)
+--- @return any #(function)
+function vim.lsp.connect(host, port) end
+
 -- Converts any of `MarkedString` | `MarkedString[]` | `MarkupContent` into a
 -- list of lines containing valid markdown. Useful to populate the hover
 -- window for `textDocument/hover`, for parsing the result of
@@ -351,7 +358,7 @@ function vim.lsp.make_workspace_params(added, removed) end
 
 -- Sends a notification to the LSP server.
 --- @param method any #(string) The invoked LSP method
---- @param params any #(table): Parameters for the invoked LSP method
+--- @param params any #(table|nil): Parameters for the invoked LSP method
 --- @return any #(bool) `true` if notification could be sent, `false` if not
 function vim.lsp.notify(method, params) end
 
@@ -445,7 +452,8 @@ function vim.lsp.rename(old_fname, new_fname, opts) end
 
 -- Sends a request to the LSP server and runs {callback} upon response.
 --- @param method any #(string) The invoked LSP method
---- @param params any #(table) Parameters for the invoked LSP method
+--- @param params any #(table|nil) Parameters for the invoked LSP
+---                              method
 --- @param callback any #(function) Callback to invoke
 --- @param notify_reply_callback any #(function|nil) Callback to invoke as soon as
 ---                              a request is no longer pending

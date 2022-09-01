@@ -10,7 +10,8 @@ function vim.api.nvim__buf_redraw_range(buffer, first, last) end
 function vim.api.nvim__buf_stats(buffer) end
 
 --- @param ns_id integer
-function vim.api.nvim__get_hl_defs(ns_id) end
+--- @param arena arena *
+function vim.api.nvim__get_hl_defs(ns_id, arena) end
 
 function vim.api.nvim__get_lib_dir() end
 
@@ -44,7 +45,8 @@ function vim.api.nvim__id_float(flt) end
 --- @param grid integer
 --- @param row integer
 --- @param col integer
-function vim.api.nvim__inspect_cell(grid, row, col) end
+--- @param arena arena *
+function vim.api.nvim__inspect_cell(grid, row, col, arena) end
 
 function vim.api.nvim__runtime_inspect() end
 
@@ -856,14 +858,16 @@ function vim.api.nvim_get_current_win() end
 -- Gets a highlight definition by id. |hlID()|
 --- @param hl_id integer #Highlight id as returned by |hlID()|
 --- @param rgb boolean #Export RGB colors
+--- @param arena arena *
 --- @return any #Highlight definition map
-function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
+function vim.api.nvim_get_hl_by_id(hl_id, rgb, arena) end
 
 -- Gets a highlight definition by name.
 --- @param name string #Highlight group name
 --- @param rgb boolean #Export RGB colors
+--- @param arena arena *
 --- @return any #Highlight definition map
-function vim.api.nvim_get_hl_by_name(name, rgb) end
+function vim.api.nvim_get_hl_by_name(name, rgb, arena) end
 
 -- Gets a highlight group by name
 --- @param name string
