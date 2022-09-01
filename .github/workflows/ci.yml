@@ -1,7 +1,5 @@
 name: CI
 on:
-  push:
-    branches: [main]
   schedule:
     # Run this once a week
     - cron: '0 0 * * 0'
