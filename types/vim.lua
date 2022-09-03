@@ -28,6 +28,7 @@ vim.treesitter = require("vim.treesitter")
 vim.highlight = require("vim.highlight")
 vim.diagnostic = require("vim.diagnostic")
 vim.ui = require("vim.ui")
+vim.keymap = require("vim.keymap")
 
 -- HACK: hardcode these levels, since there's currently no docs for them
 vim.log = {
