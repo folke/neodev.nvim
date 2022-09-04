@@ -48,6 +48,7 @@ function vim.api.nvim_out_write(str) end
 ---       • browse: (boolean) |:browse|.
 ---       • confirm: (boolean) |:confirm|.
 ---       • hide: (boolean) |:hide|.
+---       • horizontal: (boolean) |:horizontal|.
 ---       • keepalt: (boolean) |:keepalt|.
 ---       • keepjumps: (boolean) |:keepjumps|.
 ---       • keepmarks: (boolean) |:keepmarks|.
