@@ -42,8 +42,8 @@ end
 
 function M.path(opts)
   local path = {} --vim.split(package.path, ";")
-  table.insert(path, "?.lua")
-  table.insert(path, "?/init.lua")
+  table.insert(path, "lua/?.lua")
+  table.insert(path, "lua/?/init.lua")
   -- if opts and opts.runtime_path then
   --   for lib, _ in pairs(M.library()) do
   --     table.insert(path, lib .. "/?.lua")
