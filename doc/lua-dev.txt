@@ -1,0 +1,140 @@
+*lua-dev.txt*          For NVIM v0.5.0          Last change: 2022 September 05
+
+==============================================================================
+Table of Contents                                  *lua-dev-table-of-contents*
+
+1. 💻 lua-dev                                         |lua-dev-💻-lua-dev|
+  - ✨ Features                                        |lua-dev-✨-features|
+  - ⚡️ Requirements                          |lua-dev-⚡️-requirements|
+  - 📦 Installation                              |lua-dev-📦-installation|
+  - ⚙️ Configuration                        |lua-dev-⚙️-configuration|
+  - 🚀 Setup                                            |lua-dev-🚀-setup|
+  - ❓ How?                                                |lua-dev-❓-how?|
+  - 🗒️ Limitations                          |lua-dev-🗒️-limitations|
+  - ⭐ Acknowledgment                            |lua-dev-⭐-acknowledgment|
+
+==============================================================================
+1. 💻 lua-dev                                         *lua-dev-💻-lua-dev*
+
+Dev setup for init.lua and plugin development with full signature help, docs
+and completion for the nvim lua API.
+
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/292349/118822916-6af02080-b86d-11eb-9990-942fe9b55541.png" title="fig:"/>
+<p class="caption">image</p>
+</div>
+
+<div class="figure">
+<img src="https://user-images.githubusercontent.com/292349/118823099-9115c080-b86d-11eb-9a68-521c6cb9905a.png" title="fig:"/>
+<p class="caption">image</p>
+</div>
+
+✨ FEATURES                                            *lua-dev-✨-features*
+
+
+- EmmyLua <https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations> library for the nvim lua API for:
+    - completion
+    - hover docs
+    - function signatures
+- properly configures the `require` path with `lua/?.lua` and `lua/?/init.lua`.
+- adds all plugins in `opt` and `start` to the workspace so you get completion for all installed plugins
+- properly configure the vim runtime
+
+
+⚡️ REQUIREMENTS                              *lua-dev-⚡️-requirements*
+
+
+- Neovim >= 0.5.0
+- completion plugin like nvim-cmp <https://github.com/hrsh7th/nvim-cmp>
+
+
+📦 INSTALLATION                                  *lua-dev-📦-installation*
+
+Install the plugin with your preferred package manager:
+
+PACKER <HTTPS://GITHUB.COM/WBTHOMASON/PACKER.NVIM> ~
+
+>
+    use "folke/lua-dev.nvim"
+<
+
+
+VIM-PLUG <HTTPS://GITHUB.COM/JUNEGUNN/VIM-PLUG> ~
+
+>
+    Plug 'folke/lua-dev.nvim'
+<
+
+
+⚙️ CONFIGURATION                            *lua-dev-⚙️-configuration*
+
+**lua-dev** comes with the following defaults:
+
+>
+    {
+      library = {
+        vimruntime = true, -- runtime path
+        types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+        plugins = true, -- installed opt or start plugins in packpath
+        -- you can also specify the list of plugins to make available as a workspace library
+        -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+      },
+      runtime_path = false, -- enable this to get completion in require strings. Slow!
+      -- pass any additional options that will be merged in the final lsp config
+      lspconfig = {
+        -- cmd = {"lua-language-server"},
+        -- on_attach = ...
+      },
+    }
+<
+
+
+🚀 SETUP                                                *lua-dev-🚀-setup*
+
+Be aware that this will configure Sumneko to work for Neovim init.lua and
+plugin development. This setup is **NOT** intended to be used for any other
+types of projects.
+
+>
+    local luadev = require("lua-dev").setup({
+      -- add any options here, or leave empty to use the default settings
+      -- lspconfig = {
+      --   cmd = {"lua-language-server"}
+      -- },
+    })
+    
+    local lspconfig = require('lspconfig')
+    lspconfig.sumneko_lua.setup(luadev)
+<
+
+
+❓ HOW?                                                    *lua-dev-❓-how?*
+
+**Neovim** includes a script
+<https://github.com/neovim/neovim/blob/master/scripts/gen_vimdoc.py> to
+generated the nvim docs. That script also creates message pack files containing
+all the API metadata in a structured way. Unfortunately these files are not
+packaged in the releases.
+
+Using the message pack files, I converted all the API data to EmmyLua
+annotations
+<https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations> and
+make them available for the Sumneko LSP
+<https://github.com/sumneko/lua-language-server> as a workspace library.
+
+🗒️ LIMITATIONS                              *lua-dev-🗒️-limitations*
+
+
+- ☒ `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
+- function return types are always `any`, since that information is missing
+
+
+⭐ ACKNOWLEDGMENT                                *lua-dev-⭐-acknowledgment*
+
+
+- docs for options and functions are based on the work of vim-lsp <https://github.com/prabirshrestha/vim-lsp>
+
+
+Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
+
+vim:tw=78:ts=8:noet:ft=help:norl:
