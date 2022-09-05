@@ -955,9 +955,11 @@ function vim.api.nvim_get_vvar(name) end
 function vim.api.nvim_input(keys) end
 
 -- Send mouse event from GUI.
---- @param button string #Mouse button: one of "left", "right", "middle", "wheel".
+--- @param button string #Mouse button: one of "left", "right", "middle", "wheel",
+---                 "move".
 --- @param action string #For ordinary buttons, one of "press", "drag", "release".
 ---                 For the wheel, one of "up", "down", "left", "right".
+---                 Ignored for "move".
 --- @param modifier string #String of modifiers each represented by a single char. The
 ---                 same specifiers are used as for a key press, except that
 ---                 the "-" separator is optional, so "C-A-", "c-a" and "CA"

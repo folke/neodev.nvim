@@ -162,17 +162,13 @@ vim.bo.keymap = ""
 -- 	  prompt	buffer where only the last line can be edited, meant
 -- 			to be used by a plugin, see |prompt-buffer|
 vim.bo.buftype = ""
--- boolean	(default off)
+-- string	(default: empty)
 -- 			local to buffer
--- 	If on, writes fail unless you use a '!'.  Protects you from
--- 	accidentally overwriting a file.  Default on when Vim is started
--- 	in read-only mode ("vim -R") or when the executable is called "view".
--- 	When using ":w!" the 'readonly' option is reset for the current
--- 	buffer, unless the 'Z' flag is in 'cpoptions'.
--- 	When using the ":view" command the 'readonly' option is
--- 	set for the newly edited buffer.
--- 	See 'modifiable' for disallowing changes to the buffer.
-vim.bo.readonly = "false"
+-- 	This option specifies a function to be used to perform tag searches.
+-- 	The function gets the tag pattern and should return a List of matching
+-- 	tags.  See |tag-function| for an explanation of how to write the
+-- 	function and an example.
+vim.bo.tagfunc = ""
 -- number	(default 0)
 -- 			local to buffer
 -- 	Maximum width of text that is being inserted.  A longer line will be
@@ -250,23 +246,13 @@ vim.bo.suffixesadd = ""
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.bo.formatprg = ""
--- number	(default 0)
+-- string	(default
+-- 				"s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
 -- 			local to buffer
--- 	Number of spaces that a <Tab> counts for while performing editing
--- 	operations, like inserting a <Tab> or using <BS>.  It "feels" like
--- 	<Tab>s are being inserted, while in fact a mix of spaces and <Tab>s is
--- 	used.  This is useful to keep the 'ts' setting at its standard value
--- 	of 8, while being able to edit like it is set to 'sts'.  However,
--- 	commands like "x" still work on the actual characters.
--- 	When 'sts' is zero, this feature is off.
--- 	When 'sts' is negative, the value of 'shiftwidth' is used.
--- 	'softtabstop' is set to 0 when the 'paste' option is set and restored
--- 	when 'paste' is reset.
--- 	See also |ins-expandtab|.  When 'expandtab' is not set, the number of
--- 	spaces is minimized by using <Tab>s.
--- 	The 'L' flag in 'cpoptions' changes how tabs are used when 'list' is
--- 	set.
-vim.bo.softtabstop = "0"
+-- 	A comma separated list of strings that can start a comment line.  See
+-- 	|format-comments|.  See |option-backslash| about using backslashes to
+-- 	insert a space.
+vim.bo.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-"
 -- string	(default "[.?!]\_[\])'" \t]\+")
 -- 			local to buffer
 -- 	Pattern to locate the end of a sentence.  The following word will be
@@ -369,16 +355,13 @@ vim.bo.matchpairs = "(:),{:},[:]"
 -- 	character and white space.
 vim.bo.formatlistpat = "^\\s*\\d\\+[\\]:.)}\\t ]\\s*"
 -- string	(default "")
--- 			local to buffer
--- 			{only available when compiled with the |+vartabs|
--- 			feature}
--- 	A list of the number of spaces that a <Tab> in the file counts for,
--- 	separated by commas.  Each value corresponds to one tab, with the
--- 	final value applying to all subsequent tabs. For example: >
--- 		:set vartabstop=4,20,10,8
--- <	This will make the first tab 4 spaces wide, the second 20 spaces,
--- 	the third 10 spaces, and all following tabs 8 spaces.
-vim.bo.vartabstop = ""
+-- 			global or local to buffer |global-local|
+-- 	List of file names, separated by commas, that are used to lookup words
+-- 	for keyword completion commands |i_CTRL-X_CTRL-K|.  Each file should
+-- 	contain a list of words.  This can be one word per line, or several
+-- 	words per line, separated by non-keyword characters (white space is
+-- 	preferred).  Maximum line length is 510 bytes.
+vim.bo.dictionary = ""
 -- boolean	(default on)
 -- 			global or local to buffer |global-local|
 -- 	When a file has been detected to have been changed outside of Vim and
@@ -490,14 +473,32 @@ vim.bo.smartindent = "false"
 -- 		:set includeexpr=substitute(v:fname,'\\.','/','g')
 -- <	The "v:fname" variable will be set to the file name that was detected.
 vim.bo.includeexpr = ""
--- string	(default "")
--- 			global or local to buffer |global-local|
--- 	List of file names, separated by commas, that are used to lookup words
--- 	for keyword completion commands |i_CTRL-X_CTRL-K|.  Each file should
--- 	contain a list of words.  This can be one word per line, or several
--- 	words per line, separated by non-keyword characters (white space is
--- 	preferred).  Maximum line length is 510 bytes.
-vim.bo.dictionary = ""
+-- string	(default empty)
+-- 			local to buffer
+-- 	When this option is set, the syntax with this name is loaded, unless
+-- 	syntax highlighting has been switched off with ":syntax off".
+-- 	Otherwise this option does not always reflect the current syntax (the
+-- 	b:current_syntax variable does).
+-- 	This option is most useful in a modeline, for a file which syntax is
+-- 	not automatically recognized.  Example, in an IDL file:
+-- 		/* vim: set syntax=idl : */ ~
+-- 	When a dot appears in the value then this separates two filetype
+-- 	names.  Example:
+-- 		/* vim: set syntax=c.doxygen : */ ~
+-- 	This will use the "c" syntax first, then the "doxygen" syntax.
+-- 	Note that the second one must be prepared to be loaded as an addition,
+-- 	otherwise it will be skipped.  More than one dot may appear.
+-- 	To switch off syntax highlighting for the current file, use: >
+-- 		:set syntax=OFF
+-- <	To switch syntax highlighting on according to the current value of the
+-- 	'filetype' option: >
+-- 		:set syntax=ON
+-- <	What actually happens when setting the 'syntax' option is that the
+-- 	Syntax autocommand event is triggered with the value as argument.
+-- 	This option is not copied to another buffer, independent of the 's' or
+-- 	'S' flag in 'cpoptions'.
+-- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+vim.bo.syntax = ""
 -- boolean	(Vim default: on (off for root),
 -- 				 Vi default: off)
 -- 			local to buffer
@@ -708,21 +709,17 @@ vim.bo.cindent = "false"
 -- 	the following character will be skipped.  The default value makes the
 -- 	text "foo\"bar\\" considered to be one string.
 vim.bo.quoteescape = "\\"
--- boolean	(default off)
+-- string	(default "")
 -- 			local to buffer
--- 	When changing the indent of the current line, preserve as much of the
--- 	indent structure as possible.  Normally the indent is replaced by a
--- 	series of tabs followed by spaces as required (unless |'expandtab'| is
--- 	enabled, in which case only spaces are used).  Enabling this option
--- 	means the indent will preserve as many existing characters as possible
--- 	for indenting, and only add additional tabs or spaces as required.
--- 	'expandtab' does not apply to the preserved white space, a Tab remains
--- 	a Tab.
--- 	NOTE: When using ">>" multiple times the resulting indent is a mix of
--- 	tabs and spaces.  You might not like this.
--- 	Also see 'copyindent'.
--- 	Use |:retab| to clean up white space.
-vim.bo.preserveindent = "false"
+-- 			{only available when compiled with the |+vartabs|
+-- 			feature}
+-- 	A list of the number of spaces that a <Tab> in the file counts for,
+-- 	separated by commas.  Each value corresponds to one tab, with the
+-- 	final value applying to all subsequent tabs. For example: >
+-- 		:set vartabstop=4,20,10,8
+-- <	This will make the first tab 4 spaces wide, the second 20 spaces,
+-- 	the third 10 spaces, and all following tabs 8 spaces.
+vim.bo.vartabstop = ""
 -- string	(default "./tags;,tags")
 -- 			global or local to buffer |global-local|
 -- 	Filenames for the tag command, separated by spaces or commas.  To
@@ -870,7 +867,21 @@ vim.bo.wrapmargin = "0"
 -- 	"msg".
 -- 	See |indent-expression|.
 vim.bo.indentexpr = ""
-vim.bo.cinscopedecls = "public,protected,private"
+-- boolean	(default off)
+-- 			local to buffer
+-- 	When changing the indent of the current line, preserve as much of the
+-- 	indent structure as possible.  Normally the indent is replaced by a
+-- 	series of tabs followed by spaces as required (unless |'expandtab'| is
+-- 	enabled, in which case only spaces are used).  Enabling this option
+-- 	means the indent will preserve as many existing characters as possible
+-- 	for indenting, and only add additional tabs or spaces as required.
+-- 	'expandtab' does not apply to the preserved white space, a Tab remains
+-- 	a Tab.
+-- 	NOTE: When using ">>" multiple times the resulting indent is a mix of
+-- 	tabs and spaces.  You might not like this.
+-- 	Also see 'copyindent'.
+-- 	Use |:retab| to clean up white space.
+vim.bo.preserveindent = "false"
 -- string	(default "")
 -- 			local to buffer
 -- 			{only available when compiled with the |+vartabs|
@@ -888,39 +899,23 @@ vim.bo.varsofttabstop = ""
 -- 	When zero the 'ts' value will be used.  Use the |shiftwidth()|
 -- 	function to get the effective shiftwidth value.
 vim.bo.shiftwidth = "8"
--- string	(default
--- 				"s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
+-- number	(default 0)
 -- 			local to buffer
--- 	A comma separated list of strings that can start a comment line.  See
--- 	|format-comments|.  See |option-backslash| about using backslashes to
--- 	insert a space.
-vim.bo.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-"
--- string	(default empty)
--- 			local to buffer
--- 	When this option is set, the syntax with this name is loaded, unless
--- 	syntax highlighting has been switched off with ":syntax off".
--- 	Otherwise this option does not always reflect the current syntax (the
--- 	b:current_syntax variable does).
--- 	This option is most useful in a modeline, for a file which syntax is
--- 	not automatically recognized.  Example, in an IDL file:
--- 		/* vim: set syntax=idl : */ ~
--- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example:
--- 		/* vim: set syntax=c.doxygen : */ ~
--- 	This will use the "c" syntax first, then the "doxygen" syntax.
--- 	Note that the second one must be prepared to be loaded as an addition,
--- 	otherwise it will be skipped.  More than one dot may appear.
--- 	To switch off syntax highlighting for the current file, use: >
--- 		:set syntax=OFF
--- <	To switch syntax highlighting on according to the current value of the
--- 	'filetype' option: >
--- 		:set syntax=ON
--- <	What actually happens when setting the 'syntax' option is that the
--- 	Syntax autocommand event is triggered with the value as argument.
--- 	This option is not copied to another buffer, independent of the 's' or
--- 	'S' flag in 'cpoptions'.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
-vim.bo.syntax = ""
+-- 	Number of spaces that a <Tab> counts for while performing editing
+-- 	operations, like inserting a <Tab> or using <BS>.  It "feels" like
+-- 	<Tab>s are being inserted, while in fact a mix of spaces and <Tab>s is
+-- 	used.  This is useful to keep the 'ts' setting at its standard value
+-- 	of 8, while being able to edit like it is set to 'sts'.  However,
+-- 	commands like "x" still work on the actual characters.
+-- 	When 'sts' is zero, this feature is off.
+-- 	When 'sts' is negative, the value of 'shiftwidth' is used.
+-- 	'softtabstop' is set to 0 when the 'paste' option is set and restored
+-- 	when 'paste' is reset.
+-- 	See also |ins-expandtab|.  When 'expandtab' is not set, the number of
+-- 	spaces is minimized by using <Tab>s.
+-- 	The 'L' flag in 'cpoptions' changes how tabs are used when 'list' is
+-- 	set.
+vim.bo.softtabstop = "0"
 -- string	(default on Unix: ".,/usr/include,,"
 -- 				   other systems: ".,,")
 -- 			global or local to buffer |global-local|
@@ -972,6 +967,7 @@ vim.bo.syntax = ""
 -- <	Replace the ';' with a ':' or whatever separator is used.  Note that
 -- 	this doesn't work when $INCL contains a comma or white space.
 vim.bo.path = ".,/usr/include,,"
+vim.bo.cinscopedecls = "public,protected,private"
 -- string	(default empty)
 -- 			local to buffer
 -- 	Name of the word list file where words are added for the |zg| and |zw|
@@ -995,10 +991,14 @@ vim.bo.path = ".,/usr/include,,"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.bo.spellfile = ""
--- string	(default: empty)
+-- boolean	(default off)
 -- 			local to buffer
--- 	This option specifies a function to be used to perform tag searches.
--- 	The function gets the tag pattern and should return a List of matching
--- 	tags.  See |tag-function| for an explanation of how to write the
--- 	function and an example.
-vim.bo.tagfunc = ""
+-- 	If on, writes fail unless you use a '!'.  Protects you from
+-- 	accidentally overwriting a file.  Default on when Vim is started
+-- 	in read-only mode ("vim -R") or when the executable is called "view".
+-- 	When using ":w!" the 'readonly' option is reset for the current
+-- 	buffer, unless the 'Z' flag is in 'cpoptions'.
+-- 	When using the ":view" command the 'readonly' option is
+-- 	set for the newly edited buffer.
+-- 	See 'modifiable' for disallowing changes to the buffer.
+vim.bo.readonly = "false"
