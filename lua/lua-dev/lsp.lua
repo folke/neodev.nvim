@@ -49,10 +49,10 @@ function M.on_new_config(config, root_dir)
         elseif lib == "runtime" then
           opts.library.runtime = true
         else
-          if not type(opts.library) == "table" then
-            opts.library = {}
+          if type(opts.library.plugins) ~= "table" then
+            opts.library.plugins = {}
           end
-          table.insert(opts.library, lib)
+          table.insert(opts.library.plugins, lib)
         end
       else
         table.insert(library, lib)
