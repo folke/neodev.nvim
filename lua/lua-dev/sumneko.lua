@@ -1,9 +1,9 @@
-local Config = require("lua-dev.config")
+local config = require("lua-dev.config")
 
 local M = {}
 
 function M.library(opts)
-  opts = opts or Config.options
+  opts = config.merge(opts)
   local ret = {}
 
   if opts.library.types then
@@ -11,6 +11,7 @@ function M.library(opts)
   end
 
   local function add(lib, filter)
+    ---@diagnostic disable-next-line: param-type-mismatch
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
@@ -19,7 +20,7 @@ function M.library(opts)
     end
   end
 
-  if opts.library.vimruntime then
+  if opts.library.runtime then
     add("$VIMRUNTIME")
   end
 
@@ -40,21 +41,11 @@ function M.library(opts)
   return ret
 end
 
-function M.path(opts)
-  local path = {} --vim.split(package.path, ";")
-  table.insert(path, "lua/?.lua")
-  table.insert(path, "lua/?/init.lua")
-  -- if opts and opts.runtime_path then
-  --   for lib, _ in pairs(M.library()) do
-  --     table.insert(path, lib .. "/?.lua")
-  --     table.insert(path, lib .. "/?/init.lua")
-  --   end
-  -- end
-  return path
-end
-
-function M.config_path()
-  return vim.loop.fs_realpath(vim.fn.stdpath("config"))
+function M.path()
+  return {
+    "lua/?.lua",
+    "lua/?/init.lua",
+  }
 end
 
 function M.types()
@@ -63,30 +54,20 @@ function M.types()
 end
 
 function M.setup(opts)
-  opts = opts or Config.options
+  opts = config.merge(opts)
   return {
     settings = {
       Lua = {
         runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
-          -- Setup your lua path
           path = M.path(),
         },
+        ---@diagnostic disable-next-line: undefined-field
         completion = opts.snippet and { callSnippet = "Replace" } or nil,
-        -- diagnostics = {
-        --   -- Get the language server to recognize the `vim` global
-        --   globals = { "vim" },
-        -- },
-        -- hint = { enable = true },
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = M.library(opts),
-          maxPreload = 1000,
-          preloadFileSize = 150,
         },
-        -- Do not send telemetry data containing a randomized but unique identifier
-        telemetry = { enable = false },
       },
     },
   }

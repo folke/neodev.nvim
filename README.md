@@ -8,6 +8,7 @@ Dev setup for init.lua and plugin development with full signature help, docs and
 
 ## ✨ Features
 
+- Automatically configures **sumneko_lua** for your **Neovim** config and plugin directories
 - [EmmyLua](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations) library for the nvim lua API for:
   - completion
   - hover docs
@@ -37,43 +38,56 @@ use "folke/lua-dev.nvim"
 Plug 'folke/lua-dev.nvim'
 ```
 
-## ⚙️ Configuration
+## ⚙️ Configuration 
 
 **lua-dev** comes with the following defaults:
 
 ```lua
 {
+  -- these settings will be used for your neovim config directory
   library = {
-    vimruntime = true, -- runtime path
+    runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
     plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
-  runtime_path = false, -- enable this to get completion in require strings. Slow!
-  -- pass any additional options that will be merged in the final lsp config
-  lspconfig = {
-    -- cmd = {"lua-language-server"},
-    -- on_attach = ...
+  -- these settings will be used for plugins (root dirs containing a /lua directory)
+  plugin_library = {
+    runtime = true,
+    types = true,
+    -- disable other plugins by default
+    plugins = false,
   },
 }
 ```
 
 ## 🚀 Setup
 
-Be aware that this will configure Sumneko to work for Neovim init.lua and plugin development.
-This setup is **NOT** intended to be used for any other types of projects.
+**lua-dev** will **ONLY** change the **sumneko_lua** settings for:
+
+* your Neovim config directory
+* any plugin directory (this is an lsp root_dir that contains a `/lua` directory)
+
+For any other `root_dir`, **lua-dev** will **NOT** change any settings.
 
 ```lua
-local luadev = require("lua-dev").setup({
+-- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
+require("lua-dev").setup({
   -- add any options here, or leave empty to use the default settings
-  -- lspconfig = {
-  --   cmd = {"lua-language-server"}
-  -- },
 })
 
+-- then setup your lsp server as usual
 local lspconfig = require('lspconfig')
-lspconfig.sumneko_lua.setup(luadev)
+
+-- example to setup sumneko and enable call snippets
+lspconfig.sumneko_lua.setup({
+  Lua = {
+    completion = {
+      callSnippet = "Replace"
+    }
+  }
+})
 ```
 
 ## ❓ How?
