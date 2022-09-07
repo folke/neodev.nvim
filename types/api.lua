@@ -395,6 +395,8 @@ function vim.api.nvim_buf_line_count(buffer) end
 ---                 When a character is supplied it is used as |:syn-cchar|.
 ---                 "hl_group" is used as highlight for the cchar if provided,
 ---                 otherwise it defaults to |hl-Conceal|.
+---               • spell: boolean indicating that spell checking should be
+---                 performed within this extmark
 ---               • ui_watched: boolean that indicates the mark should be
 ---                 drawn by a UI. When set, the UI will receive win_extmark
 ---                 events. Note: the mark is positioned by virt_text

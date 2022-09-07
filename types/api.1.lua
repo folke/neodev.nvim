@@ -55,7 +55,7 @@ function vim.api.nvim_out_write(str) end
 ---       • keeppatterns: (boolean) |:keeppatterns|.
 ---       • lockmarks: (boolean) |:lockmarks|.
 ---       • noswapfile: (boolean) |:noswapfile|.
----       • tab: (integer) |:tab|.
+---       • tab: (integer) |:tab|. -1 when omitted.
 ---       • verbose: (integer) |:verbose|. -1 when omitted.
 ---       • vertical: (boolean) |:vertical|.
 ---       • split: (string) Split modifier string, is an empty string when
@@ -246,7 +246,7 @@ function vim.api.nvim_set_current_win(window) end
 
 -- Set or change decoration provider for a namespace
 --- @param ns_id integer #Namespace id from |nvim_create_namespace()|
---- @param opts table<string, luaref> #Callbacks invoked during redraw:
+--- @param opts dict(set_decoration_provider) * #Table of callbacks:
 ---              • on_start: called first on each screen redraw ["start",
 ---                tick]
 ---              • on_buf: called for each buffer being redrawn (before window
