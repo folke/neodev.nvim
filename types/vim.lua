@@ -1,3 +1,5 @@
+---@meta
+
 ---@alias window number
 ---@alias buffer number
 ---@alias tabpage number

@@ -129,6 +129,8 @@ function M.intro(fd)
   uv.fs_write(
     fd,
     [[
+---@meta
+
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
