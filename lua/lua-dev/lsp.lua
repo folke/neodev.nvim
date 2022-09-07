@@ -22,6 +22,14 @@ function M.on_new_config(config, root_dir)
 
   local enabled = util.is_nvim_config(root_dir)
 
+  if not enabled then
+    for _, path in pairs(opts.additional_config_paths) do
+      if util.fqn(path) == root_dir then
+        enabled = true
+      end
+    end
+  end
+
   if not enabled and util.is_plugin(root_dir) then
     enabled = true
     opts.library = opts.plugin_library

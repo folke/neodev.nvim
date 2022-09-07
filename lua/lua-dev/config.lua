@@ -17,6 +17,7 @@ M.defaults = {
     -- disable other plugins by default
     plugins = false,
   },
+  additional_config_paths = {},
 }
 
 --- @type LuaApiOptions

@@ -59,6 +59,7 @@ Plug 'folke/lua-dev.nvim'
     -- disable other plugins by default
     plugins = false,
   },
+  additional_config_paths = {}, -- additional paths to enable this plugin in. e.g. /etc/nixos/ on NixOS
 }
 ```
 
@@ -68,6 +69,7 @@ Plug 'folke/lua-dev.nvim'
 
 * your Neovim config directory
 * any plugin directory (this is an lsp root_dir that contains a `/lua` directory)
+* any directory listed in `additional_config_paths`
 
 For any other `root_dir`, **lua-dev** will **NOT** change any settings.
 
