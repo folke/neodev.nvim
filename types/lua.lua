@@ -1,3 +1,5 @@
+---@meta
+
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
@@ -36,6 +38,13 @@ function vim.deep_equal(a, b) end
 --- @param orig any #(table) Table to copy
 --- @return any #(table) Table of copied keys and (nested) values.
 function vim.deepcopy(orig) end
+
+-- Creates a table whose members are automatically created when accessed, if
+-- they don't already exist.
+--- @param create any #(function|nil) The function called to create a missing
+---               value.
+--- @return any #(table) Empty table with metamethod
+function vim.defaulttable(create) end
 
 -- Defers calling `fn` until `timeout` ms passes.
 --- @param fn fun(...) #Callback to call once `timeout` expires

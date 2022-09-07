@@ -1,3 +1,5 @@
+---@meta
+
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
@@ -128,16 +130,4 @@ function vim.treesitter.TSHighlighter:get_query(lang) end
 --- @param lang any #The language this tree represents
 --- @param opts any #Options table
 function vim.treesitter.new(source, lang, opts) end
-
--- Start treesitter highlighting for a buffer
---- @param bufnr any #(number|nil) Buffer to be highlighted (default: current
----              buffer)
---- @param lang any #(string|nil) Language of the parser (default: buffer
----              filetype)
-function vim.treesitter.start(bufnr, lang) end
-
--- Stop treesitter highlighting for a buffer
---- @param bufnr any #(number|nil) Buffer to stop highlighting (default: current
----              buffer)
-function vim.treesitter.stop(bufnr) end
 

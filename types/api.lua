@@ -1,3 +1,5 @@
+---@meta
+
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
@@ -10,8 +12,7 @@ function vim.api.nvim__buf_redraw_range(buffer, first, last) end
 function vim.api.nvim__buf_stats(buffer) end
 
 --- @param ns_id integer
---- @param arena arena *
-function vim.api.nvim__get_hl_defs(ns_id, arena) end
+function vim.api.nvim__get_hl_defs(ns_id) end
 
 function vim.api.nvim__get_lib_dir() end
 
@@ -45,8 +46,7 @@ function vim.api.nvim__id_float(flt) end
 --- @param grid integer
 --- @param row integer
 --- @param col integer
---- @param arena arena *
-function vim.api.nvim__inspect_cell(grid, row, col, arena) end
+function vim.api.nvim__inspect_cell(grid, row, col) end
 
 function vim.api.nvim__runtime_inspect() end
 
@@ -256,9 +256,8 @@ function vim.api.nvim_buf_get_mark(buffer, name) end
 
 -- Gets the full file name for the buffer
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
---- @param arena arena *
 --- @return any #Buffer name
-function vim.api.nvim_buf_get_name(buffer, arena) end
+function vim.api.nvim_buf_get_name(buffer) end
 
 -- Returns the byte offset of a line (0-indexed). |api-indexing|
 --- @param buffer buffer #Buffer handle, or 0 for current buffer
@@ -461,14 +460,13 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 --- @param calls array #an array of calls, where each call is described by an array
 ---              with two elements: the request name, and an array of
 ---              arguments.
---- @param arena arena *
 --- @return any #Array of two elements. The first is an array of return values. The
 ---     second is NIL if all calls succeeded. If a call resulted in an error,
 ---     it is a three-element array with the zero-based index of the call
 ---     which resulted in an error, the error type and the error message. If
 ---     an error occurred, the values from all preceding calls will still be
 ---     returned.
-function vim.api.nvim_call_atomic(calls, arena) end
+function vim.api.nvim_call_atomic(calls) end
 
 -- Calls a VimL |Dictionary-function| with the given arguments.
 --- @param dict object #Dictionary, or String evaluating to a VimL |self| dict
@@ -765,9 +763,8 @@ function vim.api.nvim_get_all_options_info() end
 
 -- Returns a 2-tuple (Array), where item 0 is the current channel id and item
 -- 1 is the |api-metadata| map (Dictionary).
---- @param arena arena *
 --- @return any #2-tuple [{channel-id}, {api-metadata}]
-function vim.api.nvim_get_api_info(arena) end
+function vim.api.nvim_get_api_info() end
 
 -- Get all autocommands that match the corresponding {opts}.
 --- @param opts dict(get_autocmds) * #Dictionary with at least one of the following:
@@ -860,16 +857,14 @@ function vim.api.nvim_get_current_win() end
 -- Gets a highlight definition by id. |hlID()|
 --- @param hl_id integer #Highlight id as returned by |hlID()|
 --- @param rgb boolean #Export RGB colors
---- @param arena arena *
 --- @return any #Highlight definition map
-function vim.api.nvim_get_hl_by_id(hl_id, rgb, arena) end
+function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
 
 -- Gets a highlight definition by name.
 --- @param name string #Highlight group name
 --- @param rgb boolean #Export RGB colors
---- @param arena arena *
 --- @return any #Highlight definition map
-function vim.api.nvim_get_hl_by_name(name, rgb, arena) end
+function vim.api.nvim_get_hl_by_name(name, rgb) end
 
 -- Gets a highlight group by name
 --- @param name string
