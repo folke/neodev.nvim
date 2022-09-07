@@ -92,7 +92,7 @@ function M.process(name, fun, prefix)
     -- most nvim_ functions have an err param at the end, but these should not be included
     local skip = i == #fun.parameters and (pname == "err" or pname == "error")
     -- skip self params
-    if param.name == "self" or param.name == "" then
+    if param.name == "self" or param.name == "" or param.name == "arena" then
       skip = true
     end
     if not skip then
