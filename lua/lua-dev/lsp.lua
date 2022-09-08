@@ -20,11 +20,11 @@ function M.on_new_config(config, root_dir)
 
   local opts = require("lua-dev.config").merge()
 
-  local enabled = util.is_nvim_config(root_dir)
+  opts.library.enabled = util.is_nvim_config(root_dir)
 
-  if not enabled and util.is_plugin(root_dir) then
-    enabled = true
-    opts.library = opts.plugin_library
+  if not opts.library.enabled and util.is_plugin(root_dir) then
+    opts.library.enabled = true
+    opts.library.plugins = false
   end
 
   local library = {}
@@ -38,7 +38,7 @@ function M.on_new_config(config, root_dir)
     for _, lib in ipairs(config.settings.Lua.workspace.library) do
       -- Handle special workspace libraries
       if lib:match("^nvim:?.*$") then
-        enabled = true
+        opts.library.enabled = true
         lib = lib:gsub("^nvim:?", "")
         if lib == "" then
           opts.library.runtime = true
@@ -61,7 +61,9 @@ function M.on_new_config(config, root_dir)
     end
   end
 
-  if enabled then
+  pcall(opts.override, root_dir, opts.library)
+
+  if opts.library.enabled then
     config.settings =
       vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
     for _, lib in ipairs(library) do

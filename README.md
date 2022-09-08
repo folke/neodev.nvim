@@ -44,21 +44,20 @@ Plug 'folke/lua-dev.nvim'
 
 ```lua
 {
-  -- these settings will be used for your neovim config directory
   library = {
+    enabled = true, -- when not enabled, lua-dev will not change any settings to the LSP server
+    -- these settings will be used for your neovim config directory
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
     plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
-  -- these settings will be used for plugins (root dirs containing a /lua directory)
-  plugin_library = {
-    runtime = true,
-    types = true,
-    -- disable other plugins by default
-    plugins = false,
-  },
+  -- for your neovim config directory, the config.library settings will be used as is
+  -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
+  -- for any other directory, config.library.enabled will be set to false
+  override = function(root_dir, options) end,
+
 }
 ```
 
@@ -87,6 +86,21 @@ lspconfig.sumneko_lua.setup({
       callSnippet = "Replace"
     }
   }
+})
+```
+
+Example for setting up **lua-dev** that overrides the settings for `/etc/nixos`
+
+```lua
+-- You can override the default detection using the override function
+  -- EXAMPLE: If you want a certain directory to be configured differently, you can override its settings
+require("lua-dev").setup({
+  override = function(root_dir, library)
+    if require("lua-dev.util").has_file(root_dir, "/etc/nixos") then
+      library.enabled = true
+      library.plugins = true
+    end
+  end,
 })
 ```
 
