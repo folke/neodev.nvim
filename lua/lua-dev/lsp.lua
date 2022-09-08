@@ -27,13 +27,14 @@ function M.on_new_config(config, root_dir)
     opts.library = opts.plugin_library
   end
 
+  local library = {}
+
   if
     config.settings
     and config.settings.Lua
     and config.settings.Lua.workspace
     and config.settings.Lua.workspace.library
   then
-    local library = {}
     for _, lib in ipairs(config.settings.Lua.workspace.library) do
       -- Handle special workspace libraries
       if lib:match("^nvim:?.*$") then
@@ -58,12 +59,14 @@ function M.on_new_config(config, root_dir)
         table.insert(library, lib)
       end
     end
-    config.settings.Lua.workspace.library = library
   end
 
   if enabled then
     config.settings =
       vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
+    for _, lib in ipairs(library) do
+      table.insert(config.settings, lib)
+    end
   end
 end
 
