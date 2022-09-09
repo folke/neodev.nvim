@@ -28,8 +28,7 @@ function M.on_new_config(config, root_dir)
   end
 
   pcall(function()
-    local settings = require("settings").get_settings({ file = root_dir, key = "lua-dev" })
-    opts = vim.tbl_deep_extend("force", opts, settings)
+    opts = require("settings").get("lua-dev.nvim", opts, { file = root_dir })
   end)
 
   pcall(opts.override, root_dir, opts.library)
