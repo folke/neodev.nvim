@@ -27,7 +27,7 @@ function M.is_plugin(path)
 end
 
 function M.is_nvim_config(path)
-  return M.has_file(path, M.config_path())
+  return M.has_file(M.fqn(path), M.config_path())
 end
 
 return M
