@@ -27,47 +27,24 @@ function M.on_new_config(config, root_dir)
     opts.library.plugins = false
   end
 
-  local library = {}
-
-  if
-    config.settings
-    and config.settings.Lua
-    and config.settings.Lua.workspace
-    and config.settings.Lua.workspace.library
-  then
-    for _, lib in ipairs(config.settings.Lua.workspace.library) do
-      -- Handle special workspace libraries
-      if lib:match("^nvim:?.*$") then
-        opts.library.enabled = true
-        lib = lib:gsub("^nvim:?", "")
-        if lib == "" then
-          opts.library.runtime = true
-          opts.library.types = true
-        elseif lib == "plugins" then
-          opts.library.plugins = true
-        elseif lib == "types" then
-          opts.library.types = true
-        elseif lib == "runtime" then
-          opts.library.runtime = true
-        else
-          if type(opts.library.plugins) ~= "table" then
-            opts.library.plugins = {}
-          end
-          table.insert(opts.library.plugins, lib)
-        end
-      else
-        table.insert(library, lib)
-      end
-    end
-  end
+  pcall(function()
+    local settings = require("settings").get_settings({ file = root_dir, key = "lua-dev" })
+    opts = vim.tbl_deep_extend("force", opts, settings)
+  end)
 
   pcall(opts.override, root_dir, opts.library)
+
+  local library = config.settings
+      and config.settings.Lua
+      and config.settings.Lua.workspace
+      and config.settings.Lua.workspace.library
+    or {}
 
   if opts.library.enabled then
     config.settings =
       vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
     for _, lib in ipairs(library) do
-      table.insert(config.settings, lib)
+      table.insert(config.settings.Lua.workspace.library, lib)
     end
   end
 end
