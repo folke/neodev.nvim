@@ -124,6 +124,26 @@ function vim.treesitter.TSHighlighter:destroy() end
 --- @param lang any #A language used by the highlighter.
 function vim.treesitter.TSHighlighter:get_query(lang) end
 
+-- Gets a list of captures under the cursor
+--- @param winnr any #(number|nil) Window handle or 0 for current window (default)
+--- @return any #(table) Named node under the cursor
+function vim.treesitter.get_captures_at_cursor(winnr) end
+
+-- Gets the smallest named node under the cursor
+--- @param winnr any #(number|nil) Window handle or 0 for current window (default)
+--- @return any #(string) Named node under the cursor
+function vim.treesitter.get_node_at_cursor(winnr) end
+
+-- Gets the smallest named node at position
+--- @param bufnr any #(number) Buffer number (0 for current buffer)
+--- @param row any #(number) Position row
+--- @param col any #(number) Position column
+--- @param opts any #(table) Optional keyword arguments:
+---              • ignore_injections boolean Ignore injected languages
+---                (default true)
+--- @return any #(table) Named node under the cursor
+function vim.treesitter.get_node_at_position(bufnr, row, col, opts) end
+
 -- Represents a single treesitter parser for a language. The language can
 -- contain child languages with in its range, hence the tree.
 --- @param source any #Can be a bufnr or a string of text to parse

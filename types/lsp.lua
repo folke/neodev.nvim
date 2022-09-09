@@ -184,6 +184,11 @@ function vim.lsp.extract_completion_items(result) end
 ---                  ID (client.id) matching this field.
 ---                • name (string|nil): Restrict formatting to the client with
 ---                  name (client.name) matching this field.
+---                • range (table|nil) Range to format. Table must contain
+---                  `start` and `end` keys with {row, col} tuples using (1,0)
+---                  indexing. Defaults to current selection in visual mode
+---                  Defaults to `nil` in other modes, formatting the full
+---                  buffer
 function vim.lsp.format(options) end
 
 -- Constructs an error message from an LSP error object.
