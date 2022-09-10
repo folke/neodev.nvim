@@ -1,5 +1,5 @@
 {
-  "lua-dev.nvim": {
+  "lua-dev": {
     "library": {
       "enabled": true,
       "plugins": [

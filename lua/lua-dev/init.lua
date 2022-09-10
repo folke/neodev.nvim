@@ -4,8 +4,8 @@ local function setup_settings(config)
   pcall(function()
     require("settings.plugins").register({
       get_schema = function()
-        local ret = require("settings.schema").plugin_schema("lua-dev.nvim", config.defaults, "Settings for lua-dev")
-        ret.properties["lua-dev.nvim"].properties.library.properties.plugins = {
+        local ret = require("settings.schema").plugin_schema("lua-dev", config.defaults, "Settings for lua-dev")
+        ret.properties["lua-dev"].properties.library.properties.plugins = {
           description = "true/false or an array of plugin names to enable",
           anyOf = {
             { type = "boolean" },
