@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    # Run this once a week
-    - cron: '0 0 * * *'
+    # Run this every day
+    - cron: '0 * * * *'
 
 jobs:
   update-docs:
@@ -21,6 +21,11 @@ jobs:
           cd /tmp/neovim-repo
           python3 ./scripts/gen_vimdoc.py
       - uses: actions/checkout@v3
+      - name: panvimdoc
+        uses: kdheepak/panvimdoc@main
+        with:
+          vimdoc: lua-dev
+          demojify: true
       - name: Generate new docs
         run: |
           cp /tmp/neovim-repo/runtime/doc/*.mpack ./data/
