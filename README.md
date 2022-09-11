@@ -38,7 +38,7 @@ use "folke/lua-dev.nvim"
 Plug 'folke/lua-dev.nvim'
 ```
 
-## ⚙️ Configuration 
+## ⚙️ Configuration
 
 **lua-dev** comes with the following defaults:
 
@@ -46,14 +46,14 @@ Plug 'folke/lua-dev.nvim'
 {
   library = {
     enabled = true, -- when not enabled, lua-dev will not change any settings to the LSP server
-    -- these settings will be used for your neovim config directory
+    -- these settings will be used for your Neovim config directory
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
     plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
-  -- for your neovim config directory, the config.library settings will be used as is
+  -- for your Neovim config directory, the config.library settings will be used as is
   -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
   -- for any other directory, config.library.enabled will be set to false
   override = function(root_dir, options) end,
@@ -81,9 +81,11 @@ local lspconfig = require('lspconfig')
 
 -- example to setup sumneko and enable call snippets
 lspconfig.sumneko_lua.setup({
-  Lua = {
-    completion = {
-      callSnippet = "Replace"
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace"
+      }
     }
   }
 })
@@ -106,7 +108,7 @@ require("lua-dev").setup({
 
 ## ❓ How?
 
-**Neovim** includes a [script](https://github.com/neovim/neovim/blob/master/scripts/gen_vimdoc.py) to generated the nvim docs.
+**Neovim** includes a [script](https://github.com/neovim/neovim/blob/master/scripts/gen_vimdoc.py) to generate the nvim docs.
 That script also creates message pack files containing all the API metadata in a structured way.
 Unfortunately these files are not packaged in the releases.
 
