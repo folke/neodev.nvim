@@ -22,7 +22,7 @@ function M.setup_jsonls(config)
   table.insert(schemas, {
     name = "Sumneko Lua Settings",
     url = "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
-    fileMatch = { ".luarc.json" },
+    fileMatch = { ".luarc.json", ".luarc.jsonc" },
   })
   config.settings = vim.tbl_deep_extend("force", config.settings, {
     json = {
@@ -56,14 +56,14 @@ function M.on_new_config(config, root_dir)
   pcall(opts.override, root_dir, opts.library)
 
   local library = config.settings
-    and config.settings.Lua
-    and config.settings.Lua.workspace
-    and config.settings.Lua.workspace.library
+      and config.settings.Lua
+      and config.settings.Lua.workspace
+      and config.settings.Lua.workspace.library
     or {}
 
   if opts.library.enabled then
     config.settings =
-    vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
+      vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
     end
