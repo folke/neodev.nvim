@@ -3,18 +3,18 @@
 ==============================================================================
 Table of Contents                                  *lua-dev-table-of-contents*
 
-1. 💻 lua-dev                                         |lua-dev-💻-lua-dev|
-  - ✨ Features                                        |lua-dev-✨-features|
-  - ⚡️ Requirements                          |lua-dev-⚡️-requirements|
-  - 📦 Installation                              |lua-dev-📦-installation|
-  - ⚙️ Configuration                        |lua-dev-⚙️-configuration|
-  - 🚀 Setup                                            |lua-dev-🚀-setup|
-  - ❓ How?                                                |lua-dev-❓-how?|
-  - 🗒️ Limitations                          |lua-dev-🗒️-limitations|
-  - ⭐ Acknowledgment                            |lua-dev-⭐-acknowledgment|
+1. lua-dev                                                   |lua-dev-lua-dev|
+  - Features                                                |lua-dev-features|
+  - Requirements                                        |lua-dev-requirements|
+  - Installation                                        |lua-dev-installation|
+  - Configuration                                      |lua-dev-configuration|
+  - Setup                                                      |lua-dev-setup|
+  - How?                                                        |lua-dev-how?|
+  - Limitations                                          |lua-dev-limitations|
+  - Acknowledgment                                    |lua-dev-acknowledgment|
 
 ==============================================================================
-1. 💻 lua-dev                                         *lua-dev-💻-lua-dev*
+1. lua-dev                                                   *lua-dev-lua-dev*
 
 Dev setup for init.lua and plugin development with full signature help, docs
 and completion for the nvim lua API.
@@ -29,7 +29,7 @@ and completion for the nvim lua API.
 <p class="caption">image</p>
 </div>
 
-✨ FEATURES                                            *lua-dev-✨-features*
+FEATURES                                                    *lua-dev-features*
 
 
 - Automatically configures **sumneko_lua** for your **Neovim** config and plugin directories
@@ -42,14 +42,14 @@ and completion for the nvim lua API.
 - properly configure the vim runtime
 
 
-⚡️ REQUIREMENTS                              *lua-dev-⚡️-requirements*
+REQUIREMENTS                                            *lua-dev-requirements*
 
 
 - Neovim >= 0.5.0
 - completion plugin like nvim-cmp <https://github.com/hrsh7th/nvim-cmp>
 
 
-📦 INSTALLATION                                  *lua-dev-📦-installation*
+INSTALLATION                                            *lua-dev-installation*
 
 Install the plugin with your preferred package manager:
 
@@ -67,7 +67,7 @@ VIM-PLUG <HTTPS://GITHUB.COM/JUNEGUNN/VIM-PLUG> ~
 <
 
 
-⚙️ CONFIGURATION                            *lua-dev-⚙️-configuration*
+CONFIGURATION                                          *lua-dev-configuration*
 
 **lua-dev** comes with the following defaults:
 
@@ -91,7 +91,7 @@ VIM-PLUG <HTTPS://GITHUB.COM/JUNEGUNN/VIM-PLUG> ~
 <
 
 
-🚀 SETUP                                                *lua-dev-🚀-setup*
+SETUP                                                          *lua-dev-setup*
 
 **lua-dev** will **ONLY** change the **sumneko_lua** settings for:
 
@@ -138,7 +138,7 @@ Example for setting up **lua-dev** that overrides the settings for `/etc/nixos`
 <
 
 
-❓ HOW?                                                    *lua-dev-❓-how?*
+HOW?                                                            *lua-dev-how?*
 
 **Neovim** includes a script
 <https://github.com/neovim/neovim/blob/master/scripts/gen_vimdoc.py> to
@@ -152,14 +152,14 @@ annotations
 make them available for the Sumneko LSP
 <https://github.com/sumneko/lua-language-server> as a workspace library.
 
-🗒️ LIMITATIONS                              *lua-dev-🗒️-limitations*
+LIMITATIONS                                              *lua-dev-limitations*
 
 
-- ☒ `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
+- `vim.fn` functions are currently not part of the EmmyLua library since no message pack files are generated. Implemented using vim-lsp
 - function return types are always `any`, since that information is missing
 
 
-⭐ ACKNOWLEDGMENT                                *lua-dev-⭐-acknowledgment*
+ACKNOWLEDGMENT                                        *lua-dev-acknowledgment*
 
 
 - docs for options and functions are based on the work of vim-lsp <https://github.com/prabirshrestha/vim-lsp>
