@@ -3,13 +3,35 @@ local util = require("lua-dev.util")
 local M = {}
 
 function M.setup()
+  local opts = require("lua-dev.config").options
+
   local lsputil = require("lspconfig.util")
   local hook = lsputil.add_hook_after
   lsputil.on_setup = hook(lsputil.on_setup, function(config)
+    if opts.setup_jsonls and config.name == "jsonls" then
+      M.setup_jsonls(config)
+    end
     if config.name == "sumneko_lua" then
       config.on_new_config = hook(config.on_new_config, M.on_new_config)
     end
   end)
+end
+
+function M.setup_jsonls(config)
+  local schemas = config.settings.json and config.settings.json.schemas or {}
+  table.insert(schemas, {
+    name = "Sumneko Lua Settings",
+    url = "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    fileMatch = { ".luarc.json" },
+  })
+  config.settings = vim.tbl_deep_extend("force", config.settings, {
+    json = {
+      schemas = schemas,
+      validate = {
+        enable = true,
+      },
+    },
+  })
 end
 
 function M.on_new_config(config, root_dir)
@@ -34,14 +56,14 @@ function M.on_new_config(config, root_dir)
   pcall(opts.override, root_dir, opts.library)
 
   local library = config.settings
-      and config.settings.Lua
-      and config.settings.Lua.workspace
-      and config.settings.Lua.workspace.library
+    and config.settings.Lua
+    and config.settings.Lua.workspace
+    and config.settings.Lua.workspace.library
     or {}
 
   if opts.library.enabled then
     config.settings =
-      vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
+    vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
     end
