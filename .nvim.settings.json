@@ -1,4 +1,11 @@
 {
+  "settings": {
+    "plugins": {
+      "sumneko_lua": {
+        "enabled": true
+      }
+    }
+  },
   "lua-dev": {
     "library": {
       "enabled": true,

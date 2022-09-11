@@ -15,7 +15,7 @@ function M.library(opts)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
-        table.insert(ret, p)
+        table.insert(ret, vim.fn.fnamemodify(p, ":h"))
       end
     end
   end
@@ -43,8 +43,8 @@ end
 
 function M.path()
   return {
-    "?.lua",
-    "?/init.lua",
+    "lua/?.lua",
+    "lua/?/init.lua",
   }
 end
 
@@ -56,6 +56,7 @@ end
 function M.setup(opts)
   opts = config.merge(opts)
   return {
+    ---@type Settings.sumneko_lua
     settings = {
       Lua = {
         runtime = {
