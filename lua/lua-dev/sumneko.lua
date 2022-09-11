@@ -43,8 +43,8 @@ end
 
 function M.path()
   return {
-    "lua/?.lua",
-    "lua/?/init.lua",
+    "?.lua",
+    "?/init.lua",
   }
 end
 
