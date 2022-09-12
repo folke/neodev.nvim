@@ -30,4 +30,9 @@ function M.is_nvim_config(path)
   return M.has_file(M.fqn(path), M.config_path())
 end
 
+function M.is_nvim_runtime(path)
+  local runtime = vim.loop.fs_realpath(vim.fn.getenv("VIMRUNTIME"))
+  return M.has_file(runtime, path)
+end
+
 return M

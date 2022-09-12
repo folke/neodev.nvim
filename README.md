@@ -9,7 +9,7 @@ completion for the nvim lua API.
 
 ## ✨ Features
 
-- Automatically configures **sumneko_lua** for your **Neovim** config and plugin
+- Automatically configures **sumneko_lua** for your **Neovim** config, **Neovim** runtime and plugin
   directories
 - [EmmyLua](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations)
   library for the nvim lua API for:
@@ -71,6 +71,7 @@ Plug 'folke/lua-dev.nvim'
 **lua-dev** will **ONLY** change the **sumneko_lua** settings for:
 
 - your Neovim config directory
+- your Neovim runtime directory
 - any plugin directory (this is an lsp root_dir that contains a `/lua`
   directory)
 

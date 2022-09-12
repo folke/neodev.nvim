@@ -44,6 +44,11 @@ function M.on_new_config(config, root_dir)
 
   opts.library.enabled = util.is_nvim_config(root_dir)
 
+  if not opts.library.enabled and util.is_nvim_runtime(root_dir) then
+    opts.library.enabled = true
+    opts.library.plugins = false
+  end
+
   if not opts.library.enabled and util.is_plugin(root_dir) then
     opts.library.enabled = true
     opts.library.plugins = false
