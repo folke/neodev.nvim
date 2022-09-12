@@ -56,7 +56,7 @@ end
 function M.setup(opts)
   opts = config.merge(opts)
   return {
-    ---@type Settings.sumneko_lua
+    ---@type lspconfig.settings.sumneko_lua
     settings = {
       Lua = {
         runtime = {
