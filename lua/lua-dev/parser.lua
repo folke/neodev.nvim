@@ -56,11 +56,12 @@ function M.emmy_param(param, is_return)
   end
 end
 
+--- @param fun MpackFunction
 --- @return ApiFunction
 function M.process(name, fun, prefix)
   --- @class ApiFunction
   local ret = {
-    doc = (fun.doc and fun.doc[1]) and fun.doc[1] or "",
+    doc = (fun.doc and fun.doc[1]) and table.concat(fun.doc, "\n\n") or "",
     name = name,
     fqname = prefix .. "." .. name,
     params = {},
@@ -138,6 +139,14 @@ function M.intro(fd)
     -1
   )
 end
+
+---@class MpackFunction
+---@field doc string[]
+---@field parameters string[][]
+---@field parameters_doc table<string, string>
+---@field return string[]
+---@field seealso string[]
+---@field signature string
 
 function M.get_functions(mpack)
   mpack = "data/" .. mpack
