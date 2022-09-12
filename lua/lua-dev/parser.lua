@@ -26,6 +26,8 @@ function M.infer_type(param)
     type = "number[]"
   elseif type == "dictionaryof(luaref)" then
     type = "table<string, luaref>"
+  elseif type and type:find("dict%(") == 1 then
+    type = "dict"
   end
   return type
 end
