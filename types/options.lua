@@ -1208,7 +1208,7 @@ vim.o.backupcopy = "auto"
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.o.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 -- string	(default "~")
 -- 			global
 -- 	String which is appended to a file name to make the name of the
@@ -1559,7 +1559,7 @@ vim.o.digraph = "false"
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.directory = "/home/folke/.local/state/nvim/swap//"
+vim.o.directory = "/home/runner/.local/state/nvim/swap//"
 -- string	(default "lastline,msgsep", Vi default: "")
 -- 			global
 -- 	Change the way text is displayed.  This is comma separated list of
@@ -1904,7 +1904,7 @@ vim.o.guitabtooltip = ""
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.o.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 -- number	(default 20)
 -- 			global
 -- 	Minimal initial height of the help window when it is opened with the
@@ -2556,7 +2556,7 @@ vim.o.opendevice = "false"
 vim.o.operatorfunc = ""
 -- string	(default: see 'runtimepath')
 -- 	Directories used to find packages.  See |packages|.
-vim.o.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.o.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 -- string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
 -- 	Specifies the nroff macros that separate paragraphs.  These are pairs
@@ -2889,7 +2889,7 @@ vim.o.rulerformat = ""
 -- 	  spell/	spell checking files |spell|
 -- 	  syntax/	syntax files |mysyntaxfile|
 -- 	  tutor/	tutorial files |:Tutor|
-vim.o.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.o.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 -- number	(default 1)
 -- 			global
 -- 	Minimal number of lines to scroll when the cursor gets off the
@@ -3175,7 +3175,7 @@ vim.o.shadafile = ""
 -- 		set shellquote= shellpipe=\| shellxquote=
 -- 		set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
 -- 		set shellredir=\|\ Out-File\ -Encoding\ UTF8
-vim.o.shell = "/usr/bin/fish"
+vim.o.shell = "sh"
 -- string	(default: "-c"; Windows: "/s /c")
 -- 			global
 -- 	Flag passed to the shell to execute "!" and ":!" commands; e.g.,
@@ -3740,7 +3740,7 @@ vim.o.ttyfast = "true"
 -- 	See |undo-persistence|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.o.undodir = "/home/runner/.local/state/nvim/undo//"
 -- number	(default 1000)
 -- 			global or local to buffer |global-local|
 -- 	Maximum number of changes that can be undone.  Since undo information
@@ -3816,7 +3816,7 @@ vim.o.verbosefile = ""
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.o.viewdir = "/home/runner/.local/state/nvim/view//"
 -- string	(default: "folds,options,cursor,curdir")
 -- 			global
 -- 	Changes the effect of the |:mkview| command.  It is a comma separated
