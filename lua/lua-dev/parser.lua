@@ -284,7 +284,10 @@ function M.functions()
 
   local writer = M.writer("types/vim.fn")
   local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
-  for name, props in pairs(functions) do
+  local names = vim.tbl_keys(functions)
+  table.sort(names)
+  for _, name in ipairs(names) do
+    local props = functions[name]
     if vim.fn[name] and not vim.api[name] and not exclude[name] then
       local fun = {
         name = name,
