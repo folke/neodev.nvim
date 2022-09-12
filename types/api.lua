@@ -111,6 +111,8 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --     on_lines=function(...) table.insert(events, {...}) end})
 --
 -- ```
+--- @see |nvim_buf_detach()|
+--- @see |api-buffer-updates-lua|
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @param send_buffer boolean # True if the initial notification should contain the
 --                    whole buffer: first notification will be
@@ -200,6 +202,7 @@ function vim.api.nvim_buf_call(buffer, fun) end
 function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) end
 
 -- Create a new user command |user-commands| in the given buffer.
+--- @see nvim_create_user_command
 --- @param buffer buffer # Buffer handle, or 0 for current buffer.
 --- @param name string
 --- @param command object
@@ -214,6 +217,7 @@ function vim.api.nvim_buf_create_user_command(buffer, name, command, opts) end
 function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
 
 -- Unmaps a buffer-local |mapping| for the given mode.
+--- @see |nvim_del_keymap()|
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @param mode string
 --- @param lhs string
@@ -225,6 +229,8 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 -- Note:
 --     only deletes marks set in the buffer, if the mark is not set in the
 --     buffer it will return false.
+--- @see |nvim_buf_set_mark()|
+--- @see |nvim_del_mark()|
 --- @param buffer buffer # Buffer to set the mark on
 --- @param name string # Mark name
 --- @return any # true if the mark was deleted, else false.
@@ -251,6 +257,8 @@ function vim.api.nvim_buf_del_var(buffer, name) end
 function vim.api.nvim_buf_delete(buffer, opts) end
 
 -- Deactivates buffer-update events on the channel.
+--- @see |nvim_buf_attach()|
+--- @see |api-lua-detach| for detaching Lua callbacks
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @return any # False if detach failed (because the buffer isn't loaded); otherwise
 --     True.
@@ -350,6 +358,8 @@ function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 -- |mark-motions|.
 --
 -- Marks are (1,0)-indexed. |api-indexing|
+--- @see |nvim_buf_set_mark()|
+--- @see |nvim_buf_del_mark()|
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @param name string # Mark name
 --- @return any # (row, col) tuple, (0, 0) if the mark is not set, or is an
@@ -536,6 +546,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 
 -- Sets a buffer-local |mapping| for the given mode.
+--- @see |nvim_set_keymap()|
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @param mode string
 --- @param lhs string
@@ -569,6 +580,8 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 --
 -- Note:
 --     Passing 0 as line deletes the mark
+--- @see |nvim_buf_del_mark()|
+--- @see |nvim_buf_get_mark()|
 --- @param buffer buffer # Buffer to set the mark on
 --- @param name string # Mark name
 --- @param line integer # Line number
@@ -701,6 +714,8 @@ function vim.api.nvim_clear_autocmds(opts) end
 -- expand filenames, etc.
 --
 -- On execution error: fails with VimL error, updates v:errmsg.
+--- @see |nvim_exec()|
+--- @see |nvim_command()|
 --- @param cmd? dict # Command to execute. Must be a Dictionary that can contain the
 --             same values as the return value of |nvim_parse_cmd()| except
 --             "addr", "nargs" and "nextcmd" which are ignored if provided.
@@ -733,6 +748,7 @@ function vim.api.nvim_command(command) end
 --     })
 --
 -- ```
+--- @see |autocmd-groups|
 --- @param name string # String: The name of the group
 --- @param opts? dict # Dictionary Parameters
 --             • clear (bool) optional: defaults to true. Clear existing
@@ -801,6 +817,8 @@ function vim.api.nvim_create_augroup(name, opts) end
 --   {"CursorHold", "BufWritePre", "BufWritePost"}
 --
 -- ```
+--- @see |autocommand|
+--- @see |nvim_del_autocmd()|
 --- @param event object # (string|array) The event or events to register this
 --              autocommand
 --- @param opts? dict # Dictionary of autocommand options:
@@ -840,6 +858,7 @@ function vim.api.nvim_create_augroup(name, opts) end
 function vim.api.nvim_create_autocmd(event, opts) end
 
 -- Creates a new, empty, unnamed buffer.
+--- @see buf_open_scratch
 --- @param listed boolean # Sets 'buflisted'
 --- @param scratch boolean # Creates a "throwaway" |scratch-buffer| for temporary work
 --                (always 'nomodified'). Also sets 'nomodeline' on the
@@ -920,6 +939,8 @@ function vim.api.nvim_create_user_command(name, command, opts) end
 -- NOTE: behavior differs from |augroup-delete|. When deleting a group,
 -- autocommands contained in this group will also be deleted and cleared.
 -- This group will no longer exist.
+--- @see |nvim_del_augroup_by_name()|
+--- @see |nvim_create_augroup()|
 --- @param id integer # Integer The id of the group.
 function vim.api.nvim_del_augroup_by_id(id) end
 
@@ -928,12 +949,14 @@ function vim.api.nvim_del_augroup_by_id(id) end
 -- NOTE: behavior differs from |augroup-delete|. When deleting a group,
 -- autocommands contained in this group will also be deleted and cleared.
 -- This group will no longer exist.
+--- @see |autocommand-groups|
 --- @param name string # String The name of the group.
 function vim.api.nvim_del_augroup_by_name(name) end
 
 -- Delete an autocommand by id.
 --
 -- NOTE: Only autocommands created via the API have an id.
+--- @see |nvim_create_autocmd()|
 --- @param id integer # Integer The id returned by nvim_create_autocmd
 function vim.api.nvim_del_autocmd(id) end
 
@@ -943,6 +966,7 @@ function vim.api.nvim_del_current_line() end
 -- Unmaps a global |mapping| for the given mode.
 --
 -- To unmap a buffer-local mapping, use |nvim_buf_del_keymap()|.
+--- @see |nvim_set_keymap()|
 --- @param mode string
 --- @param lhs string
 function vim.api.nvim_del_keymap(mode, lhs) end
@@ -952,6 +976,8 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 --
 -- Note:
 --     fails with error if a lowercase or buffer local named mark is used.
+--- @see |nvim_buf_del_mark()|
+--- @see |nvim_get_mark()|
 --- @param name string # Mark name
 --- @return any # true if the mark was deleted, else false.
 function vim.api.nvim_del_mark(name) end
@@ -979,6 +1005,7 @@ function vim.api.nvim_err_write(str) end
 
 -- Writes a message to the Vim error buffer. Appends "\n", so the buffer is
 -- flushed (and displayed).
+--- @see nvim_err_write()
 --- @param str string # Message
 function vim.api.nvim_err_writeln(str) end
 
@@ -1026,6 +1053,9 @@ function vim.api.nvim_eval_statusline(str, opts) end
 -- (s:), etc.
 --
 -- On execution error: fails with VimL error, updates v:errmsg.
+--- @see |execute()|
+--- @see |nvim_command()|
+--- @see |nvim_cmd()|
 --- @param src string # Vimscript code
 --- @param output boolean # Capture and return all (non-error, non-shell |:!|) output
 --- @return any # Output (non-error, non-shell |:!|) if `output` is true, else empty
@@ -1034,6 +1064,7 @@ function vim.api.nvim_exec(src, output) end
 
 -- Execute all autocommands for {event} that match the corresponding {opts}
 -- |autocmd-execute|.
+--- @see |:doautocmd|
 --- @param event object # (String|Array) The event or events to execute
 --- @param opts? dict # Dictionary of autocommand options:
 --              • group (string|integer) optional: the autocommand group name
@@ -1073,6 +1104,8 @@ function vim.api.nvim_exec_lua(code, args) end
 --     :call nvim_feedkeys(key, 'n', v:false)
 --
 -- ```
+--- @see feedkeys()
+--- @see vim_strsave_escape_ks
 --- @param keys string # to be typed
 --- @param mode string # behavior flags, see |feedkeys()|
 --- @param escape_ks boolean # If true, escape K_SPECIAL bytes in `keys` This should be
@@ -1212,12 +1245,14 @@ function vim.api.nvim_get_current_tabpage() end
 function vim.api.nvim_get_current_win() end
 
 -- Gets a highlight definition by id. |hlID()|
+--- @see nvim_get_hl_by_name
 --- @param hl_id integer # Highlight id as returned by |hlID()|
 --- @param rgb boolean # Export RGB colors
 --- @return any # Highlight definition map
 function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
 
 -- Gets a highlight definition by name.
+--- @see nvim_get_hl_by_id
 --- @param name string # Highlight group name
 --- @param rgb boolean # Export RGB colors
 --- @return any # Highlight definition map
@@ -1243,6 +1278,8 @@ function vim.api.nvim_get_keymap(mode) end
 --
 -- Note:
 --     fails with error if a lowercase or buffer local named mark is used.
+--- @see |nvim_buf_set_mark()|
+--- @see |nvim_del_mark()|
 --- @param name string # Mark name
 --- @param opts dictionary # Optional parameters. Reserved for future use.
 --- @return any # 4-tuple (row, col, buffer, buffername), (0, 0, 0, '') if the mark is
@@ -1753,6 +1790,8 @@ function vim.api.nvim_put(lines, type, after, follow) end
 
 -- Replaces terminal codes and |keycodes| (<CR>, <Esc>, ...) in a string with
 -- the internal representation.
+--- @see replace_termcodes
+--- @see cpoptions
 --- @param str string # String to be converted.
 --- @param from_part boolean # Legacy Vim parameter. Usually true.
 --- @param do_lt boolean # Also translate <lt>. Ignored if `special` is false.
@@ -2117,6 +2156,8 @@ function vim.api.nvim_ui_try_resize_grid(grid, width, height) end
 function vim.api.nvim_unsubscribe(event) end
 
 -- Calls a function with window as temporary current window.
+--- @see |win_execute()|
+--- @see |nvim_buf_call()|
 --- @param window window # Window handle, or 0 for current window
 --- @param fun luaref # Function to call inside the window (currently lua callable
 --               only)
@@ -2216,6 +2257,7 @@ function vim.api.nvim_win_set_buf(window, buffer) end
 --
 -- When reconfiguring a floating window, absent option keys will not be
 -- changed. `row`/`col` and `relative` must be reconfigured together.
+--- @see |nvim_open_win()|
 --- @param window window # Window handle, or 0 for current window
 --- @param config? dict # Map defining the window configuration, see |nvim_open_win()|
 function vim.api.nvim_win_set_config(window, config) end

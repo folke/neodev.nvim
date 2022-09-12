@@ -128,6 +128,7 @@ function vim.basename(file) end
 --    vim.cmd.colorscheme('blue')
 --
 -- ```
+--- @see |ex-cmd-index|
 --- @param command any # string|table Command(s) to execute. If a string, executes
 --                multiple lines of Vim script at once. In this case, it is
 --                an alias to |nvim_exec()|, where `output` is set to false.
@@ -193,6 +194,7 @@ function vim.defer_fn(fn, timeout) end
 --    vim.keymap.del({'n', 'i', 'v'}, '<leader>w', { buffer = 5 })
 --
 -- ```
+--- @see |vim.keymap.set()|
 --- @param opts any # (table) A table of optional arguments:
 --             • buffer: (number or boolean) Remove a mapping from the given
 --               buffer. When "true" or 0, use the current buffer.
@@ -258,6 +260,9 @@ function vim.endswith(s, suffix) end
 function vim.find(names, opts) end
 
 -- Splits a string at each instance of a separator.
+--- @see |vim.split()|
+--- @see https://www.lua.org/pil/20.2.html
+--- @see http://lua-users.org/wiki/StringLibraryTutorial
 --- @param s any # (string) String to split
 --- @param sep any # (string) Separator or pattern
 --- @param plain any # (boolean) If `true` use `sep` literally (passed to
@@ -297,6 +302,7 @@ function vim.is_callable(f) end
 -- Extends a list-like table with the values of another list-like table.
 --
 -- NOTE: This mutates dst!
+--- @see |vim.tbl_extend()|
 --- @param dst any # (table) List which will be modified and appended to
 --- @param src any # (table) List from which values will be inserted
 --- @param start any # (number) Start index on src. Defaults to 1
@@ -471,6 +477,7 @@ function vim.parents(start) end
 --  end)(vim.paste)
 --
 -- ```
+--- @see |paste|
 --- @param lines any # |readfile()|-style list of lines to paste. |channel-lines|
 --- @param phase any # -1: "non-streaming" paste: the call contains all lines. If
 --              paste is "streamed", `phase` indicates the stream state:
@@ -481,6 +488,7 @@ function vim.parents(start) end
 function vim.paste(lines, phase) end
 
 -- Escapes magic chars in |lua-patterns|.
+--- @see https://github.com/rxi/lume
 --- @param s any # (string) String to escape
 --- @return any # (string) %-escaped pattern string
 function vim.pesc(s) end
@@ -491,6 +499,7 @@ function vim.pesc(s) end
 --   local hl_normal = vim.pretty_print(vim.api.nvim_get_hl_by_name("Normal", true))
 --
 -- ```
+--- @see |vim.inspect()|
 --- @return any # given arguments.
 function vim.pretty_print(...) end
 
@@ -506,6 +515,9 @@ function vim.pretty_print(...) end
 function vim.region(bufnr, pos1, pos2, regtype, inclusive) end
 
 -- Defers callback `cb` until the Nvim API is safe to call.
+--- @see |lua-loop-callbacks|
+--- @see |vim.schedule()|
+--- @see |vim.in_fast_event()|
 function vim.schedule_wrap(cb) end
 
 -- Prompts the user to pick a single item from a collection of entries
@@ -579,6 +591,7 @@ function vim.select(items, opts, on_choice) end
 --     vim.keymap.set('n', 'asdf', function() return require('jkl').my_fun() end)
 --
 -- ```
+--- @see |nvim_set_keymap()|
 --- @param mode any # string|table Same mode short names as |nvim_set_keymap()|. Can
 --             also be list of modes to create mapping on multiple modes.
 --- @param lhs any # (string) Left-hand side |{lhs}| of the mapping.
@@ -611,6 +624,7 @@ function vim.set(mode, lhs, rhs, opts) end
 --   split("|x|y|z|", "|", {trimempty=true}) --> {'x', 'y', 'z'}
 --
 -- ```
+--- @see |vim.gsplit()|
 --- @param s any # (string) String to split
 --- @param sep any # (string) Separator or pattern
 --- @param kwargs any # (table) Keyword arguments:
@@ -650,11 +664,13 @@ function vim.tbl_contains(t, value) end
 --  vim.tbl_count({ 1, 2 }) => 2
 --
 -- ```
+--- @see https://github.com/Tieske/Penlight/blob/master/lua/pl/tablex.lua
 --- @param t any # (table) Table
 --- @return any # (number) Number of non-nil values in table
 function vim.tbl_count(t) end
 
 -- Merges recursively two or more map-like tables.
+--- @see |tbl_extend()|
 --- @param behavior any # (string) Decides what to do if a key is found in more than
 --                 one map:
 --                 • "error": raise an error
@@ -665,6 +681,7 @@ function vim.tbl_count(t) end
 function vim.tbl_deep_extend(behavior, ...) end
 
 -- Merges two or more map-like tables.
+--- @see |extend()|
 --- @param behavior any # (string) Decides what to do if a key is found in more than
 --                 one map:
 --                 • "error": raise an error
@@ -682,6 +699,7 @@ function vim.tbl_filter(func, t) end
 
 -- Creates a copy of a list-like table such that any nested tables are
 -- "unrolled" and appended to the result.
+--- @see From https://github.com/premake/premake-core/blob/master/src/base/table.lua
 --- @param t any # (table) List-like table
 --- @return any # (table) Flattened copy of the given list-like table
 function vim.tbl_flatten(t) end
@@ -703,6 +721,7 @@ function vim.tbl_flatten(t) end
 function vim.tbl_get(o, ...) end
 
 -- Checks if a table is empty.
+--- @see https://github.com/premake/premake-core/blob/master/src/base/table.lua
 --- @param t any # (table) Table to check
 --- @return any # (boolean) `true` if `t` is empty
 function vim.tbl_isempty(t) end
@@ -718,6 +737,7 @@ function vim.tbl_islist(t) end
 
 -- Return a list of all keys used in a table. However, the order of the
 -- return table of keys is not guaranteed.
+--- @see From https://github.com/premake/premake-core/blob/master/src/base/table.lua
 --- @param t any # (table) Table
 --- @return any # (table) List of keys
 function vim.tbl_keys(t) end
@@ -735,6 +755,7 @@ function vim.tbl_map(func, t) end
 function vim.tbl_values(t) end
 
 -- Trim whitespace (Lua pattern "%s") from both sides of a string.
+--- @see https://www.lua.org/pil/20.2.html
 --- @param s any # (string) String to trim
 --- @return any # (string) String with whitespace removed from its beginning and end
 function vim.trim(s) end

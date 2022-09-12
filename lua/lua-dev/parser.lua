@@ -50,6 +50,7 @@ function M.emmy_param(param, is_return)
   if not param.doc and type == "any" then
     return ""
   end
+
   local ret = table.concat(parts, " ")
   if is_return then
     return M.comment("@return " .. ret, "--", "---") .. "\n"
@@ -83,6 +84,7 @@ function M.process(name, fun, prefix)
     name = name,
     fqname = prefix .. "." .. name,
     params = {},
+    seealso = fun.seealso or {},
     ["return"] = {},
   }
 
@@ -135,6 +137,12 @@ function M.emmy(fun)
   local ret = ""
   if fun.doc ~= "" then
     ret = ret .. (M.comment(fun.doc)) .. "\n"
+  end
+
+  if fun.seealso and #fun.seealso > 0 then
+    for _, also in ipairs(fun.seealso) do
+      ret = ret .. "--- @see " .. also .. "\n"
+    end
   end
 
   local params = {}

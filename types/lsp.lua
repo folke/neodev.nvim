@@ -9,12 +9,14 @@ function vim.lsp.add_workspace_folder(workspace_folder) end
 
 -- Applies a `TextDocumentEdit`, which is a list of changes to a single
 -- document.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocumentEdit
 --- @param text_document_edit any # table: a `TextDocumentEdit` object
 --- @param index any # number: Optional index of the edit, if from a
 --                           list of edits (or nil, if not from a list)
 function vim.lsp.apply_text_document_edit(text_document_edit, index, offset_encoding) end
 
 -- Applies a list of text edits to a buffer.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textEdit
 --- @param text_edits any # (table) list of `TextEdit` objects
 --- @param bufnr any # (number) Buffer id
 --- @param offset_encoding any # (string) utf-8|utf-16|utf-32
@@ -30,6 +32,7 @@ function vim.lsp.apply_workspace_edit(workspace_edit, offset_encoding) end
 function vim.lsp.buf_clear_references(bufnr) end
 
 -- Shows a list of document highlights for a certain buffer.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#documentHighlight
 --- @param bufnr any # (number) Buffer id
 --- @param references any # (table) List of `DocumentHighlight` objects to
 --                        highlight
@@ -50,6 +53,7 @@ function vim.lsp.character_offset(buf, row, col, offset_encoding) end
 function vim.lsp.clear_references() end
 
 -- Selects a code action available at the current cursor position.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_codeAction
 --- @param options any # (table|nil) Optional table which holds the following
 --                optional fields:
 --                • context: (table|nil) Corresponds to `CodeActionContext` of the LSP specification:
@@ -72,6 +76,7 @@ function vim.lsp.code_action(options) end
 
 -- Retrieves the completion items at the current cursor position. Can only be
 -- called in Insert mode.
+--- @see |vim.lsp.protocol.constants.CompletionTriggerKind|
 --- @param context any # (context support not yet implemented) Additional
 --                information about the context in which a completion was
 --                triggered (how it was triggered, and by which trigger
@@ -93,6 +98,7 @@ function vim.lsp.connect(host, port) end
 -- list of lines containing valid markdown. Useful to populate the hover
 -- window for `textDocument/hover`, for parsing the result of
 -- `textDocument/signatureHelp`, and potentially others.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_hover
 --- @param input any # (`MarkedString` | `MarkedString[]` | `MarkupContent`)
 --- @param contents any # (table, optional, default `{}`) List of strings to extend
 --                 with converted lines
@@ -100,6 +106,7 @@ function vim.lsp.connect(host, port) end
 function vim.lsp.convert_input_to_markdown_lines(input, contents) end
 
 -- Converts `textDocument/SignatureHelp` response to markdown lines.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_signatureHelp
 --- @param signature_help any # Response of `textDocument/SignatureHelp`
 --- @param ft any # optional filetype that will be use as the `lang` for
 --                       the label markdown code block
@@ -157,10 +164,12 @@ function vim.lsp.document_highlight() end
 function vim.lsp.document_symbol(options) end
 
 -- Executes an LSP server command.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_executeCommand
 --- @param command_params any # (table) A valid `ExecuteCommandParams` object
 function vim.lsp.execute_command(command_params) end
 
 -- Can be used to extract the completion items from a `textDocument/completion` request, which may return one of `CompletionItem[]` , `CompletionList` or null.
+--- @see https://microsoft.github.io/language-server-protocol/specification#textDocument_completion
 --- @param result any # (table) The result of a `textDocument/completion` request
 --- @return any # (table) List of completion items
 function vim.lsp.extract_completion_items(result) end
@@ -208,6 +217,7 @@ function vim.lsp.format(options) end
 function vim.lsp.format_rpc_error() end
 
 -- Formats the current buffer.
+--- @see https://microsoft.github.io/language-server-protocol/specification#textDocument_formatting
 --- @param options any # (table|nil) Can be used to specify FormattingOptions. Some
 --                unspecified options will be automatically derived from the
 --                current Neovim options.
@@ -247,6 +257,7 @@ function vim.lsp.formatting_seq_sync(options, timeout_ms, order) end
 --  autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
 --
 -- ```
+--- @see |vim.lsp.buf.formatting_seq_sync|
 --- @param options any # (table|nil) with valid `FormattingOptions` entries
 --- @param timeout_ms any # (number) Request timeout
 function vim.lsp.formatting_sync(options, timeout_ms) end
@@ -257,6 +268,7 @@ function vim.lsp.formatting_sync(options, timeout_ms) end
 function vim.lsp.get(bufnr) end
 
 -- Returns indentation size.
+--- @see |shiftwidth|
 --- @param bufnr any # (number|nil): Buffer handle, defaults to current
 --- @return any # (number) indentation size
 function vim.lsp.get_effective_tabstop(bufnr) end
@@ -350,6 +362,7 @@ function vim.lsp.make_floating_popup_options(width, height, opts) end
 
 -- Creates a `DocumentFormattingParams` object for the current buffer and
 -- cursor position.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_formatting
 --- @param options any # (table|nil) with valid `FormattingOptions` entries
 --- @return any # `DocumentFormattingParams` object
 function vim.lsp.make_formatting_params(options) end
@@ -370,6 +383,7 @@ function vim.lsp.make_given_range_params(start_pos, end_pos, bufnr, offset_encod
 
 -- Creates a `TextDocumentPositionParams` object for the current buffer and
 -- cursor position.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocumentPositionParams
 --- @param window any # number|nil: window handle or 0 for current,
 --                        defaults to current
 --- @param offset_encoding any # (string) utf-8|utf-16|utf-32|nil defaults to
@@ -392,6 +406,7 @@ function vim.lsp.make_position_params(window, offset_encoding) end
 function vim.lsp.make_range_params(window, offset_encoding) end
 
 -- Creates a `TextDocumentIdentifier` object for the current buffer.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocumentIdentifier
 --- @param bufnr any # number|nil: Buffer handle, defaults to current
 --- @return any # `TextDocumentIdentifier`
 function vim.lsp.make_text_document_params(bufnr) end
@@ -507,6 +522,7 @@ function vim.lsp.range_formatting(options, start_pos, end_pos) end
 
 -- Lists all the references to the symbol under the cursor in the quickfix
 -- window.
+--- @see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_references
 --- @param context any # (table) Context for the request
 --- @param options any # (table|nil) additional options
 --                • on_list: (function) handler for list results. See
@@ -633,6 +649,7 @@ function vim.lsp.symbols_to_items(symbols, bufnr) end
 
 -- Turns the result of a `textDocument/completion` request into
 -- vim-compatible |complete-items|.
+--- @see |complete-items|
 --- @param result any # The result of a `textDocument/completion` call, e.g. from
 --               |vim.lsp.buf.completion()|, which may be one of
 --               `CompletionItem[]`, `CompletionList` or `null`
