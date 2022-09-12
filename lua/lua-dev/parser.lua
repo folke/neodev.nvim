@@ -1,9 +1,9 @@
 local uv = vim.loop
 local M = {}
 
-function M.comment(str, comment_str)
-  comment_str = comment_str or "--"
-  return comment_str .. " " .. vim.fn.trim(str):gsub("[\n]", "\n" .. comment_str .. " "):gsub("%s+\n", "\n")
+function M.comment(str, prefix, prefix_first)
+  prefix = prefix or "--"
+  return (prefix_first or prefix) .. " " .. vim.fn.trim(str):gsub("[\n]", "\n" .. prefix .. " "):gsub("%s+\n", "\n")
 end
 
 function M.infer_type(param)
@@ -19,6 +19,7 @@ function M.infer_type(param)
     elseif param.name == "dict" then
       type = "dictionary"
     end
+    return type
   end
   if type == "arrayof(string)" then
     type = "string[]"
@@ -50,11 +51,9 @@ function M.emmy_param(param, is_return)
   end
   local ret = table.concat(parts, " ")
   if is_return then
-    return M.comment("@return " .. ret, "---") .. "\n"
-  elseif param.name == "..." then
-    return M.comment("@vararg " .. ret, "---") .. "\n"
+    return M.comment("@return " .. ret, "--", "---") .. "\n"
   else
-    return M.comment("@param " .. ret, "---") .. "\n"
+    return M.comment("@param " .. ret, "--", "---") .. "\n"
   end
 end
 
