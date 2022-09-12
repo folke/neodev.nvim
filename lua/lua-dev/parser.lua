@@ -255,7 +255,7 @@ function M.writer(file)
     write = function(str)
       uv.fs_write(fd, str, -1)
       size = size + #str
-      if size > 1024 * 50 then
+      if size > 1024 * 200 then
         uv.fs_close(fd)
         fnum = fnum + 1
         size = 0
