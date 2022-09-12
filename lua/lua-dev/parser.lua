@@ -21,6 +21,7 @@ function M.infer_type(param)
     end
     return type
   end
+
   if type == "arrayof(string)" then
     type = "string[]"
   elseif type == "arrayof(integer, 2)" then
@@ -84,6 +85,11 @@ function M.process(name, fun, prefix)
     params = {},
     ["return"] = {},
   }
+
+  -- make markdown lua code blocks for code regions
+  ret.doc = ret.doc:gsub(">\n", "\n```lua\n")
+  ret.doc = ret.doc:gsub("\n<\n", "\n```\n")
+  ret.doc = ret.doc:gsub("\n<$", "\n```")
 
   for _, r in pairs(fun["return"]) do
     table.insert(ret["return"], { doc = r })
@@ -160,14 +166,6 @@ function M.intro(fd)
     -1
   )
 end
-
----@class MpackFunction
----@field doc string[]
----@field parameters string[][]
----@field parameters_doc table<string, string>
----@field return string[]
----@field seealso string[]
----@field signature string
 
 function M.get_functions(mpack)
   mpack = "data/" .. mpack
