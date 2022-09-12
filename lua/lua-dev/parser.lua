@@ -42,7 +42,7 @@ function M.emmy_param(param, is_return)
     table.insert(parts, type)
   end
   if param.doc then
-    table.insert(parts, "#" .. param.doc)
+    table.insert(parts, param.doc)
   end
 
   if not param.doc and type == "any" then
