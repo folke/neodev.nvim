@@ -35,8 +35,8 @@ end
 function M.emmy_param(param, is_return)
   local type = M.infer_type(param)
   local parts = {}
-  if param.name and param.name ~= "..." then
-    table.insert(parts, param.name)
+  if param.name then
+    table.insert(parts, param.name .. (param.optional and "?" or ""))
   end
   if type then
     table.insert(parts, type)
@@ -58,10 +58,26 @@ function M.emmy_param(param, is_return)
   end
 end
 
+---@class MpackFunction
+---@field doc string[]
+---@field parameters string[][]
+---@field parameters_doc table<string, string>
+---@field return string[]
+---@field seealso string[]
+---@field signature string
+
+---@class ApiFunctionParam
+---@field name string
+---@field type string
+---@field doc string
+---@field optional boolean
+
 --- @param fun MpackFunction
 --- @return ApiFunction
 function M.process(name, fun, prefix)
   --- @class ApiFunction
+  --- @field params ApiFunctionParam[]
+  --- @field return ApiFunctionParam
   local ret = {
     doc = (fun.doc and fun.doc[1]) and table.concat(fun.doc, "\n\n") or "",
     name = name,
@@ -90,6 +106,10 @@ function M.process(name, fun, prefix)
     end
     if param.name == "end" then
       param.name = "end_"
+    end
+    if param.type and param.type:find("%*$") then
+      param.type = param.type:sub(1, -2)
+      param.optional = true
     end
     -- only include err param if it's documented
     -- most nvim_ functions have an err param at the end, but these should not be included
