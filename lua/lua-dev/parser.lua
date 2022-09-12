@@ -241,8 +241,12 @@ function M.options()
   end
 
   local writer = M.writer("types/options")
-  for scope, options in pairs(ret) do
-    for key, value in pairs(options) do
+  for _, scope in ipairs({ "bo", "o", "wo" }) do
+    local options = ret[scope]
+    local names = vim.tbl_keys(options)
+    table.sort(names)
+    for _, key in ipairs(names) do
+      local value = options[key]
       local str = ("vim.%s.%s = %q\n"):format(scope, key, value)
       local doc = docs[key] and table.concat(docs[key], "\n") or nil
       if doc then
