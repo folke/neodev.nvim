@@ -240,8 +240,10 @@ function vim.endswith(s, suffix) end
 -- reached. The search terminates when {limit} (default 1) matches are found.
 -- The search can be narrowed to find only files or or only directories by
 -- specifying {type} to be "file" or "directory", respectively.
---- @param names any # (string|table) Names of the files and directories to find.
---              Must be base names, paths and globs are not supported.
+--- @param names any # (string|table|fun(name: string): boolean) Names of the files
+--              and directories to find. Must be base names, paths and globs
+--              are not supported. If a function it is called per file and
+--              dir within the traversed directories to test if they match.
 --- @param opts any # (table) Optional keyword arguments:
 --              • path (string): Path to begin searching from. If omitted,
 --                the current working directory is used.
