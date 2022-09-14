@@ -161,7 +161,7 @@ function vim.deepcopy(orig) end
 --
 -- They mimic defaultdict in python.
 --
--- If `create` is `nil`, this will create a defaulttable whose constructor
+-- If {create} is `nil`, this will create a defaulttable whose constructor
 -- function is this function, effectively allowing to create nested tables on
 -- the fly:
 --
