@@ -1151,7 +1151,10 @@ function vim.api.nvim_get_api_info() end
 --             • event (string|array): event or events to match against
 --               |autocmd-events|.
 --             • pattern (string|array): pattern or patterns to match against
---               |autocmd-pattern|.
+--               |autocmd-pattern|. Cannot be used with {buffer}
+--             • buffer: Buffer number or list of buffer numbers for buffer
+--               local autocommands |autocmd-buflocal|. Cannot be used with
+--               {pattern}
 --- @return any # Array of autocommands matching the criteria, with each item containing
 --     the following fields:
 --     • id (number): the autocommand id (only when defined with the API).
