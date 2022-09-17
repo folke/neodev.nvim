@@ -50,7 +50,7 @@ function M.on_new_config(config, root_dir)
   end
 
   pcall(function()
-    opts = require("settings").get("lua-dev", opts, { file = root_dir })
+    opts = require("neoconf").get("lua-dev", opts, { file = root_dir })
   end)
 
   pcall(opts.override, root_dir, opts.library)

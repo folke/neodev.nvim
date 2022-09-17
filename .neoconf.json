@@ -10,8 +10,8 @@
     "library": {
       "enabled": true,
       "plugins": [
-        "workspace.nvim",
-        "settings.nvim"
+        "neoconf.nvim",
+        "nvim-lspconfig"
       ]
     }
   },
