@@ -29,7 +29,7 @@ jobs:
       - name: Generate new docs
         run: |
           cp /tmp/neovim-repo/runtime/doc/*.mpack ./data/
-          nvim --headless -c "luafile ./lua/lua-dev/parser.lua" -c "q"
+          nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/lua-dev/parser.lua" --cmd q
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
