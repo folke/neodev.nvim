@@ -24,6 +24,7 @@
 vim = require("vim.shared")
 vim = require("vim.uri")
 vim = require("vim.inspect")
+vim = require("vim._editor")
 
 vim.diagnostic = require("vim.diagnostic")
 vim.filetype = require("vim.filetype")
@@ -36,14 +37,3 @@ vim.keymap = require("vim.keymap")
 vim.lsp = require("vim.lsp")
 vim.treesitter = require("vim.treesitter")
 vim.ui = require("vim.ui")
-
--- HACK: hardcode these levels, since there's currently no docs for them
-vim.log = {
-  levels = {
-    TRACE = 0,
-    DEBUG = 1,
-    INFO = 2,
-    WARN = 3,
-    ERROR = 4,
-  },
-}
