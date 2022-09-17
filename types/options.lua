@@ -3220,7 +3220,7 @@ vim.o.shellcmdflag = "-c"
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.shellpipe = "2>&1| tee"
+vim.o.shellpipe = "| tee"
 -- string	(default: ""; Windows, when 'shell'
 -- 					contains "sh" somewhere: "\"")
 -- 			global
@@ -3259,7 +3259,7 @@ vim.o.shellquote = ""
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.shellredir = ">%s 2>&1"
+vim.o.shellredir = ">"
 -- boolean	(default off)
 -- 			global
 -- 			{only for Windows}
