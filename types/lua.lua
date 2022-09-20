@@ -195,7 +195,7 @@ function vim.defer_fn(fn, timeout) end
 --
 -- ```
 --- @see |vim.keymap.set()|
---- @param opts any # (table) A table of optional arguments:
+--- @param opts any # (table|nil) A table of optional arguments:
 --             • buffer: (number or boolean) Remove a mapping from the given
 --               buffer. When "true" or 0, use the current buffer.
 function vim.del(modes, lhs, opts) end
@@ -599,7 +599,7 @@ function vim.select(items, opts, on_choice) end
 --- @param lhs any # (string) Left-hand side |{lhs}| of the mapping.
 --- @param rhs any # string|function Right-hand side |{rhs}| of the mapping. Can
 --             also be a Lua function.
---- @param opts any # (table) A table of |:map-arguments|.
+--- @param opts any # (table|nil) A table of |:map-arguments|.
 --             • Accepts options accepted by the {opts} parameter in
 --               |nvim_set_keymap()|, with the following notable differences:
 --               • replace_keycodes: Defaults to `true` if "expr" is `true`.
