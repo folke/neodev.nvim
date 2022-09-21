@@ -22,7 +22,10 @@
 --
 -- Filename patterns can specify an optional priority to resolve cases when a
 -- file path matches multiple patterns. Higher priorities are matched first.
--- When omitted, the priority defaults to 0.
+-- When omitted, the priority defaults to 0. A pattern can contain
+-- environment variables of the form "${SOME_VAR}" that will be automatically
+-- expanded. If the environment variable is not set, the pattern won't be
+-- matched.
 --
 -- See $VIMRUNTIME/lua/vim/filetype.lua for more examples.
 --
@@ -53,6 +56,8 @@
 --       ['.*/etc/foo/.*'] = 'fooscript',
 --       -- Using an optional priority
 --       ['.*/etc/foo/.*%.conf'] = { 'dosini', { priority = 10 } },
+--       -- A pattern containing an environment variable
+--       ['${XDG_CONFIG_HOME}/foo/git'] = 'git',
 --       ['README.(a+)$'] = function(path, bufnr, ext)
 --         if ext == 'md' then
 --           return 'markdown'
