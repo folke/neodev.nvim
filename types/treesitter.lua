@@ -167,28 +167,6 @@ vim.treesitter.TSHighlighter = {}
 -- Removes all internal references to the highlighter
 function vim.treesitter.TSHighlighter:destroy() end
 
--- Returns a list of highlight captures at the given position
---
--- Each capture is represented by a table containing the capture name as a
--- string as well as a table of metadata (`priority`, `conceal`, ...; empty
--- if none are defined).
---- @param bufnr any # (number) Buffer number (0 for current buffer)
---- @param row any # (number) Position row
---- @param col any # (number) Position column
---- @return any # table[] List of captures `{ capture = "capture name", metadata = { ...
---     } }`
-function vim.treesitter.get_captures_at_pos(bufnr, row, col) end
-
--- Returns the smallest named node at the given position
---- @param bufnr any # (number) Buffer number (0 for current buffer)
---- @param row any # (number) Position row
---- @param col any # (number) Position column
---- @param opts any # (table) Optional keyword arguments:
---              • ignore_injections boolean Ignore injected languages
---                (default true)
---- @return any # userdata |tsnode| under the cursor
-function vim.treesitter.get_node_at_pos(bufnr, row, col, opts) end
-
 -- A |LanguageTree| holds the treesitter parser for a given language {lang}
 -- used to parse a buffer. As the buffer may contain injected languages, the LanguageTree needs to store parsers for these child languages as well (which in turn
 -- may contain child languages themselves, hence the name).
