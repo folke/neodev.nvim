@@ -2117,8 +2117,8 @@ function vim.api.nvim_ui_attach(width, height, options) end
 -- Removes the client from the list of UIs. |nvim_list_uis()|
 function vim.api.nvim_ui_detach() end
 
--- Tells Nvim the geometry of the popumenu, to align floating windows with an
--- external popup menu.
+-- Tells Nvim the geometry of the popupmenu, to align floating windows with
+-- an external popup menu.
 --
 -- Note that this method is not to be confused with
 -- |nvim_ui_pum_set_height()|, which sets the number of visible items in the
@@ -2132,7 +2132,7 @@ function vim.api.nvim_ui_detach() end
 --- @param col float # Popupmenu height.
 function vim.api.nvim_ui_pum_set_bounds(width, height, row, col) end
 
--- Tells Nvim the number of elements displaying in the popumenu, to decide
+-- Tells Nvim the number of elements displaying in the popupmenu, to decide
 -- <PageUp> and <PageDown> movement.
 --- @param height integer # Popupmenu height, must be greater than zero.
 function vim.api.nvim_ui_pum_set_height(height) end
