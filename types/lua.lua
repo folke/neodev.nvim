@@ -184,8 +184,8 @@ function vim.defaulttable(create) end
 
 -- Defers calling `fn` until `timeout` ms passes.
 --
--- Use to do a one-shot timer that calls `fn` Note: The {fn} is |schedule_wrap|ped automatically, so API functions are
--- safe to call.
+-- Use to do a one-shot timer that calls `fn` Note: The {fn} is |vim.schedule_wrap()|ped automatically, so API functions
+-- are safe to call.
 --- @param fn fun(...) # Callback to call once `timeout` expires
 --- @param timeout any # Number of milliseconds to wait before calling `fn`
 --- @return any # timer luv timer object
@@ -515,7 +515,7 @@ function vim.pretty_print(...) end
 --- @param bufnr any # (number) of buffer
 --- @param pos1 any # (line, column) tuple marking beginning of region
 --- @param pos2 any # (line, column) tuple marking end of region
---- @param regtype any # type of selection (:help setreg)
+--- @param regtype any # type of selection, see |setreg()|
 --- @param inclusive any # (boolean) indicating whether the selection is
 --                  end-inclusive
 --- @return any # region lua table of the form {linenr = {startcol,endcol}}
@@ -677,7 +677,7 @@ function vim.tbl_contains(t, value) end
 function vim.tbl_count(t) end
 
 -- Merges recursively two or more map-like tables.
---- @see |tbl_extend()|
+--- @see |vim.tbl_extend()|
 --- @param behavior any # (string) Decides what to do if a key is found in more than
 --                 one map:
 --                 • "error": raise an error

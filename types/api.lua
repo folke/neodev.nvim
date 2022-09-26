@@ -466,7 +466,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 highlight groups that will be stacked (highest priority
 --                 last). A highlight group can be supplied either as a
 --                 string or as an integer, the latter which can be obtained
---                 using |nvim_get_hl_id_by_name|.
+--                 using |nvim_get_hl_id_by_name()|.
 --               • virt_text_pos : position of virtual text. Possible values:
 --                 • "eol": right after eol character (default)
 --                 • "overlay": display over the specified column, without
@@ -498,7 +498,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 --               • virt_lines_above: place virtual lines above instead.
 --               • virt_lines_leftcol: Place extmarks in the leftmost column
 --                 of the window, bypassing sign and number columns.
---               • ephemeral : for use with |nvim_set_decoration_provider|
+--               • ephemeral : for use with |nvim_set_decoration_provider()|
 --                 callbacks. The mark will only be used for the current
 --                 redraw cycle, and not be permantently stored in the
 --                 buffer.
@@ -681,7 +681,7 @@ function vim.api.nvim_call_function(fn, args) end
 function vim.api.nvim_chan_send(chan, data) end
 
 -- Clear all autocommands that match the corresponding {opts}. To delete a
--- particular autocmd, see |nvim_del_autocmd|.
+-- particular autocmd, see |nvim_del_autocmd()|.
 --- @param opts? dict # Parameters
 --             • event: (string|table) Examples:
 --               • event: "pat1"
@@ -936,7 +936,7 @@ function vim.api.nvim_create_user_command(name, command, opts) end
 --
 -- To get a group id one can use |nvim_get_autocmds()|.
 --
--- NOTE: behavior differs from |augroup-delete|. When deleting a group,
+-- NOTE: behavior differs from |:augroup-delete|. When deleting a group,
 -- autocommands contained in this group will also be deleted and cleared.
 -- This group will no longer exist.
 --- @see |nvim_del_augroup_by_name()|
@@ -946,10 +946,10 @@ function vim.api.nvim_del_augroup_by_id(id) end
 
 -- Delete an autocommand group by name.
 --
--- NOTE: behavior differs from |augroup-delete|. When deleting a group,
+-- NOTE: behavior differs from |:augroup-delete|. When deleting a group,
 -- autocommands contained in this group will also be deleted and cleared.
 -- This group will no longer exist.
---- @see |autocommand-groups|
+--- @see |autocmd-groups|
 --- @param name string # String The name of the group.
 function vim.api.nvim_del_augroup_by_name(name) end
 
@@ -1116,7 +1116,7 @@ function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
 -- Gets the option information for all options.
 --
 -- The dictionary has the full option names as keys and option metadata
--- dictionaries as detailed at |nvim_get_option_info|.
+-- dictionaries as detailed at |nvim_get_option_info()|.
 --- @return any # dictionary of all options
 function vim.api.nvim_get_all_options_info() end
 
@@ -1348,7 +1348,7 @@ function vim.api.nvim_get_proc_children(pid) end
 
 -- Find files in runtime directories
 --
--- 'name' can contain wildcards. For example
+-- "name" can contain wildcards. For example
 -- nvim_get_runtime_file("colors/*.vim", true) will return all color scheme
 -- files. Always use forward slashes (/) in the search pattern for
 -- subdirectories regardless of platform.
@@ -1479,7 +1479,7 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 --                 terminal mode. Note: keypresses are sent raw as they would
 --                 be to the pty master end. For instance, a carriage return
 --                 is sent as a "\r", not as a "\n". |textlock| applies. It
---                 is possible to call |nvim_chan_send| directly in the
+--                 is possible to call |nvim_chan_send()| directly in the
 --                 callback however. ["input", term, bufnr, data]
 --- @return any # Channel id, or 0 on error
 function vim.api.nvim_open_term(buffer, opts) end
@@ -1579,7 +1579,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                   options. 'signcolumn' is changed to `auto` and
 --                   'colorcolumn' is cleared. The end-of-buffer region is
 --                   hidden by setting `eob` flag of 'fillchars' to a space
---                   char, and clearing the |EndOfBuffer| region in
+--                   char, and clearing the |hl-EndOfBuffer| region in
 --                   'winhighlight'.
 --
 --               • border: Style of (optional) window border. This can either
@@ -1896,7 +1896,7 @@ function vim.api.nvim_set_current_win(window) end
 -- triggered during the redraw code.
 --
 -- The expected usage is to set extmarks for the currently redrawn buffer.
--- |nvim_buf_set_extmark| can be called to add marks on a per-window or
+-- |nvim_buf_set_extmark()| can be called to add marks on a per-window or
 -- per-lines basis. Use the `ephemeral` key to only use the mark for the
 -- current screen redraw (the callback will be called again for the next
 -- redraw ).
@@ -1965,22 +1965,22 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --              • link: name of another highlight group to link to, see
 --                |:hi-link|.
 --              • default: Don't override existing definition |:hi-default|
---              • ctermfg: Sets foreground of cterm color |highlight-ctermfg|
---              • ctermbg: Sets background of cterm color |highlight-ctermbg|
+--              • ctermfg: Sets foreground of cterm color |ctermfg|
+--              • ctermbg: Sets background of cterm color |ctermbg|
 --              • cterm: cterm attribute map, like |highlight-args|. If not
 --                set, cterm attributes will match those from the attribute
 --                map documented above.
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
 -- Set active namespace for highlights. This can be set for a single window,
--- see |nvim_win_set_hl_ns|.
+-- see |nvim_win_set_hl_ns()|.
 --- @param ns_id integer # the namespace to use
 function vim.api.nvim_set_hl_ns(ns_id) end
 
 -- Set active namespace for highlights while redrawing.
 --
 -- This function meant to be called while redrawing, primarily from
--- |nvim_set_decoration_provider| on_win and on_line callbacks, which are
+-- |nvim_set_decoration_provider()| on_win and on_line callbacks, which are
 -- allowed to change the namespace during a redraw cycle.
 --- @param ns_id integer # the namespace to activate
 function vim.api.nvim_set_hl_ns_fast(ns_id) end
@@ -2010,7 +2010,7 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --- @param rhs string # Right-hand-side |{rhs}| of the mapping.
 --- @param opts? dict # Optional parameters map: keys are |:map-arguments|, values are
 --             booleans (default false). Accepts all |:map-arguments| as keys
---             excluding |<buffer>| but including |noremap| and "desc".
+--             excluding |<buffer>| but including |:noremap| and "desc".
 --             Unknown key is an error. "desc" can be used to give a
 --             description to the mapping. When called from Lua, also accepts
 --             a "callback" key that takes a Lua function to call when the
@@ -2033,7 +2033,7 @@ function vim.api.nvim_set_option(name, value) end
 --- @param name string # Option name
 --- @param value object # New option value
 --- @param opts? dict # Optional parameters
---              • scope: One of 'global' or 'local'. Analogous to
+--              • scope: One of "global" or "local". Analogous to
 --                |:setglobal| and |:setlocal|, respectively.
 --              • win: |window-ID|. Used for setting window local option.
 --              • buf: Buffer number. Used for setting buffer local option.
@@ -2241,7 +2241,7 @@ function vim.api.nvim_win_get_width(window) end
 --
 -- Like |:hide| the buffer becomes hidden unless another window is editing
 -- it, or 'bufhidden' is `unload`, `delete` or `wipe` as opposed to |:close|
--- or |nvim_win_close|, which will close the buffer.
+-- or |nvim_win_close()|, which will close the buffer.
 --- @param window window # Window handle, or 0 for current window
 function vim.api.nvim_win_hide(window) end
 

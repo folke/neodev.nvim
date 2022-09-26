@@ -133,7 +133,7 @@ function vim.treesitter.Query:iter_captures(node, source, start, stop) end
 -- Iterates the matches of self on a given range.
 --
 -- Iterate over all matches within a {node}. The arguments are the same as
--- for |query:iter_captures()| but the iterated values are different: an
+-- for |Query:iter_captures()| but the iterated values are different: an
 -- (1-based) index of the pattern in the query, a table mapping capture
 -- indices to nodes, and metadata from any directives processing the match.
 -- If the query has more than one pattern, the capture table might be sparse

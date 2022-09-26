@@ -76,7 +76,7 @@ function vim.lsp.code_action(options) end
 
 -- Retrieves the completion items at the current cursor position. Can only be
 -- called in Insert mode.
---- @see |vim.lsp.protocol.constants.CompletionTriggerKind|
+--- @see vim.lsp.protocol.constants.CompletionTriggerKind
 --- @param context any # (context support not yet implemented) Additional
 --                information about the context in which a completion was
 --                triggered (how it was triggered, and by which trigger
@@ -154,7 +154,8 @@ function vim.lsp.display(lenses, bufnr, client_id) end
 --
 -- Note: Usage of |vim.lsp.buf.document_highlight()| requires the following
 -- highlight groups to be defined or you won't be able to see the actual
--- highlights. |LspReferenceText| |LspReferenceRead| |LspReferenceWrite|
+-- highlights. |hl-LspReferenceText| |hl-LspReferenceRead|
+-- |hl-LspReferenceWrite|
 function vim.lsp.document_highlight() end
 
 -- Lists all symbols in the current buffer in the quickfix window.
@@ -257,7 +258,7 @@ function vim.lsp.formatting_seq_sync(options, timeout_ms, order) end
 --  autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
 --
 -- ```
---- @see |vim.lsp.buf.formatting_seq_sync|
+--- @see |vim.lsp.buf.format()|
 --- @param options any # (table|nil) with valid `FormattingOptions` entries
 --- @param timeout_ms any # (number) Request timeout
 function vim.lsp.formatting_sync(options, timeout_ms) end
@@ -268,7 +269,7 @@ function vim.lsp.formatting_sync(options, timeout_ms) end
 function vim.lsp.get(bufnr) end
 
 -- Returns indentation size.
---- @see |shiftwidth|
+--- @see 'shiftwidth'
 --- @param bufnr any # (number|nil): Buffer handle, defaults to current
 --- @return any # (number) indentation size
 function vim.lsp.get_effective_tabstop(bufnr) end
@@ -312,7 +313,7 @@ function vim.lsp.implementation(options) end
 
 -- Lists all the call sites of the symbol under the cursor in the |quickfix|
 -- window. If the symbol can resolve to multiple items, the user can pick one
--- in the |inputlist|.
+-- in the |inputlist()|.
 function vim.lsp.incoming_calls() end
 
 -- Jumps to a location.
@@ -457,7 +458,7 @@ function vim.lsp.on_publish_diagnostics(_, result, ctx, config) end
 --- @param contents any # (table) of lines to show in window
 --- @param syntax any # (string) of syntax to set for opened buffer
 --- @param opts any # (table) with optional fields (additional keys are passed
---                 on to |vim.api.nvim_open_win()|)
+--                 on to |nvim_open_win()|)
 --                 • height: (number) height of floating window
 --                 • width: (number) width of floating window
 --                 • wrap: (boolean, default true) wrap long lines
@@ -482,7 +483,7 @@ function vim.lsp.open_floating_preview(contents, syntax, opts) end
 
 -- Lists all the items that are called by the symbol under the cursor in the
 -- |quickfix| window. If the symbol can resolve to multiple items, the user
--- can pick one in the |inputlist|.
+-- can pick one in the |inputlist()|.
 function vim.lsp.outgoing_calls() end
 
 -- Parses snippets in a completion entry.
@@ -618,7 +619,7 @@ function vim.lsp.should_log(level) end
 --- @param config any # (table) Configuration table.
 --               • border: (default=nil)
 --                 • Add borders to the floating window
---                 • See |vim.api.nvim_open_win()|
+--                 • See |nvim_open_win()|
 function vim.lsp.signature_help(_, result, ctx, config) end
 
 -- Converts markdown into syntax highlighted regions by stripping the code
@@ -667,7 +668,7 @@ function vim.lsp.trim_empty_lines(lines) end
 --
 -- CAUTION: Modifies the input in-place!
 --- @param lines any # (table) list of lines
---- @return any # (string) filetype or 'markdown' if it was unchanged.
+--- @return any # (string) filetype or "markdown" if it was unchanged.
 function vim.lsp.try_trim_markdown_code_blocks(lines) end
 
 -- Jumps to the definition of the type of the symbol under the cursor.
