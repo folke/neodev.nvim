@@ -1,6 +1,6 @@
 local M = {}
 
-local function setup_settings(config)
+local function neoconf(config)
   pcall(function()
     require("neoconf.plugins").register({
       on_schema = function(schema)
@@ -21,11 +21,11 @@ function M.setup(opts)
   local config = require("lua-dev.config")
   config.setup(opts)
   require("lua-dev.lsp").setup()
-  local ret = require("lua-dev.sumneko").setup()
 
-  setup_settings(config)
+  neoconf(config)
 
   -- leave this for now for backward compatibility
+  local ret = require("lua-dev.sumneko").setup()
   ret.settings.legacy = true
   ---@diagnostic disable-next-line: undefined-field
   return vim.tbl_deep_extend("force", {}, ret, config.options.lspconfig or {})

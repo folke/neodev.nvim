@@ -62,8 +62,11 @@ function M.on_new_config(config, root_dir)
     or {}
 
   if opts.library.enabled then
-    config.settings =
-      vim.tbl_deep_extend("force", config.settings or {}, require("lua-dev.sumneko").setup(opts).settings)
+    config.settings = vim.tbl_deep_extend(
+      "force",
+      config.settings or {},
+      require("lua-dev.sumneko").setup(opts, config.settings).settings
+    )
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
     end
