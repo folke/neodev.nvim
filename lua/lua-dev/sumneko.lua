@@ -16,7 +16,7 @@ function M.library(opts)
     for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
-        table.insert(ret, p) --vim.fn.fnamemodify(p, ":h"))
+        table.insert(ret, vim.fn.fnamemodify(p, ":h"))
       end
     end
   end
