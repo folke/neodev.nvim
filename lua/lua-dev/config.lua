@@ -1,6 +1,6 @@
 local M = {}
 
---- @class LuaApiOptions
+--- @class LuaDevOptions
 M.defaults = {
   library = {
     enabled = true, -- when not enabled, lua-dev will not change any settings to the LSP server
@@ -18,7 +18,7 @@ M.defaults = {
   override = function(root_dir, options) end,
 }
 
---- @type LuaApiOptions
+--- @type LuaDevOptions
 M.options = {}
 
 function M.setup(options)
@@ -30,7 +30,7 @@ function M.setup(options)
   end
 end
 
----@return LuaApiOptions
+---@return LuaDevOptions
 function M.merge(options)
   return vim.tbl_deep_extend("force", {}, M.options, options or {})
 end

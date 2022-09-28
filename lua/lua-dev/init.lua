@@ -17,6 +17,7 @@ local function neoconf(config)
   end)
 end
 
+---@param opts LuaApiOptions
 function M.setup(opts)
   local config = require("lua-dev.config")
   config.setup(opts)

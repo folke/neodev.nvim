@@ -2,7 +2,7 @@ local config = require("lua-dev.config")
 
 local M = {}
 
----@param opts LuaApiOptions
+---@param opts LuaDevOptions
 function M.library(opts)
   opts = config.merge(opts)
   local ret = {}
@@ -22,7 +22,7 @@ function M.library(opts)
   end
 
   if opts.library.runtime then
-    add("$VIMRUNTIME")
+    add(type(opts.library.runtime) == "string" and opts.library.runtime or "$VIMRUNTIME")
   end
 
   if opts.library.plugins then
@@ -69,7 +69,7 @@ function M.types()
   return vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
 end
 
----@param opts? LuaApiOptions
+---@param opts? LuaDevOptions
 ---@param settings? lspconfig.settings.sumneko_lua
 function M.setup(opts, settings)
   opts = config.merge(opts)
