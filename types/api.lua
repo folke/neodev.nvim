@@ -1634,7 +1634,7 @@ function vim.api.nvim_out_write(str) end
 --       range items were specified.
 --     • count: (number) Any |<count>| that was supplied to the command. -1
 --       if command cannot take a count.
---     • reg: (number) The optional command |<register>|, if specified. Empty
+--     • reg: (string) The optional command |<register>|, if specified. Empty
 --       string if not specified or if command cannot take a register.
 --     • bang: (boolean) Whether command contains a |<bang>| (!) modifier.
 --     • args: (array) Command arguments.
