@@ -11,12 +11,12 @@ completion for the nvim lua API.
 
 - Automatically configures **sumneko_lua** for your **Neovim** config, **Neovim** runtime and plugin
   directories
-- [EmmyLua](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations)
+- [Annotations](https://github.com/sumneko/lua-language-server/wiki/Annotations)
   library for the nvim lua API for:
   - completion
   - hover docs
   - function signatures
-- properly configures the `require` path with `lua/?.lua` and `lua/?/init.lua`.
+- properly configures the `require` path.
 - adds all plugins in `opt` and `start` to the workspace so you get completion
   for all installed plugins
 - properly configure the vim runtime
