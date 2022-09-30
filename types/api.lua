@@ -462,7 +462,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 --               • virt_text : virtual text to link to this mark. A list of
 --                 [text, highlight] tuples, each representing a text chunk
 --                 with specified highlight. `highlight` element can either
---                 be a a single highlight group, or an array of multiple
+--                 be a single highlight group, or an array of multiple
 --                 highlight groups that will be stacked (highest priority
 --                 last). A highlight group can be supplied either as a
 --                 string or as an integer, the latter which can be obtained
@@ -711,7 +711,13 @@ function vim.api.nvim_clear_autocmds(opts) end
 -- of a String. This allows for easier construction and manipulation of an Ex
 -- command. This also allows for things such as having spaces inside a
 -- command argument, expanding filenames in a command that otherwise doesn't
--- expand filenames, etc.
+-- expand filenames, etc. Command arguments may also be Number, Boolean or
+-- String.
+--
+-- The first argument may also be used instead of count for commands that
+-- support it in order to make their usage simpler with |vim.cmd()|. For
+-- example, instead of `vim.cmd.bdelete{ count = 2 }`, you may do
+-- `vim.cmd.bdelete(2)`.
 --
 -- On execution error: fails with VimL error, updates v:errmsg.
 --- @see |nvim_exec()|
@@ -1627,15 +1633,15 @@ function vim.api.nvim_out_write(str) end
 --- @param opts dictionary # Optional parameters. Reserved for future use.
 --- @return any # Dictionary containing command information, with these keys:
 --     • cmd: (string) Command name.
---     • range: (array) Command <range>. Can have 0-2 elements depending on
---       how many items the range contains. Has no elements if command
---       doesn't accept a range or if no range was specified, one element if
---       only a single range item was specified and two elements if both
---       range items were specified.
---     • count: (number) Any |<count>| that was supplied to the command. -1
---       if command cannot take a count.
---     • reg: (string) The optional command |<register>|, if specified. Empty
---       string if not specified or if command cannot take a register.
+--     • range: (array) (optional) Command range (|<line1>| |<line2>|).
+--       Omitted if command doesn't accept a range. Otherwise, has no
+--       elements if no range was specified, one element if only a single
+--       range item was specified, or two elements if both range items were
+--       specified.
+--     • count: (number) (optional) Command |<count>|. Omitted if command
+--       cannot take a count.
+--     • reg: (string) (optional) Command |<register>|. Omitted if command
+--       cannot take a register.
 --     • bang: (boolean) Whether command contains a |<bang>| (!) modifier.
 --     • args: (array) Command arguments.
 --     • addr: (string) Value of |:command-addr|. Uses short name.
@@ -2279,7 +2285,7 @@ function vim.api.nvim_win_set_height(window, height) end
 -- Set highlight namespace for a window. This will use highlights defined in
 -- this namespace, but fall back to global highlights (ns=0) when missing.
 --
--- This takes predecence over the 'winhighlight' option.
+-- This takes precedence over the 'winhighlight' option.
 --- @param window window
 --- @param ns_id integer # the namespace to use
 function vim.api.nvim_win_set_hl_ns(window, ns_id) end
