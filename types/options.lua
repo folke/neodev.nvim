@@ -1576,7 +1576,7 @@ vim.o.directory = "/home/runner/.local/state/nvim/swap//"
 -- 			scroll the message lines, not the entire screen. The
 -- 			separator line is decorated by |hl-MsgSeparator| and
 -- 			the "msgsep" flag of 'fillchars'.
-vim.o.display = "lastline,msgsep"
+vim.o.display = "lastline"
 -- string	(default "both")
 -- 			global
 -- 	Tells when the 'equalalways' option applies:
@@ -3468,6 +3468,7 @@ vim.o.spellsuggest = "best"
 -- 	When on, splitting a window will put the new window below the current
 -- 	one. |:split|
 vim.o.splitbelow = "false"
+vim.o.splitkeep = "cursor"
 -- boolean	(default off)
 -- 			global
 -- 	When on, splitting a window will put the new window right of the
