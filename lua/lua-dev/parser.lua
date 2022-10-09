@@ -1,3 +1,4 @@
+local util = require("lua-dev.util")
 local uv = vim.loop
 local M = {}
 
@@ -87,6 +88,8 @@ end
 --- @return ApiFunction
 function M.process(name, fun, prefix)
   --- @class ApiFunction
+  --- @field doc string,
+  --- @field fqname string,
   --- @field params ApiFunctionParam[]
   --- @field return ApiFunctionParam
   local ret = {
@@ -185,6 +188,7 @@ function M.intro(fd)
   )
 end
 
+---@return {[1]:string, [2]:MpackFunction}[]
 function M.get_functions(mpack)
   mpack = "data/" .. mpack
   local data = vim.fn.msgpackparse(vim.fn.readfile(mpack, "b"))
