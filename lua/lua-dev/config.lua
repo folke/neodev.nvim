@@ -16,6 +16,7 @@ M.defaults = {
   -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
   -- for any other directory, config.library.enabled will be set to false
   override = function(root_dir, options) end,
+  debug = false,
 }
 
 --- @type LuaDevOptions
@@ -23,11 +24,11 @@ M.options = {}
 
 function M.setup(options)
   M.options = vim.tbl_deep_extend("force", {}, M.defaults, options or {})
+end
 
-  -- legacy config
-  if M.options.library.vimruntime ~= nil then
-    M.options.library.runtime = M.options.library.vimruntime
-  end
+function M.runtime()
+  local ret = type(M.options.library.runtime) == "string" and M.options.library.runtime or "$VIMRUNTIME"
+  return vim.fn.expand(ret, false, false)
 end
 
 ---@return LuaDevOptions
