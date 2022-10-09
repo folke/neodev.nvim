@@ -204,34 +204,55 @@ function M.get_functions(mpack)
   return ret
 end
 
-function M.parse(mpack, prefix, exclude)
-  print(prefix)
-  -- exclude signatures for functions that are existing lua sources
-  local skip = {}
-  for _, value in pairs(exclude or {}) do
-    for key, _ in pairs(require(value)) do
-      print("skipping " .. value .. ": " .. key)
-      skip[key] = true
+---@return string?, any?
+function M.get_fn(prefix, name, alt)
+  for _, p in ipairs(alt and { prefix, alt } or { prefix }) do
+    local real_fn = vim.tbl_get(_G, unpack(vim.split(p .. "." .. name, ".", { plain = true })))
+    if real_fn then
+      return p, real_fn
     end
   end
+end
+
+---@param opts? {alt: string, extra: table<string,ApiFunction>}
+function M.parse(mpack, prefix, opts)
+  opts = opts or {}
+  print(prefix)
   prefix = prefix or "vim"
   local fname = vim.fn.fnamemodify(mpack, ":t:r")
 
   local writer = M.writer("types/" .. fname)
-  local classes = {}
   for _, f in pairs(M.get_functions(mpack)) do
-    local name, fun = unpack(f)
-    if not skip[name] then
-      local parts = vim.fn.split(name, ":")
-      if #parts > 1 and not classes[parts[1]] then
-        writer.write(([[
---- @class %s
-%s = {}
+    local name = f[1]
+    local fun = f[2]
 
-]]):format(prefix .. "." .. parts[1], prefix .. "." .. parts[1]))
-        classes[parts[1]] = true
+    -- we shouldnt get classes here
+    assert(not name:find(":"))
+
+    local prefix_fn, real_fn = M.get_fn(prefix, name, opts.alt)
+
+    if prefix_fn then
+      local skip = false
+
+      if real_fn then
+        if type(real_fn) == "function" then
+          if prefix_fn ~= "vim.fn" and prefix_fn ~= "vim.api" then
+            local info = debug.getinfo(real_fn, "S")
+            skip = info.what == "Lua"
+          end
+        end
       end
-      local emmy = M.emmy(M.process(name, fun, prefix))
+
+      if not skip then
+        local emmy = M.emmy(M.process(name, fun, prefix_fn))
+        writer.write(emmy)
+      end
+    end
+  end
+
+  if opts.extra then
+    for _, fun in pairs(opts.extra) do
+      local emmy = M.emmy(fun)
       writer.write(emmy)
     end
   end
@@ -332,11 +353,8 @@ function M.build()
   M.clean()
   M.functions()
   M.options()
-  -- M.parse("lua.mpack", "vim", { "vim.uri", "vim.inspect" })
-  M.parse("api.mpack", "vim.api")
-  -- M.parse("diagnostic.mpack", "vim.diagnostic")
-  -- M.parse("lsp.mpack", "vim.lsp", { "vim.lsp" })
-  -- M.parse("treesitter.mpack", "vim.treesitter", { "vim.treesitter" })
+  M.parse("lua.mpack", "vim", { extra = require("lua-dev.docs").lua() })
+  M.parse("api.mpack", "vim.api", { alt = "vim.fn" })
 end
 
 M.build()

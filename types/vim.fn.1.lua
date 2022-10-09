@@ -3,6 +3,70 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Call nvim |api| functions. The type checking of arguments will
+-- 		be stricter than for most other builtins. For instance,
+-- 		if Integer is expected, a |Number| must be passed in, a
+-- 		|String| will not be autoconverted.
+-- 		Buffer numbers, as returned by |bufnr()| could be used as
+-- 		first argument to nvim_buf_... functions.  All functions
+-- 		expecting an object (buffer, window or tabpage) can
+-- 		also take the numerical value 0 to indicate the current
+-- 		(focused) object.
+function vim.fn.nvim_...(...) end
+
+-- Shorten directory names in the path {path} and return the
+-- 		result.  The tail, the file name, is kept as-is.  The other
+-- 		components in the path are reduced to {len} letters in length.
+-- 		If {len} is omitted or smaller than 1 then 1 is used (single
+-- 		letters).  Leading '~' and '.' characters are kept.  Examples: >
+-- 			:echo pathshorten('~/.config/nvim/autoload/file1.vim')
+-- <			~/.c/n/a/file1.vim ~
+-- >
+-- 			:echo pathshorten('~/.config/nvim/autoload/file2.vim', 2)
+-- <			~/.co/nv/au/file2.vim ~
+-- 		It doesn't matter if the path exists or not.
+-- 		Returns an empty string on error.
+--
+-- 		Can also be used as a |method|: >
+-- 			GetDirectories()->pathshorten()
+--- @param len? any
+--- @return string
+function vim.fn.pathshorten(path, len) end
+
+-- Evaluate |perl| expression {expr} and return its result
+-- 		converted to Vim data structures.
+-- 		Numbers and strings are returned as they are (strings are
+-- 		copied though).
+-- 		Lists are represented as Vim |List| type.
+-- 		Dictionaries are represented as Vim |Dictionary| type,
+-- 		non-string keys result in error.
+--
+-- 		Note: If you want an array or hash, {expr} must return a
+-- 		reference to it.
+-- 		Example: >
+-- 			:echo perleval('[1 .. 4]')
+-- <			[1, 2, 3, 4]
+--
+-- 		Can also be used as a |method|: >
+-- 			GetExpr()->perleval()
+function vim.fn.perleval(expr) end
+
+-- Return the power of {x} to the exponent {y} as a |Float|.
+-- 		{x} and {y} must evaluate to a |Float| or a |Number|.
+-- 		Returns 0.0 if {x} or {y} is not a |Float| or a |Number|.
+-- 		Examples: >
+-- 			:echo pow(3, 3)
+-- <			27.0 >
+-- 			:echo pow(2, 16)
+-- <			65536.0 >
+-- 			:echo pow(32, 0.20)
+-- <			2.0
+--
+-- 		Can also be used as a |method|: >
+-- 			Compute()->pow(3)
+--- @return float
+function vim.fn.pow(x, y) end
+
 -- Return the line number of the first line at or above {lnum}
 -- 		that is not blank.  Example: >
 -- 			let ind = indent(prevnonblank(v:lnum - 1))
@@ -287,6 +351,7 @@ function vim.fn.prompt_setinterrupt(buf, expr) end
 -- 		Can also be used as a |method|: >
 -- 			GetBuffer()->prompt_setprompt('command: ')
 --- @param buf buffer
+--- @param text string
 --- @return none
 function vim.fn.prompt_setprompt(buf, text) end
 
@@ -364,6 +429,7 @@ function vim.fn.pyxeval(expr) end
 -- 		Can also be used as a |method|: >
 -- 			seed->rand()
 -- <
+--- @param expr? any
 --- @return number
 function vim.fn.rand(expr) end
 
@@ -387,6 +453,8 @@ function vim.fn.rand(expr) end
 -- 		Can also be used as a |method|: >
 -- 			GetExpr()->range()
 -- <
+--- @param max? any
+--- @param stride? any
 --- @return list
 function vim.fn.range(expr, max, stride) end
 
@@ -422,6 +490,7 @@ function vim.fn.range(expr, max, stride) end
 -- 		Can also be used as a |method|: >
 -- 			GetDirName()->readdir()
 -- <
+--- @param expr? any
 --- @return list
 function vim.fn.readdir(directory, expr) end
 
@@ -458,6 +527,8 @@ function vim.fn.readdir(directory, expr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetFileName()->readfile()
+--- @param type? any
+--- @param max? any
 --- @return list
 function vim.fn.readfile(fname, type, max) end
 
@@ -478,6 +549,8 @@ function vim.fn.readfile(fname, type, max) end
 -- <
 -- 		Can also be used as a |method|: >
 -- 			echo mylist->reduce({ acc, val -> acc + val }, 0)
+--- @param func fun()
+--- @param initial? any
 function vim.fn.reduce(object, func, initial) end
 
 -- Returns the single letter name of the register being executed.
@@ -572,6 +645,8 @@ function vim.fn.remove(dict, key) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetOldName()->rename(newname)
+--- @param from number
+--- @param to number
 --- @return number
 function vim.fn.rename(from, to) end
 
@@ -626,20 +701,21 @@ function vim.fn.round(expr) end
 -- 		If {channel} is 0, the event is broadcast to all channels.
 -- 		Example: >
 -- 			:au VimLeave call rpcnotify(0, "leaving")
---- @param args? any[]
+--- @param args? table<string, any>
 function vim.fn.rpcnotify(channel, event, args) end
 
 -- Sends a request to {channel} to invoke {method} via
 -- 		|RPC| and blocks until a response is received.
 -- 		Example: >
 -- 			:let result = rpcrequest(rpc_chan, "func", 1, 2, 3)
---- @param args? any[]
+--- @param args? table<string, any>
 function vim.fn.rpcrequest(channel, method, args) end
 
 -- Deprecated. Replace  >
 -- 			:let id = rpcstart('prog', ['arg1', 'arg2'])
 -- <		with >
 -- 			:let id = jobstart(['prog', 'arg1', 'arg2'], {'rpc': v:true})
+--- @param argv? any
 function vim.fn.rpcstart(prog, argv) end
 
 -- Evaluate Ruby expression {expr} and return its result
@@ -732,6 +808,7 @@ function vim.fn.screencol() end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetWinid()->screenpos(lnum, col)
+--- @param winid window
 --- @param lnum number
 --- @param col number
 --- @return dict
@@ -862,6 +939,10 @@ function vim.fn.screenstring(row, col) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetPattern()->search()
+--- @param flags? any
+--- @param stopline? any
+--- @param timeout? any
+--- @param skip? any
 --- @return number
 function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 
@@ -988,6 +1069,7 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 		Can also be used as a |method|: >
 -- 			GetSearchOpts()->searchcount()
 -- <
+--- @param options? table<string, any>
 --- @return dict
 function vim.fn.searchcount(options) end
 
@@ -1109,6 +1191,8 @@ function vim.fn.searchcount(options) end
 -- 			:let [lnum,col] = searchpairpos('{', '', '}', 'n')
 -- <
 -- 		See |match-parens| for a bigger and more useful example.
+--- @param global? any
+--- @param thisblock? any
 --- @return number
 function vim.fn.searchdecl(name, global, thisblock) end
 
@@ -1128,6 +1212,10 @@ function vim.fn.searchdecl(name, global, thisblock) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetPattern()->searchpos()
+--- @param flags? any
+--- @param stopline? any
+--- @param timeout? any
+--- @param skip? any
 --- @return list
 function vim.fn.searchpos(pattern, flags, stopline, timeout, skip) end
 
@@ -1162,6 +1250,7 @@ function vim.fn.serverlist() end
 -- <
 -- 		Example TCP/IP address: >
 -- 			echo serverstart('::1:12345')
+--- @param address? any
 function vim.fn.serverstart(address) end
 
 -- Closes the pipe or socket at {address}.
@@ -1198,6 +1287,7 @@ function vim.fn.serverstop(address) end
 -- 			GetText()->setbufline(buf, lnum)
 --- @param buf buffer
 --- @param lnum number
+--- @param text string
 --- @return number
 function vim.fn.setbufline(buf, lnum, text) end
 
@@ -1298,6 +1388,7 @@ function vim.fn.setcharsearch(dict) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->setcmdline()
+--- @param str string
 --- @param pos? number
 --- @return number
 function vim.fn.setcmdline(str, pos) end
@@ -1398,6 +1489,7 @@ function vim.fn.setfperm(fname, mode) end
 -- 		second argument: >
 -- 			GetText()->setline(lnum)
 --- @param lnum number
+--- @param text string
 --- @return number
 function vim.fn.setline(lnum, text) end
 
@@ -1421,6 +1513,8 @@ function vim.fn.setline(lnum, text) end
 -- 			GetLoclist()->setloclist(winnr)
 --- @param nr number
 --- @param list any[]
+--- @param action? any
+--- @param what? any
 --- @return number
 function vim.fn.setloclist(nr, list, action, what) end
 
@@ -1608,6 +1702,8 @@ function vim.fn.setpos(expr, list) end
 -- 			GetErrorlist()->setqflist()
 -- <
 --- @param list any[]
+--- @param action? any
+--- @param what? any
 --- @return number
 function vim.fn.setqflist(list, action, what) end
 
@@ -1668,6 +1764,7 @@ function vim.fn.setqflist(list, action, what) end
 -- <		Can also be used as a |method|, the base is passed as the
 -- 		second argument: >
 -- 			GetText()->setreg('a')
+--- @param options? table<string, any>
 --- @return number
 function vim.fn.setreg(regname, value, options) end
 
@@ -1703,6 +1800,7 @@ function vim.fn.settabvar(tabnr, varname, val) end
 -- 		fourth argument: >
 -- 			GetValue()->settabwinvar(tab, winnr, name)
 --- @param tabnr number
+--- @param winnr window
 function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 
 -- Modify the tag stack of the window {nr} using {dict}.
@@ -1742,6 +1840,7 @@ function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 -- 			GetStack()->settagstack(winnr)
 --- @param nr number
 --- @param dict dictionary
+--- @param action? any
 --- @return number
 function vim.fn.settagstack(nr, dict, action) end
 
@@ -1796,6 +1895,7 @@ function vim.fn.sha256(string) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetCommand()->shellescape()
+--- @param special? any
 --- @return string
 function vim.fn.shellescape(string, special) end
 
@@ -1896,6 +1996,7 @@ function vim.fn.sinh(expr) end
 -- 		Returns:
 -- 		  - The channel ID on success (greater than zero)
 -- 		  - 0 on invalid arguments or connection failure.
+--- @param opts? table<string, any>
 --- @return number
 function vim.fn.sockconnect(mode, address, opts) end
 
@@ -1974,6 +2075,7 @@ function vim.fn.sockconnect(mode, address, opts) end
 -- 			eval mylist->sort({i1, i2 -> i1 - i2})
 -- <
 --- @param list any[]
+--- @param func? fun()
 --- @param dict? dictionary
 --- @return list
 function vim.fn.sort(list, func, dict) end
@@ -2017,6 +2119,7 @@ function vim.fn.soundfold(word) end
 -- 		Can also be used as a |method|: >
 -- 			GetText()->spellbadword()
 -- <
+--- @param sentence? any
 --- @return string
 function vim.fn.spellbadword(sentence) end
 
@@ -2042,6 +2145,8 @@ function vim.fn.spellbadword(sentence) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetWord()->spellsuggest()
+--- @param max? any
+--- @param capital? any
 --- @return list
 function vim.fn.spellsuggest(word, max, capital) end
 
@@ -2069,6 +2174,8 @@ function vim.fn.spellsuggest(word, max, capital) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetString()->split()
+--- @param pattern? any
+--- @param keepempty? any
 --- @return list
 function vim.fn.split(string, pattern, keepempty) end
 
@@ -2104,6 +2211,7 @@ function vim.fn.sqrt(expr) end
 -- <
 -- 		Can also be used as a |method|: >
 -- 			userinput->srand()
+--- @param expr? any
 --- @return list
 function vim.fn.srand(expr) end
 
@@ -2126,6 +2234,7 @@ function vim.fn.srand(expr) end
 -- 		Returns:
 -- 		  - |channel-id| on success (value is always 1)
 -- 		  - 0 on invalid arguments
+--- @param opts table<string, any>
 --- @return number
 function vim.fn.stdioopen(opts) end
 
@@ -2171,6 +2280,7 @@ function vim.fn.stdpath(what) end
 --
 -- 		Can also be used as a |method|: >
 -- 			let f = text->substitute(',', '', 'g')->str2float()
+--- @param quoted? any
 --- @return float
 function vim.fn.str2float(string, quoted) end
 
@@ -2187,6 +2297,7 @@ function vim.fn.str2float(string, quoted) end
 --
 -- <		Can also be used as a |method|: >
 -- 			GetString()->str2list()
+--- @param utf8? any
 --- @return list
 function vim.fn.str2list(string, utf8) end
 
@@ -2210,6 +2321,7 @@ function vim.fn.str2list(string, utf8) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->str2nr()
+--- @param base? any
 --- @return number
 function vim.fn.str2nr(string, base) end
 
@@ -2225,6 +2337,7 @@ function vim.fn.str2nr(string, base) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->strcharpart(5)
+--- @param len? any
 --- @return string
 function vim.fn.strcharpart(src, start, len) end
 
@@ -2256,6 +2369,7 @@ function vim.fn.strcharpart(src, start, len) end
 -- <
 -- 		Can also be used as a |method|: >
 -- 			GetText()->strchars()
+--- @param skipcc? any
 --- @return number
 function vim.fn.strchars(string, skipcc) end
 
@@ -2295,6 +2409,7 @@ function vim.fn.strdisplaywidth(string, col) end
 --
 -- <		Can also be used as a |method|: >
 -- 			GetFormat()->strftime()
+--- @param time? any
 --- @return string
 function vim.fn.strftime(format, time) end
 
@@ -2308,6 +2423,8 @@ function vim.fn.strftime(format, time) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->strgetchar(5)
+--- @param str string
+--- @param index number
 --- @return number
 function vim.fn.strgetchar(str, index) end
 
@@ -2331,6 +2448,7 @@ function vim.fn.strgetchar(str, index) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetHaystack()->stridx(needle)
+--- @param start? any
 --- @return number
 function vim.fn.stridx(haystack, needle, start) end
 
@@ -2401,6 +2519,8 @@ function vim.fn.strlen(string) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->strpart(5)
+--- @param len? any
+--- @param chars? any
 --- @return string
 function vim.fn.strpart(src, start, len, chars) end
 
@@ -2452,6 +2572,7 @@ function vim.fn.strptime(format, timestring) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetHaystack()->strridx(needle)
+--- @param start? any
 --- @return number
 function vim.fn.strridx(haystack, needle, start) end
 
@@ -2668,6 +2789,7 @@ function vim.fn.synID(lnum, col, trans) end
 -- <
 -- 		Can also be used as a |method|: >
 -- 	:echo synID(line("."), col("."), 1)->synIDtrans()->synIDattr("fg")
+--- @param mode? any
 --- @return string
 function vim.fn.synIDattr(synID, what, mode) end
 
@@ -2781,6 +2903,7 @@ function vim.fn.synstack(lnum, col) end
 --
 -- 		Can also be used as a |method|: >
 -- 			:echo GetCmd()->system()
+--- @param input? any
 --- @return string
 function vim.fn.system(cmd, input) end
 
@@ -2799,6 +2922,8 @@ function vim.fn.system(cmd, input) end
 --
 -- 		Can also be used as a |method|: >
 -- 			:echo GetCmd()->systemlist()
+--- @param input? any
+--- @param keepempty? any
 --- @return list
 function vim.fn.systemlist(cmd, input, keepempty) end
 
@@ -2816,6 +2941,7 @@ function vim.fn.systemlist(cmd, input, keepempty) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetTabpage()->tabpagebuflist()
+--- @param arg? any
 --- @return list
 function vim.fn.tabpagebuflist(arg) end
 
@@ -2831,6 +2957,7 @@ function vim.fn.tabpagebuflist(arg) end
 -- 		The number can be used with the |:tab| command.
 --
 -- 		Returns zero on error.
+--- @param arg? any
 --- @return number
 function vim.fn.tabpagenr(arg) end
 
@@ -2849,6 +2976,7 @@ function vim.fn.tabpagenr(arg) end
 -- 		Can also be used as a |method|: >
 -- 			GetTabpage()->tabpagewinnr()
 -- <
+--- @param arg? any
 --- @return number
 function vim.fn.tabpagewinnr(tabarg, arg) end
 
@@ -2901,6 +3029,7 @@ function vim.fn.tagfiles() end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetTagpattern()->taglist()
+--- @param filename? any
 --- @return list
 function vim.fn.taglist(expr, filename) end
 
@@ -2955,6 +3084,7 @@ function vim.fn.tempname() end
 -- 		Terminal environment is initialized as in ||jobstart-env|,
 -- 		except $TERM is set to "xterm-256color". Full behavior is
 -- 		described in |terminal|.
+--- @param opts? table<string, any>
 function vim.fn.termopen(cmd, opts) end
 
 -- Return a list with information about timers.
@@ -2974,6 +3104,7 @@ function vim.fn.termopen(cmd, opts) end
 -- 		Can also be used as a |method|: >
 -- 			GetTimer()->timer_info()
 -- <
+--- @param id? any
 --- @return list
 function vim.fn.timer_info(id) end
 
@@ -3026,6 +3157,8 @@ function vim.fn.timer_pause(timer, paused) end
 -- 			GetMsec()->timer_start(callback)
 --
 -- <		Not available in the |sandbox|.
+--- @param callback fun()
+--- @param options? table<string, any>
 --- @return number
 function vim.fn.timer_start(time, callback, options) end
 
@@ -3109,6 +3242,9 @@ function vim.fn.tr(src, fromstr, tostr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->trim()
+--- @param text string
+--- @param mask? any
+--- @param dir? any
 --- @return string
 function vim.fn.trim(text, mask, dir) end
 
@@ -3231,6 +3367,7 @@ function vim.fn.undotree() end
 -- 		Can also be used as a |method|: >
 -- 			mylist->uniq()
 --- @param list any[]
+--- @param func? fun()
 --- @param dict? dictionary
 --- @return list
 function vim.fn.uniq(list, func, dict) end
@@ -3304,6 +3441,7 @@ function vim.fn.virtcol(expr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetWinid()->virtcol2col(lnum, col)
+--- @param winid window
 --- @param lnum number
 --- @param col number
 function vim.fn.virtcol2col(winid, lnum, col) end
@@ -3324,6 +3462,7 @@ function vim.fn.virtcol2col(winid, lnum, col) end
 -- 		If {expr} is supplied and it evaluates to a non-zero Number or
 -- 		a non-empty String, then the Visual mode will be cleared and
 -- 		the old value is returned.  See |non-zero-arg|.
+--- @param expr? any
 --- @return string
 function vim.fn.visualmode(expr) end
 
@@ -3341,6 +3480,7 @@ function vim.fn.visualmode(expr) end
 -- 			-1 if the timeout was exceeded
 -- 			-2 if the function was interrupted (by |CTRL-C|)
 -- 			-3 if an error occurred
+--- @param interval? any
 --- @return number
 function vim.fn.wait(timeout, condition, interval) end
 
@@ -3367,6 +3507,7 @@ function vim.fn.wildmenumode() end
 -- 		Can also be used as a |method|, the base is passed as the
 -- 		second argument: >
 -- 			GetCommand()->win_execute(winid)
+--- @param silent? any
 --- @return string
 function vim.fn.win_execute(id, command, silent) end
 
@@ -3375,6 +3516,7 @@ function vim.fn.win_execute(id, command, silent) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetBufnr()->win_findbuf()
+--- @param bufnr buffer
 --- @return list
 function vim.fn.win_findbuf(bufnr) end
 
@@ -3389,6 +3531,7 @@ function vim.fn.win_findbuf(bufnr) end
 -- 		Can also be used as a |method|: >
 -- 			GetWinnr()->win_getid()
 --- @param win? window
+--- @param tab? any
 --- @return number
 function vim.fn.win_getid(win, tab) end
 
@@ -3515,6 +3658,7 @@ function vim.fn.win_screenpos(nr) end
 -- 			GetWinid()->win_splitmove(target)
 -- <
 --- @param nr number
+--- @param options? table<string, any>
 --- @return number
 function vim.fn.win_splitmove(nr, target, options) end
 
@@ -3638,6 +3782,7 @@ function vim.fn.winline() end
 -- <		Can also be used as a |method|: >
 -- 			GetWinval()->winnr()
 -- <
+--- @param arg? any
 --- @return number
 function vim.fn.winnr(arg) end
 
@@ -3775,6 +3920,7 @@ function vim.fn.wordcount() end
 --
 -- <		Can also be used as a |method|: >
 -- 			GetText()->writefile("thefile")
+--- @param flags? any
 --- @return number
 function vim.fn.writefile(object, fname, flags) end
 

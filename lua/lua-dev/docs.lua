@@ -217,6 +217,5 @@ function M.parse_signature(line)
     return { name = name, params = params, doc = doc }
   end
 end
-dumpp(M.lua())
 
 return M

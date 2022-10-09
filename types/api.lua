@@ -262,7 +262,7 @@ function vim.api.nvim_buf_delete(buffer, opts) end
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @return any # False if detach failed (because the buffer isn't loaded); otherwise
 --     True.
-function vim.api.nvim_buf_detach(buffer) end
+function vim.fn.nvim_buf_detach(buffer) end
 
 -- Gets a changed tick of a buffer
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
@@ -651,7 +651,7 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 --     which resulted in an error, the error type and the error message. If
 --     an error occurred, the values from all preceding calls will still be
 --     returned.
-function vim.api.nvim_call_atomic(calls) end
+function vim.fn.nvim_call_atomic(calls) end
 
 -- Calls a VimL |Dictionary-function| with the given arguments.
 --
@@ -1019,7 +1019,7 @@ function vim.api.nvim_err_writeln(str) end
 
 --- @param lvl integer
 --- @param data string
-function vim.api.nvim_error_event(lvl, data) end
+function vim.fn.nvim_error_event(lvl, data) end
 
 -- Evaluates a VimL |expression|. Dictionaries and Lists are recursively
 -- expanded.
@@ -1095,7 +1095,7 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 --- @param code string # Lua code to execute
 --- @param args array # Arguments to the code
 --- @return any # Return value of Lua code if present or NIL.
-function vim.api.nvim_exec_lua(code, args) end
+function vim.fn.nvim_exec_lua(code, args) end
 
 -- Sends input-keys to Nvim, subject to various quirks controlled by `mode`
 -- flags. This is a blocking call, unlike |nvim_input()|.
@@ -1131,7 +1131,7 @@ function vim.api.nvim_get_all_options_info() end
 -- Returns a 2-tuple (Array), where item 0 is the current channel id and item
 -- 1 is the |api-metadata| map (Dictionary).
 --- @return any # 2-tuple [{channel-id}, {api-metadata}]
-function vim.api.nvim_get_api_info() end
+function vim.fn.nvim_get_api_info() end
 
 -- Get all autocommands that match the corresponding {opts}.
 --
@@ -1876,7 +1876,7 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 --                     "MIT", …)
 --                   • "logo": URI or path to image, preferably small logo or
 --                     icon. .png or .svg format is preferred.
-function vim.api.nvim_set_client_info(name, version, type, methods, attributes) end
+function vim.fn.nvim_set_client_info(name, version, type, methods, attributes) end
 
 -- Sets the current buffer.
 --- @param buffer buffer # Buffer handle
@@ -2065,7 +2065,7 @@ function vim.api.nvim_strwidth(text) end
 
 -- Subscribes to event broadcasts.
 --- @param event string # Event type string
-function vim.api.nvim_subscribe(event) end
+function vim.fn.nvim_subscribe(event) end
 
 -- Removes a tab-scoped (t:) variable
 --- @param tabpage tabpage # Tabpage handle, or 0 for current tabpage
@@ -2118,12 +2118,12 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 --- @param width integer # Requested screen columns
 --- @param height integer # Requested screen rows
 --- @param options dictionary # |ui-option| map
-function vim.api.nvim_ui_attach(width, height, options) end
+function vim.fn.nvim_ui_attach(width, height, options) end
 
 -- Deactivates UI events on the channel.
 --
 -- Removes the client from the list of UIs. |nvim_list_uis()|
-function vim.api.nvim_ui_detach() end
+function vim.fn.nvim_ui_detach() end
 
 -- Tells Nvim the geometry of the popupmenu, to align floating windows with
 -- an external popup menu.
@@ -2138,20 +2138,20 @@ function vim.api.nvim_ui_detach() end
 --- @param height float # Popupmenu height.
 --- @param row float # Popupmenu row.
 --- @param col float # Popupmenu height.
-function vim.api.nvim_ui_pum_set_bounds(width, height, row, col) end
+function vim.fn.nvim_ui_pum_set_bounds(width, height, row, col) end
 
 -- Tells Nvim the number of elements displaying in the popupmenu, to decide
 -- <PageUp> and <PageDown> movement.
 --- @param height integer # Popupmenu height, must be greater than zero.
-function vim.api.nvim_ui_pum_set_height(height) end
+function vim.fn.nvim_ui_pum_set_height(height) end
 
 --- @param name string
 --- @param value object
-function vim.api.nvim_ui_set_option(name, value) end
+function vim.fn.nvim_ui_set_option(name, value) end
 
 --- @param width integer
 --- @param height integer
-function vim.api.nvim_ui_try_resize(width, height) end
+function vim.fn.nvim_ui_try_resize(width, height) end
 
 -- Tell Nvim to resize a grid. Triggers a grid_resize event with the
 -- requested grid size or the maximum size if it exceeds size limits.
@@ -2160,11 +2160,11 @@ function vim.api.nvim_ui_try_resize(width, height) end
 --- @param grid integer # The handle of the grid to be changed.
 --- @param width integer # The new requested width.
 --- @param height integer # The new requested height.
-function vim.api.nvim_ui_try_resize_grid(grid, width, height) end
+function vim.fn.nvim_ui_try_resize_grid(grid, width, height) end
 
 -- Unsubscribes to event broadcasts.
 --- @param event string # Event type string
-function vim.api.nvim_unsubscribe(event) end
+function vim.fn.nvim_unsubscribe(event) end
 
 -- Calls a function with window as temporary current window.
 --- @see |win_execute()|
