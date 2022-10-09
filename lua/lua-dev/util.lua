@@ -30,4 +30,8 @@ function M.is_nvim_config(path)
   return M.has_file(M.fqn(path), M.config_path())
 end
 
+function M.error(msg)
+  vim.notify(msg, vim.log.levels.ERROR, { title = "lua-dev.nvim" })
+end
+
 return M
