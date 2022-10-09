@@ -23,6 +23,8 @@
 ---@alias Number number
 ---@alias Callback fun()
 
+vim = {}
+
 vim.F = require("vim.F")
 vim.diagnostic = require("vim.diagnostic")
 vim.filetype = require("vim.filetype")
