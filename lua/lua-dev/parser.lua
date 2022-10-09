@@ -288,9 +288,7 @@ function M.writer(file)
 end
 
 function M.functions()
-  local data = vim.fn.json_decode(vim.fn.readfile("data/builtin-docs.json"))
-  local functions = data.signatureHelp
-  local docs = data.documents.functions
+  local functions = require("lua-dev.docs").functions()
 
   local writer = M.writer("types/vim.fn")
   local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
@@ -298,29 +296,16 @@ function M.functions()
   table.sort(names)
   for _, name in ipairs(names) do
     local props = functions[name]
-    if vim.fn[name] and not vim.api[name] and not exclude[name] then
+    if vim.fn[name] and not exclude[name] then
       local fun = {
         name = name,
         fqname = "vim.fn." .. name,
-        doc = table.concat(docs[name] or {}, "\n"),
-        params = {},
+        doc = props.doc or "",
+        params = props.params,
         ["return"] = {},
       }
-      if props[2] ~= "" then
-        fun["return"] = { { type = props[2]:lower() } }
-      end
-      if props[1] ~= "" then
-        for _, param in pairs(vim.split(props[1], ",")) do
-          param = vim.trim(param:gsub("[{}%]%[]", ""))
-          param = param:gsub("-", "_")
-          if exclude[param] or tonumber(param) ~= nil then
-            param = "_" .. param
-          end
-          if param:find("%.%.%.") then
-            param = "..."
-          end
-          table.insert(fun.params, { name = param })
-        end
+      if props["return"] then
+        fun["return"] = { { type = props["return"]:lower() } }
       end
       writer.write(M.emmy(fun))
     end
