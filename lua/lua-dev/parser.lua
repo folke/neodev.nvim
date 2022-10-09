@@ -8,18 +8,22 @@ end
 
 function M.infer_type(param)
   local type = param.type or "any"
-  if type == "" then
+  if type == "" or not type then
     type = "any"
   end
   if type == "any" then
-    if param.name == "buf" then
+    if vim.tbl_contains({ "buffer", "bufid", "bufnr", "buf" }, param.name) then
       type = "buffer"
-    elseif param.name == "win" then
+    elseif vim.tbl_contains({ "win", "window", "winid", "winnr" }, param.name) then
       type = "window"
-    elseif vim.tbl_contains({ "col", "lnum", "tabnr", "nr", "pos" }, param.name) then
+    elseif vim.tbl_contains({ "col", "lnum", "tabnr", "nr", "pos", "ns", "index", "from", "to" }, param.name) then
       type = "number"
-    elseif param.name == "fn" then
-      type = "fun(...)"
+    elseif vim.tbl_contains({ "str", "text" }, param.name) then
+      type = "string"
+    elseif vim.tbl_contains({ "args", "opt", "opts", "options" }, param.name) then
+      type = "table<string, any>"
+    elseif vim.tbl_contains({ "fn", "function", "callback", "func" }, param.name) then
+      type = "fun()"
     elseif param.name == "args" or param.name == "list" then
       type = "any[]"
     elseif param.name == "dict" then
@@ -53,7 +57,7 @@ function M.emmy_param(param, is_return)
     table.insert(parts, "# " .. param.doc)
   end
 
-  if not param.doc and type == "any" then
+  if not param.doc and type == "any" and not param.optional then
     return ""
   end
 
