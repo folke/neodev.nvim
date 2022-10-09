@@ -66,7 +66,8 @@ end
 
 function M.types()
   local f = debug.getinfo(1, "S").source:sub(2)
-  return vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
+  local ret = vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
+  return vim.loop.fs_realpath(ret .. "/" .. (vim.version().prerelease and "/nightly" or "/stable"))
 end
 
 ---@param opts? LuaDevOptions

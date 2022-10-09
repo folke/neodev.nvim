@@ -52,13 +52,6 @@ function vim.cmd(command) end
 --- @param options table<string, any>
 function vim.inspect(object, options) end
 
--- Returns true if the code is executing as part of a "fast" event handler,
---     where most of the API is disabled. These are low-level events (e.g.
---     |lua-loop-callbacks|) which can be invoked whenever Nvim polls for input.
---     When this is `false` most API functions are callable (but may be subject
---     to other restrictions such as |textlock|).
-function vim.in_fast_event() end
-
 -- Invokes |vim-function| or |user-function| {func} with arguments {...}.
 --     See also |vim.fn|.
 --     Equivalent to: >
@@ -68,50 +61,6 @@ function vim.in_fast_event() end
 --     See |vim.cmd()|.
 --- @param func fun()
 function vim.call(func, ...) end
-
--- Sends a request to {channel} to invoke {method} via |RPC| and blocks until
---     a response is received.
---
---     Note: NIL values as part of the return value is represented as |vim.NIL|
---     special value
---- @param args? table<string, any>
-function vim.rpcrequest(channel, method, args) end
-
--- Convert UTF-32 or UTF-16 {index} to byte index. If {use_utf16} is not
---     supplied, it defaults to false (use UTF-32). Returns the byte index.
---
---     Invalid UTF-8 and NUL is treated like by |vim.str_byteindex()|.
---     An {index} in the middle of a UTF-16 sequence is rounded upwards to
---     the end of that sequence.
---- @param str string
---- @param index number
---- @param use_utf16? any
-function vim.str_byteindex(str, index, use_utf16) end
-
--- The result is a String, which is the text {str} converted from
---         encoding {from} to encoding {to}. When the conversion fails `nil` is
---         returned.  When some characters could not be converted they
---         are replaced with "?".
---         The encoding names are whatever the iconv() library function
---         can accept, see ":Man 3 iconv".
---
---         Parameters: ~
---             {str}   (string) Text to convert
---             {from}  (string) Encoding of {str}
---             {to}    (string) Target encoding
---
---         Returns: ~
---             Converted string if conversion succeeds, `nil` otherwise.
---- @param str string
---- @param from number
---- @param to number
---- @param opts? table<string, any>
-function vim.iconv(str, from, to, opts) end
-
--- Schedules {callback} to be invoked soon by the main event-loop. Useful
---     to avoid |textlock| or other temporary restrictions.
---- @param callback fun()
-function vim.schedule(callback) end
 
 -- Run diff on strings {a} and {b}. Any indices returned by this function,
 --     either directly or via callback arguments, are 1-based.
@@ -178,6 +127,160 @@ function vim.schedule(callback) end
 --- @param opts table<string, any>
 function vim.diff(a, b, opts) end
 
+-- The result is a String, which is the text {str} converted from
+--         encoding {from} to encoding {to}. When the conversion fails `nil` is
+--         returned.  When some characters could not be converted they
+--         are replaced with "?".
+--         The encoding names are whatever the iconv() library function
+--         can accept, see ":Man 3 iconv".
+--
+--         Parameters: ~
+--             {str}   (string) Text to convert
+--             {from}  (string) Encoding of {str}
+--             {to}    (string) Target encoding
+--
+--         Returns: ~
+--             Converted string if conversion succeeds, `nil` otherwise.
+--- @param str string
+--- @param from number
+--- @param to number
+--- @param opts? table<string, any>
+function vim.iconv(str, from, to, opts) end
+
+-- Returns true if the code is executing as part of a "fast" event handler,
+--     where most of the API is disabled. These are low-level events (e.g.
+--     |lua-loop-callbacks|) which can be invoked whenever Nvim polls for input.
+--     When this is `false` most API functions are callable (but may be subject
+--     to other restrictions such as |textlock|).
+function vim.in_fast_event() end
+
+-- Parse the Vim regex {re} and return a regex object. Regexes are "magic"
+--     and case-sensitive by default, regardless of 'magic' and 'ignorecase'.
+--     They can be controlled with flags, see |/magic| and |/ignorecase|.
+--
+-- Methods on the regex object:
+function vim.regex(re) end
+
+-- Sends {event} to {channel} via |RPC| and returns immediately. If {channel}
+--     is 0, the event is broadcast to all channels.
+--
+--     This function also works in a fast callback |lua-loop-callbacks|.
+--- @param args? table<string, any>
+function vim.rpcnotify(channel, method, args) end
+
+-- Sends a request to {channel} to invoke {method} via |RPC| and blocks until
+--     a response is received.
+--
+--     Note: NIL values as part of the return value is represented as |vim.NIL|
+--     special value
+--- @param args? table<string, any>
+function vim.rpcrequest(channel, method, args) end
+
+-- Schedules {callback} to be invoked soon by the main event-loop. Useful
+--     to avoid |textlock| or other temporary restrictions.
+--- @param callback fun()
+function vim.schedule(callback) end
+
+-- Check {str} for spelling errors. Similar to the Vimscript function
+--     |spellbadword()|.
+--
+--     Note: The behaviour of this function is dependent on: 'spelllang',
+--     'spellfile', 'spellcapcheck' and 'spelloptions' which can all be local to
+--     the buffer. Consider calling this with |nvim_buf_call()|.
+--
+--     Example: >
+--
+--         vim.spell.check("the quik brown fox")
+--         -->
+--         {
+--             {'quik', 'bad', 4}
+--         }
+-- <
+--     Parameters: ~
+--         {str}    String to spell check.
+--
+--     Return: ~
+--       List of tuples with three items:
+--         - The badly spelled word.
+--         - The type of the spelling error:
+--             "bad"   spelling mistake
+--             "rare"  rare word
+--             "local" word only valid in another region
+--             "caps"  word should start with Capital
+--         - The position in {str} where the word begins.
+--
+-- ------------------------------------------------------------------------------
+--- @param str string
+function vim.spell.check(str) end
+
+-- Convert UTF-32 or UTF-16 {index} to byte index. If {use_utf16} is not
+--     supplied, it defaults to false (use UTF-32). Returns the byte index.
+--
+--     Invalid UTF-8 and NUL is treated like by |vim.str_byteindex()|.
+--     An {index} in the middle of a UTF-16 sequence is rounded upwards to
+--     the end of that sequence.
+--- @param str string
+--- @param index number
+--- @param use_utf16? any
+function vim.str_byteindex(str, index, use_utf16) end
+
+-- Convert byte index to UTF-32 and UTF-16 indices. If {index} is not
+--     supplied, the length of the string is used. All indices are zero-based.
+--     Returns two values: the UTF-32 and UTF-16 indices respectively.
+--
+--     Embedded NUL bytes are treated as terminating the string. Invalid UTF-8
+--     bytes, and embedded surrogates are counted as one code point each. An
+--     {index} in the middle of a UTF-8 sequence is rounded upwards to the end of
+--     that sequence.
+--- @param str string
+--- @param index? number
+function vim.str_utfindex(str, index) end
+
+-- Compares strings case-insensitively. Returns 0, 1 or -1 if strings are
+--     equal, {a} is greater than {b} or {a} is lesser than {b}, respectively.
+function vim.stricmp(a, b) end
+
+-- Attach to ui events, similar to |nvim_ui_attach()| but receive events
+--     as lua callback. Can be used to implement screen elements like
+--     popupmenu or message handling in lua.
+--
+--     {options} should be a dictionary-like table, where `ext_...` options should
+--     be set to true to receive events for the respective external element.
+--
+--     {callback} receives event name plus additional parameters. See |ui-popupmenu|
+--     and the sections below for event format for respective events.
+--
+--     WARNING: This api is considered experimental.  Usability will vary for
+--     different screen elements. In particular `ext_messages` behavior is subject
+--     to further changes and usability improvements.  This is expected to be
+--     used to handle messages when setting 'cmdheight' to zero (which is
+--     likewise experimental).
+--
+--     Example (stub for a |ui-popupmenu| implementation): >
+--
+--       ns = vim.api.nvim_create_namespace('my_fancy_pum')
+--
+--       vim.ui_attach(ns, {ext_popupmenu=true}, function(event, ...)
+--         if event == "popupmenu_show" then
+--           local items, selected, row, col, grid = ...
+--           print("display pum ", #items)
+--         elseif event == "popupmenu_select" then
+--           local selected = ...
+--           print("selected", selected)
+--         elseif event == "popupmenu_hide" then
+--           print("FIN")
+--         end
+--       end)
+--- @param ns number
+--- @param options table<string, any>
+--- @param callback fun()
+function vim.ui_attach(ns, options, callback) end
+
+-- Detach a callback previously attached with |vim.ui_attach()| for the
+--     given namespace {ns}.
+--- @param ns number
+function vim.ui_detach(ns) end
+
 -- Wait for {time} in milliseconds until {callback} returns `true`.
 --
 --     Executes {callback} immediately and at approximately {interval}
@@ -231,107 +334,4 @@ function vim.diff(a, b, opts) end
 --- @param interval? any
 --- @param fast_only? any
 function vim.wait(time, callback, interval, fast_only) end
-
--- Compares strings case-insensitively. Returns 0, 1 or -1 if strings are
---     equal, {a} is greater than {b} or {a} is lesser than {b}, respectively.
-function vim.stricmp(a, b) end
-
--- Parse the Vim regex {re} and return a regex object. Regexes are "magic"
---     and case-sensitive by default, regardless of 'magic' and 'ignorecase'.
---     They can be controlled with flags, see |/magic| and |/ignorecase|.
---
--- Methods on the regex object:
-function vim.regex(re) end
-
--- Detach a callback previously attached with |vim.ui_attach()| for the
---     given namespace {ns}.
---- @param ns number
-function vim.ui_detach(ns) end
-
--- Sends {event} to {channel} via |RPC| and returns immediately. If {channel}
---     is 0, the event is broadcast to all channels.
---
---     This function also works in a fast callback |lua-loop-callbacks|.
---- @param args? table<string, any>
-function vim.rpcnotify(channel, method, args) end
-
--- Check {str} for spelling errors. Similar to the Vimscript function
---     |spellbadword()|.
---
---     Note: The behaviour of this function is dependent on: 'spelllang',
---     'spellfile', 'spellcapcheck' and 'spelloptions' which can all be local to
---     the buffer. Consider calling this with |nvim_buf_call()|.
---
---     Example: >
---
---         vim.spell.check("the quik brown fox")
---         -->
---         {
---             {'quik', 'bad', 4}
---         }
--- <
---     Parameters: ~
---         {str}    String to spell check.
---
---     Return: ~
---       List of tuples with three items:
---         - The badly spelled word.
---         - The type of the spelling error:
---             "bad"   spelling mistake
---             "rare"  rare word
---             "local" word only valid in another region
---             "caps"  word should start with Capital
---         - The position in {str} where the word begins.
---
--- ------------------------------------------------------------------------------
---- @param str string
-function vim.spell.check(str) end
-
--- Attach to ui events, similar to |nvim_ui_attach()| but receive events
---     as lua callback. Can be used to implement screen elements like
---     popupmenu or message handling in lua.
---
---     {options} should be a dictionary-like table, where `ext_...` options should
---     be set to true to receive events for the respective external element.
---
---     {callback} receives event name plus additional parameters. See |ui-popupmenu|
---     and the sections below for event format for respective events.
---
---     WARNING: This api is considered experimental.  Usability will vary for
---     different screen elements. In particular `ext_messages` behavior is subject
---     to further changes and usability improvements.  This is expected to be
---     used to handle messages when setting 'cmdheight' to zero (which is
---     likewise experimental).
---
---     Example (stub for a |ui-popupmenu| implementation): >
---
---       ns = vim.api.nvim_create_namespace('my_fancy_pum')
---
---       vim.ui_attach(ns, {ext_popupmenu=true}, function(event, ...)
---         if event == "popupmenu_show" then
---           local items, selected, row, col, grid = ...
---           print("display pum ", #items)
---         elseif event == "popupmenu_select" then
---           local selected = ...
---           print("selected", selected)
---         elseif event == "popupmenu_hide" then
---           print("FIN")
---         end
---       end)
---- @param ns number
---- @param options table<string, any>
---- @param callback fun()
-function vim.ui_attach(ns, options, callback) end
-
--- Convert byte index to UTF-32 and UTF-16 indices. If {index} is not
---     supplied, the length of the string is used. All indices are zero-based.
---     Returns two values: the UTF-32 and UTF-16 indices respectively.
---
---     Embedded NUL bytes are treated as terminating the string. Invalid UTF-8
---     bytes, and embedded surrogates are counted as one code point each. An
---     {index} in the middle of a UTF-8 sequence is rounded upwards to the end of
---     that sequence.
---- @param str string
---- @param index? number
-function vim.str_utfindex(str, index) end
 

@@ -221,7 +221,7 @@ function M.parse(mpack, prefix, opts)
   prefix = prefix or "vim"
   local fname = vim.fn.fnamemodify(mpack, ":t:r")
 
-  local writer = M.writer("types/" .. fname)
+  local writer = M.writer(fname)
   for _, f in pairs(M.get_functions(mpack)) do
     local name = f[1]
     local fun = f[2]
@@ -251,8 +251,10 @@ function M.parse(mpack, prefix, opts)
   end
 
   if opts.extra then
-    for _, fun in pairs(opts.extra) do
-      local emmy = M.emmy(fun)
+    local names = vim.tbl_keys(opts.extra)
+    table.sort(names)
+    for _, name in ipairs(names) do
+      local emmy = M.emmy(opts.extra[name])
       writer.write(emmy)
     end
   end
@@ -274,7 +276,7 @@ function M.options()
     end
   end
 
-  local writer = M.writer("types/options")
+  local writer = M.writer("options")
   for _, scope in ipairs({ "bo", "o", "wo" }) do
     local options = ret[scope]
     local names = vim.tbl_keys(options)
@@ -293,7 +295,8 @@ function M.options()
 end
 
 function M.writer(file)
-  local fd = uv.fs_open(file .. ".lua", "w+", 420)
+  local types = require("lua-dev.sumneko").types()
+  local fd = uv.fs_open(types .. "/" .. file .. ".lua", "w+", 420)
   local size = 0
   local fnum = 0
   M.intro(fd)
@@ -305,7 +308,7 @@ function M.writer(file)
         uv.fs_close(fd)
         fnum = fnum + 1
         size = 0
-        fd = uv.fs_open(file .. "." .. fnum .. ".lua", "w+", 420)
+        fd = uv.fs_open(types .. "/" .. file .. "." .. fnum .. ".lua", "w+", 420)
         M.intro(fd)
       end
     end,
@@ -318,7 +321,7 @@ end
 function M.functions()
   local functions = require("lua-dev.docs").functions()
 
-  local writer = M.writer("types/vim.fn")
+  local writer = M.writer("vim.fn")
   local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
   local names = vim.tbl_keys(functions)
   table.sort(names)
@@ -342,8 +345,9 @@ function M.functions()
 end
 
 function M.clean()
-  for _, f in pairs(vim.fn.expand("types/*.lua", false, true)) do
-    if f ~= "types/vim.lua" then
+  local types = require("lua-dev.sumneko").types()
+  for _, f in pairs(vim.fn.expand(types .. "/*.lua", false, true)) do
+    if not f:find("/vim.lua", 1, true) then
       uv.fs_unlink(f)
     end
   end
