@@ -14,18 +14,21 @@ function M.read(name)
   return lines
 end
 
----@return string
+---@return string, string[]
 function M.strip_tags(str)
+  local tags = {}
   return str
     :gsub(
       "(%*%S-%*)",
       ---@param tag string
       function(tag)
         tag = tag:sub(2, -2)
+        table.insert(tags, tag)
         return ""
       end
     )
-    :gsub("%s*$", "")
+    :gsub("%s*$", ""),
+    tags
 end
 
 function M.options()
@@ -48,6 +51,74 @@ function M.options()
       else
         ret[option] = line
       end
+    end
+  end
+  return ret
+end
+
+function M.lua()
+  ---@type table<string, ApiFunction>
+  local ret = {}
+
+  ---@type string[], string[]
+  local tags, line_tags
+
+  ---@type string[]
+  local content = {}
+
+  local function save()
+    if tags then
+      for _, tag in ipairs(tags) do
+        if tag:find("vim.*%(%)$") then
+          tag = tag:sub(1, -2)
+          local doc = table.concat(content, "\n")
+          doc = doc:gsub("^%S-%(", tag .. "(")
+          local parse = M.parse_signature(doc)
+          if parse then
+            local name = parse.name
+            ret[name] = {
+              name = name,
+              fqname = name,
+              params = parse.params,
+              doc = parse.doc,
+              ["return"] = {},
+            }
+          end
+        end
+      end
+    end
+    content = {}
+    tags = {}
+  end
+
+  ---@type string
+  for _, line in ipairs(M.read("lua")) do
+    line, line_tags = M.strip_tags(line)
+    if #line_tags > 0 then
+      save()
+      tags = line_tags
+      line = vim.trim(line)
+      if #line > 0 then
+        content = { line }
+      end
+    else
+      table.insert(content, line)
+    end
+  end
+  save()
+
+  for k, v in pairs(ret) do
+    local real_fn = vim.tbl_get(_G, unpack(vim.split(k, ".", { plain = true })))
+    if type(real_fn) == "function" then
+      local info = debug.getinfo(real_fn, "S")
+      if info.what == "Lua" then
+        ret[k] = nil
+      end
+    elseif type(real_fn) == "table" then
+      ret[k] = nil
+    end
+    if not real_fn then
+      ret[k] = nil
     end
   end
   return ret
@@ -99,31 +170,13 @@ function M.functions()
         last = line
       end
     elseif in_details then
-      ---@type string, string, string
-      local name, sig, doc = line:match("^(%S-)%((.-)%)%s*(.*)")
-      if name then
-        -- Parse args
-        local optional = sig:find("%[")
-        local params = {}
-        local from = 0
-        local to = 0
-        local param = ""
-        while from do
-          from, to, param = sig:find("{(%S-)}", to)
-          if from then
-            table.insert(params, {
-              name = param,
-              optional = optional and from > optional and true or nil,
-            })
-          end
-        end
-
-        -- Parse return type
-
+      local parse = M.parse_signature(line)
+      if parse then
+        local name = parse.name
         ret[name] = {
           name = name,
-          params = params,
-          doc = doc,
+          params = parse.params,
+          doc = parse.doc,
           ["return"] = retvals[name],
         }
         last = name
@@ -139,5 +192,31 @@ function M.functions()
 
   return ret
 end
+
+---@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
+function M.parse_signature(line)
+  ---@type string, string, string
+  local name, sig, doc = line:match("^(%S-)%((.-)%)%s*(.*)")
+  if name then
+    -- Parse args
+    local optional = sig:find("%[")
+    local params = {}
+    local from = 0
+    local to = 0
+    local param = ""
+    while from do
+      from, to, param = sig:find("{(%S-)}", to)
+      if from then
+        table.insert(params, {
+          name = param,
+          optional = optional and from > optional and true or nil,
+        })
+      end
+    end
+
+    return { name = name, params = params, doc = doc }
+  end
+end
+dumpp(M.lua())
 
 return M
