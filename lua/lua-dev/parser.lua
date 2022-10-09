@@ -12,7 +12,13 @@ function M.infer_type(param)
     type = "any"
   end
   if type == "any" then
-    if param.name == "fn" then
+    if param.name == "buf" then
+      type = "buffer"
+    elseif param.name == "win" then
+      type = "window"
+    elseif vim.tbl_contains({ "col", "lnum", "tabnr", "nr", "pos" }, param.name) then
+      type = "number"
+    elseif param.name == "fn" then
       type = "fun(...)"
     elseif param.name == "args" or param.name == "list" then
       type = "any[]"
