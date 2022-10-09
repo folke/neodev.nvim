@@ -231,8 +231,7 @@ function M.parse(mpack, prefix, exclude)
 end
 
 function M.options()
-  local data = vim.fn.json_decode(vim.fn.readfile("data/builtin-docs.json"))
-  local docs = data.documents.options
+  local docs = require("lua-dev.docs").options()
 
   local ret = { o = {}, wo = {}, bo = {} }
   for name, option in pairs(vim.api.nvim_get_all_options_info()) do
@@ -254,7 +253,7 @@ function M.options()
     for _, key in ipairs(names) do
       local value = options[key]
       local str = ("vim.%s.%s = %q\n"):format(scope, key, value)
-      local doc = docs[key] and table.concat(docs[key], "\n") or nil
+      local doc = docs[key] or nil
       if doc then
         str = M.comment(doc) .. "\n" .. str
       end

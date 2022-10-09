@@ -28,6 +28,31 @@ function M.strip_tags(str)
     :gsub("%s*$", "")
 end
 
+function M.options()
+  local ret = {}
+
+  ---@type string
+  local option = nil
+  for _, line in ipairs(M.read("options")) do
+    line = M.strip_tags(line)
+    local name, _, doc = line:match("^'(%S-)'%s*('%S-')%s*(.*)")
+    if not name then
+      name, doc = line:match("^'(%S-)'%s*(.*)")
+    end
+    if name then
+      option = name
+      ret[option] = doc
+    elseif option and line:find("^\t") then
+      if ret[option] then
+        ret[option] = ret[option] .. "\n" .. line
+      else
+        ret[option] = line
+      end
+    end
+  end
+  return ret
+end
+
 ---@class VimFunction
 ---@field name string
 ---@field doc string
