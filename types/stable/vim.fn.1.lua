@@ -591,6 +591,8 @@ function vim.fn.reg_recording() end
 -- 			GetStart()->reltime()
 -- <
 -- 		Note: |localtime()| returns the current (non-relative) time.
+--- @param start? any
+--- @param end? any
 --- @return list
 function vim.fn.reltime(start, end) end
 
@@ -2188,7 +2190,7 @@ function vim.fn.split(string, pattern, keepempty) end
 -- 			:echo sqrt(100)
 -- <			10.0 >
 -- 			:echo sqrt(-4.01)
--- <			str2float("nan")
+-- <			str2float('nan')
 -- 		NaN may be different, it depends on system libraries.
 --
 -- 		Can also be used as a |method|: >

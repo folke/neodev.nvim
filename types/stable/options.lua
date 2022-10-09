@@ -734,9 +734,9 @@ vim.bo.lispwords = "defun,define,defmacro,set!,lambda,if,case,let,flet,let*,letr
 -- 	This is used for `:make`, `:lmake`, `:grep`, `:lgrep`, `:grepadd`,
 -- 	`:lgrepadd`, `:cfile`, `:cgetfile`, `:caddfile`, `:lfile`, `:lgetfile`,
 -- 	and `:laddfile`.
--- 	This would be mostly useful when you use MS-Windows.  If iconv is
--- 	enabled, setting 'makeencoding' to "char" has the same effect as
--- 	setting to the system locale encoding.  Example: >
+-- 	This would be mostly useful when you use MS-Windows.  If |+iconv| is
+-- 	enabled and GNU libiconv is used, setting 'makeencoding' to "char" has
+-- 	the same effect as setting to the system locale encoding.  Example: >
 -- 		:set makeencoding=char	" system locale is used
 vim.bo.makeencoding = ""
 -- string	(default "make")
@@ -2225,9 +2225,9 @@ vim.o.digraph = "false"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.o.directory = "/home/folke/.local/state/nvim/swap//"
--- string	(default "lastline")
+-- string	(default "lastline,msgsep")
 -- 			global
--- 	Change the way text is displayed.  This is a comma-separated list of
+-- 	Change the way text is displayed.  This is comma-separated list of
 -- 	flags:
 -- 	lastline	When included, as much as possible of the last line
 -- 			in a window will be displayed.  "@@@" is put in the
@@ -2237,11 +2237,12 @@ vim.o.directory = "/home/folke/.local/state/nvim/swap//"
 -- 			column of the last screen line.  Overrules "lastline".
 -- 	uhex		Show unprintable characters hexadecimal as <xx>
 -- 			instead of using ^C and ~C.
--- 	msgsep		Obsolete flag. Allowed but takes no effect. |msgsep|
+-- 	msgsep		When showing messages longer than 'cmdheight', only
+-- 			scroll the message lines, not the entire screen. The
+-- 			separator line is decorated by |hl-MsgSeparator| and
+-- 			the "msgsep" flag of 'fillchars'.
 -- 	When neither "lastline" nor "truncate" is included, a last line that
 -- 	doesn't fit is replaced with "@" lines.
--- 	The "@" character can be changed by setting the "lastline" item in
--- 	'fillchars'.  The character is highlighted with |hl-NonText|.
 vim.o.display = "lastline,msgsep"
 -- string	(default "both")
 -- 			global
@@ -2449,7 +2450,6 @@ vim.o.fileignorecase = "false"
 -- 	  diff		'-'		deleted lines of the 'diff' option
 -- 	  msgsep	' '		message separator 'display'
 -- 	  eob		'~'		empty lines at the end of a buffer
--- 	  lastline	'@'		'display' contains lastline/truncate
 -- 	Any one that is omitted will fall back to the default.  For "stl" and
 -- 	"stlnc" the space will be used when there is highlighting, '^' or '='
 -- 	otherwise.
@@ -2480,7 +2480,6 @@ vim.o.fileignorecase = "false"
 -- 	  fold		Folded			|hl-Folded|
 -- 	  diff		DiffDelete		|hl-DiffDelete|
 -- 	  eob		EndOfBuffer		|hl-EndOfBuffer|
--- 	  lastline	NonText			|hl-NonText|
 vim.o.fillchars = ""
 -- string (default "")
 -- 			global
@@ -3388,9 +3387,9 @@ vim.o.makeef = ""
 -- 	This is used for `:make`, `:lmake`, `:grep`, `:lgrep`, `:grepadd`,
 -- 	`:lgrepadd`, `:cfile`, `:cgetfile`, `:caddfile`, `:lfile`, `:lgetfile`,
 -- 	and `:laddfile`.
--- 	This would be mostly useful when you use MS-Windows.  If iconv is
--- 	enabled, setting 'makeencoding' to "char" has the same effect as
--- 	setting to the system locale encoding.  Example: >
+-- 	This would be mostly useful when you use MS-Windows.  If |+iconv| is
+-- 	enabled and GNU libiconv is used, setting 'makeencoding' to "char" has
+-- 	the same effect as setting to the system locale encoding.  Example: >
 -- 		:set makeencoding=char	" system locale is used
 vim.o.makeencoding = ""
 -- string	(default "make")

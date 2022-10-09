@@ -4680,7 +4680,7 @@ function vim.fn.match(expr, pat, start, count) end
 -- 		respectively.  3 is reserved for use by the |matchparen|
 -- 		plugin.
 -- 		If the {id} argument is not specified or -1, |matchadd()|
--- 		automatically chooses a free ID, which is at least 1000.
+-- 		automatically chooses a free ID.
 --
 -- 		The optional {dict} argument allows for further custom
 -- 		values. Currently this is used to specify a match specific
@@ -4741,6 +4741,8 @@ function vim.fn.matchadd(group, pattern, priority, id, dict) end
 -- 		Entries with zero and negative line numbers are silently
 -- 		ignored, as well as entries with negative column numbers and
 -- 		lengths.
+--
+-- 		The maximum number of positions in {pos} is 8.
 --
 -- 		Returns -1 on error.
 --

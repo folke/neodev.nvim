@@ -1,10 +1,9 @@
-local config = require("lua-dev.config")
-
 local M = {}
 
 ---@param name string
 function M.read(name)
-  local txtfile = config.runtime() .. "/doc/" .. name .. ".txt"
+  local docs = vim.fn.expand("$VIMRUNTIME/doc", false, false)
+  local txtfile = docs .. "/" .. name .. ".txt"
 
   ---@type string[]
   local lines = {}

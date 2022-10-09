@@ -26,11 +26,6 @@ function M.setup(options)
   M.options = vim.tbl_deep_extend("force", {}, M.defaults, options or {})
 end
 
-function M.runtime()
-  local ret = type(M.options.library.runtime) == "string" and M.options.library.runtime or "$VIMRUNTIME"
-  return vim.fn.expand(ret, false, false)
-end
-
 ---@return LuaDevOptions
 function M.merge(options)
   return vim.tbl_deep_extend("force", {}, M.options, options or {})

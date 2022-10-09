@@ -379,7 +379,7 @@ vim.o.shadafile = ""
 -- 	To use PowerShell: >
 -- 		let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
 -- 		let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
--- 		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+-- 		let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
 -- 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 -- 		set shellquote= shellxquote=
 -- 	security reasons.
@@ -1871,7 +1871,6 @@ vim.wo.diff = "false"
 -- 	  diff		'-'		deleted lines of the 'diff' option
 -- 	  msgsep	' '		message separator 'display'
 -- 	  eob		'~'		empty lines at the end of a buffer
--- 	  lastline	'@'		'display' contains lastline/truncate
 -- 	Any one that is omitted will fall back to the default.  For "stl" and
 -- 	"stlnc" the space will be used when there is highlighting, '^' or '='
 -- 	otherwise.
@@ -1902,7 +1901,6 @@ vim.wo.diff = "false"
 -- 	  fold		Folded			|hl-Folded|
 -- 	  diff		DiffDelete		|hl-DiffDelete|
 -- 	  eob		EndOfBuffer		|hl-EndOfBuffer|
--- 	  lastline	NonText			|hl-NonText|
 vim.wo.fillchars = ""
 -- string (default "0")
 -- 			local to window
