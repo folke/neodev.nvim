@@ -1,5 +1,27 @@
 local util = require("lua-dev.util")
+
+---@class VimFunction
+---@field name string
+---@field doc string
+---@field return? string
+---@field params {name: string, optional?: boolean}[]
+
 local M = {}
+
+M.function_pattern = "^(%S-%([^(]-%))"
+M.function_signature_pattern = "^(%S-)%(([^(]-)%)"
+M.vim_type_map = {
+  number = "number",
+  float = "float",
+  string = "string",
+  list = "any[]",
+  any = "any",
+  funcref = "fun()",
+  dict = "table<string, any>",
+  none = "nil",
+  set = "table",
+  boolean = "boolean",
+}
 
 ---@param name string
 function M.read(name)
@@ -43,15 +65,15 @@ function M.parse(name, opts)
   local chunk_tags = {}
   local chunk_match = {}
   local chunk = {}
-  ---@type {tags:string[], text:string}[]
+  ---@type {tags:string[], text:string, match: string[]}[]
   local ret = {}
 
   local function save()
     if #chunk > 0 then
       table.insert(ret, {
-        tags = chunk_tags,
+        tags = vim.deepcopy(chunk_tags),
         text = table.concat(chunk, "\n"),
-        match = chunk_match,
+        match = vim.deepcopy(chunk_match),
       })
     end
     chunk = {}
@@ -91,123 +113,76 @@ end
 function M.options()
   local ret = {}
 
-  ---@type string
-  local option = nil
-  for _, line in ipairs(M.read("options")) do
-    line = M.strip_tags(line)
-    local name, _, doc = line:match("^'(%S-)'%s*('%S-')%s*(.*)")
-    if not name then
-      name, doc = line:match("^'(%S-)'%s*(.*)")
-    end
-    if name then
-      option = name
-      ret[option] = doc
-    elseif option and line:find("^\t") then
-      if ret[option] then
-        ret[option] = ret[option] .. "\n" .. line
-      else
-        ret[option] = line
-      end
-    end
+  local option_pattern = "^'(%S-)'%s*"
+
+  local options = M.parse("options", { pattern = option_pattern })
+
+  for _, option in ipairs(options) do
+    local name = option.match[1]
+    local doc = option.text:gsub(option_pattern, ""):gsub(option_pattern, "")
+    ret[name] = doc
   end
   return ret
 end
 
 function M.lua()
-  ---@type table<string, ApiFunction>
+  ---@type table<string, VimFunction>
   local ret = {}
 
-  ---@type string[], string[]
-  local tags, line_tags
+  local functions = M.parse("lua", { pattern = M.function_pattern, context = 2 })
 
-  ---@type string[]
-  local content = {}
-
-  local function save()
-    if tags then
-      for _, tag in ipairs(tags) do
-        if tag:find("vim.*%(%)$") then
-          tag = tag:sub(1, -2)
-          local doc = table.concat(content, "\n")
-          doc = doc:gsub("^%S-%(", tag .. "(")
-          local parse = M.parse_signature(doc)
-          if parse then
-            local name = parse.name
-            ret[name] = {
-              name = name,
-              fqname = name,
-              params = parse.params,
-              doc = parse.doc,
-              ["return"] = {},
-            }
-          end
+  for _, fun in ipairs(functions) do
+    local text = fun.text
+    -- replace function name by the function tag, to make sure it is fully qualified
+    for _, tag in ipairs(fun.tags) do
+      if tag:find("vim.*%(%)$") then
+        tag = tag:sub(1, -3)
+        local name = text:match(M.function_signature_pattern)
+        if tag:sub(-#name) == name then
+          text = text:gsub("^%S-%(", tag .. "(")
         end
       end
     end
-    content = {}
-    tags = {}
-  end
 
-  ---@type string
-  for _, line in ipairs(M.read("lua")) do
-    line, line_tags = M.strip_tags(line)
-    if #line_tags > 0 then
-      save()
-      tags = line_tags
-      line = vim.trim(line)
-      if #line > 0 then
-        content = { line }
-      end
-    else
-      table.insert(content, line)
-    end
-  end
-  save()
+    local parse = M.parse_signature(text)
 
-  for k, v in pairs(ret) do
-    local real_fn = vim.tbl_get(_G, unpack(vim.split(k, ".", { plain = true })))
-    if type(real_fn) == "function" then
-      local info = debug.getinfo(real_fn, "S")
-      if info.what == "Lua" then
-        ret[k] = nil
+    if parse then
+      local name = parse.name
+
+      local skip = false
+
+      local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
+      if type(real_fn) == "function" then
+        local info = debug.getinfo(real_fn, "S")
+        if info.what == "Lua" then
+          skip = true
+        end
+      elseif type(real_fn) == "table" then
+        skip = true
+      elseif not real_fn then
+        skip = true
       end
-    elseif type(real_fn) == "table" then
-      ret[k] = nil
-    end
-    if not real_fn then
-      ret[k] = nil
+
+      if not skip then
+        ret[name] = {
+          name = name,
+          fqname = name,
+          params = parse.params,
+          doc = parse.doc,
+          ["return"] = {},
+        }
+      end
     end
   end
   return ret
 end
-
----@class VimFunction
----@field name string
----@field doc string
----@field return? string
----@field params {name: string, optional?: boolean}[]
-
-M.function_pattern = "^(%S-%(.-%))"
-M.function_signature_pattern = "^(%S-)%((.-)%)"
-M.vim_type_map = {
-  number = "number",
-  float = "float",
-  string = "string",
-  list = "any[]",
-  any = "any",
-  funcref = "fun()",
-  dict = "table<string, any>",
-  none = "nil",
-  set = "table",
-  boolean = "boolean",
-}
 
 ---@return table<string, VimFunction>
 function M.functions()
   ---@type table<string, VimFunction>
   local ret = {}
 
-  local builtins = M.parse("builtin", { pattern = M.function_pattern })
+  local builtins = M.parse("builtin", { pattern = M.function_pattern, context = 2 })
 
   ---@type table<string, string>
   local retvals = {}

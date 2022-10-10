@@ -56,9 +56,6 @@ function vim.inspect(object, options) end
 --     See also |vim.fn|.
 --     Equivalent to: >
 --         vim.fn[func]({...})
---
--- vim.cmd({command})
---     See |vim.cmd()|.
 --- @param func fun()
 function vim.call(func, ...) end
 
@@ -122,8 +119,6 @@ function vim.call(func, ...) end
 --
 --     Return: ~
 --         See {opts.result_type}. nil if {opts.on_hunk} is given.
---
--- ------------------------------------------------------------------------------
 --- @param opts table<string, any>
 function vim.diff(a, b, opts) end
 
@@ -154,11 +149,16 @@ function vim.iconv(str, from, to, opts) end
 --     to other restrictions such as |textlock|).
 function vim.in_fast_event() end
 
+-- Decodes (or "unpacks") the msgpack-encoded {str} to a Lua object.
+--- @param str string
+function vim.mpack.decode(str) end
+
+-- Encodes (or "packs") Lua object {obj} as msgpack in a Lua string.
+function vim.mpack.encode(obj) end
+
 -- Parse the Vim regex {re} and return a regex object. Regexes are "magic"
 --     and case-sensitive by default, regardless of 'magic' and 'ignorecase'.
 --     They can be controlled with flags, see |/magic| and |/ignorecase|.
---
--- Methods on the regex object:
 function vim.regex(re) end
 
 -- Sends {event} to {channel} via |RPC| and returns immediately. If {channel}
@@ -208,8 +208,6 @@ function vim.schedule(callback) end
 --             "local" word only valid in another region
 --             "caps"  word should start with Capital
 --         - The position in {str} where the word begins.
---
--- ------------------------------------------------------------------------------
 --- @param str string
 function vim.spell.check(str) end
 
@@ -280,6 +278,9 @@ function vim.ui_attach(ns, options, callback) end
 --     given namespace {ns}.
 --- @param ns number
 function vim.ui_detach(ns) end
+
+-- Gets the version of the current Nvim build.
+function vim.version() end
 
 -- Wait for {time} in milliseconds until {callback} returns `true`.
 --
