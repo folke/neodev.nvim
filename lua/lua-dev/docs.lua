@@ -125,6 +125,19 @@ function M.options()
   return ret
 end
 
+function M.is_lua(name)
+  local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
+  if type(real_fn) == "function" then
+    local info = debug.getinfo(real_fn, "S")
+    return info.what == "Lua"
+  elseif type(real_fn) == "table" then
+    return true
+  elseif not real_fn then
+    return true
+  end
+  return false
+end
+
 function M.lua()
   ---@type table<string, VimFunction>
   local ret = {}
@@ -149,21 +162,9 @@ function M.lua()
     if parse then
       local name = parse.name
 
-      local skip = false
-
-      local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
-      if type(real_fn) == "function" then
-        local info = debug.getinfo(real_fn, "S")
-        if info.what == "Lua" then
-          skip = true
-        end
-      elseif type(real_fn) == "table" then
-        skip = true
-      elseif not real_fn then
-        skip = true
-      end
-
-      if not skip then
+      -- Skip real lua functions
+      -- We're only interested in C type functions
+      if not M.is_lua(name) then
         ret[name] = {
           name = name,
           fqname = name,
