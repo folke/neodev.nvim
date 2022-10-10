@@ -1,3 +1,4 @@
+local util = require("lua-dev.util")
 local M = {}
 
 ---@param name string
@@ -28,6 +29,63 @@ function M.strip_tags(str)
     )
     :gsub("%s*$", ""),
     tags
+end
+
+---@param name string
+---@param opts { pattern: string, continuation?: string, context?: number}
+function M.parse(name, opts)
+  opts = opts or {}
+  opts.continuation = opts.continuation or "^[%s<>]"
+  opts.context = opts.context or 1
+
+  local tags = {}
+  local line_tags = {}
+  local chunk_tags = {}
+  local chunk_match = {}
+  local chunk = {}
+  ---@type {tags:string[], text:string}[]
+  local ret = {}
+
+  local function save()
+    if #chunk > 0 then
+      table.insert(ret, {
+        tags = chunk_tags,
+        text = table.concat(chunk, "\n"),
+        match = chunk_match,
+      })
+    end
+    chunk = {}
+    chunk_tags = {}
+  end
+  local lines = M.read(name)
+  for l, line in ipairs(lines) do
+    line, line_tags = M.strip_tags(line)
+
+    if #line_tags > 0 then
+      tags = line_tags
+    end
+
+    local context = line
+    for c = 1, opts.context do
+      if lines[l + c] then
+        context = line .. "\n" .. lines[l + c]
+      end
+    end
+
+    local match = { context:match(opts.pattern) }
+
+    if #match > 0 then
+      save()
+      chunk_match = match
+      chunk_tags = vim.deepcopy(tags)
+      table.insert(chunk, line)
+    elseif #chunk > 0 and (line:find(opts.continuation) or line:find("^%s*$")) then
+      table.insert(chunk, line)
+    else
+      save()
+    end
+  end
+  return ret
 end
 
 function M.options()
@@ -129,47 +187,55 @@ end
 ---@field return? string
 ---@field params {name: string, optional?: boolean}[]
 
+M.function_pattern = "^(%S-%(.-%))"
+M.function_signature_pattern = "^(%S-)%((.-)%)"
+M.vim_type_map = {
+  number = "number",
+  float = "float",
+  string = "string",
+  list = "any[]",
+  any = "any",
+  funcref = "fun()",
+  dict = "table<string, any>",
+  none = "nil",
+  set = "table",
+  boolean = "boolean",
+}
+
 ---@return table<string, VimFunction>
 function M.functions()
   ---@type table<string, VimFunction>
   local ret = {}
 
-  local builtin = M.read("builtin")
+  local builtins = M.parse("builtin", { pattern = M.function_pattern })
 
   ---@type table<string, string>
   local retvals = {}
 
-  local in_list = false
-  local in_details = false
-  ---@type string?
-  local last = nil
-  for _, line in ipairs(builtin) do
-    if line:find("*builtin-function-list", 1, true) then
-      in_list = true
-    elseif line:find("*builtin-function-details", 1, true) then
-      in_details = true
-      in_list = false
-      last = nil
-    end
-
-    line = M.strip_tags(line)
-
-    if in_list then
-      local name, retval = line:match("^(%S+)%([^\t]*%)%s+([^\t]+)\t+.*$")
-      if retval then
-        retvals[name] = retval
-      elseif last then
-        name, retval = (last .. line):match("^(%S+)%([^\t]*%)\t+([^\t]+)\t+.*$")
-        if retval then
-          retvals[name] = retval
+  for _, builtin in ipairs(builtins) do
+    if vim.tbl_contains(builtin.tags, "builtin-function-list") then
+      local text = builtin.text
+      -- replace any whitespace after the function by a tab character
+      text = text:gsub(M.function_pattern .. "%s+", "%1\t")
+      -- replace consecutive whitespace by tabs
+      text = text:gsub("%s%s+", "\t")
+      ---@type string, string, string
+      local name, _args, retval = text:match(M.function_signature_pattern .. "\t(%w+)")
+      if name then
+        retval = retval:lower()
+        if M.vim_type_map[retval] then
+          retval = M.vim_type_map[retval]
+          if retval ~= "nil" then
+            retvals[name] = retval
+          end
         else
-          last = line
+          util.debug(retval)
         end
       else
-        last = line
+        util.error("Couldnt parse builtin-function-list: " .. vim.inspect(builtin))
       end
-    elseif in_details then
-      local parse = M.parse_signature(line)
+    else
+      local parse = M.parse_signature(builtin.text)
       if parse then
         local name = parse.name
         ret[name] = {
@@ -178,13 +244,6 @@ function M.functions()
           doc = parse.doc,
           ["return"] = retvals[name],
         }
-        last = name
-      elseif last then
-        if ret[last].doc == "" then
-          ret[last].doc = line
-        else
-          ret[last].doc = ret[last].doc .. "\n" .. line
-        end
       end
     end
   end
@@ -195,7 +254,7 @@ end
 ---@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
 function M.parse_signature(line)
   ---@type string, string, string
-  local name, sig, doc = line:match("^(%S-)%((.-)%)%s*(.*)")
+  local name, sig, doc = line:match(M.function_signature_pattern .. "%s*(.*)")
   if name then
     -- Parse args
     local optional = sig:find("%[")
