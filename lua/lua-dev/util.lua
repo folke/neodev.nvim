@@ -1,3 +1,4 @@
+local config = require("lua-dev.config")
 local M = {}
 
 function M.fqn(fname)
@@ -30,8 +31,14 @@ function M.is_nvim_config(path)
   return M.has_file(M.fqn(path), M.config_path())
 end
 
+function M.debug(msg)
+  if config.options.debug then
+    M.error(msg)
+  end
+end
+
 function M.error(msg)
-  vim.notify(msg, vim.log.levels.ERROR, { title = "lua-dev.nvim" })
+  vim.notify_once(msg, vim.log.levels.ERROR, { title = "lua-dev.nvim" })
 end
 
 return M
