@@ -17,7 +17,7 @@
 --
 -- 		Can also be used as a |method|: >
 -- 			Compute()->abs()
---- @return float or number  absolute value of {expr}add({object}, {item})
+--- @return float
 function vim.fn.abs(expr) end
 
 -- Return the arc cosine of {expr} measured in radians, as a
@@ -49,13 +49,14 @@ function vim.fn.acos(expr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			mylist->add(val1)->add(val2)
+--- @return any[]
 function vim.fn.add(object, expr) end
 
 -- Returns Dictionary of |api-metadata|.
 --
 -- 		View it in a nice human-readable format: >
 -- 		       :lua print(vim.inspect(vim.fn.api_info()))
---- @return dict
+--- @return table<string, any>
 function vim.fn.api_info() end
 
 -- When {text} is a |List|: Append each item of the |List| as a
@@ -152,7 +153,7 @@ function vim.fn.arglistid(winnr, tabnr) end
 -- 		argument is invalid.
 --- @param nr? number
 --- @param winid? window
---- @return list
+--- @return any[]
 function vim.fn.argv(nr, winid) end
 
 -- Return the arc sine of {expr} measured in radians, as a |Float|
@@ -169,9 +170,6 @@ function vim.fn.argv(nr, winid) end
 --
 -- 		Can also be used as a |method|: >
 -- 			Compute()->asin()
---
---
--- assert_ functions are documented here: |assert-functions-details|
 --- @return float
 function vim.fn.asin(expr) end
 
@@ -649,7 +647,6 @@ function vim.fn.cindent(lnum) end
 -- 			GetWin()->clearmatches()
 -- <
 --- @param win? window
---- @return none
 function vim.fn.clearmatches(win) end
 
 -- The result is a Number, which is the byte index of the column
@@ -726,7 +723,6 @@ function vim.fn.col(expr) end
 -- 		Can also be used as a |method|, the base is passed as the
 -- 		second argument: >
 -- 			GetMatches()->complete(col('.'))
---- @return none
 function vim.fn.complete(startcol, matches) end
 
 -- Add {expr} to the list of matches.  Only to be used by the
@@ -812,7 +808,7 @@ function vim.fn.complete_check() end
 -- 			GetItems()->complete_info()
 -- <
 --- @param what? any
---- @return dict
+--- @return table<string, any>
 function vim.fn.complete_info(what) end
 
 -- confirm() offers the user a dialog, from which a choice can be
@@ -984,12 +980,11 @@ function vim.fn.cscope_connection(num, dbpath, prepend) end
 -- 		from the top of the |context-stack| (see |context-dict|).
 -- 		If {index} is not given, it is assumed to be 0 (i.e.: top).
 --- @param index? number
---- @return dict
+--- @return table<string, any>
 function vim.fn.ctxget(index) end
 
 -- Pops and restores the |context| at the top of the
 -- 		|context-stack|.
---- @return none
 function vim.fn.ctxpop() end
 
 -- Pushes the current editor state (|context|) on the
@@ -998,7 +993,6 @@ function vim.fn.ctxpop() end
 -- 		which |context-types| to include in the pushed context.
 -- 		Otherwise, all context types are included.
 --- @param types? any
---- @return none
 function vim.fn.ctxpush(types) end
 
 -- Sets the |context| at {index} from the top of the
@@ -1006,7 +1000,6 @@ function vim.fn.ctxpush(types) end
 -- 		{context} is a Dictionary with context data (|context-dict|).
 -- 		If {index} is not given, it is assumed to be 0 (i.e.: top).
 --- @param index? number
---- @return none
 function vim.fn.ctxset(context, index) end
 
 -- Returns the size of the |context-stack|.
@@ -1263,7 +1256,7 @@ function vim.fn.digraph_get(chars) end
 -- 			GetNumber()->digraph_getlist()
 -- <
 --- @param listall? any
---- @return list
+--- @return any[]
 function vim.fn.digraph_getlist(listall) end
 
 -- Add digraph {chars} to the list.  {chars} must be a string
@@ -1327,7 +1320,7 @@ function vim.fn.empty(expr) end
 -- <		Note that the variable name may be CamelCase; to ignore case
 -- 		use this: >
 -- 			:echo index(keys(environ()), 'HOME', 0, 1) != -1
---- @return dict
+--- @return table<string, any>
 function vim.fn.environ() end
 
 -- Escape the characters in {chars} that occur in {string} with a
@@ -1688,6 +1681,7 @@ function vim.fn.expandcmd(string) end
 -- 		Can also be used as a |method|: >
 -- 			mylist->extend(otherlist)
 --- @param expr3? any
+--- @return any[]
 function vim.fn.extend(expr1, expr2, expr3) end
 
 -- Characters in {string} are queued for processing as if they
@@ -1818,7 +1812,7 @@ function vim.fn.filewritable(file) end
 --
 -- 		Can also be used as a |method|: >
 -- 			mylist->filter(expr2)
---- @return list/dict  remove items from {expr1} where
+--- @return any[]
 function vim.fn.filter(expr1, expr2) end
 
 -- Find directory {name} in {path}.  Supports both downwards and
@@ -1882,7 +1876,7 @@ function vim.fn.findfile(name, path, count) end
 -- <
 --- @param list any[]
 --- @param maxdepth? any
---- @return list
+--- @return any[]
 function vim.fn.flatten(list, maxdepth) end
 
 -- Convert {expr} to a Number by omitting the part after the
@@ -2097,7 +2091,7 @@ function vim.fn.fullcommand(name) end
 -- <
 --- @param arglist? any
 --- @param dict? dictionary
---- @return funcref
+--- @return fun()
 function vim.fn.funcref(name, arglist, dict) end
 
 -- Cleanup unused |Lists| and |Dictionaries| that have circular
@@ -2119,7 +2113,6 @@ function vim.fn.funcref(name, arglist, dict) end
 -- 		it's safe to perform.  This is when waiting for the user to
 -- 		type a character.
 --- @param atexit? any
---- @return none
 function vim.fn.garbagecollect(atexit) end
 
 -- Get item {what} from Funcref {func}.  Possible values for
@@ -2200,7 +2193,7 @@ function vim.fn.get(func, what) end
 -- 			GetBufnr()->getbufinfo()
 -- <
 --- @param dict? dictionary
---- @return list
+--- @return any[]
 function vim.fn.getbufinfo(dict) end
 
 -- Return a |List| with the lines starting from {lnum} to {end}
@@ -2231,7 +2224,7 @@ function vim.fn.getbufinfo(dict) end
 --- @param buf buffer
 --- @param lnum number
 --- @param end? any
---- @return list
+--- @return any[]
 function vim.fn.getbufline(buf, lnum, end) end
 
 -- The result is the value of option or local buffer variable
@@ -2279,7 +2272,7 @@ function vim.fn.getbufvar(buf, varname, def) end
 -- 		Can also be used as a |method|: >
 -- 			GetBufnr()->getchangelist()
 --- @param buf? buffer
---- @return list
+--- @return any[]
 function vim.fn.getchangelist(buf) end
 
 -- Get a single character from the user or input stream.
@@ -2345,7 +2338,7 @@ function vim.fn.getchangelist(buf) end
 -- 			:  endwhile
 -- 			:endfunction
 -- <
---- @return number or string
+--- @return number
 function vim.fn.getchar() end
 
 -- The result is a Number which is the state of the modifiers for
@@ -2376,7 +2369,7 @@ function vim.fn.getcharmod() end
 -- <
 -- 		Can also be used as a |method|: >
 -- 			GetMark()->getcharpos()
---- @return list
+--- @return any[]
 function vim.fn.getcharpos(expr) end
 
 -- Return the current character search information as a {dict}
@@ -2397,7 +2390,7 @@ function vim.fn.getcharpos(expr) end
 -- 			:nnoremap <expr> ; getcharsearch().forward ? ';' : ','
 -- 			:nnoremap <expr> , getcharsearch().forward ? ',' : ';'
 -- <		Also see |setcharsearch()|.
---- @return dict
+--- @return table<string, any>
 function vim.fn.getcharsearch() end
 
 -- Get a single character from the user or input stream as a
@@ -2539,7 +2532,7 @@ function vim.fn.getcmdwintype() end
 -- 			GetPattern()->getcompletion('color')
 -- <
 --- @param filtered? any
---- @return list
+--- @return any[]
 function vim.fn.getcompletion(pat, type, filtered) end
 
 -- Get the position of the cursor.  This is like getpos('.'), but
@@ -2569,7 +2562,7 @@ function vim.fn.getcompletion(pat, type, filtered) end
 -- 			GetWinid()->getcurpos()
 -- <
 --- @param winid? window
---- @return list
+--- @return any[]
 function vim.fn.getcurpos(winid) end
 
 -- Same as |getcurpos()| but the column number in the returned
@@ -2583,7 +2576,7 @@ function vim.fn.getcurpos(winid) end
 -- 		Can also be used as a |method|: >
 -- 			GetWinid()->getcursorcharpos()
 --- @param winid? window
---- @return list
+--- @return any[]
 function vim.fn.getcursorcharpos(winid) end
 
 -- With no arguments, returns the name of the effective
@@ -2728,7 +2721,7 @@ function vim.fn.getftype(fname) end
 -- <
 --- @param winnr? window
 --- @param tabnr? number
---- @return list
+--- @return any[]
 function vim.fn.getjumplist(winnr, tabnr) end
 
 -- Without {end} the result is a String, which is line {lnum}
@@ -2758,7 +2751,7 @@ function vim.fn.getjumplist(winnr, tabnr) end
 -- <		To get lines from another buffer see |getbufline()|
 --- @param lnum number
 --- @param end? any
---- @return list
+--- @return any[]
 function vim.fn.getline(lnum, end) end
 
 -- Returns a |List| with all the entries in the location list for
@@ -2792,7 +2785,7 @@ function vim.fn.getline(lnum, end) end
 -- 			:echo getloclist(5, {'filewinid': 0})
 --- @param nr number
 --- @param what? any
---- @return dict
+--- @return table<string, any>
 function vim.fn.getloclist(nr, what) end
 
 -- Without the {buf} argument returns a |List| with information
@@ -2816,7 +2809,7 @@ function vim.fn.getloclist(nr, what) end
 -- 		Can also be used as a |method|: >
 -- 			GetBufnr()->getmarklist()
 --- @param buf? buffer
---- @return list
+--- @return any[]
 function vim.fn.getmarklist(buf) end
 
 -- Returns a |List| with all matches previously defined for the
@@ -2844,7 +2837,7 @@ function vim.fn.getmarklist(buf) end
 -- 			:unlet m
 -- <
 --- @param win? window
---- @return list
+--- @return any[]
 function vim.fn.getmatches(win) end
 
 -- Returns a Dictionary with the last known position of the
@@ -2874,7 +2867,7 @@ function vim.fn.getmatches(win) end
 --
 -- 		When using |getchar()| the Vim variables |v:mouse_lnum|,
 -- 		|v:mouse_col| and |v:mouse_winid| also provide these values.
---- @return dict
+--- @return table<string, any>
 function vim.fn.getmousepos() end
 
 -- Return a Number which is the process ID of the Vim process.
@@ -2912,7 +2905,7 @@ function vim.fn.getpid() end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetMark()->getpos()
---- @return list
+--- @return any[]
 function vim.fn.getpos(expr) end
 
 -- Returns a |List| with all the current quickfix errors.  Each
@@ -3015,7 +3008,7 @@ function vim.fn.getpos(expr) end
 -- 			:echo getqflist({'lines' : ["F1:10:L10"]})
 -- <
 --- @param what? any
---- @return dict
+--- @return table<string, any>
 function vim.fn.getqflist(what) end
 
 -- The result is a String, which is the contents of register
@@ -3044,6 +3037,7 @@ function vim.fn.getqflist(what) end
 -- 			GetRegname()->getreg()
 --- @param regname? any
 --- @param list? any[]
+--- @return string
 function vim.fn.getreg(regname, list) end
 
 -- Returns detailed information about register {regname} as a
@@ -3072,7 +3066,7 @@ function vim.fn.getreg(regname, list) end
 -- 		Can also be used as a |method|: >
 -- 			GetRegname()->getreginfo()
 --- @param regname? any
---- @return dict
+--- @return table<string, any>
 function vim.fn.getreginfo(regname) end
 
 -- The result is a String, which is type of register {regname}.
@@ -3106,7 +3100,7 @@ function vim.fn.getregtype(regname) end
 -- 		Can also be used as a |method|: >
 -- 			GetTabnr()->gettabinfo()
 --- @param tabnr? number
---- @return list
+--- @return any[]
 function vim.fn.gettabinfo(tabnr) end
 
 -- Get the value of a tab-local variable {varname} in tab page
@@ -3186,7 +3180,7 @@ function vim.fn.gettabwinvar(tabnr, winnr, varname, def) end
 -- 		Can also be used as a |method|: >
 -- 			GetWinnr()->gettagstack()
 --- @param winnr? window
---- @return dict
+--- @return table<string, any>
 function vim.fn.gettagstack(winnr) end
 
 -- Returns information about windows as a |List| with Dictionaries.
@@ -3225,7 +3219,7 @@ function vim.fn.gettagstack(winnr) end
 -- 		Can also be used as a |method|: >
 -- 			GetWinnr()->getwininfo()
 --- @param winid? window
---- @return list
+--- @return any[]
 function vim.fn.getwininfo(winid) end
 
 -- The result is a |List| with two numbers, the result of
@@ -3251,7 +3245,7 @@ function vim.fn.getwininfo(winid) end
 -- 			GetTimeout()->getwinpos()
 -- <
 --- @param timeout? any
---- @return list
+--- @return any[]
 function vim.fn.getwinpos(timeout) end
 
 -- The result is a Number, which is the X coordinate in pixels of
@@ -3900,7 +3894,7 @@ function vim.fn.inputsecret(prompt, text) end
 -- 		Can also be used as a |method|: >
 -- 			mylist->insert(item)
 --- @param idx? any
---- @return list
+--- @return any[]
 function vim.fn.insert(object, item, idx) end
 
 -- Interrupt script execution.  It works more or less like the
@@ -3914,7 +3908,6 @@ function vim.fn.insert(object, item, idx) end
 -- 		:   endif
 -- 		:endfunction
 -- 		:au BufWritePre * call s:check_typoname(expand('<amatch>'))
---- @return none
 function vim.fn.interrupt() end
 
 -- Bitwise invert.  The argument is converted to a number.  A
@@ -3986,7 +3979,7 @@ function vim.fn.isnan(expr) end
 -- <		Can also be used as a |method|: >
 -- 			mydict->items()
 --- @param dict dictionary
---- @return list
+--- @return any[]
 function vim.fn.items(dict) end
 
 -- Return the PID (process id) of |job-id| {job}.
@@ -4179,7 +4172,7 @@ function vim.fn.json_encode(expr) end
 -- 		Can also be used as a |method|: >
 -- 			mydict->keys()
 --- @param dict dictionary
---- @return list
+--- @return any[]
 function vim.fn.keys(dict) end
 
 -- Turn the internal byte representation of keys into a form that
@@ -4453,6 +4446,7 @@ function vim.fn.luaeval(expr, expr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			mylist->map(expr2)
+--- @return any[]
 function vim.fn.map(expr1, expr2) end
 
 -- When {dict} is omitted or zero: Return the rhs of mapping
@@ -4523,6 +4517,7 @@ function vim.fn.map(expr1, expr2) end
 --- @param mode? any
 --- @param abbr? any
 --- @param dict? dictionary
+--- @return string
 function vim.fn.maparg(name, mode, abbr, dict) end
 
 -- Check if there is a mapping that matches with {name} in mode
@@ -4578,7 +4573,6 @@ function vim.fn.mapcheck(name, mode, abbr) end
 -- 		e.g. with `:map!`, you need to save the mapping for all of
 -- 		them, since they can differ.
 --- @param dict dictionary
---- @return none
 function vim.fn.mapset(mode, abbr, dict) end
 
 -- When {expr} is a |List| then this returns the index of the
@@ -4778,7 +4772,7 @@ function vim.fn.matchaddpos(group, pos, priority, id, dict) end
 -- 		Can also be used as a |method|: >
 -- 			GetMatch()->matcharg()
 --- @param nr number
---- @return list
+--- @return any[]
 function vim.fn.matcharg(nr) end
 
 -- Deletes a match with ID {id} previously defined by |matchadd()|
@@ -4883,7 +4877,7 @@ function vim.fn.matchend(expr, pat, start, count) end
 --- @param list any[]
 --- @param str string
 --- @param dict? dictionary
---- @return list
+--- @return any[]
 function vim.fn.matchfuzzy(list, str, dict) end
 
 -- Same as |matchfuzzy()|, but returns the list of matched
@@ -4909,7 +4903,7 @@ function vim.fn.matchfuzzy(list, str, dict) end
 --- @param list any[]
 --- @param str string
 --- @param dict? dictionary
---- @return list
+--- @return any[]
 function vim.fn.matchfuzzypos(list, str, dict) end
 
 -- Same as |match()|, but return a |List|.  The first item in the
@@ -4927,7 +4921,7 @@ function vim.fn.matchfuzzypos(list, str, dict) end
 -- 			GetText()->matchlist('word')
 --- @param start? any
 --- @param count? any
---- @return list
+--- @return any[]
 function vim.fn.matchlist(expr, pat, start, count) end
 
 -- Same as |match()|, but return the matched string.  Example: >
@@ -4971,7 +4965,7 @@ function vim.fn.matchstr(expr, pat, start, count) end
 -- <
 --- @param start? any
 --- @param count? any
---- @return list
+--- @return any[]
 function vim.fn.matchstrpos(expr, pat, start, count) end
 
 -- Return the maximum value of all items in {expr}. Example: >
@@ -5033,7 +5027,7 @@ function vim.fn.max(expr) end
 -- 			} ]
 -- <
 --- @param modes? any
---- @return list
+--- @return any[]
 function vim.fn.menu_get(path, modes) end
 
 -- Return information about the specified menu {name} in
@@ -5111,7 +5105,7 @@ function vim.fn.menu_get(path, modes) end
 --
 -- <
 --- @param mode? any
---- @return dict
+--- @return table<string, any>
 function vim.fn.menu_info(name, mode) end
 
 -- Return the minimum value of all items in {expr}. Example:  >
@@ -5235,6 +5229,7 @@ function vim.fn.mode() end
 -- 		5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
 --- @param list any[]
 --- @param type? any
+--- @return any[]
 function vim.fn.msgpackdump(list, type) end
 
 -- Convert a |readfile()|-style list or a |Blob| to a list of
@@ -5309,7 +5304,7 @@ function vim.fn.msgpackdump(list, type) end
 -- 		ext	|List| with two values: first is a signed integer
 -- 			representing extension type. Second is
 -- 			|readfile()|-style list of strings.
---- @return list
+--- @return any[]
 function vim.fn.msgpackparse(data) end
 
 -- Return the line number of the first line at or below {lnum}

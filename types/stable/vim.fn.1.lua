@@ -325,7 +325,6 @@ function vim.fn.prompt_getprompt(buf) end
 -- <		Can also be used as a |method|: >
 -- 			GetBuffer()->prompt_setcallback(callback)
 --- @param buf buffer
---- @return none
 function vim.fn.prompt_setcallback(buf, expr) end
 
 -- Set a callback for buffer {buf} to {expr}.  When {expr} is an
@@ -339,7 +338,6 @@ function vim.fn.prompt_setcallback(buf, expr) end
 -- 		Can also be used as a |method|: >
 -- 			GetBuffer()->prompt_setinterrupt(callback)
 --- @param buf buffer
---- @return none
 function vim.fn.prompt_setinterrupt(buf, expr) end
 
 -- Set prompt for buffer {buf} to {text}.  You most likely want
@@ -352,7 +350,6 @@ function vim.fn.prompt_setinterrupt(buf, expr) end
 -- 			GetBuffer()->prompt_setprompt('command: ')
 --- @param buf buffer
 --- @param text string
---- @return none
 function vim.fn.prompt_setprompt(buf, text) end
 
 -- If the popup menu (see |ins-completion-menu|) is not visible,
@@ -366,7 +363,7 @@ function vim.fn.prompt_setprompt(buf, text) end
 -- 			scrollbar	|TRUE| if scrollbar is visible
 --
 -- 		The values are the same as in |v:event| during |CompleteChanged|.
---- @return dict
+--- @return table<string, any>
 function vim.fn.pum_getpos() end
 
 -- Returns non-zero when the popup menu is visible, zero
@@ -455,7 +452,7 @@ function vim.fn.rand(expr) end
 -- <
 --- @param max? any
 --- @param stride? any
---- @return list
+--- @return any[]
 function vim.fn.range(expr, max, stride) end
 
 -- Return a list with file and directory names in {directory}.
@@ -491,7 +488,7 @@ function vim.fn.range(expr, max, stride) end
 -- 			GetDirName()->readdir()
 -- <
 --- @param expr? any
---- @return list
+--- @return any[]
 function vim.fn.readdir(directory, expr) end
 
 -- Read file {fname} and return a |List|, each line of the file
@@ -529,7 +526,7 @@ function vim.fn.readdir(directory, expr) end
 -- 			GetFileName()->readfile()
 --- @param type? any
 --- @param max? any
---- @return list
+--- @return any[]
 function vim.fn.readfile(fname, type, max) end
 
 -- {func} is called for every item in {object}, which can be a
@@ -593,7 +590,7 @@ function vim.fn.reg_recording() end
 -- 		Note: |localtime()| returns the current (non-relative) time.
 --- @param start? any
 --- @param end? any
---- @return list
+--- @return any[]
 function vim.fn.reltime(start, end) end
 
 -- Return a Float that represents the time value of {time}.
@@ -678,7 +675,7 @@ function vim.fn.resolve(filename) end
 -- 			:let revlist = reverse(copy(mylist))
 -- <		Can also be used as a |method|: >
 -- 			mylist->reverse()
---- @return list
+--- @return any[]
 function vim.fn.reverse(object) end
 
 -- Round off {expr} to the nearest integral value and return it
@@ -768,7 +765,7 @@ function vim.fn.screenchar(row, col) end
 -- 		Can also be used as a |method|: >
 -- 			GetRow()->screenchars(col)
 --- @param col number
---- @return list
+--- @return any[]
 function vim.fn.screenchars(row, col) end
 
 -- The result is a Number, which is the current screen column of
@@ -813,7 +810,7 @@ function vim.fn.screencol() end
 --- @param winid window
 --- @param lnum number
 --- @param col number
---- @return dict
+--- @return table<string, any>
 function vim.fn.screenpos(winid, lnum, col) end
 
 -- The result is a Number, which is the current screen row of the
@@ -1072,7 +1069,7 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 			GetSearchOpts()->searchcount()
 -- <
 --- @param options? table<string, any>
---- @return dict
+--- @return table<string, any>
 function vim.fn.searchcount(options) end
 
 -- Search for the declaration of {name}.
@@ -1095,104 +1092,6 @@ function vim.fn.searchcount(options) end
 -- 		Can also be used as a |method|: >
 -- 			GetName()->searchdecl()
 -- <
---
--- searchpair({start}, {middle}, {end} [, {flags} [, {skip}
--- 				[, {stopline} [, {timeout}]]]])
--- 		Search for the match of a nested start-end pair.  This can be
--- 		used to find the "endif" that matches an "if", while other
--- 		if/endif pairs in between are ignored.
--- 		The search starts at the cursor.  The default is to search
--- 		forward, include 'b' in {flags} to search backward.
--- 		If a match is found, the cursor is positioned at it and the
--- 		line number is returned.  If no match is found 0 or -1 is
--- 		returned and the cursor doesn't move.  No error message is
--- 		given.
---
--- 		{start}, {middle} and {end} are patterns, see |pattern|.  They
--- 		must not contain \( \) pairs.  Use of \%( \) is allowed.  When
--- 		{middle} is not empty, it is found when searching from either
--- 		direction, but only when not in a nested start-end pair.  A
--- 		typical use is: >
--- 			searchpair('\<if\>', '\<else\>', '\<endif\>')
--- <		By leaving {middle} empty the "else" is skipped.
---
--- 		{flags} 'b', 'c', 'n', 's', 'w' and 'W' are used like with
--- 		|search()|.  Additionally:
--- 		'r'	Repeat until no more matches found; will find the
--- 			outer pair.  Implies the 'W' flag.
--- 		'm'	Return number of matches instead of line number with
--- 			the match; will be > 1 when 'r' is used.
--- 		Note: it's nearly always a good idea to use the 'W' flag, to
--- 		avoid wrapping around the end of the file.
---
--- 		When a match for {start}, {middle} or {end} is found, the
--- 		{skip} expression is evaluated with the cursor positioned on
--- 		the start of the match.  It should return non-zero if this
--- 		match is to be skipped.  E.g., because it is inside a comment
--- 		or a string.
--- 		When {skip} is omitted or empty, every match is accepted.
--- 		When evaluating {skip} causes an error the search is aborted
--- 		and -1 returned.
--- 		{skip} can be a string, a lambda, a funcref or a partial.
--- 		Anything else makes the function fail.
---
--- 		For {stopline} and {timeout} see |search()|.
---
--- 		The value of 'ignorecase' is used.  'magic' is ignored, the
--- 		patterns are used like it's on.
---
--- 		The search starts exactly at the cursor.  A match with
--- 		{start}, {middle} or {end} at the next character, in the
--- 		direction of searching, is the first one found.  Example: >
--- 			if 1
--- 			  if 2
--- 			  endif 2
--- 			endif 1
--- <		When starting at the "if 2", with the cursor on the "i", and
--- 		searching forwards, the "endif 2" is found.  When starting on
--- 		the character just before the "if 2", the "endif 1" will be
--- 		found.  That's because the "if 2" will be found first, and
--- 		then this is considered to be a nested if/endif from "if 2" to
--- 		"endif 2".
--- 		When searching backwards and {end} is more than one character,
--- 		it may be useful to put "\zs" at the end of the pattern, so
--- 		that when the cursor is inside a match with the end it finds
--- 		the matching start.
---
--- 		Example, to find the "endif" command in a Vim script: >
---
--- 	:echo searchpair('\<if\>', '\<el\%[seif]\>', '\<en\%[dif]\>', 'W',
--- 			\ 'getline(".") =~ "^\\s*\""')
---
--- <		The cursor must be at or after the "if" for which a match is
--- 		to be found.  Note that single-quote strings are used to avoid
--- 		having to double the backslashes.  The skip expression only
--- 		catches comments at the start of a line, not after a command.
--- 		Also, a word "en" or "if" halfway through a line is considered
--- 		a match.
--- 		Another example, to search for the matching "{" of a "}": >
---
--- 	:echo searchpair('{', '', '}', 'bW')
---
--- <		This works when the cursor is at or before the "}" for which a
--- 		match is to be found.  To reject matches that syntax
--- 		highlighting recognized as strings: >
---
--- 	:echo searchpair('{', '', '}', 'bW',
--- 	     \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string"')
--- <
---
--- searchpairpos({start}, {middle}, {end} [, {flags} [, {skip}
--- 				[, {stopline} [, {timeout}]]]])
--- 		Same as |searchpair()|, but returns a |List| with the line and
--- 		column position of the match. The first element of the |List|
--- 		is the line number and the second element is the byte index of
--- 		the column position of the match.  If no match is found,
--- 		returns [0, 0]. >
---
--- 			:let [lnum,col] = searchpairpos('{', '', '}', 'n')
--- <
--- 		See |match-parens| for a bigger and more useful example.
 --- @param global? any
 --- @param thisblock? any
 --- @return number
@@ -1218,7 +1117,7 @@ function vim.fn.searchdecl(name, global, thisblock) end
 --- @param stopline? any
 --- @param timeout? any
 --- @param skip? any
---- @return list
+--- @return any[]
 function vim.fn.searchpos(pattern, flags, stopline, timeout, skip) end
 
 -- Returns a list of server addresses, or empty if all servers
@@ -1310,7 +1209,7 @@ function vim.fn.setbufline(buf, lnum, text) end
 -- 		third argument: >
 -- 			GetValue()->setbufvar(buf, varname)
 --- @param buf buffer
---- @return set {varname} in buffer {buf} to {val}setfperm({fname}, {mode}
+--- @return table
 function vim.fn.setbufvar(buf, varname, val) end
 
 -- Specify overrides for cell widths of character ranges.  This
@@ -1338,7 +1237,6 @@ function vim.fn.setbufvar(buf, varname, val) end
 -- <		You can use the script $VIMRUNTIME/tools/emoji_list.vim to see
 -- 		the effect for known emoji characters.
 --- @param list any[]
---- @return none
 function vim.fn.setcellwidths(list) end
 
 -- Same as |setpos()| but uses the specified column number as the
@@ -1379,7 +1277,7 @@ function vim.fn.setcharpos(expr, list) end
 -- 		Can also be used as a |method|: >
 -- 			SavedSearch()->setcharsearch()
 --- @param dict dictionary
---- @return dict
+--- @return table<string, any>
 function vim.fn.setcharsearch(dict) end
 
 -- Set the command line to {str} and set the cursor position to
@@ -1440,7 +1338,6 @@ function vim.fn.setcursorcharpos(list) end
 -- 		Can also be used as a |method|, the base is passed as the
 -- 		second argument: >
 -- 			GetPath()->setenv('PATH')
---- @return none
 function vim.fn.setenv(name, val) end
 
 -- Set the file permissions for {fname} to {mode}.
@@ -1781,6 +1678,7 @@ function vim.fn.setreg(regname, value, options) end
 -- 		third argument: >
 -- 			GetValue()->settabvar(tab, name)
 --- @param tabnr number
+--- @return table
 function vim.fn.settabvar(tabnr, varname, val) end
 
 -- Set option or local variable {varname} in window {winnr} to
@@ -1803,6 +1701,7 @@ function vim.fn.settabvar(tabnr, varname, val) end
 -- 			GetValue()->settabwinvar(tab, winnr, name)
 --- @param tabnr number
 --- @param winnr window
+--- @return table
 function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 
 -- Modify the tag stack of the window {nr} using {dict}.
@@ -1855,6 +1754,7 @@ function vim.fn.settagstack(nr, dict, action) end
 -- 		third argument: >
 -- 			GetValue()->setwinvar(winnr, name)
 --- @param nr number
+--- @return table
 function vim.fn.setwinvar(nr, varname, val) end
 
 -- Returns a String with 64 hex characters, which is the SHA256
@@ -1923,8 +1823,6 @@ function vim.fn.shellescape(string, special) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetColumn()->shiftwidth()
---
--- sign_ functions are documented here: |sign-functions-details|
 --- @param col? number
 --- @return number
 function vim.fn.shiftwidth(col) end
@@ -2079,7 +1977,7 @@ function vim.fn.sockconnect(mode, address, opts) end
 --- @param list any[]
 --- @param func? fun()
 --- @param dict? dictionary
---- @return list
+--- @return any[]
 function vim.fn.sort(list, func, dict) end
 
 -- Return the sound-folded equivalent of {word}.  Uses the first
@@ -2149,7 +2047,7 @@ function vim.fn.spellbadword(sentence) end
 -- 			GetWord()->spellsuggest()
 --- @param max? any
 --- @param capital? any
---- @return list
+--- @return any[]
 function vim.fn.spellsuggest(word, max, capital) end
 
 -- Make a |List| out of {string}.  When {pattern} is omitted or
@@ -2178,7 +2076,7 @@ function vim.fn.spellsuggest(word, max, capital) end
 -- 			GetString()->split()
 --- @param pattern? any
 --- @param keepempty? any
---- @return list
+--- @return any[]
 function vim.fn.split(string, pattern, keepempty) end
 
 -- Return the non-negative square root of Float {expr} as a
@@ -2214,7 +2112,7 @@ function vim.fn.sqrt(expr) end
 -- 		Can also be used as a |method|: >
 -- 			userinput->srand()
 --- @param expr? any
---- @return list
+--- @return any[]
 function vim.fn.srand(expr) end
 
 -- With |--headless| this opens stdin and stdout as a |channel|.
@@ -2259,7 +2157,7 @@ function vim.fn.stdioopen(opts) end
 --
 -- 		Example: >
 -- 			:echo stdpath("config")
---- @return string/list  returns the standard path(s) for {what}
+--- @return string
 function vim.fn.stdpath(what) end
 
 -- Convert String {string} to a Float.  This mostly works the
@@ -2300,7 +2198,7 @@ function vim.fn.str2float(string, quoted) end
 -- <		Can also be used as a |method|: >
 -- 			GetString()->str2list()
 --- @param utf8? any
---- @return list
+--- @return any[]
 function vim.fn.str2list(string, utf8) end
 
 -- Convert string {string} to a number.
@@ -2391,6 +2289,7 @@ function vim.fn.strchars(string, skipcc) end
 -- 		Can also be used as a |method|: >
 -- 			GetText()->strdisplaywidth()
 --- @param col? number
+--- @return number
 function vim.fn.strdisplaywidth(string, col) end
 
 -- The result is a String, which is a formatted date and time, as
@@ -2636,7 +2535,7 @@ function vim.fn.strwidth(string) end
 -- 			GetNr()->submatch()
 --- @param nr number
 --- @param list? any[]
---- @return string or list
+--- @return string
 function vim.fn.submatch(nr, list) end
 
 -- The result is a String, which is a copy of {string}, in which
@@ -2705,7 +2604,7 @@ function vim.fn.substitute(string, pat, sub, flags) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetFilename()->swapinfo()
---- @return dict
+--- @return table<string, any>
 function vim.fn.swapinfo(fname) end
 
 -- The result is the swap file path of the buffer {buf}.
@@ -2832,7 +2731,7 @@ function vim.fn.synIDtrans(synID) end
 -- 			synconcealed(lnum, 6)   [0, '', 0]
 --- @param lnum number
 --- @param col number
---- @return list
+--- @return any[]
 function vim.fn.synconcealed(lnum, col) end
 
 -- Return a |List|, which is the stack of syntax items at the
@@ -2854,7 +2753,7 @@ function vim.fn.synconcealed(lnum, col) end
 -- 		valid positions.
 --- @param lnum number
 --- @param col number
---- @return list
+--- @return any[]
 function vim.fn.synstack(lnum, col) end
 
 -- Gets the output of {cmd} as a |string| (|systemlist()| returns
@@ -2926,7 +2825,7 @@ function vim.fn.system(cmd, input) end
 -- 			:echo GetCmd()->systemlist()
 --- @param input? any
 --- @param keepempty? any
---- @return list
+--- @return any[]
 function vim.fn.systemlist(cmd, input, keepempty) end
 
 -- The result is a |List|, where each item is the number of the
@@ -2944,7 +2843,7 @@ function vim.fn.systemlist(cmd, input, keepempty) end
 -- 		Can also be used as a |method|: >
 -- 			GetTabpage()->tabpagebuflist()
 --- @param arg? any
---- @return list
+--- @return any[]
 function vim.fn.tabpagebuflist(arg) end
 
 -- The result is a Number, which is the number of the current
@@ -2984,7 +2883,7 @@ function vim.fn.tabpagewinnr(tabarg, arg) end
 
 -- Returns a |List| with the file names used to search for tags
 -- 		for the current buffer.  This is the 'tags' option expanded.
---- @return list
+--- @return any[]
 function vim.fn.tagfiles() end
 
 -- Returns a |List| of tags matching the regular expression {expr}.
@@ -3032,7 +2931,7 @@ function vim.fn.tagfiles() end
 -- 		Can also be used as a |method|: >
 -- 			GetTagpattern()->taglist()
 --- @param filename? any
---- @return list
+--- @return any[]
 function vim.fn.taglist(expr, filename) end
 
 -- Return the tangent of {expr}, measured in radians, as a |Float|
@@ -3107,7 +3006,7 @@ function vim.fn.termopen(cmd, opts) end
 -- 			GetTimer()->timer_info()
 -- <
 --- @param id? any
---- @return list
+--- @return any[]
 function vim.fn.timer_info(id) end
 
 -- Pause or unpause a timer.  A paused timer does not invoke its
@@ -3125,7 +3024,6 @@ function vim.fn.timer_info(id) end
 -- 		Can also be used as a |method|: >
 -- 			GetTimer()->timer_pause(1)
 -- <
---- @return none
 function vim.fn.timer_pause(timer, paused) end
 
 -- Create a timer and return the timer ID.
@@ -3171,13 +3069,11 @@ function vim.fn.timer_start(time, callback, options) end
 -- 		Can also be used as a |method|: >
 -- 			GetTimer()->timer_stop()
 -- <
---- @return none
 function vim.fn.timer_stop(timer) end
 
 -- Stop all timers.  The timer callbacks will no longer be
 -- 		invoked.  Useful if some timers is misbehaving.  If there are
 -- 		no timers there is no error.
---- @return none
 function vim.fn.timer_stopall() end
 
 -- The result is a copy of the String given, with all uppercase
@@ -3354,7 +3250,7 @@ function vim.fn.undofile(name) end
 -- 		  "alt"		Alternate entry.  This is again a List of undo
 -- 				blocks.  Each item may again have an "alt"
 -- 				item.
---- @return list
+--- @return any[]
 function vim.fn.undotree() end
 
 -- Remove second and succeeding copies of repeated adjacent
@@ -3371,7 +3267,7 @@ function vim.fn.undotree() end
 --- @param list any[]
 --- @param func? fun()
 --- @param dict? dictionary
---- @return list
+--- @return any[]
 function vim.fn.uniq(list, func, dict) end
 
 -- Return a |List| with all the values of {dict}.  The |List| is
@@ -3381,7 +3277,7 @@ function vim.fn.uniq(list, func, dict) end
 -- 		Can also be used as a |method|: >
 -- 			mydict->values()
 --- @param dict dictionary
---- @return list
+--- @return any[]
 function vim.fn.values(dict) end
 
 -- The result is a Number, which is the screen column of the file
@@ -3446,6 +3342,7 @@ function vim.fn.virtcol(expr) end
 --- @param winid window
 --- @param lnum number
 --- @param col number
+--- @return number
 function vim.fn.virtcol2col(winid, lnum, col) end
 
 -- The result is a String, which describes the last Visual mode
@@ -3519,7 +3416,7 @@ function vim.fn.win_execute(id, command, silent) end
 -- 		Can also be used as a |method|: >
 -- 			GetBufnr()->win_findbuf()
 --- @param bufnr buffer
---- @return list
+--- @return any[]
 function vim.fn.win_findbuf(bufnr) end
 
 -- Get the |window-ID| for the specified window.
@@ -3576,7 +3473,7 @@ function vim.fn.win_gotoid(expr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetWinid()->win_id2tabwin()
---- @return list
+--- @return any[]
 function vim.fn.win_id2tabwin(expr) end
 
 -- Return the window number of window with ID {expr}.
@@ -3634,7 +3531,7 @@ function vim.fn.win_move_statusline(nr, offset) end
 -- 			GetWinid()->win_screenpos()
 -- <
 --- @param nr number
---- @return list
+--- @return any[]
 function vim.fn.win_screenpos(nr) end
 
 -- Move the window {nr} to a new split of the window {target}.
@@ -3742,7 +3639,7 @@ function vim.fn.winheight(nr) end
 -- 			GetTabnr()->winlayout()
 -- <
 --- @param tabnr? number
---- @return list
+--- @return any[]
 function vim.fn.winlayout(tabnr) end
 
 -- The result is a Number, which is the screen line of the cursor
@@ -3819,7 +3716,6 @@ function vim.fn.winrestcmd() end
 -- 			GetView()->winrestview()
 -- <
 --- @param dict dictionary
---- @return none
 function vim.fn.winrestview(dict) end
 
 -- Returns a |Dictionary| that contains information to restore
@@ -3843,7 +3739,7 @@ function vim.fn.winrestview(dict) end
 -- 					'wrap' is off
 -- 			skipcol		columns skipped
 -- 		Note that no option values are saved.
---- @return dict
+--- @return table<string, any>
 function vim.fn.winsaveview() end
 
 -- The result is a Number, which is the width of window {nr}.
@@ -3884,7 +3780,7 @@ function vim.fn.winwidth(nr) end
 -- 					(only in Visual mode)
 -- 			visual_words    Number of words visually selected
 -- 					(only in Visual mode)
---- @return dict
+--- @return table<string, any>
 function vim.fn.wordcount() end
 
 -- When {object} is a |List| write it to file {fname}.  Each list
@@ -3935,29 +3831,6 @@ function vim.fn.writefile(object, fname, flags) end
 -- 		Can also be used as a |method|: >
 -- 			:let bits = bits->xor(0x80)
 -- <
--- ==============================================================================
--- 3. Matching a pattern in a String
---
--- This is common between several functions. A regexp pattern as explained at
--- |pattern| is normally used to find a match in the buffer lines.  When a
--- pattern is used to find a match in a String, almost everything works in the
--- same way.  The difference is that a String is handled like it is one line.
--- When it contains a "\n" character, this is not seen as a line break for the
--- pattern.  It can be matched with a "\n" in the pattern, or with ".".  Example:
--- >
--- 	:let a = "aaaa\nxxxx"
--- 	:echo matchstr(a, "..\n..")
--- 	aa
--- 	xx
--- 	:echo matchstr(a, "a.x")
--- 	a
--- 	x
---
--- Don't forget that "^" will only match at the first character of the String and
--- "$" at the last character of the string.  They don't match after or before a
--- "\n".
---
---  vim:tw=78:ts=8:noet:ft=help:norl:
 --- @return number
 function vim.fn.xor(expr, expr) end
 
