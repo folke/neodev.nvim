@@ -149,6 +149,28 @@ function M.process(fun)
   return ret
 end
 
+---@param text string
+function M.fix_indent(text)
+  local lines = vim.split(text, "\n")
+  local indent = 10
+  for l, line in ipairs(lines) do
+    if not (line:find("^%s*$") or line:find("^```")) then
+      line = line:gsub("  ", "\t")
+      lines[l] = line
+      local prefix = line:match("^\t+")
+      if prefix then
+        indent = math.min(indent, #prefix)
+      end
+    end
+  end
+  if indent > 0 then
+    for l, line in ipairs(lines) do
+      lines[l] = line:gsub("^" .. ("\t"):rep(indent), ""):gsub("\t", "  ")
+    end
+  end
+  return table.concat(lines, "\n")
+end
+
 --- @param fun LuaFunction
 function M.emmy(fun)
   local special = { "or", "and", "repeat", "function", "end", "return" }
@@ -157,8 +179,9 @@ function M.emmy(fun)
   if fun.doc ~= "" then
     -- make markdown lua code blocks for code regions
     local ft = fun.name:find("vim.fn") and "vim" or "lua"
-    fun.doc = fun.doc:gsub("\n*>\n(.-)\n+<\n?", "\n```" .. ft .. "\n%1\n```\n")
-    ret = ret .. (M.comment(fun.doc)) .. "\n"
+    local doc = fun.doc:gsub("\n*>\n(.-)\n+<\n?", "\n```" .. ft .. "\n%1\n```\n")
+    doc = M.fix_indent(doc)
+    ret = ret .. (M.comment(doc)) .. "\n"
   end
 
   if fun.seealso and #fun.seealso > 0 then

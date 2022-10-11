@@ -106,9 +106,9 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 -- 
 -- Example (Lua): capture buffer updates in a global `events` variable (use "print(vim.inspect(events))" to see its contents): 
 -- ```lua
---   events = {}
---   vim.api.nvim_buf_attach(0, false, {
---     on_lines=function(...) table.insert(events, {...}) end})
+-- events = {}
+-- vim.api.nvim_buf_attach(0, false, {
+--   on_lines=function(...) table.insert(events, {...}) end})
 -- ```
 -- 
 --- @see |nvim_buf_detach()|
@@ -227,8 +227,8 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 -- 
 -- 
 -- Note:
---     only deletes marks set in the buffer, if the mark is not set in the
---     buffer it will return false.
+-- only deletes marks set in the buffer, if the mark is not set in the
+-- buffer it will return false.
 -- 
 --- @see |nvim_buf_set_mark()|
 --- @see |nvim_del_mark()|
@@ -292,8 +292,8 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- positions define the bounds). 0 and -1 are understood as (0,0) and (-1,-1)
 -- respectively, thus the following are equivalent:
 -- ```lua
---   nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
---   nvim_buf_get_extmarks(0, my_ns, [0,0], [-1,-1], {})
+-- nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
+-- nvim_buf_get_extmarks(0, my_ns, [0,0], [-1,-1], {})
 -- ```
 -- 
 -- If `end` is less than `start`, traversal works backwards. (Useful with
@@ -301,18 +301,18 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- 
 -- Example:
 -- ```lua
---   local a   = vim.api
---   local pos = a.nvim_win_get_cursor(0)
---   local ns  = a.nvim_create_namespace('my-plugin')
---   -- Create new extmark at line 1, column 1.
---   local m1  = a.nvim_buf_set_extmark(0, ns, 0, 0, {})
---   -- Create new extmark at line 3, column 1.
---   local m2  = a.nvim_buf_set_extmark(0, ns, 0, 2, {})
---   -- Get extmarks only from line 3.
---   local ms  = a.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
---   -- Get all marks in this buffer + namespace.
---   local all = a.nvim_buf_get_extmarks(0, ns, 0, -1, {})
---   print(vim.inspect(ms))
+-- local a   = vim.api
+-- local pos = a.nvim_win_get_cursor(0)
+-- local ns  = a.nvim_create_namespace('my-plugin')
+-- -- Create new extmark at line 1, column 1.
+-- local m1  = a.nvim_buf_set_extmark(0, ns, 0, 0, {})
+-- -- Create new extmark at line 3, column 1.
+-- local m2  = a.nvim_buf_set_extmark(0, ns, 0, 2, {})
+-- -- Get extmarks only from line 3.
+-- local ms  = a.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
+-- -- Get all marks in this buffer + namespace.
+-- local all = a.nvim_buf_get_extmarks(0, ns, 0, -1, {})
+-- print(vim.inspect(ms))
 -- ```
 -- 
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
@@ -421,8 +421,8 @@ function vim.api.nvim_buf_is_loaded(buffer) end
 -- 
 -- 
 -- Note:
---     Even if a buffer is valid it may have been unloaded. See |api-buffer|
---     for more info about unloaded buffers.
+-- Even if a buffer is valid it may have been unloaded. See |api-buffer|
+-- for more info about unloaded buffers.
 -- 
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @return any # true if the buffer is valid, false otherwise.
@@ -577,7 +577,7 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 -- 
 -- 
 -- Note:
---     Passing 0 as line deletes the mark
+-- Passing 0 as line deletes the mark
 -- 
 --- @see |nvim_buf_del_mark()|
 --- @see |nvim_buf_get_mark()|
@@ -635,10 +635,10 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 -- 
 -- This has two main usages:
 -- 1. To perform several requests from an async context atomically, i.e.
---    without interleaving redraws, RPC requests from other clients, or user
---    interactions (however API methods may trigger autocommands or event
---    processing which have such side effects, e.g. |:sleep| may wake
---    timers).
+--  without interleaving redraws, RPC requests from other clients, or user
+--  interactions (however API methods may trigger autocommands or event
+--  processing which have such side effects, e.g. |:sleep| may wake
+--  timers).
 -- 2. To minimize RPC overhead (roundtrips) of a sequence of many requests.
 -- 
 --- @param calls array # an array of calls, where each call is described by an array
@@ -750,9 +750,9 @@ function vim.api.nvim_command(command) end
 -- 
 -- To get an existing group id, do: 
 -- ```lua
---     local id = vim.api.nvim_create_augroup("MyGroup", {
---         clear = false
---     })
+-- local id = vim.api.nvim_create_augroup("MyGroup", {
+--     clear = false
+-- })
 -- ```
 -- 
 --- @see |autocmd-groups|
@@ -771,51 +771,51 @@ function vim.api.nvim_create_augroup(name, opts) end
 -- 
 -- Example using callback: 
 -- ```lua
---     -- Lua function
---     local myluafun = function() print("This buffer enters") end
+--   -- Lua function
+--   local myluafun = function() print("This buffer enters") end
 -- 
---     -- Vimscript function name (as a string)
---     local myvimfun = "g:MyVimFunction"
+--   -- Vimscript function name (as a string)
+--   local myvimfun = "g:MyVimFunction"
 -- 
---     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
---       pattern = {"*.c", "*.h"},
---       callback = myluafun,  -- Or myvimfun
---     })
+--   vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+--     pattern = {"*.c", "*.h"},
+--     callback = myluafun,  -- Or myvimfun
+--   })
 -- ```
 -- 
 -- Lua functions receive a table with information about the autocmd event as
 -- an argument. To use a function which itself accepts another (optional)
 -- parameter, wrap the function in a lambda:
 -- ```lua
---     -- Lua function with an optional parameter.
---     -- The autocmd callback would pass a table as argument but this
---     -- function expects number|nil
---     local myluafun = function(bufnr) bufnr = bufnr or vim.api.nvim_get_current_buf() end
+--   -- Lua function with an optional parameter.
+--   -- The autocmd callback would pass a table as argument but this
+--   -- function expects number|nil
+--   local myluafun = function(bufnr) bufnr = bufnr or vim.api.nvim_get_current_buf() end
 -- 
---     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
---       pattern = {"*.c", "*.h"},
---       callback = function() myluafun() end,
---     })
+--   vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+--     pattern = {"*.c", "*.h"},
+--     callback = function() myluafun() end,
+--   })
 -- ```
 -- 
 -- Example using command: 
 -- ```lua
---     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
---       pattern = {"*.c", "*.h"},
---       command = "echo 'Entering a C or C++ file'",
---     })
+--   vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+--     pattern = {"*.c", "*.h"},
+--     command = "echo 'Entering a C or C++ file'",
+--   })
 -- ```
 -- 
 -- Example values for pattern: 
 -- ```lua
---   pattern = "*.py"
---   pattern = { "*.py", "*.pyi" }
+-- pattern = "*.py"
+-- pattern = { "*.py", "*.pyi" }
 -- ```
 -- 
 -- Example values for event: 
 -- ```lua
---   "BufWritePre"
---   {"CursorHold", "BufWritePre", "BufWritePost"}
+-- "BufWritePre"
+-- {"CursorHold", "BufWritePre", "BufWritePost"}
 -- ```
 -- 
 --- @see |autocommand|
@@ -888,9 +888,9 @@ function vim.api.nvim_create_namespace(name) end
 -- 
 -- Example: 
 -- ```lua
---    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {})
---    :SayHello
---    Hello world!
+--  :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {})
+--  :SayHello
+--  Hello world!
 -- ```
 -- 
 --- @param name string # Name of the new user command. Must begin with an uppercase
@@ -976,7 +976,7 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 -- 
 -- 
 -- Note:
---     fails with error if a lowercase or buffer local named mark is used.
+-- fails with error if a lowercase or buffer local named mark is used.
 -- 
 --- @see |nvim_buf_del_mark()|
 --- @see |nvim_get_mark()|
@@ -1104,8 +1104,8 @@ function vim.fn.nvim_exec_lua(code, args) end
 -- 
 -- Example: 
 -- ```lua
---     :let key = nvim_replace_termcodes("<C-o>", v:true, v:false, v:true)
---     :call nvim_feedkeys(key, 'n', v:false)
+-- :let key = nvim_replace_termcodes("<C-o>", v:true, v:false, v:true)
+-- :call nvim_feedkeys(key, 'n', v:false)
 -- ```
 -- 
 --- @see feedkeys()
@@ -1133,17 +1133,17 @@ function vim.fn.nvim_get_api_info() end
 -- 
 -- These examples will get autocommands matching ALL the given criteria: 
 -- ```lua
---   -- Matches all criteria
---   autocommands = vim.api.nvim_get_autocmds({
---     group = "MyGroup",
---     event = {"BufEnter", "BufWinEnter"},
---     pattern = {"*.c", "*.h"}
---   })
+-- -- Matches all criteria
+-- autocommands = vim.api.nvim_get_autocmds({
+--   group = "MyGroup",
+--   event = {"BufEnter", "BufWinEnter"},
+--   pattern = {"*.c", "*.h"}
+-- })
 -- 
---   -- All commands from one group
---   autocommands = vim.api.nvim_get_autocmds({
---     group = "MyGroup",
---   })
+-- -- All commands from one group
+-- autocommands = vim.api.nvim_get_autocmds({
+--   group = "MyGroup",
+-- })
 -- ```
 -- 
 -- NOTE: When multiple patterns or events are provided, it will find all the
@@ -1207,8 +1207,8 @@ function vim.api.nvim_get_chan_info(chan) end
 -- 
 -- Example: 
 -- ```lua
---     :echo nvim_get_color_by_name("Pink")
---     :echo nvim_get_color_by_name("#cbcbcb")
+-- :echo nvim_get_color_by_name("Pink")
+-- :echo nvim_get_color_by_name("#cbcbcb")
 -- ```
 -- 
 --- @param name string # Color name or "#rrggbb" string
@@ -1285,7 +1285,7 @@ function vim.api.nvim_get_keymap(mode) end
 -- 
 -- 
 -- Note:
---     fails with error if a lowercase or buffer local named mark is used.
+-- fails with error if a lowercase or buffer local named mark is used.
 -- 
 --- @see |nvim_buf_set_mark()|
 --- @see |nvim_del_mark()|
@@ -1384,12 +1384,12 @@ function vim.api.nvim_get_vvar(name) end
 -- 
 -- 
 -- Note:
---     |keycodes| like <CR> are translated, so "<" is special. To input a
---     literal "<", send <LT>.
+-- |keycodes| like <CR> are translated, so "<" is special. To input a
+-- literal "<", send <LT>.
 -- 
 -- Note:
---     For mouse events use |nvim_input_mouse()|. The pseudokey form
---     "<LeftMouse><col,row>" is deprecated since |api-level| 6.
+-- For mouse events use |nvim_input_mouse()|. The pseudokey form
+-- "<LeftMouse><col,row>" is deprecated since |api-level| 6.
 -- 
 --- @param keys string # to be typed
 --- @return any # Number of bytes actually written (can be fewer than requested if the
@@ -1403,11 +1403,11 @@ function vim.api.nvim_input(keys) end
 -- 
 -- 
 -- Note:
---     Currently this doesn't support "scripting" multiple mouse events by
---     calling it multiple times in a loop: the intermediate mouse positions
---     will be ignored. It should be used to implement real-time mouse input
---     in a GUI. The deprecated pseudokey form ("<LeftMouse><col,row>") of
---     |nvim_input()| has the same limitation.
+-- Currently this doesn't support "scripting" multiple mouse events by
+-- calling it multiple times in a loop: the intermediate mouse positions
+-- will be ignored. It should be used to implement real-time mouse input
+-- in a GUI. The deprecated pseudokey form ("<LeftMouse><col,row>") of
+-- |nvim_input()| has the same limitation.
 -- 
 --- @param button string # Mouse button: one of "left", "right", "middle", "wheel",
 ---                 "move".
@@ -1520,14 +1520,14 @@ function vim.api.nvim_open_term(buffer, opts) end
 -- 
 -- Example (Lua): window-relative float 
 -- ```lua
---     vim.api.nvim_open_win(0, false,
---       {relative='win', row=3, col=3, width=12, height=3})
+-- vim.api.nvim_open_win(0, false,
+--   {relative='win', row=3, col=3, width=12, height=3})
 -- ```
 -- 
 -- Example (Lua): buffer-relative float (travels as buffer is scrolled) 
 -- ```lua
---     vim.api.nvim_open_win(0, false,
---       {relative='win', width=12, height=3, bufpos={100,10}})
+-- vim.api.nvim_open_win(0, false,
+--   {relative='win', width=12, height=3, bufpos={100,10}})
 -- ```
 -- 
 --- @param buffer buffer # Buffer to display, or 0 for current buffer
@@ -1842,8 +1842,8 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 -- 
 -- 
 -- Note:
---     "Something is better than nothing". You don't need to include all the
---     fields.
+-- "Something is better than nothing". You don't need to include all the
+-- fields.
 -- 
 --- @param name string # Short name for the connected client
 --- @param version dictionary # Dictionary describing the version, with these (optional)
@@ -1949,16 +1949,16 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 -- 
 -- 
 -- Note:
---     Unlike the `:highlight` command which can update a highlight group,
---     this function completely replaces the definition. For example:
---     `nvim_set_hl(0, 'Visual', {})` will clear the highlight group
---     'Visual'.
+-- Unlike the `:highlight` command which can update a highlight group,
+-- this function completely replaces the definition. For example:
+-- `nvim_set_hl(0, 'Visual', {})` will clear the highlight group
+-- 'Visual'.
 -- 
 -- Note:
---     The fg and bg keys also accept the string values `"fg"` or `"bg"`
---     which act as aliases to the corresponding foreground and background
---     values of the Normal group. If the Normal group has not been defined,
---     using these values results in an error.
+-- The fg and bg keys also accept the string values `"fg"` or `"bg"`
+-- which act as aliases to the corresponding foreground and background
+-- values of the Normal group. If the Normal group has not been defined,
+-- using these values results in an error.
 -- 
 --- @param ns_id integer # Namespace id for this highlight |nvim_create_namespace()|.
 ---              Use 0 to set a highlight group globally |:highlight|.
@@ -2011,12 +2011,12 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 -- 
 -- Example: 
 -- ```lua
---     call nvim_set_keymap('n', ' <NL>', '', {'nowait': v:true})
+-- call nvim_set_keymap('n', ' <NL>', '', {'nowait': v:true})
 -- ```
 -- 
 -- is equivalent to: 
 -- ```lua
---     nmap <nowait> <Space><NL> <Nop>
+-- nmap <nowait> <Space><NL> <Nop>
 -- ```
 -- 
 --- @param mode string # Mode short-name (map command prefix: "n", "i", "v", "x", …) or
@@ -2119,9 +2119,9 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 -- 
 -- 
 -- Note:
---     If multiple UI clients are attached, the global screen dimensions
---     degrade to the smallest client. E.g. if client A requests 80x40 but
---     client B requests 200x100, the global screen has size 80x40.
+-- If multiple UI clients are attached, the global screen dimensions
+-- degrade to the smallest client. E.g. if client A requests 80x40 but
+-- client B requests 200x100, the global screen has size 80x40.
 -- 
 --- @param width integer # Requested screen columns
 --- @param height integer # Requested screen rows
