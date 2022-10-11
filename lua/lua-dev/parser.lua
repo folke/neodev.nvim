@@ -157,8 +157,7 @@ function M.emmy(fun)
   if fun.doc ~= "" then
     -- make markdown lua code blocks for code regions
     local ft = fun.name:find("vim.fn") and "vim" or "lua"
-    fun.doc = fun.doc:gsub("\n*>\n(.-)\n*<\n", "\n```" .. ft .. "\n%1\n```\n")
-    fun.doc = fun.doc:gsub("\n*>\n(.-)\n*<$", "\n```" .. ft .. "\n%1\n```\n")
+    fun.doc = fun.doc:gsub("\n*>\n(.-)\n+<\n?", "\n```" .. ft .. "\n%1\n```\n")
     ret = ret .. (M.comment(fun.doc)) .. "\n"
   end
 
