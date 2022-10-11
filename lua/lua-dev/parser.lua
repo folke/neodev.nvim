@@ -150,6 +150,8 @@ end
 
 --- @param fun ApiFunction
 function M.emmy(fun)
+  local special = { "or", "and", "repeat", "function", "end", "return" }
+
   local ret = ""
   if fun.doc ~= "" then
     ret = ret .. (M.comment(fun.doc)) .. "\n"
@@ -173,7 +175,14 @@ function M.emmy(fun)
 
   local signature = "function %s(%s) end"
 
-  ret = ret .. signature:format(fun.fqname, table.concat(params, ", "))
+  -- handle special Lua names. Set as a field instead of a function
+  if vim.tbl_contains(special, fun.name:match("[^.]+$")) then
+    local prefix, name = fun.name:match("(.*)%.([^.]+)$")
+    fun.name = name
+    signature = prefix .. "[%q] = function(%s) end"
+  end
+
+  ret = ret .. signature:format(fun.name, table.concat(params, ", "))
   return ret .. "\n\n"
 end
 

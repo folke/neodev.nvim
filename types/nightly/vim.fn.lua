@@ -52,6 +52,15 @@ function vim.fn.acos(expr) end
 --- @return any[]
 function vim.fn.add(object, expr) end
 
+-- Bitwise AND on the two arguments.  The arguments are converted
+-- 		to a number.  A List, Dict or Float argument causes an error.
+-- 		Example: >
+-- 			:let flag = and(bits, 0x80)
+-- <		Can also be used as a |method|: >
+-- 			:let flag = bits->and(0x80)
+--- @return number
+vim.fn["and"] = function(expr, expr) end
+
 -- Returns Dictionary of |api-metadata|.
 --
 -- 		View it in a nice human-readable format: >
@@ -2157,6 +2166,90 @@ function vim.fn.fullcommand(name) end
 --- @param dict? dictionary
 --- @return fun()
 function vim.fn.funcref(name, arglist, dict) end
+
+-- Return a |Funcref| variable that refers to function {name}.
+-- 		{name} can be the name of a user defined function or an
+-- 		internal function.
+--
+-- 		{name} can also be a Funcref or a partial. When it is a
+-- 		partial the dict stored in it will be used and the {dict}
+-- 		argument is not allowed. E.g.: >
+-- 			let FuncWithArg = function(dict.Func, [arg])
+-- 			let Broken = function(dict.Func, [arg], dict)
+-- <
+-- 		When using the Funcref the function will be found by {name},
+-- 		also when it was redefined later. Use |funcref()| to keep the
+-- 		same function.
+--
+-- 		When {arglist} or {dict} is present this creates a partial.
+-- 		That means the argument list and/or the dictionary is stored in
+-- 		the Funcref and will be used when the Funcref is called.
+--
+-- 		The arguments are passed to the function in front of other
+-- 		arguments, but after any argument from |method|.  Example: >
+-- 			func Callback(arg1, arg2, name)
+-- 			"...
+-- 			let Partial = function('Callback', ['one', 'two'])
+-- 			"...
+-- 			call Partial('name')
+-- <		Invokes the function as with: >
+-- 			call Callback('one', 'two', 'name')
+--
+-- <		With a |method|: >
+-- 			func Callback(one, two, three)
+-- 			"...
+-- 			let Partial = function('Callback', ['two'])
+-- 			"...
+-- 			eval 'one'->Partial('three')
+-- <		Invokes the function as with: >
+-- 			call Callback('one', 'two', 'three')
+--
+-- <		The function() call can be nested to add more arguments to the
+-- 		Funcref.  The extra arguments are appended to the list of
+-- 		arguments.  Example: >
+-- 			func Callback(arg1, arg2, name)
+-- 			"...
+-- 			let Func = function('Callback', ['one'])
+-- 			let Func2 = function(Func, ['two'])
+-- 			"...
+-- 			call Func2('name')
+-- <		Invokes the function as with: >
+-- 			call Callback('one', 'two', 'name')
+--
+-- <		The Dictionary is only useful when calling a "dict" function.
+-- 		In that case the {dict} is passed in as "self". Example: >
+-- 			function Callback() dict
+-- 			   echo "called for " .. self.name
+-- 			endfunction
+-- 			"...
+-- 			let context = {"name": "example"}
+-- 			let Func = function('Callback', context)
+-- 			"...
+-- 			call Func()	" will echo: called for example
+-- <		The use of function() is not needed when there are no extra
+-- 		arguments, these two are equivalent, if Callback() is defined
+-- 		as context.Callback(): >
+-- 			let Func = function('Callback', context)
+-- 			let Func = context.Callback
+--
+-- <		The argument list and the Dictionary can be combined: >
+-- 			function Callback(arg1, count) dict
+-- 			"...
+-- 			let context = {"name": "example"}
+-- 			let Func = function('Callback', ['one'], context)
+-- 			"...
+-- 			call Func(500)
+-- <		Invokes the function as with: >
+-- 			call context.Callback('one', 500)
+-- <
+-- 		Returns 0 on error.
+--
+-- 		Can also be used as a |method|: >
+-- 			GetFuncname()->function([arg])
+--- @param arglist? any
+--- @param dict? dictionary
+--- @return fun()
+vim.fn["function"] = function(name, arglist, dict) end
 
 -- Cleanup unused |Lists| and |Dictionaries| that have circular
 -- 		references.
@@ -5293,79 +5386,4 @@ function vim.fn.mode() end
 --- @param type? any
 --- @return any[]
 function vim.fn.msgpackdump(list, type) end
-
--- Convert a |readfile()|-style list or a |Blob| to a list of
--- 		VimL objects.
--- 		Example: >
--- 			let fname = expand('~/.config/nvim/shada/main.shada')
--- 			let mpack = readfile(fname, 'b')
--- 			let shada_objects = msgpackparse(mpack)
--- <		This will read ~/.config/nvim/shada/main.shada file to
--- 		`shada_objects` list.
---
--- 		Limitations:
--- 		1. Mapping ordering is not preserved unless messagepack
--- 		   mapping is dumped using generic mapping
--- 		   (|msgpack-special-map|).
--- 		2. Since the parser aims to preserve all data untouched
--- 		   (except for 1.) some strings are parsed to
--- 		   |msgpack-special-dict| format which is not convenient to
--- 		   use.
---
--- 		Some messagepack strings may be parsed to special
--- 		dictionaries. Special dictionaries are dictionaries which
---
--- 		1. Contain exactly two keys: `_TYPE` and `_VAL`.
--- 		2. `_TYPE` key is one of the types found in |v:msgpack_types|
--- 		   variable.
--- 		3. Value for `_VAL` has the following format (Key column
--- 		   contains name of the key from |v:msgpack_types|):
---
--- 		Key	Value ~
--- 		nil	Zero, ignored when dumping.  Not returned by
--- 			|msgpackparse()| since |v:null| was introduced.
--- 		boolean	One or zero.  When dumping it is only checked that
--- 			value is a |Number|.  Not returned by |msgpackparse()|
--- 			since |v:true| and |v:false| were introduced.
--- 		integer	|List| with four numbers: sign (-1 or 1), highest two
--- 			bits, number with bits from 62nd to 31st, lowest 31
--- 			bits. I.e. to get actual number one will need to use
--- 			code like >
--- 				_VAL[0] * ((_VAL[1] << 62)
--- 				           & (_VAL[2] << 31)
--- 				           & _VAL[3])
--- <			Special dictionary with this type will appear in
--- 			|msgpackparse()| output under one of the following
--- 			circumstances:
--- 			1. |Number| is 32-bit and value is either above
--- 			   INT32_MAX or below INT32_MIN.
--- 			2. |Number| is 64-bit and value is above INT64_MAX. It
--- 			   cannot possibly be below INT64_MIN because msgpack
--- 			   C parser does not support such values.
--- 		float	|Float|. This value cannot possibly appear in
--- 			|msgpackparse()| output.
--- 		string	|readfile()|-style list of strings. This value will
--- 			appear in |msgpackparse()| output if string contains
--- 			zero byte or if string is a mapping key and mapping is
--- 			being represented as special dictionary for other
--- 			reasons.
--- 		binary	|String|, or |Blob| if binary string contains zero
--- 			byte. This value cannot appear in |msgpackparse()|
--- 			output since blobs were introduced.
--- 		array	|List|. This value cannot appear in |msgpackparse()|
--- 			output.
---
--- 		map	|List| of |List|s with two items (key and value) each.
--- 			This value will appear in |msgpackparse()| output if
--- 			parsed mapping contains one of the following keys:
--- 			1. Any key that is not a string (including keys which
--- 			   are binary strings).
--- 			2. String with NUL byte inside.
--- 			3. Duplicate key.
--- 			4. Empty key.
--- 		ext	|List| with two values: first is a signed integer
--- 			representing extension type. Second is
--- 			|readfile()|-style list of strings.
---- @return any[]
-function vim.fn.msgpackparse(data) end
 

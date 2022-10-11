@@ -3,6 +3,81 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Convert a |readfile()|-style list or a |Blob| to a list of
+-- 		VimL objects.
+-- 		Example: >
+-- 			let fname = expand('~/.config/nvim/shada/main.shada')
+-- 			let mpack = readfile(fname, 'b')
+-- 			let shada_objects = msgpackparse(mpack)
+-- <		This will read ~/.config/nvim/shada/main.shada file to
+-- 		`shada_objects` list.
+--
+-- 		Limitations:
+-- 		1. Mapping ordering is not preserved unless messagepack
+-- 		   mapping is dumped using generic mapping
+-- 		   (|msgpack-special-map|).
+-- 		2. Since the parser aims to preserve all data untouched
+-- 		   (except for 1.) some strings are parsed to
+-- 		   |msgpack-special-dict| format which is not convenient to
+-- 		   use.
+--
+-- 		Some messagepack strings may be parsed to special
+-- 		dictionaries. Special dictionaries are dictionaries which
+--
+-- 		1. Contain exactly two keys: `_TYPE` and `_VAL`.
+-- 		2. `_TYPE` key is one of the types found in |v:msgpack_types|
+-- 		   variable.
+-- 		3. Value for `_VAL` has the following format (Key column
+-- 		   contains name of the key from |v:msgpack_types|):
+--
+-- 		Key	Value ~
+-- 		nil	Zero, ignored when dumping.  Not returned by
+-- 			|msgpackparse()| since |v:null| was introduced.
+-- 		boolean	One or zero.  When dumping it is only checked that
+-- 			value is a |Number|.  Not returned by |msgpackparse()|
+-- 			since |v:true| and |v:false| were introduced.
+-- 		integer	|List| with four numbers: sign (-1 or 1), highest two
+-- 			bits, number with bits from 62nd to 31st, lowest 31
+-- 			bits. I.e. to get actual number one will need to use
+-- 			code like >
+-- 				_VAL[0] * ((_VAL[1] << 62)
+-- 				           & (_VAL[2] << 31)
+-- 				           & _VAL[3])
+-- <			Special dictionary with this type will appear in
+-- 			|msgpackparse()| output under one of the following
+-- 			circumstances:
+-- 			1. |Number| is 32-bit and value is either above
+-- 			   INT32_MAX or below INT32_MIN.
+-- 			2. |Number| is 64-bit and value is above INT64_MAX. It
+-- 			   cannot possibly be below INT64_MIN because msgpack
+-- 			   C parser does not support such values.
+-- 		float	|Float|. This value cannot possibly appear in
+-- 			|msgpackparse()| output.
+-- 		string	|readfile()|-style list of strings. This value will
+-- 			appear in |msgpackparse()| output if string contains
+-- 			zero byte or if string is a mapping key and mapping is
+-- 			being represented as special dictionary for other
+-- 			reasons.
+-- 		binary	|String|, or |Blob| if binary string contains zero
+-- 			byte. This value cannot appear in |msgpackparse()|
+-- 			output since blobs were introduced.
+-- 		array	|List|. This value cannot appear in |msgpackparse()|
+-- 			output.
+--
+-- 		map	|List| of |List|s with two items (key and value) each.
+-- 			This value will appear in |msgpackparse()| output if
+-- 			parsed mapping contains one of the following keys:
+-- 			1. Any key that is not a string (including keys which
+-- 			   are binary strings).
+-- 			2. String with NUL byte inside.
+-- 			3. Duplicate key.
+-- 			4. Empty key.
+-- 		ext	|List| with two values: first is a signed integer
+-- 			representing extension type. Second is
+-- 			|readfile()|-style list of strings.
+--- @return any[]
+function vim.fn.msgpackparse(data) end
+
 -- Return the line number of the first line at or below {lnum}
 -- 		that is not blank.  Example: >
 -- 			if getline(nextnonblank(1)) =~ "Java"
@@ -46,6 +121,21 @@ function vim.fn.nr2char(expr, utf8) end
 -- 		also take the numerical value 0 to indicate the current
 -- 		(focused) object.
 function vim.fn.nvim_...(...) end
+
+-- Bitwise OR on the two arguments.  The arguments are converted
+-- 		to a number.  A List, Dict or Float argument causes an error.
+-- 		Also see `and()` and `xor()`.
+-- 		Example: >
+-- 			:let bits = or(bits, 0x80)
+-- <		Can also be used as a |method|: >
+-- 			:let bits = bits->or(0x80)
+--
+-- <		Rationale: The reason this is a function and not using the "|"
+-- 		character like many languages, is that Vi has always used "|"
+-- 		to separate commands.  In many places it would not be clear if
+-- 		"|" is an operator or a command separator.
+--- @return number
+vim.fn["or"] = function(expr, expr) end
 
 -- Shorten directory names in the path {path} and return the
 -- 		result.  The tail, the file name, is kept as-is.  The other
@@ -679,6 +769,20 @@ function vim.fn.remove(dict, key) end
 --- @param to number
 --- @return number
 function vim.fn.rename(from, to) end
+
+-- Repeat {expr} {count} times and return the concatenated
+-- 		result.  Example: >
+-- 			:let separator = repeat('-', 80)
+-- <		When {count} is zero or negative the result is empty.
+-- 		When {expr} is a |List| the result is {expr} concatenated
+-- 		{count} times.  Example: >
+-- 			:let longlist = repeat(['a', 'b'], 3)
+-- <		Results in ['a', 'b', 'a', 'b', 'a', 'b'].
+--
+-- 		Can also be used as a |method|: >
+-- 			mylist->repeat(count)
+--- @return string
+vim.fn["repeat"] = function(expr, count) end
 
 -- On MS-Windows, when {filename} is a shortcut (a .lnk file),
 -- 		returns the path the shortcut points to in a simplified form.
