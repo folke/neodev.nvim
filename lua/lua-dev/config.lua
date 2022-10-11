@@ -36,6 +36,7 @@ function M.types()
   return vim.loop.fs_realpath(ret .. "/" .. M.version())
 end
 
+---@return "nightly" | "stable"
 function M.version()
   return vim.version().prerelease and "nightly" or "stable"
 end

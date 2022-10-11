@@ -9,32 +9,22 @@ local Writer = require("lua-dev.build.writer")
 
 local M = {}
 
----@param opts? {alt: string, extra: table<string,LuaFunction>}
-function M.parse(mpack, prefix, opts)
-  opts = opts or {}
-  print(mpack)
-  prefix = prefix or "vim"
-  local fname = vim.fn.fnamemodify(mpack, ":t:r")
+function M.api()
+  local api = Api.get()
 
-  local writer = Writer(fname)
-  local functions = Mpack.read(mpack)
+  -- Only load mpack on nightly and add any missing functions
+  -- Typically hidden functions
+  if Config.version() == "nightly" then
+    local functions = Mpack.read("api.mpack")
 
-  Util.for_each(functions, function(name, fun)
-    if not Annotations.is_lua(name) then
-      if mpack == "lua.mpack" then
-        dumpp(name)
+    for k, v in pairs(functions) do
+      if not api[k] then
+        api[k] = v
       end
-      fun.name = name
-      writer:write(Annotations.fun(fun))
     end
-  end)
-
-  if opts.extra then
-    Util.for_each(opts.extra, function(_, fun)
-      writer:write(Annotations.fun(fun))
-    end)
   end
-  writer:close()
+
+  M.write("api", api)
 end
 
 ---@param fname string
@@ -102,10 +92,11 @@ end
 
 function M.build()
   M.clean()
+
   M.alias()
   M.options()
-  M.parse("api.mpack", "vim.api", { alt = "vim.fn" })
-  -- M.write("api", Api.get())
+  M.api()
+
   M.write("luv", Docs.luv())
   M.write("lua", Docs.lua())
   M.write("vim.fn", Docs.functions())

@@ -79,21 +79,16 @@ function M.type(param)
     return M.lua_types[type]
   end
 
-  if type:find("^arrayof%(") then
-    return "any[]"
-  end
-  if type:find("^dict%(") or type:find("^dictionaryof%(") then
-    return "table<string, any>"
-  end
-
   if type == "arrayof(string)" then
     type = "string[]"
   elseif type == "arrayof(integer, 2)" then
     type = "number[]"
   elseif type == "dictionaryof(luaref)" then
     type = "table<string, luaref>"
-  elseif type and type:find("dict%(") == 1 then
-    type = "dict"
+  elseif type:find("^arrayof%(") then
+    return "any[]"
+  elseif type:find("^dict%(") or type:find("^dictionaryof%(") then
+    return "table<string, any>"
   end
   return type
 end
@@ -109,6 +104,10 @@ function M.param(param)
   end
 
   local type = M.type(param)
+  if type == "nil" then
+    return ""
+  end
+
   if type then
     table.insert(parts, type)
   end
