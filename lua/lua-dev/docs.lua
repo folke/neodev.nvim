@@ -104,6 +104,20 @@ function M.parse(name, opts)
   return ret
 end
 
+function M.fqn(name)
+  local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
+  if vim.api[name] then
+    return "vim.api." .. name
+  elseif vim[name] then
+    return "vim." .. name
+  elseif name:find("^[a-zA-Z_]+$") and vim.fn.exists("*" .. name) == 1 then
+    return "vim.fn." .. name
+  elseif real_fn then
+    return name
+  end
+  -- if we get here, it means the function is RPC only, or no longer exists
+end
+
 ---@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
 ---@return LuaFunction?
 function M.parse_signature(line)
