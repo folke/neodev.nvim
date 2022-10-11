@@ -81,24 +81,30 @@ end
 ---@field seealso string[]
 ---@field signature string
 
----@class ApiFunctionParam
+---@class LuaType
+---@field type? string
+---@field doc? string
+---@field optional? boolean
+
+---@class LuaParam: LuaType
 ---@field name string
----@field type string
----@field doc string
----@field optional boolean
+
+---@class LuaReturn: LuaType
+
+--- @class LuaFunction
+--- @field name string,
+--- @field doc string,
+--- @field deprecated? boolean
+--- @field params LuaParam[]
+--- @field return LuaReturn[]
 
 --- @param fun MpackFunction
---- @return ApiFunction
-function M.process(name, fun, prefix)
-  --- @class ApiFunction
-  --- @field doc string,
-  --- @field fqname string,
-  --- @field params ApiFunctionParam[]
-  --- @field return ApiFunctionParam
+--- @return LuaFunction
+function M.process(fun)
+  ---@type LuaFunction
   local ret = {
     doc = (fun.doc and fun.doc[1]) and table.concat(fun.doc, "\n\n") or "",
-    name = name,
-    fqname = prefix .. "." .. name,
+    name = fun.name,
     params = {},
     seealso = fun.seealso or {},
     ["return"] = {},
@@ -143,7 +149,7 @@ function M.process(name, fun, prefix)
   return ret
 end
 
---- @param fun ApiFunction
+--- @param fun LuaFunction
 function M.emmy(fun)
   local special = { "or", "and", "repeat", "function", "end", "return" }
 
@@ -225,7 +231,7 @@ function M.get_fn(prefix, name, alt)
   end
 end
 
----@param opts? {alt: string, extra: table<string,ApiFunction>}
+---@param opts? {alt: string, extra: table<string,LuaFunction>}
 function M.parse(mpack, prefix, opts)
   opts = opts or {}
   print(prefix)
@@ -243,6 +249,8 @@ function M.parse(mpack, prefix, opts)
     local prefix_fn, real_fn = M.get_fn(prefix, name, opts.alt)
 
     if prefix_fn then
+      name = prefix_fn .. "." .. name
+      fun.name = name
       local skip = false
 
       if real_fn then
@@ -255,7 +263,7 @@ function M.parse(mpack, prefix, opts)
       end
 
       if not skip then
-        local emmy = M.emmy(M.process(name, fun, prefix_fn))
+        local emmy = M.emmy(M.process(fun))
         writer.write(emmy)
       end
     end
@@ -275,7 +283,6 @@ end
 function M.luv()
   local prefix = "luv"
   print(prefix)
-  prefix = prefix or "vim"
 
   local writer = M.writer(prefix)
   local functions = require("lua-dev.docs").luv()
@@ -348,22 +355,17 @@ function M.functions()
   local functions = require("lua-dev.docs").functions()
 
   local writer = M.writer("vim.fn")
-  local exclude = { ["or"] = true, ["and"] = true, ["repeat"] = true, ["function"] = true, ["end"] = true }
   local names = vim.tbl_keys(functions)
   table.sort(names)
   for _, name in ipairs(names) do
     local props = functions[name]
-    if vim.fn[name] and not exclude[name] then
+    if vim.fn[name] then
       local fun = {
         name = name,
-        fqname = "vim.fn." .. name,
         doc = props.doc or "",
         params = props.params,
-        ["return"] = {},
+        ["return"] = props["return"],
       }
-      if props["return"] then
-        fun["return"] = { { type = props["return"]:lower() } }
-      end
       writer.write(M.emmy(fun))
     end
   end
