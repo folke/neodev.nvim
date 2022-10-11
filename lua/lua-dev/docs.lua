@@ -47,6 +47,11 @@ function M.strip_tags(str)
     tags
 end
 
+---@param text string
+function M.trim(text)
+  return text:gsub("^%s*\n", ""):gsub("\n+$", "")
+end
+
 ---@param name string
 ---@param opts { pattern: string, continuation?: string, context?: number}
 function M.parse(name, opts)
@@ -66,7 +71,7 @@ function M.parse(name, opts)
     if #chunk > 0 then
       table.insert(ret, {
         tags = vim.deepcopy(chunk_tags),
-        text = table.concat(chunk, "\n"),
+        text = M.trim(table.concat(chunk, "\n")),
         match = vim.deepcopy(chunk_match),
       })
     end
@@ -96,7 +101,6 @@ function M.parse(name, opts)
       chunk_tags = vim.deepcopy(tags)
       table.insert(chunk, line)
     elseif #chunk > 0 and (line:find(opts.continuation) or line:find("^%s*$")) then
-      line = line:gsub("^\t", "")
       table.insert(chunk, line)
     else
       save()
@@ -123,7 +127,7 @@ end
 ---@return LuaFunction?
 function M.parse_signature(line)
   ---@type string, string, string
-  local name, sig, doc = line:match(M.function_signature_pattern .. "%s*(.*)")
+  local name, sig, doc = line:match(M.function_signature_pattern .. "(.*)")
   if name then
     -- Parse args
     local optional_from = sig:find("%[")
@@ -148,7 +152,7 @@ function M.parse_signature(line)
       end
     end
 
-    return { name = name, params = params, doc = doc }
+    return { name = name, params = params, doc = M.trim(doc) }
   end
 end
 

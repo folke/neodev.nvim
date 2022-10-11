@@ -2,9 +2,9 @@ local util = require("lua-dev.util")
 local uv = vim.loop
 local M = {}
 
-function M.comment(str, prefix, prefix_first)
-  prefix = prefix or "--"
-  return (prefix_first or prefix) .. " " .. vim.fn.trim(str):gsub("[\n]", "\n" .. prefix .. " "):gsub("%s+\n", "\n")
+function M.comment(str, prefix)
+  prefix = (prefix or "") .. "-- "
+  return prefix .. str:gsub("\n", "\n" .. prefix)
 end
 
 function M.infer_type(param)
@@ -67,9 +67,9 @@ function M.emmy_param(param, is_return)
 
   local ret = table.concat(parts, " ")
   if is_return then
-    return M.comment("@return " .. ret, "--", "---") .. "\n"
+    return M.comment("@return " .. ret, "-") .. "\n"
   else
-    return M.comment("@param " .. ret, "--", "---") .. "\n"
+    return M.comment("@param " .. ret, "-") .. "\n"
   end
 end
 

@@ -4,13 +4,13 @@
 ---@diagnostic disable: unused-local
 
 -- Execute Vim script commands.
---
+-- 
 -- Note that `vim.cmd` can be indexed with a command name to return a
 -- callable function to the command.
---
--- Example:
+-- 
+-- Example: 
 -- ```lua
---
+-- 
 --    vim.cmd('echo 42')
 --    vim.cmd([[
 --      augroup My_group
@@ -18,32 +18,33 @@
 --        autocmd FileType c setlocal cindent
 --      augroup END
 --    ]])
---
+-- 
 --    -- Ex command :echo "foo"
 --    -- Note string literals need to be double quoted.
 --    vim.cmd('echo "foo"')
 --    vim.cmd { cmd = 'echo', args = { '"foo"' } }
 --    vim.cmd.echo({ args = { '"foo"' } })
 --    vim.cmd.echo('"foo"')
---
+-- 
 --    -- Ex command :write! myfile.txt
 --    vim.cmd('write! myfile.txt')
 --    vim.cmd { cmd = 'write', args = { "myfile.txt" }, bang = true }
 --    vim.cmd.write { args = { "myfile.txt" }, bang = true }
 --    vim.cmd.write { "myfile.txt", bang = true }
---
+-- 
 --    -- Ex command :colorscheme blue
 --    vim.cmd('colorscheme blue')
 --    vim.cmd.colorscheme('blue')
---
+--  
 -- ```
+-- 
 --- @see |ex-cmd-index|
 --- @param command any # string|table Command(s) to execute. If a string, executes
---                multiple lines of Vim script at once. In this case, it is
---                an alias to |nvim_exec()|, where `output` is set to false.
---                Thus it works identical to |:source|. If a table, executes
---                a single command. In this case, it is an alias to
---                |nvim_cmd()| where `opts` is empty.
+---                multiple lines of Vim script at once. In this case, it is
+---                an alias to |nvim_exec()|, where `output` is set to false.
+---                Thus it works identical to |:source|. If a table, executes
+---                a single command. In this case, it is an alias to
+---                |nvim_cmd()| where `opts` is empty.
 function vim.cmd(command) end
 
 -- Return a human-readable representation of the given object.
@@ -52,26 +53,26 @@ function vim.cmd(command) end
 --- @param options table<string, any>
 function vim.inspect(object, options) end
 
--- Invokes |vim-function| or |user-function| {func} with arguments {...}.
+--     Invokes |vim-function| or |user-function| {func} with arguments {...}.
 --     See also |vim.fn|.
 --     Equivalent to: >
 --         vim.fn[func]({...})
 --- @param func fun()
 function vim.call(func, ...) end
 
--- Run diff on strings {a} and {b}. Any indices returned by this function,
+--     Run diff on strings {a} and {b}. Any indices returned by this function,
 --     either directly or via callback arguments, are 1-based.
---
---     Examples:
+-- 
+--     Examples: 
 -- ```lua
---
+-- 
 --         vim.diff('a\n', 'b\nc\n')
 --         =>
 --         @@ -1 +1,2 @@
 --         -a
 --         +b
 --         +c
---
+-- 
 --         vim.diff('a\n', 'b\nc\n', {result_type = 'indices'})
 --         =>
 --         {
@@ -117,24 +118,24 @@ function vim.call(func, ...) end
 --                  • `indent_heuristic` (boolean):
 --                    Use the indent heuristic for the internal
 --                    diff library.
---
+-- 
 --     Return: ~
 --         See {opts.result_type}. nil if {opts.on_hunk} is given.
 --- @param opts table<string, any>
 function vim.diff(a, b, opts) end
 
--- The result is a String, which is the text {str} converted from
+--         The result is a String, which is the text {str} converted from
 --         encoding {from} to encoding {to}. When the conversion fails `nil` is
 --         returned.  When some characters could not be converted they
 --         are replaced with "?".
 --         The encoding names are whatever the iconv() library function
 --         can accept, see ":Man 3 iconv".
---
+-- 
 --         Parameters: ~
 --           • {str}   (string) Text to convert
 --           • {from}  (string) Encoding of {str}
 --           • {to}    (string) Target encoding
---
+-- 
 --         Returns: ~
 --             Converted string if conversion succeeds, `nil` otherwise.
 --- @param str string
@@ -143,55 +144,55 @@ function vim.diff(a, b, opts) end
 --- @param opts? table<string, any>
 function vim.iconv(str, from, to, opts) end
 
--- Returns true if the code is executing as part of a "fast" event handler,
+--     Returns true if the code is executing as part of a "fast" event handler,
 --     where most of the API is disabled. These are low-level events (e.g.
 --     |lua-loop-callbacks|) which can be invoked whenever Nvim polls for input.
 --     When this is `false` most API functions are callable (but may be subject
 --     to other restrictions such as |textlock|).
 function vim.in_fast_event() end
 
--- Decodes (or "unpacks") the msgpack-encoded {str} to a Lua object.
+--     Decodes (or "unpacks") the msgpack-encoded {str} to a Lua object.
 --- @param str string
 function vim.mpack.decode(str) end
 
--- Encodes (or "packs") Lua object {obj} as msgpack in a Lua string.
+--     Encodes (or "packs") Lua object {obj} as msgpack in a Lua string.
 function vim.mpack.encode(obj) end
 
--- Parse the Vim regex {re} and return a regex object. Regexes are "magic"
+--     Parse the Vim regex {re} and return a regex object. Regexes are "magic"
 --     and case-sensitive by default, regardless of 'magic' and 'ignorecase'.
 --     They can be controlled with flags, see |/magic| and |/ignorecase|.
 function vim.regex(re) end
 
--- Sends {event} to {channel} via |RPC| and returns immediately. If {channel}
+--     Sends {event} to {channel} via |RPC| and returns immediately. If {channel}
 --     is 0, the event is broadcast to all channels.
---
+-- 
 --     This function also works in a fast callback |lua-loop-callbacks|.
 --- @param args? table<string, any>
 function vim.rpcnotify(channel, method, args) end
 
--- Sends a request to {channel} to invoke {method} via |RPC| and blocks until
+--     Sends a request to {channel} to invoke {method} via |RPC| and blocks until
 --     a response is received.
---
+-- 
 --     Note: NIL values as part of the return value is represented as |vim.NIL|
 --     special value
 --- @param args? table<string, any>
 function vim.rpcrequest(channel, method, args) end
 
--- Schedules {callback} to be invoked soon by the main event-loop. Useful
+--     Schedules {callback} to be invoked soon by the main event-loop. Useful
 --     to avoid |textlock| or other temporary restrictions.
 --- @param callback fun()
 function vim.schedule(callback) end
 
--- Check {str} for spelling errors. Similar to the Vimscript function
+--     Check {str} for spelling errors. Similar to the Vimscript function
 --     |spellbadword()|.
---
+-- 
 --     Note: The behaviour of this function is dependent on: 'spelllang',
 --     'spellfile', 'spellcapcheck' and 'spelloptions' which can all be local to
 --     the buffer. Consider calling this with |nvim_buf_call()|.
---
---     Example:
+-- 
+--     Example: 
 -- ```lua
---
+-- 
 --         vim.spell.check("the quik brown fox")
 --         =>
 --         {
@@ -200,7 +201,7 @@ function vim.schedule(callback) end
 -- ```
 --     Parameters: ~
 --       • {str}    String to spell check.
---
+-- 
 --     Return: ~
 --       List of tuples with three items:
 --         - The badly spelled word.
@@ -213,9 +214,9 @@ function vim.schedule(callback) end
 --- @param str string
 function vim.spell.check(str) end
 
--- Convert UTF-32 or UTF-16 {index} to byte index. If {use_utf16} is not
+--     Convert UTF-32 or UTF-16 {index} to byte index. If {use_utf16} is not
 --     supplied, it defaults to false (use UTF-32). Returns the byte index.
---
+-- 
 --     Invalid UTF-8 and NUL is treated like by |vim.str_byteindex()|.
 --     An {index} in the middle of a UTF-16 sequence is rounded upwards to
 --     the end of that sequence.
@@ -224,10 +225,10 @@ function vim.spell.check(str) end
 --- @param use_utf16? any
 function vim.str_byteindex(str, index, use_utf16) end
 
--- Convert byte index to UTF-32 and UTF-16 indices. If {index} is not
+--     Convert byte index to UTF-32 and UTF-16 indices. If {index} is not
 --     supplied, the length of the string is used. All indices are zero-based.
 --     Returns two values: the UTF-32 and UTF-16 indices respectively.
---
+-- 
 --     Embedded NUL bytes are treated as terminating the string. Invalid UTF-8
 --     bytes, and embedded surrogates are counted as one code point each. An
 --     {index} in the middle of a UTF-8 sequence is rounded upwards to the end of
@@ -236,30 +237,30 @@ function vim.str_byteindex(str, index, use_utf16) end
 --- @param index? number
 function vim.str_utfindex(str, index) end
 
--- Compares strings case-insensitively. Returns 0, 1 or -1 if strings are
+--     Compares strings case-insensitively. Returns 0, 1 or -1 if strings are
 --     equal, {a} is greater than {b} or {a} is lesser than {b}, respectively.
 function vim.stricmp(a, b) end
 
--- Attach to ui events, similar to |nvim_ui_attach()| but receive events
+--     Attach to ui events, similar to |nvim_ui_attach()| but receive events
 --     as lua callback. Can be used to implement screen elements like
 --     popupmenu or message handling in lua.
---
+-- 
 --     {options} should be a dictionary-like table, where `ext_...` options should
 --     be set to true to receive events for the respective external element.
---
+-- 
 --     {callback} receives event name plus additional parameters. See |ui-popupmenu|
 --     and the sections below for event format for respective events.
---
+-- 
 --     WARNING: This api is considered experimental.  Usability will vary for
 --     different screen elements. In particular `ext_messages` behavior is subject
 --     to further changes and usability improvements.  This is expected to be
 --     used to handle messages when setting 'cmdheight' to zero (which is
 --     likewise experimental).
---
+-- 
 --     Example (stub for a |ui-popupmenu| implementation): >
---
+-- 
 --       ns = vim.api.nvim_create_namespace('my_fancy_pum')
---
+-- 
 --       vim.ui_attach(ns, {ext_popupmenu=true}, function(event, ...)
 --         if event == "popupmenu_show" then
 --           local items, selected, row, col, grid = ...
@@ -276,20 +277,20 @@ function vim.stricmp(a, b) end
 --- @param callback fun()
 function vim.ui_attach(ns, options, callback) end
 
--- Detach a callback previously attached with |vim.ui_attach()| for the
+--     Detach a callback previously attached with |vim.ui_attach()| for the
 --     given namespace {ns}.
 --- @param ns number
 function vim.ui_detach(ns) end
 
--- Gets the version of the current Nvim build.
+--     Gets the version of the current Nvim build.
 function vim.version() end
 
--- Wait for {time} in milliseconds until {callback} returns `true`.
---
+--     Wait for {time} in milliseconds until {callback} returns `true`.
+-- 
 --     Executes {callback} immediately and at approximately {interval}
 --     milliseconds (default 200). Nvim still processes other events during
 --     this time.
---
+-- 
 --     Parameters: ~
 --       • {time}      Number of milliseconds to wait
 --       • {callback}  Optional callback. Waits until {callback} returns true
@@ -297,43 +298,44 @@ function vim.version() end
 --       • {fast_only} If true, only |api-fast| events will be processed.
 --                         If called from while in an |api-fast| event, will
 --                         automatically be set to `true`.
---
+-- 
 --     Returns: ~
 --         If {callback} returns `true` during the {time}:
 --             `true, nil`
---
+-- 
 --         If {callback} never returns `true` during the {time}:
 --             `false, -1`
---
+-- 
 --         If {callback} is interrupted during the {time}:
 --             `false, -2`
---
+-- 
 --         If {callback} errors, the error is raised.
---
---         Examples:
+-- 
+--         Examples: 
 -- ```lua
---
+-- 
 --     ---
 --     -- Wait for 100 ms, allowing other events to process
 --     vim.wait(100, function() end)
---
+-- 
 --     ---
 --     -- Wait for 100 ms or until global variable set.
 --     vim.wait(100, function() return vim.g.waiting_for_var end)
---
+-- 
 --     ---
 --     -- Wait for 1 second or until global variable set, checking every ~500 ms
 --     vim.wait(1000, function() return vim.g.waiting_for_var end, 500)
---
+-- 
 --     ---
 --     -- Schedule a function to set a value in 100ms
 --     vim.defer_fn(function() vim.g.timer_result = true end, 100)
---
+-- 
 --     -- Would wait ten seconds if results blocked. Actually only waits  100 ms
 --     if vim.wait(10000, function() return vim.g.timer_result end) then
 --       print('Only waiting a little bit of time!')
 --     end
 -- ```
+-- 
 --- @param callback? fun()
 --- @param interval? any
 --- @param fast_only? any
