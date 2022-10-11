@@ -173,6 +173,70 @@ function vim.fn.argv(nr, winid) end
 --- @return float
 function vim.fn.asin(expr) end
 
+-- Number	assert {cmd} causes a beep
+--- @return number
+function vim.fn.assert_beeps(cmd) end
+
+-- Number	assert {exp} is equal to {act}
+--- @param msg? any
+--- @return number
+function vim.fn.assert_equal(exp, act, msg) end
+
+-- Number	assert file contents are equal
+--- @param msg? any
+--- @return number
+function vim.fn.assert_equalfile(fname-one, fname-two, msg) end
+
+-- Number	assert {error} is in v:exception
+--- @param msg? any
+--- @return number
+function vim.fn.assert_exception(error, msg) end
+
+-- Number	assert {cmd} fails
+--- @param error? any
+--- @return number
+function vim.fn.assert_fails(cmd, error) end
+
+-- Number	assert {actual} is false
+--- @param msg? any
+--- @return number
+function vim.fn.assert_false(actual, msg) end
+
+-- Number	assert {actual} is inside the range
+--- @param msg? any
+--- @return number
+function vim.fn.assert_inrange(lower, upper, actual, msg) end
+
+-- Number	assert {pat} matches {text}
+--- @param text string
+--- @param msg? any
+--- @return number
+function vim.fn.assert_match(pat, text, msg) end
+
+-- Number	assert {cmd} does not cause a beep
+--- @return number
+function vim.fn.assert_nobeep(cmd) end
+
+-- Number	assert {exp} is not equal {act}
+--- @param msg? any
+--- @return number
+function vim.fn.assert_notequal(exp, act, msg) end
+
+-- Number	assert {pat} not matches {text}
+--- @param text string
+--- @param msg? any
+--- @return number
+function vim.fn.assert_notmatch(pat, text, msg) end
+
+-- Number	report a test failure
+--- @return number
+function vim.fn.assert_report(msg) end
+
+-- Number	assert {actual} is true
+--- @param msg? any
+--- @return number
+function vim.fn.assert_true(actual, msg) end
+
 -- Return the principal value of the arc tangent of {expr}, in
 -- 		the range [-pi/2, +pi/2] radians, as a |Float|.
 -- 		{expr} must evaluate to a |Float| or a |Number|.
@@ -5304,37 +5368,4 @@ function vim.fn.msgpackdump(list, type) end
 -- 			|readfile()|-style list of strings.
 --- @return any[]
 function vim.fn.msgpackparse(data) end
-
--- Return the line number of the first line at or below {lnum}
--- 		that is not blank.  Example: >
--- 			if getline(nextnonblank(1)) =~ "Java"
--- <		When {lnum} is invalid or there is no non-blank line at or
--- 		below it, zero is returned.
--- 		{lnum} is used like with |getline()|.
--- 		See also |prevnonblank()|.
---
--- 		Can also be used as a |method|: >
--- 			GetLnum()->nextnonblank()
---- @param lnum number
---- @return number
-function vim.fn.nextnonblank(lnum) end
-
--- Return a string with a single character, which has the number
--- 		value {expr}.  Examples: >
--- 			nr2char(64)		returns "@"
--- 			nr2char(32)		returns " "
--- <		Example for "utf-8": >
--- 			nr2char(300)		returns I with bow character
--- <		UTF-8 encoding is always used, {utf8} option has no effect,
--- 		and exists only for backwards-compatibility.
--- 		Note that a NUL character in the file is specified with
--- 		nr2char(10), because NULs are represented with newline
--- 		characters.  nr2char(0) is a real NUL and terminates the
--- 		string, thus results in an empty string.
---
--- 		Can also be used as a |method|: >
--- 			GetNumber()->nr2char()
---- @param utf8? any
---- @return string
-function vim.fn.nr2char(expr, utf8) end
 

@@ -3,6 +3,39 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Return the line number of the first line at or below {lnum}
+-- 		that is not blank.  Example: >
+-- 			if getline(nextnonblank(1)) =~ "Java"
+-- <		When {lnum} is invalid or there is no non-blank line at or
+-- 		below it, zero is returned.
+-- 		{lnum} is used like with |getline()|.
+-- 		See also |prevnonblank()|.
+--
+-- 		Can also be used as a |method|: >
+-- 			GetLnum()->nextnonblank()
+--- @param lnum number
+--- @return number
+function vim.fn.nextnonblank(lnum) end
+
+-- Return a string with a single character, which has the number
+-- 		value {expr}.  Examples: >
+-- 			nr2char(64)		returns "@"
+-- 			nr2char(32)		returns " "
+-- <		Example for "utf-8": >
+-- 			nr2char(300)		returns I with bow character
+-- <		UTF-8 encoding is always used, {utf8} option has no effect,
+-- 		and exists only for backwards-compatibility.
+-- 		Note that a NUL character in the file is specified with
+-- 		nr2char(10), because NULs are represented with newline
+-- 		characters.  nr2char(0) is a real NUL and terminates the
+-- 		string, thus results in an empty string.
+--
+-- 		Can also be used as a |method|: >
+-- 			GetNumber()->nr2char()
+--- @param utf8? any
+--- @return string
+function vim.fn.nr2char(expr, utf8) end
+
 -- Call nvim |api| functions. The type checking of arguments will
 -- 		be stricter than for most other builtins. For instance,
 -- 		if Integer is expected, a |Number| must be passed in, a
@@ -1095,6 +1128,18 @@ function vim.fn.searchcount(options) end
 --- @return number
 function vim.fn.searchdecl(name, global, thisblock) end
 
+-- Number	search for other end of start/end pair
+--- @param flags? any
+--- @param skip? any
+--- @return number
+function vim.fn.searchpair(start, middle, _end, flags, skip) end
+
+-- List	search for other end of start/end pair
+--- @param flags? any
+--- @param skip? any
+--- @return any[]
+function vim.fn.searchpairpos(start, middle, _end, flags, skip) end
+
 -- Same as |search()|, but returns a |List| with the line and
 -- 		column position of the match. The first element of the |List|
 -- 		is the line number and the second element is the byte index of
@@ -1824,6 +1869,53 @@ function vim.fn.shellescape(string, special) end
 --- @param col? number
 --- @return number
 function vim.fn.shiftwidth(col) end
+
+-- List	define or update a list of signs
+--- @param list any[]
+--- @return any[]
+function vim.fn.sign_define(list) end
+
+-- List	get a list of defined signs
+--- @param name? any
+--- @return any[]
+function vim.fn.sign_getdefined(name) end
+
+-- List	get a list of placed signs
+--- @param buf? buffer
+--- @param dict? dictionary
+--- @return any[]
+function vim.fn.sign_getplaced(buf, dict) end
+
+-- Number	jump to a sign
+--- @param buf buffer
+--- @return number
+function vim.fn.sign_jump(id, group, buf) end
+
+-- Number	place a sign
+--- @param buf buffer
+--- @param dict? dictionary
+--- @return number
+function vim.fn.sign_place(id, group, name, buf, dict) end
+
+-- List	place a list of signs
+--- @param list any[]
+--- @return any[]
+function vim.fn.sign_placelist(list) end
+
+-- List	undefine a list of signs
+--- @param list any[]
+--- @return any[]
+function vim.fn.sign_undefine(list) end
+
+-- Number	unplace a sign
+--- @param dict? dictionary
+--- @return number
+function vim.fn.sign_unplace(group, dict) end
+
+-- List	unplace a list of signs
+--- @param list any[]
+--- @return any[]
+function vim.fn.sign_unplacelist(list) end
 
 -- Simplify the file name as much as possible without changing
 -- 		the meaning.  Shortcuts (on MS-Windows) or symbolic links (on
@@ -2985,6 +3077,9 @@ function vim.fn.tempname() end
 -- 		described in |terminal|.
 --- @param opts? table<string, any>
 function vim.fn.termopen(cmd, opts) end
+
+-- none	free memory right now for testing
+function vim.fn.test_garbagecollect_now() end
 
 -- Return a list with information about timers.
 -- 		When {id} is given only information about this timer is

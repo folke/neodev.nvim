@@ -163,11 +163,14 @@ function M.is_lua(name)
   return false
 end
 
-function M.lua()
+---@param doc string
+---@param opts? {filter?: (fun(name:string):boolean), name?: fun(name:string):string}
+function M.parse_functions(doc, opts)
+  opts = opts or {}
   ---@type table<string, VimFunction>
   local ret = {}
 
-  local functions = M.parse("lua", { pattern = M.function_pattern, context = 2 })
+  local functions = M.parse(doc, { pattern = M.function_pattern, context = 2 })
 
   for _, fun in ipairs(functions) do
     local text = fun.text
@@ -187,9 +190,11 @@ function M.lua()
     if parse then
       local name = parse.name
 
-      -- Skip real lua functions
-      -- We're only interested in C type functions
-      if not M.is_lua(name) then
+      if opts.name then
+        name = opts.name(name)
+      end
+
+      if not opts.filter or opts.filter(name) then
         ret[name] = {
           name = name,
           fqname = name,
@@ -203,48 +208,33 @@ function M.lua()
   return ret
 end
 
+function M.lua()
+  return M.parse_functions("lua", {
+    filter = function(name)
+      return not M.is_lua(name)
+    end,
+  })
+end
+
 function M.luv()
-  ---@type table<string, VimFunction>
-  local ret = {}
-
-  local functions = M.parse("luvref", { pattern = M.function_pattern, context = 1 })
-
-  for _, fun in ipairs(functions) do
-    local text = fun.text
-
-    local parse = M.parse_signature(text)
-
-    if parse then
-      local name = parse.name
-      name = name:gsub("^uv%.", "vim.loop.")
-      print(name)
-
-      -- Skip real lua functions
-      -- We're only interested in C type functions
-      if not M.is_lua(name) then
-        ret[name] = {
-          name = name,
-          fqname = name,
-          params = parse.params,
-          doc = parse.doc,
-          ["return"] = {},
-        }
-      end
-    end
-  end
-  return ret
+  return M.parse_functions("luvref", {
+    filter = function(name)
+      return not M.is_lua(name)
+    end,
+    name = function(name)
+      return name:gsub("^uv%.", "vim.loop.")
+    end,
+  })
 end
 
 ---@return table<string, VimFunction>
 function M.functions()
-  ---@type table<string, VimFunction>
-  local ret = {}
-
   local builtins = M.parse("builtin", { pattern = M.function_pattern, context = 2 })
 
   ---@type table<string, string>
   local retvals = {}
 
+  -- Parse return values from `:h builtin-function-list`
   for _, builtin in ipairs(builtins) do
     if vim.tbl_contains(builtin.tags, "builtin-function-list") then
       local text = builtin.text
@@ -267,18 +257,12 @@ function M.functions()
       else
         util.error("Couldnt parse builtin-function-list: " .. vim.inspect(builtin))
       end
-    else
-      local parse = M.parse_signature(builtin.text)
-      if parse then
-        local name = parse.name
-        ret[name] = {
-          name = name,
-          params = parse.params,
-          doc = parse.doc,
-          ["return"] = retvals[name],
-        }
-      end
     end
+  end
+
+  local ret = M.parse_functions("builtin")
+  for k, fun in pairs(ret) do
+    fun["return"] = retvals[k]
   end
 
   return ret
