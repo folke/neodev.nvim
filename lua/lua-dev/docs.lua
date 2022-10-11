@@ -211,10 +211,9 @@ function M.parse_functions(doc, opts)
         name = opts.name(name)
       end
 
-      if not opts.filter or opts.filter(name) then
+      if name and (not opts.filter or opts.filter(name)) then
         ret[name] = {
           name = name,
-          fqname = name,
           params = parse.params,
           doc = parse.doc,
           ["return"] = {},
@@ -244,7 +243,6 @@ function M.luv()
   })
 end
 
----@return table<string, VimFunction>
 function M.functions()
   local builtins = M.parse("builtin", { pattern = M.function_pattern, context = 2 })
 
@@ -266,10 +264,10 @@ function M.functions()
         if M.vim_type_map[retval] then
           retval = M.vim_type_map[retval]
           if retval ~= "nil" then
-            retvals[name] = retval
+            retvals["vim.fn." .. name] = retval
           end
         else
-          util.debug(retval)
+          util.debug("Unknown retval: " .. retval)
         end
       else
         util.error("Couldnt parse builtin-function-list: " .. vim.inspect(builtin))
@@ -277,9 +275,15 @@ function M.functions()
     end
   end
 
-  local ret = M.parse_functions("builtin")
+  local ret = M.parse_functions("builtin", {
+    name = function(name)
+      return "vim.fn." .. name
+    end,
+  })
   for k, fun in pairs(ret) do
-    fun["return"] = retvals[k]
+    if retvals[k] then
+      fun["return"] = { { type = retvals[k]:lower() } }
+    end
   end
 
   return ret
