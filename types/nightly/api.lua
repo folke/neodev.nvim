@@ -1,8 +1,5 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
-
 --- @param buffer buffer
 --- @param first integer
 --- @param last integer

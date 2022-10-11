@@ -1,8 +1,5 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
-
 -- > method form `stream:accept(client_stream)`
 -- 
 -- Parameters:
@@ -2727,7 +2724,7 @@ function vim.loop.timer_get_repeat(timer) end
 -- callback, then the callback will run as soon as possible.
 -- 
 -- Returns: Nothing.
-function vim.loop.timer_set_repeat(timer, _repeat) end
+function vim.loop.timer_set_repeat(timer, repeat_) end
 
 -- > method form `timer:start(timeout, repeat, callback)`
 -- 
@@ -2746,7 +2743,7 @@ function vim.loop.timer_set_repeat(timer, _repeat) end
 -- 
 -- Returns: `0` or `fail`
 --- @param callback fun()
-function vim.loop.timer_start(timer, timeout, _repeat, callback) end
+function vim.loop.timer_start(timer, timeout, repeat_, callback) end
 
 -- > method form `timer:stop()`
 -- 

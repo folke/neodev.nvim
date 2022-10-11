@@ -1,8 +1,5 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
-
 -- string	(default: see below)
 -- 			global
 -- 	Expression used to print the PostScript produced with |:hardcopy|.

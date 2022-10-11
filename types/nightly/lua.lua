@@ -1,8 +1,5 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
-
 -- Execute Vim script commands.
 -- 
 -- Note that `vim.cmd` can be indexed with a command name to return a
@@ -167,7 +164,7 @@ function vim.regex(re) end
 -- is 0, the event is broadcast to all channels.
 -- 
 -- This function also works in a fast callback |lua-loop-callbacks|.
---- @param args? table<string, any>
+--- @param args? any[]
 function vim.rpcnotify(channel, method, args) end
 
 -- Sends a request to {channel} to invoke {method} via |RPC| and blocks until
@@ -175,7 +172,7 @@ function vim.rpcnotify(channel, method, args) end
 -- 
 -- Note: NIL values as part of the return value is represented as |vim.NIL|
 -- special value
---- @param args? table<string, any>
+--- @param args? any[]
 function vim.rpcrequest(channel, method, args) end
 
 -- Schedules {callback} to be invoked soon by the main event-loop. Useful

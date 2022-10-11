@@ -1,8 +1,5 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
-
 -- boolean	(default on)
 -- 			local to buffer
 -- 	Copy indent from current line when starting a new line (typing <CR>

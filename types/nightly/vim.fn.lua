@@ -1,8 +1,5 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
-
 -- Return the absolute value of {expr}.  When {expr} evaluates to
 -- a |Float| abs() returns a |Float|.  When {expr} can be
 -- converted to a |Number| abs() returns a |Number|.  Otherwise
@@ -583,7 +580,7 @@ function vim.fn.byteidxcomp(expr, nr) end
 -- Can also be used as a |method|: >
 --   GetFunc()->call([arg, arg], dict)
 --- @param func fun()
---- @param dict? dictionary
+--- @param dict? table<string, any>
 function vim.fn.call(func, arglist, dict) end
 
 -- Return the smallest integral value greater than or equal to
@@ -1335,14 +1332,14 @@ function vim.fn.deletebufline(buf, first, last) end
 -- 
 -- This function can be used by plugins to implement options with
 -- validation and parsing logic.
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @param callback fun()
 function vim.fn.dictwatcheradd(dict, pattern, callback) end
 
 -- Removes a watcher added  with |dictwatcheradd()|. All three
 -- arguments must match the ones passed to |dictwatcheradd()| in
 -- order for the watcher to be successfully deleted.
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @param callback fun()
 function vim.fn.dictwatcherdel(dict, pattern, callback) end
 
@@ -2382,7 +2379,7 @@ function vim.fn.fullcommand(name) end
 -- ```
 -- 
 --- @param arglist? any
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return fun()
 function vim.fn.funcref(name, arglist, dict) end
 
@@ -2482,7 +2479,7 @@ function vim.fn.funcref(name, arglist, dict) end
 -- Can also be used as a |method|: >
 --   GetFuncname()->function([arg])
 --- @param arglist? any
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return fun()
 vim.fn["function"] = function(name, arglist, dict) end
 
@@ -2589,7 +2586,7 @@ function vim.fn.get(func, what) end
 --   GetBufnr()->getbufinfo()
 -- ```
 -- 
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return any[]
 function vim.fn.getbufinfo(dict) end
 
@@ -2621,9 +2618,9 @@ function vim.fn.getbufinfo(dict) end
 --   GetBufnr()->getbufline(lnum)
 --- @param buf buffer
 --- @param lnum number
---- @param _end? any
+--- @param end_? any
 --- @return any[]
-function vim.fn.getbufline(buf, lnum, _end) end
+function vim.fn.getbufline(buf, lnum, end_) end
 
 -- The result is the value of option or local buffer variable
 -- {varname} in buffer {buf}.  Note that the name without "b:"
@@ -3184,9 +3181,9 @@ function vim.fn.getjumplist(winnr, tabnr) end
 -- ```
 -- To get lines from another buffer see |getbufline()|
 --- @param lnum number
---- @param _end? any
+--- @param end_? any
 --- @return any[]
-function vim.fn.getline(lnum, _end) end
+function vim.fn.getline(lnum, end_) end
 
 -- Returns a |List| with all the entries in the location list for
 -- window {nr}.  {nr} can be the window number or the |window-ID|.
@@ -3918,7 +3915,7 @@ function vim.fn.has(feature) end
 -- 
 -- Can also be used as a |method|: >
 --   mydict->has_key(key)
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @return number
 function vim.fn.has_key(dict, key) end
 
@@ -4492,7 +4489,7 @@ function vim.fn.isnan(expr) end
 -- ```
 -- Can also be used as a |method|: >
 --   mydict->items()
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @return any[]
 function vim.fn.items(dict) end
 
@@ -4695,7 +4692,7 @@ function vim.fn.json_encode(expr) end
 -- 
 -- Can also be used as a |method|: >
 --   mydict->keys()
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @return any[]
 function vim.fn.keys(dict) end
 
@@ -5077,7 +5074,7 @@ function vim.fn.map(expr1, expr2) end
 --   GetKey()->maparg('n')
 --- @param mode? any
 --- @param abbr? any
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return string
 function vim.fn.maparg(name, mode, abbr, dict) end
 
@@ -5137,7 +5134,7 @@ function vim.fn.mapcheck(name, mode, abbr) end
 -- Note that if you are going to replace a map in several modes,
 -- e.g. with `:map!`, you need to save the mapping for all of
 -- them, since they can differ.
---- @param dict dictionary
+--- @param dict table<string, any>
 function vim.fn.mapset(mode, abbr, dict) end
 
 -- When {expr} is a |List| then this returns the index of the
@@ -5291,7 +5288,7 @@ function vim.fn.match(expr, pat, start, count) end
 -- 
 --- @param priority? any
 --- @param id? any
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return number
 function vim.fn.matchadd(group, pattern, priority, id, dict) end
 
@@ -5339,7 +5336,7 @@ function vim.fn.matchadd(group, pattern, priority, id, dict) end
 --- @param pos number
 --- @param priority? any
 --- @param id? any
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return number
 function vim.fn.matchaddpos(group, pos, priority, id, dict) end
 
@@ -5485,7 +5482,7 @@ function vim.fn.matchend(expr, pat, start, count) end
 -- results in ['two one'].
 --- @param list any[]
 --- @param str string
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return any[]
 function vim.fn.matchfuzzy(list, str, dict) end
 
@@ -5517,7 +5514,7 @@ function vim.fn.matchfuzzy(list, str, dict) end
 -- results in [[{"id": 10, "text": "hello"}], [[2, 3]], [127]]
 --- @param list any[]
 --- @param str string
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return any[]
 function vim.fn.matchfuzzypos(list, str, dict) end
 
@@ -5853,29 +5850,4 @@ function vim.fn.mkdir(name, path, prot) end
 --     DoFull()->mode()
 --- @return string
 function vim.fn.mode() end
-
--- Convert a list of VimL objects to msgpack. Returned value is a
--- |readfile()|-style list. When {type} contains "B", a |Blob| is
--- returned instead. Example: 
--- ```vim
---   call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
--- ```
--- or, using a |Blob|: 
--- ```vim
---   call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
--- ```
--- This will write the single 0x80 byte to a `fname.mpack` file
--- (dictionary with zero items is represented by 0x80 byte in
--- messagepack).
--- 
--- Limitations:
--- 1. |Funcref|s cannot be dumped.
--- 2. Containers that reference themselves cannot be dumped.
--- 3. Dictionary keys are always dumped as STR strings.
--- 4. Other strings and |Blob|s are always dumped as BIN strings.
--- 5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
---- @param list any[]
---- @param type? any
---- @return any[]
-function vim.fn.msgpackdump(list, type) end
 

@@ -1,7 +1,29 @@
 ---@meta
 
---# selene: allow(unused_variable)
----@diagnostic disable: unused-local
+-- Convert a list of VimL objects to msgpack. Returned value is a
+-- |readfile()|-style list. When {type} contains "B", a |Blob| is
+-- returned instead. Example: 
+-- ```vim
+--   call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
+-- ```
+-- or, using a |Blob|: 
+-- ```vim
+--   call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
+-- ```
+-- This will write the single 0x80 byte to a `fname.mpack` file
+-- (dictionary with zero items is represented by 0x80 byte in
+-- messagepack).
+-- 
+-- Limitations:
+-- 1. |Funcref|s cannot be dumped.
+-- 2. Containers that reference themselves cannot be dumped.
+-- 3. Dictionary keys are always dumped as STR strings.
+-- 4. Other strings and |Blob|s are always dumped as BIN strings.
+-- 5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
+--- @param list any[]
+--- @param type? any
+--- @return any[]
+function vim.fn.msgpackdump(list, type) end
 
 -- Convert a |readfile()|-style list or a |Blob| to a list of
 -- VimL objects.
@@ -767,7 +789,7 @@ function vim.fn.reg_recording() end
 -- ```
 -- Note: |localtime()| returns the current (non-relative) time.
 --- @return any[]
-function vim.fn.reltime(start, _end) end
+function vim.fn.reltime(start, end_) end
 
 -- Return a Float that represents the time value of {time}.
 -- Unit of time is seconds.
@@ -816,7 +838,7 @@ function vim.fn.reltimestr(time) end
 -- ```
 -- If there is no {key} in {dict} this is an error.
 -- Returns zero on error.
---- @param dict dictionary
+--- @param dict table<string, any>
 function vim.fn.remove(dict, key) end
 
 -- Rename the file by the name {from} to the name {to}.  This
@@ -912,14 +934,14 @@ function vim.fn.round(expr) end
 -- If {channel} is 0, the event is broadcast to all channels.
 -- Example: >
 --   :au VimLeave call rpcnotify(0, "leaving")
---- @param args? table<string, any>
+--- @param args? any[]
 function vim.fn.rpcnotify(channel, event, args) end
 
 -- Sends a request to {channel} to invoke {method} via
 -- |RPC| and blocks until a response is received.
 -- Example: >
 --   :let result = rpcrequest(rpc_chan, "func", 1, 2, 3)
---- @param args? table<string, any>
+--- @param args? any[]
 function vim.fn.rpcrequest(channel, method, args) end
 
 -- Deprecated. Replace  
@@ -1427,7 +1449,7 @@ function vim.fn.searchdecl(name, global, thisblock) end
 --- @param stopline? any
 --- @param timeout? any
 --- @return number
-function vim.fn.searchpair(start, middle, _end, flags, skip, stopline, timeout) end
+function vim.fn.searchpair(start, middle, end_, flags, skip, stopline, timeout) end
 
 -- Same as |searchpair()|, but returns a |List| with the line and
 -- column position of the match. The first element of the |List|
@@ -1444,7 +1466,7 @@ function vim.fn.searchpair(start, middle, _end, flags, skip, stopline, timeout) 
 --- @param stopline? any
 --- @param timeout? any
 --- @return any[]
-function vim.fn.searchpairpos(start, middle, _end, flags, skip, stopline, timeout) end
+function vim.fn.searchpairpos(start, middle, end_, flags, skip, stopline, timeout) end
 
 --   Same as |search()|, but returns a |List| with the line and
 --   column position of the match. The first element of the |List|
@@ -1639,7 +1661,7 @@ function vim.fn.setcharpos(expr, list) end
 -- 
 -- Can also be used as a |method|: >
 --   SavedSearch()->setcharsearch()
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @return table<string, any>
 function vim.fn.setcharsearch(dict) end
 
@@ -2129,7 +2151,7 @@ function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 -- second argument: >
 --   GetStack()->settagstack(winnr)
 --- @param nr number
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @param action? any
 --- @return number
 function vim.fn.settagstack(nr, dict, action) end
@@ -2235,7 +2257,7 @@ function vim.fn.sign_getdefined(name) end
 
 -- List  get a list of placed signs
 --- @param buf? buffer
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return any[]
 function vim.fn.sign_getplaced(buf, dict) end
 
@@ -2246,7 +2268,7 @@ function vim.fn.sign_jump(id, group, buf) end
 
 -- Number  place a sign
 --- @param buf buffer
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return number
 function vim.fn.sign_place(id, group, name, buf, dict) end
 
@@ -2261,7 +2283,7 @@ function vim.fn.sign_placelist(list) end
 function vim.fn.sign_undefine(list) end
 
 -- Number  unplace a sign
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return number
 function vim.fn.sign_unplace(group, dict) end
 
@@ -2440,7 +2462,7 @@ function vim.fn.sockconnect(mode, address, opts) end
 -- 
 --- @param list any[]
 --- @param func? fun()
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return any[]
 function vim.fn.sort(list, func, dict) end
 
@@ -3854,7 +3876,7 @@ function vim.fn.undotree() end
 --   mylist->uniq()
 --- @param list any[]
 --- @param func? fun()
---- @param dict? dictionary
+--- @param dict? table<string, any>
 --- @return any[]
 function vim.fn.uniq(list, func, dict) end
 
@@ -3864,7 +3886,7 @@ function vim.fn.uniq(list, func, dict) end
 -- 
 -- Can also be used as a |method|: >
 --   mydict->values()
---- @param dict dictionary
+--- @param dict table<string, any>
 --- @return any[]
 function vim.fn.values(dict) end
 
@@ -4333,7 +4355,7 @@ function vim.fn.winrestcmd() end
 --   GetView()->winrestview()
 -- ```
 -- 
---- @param dict dictionary
+--- @param dict table<string, any>
 function vim.fn.winrestview(dict) end
 
 -- Returns a |Dictionary| that contains information to restore
