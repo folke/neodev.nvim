@@ -62,7 +62,8 @@ function vim.call(func, ...) end
 -- Run diff on strings {a} and {b}. Any indices returned by this function,
 --     either directly or via callback arguments, are 1-based.
 --
---     Examples: >
+--     Examples:
+-- ```lua
 --
 --         vim.diff('a\n', 'b\nc\n')
 --         =>
@@ -76,7 +77,7 @@ function vim.call(func, ...) end
 --         {
 --             {1, 1, 1, 2}
 --         }
--- <
+-- ```
 --     Parameters: ~
 --       • {a}      First string to compare
 --       • {b}      Second string to compare
@@ -188,14 +189,15 @@ function vim.schedule(callback) end
 --     'spellfile', 'spellcapcheck' and 'spelloptions' which can all be local to
 --     the buffer. Consider calling this with |nvim_buf_call()|.
 --
---     Example: >
+--     Example:
+-- ```lua
 --
 --         vim.spell.check("the quik brown fox")
 --         =>
 --         {
 --             {'quik', 'bad', 4}
 --         }
--- <
+-- ```
 --     Parameters: ~
 --       • {str}    String to spell check.
 --
@@ -308,7 +310,8 @@ function vim.version() end
 --
 --         If {callback} errors, the error is raised.
 --
---         Examples: >
+--         Examples:
+-- ```lua
 --
 --     ---
 --     -- Wait for 100 ms, allowing other events to process
@@ -330,7 +333,7 @@ function vim.version() end
 --     if vim.wait(10000, function() return vim.g.timer_result end) then
 --       print('Only waiting a little bit of time!')
 --     end
--- <
+-- ```
 --- @param callback? fun()
 --- @param interval? any
 --- @param fast_only? any

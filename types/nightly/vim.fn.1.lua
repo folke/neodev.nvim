@@ -3,6 +3,29 @@
 --# selene: allow(unused_variable)
 ---@diagnostic disable: unused-local
 
+-- Convert a list of VimL objects to msgpack. Returned value is a
+-- 		|readfile()|-style list. When {type} contains "B", a |Blob| is
+-- 		returned instead. Example:
+-- ```vim
+-- 			call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
+-- <		or, using a |Blob|: >
+-- 			call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
+-- ```
+-- 		This will write the single 0x80 byte to a `fname.mpack` file
+-- 		(dictionary with zero items is represented by 0x80 byte in
+-- 		messagepack).
+--
+-- 		Limitations:
+-- 		1. |Funcref|s cannot be dumped.
+-- 		2. Containers that reference themselves cannot be dumped.
+-- 		3. Dictionary keys are always dumped as STR strings.
+-- 		4. Other strings and |Blob|s are always dumped as BIN strings.
+-- 		5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
+--- @param list any[]
+--- @param type? any
+--- @return any[]
+function vim.fn.msgpackdump(list, type) end
+
 -- Convert a |readfile()|-style list or a |Blob| to a list of
 -- 		VimL objects.
 -- 		Example: >
@@ -205,7 +228,8 @@ function vim.fn.pow(x, y) end
 function vim.fn.prevnonblank(lnum) end
 
 -- Return a String with {fmt}, where "%" items are replaced by
--- 		the formatted form of their respective arguments.  Example: >
+-- 		the formatted form of their respective arguments.  Example:
+-- ```vim
 -- 			printf("%4d: E%d %.30s", lnum, errno, msg)
 -- <		May result in:
 -- 			"  99: E42 asdfasdfasdfasdfasdfasdfasdfas" ~
@@ -213,7 +237,7 @@ function vim.fn.prevnonblank(lnum) end
 -- 		When used as a |method| the base is passed as the second
 -- 		argument: >
 -- 			Compute()->printf("result: %d")
--- <
+-- ```
 -- 		You can use `call()` to pass the items as a list.
 --
 -- 		Often used items are:
@@ -466,9 +490,10 @@ function vim.fn.prompt_setinterrupt(buf, expr) end
 -- Set prompt for buffer {buf} to {text}.  You most likely want
 -- 		{text} to end in a space.
 -- 		The result is only visible if {buf} has 'buftype' set to
--- 		"prompt".  Example: >
+-- 		"prompt".  Example:
+-- ```vim
 -- 			call prompt_setprompt(bufnr(''), 'command: ')
--- <
+-- ```
 -- 		Can also be used as a |method|: >
 -- 			GetBuffer()->prompt_setprompt('command: ')
 --- @param buf buffer
@@ -505,9 +530,10 @@ function vim.fn.pumvisible() end
 -- 		Dictionaries are represented as Vim |Dictionary| type with
 -- 		keys converted to strings.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetExpr()->py3eval()
--- <
+-- ```
 function vim.fn.py3eval(expr) end
 
 -- Evaluate Python expression {expr} and return its result
@@ -527,9 +553,10 @@ function vim.fn.pyeval(expr) end
 -- 		Uses Python 2 or 3, see |python_x| and 'pyxversion'.
 -- 		See also: |pyeval()|, |py3eval()|
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetExpr()->pyxeval()
--- <
+-- ```
 function vim.fn.pyxeval(expr) end
 
 -- Return a pseudo-random Number generated with an xoshiro128
@@ -540,15 +567,17 @@ function vim.fn.pyxeval(expr) end
 -- 		and updated.
 -- 		Returns -1 if {expr} is invalid.
 --
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 			:echo rand()
 -- 			:let seed = srand()
 -- 			:echo rand(seed)
 -- 			:echo rand(seed) % 16  " random number 0 - 15
--- <
--- 		Can also be used as a |method|: >
+-- ```
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			seed->rand()
--- <
+-- ```
 --- @param expr? any
 --- @return number
 function vim.fn.rand(expr) end
@@ -562,17 +591,19 @@ function vim.fn.rand(expr) end
 -- 		When the maximum is one before the start the result is an
 -- 		empty list.  When the maximum is more than one before the
 -- 		start this is an error.
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 			range(4)		" [0, 1, 2, 3]
 -- 			range(2, 4)		" [2, 3, 4]
 -- 			range(2, 9, 3)		" [2, 5, 8]
 -- 			range(2, -2, -1)	" [2, 1, 0, -1, -2]
 -- 			range(0)		" []
 -- 			range(2, 0)		" error!
--- <
--- 		Can also be used as a |method|: >
+-- ```
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetExpr()->range()
--- <
+-- ```
 --- @param max? any
 --- @param stride? any
 --- @return any[]
@@ -592,7 +623,8 @@ function vim.fn.range(expr, max, stride) end
 -- 			to the list.
 -- 		Each time {expr} is evaluated |v:val| is set to the entry name.
 -- 		When {expr} is a function the name is passed as the argument.
--- 		For example, to get a list of files ending in ".txt": >
+-- 		For example, to get a list of files ending in ".txt":
+-- ```vim
 -- 		  readdir(dirname, {n -> n =~ '.txt$'})
 -- <		To skip hidden and backup files: >
 -- 		  readdir(dirname, {n -> n !~ '^\.\|\~$'})
@@ -604,12 +636,13 @@ function vim.fn.range(expr, max, stride) end
 -- 		      \          {x : s:tree(a:dir .. '/' .. x)} : x})}
 --                   endfunction
 --                   echo s:tree(".")
--- <
+-- ```
 -- 		Returns an empty List on error.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetDirName()->readdir()
--- <
+-- ```
 --- @param expr? any
 --- @return any[]
 function vim.fn.readdir(directory, expr) end
@@ -662,11 +695,12 @@ function vim.fn.readfile(fname, type, max) end
 -- 		item.  If {initial} is not given and {object} is empty no
 -- 		result can be computed, an E998 error is given.
 --
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 			echo reduce([1, 3, 5], { acc, val -> acc + val })
 -- 			echo reduce(['x', 'y'], { acc, val -> acc .. val }, 'a')
 -- 			echo reduce(0z1122, { acc, val -> 2 * acc + val })
--- <
+-- ```
 -- 		Can also be used as a |method|: >
 -- 			echo mylist->reduce({ acc, val -> acc + val }, 0)
 --- @param func fun()
@@ -707,9 +741,10 @@ function vim.fn.reg_recording() end
 -- 		The {start} and {end} arguments must be values returned by
 -- 		reltime().  Returns zero on error.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetStart()->reltime()
--- <
+-- ```
 -- 		Note: |localtime()| returns the current (non-relative) time.
 --- @return any[]
 function vim.fn.reltime(start, _end) end
@@ -731,7 +766,8 @@ function vim.fn.reltimefloat(time) end
 
 -- Return a String that represents the time value of {time}.
 -- 		This is the number of seconds, a dot and the number of
--- 		microseconds.  Example: >
+-- 		microseconds.  Example:
+-- ```vim
 -- 			let start = reltime()
 -- 			call MyFunction()
 -- 			echo reltimestr(reltime(start))
@@ -744,7 +780,7 @@ function vim.fn.reltimefloat(time) end
 --
 -- 		Can also be used as a |method|: >
 -- 			reltime(start)->reltimestr()
--- <
+-- ```
 --- @return string
 function vim.fn.reltimestr(time) end
 
@@ -796,9 +832,10 @@ vim.fn["repeat"] = function(expr, count) end
 -- 		current directory (provided the result is still a relative
 -- 		path name) and also keeps a trailing path separator.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetName()->resolve()
--- <
+-- ```
 --- @return string
 function vim.fn.resolve(filename) end
 
@@ -911,11 +948,12 @@ function vim.fn.screenchars(row, col) end
 -- 		in a command (e.g. ":echo screencol()") it will return the
 -- 		column inside the command line, which is 1 when the command is
 -- 		executed. To get the cursor position in the file use one of
--- 		the following mappings: >
+-- 		the following mappings:
+-- ```vim
 -- 			nnoremap <expr> GG ":echom " .. screencol() .. "\n"
 -- 			nnoremap <silent> GG :echom screencol()<CR>
 -- 			noremap GG <Cmd>echom screencol()<Cr>
--- <
+-- ```
 --- @return number
 function vim.fn.screencol() end
 
@@ -964,9 +1002,10 @@ function vim.fn.screenrow() end
 -- 		This is mainly to be used for testing.
 -- 		Returns an empty String when row or col is out of range.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetRow()->screenstring(col)
--- <
+-- ```
 --- @param col number
 --- @return string
 function vim.fn.screenstring(row, col) end
@@ -1011,7 +1050,8 @@ function vim.fn.screenstring(row, col) end
 --
 -- 		When the {stopline} argument is given then the search stops
 -- 		after searching this line.  This is useful to restrict the
--- 		search to a range of lines.  Examples: >
+-- 		search to a range of lines.  Examples:
+-- ```vim
 -- 			let match = search('(', 'b', line("w0"))
 -- 			let end = search('END', '', line("w$"))
 -- <		When {stopline} is used and it is not zero this also implies
@@ -1057,7 +1097,7 @@ function vim.fn.screenstring(row, col) end
 -- 		    :  update		    " write the file if modified
 -- 		    :  let n = n + 1
 -- 		    :endwhile
--- <
+-- ```
 -- 		Example for using some flags: >
 -- 		    :echo search('\<if\|\(else\)\|\(endif\)', 'ncpe')
 -- <		This will search for the keywords "if", "else", and "endif"
@@ -1104,7 +1144,8 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 		this function with `recompute: 0` . This sometimes returns
 -- 		wrong information because |n| and |N|'s maximum count is 99.
 -- 		If it exceeded 99 the result must be max count + 1 (100). If
--- 		you want to get correct information, specify `recompute: 1`: >
+-- 		you want to get correct information, specify `recompute: 1`:
+-- ```vim
 --
 -- 			" result == maxcount + 1 (100) when many matches
 -- 			let result = searchcount(#{recompute: 0})
@@ -1112,8 +1153,9 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 			" Below returns correct result (recompute defaults
 -- 			" to 1)
 -- 			let result = searchcount()
--- <
--- 		The function is useful to add the count to 'statusline': >
+-- ```
+-- 		The function is useful to add the count to 'statusline':
+-- ```vim
 -- 			function! LastSearchCount() abort
 -- 			  let result = searchcount(#{recompute: 0})
 -- 			  if empty(result)
@@ -1140,9 +1182,10 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 			" 'hlsearch' was on
 -- 			" let &statusline ..=
 -- 			" \   '%{v:hlsearch ? LastSearchCount() : ""}'
--- <
+-- ```
 -- 		You can also update the search count, which can be useful in a
--- 		|CursorMoved| or |CursorMovedI| autocommand: >
+-- 		|CursorMoved| or |CursorMovedI| autocommand:
+-- ```vim
 --
 -- 			autocmd CursorMoved,CursorMovedI *
 -- 			  \ let s:searchcount_timer = timer_start(
@@ -1154,9 +1197,10 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 			    redrawstatus
 -- 			  endif
 -- 			endfunction
--- <
+-- ```
 -- 		This can also be used to count matched texts with specified
--- 		pattern in the current buffer using "pattern":  >
+-- 		pattern in the current buffer using "pattern":
+-- ```vim
 --
 -- 			" Count '\<foo\>' in this buffer
 -- 			" (Note that it also updates search count)
@@ -1165,7 +1209,7 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 			" To restore old search count by old pattern,
 -- 			" search again
 -- 			call searchcount()
--- <
+-- ```
 -- 		{options} must be a Dictionary. It can contain:
 -- 		  key		type		meaning ~
 -- 		  recompute	|Boolean|	if |TRUE|, recompute the count
@@ -1180,7 +1224,8 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 -- 						and different with |@/|.
 -- 						this works as same as the
 -- 						below command is executed
--- 						before calling this function >
+-- 						before calling this function
+-- ```vim
 -- 						  let @/ = pattern
 -- <						(default: |@/|)
 -- 		  timeout	|Number|	0 or negative number is no
@@ -1202,7 +1247,7 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetSearchOpts()->searchcount()
--- <
+-- ```
 --- @param options? table<string, any>
 --- @return table<string, any>
 function vim.fn.searchcount(options) end
@@ -1219,14 +1264,16 @@ function vim.fn.searchcount(options) end
 --
 -- 		Moves the cursor to the found match.
 -- 		Returns zero for success, non-zero for failure.
--- 		Example: >
+-- 		Example:
+-- ```vim
 -- 			if searchdecl('myvar') == 0
 -- 			   echo getline('.')
 -- 			endif
--- <
--- 		Can also be used as a |method|: >
+-- ```
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetName()->searchdecl()
--- <
+-- ```
 --- @param global? any
 --- @param thisblock? any
 --- @return number
@@ -1246,7 +1293,8 @@ function vim.fn.searchdecl(name, global, thisblock) end
 -- 		must not contain \( \) pairs.  Use of \%( \) is allowed.  When
 -- 		{middle} is not empty, it is found when searching from either
 -- 		direction, but only when not in a nested start-end pair.  A
--- 		typical use is: >
+-- 		typical use is:
+-- ```vim
 -- 			searchpair('\<if\>', '\<else\>', '\<endif\>')
 -- <		By leaving {middle} empty the "else" is skipped.
 --
@@ -1314,7 +1362,7 @@ function vim.fn.searchdecl(name, global, thisblock) end
 --
 -- 	:echo searchpair('{', '', '}', 'bW',
 -- 	     \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string"')
--- <
+-- ```
 --- @param flags? any
 --- @param skip? any
 --- @param stopline? any
@@ -1326,10 +1374,11 @@ function vim.fn.searchpair(start, middle, _end, flags, skip, stopline, timeout) 
 -- 		column position of the match. The first element of the |List|
 -- 		is the line number and the second element is the byte index of
 -- 		the column position of the match.  If no match is found,
--- 		returns [0, 0]. >
+-- 		returns [0, 0].
+-- ```vim
 --
 -- 			:let [lnum,col] = searchpairpos('{', '', '}', 'n')
--- <
+-- ```
 -- 		See |match-parens| for a bigger and more useful example.
 --- @param flags? any
 --- @param skip? any
@@ -1383,13 +1432,14 @@ function vim.fn.serverlist() end
 -- 		  appended to a generated path.
 -- 		- If {address} is empty it generates a path.
 --
--- 		Example named pipe: >
+-- 		Example named pipe:
+-- ```vim
 -- 			if has('win32')
 -- 			  echo serverstart('\\.\pipe\nvim-pipe-1234')
 -- 			else
 -- 			  echo serverstart('nvim.sock')
 -- 			endif
--- <
+-- ```
 -- 		Example TCP/IP address: >
 -- 			echo serverstart('::1:12345')
 --- @param address? any
@@ -1455,11 +1505,11 @@ function vim.fn.setbufvar(buf, varname, val) end
 
 -- Specify overrides for cell widths of character ranges.  This
 -- 		tells Vim how wide characters are, counted in screen cells.
--- 		This overrides 'ambiwidth'.  Example: >
+-- 		This overrides 'ambiwidth'.  Example:
+-- ```vim
 -- 		   setcellwidths([[0xad, 0xad, 1],
 -- 				\ [0x2194, 0x2199, 2]])
---
--- <
+-- ```
 -- 		The {list} argument is a list of lists with each three
 -- 		numbers. These three numbers are [low, high, width].  "low"
 -- 		and "high" can be the same, in which case this refers to one
@@ -1595,9 +1645,10 @@ function vim.fn.setenv(name, val) end
 --
 -- 		Returns non-zero for success, zero for failure.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetFilename()->setfperm(mode)
--- <
+-- ```
 -- 		To read permissions see |getfperm()|.
 function vim.fn.setfperm(fname, mode) end
 
@@ -1665,9 +1716,10 @@ function vim.fn.setloclist(nr, list, action, what) end
 -- 		If {win} is specified, use the window with this number or
 -- 		window ID instead of the current window.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetMatches()->setmatches()
--- <
+-- ```
 --- @param list any[]
 --- @param win? window
 --- @return number
@@ -1779,9 +1831,10 @@ function vim.fn.setpos(expr, list) end
 --
 -- 		'r'	The items from the current quickfix list are replaced
 -- 			with the items from {list}.  This can also be used to
--- 			clear the list: >
+-- 			clear the list:
+-- ```vim
 -- 				:call setqflist([], 'r')
--- <
+-- ```
 -- 		'f'	All the quickfix lists in the quickfix stack are
 -- 			freed.
 --
@@ -1826,11 +1879,12 @@ function vim.fn.setpos(expr, list) end
 -- 		list is modified, "id" should be used instead of "nr" to
 -- 		specify the list.
 --
--- 		Examples (See also |setqflist-examples|): >
+-- 		Examples (See also |setqflist-examples|):
+-- ```vim
 -- 		   :call setqflist([], 'r', {'title': 'My search'})
 -- 		   :call setqflist([], 'r', {'nr': 2, 'title': 'Errors'})
 -- 		   :call setqflist([], 'a', {'id':qfid, 'lines':["F1:10:L10"]})
--- <
+-- ```
 -- 		Returns zero for success, -1 for failure.
 --
 -- 		This function can be used to create a quickfix list
@@ -1838,9 +1892,10 @@ function vim.fn.setpos(expr, list) end
 -- 		`:cc 1` to jump to the first position.
 --
 -- 		Can also be used as a |method|, the base is passed as the
--- 		second argument: >
+-- 		second argument:
+-- ```vim
 -- 			GetErrorlist()->setqflist()
--- <
+-- ```
 --- @param list any[]
 --- @param action? any
 --- @param what? any
@@ -1968,7 +2023,8 @@ function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 -- 		Returns zero for success, -1 for failure.
 --
 -- 		Examples (for more examples see |tagstack-examples|):
--- 		    Empty the tag stack of window 3: >
+-- 		    Empty the tag stack of window 3:
+-- ```vim
 -- 			call settagstack(3, {'items' : []})
 --
 -- <		    Save and restore the tag stack: >
@@ -1976,7 +2032,7 @@ function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 -- 			" do something else
 -- 			call settagstack(1003, stack)
 -- 			unlet stack
--- <
+-- ```
 -- 		Can also be used as a |method|, the base is passed as the
 -- 		second argument: >
 -- 			GetStack()->settagstack(winnr)
@@ -2190,7 +2246,8 @@ function vim.fn.sockconnect(mode, address, opts) end
 
 -- Sort the items in {list} in-place.  Returns {list}.
 --
--- 		If you want a list to remain unmodified make a copy first: >
+-- 		If you want a list to remain unmodified make a copy first:
+-- ```vim
 -- 			:let sortedlist = sort(copy(mylist))
 --
 -- <		When {func} is omitted, is empty or zero, then sort() uses the
@@ -2261,7 +2318,7 @@ function vim.fn.sockconnect(mode, address, opts) end
 -- 			endfunc
 -- <		For a simple expression you can use a lambda: >
 -- 			eval mylist->sort({i1, i2 -> i1 - i2})
--- <
+-- ```
 --- @param list any[]
 --- @param func? fun()
 --- @param dict? dictionary
@@ -2275,9 +2332,10 @@ function vim.fn.sort(list, func, dict) end
 -- 		This can be used for making spelling suggestions.  Note that
 -- 		the method can be quite slow.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetWord()->soundfold()
--- <
+-- ```
 --- @return string
 function vim.fn.soundfold(word) end
 
@@ -2297,7 +2355,8 @@ function vim.fn.soundfold(word) end
 -- 			"rare"		rare word
 -- 			"local"		word only valid in another region
 -- 			"caps"		word should start with Capital
--- 		Example: >
+-- 		Example:
+-- ```vim
 -- 			echo spellbadword("the quik brown fox")
 -- <			['quik', 'bad'] ~
 --
@@ -2306,7 +2365,7 @@ function vim.fn.soundfold(word) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetText()->spellbadword()
--- <
+-- ```
 --- @param sentence? any
 --- @return string
 function vim.fn.spellbadword(sentence) end
@@ -2392,11 +2451,12 @@ function vim.fn.sqrt(expr) end
 -- 		  initialize the seed values.  This is useful for testing or
 -- 		  when a predictable sequence is intended.
 --
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 			:let seed = srand()
 -- 			:let seed = srand(userinput)
 -- 			:echo rand(seed)
--- <
+-- ```
 -- 		Can also be used as a |method|: >
 -- 			userinput->srand()
 --- @param expr? any
@@ -2461,9 +2521,10 @@ function vim.fn.stdpath(what) end
 -- 		The decimal point is always '.', no matter what the locale is
 -- 		set to.  A comma ends the number: "12,345.67" is converted to
 -- 		12.0.  You can strip out thousands separators with
--- 		|substitute()|: >
+-- 		|substitute()|:
+-- ```vim
 -- 			let f = str2float(substitute(text, ',', '', 'g'))
--- <
+-- ```
 -- 		Returns 0.0 if the conversion fails.
 --
 -- 		Can also be used as a |method|: >
@@ -2496,9 +2557,10 @@ function vim.fn.str2list(string, utf8) end
 --
 -- 		When {base} is omitted base 10 is used.  This also means that
 -- 		a leading zero doesn't cause octal conversion to be used, as
--- 		with the default String to Number conversion.  Example: >
+-- 		with the default String to Number conversion.  Example:
+-- ```vim
 -- 			let nr = str2nr('0123')
--- <
+-- ```
 -- 		When {base} is 16 a leading "0x" or "0X" is ignored.  With a
 -- 		different base the result will be zero. Similarly, when
 -- 		{base} is 8 a leading "0", "0o" or "0O" is ignored, and when
@@ -2540,7 +2602,8 @@ function vim.fn.strcharpart(src, start, len) end
 -- 		Also see |strlen()|, |strdisplaywidth()| and |strwidth()|.
 --
 -- 		{skipcc} is only available after 7.4.755.  For backward
--- 		compatibility, you can define a wrapper function: >
+-- 		compatibility, you can define a wrapper function:
+-- ```vim
 -- 		    if has("patch-7.4.755")
 -- 		      function s:strchars(str, skipcc)
 -- 			return strchars(a:str, a:skipcc)
@@ -2554,7 +2617,7 @@ function vim.fn.strcharpart(src, start, len) end
 -- 			endif
 -- 		      endfunction
 -- 		    endif
--- <
+-- ```
 -- 		Can also be used as a |method|: >
 -- 			GetText()->strchars()
 --- @param skipcc? any
@@ -2620,7 +2683,8 @@ function vim.fn.strgetchar(str, index) end
 -- The result is a Number, which gives the byte index in
 -- 		{haystack} of the first occurrence of the String {needle}.
 -- 		If {start} is specified, the search starts at index {start}.
--- 		This can be used to find a second match: >
+-- 		This can be used to find a second match:
+-- ```vim
 -- 			:let colon1 = stridx(line, ":")
 -- 			:let colon2 = stridx(line, ":", colon1 + 1)
 -- <		The search is done case-sensitive.
@@ -2631,7 +2695,7 @@ function vim.fn.strgetchar(str, index) end
 -- 		  :echo stridx("An Example", "Example")	     3
 -- 		  :echo stridx("Starting point", "Start")    0
 -- 		  :echo stridx("Starting point", "start")   -1
--- <
+-- ```
 -- 		stridx() works similar to the C function strstr().  When used
 -- 		with a single character it works similar to strchr().
 --
@@ -2694,7 +2758,8 @@ function vim.fn.strlen(string) end
 -- 		When bytes are selected which do not exist, this doesn't
 -- 		result in an error, the bytes are simply omitted.
 -- 		If {len} is missing, the copy continues from {start} till the
--- 		end of the {src}. >
+-- 		end of the {src}.
+-- ```vim
 -- 			strpart("abcdefg", 3, 2)    == "de"
 -- 			strpart("abcdefg", -2, 4)   == "ab"
 -- 			strpart("abcdefg", 5, 4)    == "fg"
@@ -2703,7 +2768,7 @@ function vim.fn.strlen(string) end
 -- <		Note: To get the first character, {start} must be 0.  For
 -- 		example, to get the character under the cursor: >
 -- 			strpart(getline("."), col(".") - 1, 1, v:true)
--- <
+-- ```
 -- 		Returns an empty string on error.
 --
 -- 		Can also be used as a |method|: >
@@ -2728,7 +2793,8 @@ function vim.fn.strpart(src, start, len, chars) end
 -- 		result.
 --
 -- 		See also |strftime()|.
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 		  :echo strptime("%Y %b %d %X", "1997 Apr 27 11:49:23")
 -- <		  862156163 >
 -- 		  :echo strftime("%c", strptime("%y%m%d %T", "970427 11:53:55"))
@@ -2738,7 +2804,7 @@ function vim.fn.strpart(src, start, len, chars) end
 --
 -- 		Can also be used as a |method|: >
 -- 			GetFormat()->strptime(timestring)
--- <
+-- ```
 --- @return number
 function vim.fn.strptime(format, timestring) end
 
@@ -2746,7 +2812,8 @@ function vim.fn.strptime(format, timestring) end
 -- 		{haystack} of the last occurrence of the String {needle}.
 -- 		When {start} is specified, matches beyond this index are
 -- 		ignored.  This can be used to find a match before a previous
--- 		match: >
+-- 		match:
+-- ```vim
 -- 			:let lastcomma = strridx(line, ",")
 -- 			:let comma2 = strridx(line, ",", lastcomma - 1)
 -- <		The search is done case-sensitive.
@@ -2755,7 +2822,7 @@ function vim.fn.strptime(format, timestring) end
 -- 		If the {needle} is empty the length of {haystack} is returned.
 -- 		See also |stridx()|.  Examples: >
 -- 		  :echo strridx("an angry armadillo", "an")	     3
--- <
+-- ```
 -- 		When used with a single character it works similar to the C
 -- 		function strrchr().
 --
@@ -2928,9 +2995,10 @@ function vim.fn.swapname(buf) end
 --
 -- 		Returns zero on error.
 --
--- 		Example (echoes the name of the syntax item under the cursor): >
+-- 		Example (echoes the name of the syntax item under the cursor):
+-- ```vim
 -- 			:echo synIDattr(synID(line("."), col("."), 1), "name")
--- <
+-- ```
 --- @param lnum number
 --- @param col number
 --- @return number
@@ -2973,9 +3041,10 @@ function vim.fn.synID(lnum, col, trans) end
 -- 		Returns an empty string on error.
 --
 -- 		Example (echoes the color of the syntax item under the
--- 		cursor): >
+-- 		cursor):
+-- ```vim
 -- 	:echo synIDattr(synIDtrans(synID(line("."), col("."), 1)), "fg")
--- <
+-- ```
 -- 		Can also be used as a |method|: >
 -- 	:echo synID(line("."), col("."), 1)->synIDtrans()->synIDattr("fg")
 --- @param mode? any
@@ -3104,9 +3173,10 @@ function vim.fn.system(cmd, input) end
 -- 		Note that on MS-Windows you may get trailing CR characters.
 --
 -- 		To see the difference between "echo hello" and "echo -n hello"
--- 		use |system()| and |split()|: >
+-- 		use |system()| and |split()|:
+-- ```vim
 -- 			echo split(system('echo hello'), '\n', 1)
--- <
+-- ```
 -- 		Returns an empty string on error.
 --
 -- 		Can also be used as a |method|: >
@@ -3157,14 +3227,15 @@ function vim.fn.tabpagenr(arg) end
 -- 		  the window which will be used when going to this tab page.
 -- 		- When "$" the number of windows is returned.
 -- 		- When "#" the previous window nr is returned.
--- 		Useful examples: >
+-- 		Useful examples:
+-- ```vim
 -- 		    tabpagewinnr(1)	    " current window of tab page 1
 -- 		    tabpagewinnr(4, '$')    " number of windows in tab page 4
 -- <		When {tabarg} is invalid zero is returned.
 --
 -- 		Can also be used as a |method|: >
 -- 			GetTabpage()->tabpagewinnr()
--- <
+-- ```
 --- @param arg? any
 --- @return number
 function vim.fn.tabpagewinnr(tabarg, arg) end
@@ -3241,7 +3312,8 @@ function vim.fn.tan(expr) end
 -- 		range [-1, 1].
 -- 		{expr} must evaluate to a |Float| or a |Number|.
 -- 		Returns 0.0 if {expr} is not a |Float| or a |Number|.
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 			:echo tanh(0.5)
 -- <			0.462117 >
 -- 			:echo tanh(-1)
@@ -3249,7 +3321,7 @@ function vim.fn.tan(expr) end
 --
 -- 		Can also be used as a |method|: >
 -- 			Compute()->tanh()
--- <
+-- ```
 --- @return float
 function vim.fn.tanh(expr) end
 
@@ -3293,9 +3365,10 @@ function vim.fn.test_garbagecollect_now() end
 -- 				    -1 means forever
 -- 		    "callback"	    the callback
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetTimer()->timer_info()
--- <
+-- ```
 --- @param id? any
 --- @return any[]
 function vim.fn.timer_info(id) end
@@ -3312,9 +3385,10 @@ function vim.fn.timer_info(id) end
 -- 		String, then the timer is paused, otherwise it is unpaused.
 -- 		See |non-zero-arg|.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetTimer()->timer_pause(1)
--- <
+-- ```
 function vim.fn.timer_pause(timer, paused) end
 
 -- Create a timer and return the timer ID.
@@ -3357,9 +3431,10 @@ function vim.fn.timer_start(time, callback, options) end
 -- 		{timer} is an ID returned by timer_start(), thus it must be a
 -- 		Number.  If {timer} does not exist there is no error.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetTimer()->timer_stop()
--- <
+-- ```
 function vim.fn.timer_stop(timer) end
 
 -- Stop all timers.  The timer callbacks will no longer be
@@ -3679,9 +3754,10 @@ function vim.fn.wait(timeout, condition, interval) end
 -- 		This can be used in mappings to handle the 'wildcharm' option
 -- 		gracefully. (Makes only sense with |mapmode-c| mappings).
 --
--- 		For example to make <c-j> work like <down> in wildmode, use: >
+-- 		For example to make <c-j> work like <down> in wildmode, use:
+-- ```vim
 --     :cnoremap <expr> <C-j> wildmenumode() ? "\<Down>\<Tab>" : "\<c-j>"
--- <
+-- ```
 -- 		(Note, this needs the 'wildcharm' option set appropriately).
 --- @return number
 function vim.fn.wildmenumode() end
@@ -3691,9 +3767,10 @@ function vim.fn.wildmenumode() end
 -- 		without triggering autocommands or changing directory.  When
 -- 		executing {command} autocommands will be triggered, this may
 -- 		have unexpected side effects.  Use |:noautocmd| if needed.
--- 		Example: >
+-- 		Example:
+-- ```vim
 -- 			call win_execute(winid, 'syntax enable')
--- <
+-- ```
 -- 		Can also be used as a |method|, the base is passed as the
 -- 		second argument: >
 -- 			GetCommand()->win_execute(winid)
@@ -3742,9 +3819,10 @@ function vim.fn.win_getid(win, tab) end
 --
 -- 		Also see the 'buftype' option.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetWinid()->win_gettype()
--- <
+-- ```
 --- @param nr? number
 --- @return string
 function vim.fn.win_gettype(nr) end
@@ -3818,9 +3896,10 @@ function vim.fn.win_move_statusline(nr, offset) end
 -- 		Returns [0, 0] if the window cannot be found in the current
 -- 		tabpage.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetWinid()->win_screenpos()
--- <
+-- ```
 --- @param nr number
 --- @return any[]
 function vim.fn.win_screenpos(nr) end
@@ -3844,9 +3923,10 @@ function vim.fn.win_screenpos(nr) end
 -- 				present, the values of 'splitbelow' and
 -- 				'splitright' are used.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetWinid()->win_splitmove(target)
--- <
+-- ```
 --- @param nr number
 --- @param options? table<string, any>
 --- @return number
@@ -3858,12 +3938,14 @@ function vim.fn.win_splitmove(nr, target, options) end
 -- 		When {nr} is zero, the number of the buffer in the current
 -- 		window is returned.
 -- 		When window {nr} doesn't exist, -1 is returned.
--- 		Example: >
+-- 		Example:
+-- ```vim
 --   :echo "The file in the current window is " .. bufname(winbufnr(0))
--- <
--- 		Can also be used as a |method|: >
+-- ```
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			FindWindow()->winbufnr()->bufname()
--- <
+-- ```
 --- @param nr number
 --- @return number
 function vim.fn.winbufnr(nr) end
@@ -3887,12 +3969,13 @@ function vim.fn.windowsversion() end
 -- 		returned.  When window {nr} doesn't exist, -1 is returned.
 -- 		An existing window always has a height of zero or more.
 -- 		This excludes any window toolbar line.
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 --   :echo "The current window has " .. winheight(0) .. " lines."
 --
 -- <		Can also be used as a |method|: >
 -- 			GetWinid()->winheight()
--- <
+-- ```
 --- @param nr number
 --- @return number
 function vim.fn.winheight(nr) end
@@ -3912,7 +3995,8 @@ function vim.fn.winheight(nr) end
 -- 		For vertically split windows, which form a row, it returns:
 -- 			["row", [{nested list of windows}]]
 --
--- 		Example: >
+-- 		Example:
+-- ```vim
 -- 			" Only one window in the tab page
 -- 			:echo winlayout()
 -- 			['leaf', 1000]
@@ -3925,10 +4009,11 @@ function vim.fn.winheight(nr) end
 -- 			:echo winlayout(2)
 -- 			['col', [['leaf', 1002], ['row', [['leaf', 1003],
 -- 					    ['leaf', 1001]]], ['leaf', 1000]]]
--- <
--- 		Can also be used as a |method|: >
+-- ```
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetTabnr()->winlayout()
--- <
+-- ```
 --- @param tabnr? number
 --- @return any[]
 function vim.fn.winlayout(tabnr) end
@@ -3964,14 +4049,15 @@ function vim.fn.winline() end
 -- 		|:wincmd|.
 -- 		When {arg} is invalid an error is given and zero is returned.
 -- 		Also see |tabpagewinnr()| and |win_getid()|.
--- 		Examples: >
+-- 		Examples:
+-- ```vim
 -- 			let window_count = winnr('$')
 -- 			let prev_window = winnr('#')
 -- 			let wnum = winnr('3k')
 --
 -- <		Can also be used as a |method|: >
 -- 			GetWinval()->winnr()
--- <
+-- ```
 --- @param arg? any
 --- @return number
 function vim.fn.winnr(arg) end
@@ -3980,11 +4066,12 @@ function vim.fn.winnr(arg) end
 -- 		the current window sizes.  Only works properly when no windows
 -- 		are opened or closed and the current window and tab page is
 -- 		unchanged.
--- 		Example: >
+-- 		Example:
+-- ```vim
 -- 			:let cmd = winrestcmd()
 -- 			:call MessWithWindowSizes()
 -- 			:exe cmd
--- <
+-- ```
 --- @return string
 function vim.fn.winrestcmd() end
 
@@ -3992,9 +4079,10 @@ function vim.fn.winrestcmd() end
 -- 		the view of the current window.
 -- 		Note: The {dict} does not have to contain all values, that are
 -- 		returned by |winsaveview()|. If values are missing, those
--- 		settings won't be restored. So you can use: >
+-- 		settings won't be restored. So you can use:
+-- ```vim
 -- 		    :call winrestview({'curswant': 4})
--- <
+-- ```
 -- 		This will only set the curswant value (the column the cursor
 -- 		wants to move on vertical movements) of the cursor to column 5
 -- 		(yes, that is 5), while all other settings will remain the
@@ -4003,9 +4091,10 @@ function vim.fn.winrestcmd() end
 -- 		If you have changed the values the result is unpredictable.
 -- 		If the window size changed the result won't be the same.
 --
--- 		Can also be used as a |method|: >
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			GetView()->winrestview()
--- <
+-- ```
 --- @param dict dictionary
 function vim.fn.winrestview(dict) end
 
@@ -4085,10 +4174,11 @@ function vim.fn.wordcount() end
 -- 		unmodified.
 --
 -- 		When {flags} contains "a" then append mode is used, lines are
--- 		appended to the file: >
+-- 		appended to the file:
+-- ```vim
 -- 			:call writefile(["foo"], "event.log", "a")
 -- 			:call writefile(["bar"], "event.log", "a")
--- <
+-- ```
 -- 		When {flags} contains "S" fsync() call is not used, with "s"
 -- 		it is used, 'fsync' option applies by default. No fsync()
 -- 		means that writefile() will finish faster, but writes may be
@@ -4116,12 +4206,14 @@ function vim.fn.writefile(object, fname, flags) end
 -- Bitwise XOR on the two arguments.  The arguments are converted
 -- 		to a number.  A List, Dict or Float argument causes an error.
 -- 		Also see `and()` and `or()`.
--- 		Example: >
+-- 		Example:
+-- ```vim
 -- 			:let bits = xor(bits, 0x80)
--- <
--- 		Can also be used as a |method|: >
+-- ```
+-- 		Can also be used as a |method|:
+-- ```vim
 -- 			:let bits = bits->xor(0x80)
--- <
+-- ```
 --- @return number
 function vim.fn.xor(expr, expr) end
 

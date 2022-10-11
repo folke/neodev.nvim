@@ -104,11 +104,6 @@ function M.process(name, fun, prefix)
     ["return"] = {},
   }
 
-  -- make markdown lua code blocks for code regions
-  ret.doc = ret.doc:gsub(">\n", "\n```lua\n")
-  ret.doc = ret.doc:gsub("\n<\n", "\n```\n")
-  ret.doc = ret.doc:gsub("\n<$", "\n```")
-
   for _, r in pairs(fun["return"]) do
     table.insert(ret["return"], { doc = r })
   end
@@ -154,6 +149,10 @@ function M.emmy(fun)
 
   local ret = ""
   if fun.doc ~= "" then
+    -- make markdown lua code blocks for code regions
+    local ft = fun.name:find("vim.fn") and "vim" or "lua"
+    fun.doc = fun.doc:gsub("\n*>\n(.-)\n*<\n", "\n```" .. ft .. "\n%1\n```\n")
+    fun.doc = fun.doc:gsub("\n*>\n(.-)\n*<$", "\n```" .. ft .. "\n%1\n```\n")
     ret = ret .. (M.comment(fun.doc)) .. "\n"
   end
 
