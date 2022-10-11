@@ -90,7 +90,7 @@ function M.parse(name, opts)
     local context = line
     for c = 1, opts.context do
       if lines[l + c] then
-        context = line .. "\n" .. lines[l + c]
+        context = context .. "\n" .. lines[l + c]
       end
     end
 

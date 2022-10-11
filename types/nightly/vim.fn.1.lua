@@ -1232,17 +1232,111 @@ function vim.fn.searchcount(options) end
 --- @return number
 function vim.fn.searchdecl(name, global, thisblock) end
 
--- Number	search for other end of start/end pair
+-- Search for the match of a nested start-end pair.  This can be
+-- 		used to find the "endif" that matches an "if", while other
+-- 		if/endif pairs in between are ignored.
+-- 		The search starts at the cursor.  The default is to search
+-- 		forward, include 'b' in {flags} to search backward.
+-- 		If a match is found, the cursor is positioned at it and the
+-- 		line number is returned.  If no match is found 0 or -1 is
+-- 		returned and the cursor doesn't move.  No error message is
+-- 		given.
+--
+-- 		{start}, {middle} and {end} are patterns, see |pattern|.  They
+-- 		must not contain \( \) pairs.  Use of \%( \) is allowed.  When
+-- 		{middle} is not empty, it is found when searching from either
+-- 		direction, but only when not in a nested start-end pair.  A
+-- 		typical use is: >
+-- 			searchpair('\<if\>', '\<else\>', '\<endif\>')
+-- <		By leaving {middle} empty the "else" is skipped.
+--
+-- 		{flags} 'b', 'c', 'n', 's', 'w' and 'W' are used like with
+-- 		|search()|.  Additionally:
+-- 		'r'	Repeat until no more matches found; will find the
+-- 			outer pair.  Implies the 'W' flag.
+-- 		'm'	Return number of matches instead of line number with
+-- 			the match; will be > 1 when 'r' is used.
+-- 		Note: it's nearly always a good idea to use the 'W' flag, to
+-- 		avoid wrapping around the end of the file.
+--
+-- 		When a match for {start}, {middle} or {end} is found, the
+-- 		{skip} expression is evaluated with the cursor positioned on
+-- 		the start of the match.  It should return non-zero if this
+-- 		match is to be skipped.  E.g., because it is inside a comment
+-- 		or a string.
+-- 		When {skip} is omitted or empty, every match is accepted.
+-- 		When evaluating {skip} causes an error the search is aborted
+-- 		and -1 returned.
+-- 		{skip} can be a string, a lambda, a funcref or a partial.
+-- 		Anything else makes the function fail.
+--
+-- 		For {stopline} and {timeout} see |search()|.
+--
+-- 		The value of 'ignorecase' is used.  'magic' is ignored, the
+-- 		patterns are used like it's on.
+--
+-- 		The search starts exactly at the cursor.  A match with
+-- 		{start}, {middle} or {end} at the next character, in the
+-- 		direction of searching, is the first one found.  Example: >
+-- 			if 1
+-- 			  if 2
+-- 			  endif 2
+-- 			endif 1
+-- <		When starting at the "if 2", with the cursor on the "i", and
+-- 		searching forwards, the "endif 2" is found.  When starting on
+-- 		the character just before the "if 2", the "endif 1" will be
+-- 		found.  That's because the "if 2" will be found first, and
+-- 		then this is considered to be a nested if/endif from "if 2" to
+-- 		"endif 2".
+-- 		When searching backwards and {end} is more than one character,
+-- 		it may be useful to put "\zs" at the end of the pattern, so
+-- 		that when the cursor is inside a match with the end it finds
+-- 		the matching start.
+--
+-- 		Example, to find the "endif" command in a Vim script: >
+--
+-- 	:echo searchpair('\<if\>', '\<el\%[seif]\>', '\<en\%[dif]\>', 'W',
+-- 			\ 'getline(".") =~ "^\\s*\""')
+--
+-- <		The cursor must be at or after the "if" for which a match is
+-- 		to be found.  Note that single-quote strings are used to avoid
+-- 		having to double the backslashes.  The skip expression only
+-- 		catches comments at the start of a line, not after a command.
+-- 		Also, a word "en" or "if" halfway through a line is considered
+-- 		a match.
+-- 		Another example, to search for the matching "{" of a "}": >
+--
+-- 	:echo searchpair('{', '', '}', 'bW')
+--
+-- <		This works when the cursor is at or before the "}" for which a
+-- 		match is to be found.  To reject matches that syntax
+-- 		highlighting recognized as strings: >
+--
+-- 	:echo searchpair('{', '', '}', 'bW',
+-- 	     \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string"')
+-- <
 --- @param flags? any
 --- @param skip? any
+--- @param stopline? any
+--- @param timeout? any
 --- @return number
-function vim.fn.searchpair(start, middle, _end, flags, skip) end
+function vim.fn.searchpair(start, middle, _end, flags, skip, stopline, timeout) end
 
--- List	search for other end of start/end pair
+-- Same as |searchpair()|, but returns a |List| with the line and
+-- 		column position of the match. The first element of the |List|
+-- 		is the line number and the second element is the byte index of
+-- 		the column position of the match.  If no match is found,
+-- 		returns [0, 0]. >
+--
+-- 			:let [lnum,col] = searchpairpos('{', '', '}', 'n')
+-- <
+-- 		See |match-parens| for a bigger and more useful example.
 --- @param flags? any
 --- @param skip? any
+--- @param stopline? any
+--- @param timeout? any
 --- @return any[]
-function vim.fn.searchpairpos(start, middle, _end, flags, skip) end
+function vim.fn.searchpairpos(start, middle, _end, flags, skip, stopline, timeout) end
 
 -- Same as |search()|, but returns a |List| with the line and
 -- 		column position of the match. The first element of the |List|
