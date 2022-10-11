@@ -96,6 +96,7 @@ function M.parse(name, opts)
       chunk_tags = vim.deepcopy(tags)
       table.insert(chunk, line)
     elseif #chunk > 0 and (line:find(opts.continuation) or line:find("^%s*$")) then
+      line = line:gsub("^\t", "")
       table.insert(chunk, line)
     else
       save()
