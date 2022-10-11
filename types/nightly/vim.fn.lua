@@ -1092,7 +1092,7 @@ function vim.fn.cosh(expr) end
 -- ```
 -- 
 --- @param ic? any
---- @param start? any
+--- @param start? number
 --- @return number
 function vim.fn.count(comp, expr, ic, start) end
 
@@ -2618,7 +2618,7 @@ function vim.fn.getbufinfo(dict) end
 --   GetBufnr()->getbufline(lnum)
 --- @param buf buffer
 --- @param lnum number
---- @param end_? any
+--- @param end_? number
 --- @return any[]
 function vim.fn.getbufline(buf, lnum, end_) end
 
@@ -3181,7 +3181,7 @@ function vim.fn.getjumplist(winnr, tabnr) end
 -- ```
 -- To get lines from another buffer see |getbufline()|
 --- @param lnum number
---- @param end_? any
+--- @param end_? number
 --- @return any[]
 function vim.fn.getline(lnum, end_) end
 
@@ -4196,7 +4196,7 @@ function vim.fn.indent(lnum) end
 -- ```
 -- Can also be used as a |method|: >
 --   GetObject()->index(what)
---- @param start? any
+--- @param start? number
 --- @param ic? any
 --- @return number
 function vim.fn.index(object, expr, start, ic) end
@@ -5216,7 +5216,7 @@ function vim.fn.mapset(mode, abbr, dict) end
 --   GetList()->match('word')
 -- ```
 -- 
---- @param start? any
+--- @param start? number
 --- @param count? any
 --- @return number
 function vim.fn.match(expr, pat, start, count) end
@@ -5398,7 +5398,7 @@ function vim.fn.matchdelete(id, win) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->matchend('word')
---- @param start? any
+--- @param start? number
 --- @param count? any
 --- @return number
 function vim.fn.matchend(expr, pat, start, count) end
@@ -5533,7 +5533,7 @@ function vim.fn.matchfuzzypos(list, str, dict) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->matchlist('word')
---- @param start? any
+--- @param start? number
 --- @param count? any
 --- @return any[]
 function vim.fn.matchlist(expr, pat, start, count) end
@@ -5558,7 +5558,7 @@ function vim.fn.matchlist(expr, pat, start, count) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->matchstr('word')
---- @param start? any
+--- @param start? number
 --- @param count? any
 --- @return string
 function vim.fn.matchstr(expr, pat, start, count) end
@@ -5593,7 +5593,7 @@ function vim.fn.matchstr(expr, pat, start, count) end
 --   GetText()->matchstrpos('word')
 -- ```
 -- 
---- @param start? any
+--- @param start? number
 --- @param count? any
 --- @return any[]
 function vim.fn.matchstrpos(expr, pat, start, count) end

@@ -1,4 +1,5 @@
 local util = require("lua-dev.util")
+local Annotations = require("lua-dev.build.annotations")
 
 local M = {}
 
@@ -13,12 +14,13 @@ M.vim_type_map = {
   funcref = "fun()",
   dict = "table<string, any>",
   none = "nil",
-  set = "table",
+  set = "boolean",
   boolean = "boolean",
 }
 
 ---@param name string
 function M.read(name)
+  --- FIXME: vim.fn.expand
   local docs = vim.fn.expand("$VIMRUNTIME/doc", false, false)
   local txtfile = docs .. "/" .. name .. ".txt"
 
@@ -109,20 +111,6 @@ function M.parse(name, opts)
   return ret
 end
 
-function M.fqn(name)
-  local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
-  if vim.api[name] then
-    return "vim.api." .. name
-  elseif vim[name] then
-    return "vim." .. name
-  elseif name:find("^[a-zA-Z_]+$") and vim.fn.exists("*" .. name) == 1 then
-    return "vim.fn." .. name
-  elseif real_fn then
-    return name
-  end
-  -- if we get here, it means the function is RPC only, or no longer exists
-end
-
 ---@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
 ---@return LuaFunction?
 function M.parse_signature(line)
@@ -172,19 +160,6 @@ function M.options()
   return ret
 end
 
-function M.is_lua(name)
-  local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
-  if type(real_fn) == "function" then
-    local info = debug.getinfo(real_fn, "S")
-    return info.what == "Lua"
-  elseif type(real_fn) == "table" then
-    return true
-  elseif not real_fn then
-    return true
-  end
-  return false
-end
-
 ---@param doc string
 ---@param opts? {filter?: (fun(name:string):boolean), name?: (fun(name:string):string)}
 function M.parse_functions(doc, opts)
@@ -216,7 +191,7 @@ function M.parse_functions(doc, opts)
         name = opts.name(name)
       end
 
-      if name and (not opts.filter or opts.filter(name)) then
+      if name and (opts.filter == nil or opts.filter(name)) then
         ret[name] = {
           name = name,
           params = parse.params,
@@ -232,7 +207,7 @@ end
 function M.lua()
   return M.parse_functions("lua", {
     filter = function(name)
-      return not M.is_lua(name)
+      return not Annotations.is_lua(name)
     end,
   })
 end
@@ -240,7 +215,7 @@ end
 function M.luv()
   return M.parse_functions("luvref", {
     filter = function(name)
-      return not M.is_lua(name)
+      return not Annotations.is_lua(name)
     end,
     name = function(name)
       return name:gsub("^uv%.", "vim.loop.")
@@ -281,6 +256,13 @@ function M.functions()
   end
 
   local ret = M.parse_functions("builtin", {
+    filter = function(name)
+      name = name:match("vim%.fn%.(.*)")
+      if name:find("%.") then
+        return false
+      end
+      return name and vim.fn.exists("*" .. name)
+    end,
     name = function(name)
       return "vim.fn." .. name
     end,

@@ -143,17 +143,6 @@ function vim.fn.nextnonblank(lnum) end
 --- @return string
 function vim.fn.nr2char(expr, utf8) end
 
--- Call nvim |api| functions. The type checking of arguments will
--- be stricter than for most other builtins. For instance,
--- if Integer is expected, a |Number| must be passed in, a
--- |String| will not be autoconverted.
--- Buffer numbers, as returned by |bufnr()| could be used as
--- first argument to nvim_buf_... functions.  All functions
--- expecting an object (buffer, window or tabpage) can
--- also take the numerical value 0 to indicate the current
--- (focused) object.
-function vim.fn.nvim_...(...) end
-
 -- Bitwise OR on the two arguments.  The arguments are converted
 -- to a number.  A List, Dict or Float argument causes an error.
 -- Also see `and()` and `xor()`.
@@ -788,6 +777,8 @@ function vim.fn.reg_recording() end
 --   GetStart()->reltime()
 -- ```
 -- Note: |localtime()| returns the current (non-relative) time.
+--- @param start number
+--- @param end_ number
 --- @return any[]
 function vim.fn.reltime(start, end_) end
 
@@ -1444,6 +1435,8 @@ function vim.fn.searchdecl(name, global, thisblock) end
 --      \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string"')
 -- ```
 -- 
+--- @param start number
+--- @param end_ number
 --- @param flags? any
 --- @param skip? any
 --- @param stopline? any
@@ -1461,6 +1454,8 @@ function vim.fn.searchpair(start, middle, end_, flags, skip, stopline, timeout) 
 --   :let [lnum,col] = searchpairpos('{', '', '}', 'n')
 -- ```
 -- See |match-parens| for a bigger and more useful example.
+--- @param start number
+--- @param end_ number
 --- @param flags? any
 --- @param skip? any
 --- @param stopline? any
@@ -1586,7 +1581,7 @@ function vim.fn.setbufline(buf, lnum, text) end
 -- third argument: >
 --   GetValue()->setbufvar(buf, varname)
 --- @param buf buffer
---- @return table
+--- @return boolean
 function vim.fn.setbufvar(buf, varname, val) end
 
 -- Specify overrides for cell widths of character ranges.  This
@@ -2085,7 +2080,7 @@ function vim.fn.setreg(regname, value, options) end
 -- third argument: >
 --   GetValue()->settabvar(tab, name)
 --- @param tabnr number
---- @return table
+--- @return boolean
 function vim.fn.settabvar(tabnr, varname, val) end
 
 -- Set option or local variable {varname} in window {winnr} to
@@ -2110,7 +2105,7 @@ function vim.fn.settabvar(tabnr, varname, val) end
 --   GetValue()->settabwinvar(tab, winnr, name)
 --- @param tabnr number
 --- @param winnr window
---- @return table
+--- @return boolean
 function vim.fn.settabwinvar(tabnr, winnr, varname, val) end
 
 -- Modify the tag stack of the window {nr} using {dict}.
@@ -2166,7 +2161,7 @@ function vim.fn.settagstack(nr, dict, action) end
 -- third argument: >
 --   GetValue()->setwinvar(winnr, name)
 --- @param nr number
---- @return table
+--- @return boolean
 function vim.fn.setwinvar(nr, varname, val) end
 
 -- Returns a String with 64 hex characters, which is the SHA256
@@ -2749,6 +2744,7 @@ function vim.fn.str2nr(string, base) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->strcharpart(5)
+--- @param start number
 --- @param len? any
 --- @return string
 function vim.fn.strcharpart(src, start, len) end
@@ -2866,7 +2862,7 @@ function vim.fn.strgetchar(str, index) end
 -- 
 -- Can also be used as a |method|: >
 --   GetHaystack()->stridx(needle)
---- @param start? any
+--- @param start? number
 --- @return number
 function vim.fn.stridx(haystack, needle, start) end
 
@@ -2939,6 +2935,7 @@ function vim.fn.strlen(string) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->strpart(5)
+--- @param start number
 --- @param len? any
 --- @param chars? any
 --- @return string
@@ -3003,7 +3000,7 @@ function vim.fn.strptime(format, timestring) end
 -- 
 -- Can also be used as a |method|: >
 --   GetHaystack()->strridx(needle)
---- @param start? any
+--- @param start? number
 --- @return number
 function vim.fn.strridx(haystack, needle, start) end
 

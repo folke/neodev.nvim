@@ -30,6 +30,16 @@ function M.setup(options)
   M.options = vim.tbl_deep_extend("force", {}, M.defaults, options or {})
 end
 
+function M.types()
+  local f = debug.getinfo(1, "S").source:sub(2)
+  local ret = vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
+  return vim.loop.fs_realpath(ret .. "/" .. M.version())
+end
+
+function M.version()
+  return vim.version().prerelease and "nightly" or "stable"
+end
+
 ---@return LuaDevOptions
 function M.merge(options)
   return vim.tbl_deep_extend("force", {}, M.options, options or {})

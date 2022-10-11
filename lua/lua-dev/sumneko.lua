@@ -8,7 +8,7 @@ function M.library(opts)
   local ret = {}
 
   if opts.library.types then
-    table.insert(ret, M.types())
+    table.insert(ret, config.types())
   end
 
   local function add(lib, filter)
@@ -80,16 +80,6 @@ function M.path(settings)
   }
 end
 
-function M.types()
-  local f = debug.getinfo(1, "S").source:sub(2)
-  local ret = vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
-  return vim.loop.fs_realpath(ret .. "/" .. M.version())
-end
-
-function M.version()
-  return vim.version().prerelease and "nightly" or "stable"
-end
-
 ---@param opts? LuaDevOptions
 ---@param settings? lspconfig.settings.sumneko_lua
 function M.setup(opts, settings)
@@ -110,7 +100,7 @@ function M.setup(opts, settings)
           library = M.library(opts),
           -- when pathStrict=false, we need to add the other types to ignoreDir,
           -- otherwise they get indexed
-          ignoreDir = { M.version() == "stable" and "types/nightly" or "types/stable" },
+          ignoreDir = { config.version() == "stable" and "types/nightly" or "types/stable" },
         },
       },
     },
