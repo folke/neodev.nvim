@@ -1645,7 +1645,7 @@ vim.o.backupcopy = "auto"
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.o.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 -- string	(default "~")
 -- 			global
 -- 	String which is appended to a file name to make the name of the
@@ -2436,7 +2436,7 @@ vim.o.digraph = "false"
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.directory = "/home/folke/.local/state/nvim/swap//"
+vim.o.directory = "/home/runner/.local/state/nvim/swap//"
 -- string	(default "lastline")
 -- 			global
 -- 	Change the way text is displayed.  This is a comma-separated list of
@@ -3129,7 +3129,7 @@ vim.o.guitabtooltip = ""
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.o.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 -- number	(default 20)
 -- 			global
 -- 	Minimal initial height of the help window when it is opened with the
@@ -4078,7 +4078,7 @@ vim.o.opendevice = "false"
 vim.o.operatorfunc = ""
 -- string	(default: see 'runtimepath')
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.o.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.o.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 -- string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
 -- 	Specifies the nroff macros that separate paragraphs.  These are pairs
@@ -4245,3 +4245,10 @@ vim.o.printdevice = ""
 -- 	Sets the character encoding used when printing.
 -- 	See |penc-option|.
 vim.o.printencoding = ""
+-- string	(default: see below)
+-- 			global
+-- 	Expression used to print the PostScript produced with |:hardcopy|.
+-- 	See |pexpr-option|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+vim.o.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"

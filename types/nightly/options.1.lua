@@ -1,12 +1,5 @@
 ---@meta
 
--- string	(default: see below)
--- 			global
--- 	Expression used to print the PostScript produced with |:hardcopy|.
--- 	See |pexpr-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.o.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"
 -- string	(default "courier")
 -- 			global
 -- 	The name of the font that will be used for |:hardcopy|.
@@ -280,7 +273,7 @@ vim.o.rulerformat = ""
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.o.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.o.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 -- number	(default 1)
 -- 			global
 -- 	Minimal number of lines to scroll when the cursor gets off the
@@ -596,7 +589,7 @@ vim.o.shadafile = ""
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.shell = "/usr/bin/fish"
+vim.o.shell = "sh"
 -- string	(default: "-c"; Windows: "/s /c")
 -- 			global
 -- 	Flag passed to the shell to execute "!" and ":!" commands; e.g.,
@@ -642,7 +635,7 @@ vim.o.shellcmdflag = "-c"
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.shellpipe = "2>&1| tee"
+vim.o.shellpipe = "| tee"
 -- string	(default: ""; Windows, when 'shell'
 -- 					contains "sh" somewhere: "\"")
 -- 			global
@@ -681,7 +674,7 @@ vim.o.shellquote = ""
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.shellredir = ">%s 2>&1"
+vim.o.shellredir = ">"
 -- boolean	(default off)
 -- 			global
 -- 			{only for MS-Windows}
@@ -1577,7 +1570,7 @@ vim.o.ttyfast = "true"
 -- 	Note that unlike 'directory' and 'backupdir', 'undodir' always acts as
 -- 	though the trailing slashes are present (see 'backupdir' for what this
 -- 	means).
-vim.o.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.o.undodir = "/home/runner/.local/state/nvim/undo//"
 -- number	(default 1000)
 -- 			global or local to buffer |global-local|
 -- 	Maximum number of changes that can be undone.  Since undo information
@@ -1675,7 +1668,7 @@ vim.o.verbosefile = ""
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.o.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.o.viewdir = "/home/runner/.local/state/nvim/view//"
 -- string	(default: "folds,cursor,curdir")
 -- 			global
 -- 	Changes the effect of the |:mkview| command.  It is a comma-separated
