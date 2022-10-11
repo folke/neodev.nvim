@@ -2151,7 +2151,7 @@ function vim.fn.stdioopen(opts) end
 -- 		run          String  Run directory: temporary, local storage
 -- 				     for sockets, named pipes, etc.
 -- 		state        String  Session state directory: storage for file
--- 				     drafts, undo, |shada|, etc.
+-- 				     drafts, swap, undo, |shada|.
 --
 -- 		Example: >
 -- 			:echo stdpath("config")
