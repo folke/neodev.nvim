@@ -116,17 +116,23 @@ function M.parse_signature(line)
   local name, sig, doc = line:match(M.function_signature_pattern .. "%s*(.*)")
   if name then
     -- Parse args
-    local optional = sig:find("%[")
+    local optional_from = sig:find("%[")
     local params = {}
     local from = 0
     local to = 0
     local param = ""
     while from do
+      ---@type number, number, string
       from, to, param = sig:find("{(%S-)}", to)
       if from then
+        local optional = optional_from and from > optional_from and true or nil
+        if param:sub(1, 1) == "*" then
+          optional = true
+          param = param:sub(2)
+        end
         table.insert(params, {
           name = param,
-          optional = optional and from > optional and true or nil,
+          optional = optional,
         })
       end
     end
