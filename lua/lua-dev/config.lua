@@ -7,6 +7,7 @@ M.defaults = {
     -- these settings will be used for your neovim config directory
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+    ---@type boolean|string[]
     plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
@@ -17,6 +18,9 @@ M.defaults = {
   -- for any other directory, config.library.enabled will be set to false
   override = function(root_dir, options) end,
   debug = false,
+  experimental = {
+    pathStrict = false, -- much faster, but needs a nightly built of lua-language-server
+  },
 }
 
 --- @type LuaDevOptions

@@ -13,10 +13,14 @@ function M.library(opts)
 
   local function add(lib, filter)
     ---@diagnostic disable-next-line: param-type-mismatch
-    for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
+    for _, p in ipairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
-        table.insert(ret, vim.fn.fnamemodify(p, ":h"))
+        if config.options.experimental.pathStrict then
+          table.insert(ret, p)
+        else
+          table.insert(ret, vim.fn.fnamemodify(p, ":h"))
+        end
       end
     end
   end
@@ -26,6 +30,7 @@ function M.library(opts)
   end
 
   if opts.library.plugins then
+    ---@type table<string, boolean>
     local filter
     if type(opts.library.plugins) == "table" then
       filter = {}
@@ -39,6 +44,13 @@ function M.library(opts)
     end
   end
 
+  if config.options.experimental.pathStrict then
+    ---@type string
+    local current_file = vim.api.nvim_buf_get_name(0)
+    local current_root = current_file:gsub("/lua/.*", "")
+    add(current_root)
+  end
+
   return ret
 end
 
@@ -50,6 +62,10 @@ function M.path(settings)
   meta = meta:gsub("%${version}", runtime.version or "LuaJIT")
   meta = meta:gsub("%${language}", "en-us")
   meta = meta:gsub("%${encoding}", runtime.fileEncoding or "utf8")
+
+  if config.options.experimental.pathStrict then
+    return { "?.lua", "?/init.lua" }
+  end
 
   return {
     -- paths for builtin libraries
@@ -67,7 +83,11 @@ end
 function M.types()
   local f = debug.getinfo(1, "S").source:sub(2)
   local ret = vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
-  return vim.loop.fs_realpath(ret .. "/" .. (vim.version().prerelease and "/nightly" or "/stable"))
+  return vim.loop.fs_realpath(ret .. "/" .. M.version())
+end
+
+function M.version()
+  return vim.version().prerelease and "nightly" or "stable"
 end
 
 ---@param opts? LuaDevOptions
@@ -81,13 +101,16 @@ function M.setup(opts, settings)
         runtime = {
           version = "LuaJIT",
           path = M.path(settings),
-          pathStrict = false,
+          pathStrict = config.options.experimental.pathStrict,
         },
         ---@diagnostic disable-next-line: undefined-field
         completion = opts.snippet and { callSnippet = "Replace" } or nil,
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = M.library(opts),
+          -- when pathStrict=false, we need to add the other types to ignoreDir,
+          -- otherwise they get indexed
+          ignoreDir = { M.version() == "stable" and "types/nightly" or "types/stable" },
         },
       },
     },

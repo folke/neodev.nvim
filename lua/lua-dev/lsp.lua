@@ -61,6 +61,12 @@ function M.on_new_config(config, root_dir)
       and config.settings.Lua.workspace.library
     or {}
 
+  local ignoreDir = config.settings
+      and config.settings.Lua
+      and config.settings.Lua.workspace
+      and config.settings.Lua.workspace.ignoreDir
+    or {}
+
   if opts.library.enabled then
     config.settings = vim.tbl_deep_extend(
       "force",
@@ -69,6 +75,9 @@ function M.on_new_config(config, root_dir)
     )
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
+    end
+    for _, dir in ipairs(ignoreDir) do
+      table.insert(config.settings.Lua.workspace.ignoreDir, dir)
     end
   end
 end
