@@ -254,14 +254,6 @@ function vim.api.nvim_buf_del_var(buffer, name) end
 ---               • unload: Unloaded only, do not delete. See |:bunload|
 function vim.api.nvim_buf_delete(buffer, opts) end
 
--- Deactivates buffer-update events on the channel.
---- @see |nvim_buf_attach()|
---- @see |api-lua-detach| for detaching Lua callbacks
---- @param buffer buffer # Buffer handle, or 0 for current buffer
---- @return any # False if detach failed (because the buffer isn't loaded); otherwise
----     True.
-function vim.fn.nvim_buf_detach(buffer) end
-
 -- Gets a changed tick of a buffer
 --- @param buffer buffer # Buffer handle, or 0 for current buffer
 --- @return any # `b:changedtick` value.
@@ -628,27 +620,6 @@ function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_co
 --- @param value object # Variable value
 function vim.api.nvim_buf_set_var(buffer, name, value) end
 
--- Calls many API methods atomically.
--- 
--- This has two main usages:
--- 1. To perform several requests from an async context atomically, i.e.
---  without interleaving redraws, RPC requests from other clients, or user
---  interactions (however API methods may trigger autocommands or event
---  processing which have such side effects, e.g. |:sleep| may wake
---  timers).
--- 2. To minimize RPC overhead (roundtrips) of a sequence of many requests.
--- 
---- @param calls array # an array of calls, where each call is described by an array
----              with two elements: the request name, and an array of
----              arguments.
---- @return any # Array of two elements. The first is an array of return values. The
----     second is NIL if all calls succeeded. If a call resulted in an error,
----     it is a three-element array with the zero-based index of the call
----     which resulted in an error, the error type and the error message. If
----     an error occurred, the values from all preceding calls will still be
----     returned.
-function vim.fn.nvim_call_atomic(calls) end
-
 -- Calls a VimL |Dictionary-function| with the given arguments.
 -- 
 -- On execution error: fails with VimL error, updates v:errmsg.
@@ -1008,10 +979,6 @@ function vim.api.nvim_err_write(str) end
 --- @param str string # Message
 function vim.api.nvim_err_writeln(str) end
 
---- @param lvl integer
---- @param data string
-function vim.fn.nvim_error_event(lvl, data) end
-
 -- Evaluates a VimL |expression|. Dictionaries and Lists are recursively
 -- expanded.
 -- 
@@ -1080,16 +1047,6 @@ function vim.api.nvim_exec(src, output) end
 ---                callback. See |nvim_create_autocmd()| for details.
 function vim.api.nvim_exec_autocmds(event, opts) end
 
--- Execute Lua code. Parameters (if any) are available as `...` inside the
--- chunk. The chunk can return a value.
--- 
--- Only statements are executed. To evaluate an expression, prefix it with
--- `return`: return my_function(...)
---- @param code string # Lua code to execute
---- @param args array # Arguments to the code
---- @return any # Return value of Lua code if present or NIL.
-function vim.fn.nvim_exec_lua(code, args) end
-
 -- Sends input-keys to Nvim, subject to various quirks controlled by `mode`
 -- flags. This is a blocking call, unlike |nvim_input()|.
 -- 
@@ -1120,11 +1077,6 @@ function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
 -- dictionaries as detailed at |nvim_get_option_info()|.
 --- @return any # dictionary of all options
 function vim.api.nvim_get_all_options_info() end
-
--- Returns a 2-tuple (Array), where item 0 is the current channel id and item
--- 1 is the |api-metadata| map (Dictionary).
---- @return any # 2-tuple [{channel-id}, {api-metadata}]
-function vim.fn.nvim_get_api_info() end
 
 -- Get all autocommands that match the corresponding {opts}.
 -- 
@@ -1827,62 +1779,6 @@ function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 --- @param opts dictionary # Optional parameters. Reserved for future use.
 function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 
--- Self-identifies the client.
--- 
--- The client/plugin/application should call this after connecting, to
--- provide hints about its identity and purpose, for debugging and
--- orchestration.
--- 
--- Can be called more than once; the caller should merge old info if
--- appropriate. Example: library first identifies the channel, then a plugin
--- using that library later identifies itself.
--- 
--- 
--- Note:
--- "Something is better than nothing". You don't need to include all the
--- fields.
--- 
---- @param name string # Short name for the connected client
---- @param version dictionary # Dictionary describing the version, with these (optional)
----                   keys:
----                   • "major" major version (defaults to 0 if not set, for
----                     no release yet)
----                   • "minor" minor version
----                   • "patch" patch number
----                   • "prerelease" string describing a prerelease, like
----                     "dev" or "beta1"
----                   • "commit" hash or similar identifier of commit
---- @param type string # Must be one of the following values. Client libraries
----                   should default to "remote" unless overridden by the
----                   user.
----                   • "remote" remote client connected to Nvim.
----                   • "ui" gui frontend
----                   • "embedder" application using Nvim as a component (for
----                     example, IDE/editor implementing a vim mode).
----                   • "host" plugin host, typically started by nvim
----                   • "plugin" single plugin, started by nvim
---- @param methods dictionary # Builtin methods in the client. For a host, this does not
----                   include plugin methods which will be discovered later.
----                   The key should be the method name, the values are dicts
----                   with these (optional) keys (more keys may be added in
----                   future versions of Nvim, thus unknown keys are ignored.
----                   Clients must only use keys defined in this or later
----                   versions of Nvim):
----                   • "async" if true, send as a notification. If false or
----                     unspecified, use a blocking request
----                   • "nargs" Number of arguments. Could be a single integer
----                     or an array of two integers, minimum and maximum
----                     inclusive.
---- @param attributes dictionary # Arbitrary string:string map of informal client
----                   properties. Suggested keys:
----                   • "website": Client homepage URL (e.g. GitHub
----                     repository)
----                   • "license": License description ("Apache 2", "GPLv3",
----                     "MIT", …)
----                   • "logo": URI or path to image, preferably small logo or
----                     icon. .png or .svg format is preferred.
-function vim.fn.nvim_set_client_info(name, version, type, methods, attributes) end
-
 -- Sets the current buffer.
 --- @param buffer buffer # Buffer handle
 function vim.api.nvim_set_current_buf(buffer) end
@@ -2067,10 +1963,6 @@ function vim.api.nvim_set_vvar(name, value) end
 --- @return any # Number of cells
 function vim.api.nvim_strwidth(text) end
 
--- Subscribes to event broadcasts.
---- @param event string # Event type string
-function vim.fn.nvim_subscribe(event) end
-
 -- Removes a tab-scoped (t:) variable
 --- @param tabpage tabpage # Tabpage handle, or 0 for current tabpage
 --- @param name string # Variable name
@@ -2107,69 +1999,6 @@ function vim.api.nvim_tabpage_list_wins(tabpage) end
 --- @param name string # Variable name
 --- @param value object # Variable value
 function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
-
--- Activates UI events on the channel.
--- 
--- Entry point of all UI clients. Allows |--embed| to continue startup.
--- Implies that the client is ready to show the UI. Adds the client to the
--- list of UIs. |nvim_list_uis()|
--- 
--- 
--- Note:
--- If multiple UI clients are attached, the global screen dimensions
--- degrade to the smallest client. E.g. if client A requests 80x40 but
--- client B requests 200x100, the global screen has size 80x40.
--- 
---- @param width integer # Requested screen columns
---- @param height integer # Requested screen rows
---- @param options dictionary # |ui-option| map
-function vim.fn.nvim_ui_attach(width, height, options) end
-
--- Deactivates UI events on the channel.
--- 
--- Removes the client from the list of UIs. |nvim_list_uis()|
-function vim.fn.nvim_ui_detach() end
-
--- Tells Nvim the geometry of the popupmenu, to align floating windows with
--- an external popup menu.
--- 
--- Note that this method is not to be confused with
--- |nvim_ui_pum_set_height()|, which sets the number of visible items in the
--- popup menu, while this function sets the bounding box of the popup menu,
--- including visual elements such as borders and sliders. Floats need not use
--- the same font size, nor be anchored to exact grid corners, so one can set
--- floating-point numbers to the popup menu geometry.
---- @param width float # Popupmenu width.
---- @param height float # Popupmenu height.
---- @param row float # Popupmenu row.
---- @param col float # Popupmenu height.
-function vim.fn.nvim_ui_pum_set_bounds(width, height, row, col) end
-
--- Tells Nvim the number of elements displaying in the popupmenu, to decide
--- <PageUp> and <PageDown> movement.
---- @param height integer # Popupmenu height, must be greater than zero.
-function vim.fn.nvim_ui_pum_set_height(height) end
-
---- @param name string
---- @param value object
-function vim.fn.nvim_ui_set_option(name, value) end
-
---- @param width integer
---- @param height integer
-function vim.fn.nvim_ui_try_resize(width, height) end
-
--- Tell Nvim to resize a grid. Triggers a grid_resize event with the
--- requested grid size or the maximum size if it exceeds size limits.
--- 
--- On invalid grid handle, fails with error.
---- @param grid integer # The handle of the grid to be changed.
---- @param width integer # The new requested width.
---- @param height integer # The new requested height.
-function vim.fn.nvim_ui_try_resize_grid(grid, width, height) end
-
--- Unsubscribes to event broadcasts.
---- @param event string # Event type string
-function vim.fn.nvim_unsubscribe(event) end
 
 -- Calls a function with window as temporary current window.
 --- @see |win_execute()|
