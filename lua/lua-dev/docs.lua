@@ -130,6 +130,7 @@ function M.parse_signature(line)
           optional = true
           param = param:sub(2)
         end
+        param = param:gsub("%-", "_")
         table.insert(params, {
           name = param,
           optional = optional,
