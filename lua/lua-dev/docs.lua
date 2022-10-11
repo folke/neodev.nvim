@@ -1,11 +1,5 @@
 local util = require("lua-dev.util")
 
----@class VimFunction
----@field name string
----@field doc string
----@field return? string
----@field params {name: string, optional?: boolean}[]
-
 local M = {}
 
 M.function_pattern = "^(%S-%([^(]-%))"
@@ -111,6 +105,7 @@ function M.parse(name, opts)
 end
 
 ---@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
+---@return LuaFunction?
 function M.parse_signature(line)
   ---@type string, string, string
   local name, sig, doc = line:match(M.function_signature_pattern .. "%s*(.*)")
@@ -143,6 +138,7 @@ function M.parse_signature(line)
 end
 
 function M.options()
+  ---@type table<string, string>
   local ret = {}
 
   local option_pattern = "^'(%S-)'%s*"
@@ -171,10 +167,10 @@ function M.is_lua(name)
 end
 
 ---@param doc string
----@param opts? {filter?: (fun(name:string):boolean), name?: fun(name:string):string}
+---@param opts? {filter?: (fun(name:string):boolean), name?: (fun(name:string):string)}
 function M.parse_functions(doc, opts)
   opts = opts or {}
-  ---@type table<string, VimFunction>
+  ---@type table<string, LuaFunction>
   local ret = {}
 
   local functions = M.parse(doc, { pattern = M.function_pattern, context = 2 })
