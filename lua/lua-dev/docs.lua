@@ -110,6 +110,31 @@ function M.parse(name, opts)
   return ret
 end
 
+---@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
+function M.parse_signature(line)
+  ---@type string, string, string
+  local name, sig, doc = line:match(M.function_signature_pattern .. "%s*(.*)")
+  if name then
+    -- Parse args
+    local optional = sig:find("%[")
+    local params = {}
+    local from = 0
+    local to = 0
+    local param = ""
+    while from do
+      from, to, param = sig:find("{(%S-)}", to)
+      if from then
+        table.insert(params, {
+          name = param,
+          optional = optional and from > optional and true or nil,
+        })
+      end
+    end
+
+    return { name = name, params = params, doc = doc }
+  end
+end
+
 function M.options()
   local ret = {}
 
@@ -178,6 +203,38 @@ function M.lua()
   return ret
 end
 
+function M.luv()
+  ---@type table<string, VimFunction>
+  local ret = {}
+
+  local functions = M.parse("luvref", { pattern = M.function_pattern, context = 1 })
+
+  for _, fun in ipairs(functions) do
+    local text = fun.text
+
+    local parse = M.parse_signature(text)
+
+    if parse then
+      local name = parse.name
+      name = name:gsub("^uv%.", "vim.loop.")
+      print(name)
+
+      -- Skip real lua functions
+      -- We're only interested in C type functions
+      if not M.is_lua(name) then
+        ret[name] = {
+          name = name,
+          fqname = name,
+          params = parse.params,
+          doc = parse.doc,
+          ["return"] = {},
+        }
+      end
+    end
+  end
+  return ret
+end
+
 ---@return table<string, VimFunction>
 function M.functions()
   ---@type table<string, VimFunction>
@@ -225,31 +282,6 @@ function M.functions()
   end
 
   return ret
-end
-
----@return {name: string, params: {name:string, optional?:boolean}[], doc: string}?
-function M.parse_signature(line)
-  ---@type string, string, string
-  local name, sig, doc = line:match(M.function_signature_pattern .. "%s*(.*)")
-  if name then
-    -- Parse args
-    local optional = sig:find("%[")
-    local params = {}
-    local from = 0
-    local to = 0
-    local param = ""
-    while from do
-      from, to, param = sig:find("{(%S-)}", to)
-      if from then
-        table.insert(params, {
-          name = param,
-          optional = optional and from > optional and true or nil,
-        })
-      end
-    end
-
-    return { name = name, params = params, doc = doc }
-  end
 end
 
 return M

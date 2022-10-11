@@ -589,7 +589,7 @@ function vim.fn.reg_recording() end
 -- <
 -- 		Note: |localtime()| returns the current (non-relative) time.
 --- @return any[]
-function vim.fn.reltime(start, end) end
+function vim.fn.reltime(start, _end) end
 
 -- Return a Float that represents the time value of {time}.
 -- 		Unit of time is seconds.

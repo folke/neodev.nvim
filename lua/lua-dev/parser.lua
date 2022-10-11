@@ -48,6 +48,9 @@ end
 function M.emmy_param(param, is_return)
   local type = M.infer_type(param)
   local parts = {}
+  if vim.tbl_contains({ "end", "repeat" }, param.name) then
+    param.name = "_" .. param.name
+  end
   if param.name then
     table.insert(parts, param.name .. (param.optional and "?" or ""))
   end
@@ -161,8 +164,8 @@ function M.emmy(fun)
   local params = {}
 
   for _, param in pairs(fun.params) do
-    table.insert(params, param.name)
     ret = ret .. M.emmy_param(param)
+    table.insert(params, param.name)
   end
   for _, r in pairs(fun["return"]) do
     ret = ret .. M.emmy_param(r, true)
@@ -259,6 +262,21 @@ function M.parse(mpack, prefix, opts)
     end
   end
   writer.close()
+end
+
+function M.luv()
+  local prefix = "luv"
+  print(prefix)
+  prefix = prefix or "vim"
+
+  local writer = M.writer(prefix)
+  local functions = require("lua-dev.docs").luv()
+  local names = vim.tbl_keys(functions)
+  table.sort(names)
+  for _, name in ipairs(names) do
+    local emmy = M.emmy(functions[name])
+    writer.write(emmy)
+  end
 end
 
 function M.options()
@@ -359,6 +377,7 @@ function M.build()
   M.options()
   M.parse("lua.mpack", "vim", { extra = require("lua-dev.docs").lua() })
   M.parse("api.mpack", "vim.api", { alt = "vim.fn" })
+  M.luv()
 end
 
 M.build()

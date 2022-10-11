@@ -2223,9 +2223,9 @@ function vim.fn.getbufinfo(dict) end
 -- 			GetBufnr()->getbufline(lnum)
 --- @param buf buffer
 --- @param lnum number
---- @param end? any
+--- @param _end? any
 --- @return any[]
-function vim.fn.getbufline(buf, lnum, end) end
+function vim.fn.getbufline(buf, lnum, _end) end
 
 -- The result is the value of option or local buffer variable
 -- 		{varname} in buffer {buf}.  Note that the name without "b:"
@@ -2750,9 +2750,9 @@ function vim.fn.getjumplist(winnr, tabnr) end
 --
 -- <		To get lines from another buffer see |getbufline()|
 --- @param lnum number
---- @param end? any
+--- @param _end? any
 --- @return any[]
-function vim.fn.getline(lnum, end) end
+function vim.fn.getline(lnum, _end) end
 
 -- Returns a |List| with all the entries in the location list for
 -- 		window {nr}.  {nr} can be the window number or the |window-ID|.
