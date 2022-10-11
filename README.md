@@ -9,13 +9,13 @@ completion for the nvim lua API.
 
 ## ✨ Features
 
-- Automatically configures **sumneko_lua** for your **Neovim** config, **Neovim** runtime and plugin
+- Automatically configures **lua-language-server** for your **Neovim** config, **Neovim** runtime and plugin
   directories
-- [Annotations](https://github.com/sumneko/lua-language-server/wiki/Annotations)
-  library for the nvim lua API for:
-  - completion
-  - hover docs
-  - function signatures
+- [Annotations](https://github.com/sumneko/lua-language-server/wiki/Annotations) for completion, hover and signatures of:
+  - Vim functions
+  - Neovim api functions
+  - `vim.opt`
+  - [vim.loop](https://github.com/luvit/luv)
 - properly configures the `require` path.
 - adds all plugins in `opt` and `start` to the workspace so you get completion
   for all installed plugins
@@ -23,7 +23,7 @@ completion for the nvim lua API.
 
 ## ⚡️ Requirements
 
-- Neovim >= 0.5.0
+- Neovim >= 0.7.0
 - completion plugin like [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 
 ## 📦 Installation
@@ -126,14 +126,3 @@ Using the message pack files, I converted all the API data to
 and make them available for the
 [Sumneko LSP](https://github.com/sumneko/lua-language-server) as a workspace
 library.
-
-## 🗒️ Limitations
-
-- [x] `vim.fn` functions are currently not part of the EmmyLua library since no
-      message pack files are generated. Implemented using vim-lsp
-- function return types are always `any`, since that information is missing
-
-## ⭐ Acknowledgment
-
-- docs for options and functions are based on the work of
-  [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
