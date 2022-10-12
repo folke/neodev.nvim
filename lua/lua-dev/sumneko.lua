@@ -44,13 +44,6 @@ function M.library(opts)
     end
   end
 
-  if config.options.experimental.pathStrict then
-    ---@type string
-    local current_file = vim.api.nvim_buf_get_name(0)
-    local current_root = current_file:gsub("/lua/.*", "")
-    add(current_root)
-  end
-
   return ret
 end
 

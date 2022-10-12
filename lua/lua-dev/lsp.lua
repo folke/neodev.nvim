@@ -40,11 +40,16 @@ function M.on_new_config(config, root_dir)
     return
   end
 
+  ---@type string[]
+  local lua_dirs = vim.tbl_filter(function(dir)
+    return util.exists(dir)
+  end, vim.fn.glob(root_dir .. "/**/lua", false, true))
+
   local opts = require("lua-dev.config").merge()
 
   opts.library.enabled = util.is_nvim_config(root_dir)
 
-  if not opts.library.enabled and util.is_plugin(root_dir) then
+  if not opts.library.enabled and #lua_dirs > 0 then
     opts.library.enabled = true
     opts.library.plugins = false
   end
@@ -76,6 +81,13 @@ function M.on_new_config(config, root_dir)
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
     end
+
+    if require("lua-dev.config").options.experimental.pathStrict then
+      for _, lib in ipairs(lua_dirs) do
+        table.insert(config.settings.Lua.workspace.library, lib)
+      end
+    end
+
     for _, dir in ipairs(ignoreDir) do
       table.insert(config.settings.Lua.workspace.ignoreDir, dir)
     end
