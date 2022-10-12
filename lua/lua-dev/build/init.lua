@@ -6,6 +6,7 @@ local Api = require("lua-dev.build.api")
 local Docs = require("lua-dev.build.docs")
 local Mpack = require("lua-dev.build.mpack")
 local Writer = require("lua-dev.build.writer")
+local Options = require("lua-dev.build.options")
 
 local M = {}
 
@@ -38,41 +39,6 @@ function M.write(fname, functions)
   writer:close()
 end
 
-function M.options()
-  local docs = Docs.options()
-
-  ---@type table<string, table<string, any>>
-  local ret = { o = {}, wo = {}, bo = {} }
-
-  ---@type table<string, {scope:string, default:string, global_local: boolean}>
-  local info = vim.api.nvim_get_all_options_info()
-
-  for name, option in pairs(info) do
-    if option.scope == "buf" then
-      ret.bo[name] = option.default
-    elseif option.scope == "win" then
-      ret.wo[name] = option.default
-    end
-    if option.scope == "global" or option.global_local then
-      ret.o[name] = option.default
-    end
-  end
-
-  local writer = Writer("options")
-  for _, scope in ipairs({ "bo", "o", "wo" }) do
-    local options = ret[scope]
-    Util.for_each(options, function(key, value)
-      local str = ("vim.%s.%s = %q\n"):format(scope, key, value)
-      local doc = docs[key] or nil
-      if doc then
-        str = Annotations.comment(doc) .. "\n" .. str
-      end
-      writer:write(str)
-    end)
-  end
-  writer:close()
-end
-
 function M.alias()
   local writer = Writer("alias")
   Util.for_each(Annotations.nvim_types, function(key, value)
@@ -94,7 +60,9 @@ function M.build()
   M.clean()
 
   M.alias()
-  M.options()
+
+  Options.build()
+
   M.api()
 
   M.write("luv", Docs.luv())

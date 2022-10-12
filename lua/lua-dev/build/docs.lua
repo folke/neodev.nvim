@@ -1,4 +1,4 @@
-local util = require("lua-dev.util")
+local Util = require("lua-dev.util")
 local Annotations = require("lua-dev.build.annotations")
 
 local M = {}
@@ -154,7 +154,7 @@ function M.options()
 
   for _, option in ipairs(options) do
     local name = option.match[1]
-    local doc = option.text:gsub(option_pattern, ""):gsub(option_pattern, "")
+    local doc = option.text:gsub("'(%S-)'", "`'%1'` ")
     ret[name] = doc
   end
   return ret
@@ -247,10 +247,10 @@ function M.functions()
             retvals["vim.fn." .. name] = retval
           end
         else
-          util.debug("Unknown retval: " .. retval)
+          Util.debug("Unknown retval: " .. retval)
         end
       else
-        util.error("Couldnt parse builtin-function-list: " .. vim.inspect(builtin))
+        Util.error("Couldnt parse builtin-function-list: " .. vim.inspect(builtin))
       end
     end
   end
