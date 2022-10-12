@@ -205,7 +205,7 @@ vim.go.backup = "false"
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.go.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 -- `'backupext'`  `'bex'` 	string	(default "~")
 -- 			global
 -- 	String which is appended to a file name to make the name of the
@@ -948,7 +948,7 @@ vim.go.digraph = "false"
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.directory = "/home/folke/.local/state/nvim/swap//"
+vim.go.directory = "/home/runner/.local/state/nvim/swap//"
 -- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
 -- 	Change the way text is displayed.  This is a comma-separated list of
@@ -1528,7 +1528,7 @@ vim.go.guitabtooltip = ""
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 -- `'helpheight'`  `'hh'` 	number	(default 20)
 -- 			global
 -- 	Minimal initial height of the help window when it is opened with the
@@ -2313,7 +2313,7 @@ vim.go.opendevice = "false"
 vim.go.operatorfunc = ""
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
 -- 	Specifies the nroff macros that separate paragraphs.  These are pairs
@@ -2709,7 +2709,7 @@ vim.go.rulerformat = ""
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.go.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
 -- 	Minimal number of lines to scroll when the cursor gets off the
@@ -3012,7 +3012,7 @@ vim.go.shadafile = ""
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shell = "/usr/bin/fish"
+vim.go.shell = "sh"
 -- `'shellcmdflag'`  `'shcf'` 	string	(default: "-c"; Windows: "/s /c")
 -- 			global
 -- 	Flag passed to the shell to execute "!" and ":!" commands; e.g.,
@@ -3058,7 +3058,7 @@ vim.go.shellcmdflag = "-c"
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellpipe = "2>&1| tee"
+vim.go.shellpipe = "| tee"
 -- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
 -- 					contains "sh" somewhere: "\"")
 -- 			global
@@ -3097,7 +3097,7 @@ vim.go.shellquote = ""
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellredir = ">%s 2>&1"
+vim.go.shellredir = ">"
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
 -- 			{only for MS-Windows}
@@ -3689,7 +3689,7 @@ vim.go.ttyfast = "true"
 -- 	Note that unlike `'directory'`  and `'backupdir'` , `'undodir'`  always acts as
 -- 	though the trailing slashes are present (see `'backupdir'`  for what this
 -- 	means).
-vim.go.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.go.undodir = "/home/runner/.local/state/nvim/undo//"
 -- `'undoreload'`  `'ur'` 	number	(default 10000)
 -- 			global
 -- 	Save the whole buffer for undo when reloading it.  This applies to the
@@ -3767,7 +3767,7 @@ vim.go.verbosefile = ""
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.go.viewdir = "/home/runner/.local/state/nvim/view//"
 -- `'viewoptions'`  `'vop'` 	string	(default: "folds,cursor,curdir")
 -- 			global
 -- 	Changes the effect of the |:mkview| command.  It is a comma-separated
@@ -4214,3 +4214,19 @@ vim.wo.cursorcolumn = "false"
 -- 	When Visual mode is active the highlighting isn't used to make it
 -- 	easier to see the selected text.
 vim.wo.cursorline = "false"
+-- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+vim.wo.cursorlineopt = "both"
