@@ -1,10 +1,5 @@
 ---@meta
 
--- `'diff'` 			boolean	(default off)
--- 			local to window
--- 	Join the current window in the group of windows that shows differences
--- 	between files.  See |diff-mode|.
-vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special
