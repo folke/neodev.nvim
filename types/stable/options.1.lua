@@ -4,7 +4,7 @@
 -- 			local to window
 -- 	Join the current window in the group of windows that shows differences
 -- 	between files.  See |diff-mode|.
-vim.wo.diff = "false"
+vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special
@@ -88,7 +88,7 @@ vim.wo.foldcolumn = "0"
 -- 	`'foldenable'`  is off.
 -- 	This option is set by commands that create a new fold or close a fold.
 -- 	See |folding|.
-vim.wo.foldenable = "true"
+vim.wo.foldenable = true
 -- `'foldexpr'`  `'fde'` 	string (default: "0")
 -- 			local to window
 -- 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
@@ -116,7 +116,7 @@ vim.wo.foldignore = "#"
 -- 	close fewer folds.
 -- 	This option is set by commands like |zm|, |zM| and |zR|.
 -- 	See |fold-foldlevel|.
-vim.wo.foldlevel = "0"
+vim.wo.foldlevel = 0
 -- `'foldmarker'`  `'fmr'` 	string (default: "{{{,}}}")
 -- 			local to window
 -- 	The start and end marker used when `'foldmethod'`  is "marker".  There
@@ -143,13 +143,13 @@ vim.wo.foldmethod = "manual"
 -- 	Note that this only has an effect on what is displayed.  After using
 -- 	"zc" to close a fold, which is displayed open because it's smaller
 -- 	than `'foldminlines'` , a following "zc" may close a containing fold.
-vim.wo.foldminlines = "1"
+vim.wo.foldminlines = 1
 -- `'foldnestmax'`  `'fdn'` 	number (default: 20)
 -- 			local to window
 -- 	Sets the maximum nesting of folds for the "indent" and "syntax"
 -- 	methods.  This avoids that too many folds will be created.  Using more
 -- 	than 20 doesn't work, because the internal limit is 20.
-vim.wo.foldnestmax = "20"
+vim.wo.foldnestmax = 20
 -- `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
 -- 			local to window
 -- 	An expression which is used to specify the text displayed for a closed
@@ -173,7 +173,7 @@ vim.wo.foldtext = "foldtext()"
 -- 	is not used when the `'wrap'`  option is off.
 -- 	Note that <Tab> characters after an <EOL> are mostly not displayed
 -- 	with the right amount of white space.
-vim.wo.linebreak = "false"
+vim.wo.linebreak = false
 -- `'list'` 			boolean	(default off)
 -- 			local to window
 -- 	List mode: By default, show tabs as ">", trailing spaces as "-", and
@@ -189,7 +189,7 @@ vim.wo.linebreak = "false"
 -- 	Note that list mode will also affect formatting (set with `'textwidth'` 
 -- 	or `'wrapmargin'` ) when `'cpoptions'`  includes `'L'` .  See `'listchars'`  for
 -- 	changing the way tabs are displayed.
-vim.wo.list = "false"
+vim.wo.list = false
 -- `'listchars'`  `'lcs'` 	string	(default: "tab:> ,trail:-,nbsp:+")
 -- 			global or local to window |global-local|
 -- 	Strings to use in `'list'`  mode and for the |:list| command.  It is a
@@ -308,7 +308,7 @@ vim.wo.listchars = "tab:> ,trail:-,nbsp:+"
 -- 	    |pear           |  2 pear       |  1 pear       |  1 pear
 -- 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
 -- 	    |there          |  4 there      |  1 there      |  1 there
-vim.wo.number = "false"
+vim.wo.number = false
 -- `'numberwidth'`  `'nuw'` 	number	(default: 4)
 -- 			local to window
 -- 	Minimal number of columns to use for the line number.  Only relevant
@@ -321,13 +321,13 @@ vim.wo.number = "false"
 -- 	is set. Thus with the Vim default of 4 there is room for a line number
 -- 	up to 999. When the buffer has 1000 lines five columns will be used.
 -- 	The minimum value is 1, the maximum value is 20.
-vim.wo.numberwidth = "4"
+vim.wo.numberwidth = 4
 -- `'previewwindow'`  `'pvw'` 	boolean (default off)
 -- 			local to window
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
 -- 	|:ptag|, |:pedit|, etc.
-vim.wo.previewwindow = "false"
+vim.wo.previewwindow = false
 -- `'relativenumber'`  `'rnu'` 	boolean	(default off)
 -- 			local to window
 -- 	Show the line number relative to the line with the cursor in front of
@@ -347,7 +347,7 @@ vim.wo.previewwindow = "false"
 -- 	The number in front of the cursor line also depends on the value of
 -- 	`'number'` , see |number_relativenumber| for all combinations of the two
 -- 	options.
-vim.wo.relativenumber = "false"
+vim.wo.relativenumber = false
 -- `'rightleft'`  `'rl'` 	boolean	(default off)
 -- 			local to window
 -- 	When on, display orientation becomes right-to-left, i.e., characters
@@ -359,7 +359,7 @@ vim.wo.relativenumber = "false"
 -- 	useful whenever you have a mixed text file with both right-to-left
 -- 	and left-to-right strings so that both sets are displayed properly
 -- 	in different windows).  Also see |rileft.txt|.
-vim.wo.rightleft = "false"
+vim.wo.rightleft = false
 -- `'rightleftcmd'`  `'rlc'` 	string	(default "search")
 -- 			local to window
 -- 	Each word in this option enables the command line editing to work in
@@ -379,7 +379,7 @@ vim.wo.rightleftcmd = "search"
 -- 	If you give a count to the CTRL-U or CTRL-D command it will
 -- 	be used as the new value for `'scroll'` .  Reset to half the window
 -- 	height with ":set scroll=0".
-vim.wo.scroll = "0"
+vim.wo.scroll = 0
 -- `'scrollbind'`  `'scb'` 	boolean  (default off)
 -- 			local to window
 -- 	See also |scroll-binding|.  When this option is set, the current
@@ -391,7 +391,7 @@ vim.wo.scroll = "0"
 -- 	This option is mostly reset when splitting a window to edit another
 -- 	file.  This means that ":split | edit file" results in two windows
 -- 	with scroll-binding, but ":split file" does not.
-vim.wo.scrollbind = "false"
+vim.wo.scrollbind = false
 -- `'scrolloff'`  `'so'` 	number	(default 0)
 -- 			global or local to window |global-local|
 -- 	Minimal number of screen lines to keep above and below the cursor.
@@ -404,7 +404,7 @@ vim.wo.scrollbind = "false"
 -- 		setlocal scrolloff<
 -- 		setlocal scrolloff=-1
 -- <	For scrolling horizontally see `'sidescrolloff'` .
-vim.wo.scrolloff = "0"
+vim.wo.scrolloff = 0
 -- `'showbreak'`  `'sbr'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	String to put at the start of lines that have been wrapped.  Useful
@@ -447,7 +447,7 @@ vim.wo.showbreak = ""
 -- 		 :set nowrap sidescroll=1 listchars=extends:>,precedes:<
 -- 		 :set sidescrolloff=1
 -- <
-vim.wo.sidescrolloff = "0"
+vim.wo.sidescrolloff = 0
 -- `'signcolumn'`  `'scl'` 	string	(default "auto")
 -- 			local to window
 -- 	When and how to draw the signcolumn. Valid values are:
@@ -477,7 +477,7 @@ vim.wo.signcolumn = "auto"
 -- 			local to window
 -- 	When on spell checking will be done.  See |spell|.
 -- 	The languages are specified with `'spelllang'` .
-vim.wo.spell = "false"
+vim.wo.spell = false
 -- `'statusline'`  `'stl'` 	string	(default empty)
 -- 			global or local to window |global-local|
 -- 	When non-empty, this option determines the content of the status line.
@@ -736,20 +736,20 @@ vim.wo.winbar = ""
 -- 	transparent background. Values between 0-30 are typically most useful.
 -- 
 -- 	UI-dependent. Works best with RGB colors. `'termguicolors'` 
-vim.wo.winblend = "0"
+vim.wo.winblend = 0
 -- `'winfixheight'`  `'wfh'` 	boolean	(default off)
 -- 			local to window
 -- 	Keep the window height when windows are opened or closed and
 -- 	`'equalalways'`  is set.  Also for |CTRL-W_=|.  Set by default for the
 -- 	|preview-window| and |quickfix-window|.
 -- 	The height may be changed anyway when running out of room.
-vim.wo.winfixheight = "false"
+vim.wo.winfixheight = false
 -- `'winfixwidth'`  `'wfw'` 	boolean	(default off)
 -- 			local to window
 -- 	Keep the window width when windows are opened or closed and
 -- 	`'equalalways'`  is set.  Also for |CTRL-W_=|.
 -- 	The width may be changed anyway when running out of room.
-vim.wo.winfixwidth = "false"
+vim.wo.winfixwidth = false
 -- `'winhighlight'`  `'winhl'` 	string (default empty)
 -- 			local to window
 -- 	Window-local highlights.  Comma-delimited list of highlight
@@ -787,7 +787,7 @@ vim.wo.winhighlight = ""
 -- <	See `'sidescroll'` , `'listchars'`  and |wrap-off|.
 -- 	This option can't be set from a |modeline| when the `'diff'`  option is
 -- 	on.
-vim.wo.wrap = "true"
+vim.wo.wrap = true
 
 
 ---@class vim.bo
@@ -811,7 +811,7 @@ vim.bo = {}
 -- 	{small difference from Vi: After the indent is deleted when typing
 -- 	<Esc> or <CR>, the cursor position when moving up or down is after the
 -- 	deleted indent; Vi puts the cursor somewhere in the deleted indent}.
-vim.bo.autoindent = "true"
+vim.bo.autoindent = true
 -- `'autoread'`  `'ar'` 		boolean	(default on)
 -- 			global or local to buffer |global-local|
 -- 	When a file has been detected to have been changed outside of Vim and
@@ -823,7 +823,7 @@ vim.bo.autoindent = "true"
 -- 	using the global value: >
 -- 		:set autoread<
 -- <
-vim.bo.autoread = "true"
+vim.bo.autoread = true
 -- `'backupcopy'`  `'bkc'` 	string	(default: "auto")
 -- 			global or local to buffer |global-local|
 -- 	When writing a file and a backup is made, this option tells how it's
@@ -916,7 +916,7 @@ vim.bo.backupcopy = "auto"
 -- 	there was one in the original file (normally Vim appends an <EOL> to
 -- 	the last line if there is none; this would make the file longer).  See
 -- 	the `'endofline'`  option.
-vim.bo.binary = "false"
+vim.bo.binary = false
 -- `'bomb'` 			boolean	(default off)
 -- 			local to buffer
 -- 	When writing a file and the following conditions are met, a BOM (Byte
@@ -934,7 +934,7 @@ vim.bo.binary = "false"
 -- 	Unless `'binary'`  is set, it is removed from the first line, so that you
 -- 	don't see it when editing.  When you don't change the options, the BOM
 -- 	will be restored when writing the file.
-vim.bo.bomb = "false"
+vim.bo.bomb = false
 -- `'bufhidden'`  `'bh'` 	string (default: "")
 -- 			local to buffer
 -- 	This option specifies what happens when a buffer is no longer
@@ -964,7 +964,7 @@ vim.bo.bufhidden = ""
 -- 	This option is reset by Vim for buffers that are only used to remember
 -- 	a file name or marks.  Vim sets it when starting to edit a buffer.
 -- 	But not when moving to a buffer with ":buffer".
-vim.bo.buflisted = "true"
+vim.bo.buflisted = true
 -- `'buftype'`  `'bt'` 		string (default: "")
 -- 			local to buffer
 -- 	The value of this option specifies the type of a buffer:
@@ -1017,7 +1017,7 @@ vim.bo.buftype = ""
 -- 	|channel| connected to the buffer, or 0 if no channel is connected.
 -- 	In a |:terminal| buffer this is the terminal channel.
 -- 	Read-only.
-vim.bo.channel = "0"
+vim.bo.channel = 0
 -- `'cindent'`  `'cin'` 		boolean	(default off)
 -- 			local to buffer
 -- 	Enables automatic C program indenting.  See `'cinkeys'`  to set the keys
@@ -1031,7 +1031,7 @@ vim.bo.channel = "0"
 -- 	When you don't like the way `'cindent'`  works, try the `'smartindent'` 
 -- 	option or `'indentexpr'` .
 -- 	This option is not used when `'paste'`  is set.
-vim.bo.cindent = "false"
+vim.bo.cindent = false
 -- `'cinkeys'`  `'cink'` 	string	(default "0{,0},0),0],:,0#,!^F,o,O,e")
 -- 			local to buffer
 -- 	A list of keys that, when typed in Insert mode, cause reindenting of
@@ -1131,7 +1131,7 @@ vim.bo.completefunc = ""
 -- 	remains a Tab.  If the new indent is greater than on the existing
 -- 	line, the remaining space is filled in the normal manner.
 -- 	See `'preserveindent'` .
-vim.bo.copyindent = "false"
+vim.bo.copyindent = false
 -- `'define'`  `'def'` 		string	(default "^\sdefine")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find a macro definition.  It is a search
@@ -1193,7 +1193,7 @@ vim.bo.dictionary = ""
 -- 	to remember the presence of a <EOL> for the last line in the file, so
 -- 	that when you write the file the situation from the original file can
 -- 	be kept.  But you can change it if you want to.
-vim.bo.endofline = "true"
+vim.bo.endofline = true
 -- `'equalprg'`  `'ep'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	External program to use for "=" command.  When this option is empty
@@ -1217,7 +1217,7 @@ vim.bo.errorformat = "%*[^\"]\"%f\"%*\\D%l: %m,\"%f\"%*\\D%l: %m,%-G%f:%l: (Each
 -- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
 -- 	This option is reset when the `'paste'`  option is set and restored when
 -- 	the `'paste'`  option is reset.
-vim.bo.expandtab = "false"
+vim.bo.expandtab = false
 -- `'fileencoding'`  `'fenc'` 	string (default: "")
 -- 			local to buffer
 -- 	File-content encoding for the current buffer. Conversion is done with
@@ -1309,7 +1309,7 @@ vim.bo.filetype = ""
 -- 	When the `'binary'`  option is set the value of this option doesn't
 -- 	matter.
 -- 	See the `'endofline'`  option.
-vim.bo.fixendofline = "true"
+vim.bo.fixendofline = true
 -- `'formatexpr'`  `'fex'` 	string (default "")
 -- 			local to buffer
 -- 	Expression which is evaluated to format a range of lines for the |gq|
@@ -1413,7 +1413,7 @@ vim.bo.grepprg = "grep -n $* /dev/null"
 -- 	|i_CTRL-^|.
 -- 	The value is set to 1 when setting `'keymap'`  to a valid keymap name.
 -- 	It is also used for the argument of commands like "r" and "f".
-vim.bo.iminsert = "0"
+vim.bo.iminsert = 0
 -- `'imsearch'`  `'ims'` 	number (default -1)
 -- 			local to buffer
 -- 	Specifies whether :lmap or an Input Method (IM) is to be used when
@@ -1427,7 +1427,7 @@ vim.bo.iminsert = "0"
 -- 	|c_CTRL-^|.
 -- 	The value is set to 1 when it is not -1 and setting the `'keymap'` 
 -- 	option to a valid keymap name.
-vim.bo.imsearch = "-1"
+vim.bo.imsearch = -1
 -- `'include'`  `'inc'` 		string	(default "^\sinclude")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find an include command.  It is a search
@@ -1510,7 +1510,7 @@ vim.bo.indentkeys = "0{,0},0),0],:,0#,!^F,o,O,e"
 -- 	has a lowercase letter where the typed text has an uppercase letter,
 -- 	and there is a letter before it, the completed part is made uppercase.
 -- 	With `'noinfercase'`  the match is used as-is.
-vim.bo.infercase = "false"
+vim.bo.infercase = false
 -- `'iskeyword'`  `'isk'` 	string (default: @,48-57,_,192-255)
 -- 			local to buffer
 -- 	Keywords are used in searching and recognizing with many commands:
@@ -1562,7 +1562,7 @@ vim.bo.keywordprg = ":Man"
 -- 	"=" operator to use this same indentation algorithm rather than
 -- 	calling an external program if `'equalprg'`  is empty.
 -- 	This option is not used when `'paste'`  is set.
-vim.bo.lisp = "false"
+vim.bo.lisp = false
 -- `'lispwords'`  `'lw'` 	string	(default is very long)
 -- 			global or local to buffer |global-local|
 -- 	Comma-separated list of words that influence the Lisp indenting when
@@ -1623,13 +1623,13 @@ vim.bo.matchpairs = "(:),{:},[:]"
 -- 	If `'modeline'`  is on `'modelines'`  gives the number of lines that is
 -- 	checked for set commands.  If `'modeline'`  is off or `'modelines'`  is zero
 -- 	no lines are checked.  See |modeline|.
-vim.bo.modeline = "true"
+vim.bo.modeline = true
 -- `'modifiable'`  `'ma'` 	boolean	(default on)
 -- 			local to buffer
 -- 	When off the buffer contents cannot be changed.  The `'fileformat'`  and
 -- 	`'fileencoding'`  options also can't be changed.
 -- 	Can be reset on startup with the |-M| command line argument.
-vim.bo.modifiable = "true"
+vim.bo.modifiable = true
 -- `'modified'`  `'mod'` 	boolean	(default off)
 -- 			local to buffer
 -- 	When on, the buffer is considered to be modified.  This option is set
@@ -1653,7 +1653,7 @@ vim.bo.modifiable = "true"
 -- 	will be ignored.
 -- 	Note that the text may actually be the same, e.g. `'modified'`  is set
 -- 	when using "rA" on an "A".
-vim.bo.modified = "false"
+vim.bo.modified = false
 -- `'nrformats'`  `'nf'` 	string	(default "bin,hex")
 -- 			local to buffer
 -- 	This defines what bases Vim will consider for numbers when using the
@@ -1759,7 +1759,7 @@ vim.bo.path = ".,/usr/include,,"
 -- 	tabs and spaces.  You might not like this.
 -- 	Also see `'copyindent'` .
 -- 	Use |:retab| to clean up white space.
-vim.bo.preserveindent = "false"
+vim.bo.preserveindent = false
 -- `'quoteescape'`  `'qe'` 	string	(default "\")
 -- 			local to buffer
 -- 	The characters that are used to escape quotes in a string.  Used for
@@ -1778,21 +1778,21 @@ vim.bo.quoteescape = "\\"
 -- 	When using the ":view" command the `'readonly'`  option is set for the
 -- 	newly edited buffer.
 -- 	See `'modifiable'`  for disallowing changes to the buffer.
-vim.bo.readonly = "false"
+vim.bo.readonly = false
 -- `'scrollback'`  `'scbk'` 	number	(default: 10000)
 -- 			local to buffer
 -- 	Maximum number of lines kept beyond the visible screen. Lines at the
 -- 	top are deleted if new lines exceed this limit.
 -- 	Minimum is 1, maximum is 100000.
 -- 	Only in |terminal| buffers.
-vim.bo.scrollback = "-1"
+vim.bo.scrollback = -1
 -- `'shiftwidth'`  `'sw'` 	number	(default 8)
 -- 			local to buffer
 -- 	Number of spaces to use for each step of (auto)indent.  Used for
 -- 	|`'cindent'` |, |>>|, |<<|, etc.
 -- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
 -- 	function to get the effective shiftwidth value.
-vim.bo.shiftwidth = "8"
+vim.bo.shiftwidth = 8
 -- `'smartindent'`  `'si'` 	boolean	(default off)
 -- 			local to buffer
 -- 	Do smart autoindenting when starting a new line.  Works for C-like
@@ -1816,7 +1816,7 @@ vim.bo.shiftwidth = "8"
 -- 	right.
 -- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
 -- 	reset.
-vim.bo.smartindent = "false"
+vim.bo.smartindent = false
 -- `'softtabstop'`  `'sts'` 	number	(default 0)
 -- 			local to buffer
 -- 	Number of spaces that a <Tab> counts for while performing editing
@@ -1836,7 +1836,7 @@ vim.bo.smartindent = "false"
 -- 
 -- 	The value of `'softtabstop'`  will be ignored if |`'varsofttabstop'` | is set
 -- 	to anything other than an empty string.
-vim.bo.softtabstop = "0"
+vim.bo.softtabstop = 0
 -- `'spellcapcheck'`  `'spc'` 	string	(default "[.?!]\_[\])'" \t]\+")
 -- 			local to buffer
 -- 	Pattern to locate the end of a sentence.  The following word will be
@@ -1950,7 +1950,7 @@ vim.bo.suffixesadd = ""
 -- 
 -- 	This option is used together with `'bufhidden'`  and `'buftype'`  to
 -- 	specify special kinds of buffers.   See |special-buffers|.
-vim.bo.swapfile = "true"
+vim.bo.swapfile = true
 -- `'synmaxcol'`  `'smc'` 	number	(default 3000)
 -- 			local to buffer
 -- 	Maximum column in which to search for syntax items.  In long lines the
@@ -1959,7 +1959,7 @@ vim.bo.swapfile = "true"
 -- 	This helps to avoid very slow redrawing for an XML file that is one
 -- 	long line.
 -- 	Set to zero to remove the limit.
-vim.bo.synmaxcol = "3000"
+vim.bo.synmaxcol = 3000
 -- `'syntax'`  `'syn'` 		string	(default empty)
 -- 			local to buffer
 -- 	When this option is set, the syntax with this name is loaded, unless
@@ -2015,7 +2015,7 @@ vim.bo.syntax = ""
 -- 
 -- 	The value of `'tabstop'`  will be ignored if |`'vartabstop'` | is set to
 -- 	anything other than an empty string.
-vim.bo.tabstop = "8"
+vim.bo.tabstop = 8
 -- `'tagcase'`  `'tc'` 		string	(default "followic")
 -- 			global or local to buffer |global-local|
 -- 	This option specifies how case is handled when searching the tags
@@ -2063,7 +2063,7 @@ vim.bo.tags = "./tags;,tags"
 -- 	When `'textwidth'`  is zero, `'wrapmargin'`  may be used.  See also
 -- 	`'formatoptions'`  and |ins-textwidth|.
 -- 	When `'formatexpr'`  is set it will be used to break the line.
-vim.bo.textwidth = "0"
+vim.bo.textwidth = 0
 -- `'thesaurus'`  `'tsr'` 	string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	List of file names, separated by commas, that are used to lookup words
@@ -2099,7 +2099,7 @@ vim.bo.thesaurusfunc = ""
 -- 	The undo file is not read when `'undoreload'`  causes the buffer from
 -- 	before a reload to be saved for undo.
 -- 	When `'undofile'`  is turned off the undo file is NOT deleted.
-vim.bo.undofile = "false"
+vim.bo.undofile = false
 -- `'undolevels'`  `'ul'` 	number	(default 1000)
 -- 			global or local to buffer |global-local|
 -- 	Maximum number of changes that can be undone.  Since undo information
@@ -2119,7 +2119,7 @@ vim.bo.undofile = "false"
 -- 	The local value is set to -123456 when the global value is to be used.
 -- 
 -- 	Also see |clear-undo|.
-vim.bo.undolevels = "1000"
+vim.bo.undolevels = 1000
 -- `'varsofttabstop'`  `'vsts'` 	string	(default "")
 -- 			local to buffer
 -- 	A list of the number of spaces that a <Tab> counts for while editing,
@@ -2159,7 +2159,7 @@ vim.bo.vartabstop = ""
 -- 	the text width to be further reduced.
 -- 	When `'textwidth'`  is non-zero, this option is not used.
 -- 	See also `'formatoptions'`  and |ins-textwidth|.
-vim.bo.wrapmargin = "0"
+vim.bo.wrapmargin = 0
 
 
 ---@type table<number, vim.go>

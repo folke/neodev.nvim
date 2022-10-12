@@ -34,7 +34,11 @@ function M.build()
     writer:write(var .. " = {}\n\n")
     Util.for_each(info, function(name, option)
       if option.scope == scope then
-        local str = ("%s.%s = %q\n"):format(var, name, option.default)
+        local default = option.default
+        if option.type == "string" then
+          default = ("%q"):format(default)
+        end
+        local str = ("%s.%s = %s\n"):format(var, name, default)
         if docs[name] then
           str = Annotations.comment(docs[name]) .. "\n" .. str
         end
