@@ -3779,10 +3779,12 @@ function vim.fn.getwinvar(winnr, varname, def) end
 -- 
 -- Can also be used as a |method|: >
 --   GetExpr()->glob()
---- @param nosuf? any
---- @param list? any[]
---- @param alllinks? any
-function vim.fn.glob(expr, nosuf, list, alllinks) end
+--- @param expr string
+--- @param nosuf? boolean
+--- @return string
+--- @overload fun(expr:string, nosuf?:boolean, list:true):string[]
+--- @overload fun(expr:string, nosuf?:boolean, list:true, alllinks:true):string[]
+function vim.fn.glob(expr, nosuf) end
 
 -- Convert a file pattern, as used by glob(), into a search
 -- pattern.  The result can be used to match with a string that

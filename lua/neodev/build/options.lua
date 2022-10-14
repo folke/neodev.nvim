@@ -2,6 +2,7 @@ local Docs = require("neodev.build.docs")
 local Writer = require("neodev.build.writer")
 local Annotations = require("neodev.build.annotations")
 local Util = require("neodev.util")
+local Config = require("neodev.config")
 
 ---@class OptionInfo
 ---@field allows_duplicates boolean
@@ -17,6 +18,18 @@ local Util = require("neodev.util")
 ---@alias OptionsInfo table<string, OptionInfo>
 
 local M = {}
+
+M.metatype2lua = {
+  map = function(info)
+    return ("table<string, %s>"):format(info.type)
+  end,
+  set = function(info)
+    return ("%s[]"):format(info.type)
+  end,
+  array = function(info)
+    return ("%s[]"):format(info.type)
+  end,
+}
 
 function M.build()
   local writer = Writer("options")
@@ -38,10 +51,11 @@ function M.build()
         if option.type == "string" then
           default = ("%q"):format(default)
         end
-        local str = ("%s.%s = %s\n"):format(var, name, default)
+        local str = ""
         if docs[name] then
-          str = Annotations.comment(docs[name]) .. "\n" .. str
+          str = str .. Annotations.comment(docs[name]) .. "\n"
         end
+        str = str .. ("%s.%s = %s\n"):format(var, name, default)
         writer:write(str)
       end
     end)
@@ -52,28 +66,35 @@ function M.build()
   write("win")
   write("buf")
 
-  writer:write([[
----@type table<number, vim.go>
-vim.go = {}
+  -- Write vim.opt
+  Util.for_each(info, function(name, option)
+    local str = ""
+    if docs[name] then
+      str = str .. Annotations.comment(docs[name]) .. "\n"
+    end
+    str = str .. ("--- @class vim.opt.%s: vim.Option\n"):format(name)
+    str = str .. ("--- @operator add: vim.opt.%s\n"):format(name)
+    str = str .. ("--- @operator sub: vim.opt.%s\n"):format(name)
+    str = str .. ("--- @operator pow: vim.opt.%s\n"):format(name)
+    str = str .. ("vim.opt.%s = {}\n"):format(name)
+    ---@type string
+    local return_type = option.type
 
----@type table<number, vim.bo>
-vim.bo = {}
+    pcall(function()
+      ---@diagnostic disable-next-line: no-unknown
+      return_type = vim.opt[name]._info.metatype
+      if M.metatype2lua[return_type] then
+        ---@diagnostic disable-next-line: no-unknown
+        return_type = M.metatype2lua[return_type](option)
+      end
+    end)
 
----@type table<number, vim.wo>
-vim.wo = {}
+    str = str .. ("--- @return %s\nfunction vim.opt.%s:get()end\n\n"):format(return_type, name)
+    writer:write(str)
+  end)
 
----@type vim.go | vim.wo | vim.bo
-vim.o = {}
-
----@type vim.go | vim.wo | vim.bo
-vim.opt = {}
-
----@type vim.go | vim.wo | vim.bo
-vim.opt_global = {}
-
----@type vim.go | vim.wo | vim.bo
-vim.opt_local = {}
-  ]])
+  local code = Util.read_file(Config.root("/types/override/options.lua"))
+  writer:write(code .. "\n")
 
   writer:close()
 end

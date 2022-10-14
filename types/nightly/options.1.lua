@@ -1,5 +1,26 @@
 ---@meta
 
+-- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+vim.wo.cursorlineopt = "both"
+-- `'diff'` 			boolean	(default off)
+-- 			local to window
+-- 	Join the current window in the group of windows that shows differences
+-- 	between files.  See |diff-mode|.
+vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special
@@ -2159,24 +2180,2164 @@ vim.bo.vartabstop = ""
 vim.bo.wrapmargin = 0
 
 
----@type table<number, vim.go>
-vim.go = {}
+-- `'aleph'`  `'al'` 		number	(default 224)
+-- 			global
+-- 	The ASCII code for the first letter of the Hebrew alphabet.  The
+-- 	routine that maps the keyboard in Hebrew mode, both in Insert mode
+-- 	(when hkmap is set) and on the command-line (when hitting CTRL-_)
+-- 	outputs the Hebrew characters in the range [aleph..aleph+26].
+-- 	aleph=128 applies to PC code, and aleph=224 applies to ISO 8859-8.
+-- 	See |rileft.txt|.
+--- @class vim.opt.aleph: vim.Option
+--- @operator add: vim.opt.aleph
+--- @operator sub: vim.opt.aleph
+--- @operator pow: vim.opt.aleph
+vim.opt.aleph = {}
+--- @return number
+function vim.opt.aleph:get()end
 
----@type table<number, vim.bo>
-vim.bo = {}
+-- `'allowrevins'`  `'ari'` 	boolean	(default off)
+-- 			global
+-- 	Allow CTRL-_ in Insert and Command-line mode.  This is default off, to
+-- 	avoid that users that accidentally type CTRL-_ instead of SHIFT-_ get
+-- 	into reverse Insert mode, and don't know how to get out.  See
+-- 	`'revins'` .
+--- @class vim.opt.allowrevins: vim.Option
+--- @operator add: vim.opt.allowrevins
+--- @operator sub: vim.opt.allowrevins
+--- @operator pow: vim.opt.allowrevins
+vim.opt.allowrevins = {}
+--- @return boolean
+function vim.opt.allowrevins:get()end
 
----@type table<number, vim.wo>
-vim.wo = {}
+-- `'ambiwidth'`  `'ambw'` 	string (default: "single")
+-- 			global
+-- 	Tells Vim what to do with characters with East Asian Width Class
+-- 	Ambiguous (such as Euro, Registered Sign, Copyright Sign, Greek
+-- 	letters, Cyrillic letters).
+-- 
+-- 	There are currently two possible values:
+-- 	"single":	Use the same width as characters in US-ASCII.  This is
+-- 			expected by most users.
+-- 	"double":	Use twice the width of ASCII characters.
+-- 
+-- 	The value "double" cannot be used if `'listchars'`  or `'fillchars'` 
+-- 	contains a character that would be double width.  These errors may
+-- 	also be given when calling setcellwidths().
+-- 
+-- 	The values are overruled for characters specified with
+-- 	|setcellwidths()|.
+-- 
+-- 	There are a number of CJK fonts for which the width of glyphs for
+-- 	those characters are solely based on how many octets they take in
+-- 	legacy/traditional CJK encodings.  In those encodings, Euro,
+-- 	Registered sign, Greek/Cyrillic letters are represented by two octets,
+-- 	therefore those fonts have "wide" glyphs for them.  This is also
+-- 	true of some line drawing characters used to make tables in text
+-- 	file.  Therefore, when a CJK font is used for GUI Vim or
+-- 	Vim is running inside a terminal (emulators) that uses a CJK font
+-- 	(or Vim is run inside an xterm invoked with "-cjkwidth" option.),
+-- 	this option should be set to "double" to match the width perceived
+-- 	by Vim with the width of glyphs in the font.  Perhaps it also has
+-- 	to be set to "double" under CJK MS-Windows when the system locale is
+-- 	set to one of CJK locales.  See Unicode Standard Annex #11
+-- 	(http://www.unicode.org/reports/tr11).
+--- @class vim.opt.ambiwidth: vim.Option
+--- @operator add: vim.opt.ambiwidth
+--- @operator sub: vim.opt.ambiwidth
+--- @operator pow: vim.opt.ambiwidth
+vim.opt.ambiwidth = {}
+--- @return string
+function vim.opt.ambiwidth:get()end
 
----@type vim.go | vim.wo | vim.bo
-vim.o = {}
+-- `'arabic'`  `'arab'` 		boolean (default off)
+-- 			local to window
+-- 	This option can be set to start editing Arabic text.
+-- 	Setting this option will:
+-- 	- Set the `'rightleft'`  option, unless `'termbidi'`  is set.
+-- 	- Set the `'arabicshape'`  option, unless `'termbidi'`  is set.
+-- 	- Set the `'keymap'`  option to "arabic"; in Insert mode CTRL-^ toggles
+-- 	  between typing English and Arabic key mapping.
+-- 	- Set the `'delcombine'`  option
+-- 
+-- 	Resetting this option will:
+-- 	- Reset the `'rightleft'`  option.
+-- 	- Disable the use of `'keymap'`  (without changing its value).
+-- 	Note that `'arabicshape'`  and `'delcombine'`  are not reset (it is a global
+-- 	option).
+-- 	Also see |arabic.txt|.
+--- @class vim.opt.arabic: vim.Option
+--- @operator add: vim.opt.arabic
+--- @operator sub: vim.opt.arabic
+--- @operator pow: vim.opt.arabic
+vim.opt.arabic = {}
+--- @return boolean
+function vim.opt.arabic:get()end
 
----@type vim.go | vim.wo | vim.bo
-vim.opt = {}
+-- `'arabicshape'`  `'arshape'` 	boolean (default on)
+-- 			global
+-- 	When on and `'termbidi'`  is off, the required visual character
+-- 	corrections that need to take place for displaying the Arabic language
+-- 	take effect.  Shaping, in essence, gets enabled; the term is a broad
+-- 	one which encompasses:
+-- 	  a) the changing/morphing of characters based on their location
+-- 	     within a word (initial, medial, final and stand-alone).
+-- 	  b) the enabling of the ability to compose characters
+-- 	  c) the enabling of the required combining of some characters
+-- 	When disabled the display shows each character's true stand-alone
+-- 	form.
+-- 	Arabic is a complex language which requires other settings, for
+-- 	further details see |arabic.txt|.
+--- @class vim.opt.arabicshape: vim.Option
+--- @operator add: vim.opt.arabicshape
+--- @operator sub: vim.opt.arabicshape
+--- @operator pow: vim.opt.arabicshape
+vim.opt.arabicshape = {}
+--- @return boolean
+function vim.opt.arabicshape:get()end
 
----@type vim.go | vim.wo | vim.bo
-vim.opt_global = {}
+-- `'autochdir'`  `'acd'` 	boolean (default off)
+-- 			global
+-- 	When on, Vim will change the current working directory whenever you
+-- 	open a file, switch buffers, delete a buffer or open/close a window.
+-- 	It will change to the directory containing the file which was opened
+-- 	or selected.  When a buffer has no name it also has no directory, thus
+-- 	the current directory won't change when navigating to it.
+-- 	Note: When this option is on some plugins may not work.
+--- @class vim.opt.autochdir: vim.Option
+--- @operator add: vim.opt.autochdir
+--- @operator sub: vim.opt.autochdir
+--- @operator pow: vim.opt.autochdir
+vim.opt.autochdir = {}
+--- @return boolean
+function vim.opt.autochdir:get()end
 
----@type vim.go | vim.wo | vim.bo
-vim.opt_local = {}
-  
+-- `'autoindent'`  `'ai'` 	boolean	(default on)
+-- 			local to buffer
+-- 	Copy indent from current line when starting a new line (typing <CR>
+-- 	in Insert mode or when using the "o" or "O" command).  If you do not
+-- 	type anything on the new line except <BS> or CTRL-D and then type
+-- 	<Esc>, CTRL-O or <CR>, the indent is deleted again.  Moving the cursor
+-- 	to another line has the same effect, unless the `'I'`  flag is included
+-- 	in `'cpoptions'` .
+-- 	When autoindent is on, formatting (with the "gq" command or when you
+-- 	reach `'textwidth'`  in Insert mode) uses the indentation of the first
+-- 	line.
+-- 	When `'smartindent'`  or `'cindent'`  is on the indent is changed in
+-- 	a different way.
+-- 	The `'autoindent'`  option is reset when the `'paste'`  option is set and
+-- 	restored when `'paste'`  is reset.
+-- 	{small difference from Vi: After the indent is deleted when typing
+-- 	<Esc> or <CR>, the cursor position when moving up or down is after the
+-- 	deleted indent; Vi puts the cursor somewhere in the deleted indent}.
+--- @class vim.opt.autoindent: vim.Option
+--- @operator add: vim.opt.autoindent
+--- @operator sub: vim.opt.autoindent
+--- @operator pow: vim.opt.autoindent
+vim.opt.autoindent = {}
+--- @return boolean
+function vim.opt.autoindent:get()end
+
+-- `'autoread'`  `'ar'` 		boolean	(default on)
+-- 			global or local to buffer |global-local|
+-- 	When a file has been detected to have been changed outside of Vim and
+-- 	it has not been changed inside of Vim, automatically read it again.
+-- 	When the file has been deleted this is not done, so you have the text
+-- 	from before it was deleted.  When it appears again then it is read.
+-- 	|timestamp|
+-- 	If this option has a local value, use this command to switch back to
+-- 	using the global value: >
+-- 		:set autoread<
+-- <
+--- @class vim.opt.autoread: vim.Option
+--- @operator add: vim.opt.autoread
+--- @operator sub: vim.opt.autoread
+--- @operator pow: vim.opt.autoread
+vim.opt.autoread = {}
+--- @return boolean
+function vim.opt.autoread:get()end
+
+-- `'autowrite'`  `'aw'` 	boolean	(default off)
+-- 			global
+-- 	Write the contents of the file, if it has been modified, on each
+-- 	`:next`, `:rewind`, `:last`, `:first`, `:previous`, `:stop`,
+-- 	`:suspend`, `:tag`, `:!`, `:make`, CTRL-] and CTRL-^ command; and when
+-- 	a `:buffer`, CTRL-O, CTRL-I, '{A-Z0-9}, or `{A-Z0-9} command takes one
+-- 	to another file.
+-- 	A buffer is not written if it becomes hidden, e.g. when `'bufhidden'`  is
+-- 	set to "hide" and `:next` is used.
+-- 	Note that for some commands the `'autowrite'`  option is not used, see
+-- 	`'autowriteall'`  for that.
+-- 	Some buffers will not be written, specifically when `'buftype'`  is
+-- 	"nowrite", "nofile", "terminal" or "prompt".
+--- @class vim.opt.autowrite: vim.Option
+--- @operator add: vim.opt.autowrite
+--- @operator sub: vim.opt.autowrite
+--- @operator pow: vim.opt.autowrite
+vim.opt.autowrite = {}
+--- @return boolean
+function vim.opt.autowrite:get()end
+
+-- `'autowriteall'`  `'awa'` 	boolean	(default off)
+-- 			global
+-- 	Like `'autowrite'` , but also used for commands ":edit", ":enew", ":quit",
+-- 	":qall", ":exit", ":xit", ":recover" and closing the Vim window.
+-- 	Setting this option also implies that Vim behaves like `'autowrite'`  has
+-- 	been set.
+--- @class vim.opt.autowriteall: vim.Option
+--- @operator add: vim.opt.autowriteall
+--- @operator sub: vim.opt.autowriteall
+--- @operator pow: vim.opt.autowriteall
+vim.opt.autowriteall = {}
+--- @return boolean
+function vim.opt.autowriteall:get()end
+
+-- `'background'`  `'bg'` 	string	(default "dark")
+-- 			global
+-- 	When set to "dark" or "light", adjusts the default color groups for
+-- 	that background type.  The |TUI| or other UI sets this on startup
+-- 	(triggering |OptionSet|) if it can detect the background color.
+-- 
+-- 	This option does NOT change the background color, it tells Nvim what
+-- 	the "inherited" (terminal/GUI) background looks like.
+-- 	See |:hi-normal| if you want to set the background color explicitly.
+-- 
+-- 	When a color scheme is loaded (the "g:colors_name" variable is set)
+-- 	setting `'background'`  will cause the color scheme to be reloaded.  If
+-- 	the color scheme adjusts to the value of `'background'`  this will work.
+-- 	However, if the color scheme sets `'background'`  itself the effect may
+-- 	be undone.  First delete the "g:colors_name" variable when needed.
+-- 
+-- 	Normally this option would be set in the vimrc file.  Possibly
+-- 	depending on the terminal name.  Example: >
+-- 		:if $TERM ==# "xterm"
+-- 		:  set background=dark
+-- 		:endif
+-- <	When this option is set, the default settings for the highlight groups
+-- 	will change.  To use other settings, place ":highlight" commands AFTER
+-- 	the setting of the `'background'`  option.
+-- 	This option is also used in the "$VIMRUNTIME/syntax/syntax.vim" file
+-- 	to select the colors for syntax highlighting.  After changing this
+-- 	option, you must load syntax.vim again to see the result.  This can be
+-- 	done with ":syntax on".
+--- @class vim.opt.background: vim.Option
+--- @operator add: vim.opt.background
+--- @operator sub: vim.opt.background
+--- @operator pow: vim.opt.background
+vim.opt.background = {}
+--- @return string
+function vim.opt.background:get()end
+
+-- `'backspace'`  `'bs'` 	string	(default "indent,eol,start")
+-- 			global
+-- 	Influences the working of <BS>, <Del>, CTRL-W and CTRL-U in Insert
+-- 	mode.  This is a list of items, separated by commas.  Each item allows
+-- 	a way to backspace over something:
+-- 	value	effect	~
+-- 	indent	allow backspacing over autoindent
+-- 	eol	allow backspacing over line breaks (join lines)
+-- 	start	allow backspacing over the start of insert; CTRL-W and CTRL-U
+-- 		stop once at the start of insert.
+-- 	nostop	like start, except CTRL-W and CTRL-U do not stop at the start of
+-- 		insert.
+-- 
+-- 	When the value is empty, Vi compatible backspacing is used, none of
+-- 	the ways mentioned for the items above are possible.
+-- 
+-- 	For backwards compatibility with version 5.4 and earlier:
+-- 	value	effect	~
+-- 	  0	same as ":set backspace=" (Vi compatible)
+-- 	  1	same as ":set backspace=indent,eol"
+-- 	  2	same as ":set backspace=indent,eol,start"
+-- 	  3	same as ":set backspace=indent,eol,nostop"
+--- @class vim.opt.backspace: vim.Option
+--- @operator add: vim.opt.backspace
+--- @operator sub: vim.opt.backspace
+--- @operator pow: vim.opt.backspace
+vim.opt.backspace = {}
+--- @return string[]
+function vim.opt.backspace:get()end
+
+-- `'backup'`  `'bk'` 		boolean	(default off)
+-- 			global
+-- 	Make a backup before overwriting a file.  Leave it around after the
+-- 	file has been successfully written.  If you do not want to keep the
+-- 	backup file, but you do want a backup while the file is being
+-- 	written, reset this option and set the `'writebackup'`  option (this is
+-- 	the default).  If you do not want a backup file at all reset both
+-- 	options (use this if your file system is almost full).  See the
+-- 	|backup-table| for more explanations.
+-- 	When the `'backupskip'`  pattern matches, a backup is not made anyway.
+-- 	When `'patchmode'`  is set, the backup may be renamed to become the
+-- 	oldest version of a file.
+--- @class vim.opt.backup: vim.Option
+--- @operator add: vim.opt.backup
+--- @operator sub: vim.opt.backup
+--- @operator pow: vim.opt.backup
+vim.opt.backup = {}
+--- @return boolean
+function vim.opt.backup:get()end
+
+-- `'backupcopy'`  `'bkc'` 	string	(default: "auto")
+-- 			global or local to buffer |global-local|
+-- 	When writing a file and a backup is made, this option tells how it's
+-- 	done.  This is a comma-separated list of words.
+-- 
+-- 	The main values are:
+-- 	"yes"	make a copy of the file and overwrite the original one
+-- 	"no"	rename the file and write a new one
+-- 	"auto"	one of the previous, what works best
+-- 
+-- 	Extra values that can be combined with the ones above are:
+-- 	"breaksymlink"	always break symlinks when writing
+-- 	"breakhardlink"	always break hardlinks when writing
+-- 
+-- 	Making a copy and overwriting the original file:
+-- 	- Takes extra time to copy the file.
+-- 	+ When the file has special attributes, is a (hard/symbolic) link or
+-- 	  has a resource fork, all this is preserved.
+-- 	- When the file is a link the backup will have the name of the link,
+-- 	  not of the real file.
+-- 
+-- 	Renaming the file and writing a new one:
+-- 	+ It's fast.
+-- 	- Sometimes not all attributes of the file can be copied to the new
+-- 	  file.
+-- 	- When the file is a link the new file will not be a link.
+-- 
+-- 	The "auto" value is the middle way: When Vim sees that renaming the
+-- 	file is possible without side effects (the attributes can be passed on
+-- 	and the file is not a link) that is used.  When problems are expected,
+-- 	a copy will be made.
+-- 
+-- 	The "breaksymlink" and "breakhardlink" values can be used in
+-- 	combination with any of "yes", "no" and "auto".  When included, they
+-- 	force Vim to always break either symbolic or hard links by doing
+-- 	exactly what the "no" option does, renaming the original file to
+-- 	become the backup and writing a new file in its place.  This can be
+-- 	useful for example in source trees where all the files are symbolic or
+-- 	hard links and any changes should stay in the local source tree, not
+-- 	be propagated back to the original source.
+-- 
+-- 	One situation where "no" and "auto" will cause problems: A program
+-- 	that opens a file, invokes Vim to edit that file, and then tests if
+-- 	the open file was changed (through the file descriptor) will check the
+-- 	backup file instead of the newly created file.  "crontab -e" is an
+-- 	example.
+-- 
+-- 	When a copy is made, the original file is truncated and then filled
+-- 	with the new text.  This means that protection bits, owner and
+-- 	symbolic links of the original file are unmodified.  The backup file,
+-- 	however, is a new file, owned by the user who edited the file.  The
+-- 	group of the backup is set to the group of the original file.  If this
+-- 	fails, the protection bits for the group are made the same as for
+-- 	others.
+-- 
+-- 	When the file is renamed, this is the other way around: The backup has
+-- 	the same attributes of the original file, and the newly written file
+-- 	is owned by the current user.  When the file was a (hard/symbolic)
+-- 	link, the new file will not!  That's why the "auto" value doesn't
+-- 	rename when the file is a link.  The owner and group of the newly
+-- 	written file will be set to the same ones as the original file, but
+-- 	the system may refuse to do this.  In that case the "auto" value will
+-- 	again not rename the file.
+--- @class vim.opt.backupcopy: vim.Option
+--- @operator add: vim.opt.backupcopy
+--- @operator sub: vim.opt.backupcopy
+--- @operator pow: vim.opt.backupcopy
+vim.opt.backupcopy = {}
+--- @return string[]
+function vim.opt.backupcopy:get()end
+
+-- `'backupdir'`  `'bdir'` 	string	(default ".,$XDG_STATE_HOME/nvim/backup//")
+-- 			global
+-- 	List of directories for the backup file, separated with commas.
+-- 	- The backup file will be created in the first directory in the list
+-- 	  where this is possible.  If none of the directories exist Nvim will
+-- 	  attempt to create the last directory in the list.
+-- 	- Empty means that no backup file will be created (`'patchmode'`  is
+-- 	  impossible!).  Writing may fail because of this.
+-- 	- A directory "." means to put the backup file in the same directory
+-- 	  as the edited file.
+-- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
+-- 	  the backup file relative to where the edited file is.  The leading
+-- 	  "." is replaced with the path name of the edited file.
+-- 	  ("." inside a directory name has no special meaning).
+-- 	- Spaces after the comma are ignored, other spaces are considered part
+-- 	  of the directory name.  To have a space at the start of a directory
+-- 	  name, precede it with a backslash.
+-- 	- To include a comma in a directory name precede it with a backslash.
+-- 	- A directory name may end in an `'/'` .
+-- 	- For Unix and Win32, if a directory ends in two path separators "//",
+-- 	  the swap file name will be built from the complete path to the file
+-- 	  with all path separators changed to percent `'%'`  signs. This will
+-- 	  ensure file name uniqueness in the backup directory.
+-- 	  On Win32, it is also possible to end with "\\".  However, When a
+-- 	  separating comma is following, you must use "//", since "\\" will
+-- 	  include the comma in the file name. Therefore it is recommended to
+-- 	  use `'//'` , instead of `'\\'` .
+-- 	- Environment variables are expanded |:set_env|.
+-- 	- Careful with `'\'`  characters, type one before a space, type two to
+-- 	  get one in the option (see |option-backslash|), for example: >
+-- 	    :set bdir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
+-- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
+-- 	  of the option is removed.
+-- 	See also `'backup'`  and `'writebackup'`  options.
+-- 	If you want to hide your backup files on Unix, consider this value: >
+-- 		:set backupdir=./.backup,~/.backup,.,/tmp
+-- <	You must create a ".backup" directory in each directory and in your
+-- 	home directory for this to work properly.
+-- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
+-- 	directories from the list.  This avoids problems when a future version
+-- 	uses another default.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.backupdir: vim.Option
+--- @operator add: vim.opt.backupdir
+--- @operator sub: vim.opt.backupdir
+--- @operator pow: vim.opt.backupdir
+vim.opt.backupdir = {}
+--- @return string[]
+function vim.opt.backupdir:get()end
+
+-- `'backupext'`  `'bex'` 	string	(default "~")
+-- 			global
+-- 	String which is appended to a file name to make the name of the
+-- 	backup file.  The default is quite unusual, because this avoids
+-- 	accidentally overwriting existing files with a backup file.  You might
+-- 	prefer using ".bak", but make sure that you don't have files with
+-- 	".bak" that you want to keep.
+-- 	Only normal file name characters can be used; "/\*?[|<>" are illegal.
+-- 
+-- 	If you like to keep a lot of backups, you could use a BufWritePre
+-- 	autocommand to change `'backupext'`  just before writing the file to
+-- 	include a timestamp. >
+-- 		:au BufWritePre * let &bex = `'-'`  .. strftime("%Y%b%d%X") .. `'~'` 
+-- <	Use `'backupdir'`  to put the backup in a different directory.
+--- @class vim.opt.backupext: vim.Option
+--- @operator add: vim.opt.backupext
+--- @operator sub: vim.opt.backupext
+--- @operator pow: vim.opt.backupext
+vim.opt.backupext = {}
+--- @return string
+function vim.opt.backupext:get()end
+
+-- `'backupskip'`  `'bsk'` 	string	(default: "$TMPDIR/,$TEMP/*"
+-- 				 Unix: "/tmp/,$TMP/"
+-- 				 Mac: "/private/tmp/,$TMP/")
+-- 			global
+-- 	A list of file patterns.  When one of the patterns matches with the
+-- 	name of the file which is written, no backup file is created.  Both
+-- 	the specified file name and the full path name of the file are used.
+-- 	The pattern is used like with |:autocmd|, see |autocmd-pattern|.
+-- 	Watch out for special characters, see |option-backslash|.
+-- 	When $TMPDIR, $TMP or $TEMP is not defined, it is not used for the
+-- 	default value.  "/tmp/*" is only used for Unix.
+-- 
+-- 	WARNING: Not having a backup file means that when Vim fails to write
+-- 	your buffer correctly and then, for whatever reason, Vim exits, you
+-- 	lose both the original file and what you were writing.  Only disable
+-- 	backups if you don't care about losing the file.
+-- 
+-- 	Note that environment variables are not expanded.  If you want to use
+-- 	$HOME you must expand it explicitly, e.g.: >
+-- 		:let &backupskip = escape(expand(`'$HOME'` ), `'\'` ) .. `'/tmp/*'` 
+-- 
+-- <	Note that the default also makes sure that "crontab -e" works (when a
+-- 	backup would be made by renaming the original file crontab won't see
+-- 	the newly created file).  Also see `'backupcopy'`  and |crontab|.
+--- @class vim.opt.backupskip: vim.Option
+--- @operator add: vim.opt.backupskip
+--- @operator sub: vim.opt.backupskip
+--- @operator pow: vim.opt.backupskip
+vim.opt.backupskip = {}
+--- @return string[]
+function vim.opt.backupskip:get()end
+
+-- `'belloff'`  `'bo'` 		string	(default "all")
+-- 			global
+-- 	Specifies for which events the bell will not be rung. It is a comma-
+-- 	separated list of items. For each item that is present, the bell
+-- 	will be silenced. This is most useful to specify specific events in
+-- 	insert mode to be silenced.
+-- 
+-- 	item	    meaning when present	~
+-- 	all	    All events.
+-- 	backspace   When hitting <BS> or <Del> and deleting results in an
+-- 		    error.
+-- 	cursor	    Fail to move around using the cursor keys or
+-- 		    <PageUp>/<PageDown> in |Insert-mode|.
+-- 	complete    Error occurred when using |i_CTRL-X_CTRL-K| or
+-- 		    |i_CTRL-X_CTRL-T|.
+-- 	copy	    Cannot copy char from insert mode using |i_CTRL-Y| or
+-- 		    |i_CTRL-E|.
+-- 	ctrlg	    Unknown Char after <C-G> in Insert mode.
+-- 	error	    Other Error occurred (e.g. try to join last line)
+-- 		    (mostly used in |Normal-mode| or |Cmdline-mode|).
+-- 	esc	    hitting <Esc> in |Normal-mode|.
+-- 	hangul	    Ignored.
+-- 	lang	    Calling the beep module for Lua/Mzscheme/TCL.
+-- 	mess	    No output available for |g<|.
+-- 	showmatch   Error occurred for `'showmatch'`  function.
+-- 	operator    Empty region error |cpo-E|.
+-- 	register    Unknown register after <C-R> in |Insert-mode|.
+-- 	shell	    Bell from shell output |:!|.
+-- 	spell	    Error happened on spell suggest.
+-- 	wildmode    More matches in |cmdline-completion| available
+-- 		    (depends on the `'wildmode'`  setting).
+-- 
+-- 	This is most useful to fine tune when in Insert mode the bell should
+-- 	be rung. For Normal mode and Ex commands, the bell is often rung to
+-- 	indicate that an error occurred. It can be silenced by adding the
+-- 	"error" keyword.
+--- @class vim.opt.belloff: vim.Option
+--- @operator add: vim.opt.belloff
+--- @operator sub: vim.opt.belloff
+--- @operator pow: vim.opt.belloff
+vim.opt.belloff = {}
+--- @return string[]
+function vim.opt.belloff:get()end
+
+-- `'binary'`  `'bin'` 		boolean	(default off)
+-- 			local to buffer
+-- 	This option should be set before editing a binary file.  You can also
+-- 	use the |-b| Vim argument.  When this option is switched on a few
+-- 	options will be changed (also when it already was on):
+-- 		`'textwidth'`   will be set to 0
+-- 		`'wrapmargin'`  will be set to 0
+-- 		`'modeline'`    will be off
+-- 		`'expandtab'`   will be off
+-- 	Also, `'fileformat'`  and `'fileformats'`  options will not be used, the
+-- 	file is read and written like `'fileformat'`  was "unix" (a single <NL>
+-- 	separates lines).
+-- 	The `'fileencoding'`  and `'fileencodings'`  options will not be used, the
+-- 	file is read without conversion.
+-- 	NOTE: When you start editing a(nother) file while the `'bin'`  option is
+-- 	on, settings from autocommands may change the settings again (e.g.,
+-- 	`'textwidth'` ), causing trouble when editing.  You might want to set
+-- 	`'bin'`  again when the file has been loaded.
+-- 	The previous values of these options are remembered and restored when
+-- 	`'bin'`  is switched from on to off.  Each buffer has its own set of
+-- 	saved option values.
+-- 	To edit a file with `'binary'`  set you can use the |++bin| argument.
+-- 	This avoids you have to do ":set bin", which would have effect for all
+-- 	files you edit.
+-- 	When writing a file the <EOL> for the last line is only written if
+-- 	there was one in the original file (normally Vim appends an <EOL> to
+-- 	the last line if there is none; this would make the file longer).  See
+-- 	the `'endofline'`  option.
+--- @class vim.opt.binary: vim.Option
+--- @operator add: vim.opt.binary
+--- @operator sub: vim.opt.binary
+--- @operator pow: vim.opt.binary
+vim.opt.binary = {}
+--- @return boolean
+function vim.opt.binary:get()end
+
+-- `'bomb'` 			boolean	(default off)
+-- 			local to buffer
+-- 	When writing a file and the following conditions are met, a BOM (Byte
+-- 	Order Mark) is prepended to the file:
+-- 	- this option is on
+-- 	- the `'binary'`  option is off
+-- 	- `'fileencoding'`  is "utf-8", "ucs-2", "ucs-4" or one of the little/big
+-- 	  endian variants.
+-- 	Some applications use the BOM to recognize the encoding of the file.
+-- 	Often used for UCS-2 files on MS-Windows.  For other applications it
+-- 	causes trouble, for example: "cat file1 file2" makes the BOM of file2
+-- 	appear halfway through the resulting file.  Gcc doesn't accept a BOM.
+-- 	When Vim reads a file and `'fileencodings'`  starts with "ucs-bom", a
+-- 	check for the presence of the BOM is done and `'bomb'`  set accordingly.
+-- 	Unless `'binary'`  is set, it is removed from the first line, so that you
+-- 	don't see it when editing.  When you don't change the options, the BOM
+-- 	will be restored when writing the file.
+--- @class vim.opt.bomb: vim.Option
+--- @operator add: vim.opt.bomb
+--- @operator sub: vim.opt.bomb
+--- @operator pow: vim.opt.bomb
+vim.opt.bomb = {}
+--- @return boolean
+function vim.opt.bomb:get()end
+
+-- `'breakat'`  `'brk'` 		string	(default " ^I!@*-+;:,./?")
+-- 			global
+-- 	This option lets you choose which characters might cause a line
+-- 	break if `'linebreak'`  is on.  Only works for ASCII characters.
+--- @class vim.opt.breakat: vim.Option
+--- @operator add: vim.opt.breakat
+--- @operator sub: vim.opt.breakat
+--- @operator pow: vim.opt.breakat
+vim.opt.breakat = {}
+--- @return string[]
+function vim.opt.breakat:get()end
+
+-- `'breakindent'`  `'bri'` 	boolean (default off)
+-- 			local to window
+-- 	Every wrapped line will continue visually indented (same amount of
+-- 	space as the beginning of that line), thus preserving horizontal blocks
+-- 	of text.
+--- @class vim.opt.breakindent: vim.Option
+--- @operator add: vim.opt.breakindent
+--- @operator sub: vim.opt.breakindent
+--- @operator pow: vim.opt.breakindent
+vim.opt.breakindent = {}
+--- @return boolean
+function vim.opt.breakindent:get()end
+
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 	The default value for min is 20, shift and list is 0.
+--- @class vim.opt.breakindentopt: vim.Option
+--- @operator add: vim.opt.breakindentopt
+--- @operator sub: vim.opt.breakindentopt
+--- @operator pow: vim.opt.breakindentopt
+vim.opt.breakindentopt = {}
+--- @return string[]
+function vim.opt.breakindentopt:get()end
+
+-- `'browsedir'`  `'bsdir'` 	string	(default: "last")
+-- 			global
+-- 	Which directory to use for the file browser:
+-- 	   last		Use same directory as with last file browser, where a
+-- 			file was opened or saved.
+-- 	   buffer	Use the directory of the related buffer.
+-- 	   current	Use the current directory.
+-- 	   {path}	Use the specified directory
+--- @class vim.opt.browsedir: vim.Option
+--- @operator add: vim.opt.browsedir
+--- @operator sub: vim.opt.browsedir
+--- @operator pow: vim.opt.browsedir
+vim.opt.browsedir = {}
+--- @return string
+function vim.opt.browsedir:get()end
+
+-- `'bufhidden'`  `'bh'` 	string (default: "")
+-- 			local to buffer
+-- 	This option specifies what happens when a buffer is no longer
+-- 	displayed in a window:
+-- 	  <empty>	follow the global `'hidden'`  option
+-- 	  hide		hide the buffer (don't unload it), even if `'hidden'`  is
+-- 			not set
+-- 	  unload	unload the buffer, even if `'hidden'`  is set; the
+-- 			|:hide| command will also unload the buffer
+-- 	  delete	delete the buffer from the buffer list, even if
+-- 			`'hidden'`  is set; the |:hide| command will also delete
+-- 			the buffer, making it behave like |:bdelete|
+-- 	  wipe		wipe the buffer from the buffer list, even if
+-- 			`'hidden'`  is set; the |:hide| command will also wipe
+-- 			out the buffer, making it behave like |:bwipeout|
+-- 
+-- 	CAREFUL: when "unload", "delete" or "wipe" is used changes in a buffer
+-- 	are lost without a warning.  Also, these values may break autocommands
+-- 	that switch between buffers temporarily.
+-- 	This option is used together with `'buftype'`  and `'swapfile'`  to specify
+-- 	special kinds of buffers.   See |special-buffers|.
+--- @class vim.opt.bufhidden: vim.Option
+--- @operator add: vim.opt.bufhidden
+--- @operator sub: vim.opt.bufhidden
+--- @operator pow: vim.opt.bufhidden
+vim.opt.bufhidden = {}
+--- @return string
+function vim.opt.bufhidden:get()end
+
+-- `'buflisted'`  `'bl'` 	boolean (default: on)
+-- 			local to buffer
+-- 	When this option is set, the buffer shows up in the buffer list.  If
+-- 	it is reset it is not used for ":bnext", "ls", the Buffers menu, etc.
+-- 	This option is reset by Vim for buffers that are only used to remember
+-- 	a file name or marks.  Vim sets it when starting to edit a buffer.
+-- 	But not when moving to a buffer with ":buffer".
+--- @class vim.opt.buflisted: vim.Option
+--- @operator add: vim.opt.buflisted
+--- @operator sub: vim.opt.buflisted
+--- @operator pow: vim.opt.buflisted
+vim.opt.buflisted = {}
+--- @return boolean
+function vim.opt.buflisted:get()end
+
+-- `'buftype'`  `'bt'` 		string (default: "")
+-- 			local to buffer
+-- 	The value of this option specifies the type of a buffer:
+-- 	  <empty>	normal buffer
+-- 	  acwrite	buffer will always be written with |BufWriteCmd|s
+-- 	  help		help buffer (do not set this manually)
+-- 	  nofile	buffer is not related to a file, will not be written
+-- 	  nowrite	buffer will not be written
+-- 	  quickfix	list of errors |:cwindow| or locations |:lwindow|
+-- 	  terminal	|terminal-emulator| buffer
+-- 	  prompt	buffer where only the last line can be edited, meant
+-- 			to be used by a plugin, see |prompt-buffer|
+-- 
+-- 	This option is used together with `'bufhidden'`  and `'swapfile'`  to
+-- 	specify special kinds of buffers.   See |special-buffers|.
+-- 	Also see |win_gettype()|, which returns the type of the window.
+-- 
+-- 	Be careful with changing this option, it can have many side effects!
+-- 	One such effect is that Vim will not check the timestamp of the file,
+-- 	if the file is changed by another program this will not be noticed.
+-- 
+-- 	A "quickfix" buffer is only used for the error list and the location
+-- 	list.  This value is set by the |:cwindow| and |:lwindow| commands and
+-- 	you are not supposed to change it.
+-- 
+-- 	"nofile" and "nowrite" buffers are similar:
+-- 	both:		The buffer is not to be written to disk, ":w" doesn't
+-- 			work (":w filename" does work though).
+-- 	both:		The buffer is never considered to be |`'modified'` |.
+-- 			There is no warning when the changes will be lost, for
+-- 			example when you quit Vim.
+-- 	both:		A swap file is only created when using too much memory
+-- 			(when `'swapfile'`  has been reset there is never a swap
+-- 			file).
+-- 	nofile only:	The buffer name is fixed, it is not handled like a
+-- 			file name.  It is not modified in response to a |:cd|
+-- 			command.
+-- 	both:		When using ":e bufname" and already editing "bufname"
+-- 			the buffer is made empty and autocommands are
+-- 			triggered as usual for |:edit|.
+-- 
+-- 	"acwrite" implies that the buffer name is not related to a file, like
+-- 	"nofile", but it will be written.  Thus, in contrast to "nofile" and
+-- 	"nowrite", ":w" does work and a modified buffer can't be abandoned
+-- 	without saving.  For writing there must be matching |BufWriteCmd|,
+-- 	|FileWriteCmd| or |FileAppendCmd| autocommands.
+--- @class vim.opt.buftype: vim.Option
+--- @operator add: vim.opt.buftype
+--- @operator sub: vim.opt.buftype
+--- @operator pow: vim.opt.buftype
+vim.opt.buftype = {}
+--- @return string
+function vim.opt.buftype:get()end
+
+-- `'casemap'`  `'cmp'` 		string	(default: "internal,keepascii")
+-- 			global
+-- 	Specifies details about changing the case of letters.  It may contain
+-- 	these words, separated by a comma:
+-- 	internal	Use internal case mapping functions, the current
+-- 			locale does not change the case mapping. When
+-- 			"internal" is omitted, the towupper() and towlower()
+-- 			system library functions are used when available.
+-- 	keepascii	For the ASCII characters (0x00 to 0x7f) use the US
+-- 			case mapping, the current locale is not effective.
+-- 			This probably only matters for Turkish.
+--- @class vim.opt.casemap: vim.Option
+--- @operator add: vim.opt.casemap
+--- @operator sub: vim.opt.casemap
+--- @operator pow: vim.opt.casemap
+vim.opt.casemap = {}
+--- @return string[]
+function vim.opt.casemap:get()end
+
+-- `'cdhome'`  `'cdh'` 		boolean	(default: off)
+-- 			global
+-- 	When on, |:cd|, |:tcd| and |:lcd| without an argument changes the
+-- 	current working directory to the |$HOME| directory like in Unix.
+-- 	When off, those commands just print the current directory name.
+-- 	On Unix this option has no effect.
+--- @class vim.opt.cdhome: vim.Option
+--- @operator add: vim.opt.cdhome
+--- @operator sub: vim.opt.cdhome
+--- @operator pow: vim.opt.cdhome
+vim.opt.cdhome = {}
+--- @return boolean
+function vim.opt.cdhome:get()end
+
+-- `'cdpath'`  `'cd'` 		string	(default: equivalent to $CDPATH or ",,")
+-- 			global
+-- 	This is a list of directories which will be searched when using the
+-- 	|:cd|, |:tcd| and |:lcd| commands, provided that the directory being
+-- 	searched for has a relative path, not an absolute part starting with
+-- 	"/", "./" or "../", the `'cdpath'`  option is not used then.
+-- 	The `'cdpath'`  option's value has the same form and semantics as
+-- 	|`'path'` |.  Also see |file-searching|.
+-- 	The default value is taken from $CDPATH, with a "," prepended to look
+-- 	in the current directory first.
+-- 	If the default value taken from $CDPATH is not what you want, include
+-- 	a modified version of the following command in your vimrc file to
+-- 	override it: >
+-- 	  :let &cdpath = `','`  .. substitute(substitute($CDPATH, '[, ]', `'\\\0'` , `'g'` ), `':'` , `','` , `'g'` )
+-- <	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+-- 	(parts of `'cdpath'`  can be passed to the shell to expand file names).
+--- @class vim.opt.cdpath: vim.Option
+--- @operator add: vim.opt.cdpath
+--- @operator sub: vim.opt.cdpath
+--- @operator pow: vim.opt.cdpath
+vim.opt.cdpath = {}
+--- @return string[]
+function vim.opt.cdpath:get()end
+
+-- `'cedit'` 			string	(default: CTRL-F)
+-- 			global
+-- 	The key used in Command-line Mode to open the command-line window.
+-- 	Only non-printable keys are allowed.
+-- 	The key can be specified as a single character, but it is difficult to
+-- 	type.  The preferred way is to use the <> notation.  Examples: >
+-- 		:exe "set cedit=\<C-Y>"
+-- 		:exe "set cedit=\<Esc>"
+-- <	|Nvi| also has this option, but it only uses the first character.
+-- 	See |cmdwin|.
+--- @class vim.opt.cedit: vim.Option
+--- @operator add: vim.opt.cedit
+--- @operator sub: vim.opt.cedit
+--- @operator pow: vim.opt.cedit
+vim.opt.cedit = {}
+--- @return string
+function vim.opt.cedit:get()end
+
+-- `'channel'` 		number (default: 0)
+-- 			local to buffer
+-- 	|channel| connected to the buffer, or 0 if no channel is connected.
+-- 	In a |:terminal| buffer this is the terminal channel.
+-- 	Read-only.
+--- @class vim.opt.channel: vim.Option
+--- @operator add: vim.opt.channel
+--- @operator sub: vim.opt.channel
+--- @operator pow: vim.opt.channel
+vim.opt.channel = {}
+--- @return number
+function vim.opt.channel:get()end
+
+-- `'charconvert'`  `'ccv'` 	string (default "")
+-- 			global
+-- 	An expression that is used for character encoding conversion.  It is
+-- 	evaluated when a file that is to be read or has been written has a
+-- 	different encoding from what is desired.
+-- 	`'charconvert'`  is not used when the internal iconv() function is
+-- 	supported and is able to do the conversion.  Using iconv() is
+-- 	preferred, because it is much faster.
+-- 	`'charconvert'`  is not used when reading stdin |--|, because there is no
+-- 	file to convert from.  You will have to save the text in a file first.
+-- 	The expression must return zero, false or an empty string for success,
+-- 	non-zero or true for failure.
+-- 	See |encoding-names| for possible encoding names.
+-- 	Additionally, names given in `'fileencodings'`  and `'fileencoding'`  are
+-- 	used.
+-- 	Conversion between "latin1", "unicode", "ucs-2", "ucs-4" and "utf-8"
+-- 	is done internally by Vim, `'charconvert'`  is not used for this.
+-- 	Also used for Unicode conversion.
+-- 	Example: >
+-- 		set charconvert=CharConvert()
+-- 		fun CharConvert()
+-- 		  system("recode "
+-- 			\ .. v:charconvert_from .. ".." .. v:charconvert_to
+-- 			\ .. " <" .. v:fname_in .. " >" .. v:fname_out)
+-- 		  return v:shell_error
+-- 		endfun
+-- <	The related Vim variables are:
+-- 		v:charconvert_from	name of the current encoding
+-- 		v:charconvert_to	name of the desired encoding
+-- 		v:fname_in		name of the input file
+-- 		v:fname_out		name of the output file
+-- 	Note that v:fname_in and v:fname_out will never be the same.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.charconvert: vim.Option
+--- @operator add: vim.opt.charconvert
+--- @operator sub: vim.opt.charconvert
+--- @operator pow: vim.opt.charconvert
+vim.opt.charconvert = {}
+--- @return string
+function vim.opt.charconvert:get()end
+
+-- `'cindent'`  `'cin'` 		boolean	(default off)
+-- 			local to buffer
+-- 	Enables automatic C program indenting.  See `'cinkeys'`  to set the keys
+-- 	that trigger reindenting in insert mode and `'cinoptions'`  to set your
+-- 	preferred indent style.
+-- 	If `'indentexpr'`  is not empty, it overrules `'cindent'` .
+-- 	If `'lisp'`  is not on and both `'indentexpr'`  and `'equalprg'`  are empty,
+-- 	the "=" operator indents using this algorithm rather than calling an
+-- 	external program.
+-- 	See |C-indenting|.
+-- 	When you don't like the way `'cindent'`  works, try the `'smartindent'` 
+-- 	option or `'indentexpr'` .
+-- 	This option is not used when `'paste'`  is set.
+--- @class vim.opt.cindent: vim.Option
+--- @operator add: vim.opt.cindent
+--- @operator sub: vim.opt.cindent
+--- @operator pow: vim.opt.cindent
+vim.opt.cindent = {}
+--- @return boolean
+function vim.opt.cindent:get()end
+
+-- `'cinkeys'`  `'cink'` 	string	(default "0{,0},0),0],:,0#,!^F,o,O,e")
+-- 			local to buffer
+-- 	A list of keys that, when typed in Insert mode, cause reindenting of
+-- 	the current line.  Only used if `'cindent'`  is on and `'indentexpr'`  is
+-- 	empty.
+-- 	For the format of this option see |cinkeys-format|.
+-- 	See |C-indenting|.
+--- @class vim.opt.cinkeys: vim.Option
+--- @operator add: vim.opt.cinkeys
+--- @operator sub: vim.opt.cinkeys
+--- @operator pow: vim.opt.cinkeys
+vim.opt.cinkeys = {}
+--- @return string[]
+function vim.opt.cinkeys:get()end
+
+-- `'cinoptions'`  `'cino'` 	string	(default "")
+-- 			local to buffer
+-- 	The `'cinoptions'`  affect the way `'cindent'`  reindents lines in a C
+-- 	program.  See |cinoptions-values| for the values of this option, and
+-- 	|C-indenting| for info on C indenting in general.
+--- @class vim.opt.cinoptions: vim.Option
+--- @operator add: vim.opt.cinoptions
+--- @operator sub: vim.opt.cinoptions
+--- @operator pow: vim.opt.cinoptions
+vim.opt.cinoptions = {}
+--- @return string[]
+function vim.opt.cinoptions:get()end
+
+-- `'cinscopedecls'`  `'cinsd'` 	string	(default "public,protected,private")
+-- 			local to buffer
+-- 	Keywords that are interpreted as a C++ scope declaration by |cino-g|.
+-- 	Useful e.g. for working with the Qt framework that defines additional
+-- 	scope declarations "signals", "public slots" and "private slots": >
+-- 		set cinscopedecls+=signals,public\ slots,private\ slots
+-- 
+-- <
+--- @class vim.opt.cinscopedecls: vim.Option
+--- @operator add: vim.opt.cinscopedecls
+--- @operator sub: vim.opt.cinscopedecls
+--- @operator pow: vim.opt.cinscopedecls
+vim.opt.cinscopedecls = {}
+--- @return string[]
+function vim.opt.cinscopedecls:get()end
+
+-- `'cinwords'`  `'cinw'` 	string	(default "if,else,while,do,for,switch")
+-- 			local to buffer
+-- 	These keywords start an extra indent in the next line when
+-- 	`'smartindent'`  or `'cindent'`  is set.  For `'cindent'`  this is only done at
+-- 	an appropriate place (inside {}).
+-- 	Note that `'ignorecase'`  isn't used for `'cinwords'` .  If case doesn't
+-- 	matter, include the keyword both the uppercase and lowercase:
+-- 	"if,If,IF".
+--- @class vim.opt.cinwords: vim.Option
+--- @operator add: vim.opt.cinwords
+--- @operator sub: vim.opt.cinwords
+--- @operator pow: vim.opt.cinwords
+vim.opt.cinwords = {}
+--- @return string[]
+function vim.opt.cinwords:get()end
+
+-- `'clipboard'`  `'cb'` 	string	(default "")
+-- 			global
+-- 	This option is a list of comma-separated names.
+-- 	These names are recognized:
+-- 
+-- 
+-- 	unnamed		When included, Vim will use the clipboard register `'*'` 
+-- 			for all yank, delete, change and put operations which
+-- 			would normally go to the unnamed register.  When a
+-- 			register is explicitly specified, it will always be
+-- 			used regardless of whether "unnamed" is in `'clipboard'` 
+-- 			or not.  The clipboard register can always be
+-- 			explicitly accessed using the "* notation.  Also see
+-- 			|clipboard|.
+-- 
+-- 
+-- 	unnamedplus	A variant of the "unnamed" flag which uses the
+-- 			clipboard register `'+'`  (|quoteplus|) instead of
+-- 			register `'*'`  for all yank, delete, change and put
+-- 			operations which would normally go to the unnamed
+-- 			register.  When "unnamed" is also included to the
+-- 			option, yank and delete operations (but not put)
+-- 			will additionally copy the text into register
+-- 			`'*'` . See |clipboard|.
+--- @class vim.opt.clipboard: vim.Option
+--- @operator add: vim.opt.clipboard
+--- @operator sub: vim.opt.clipboard
+--- @operator pow: vim.opt.clipboard
+vim.opt.clipboard = {}
+--- @return string[]
+function vim.opt.clipboard:get()end
+
+-- `'cmdheight'`  `'ch'` 	number	(default 1)
+-- 			global or local to tab page
+-- 	Number of screen lines to use for the command-line.  Helps avoiding
+-- 	|hit-enter| prompts.
+-- 	The value of this option is stored with the tab page, so that each tab
+-- 	page can have a different value.
+-- 
+-- 	When `'cmdheight'`  is zero, there is no command-line unless it is being
+-- 	used.  The command-line will cover the last line of the screen when
+-- 	shown.
+-- 
+-- 	WARNING: `cmdheight=0` is considered experimental. Expect some
+-- 	unwanted behaviour. Some `'shortmess'`  flags and similar
+-- 	mechanism might fail to take effect, causing unwanted hit-enter
+-- 	prompts.  Some informative messages, both from Nvim itself and
+-- 	plugins, will not be displayed.
+--- @class vim.opt.cmdheight: vim.Option
+--- @operator add: vim.opt.cmdheight
+--- @operator sub: vim.opt.cmdheight
+--- @operator pow: vim.opt.cmdheight
+vim.opt.cmdheight = {}
+--- @return number
+function vim.opt.cmdheight:get()end
+
+-- `'cmdwinheight'`  `'cwh'` 	number	(default 7)
+-- 			global
+-- 	Number of screen lines to use for the command-line window. |cmdwin|
+--- @class vim.opt.cmdwinheight: vim.Option
+--- @operator add: vim.opt.cmdwinheight
+--- @operator sub: vim.opt.cmdwinheight
+--- @operator pow: vim.opt.cmdwinheight
+vim.opt.cmdwinheight = {}
+--- @return number
+function vim.opt.cmdwinheight:get()end
+
+-- `'colorcolumn'`  `'cc'` 	string	(default "")
+-- 			local to window
+-- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
+-- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
+-- 	text.  Will make screen redrawing slower.
+-- 	The screen column can be an absolute number, or a number preceded with
+-- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
+-- 
+-- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
+-- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+-- <
+-- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
+-- 	A maximum of 256 columns are highlighted.
+--- @class vim.opt.colorcolumn: vim.Option
+--- @operator add: vim.opt.colorcolumn
+--- @operator sub: vim.opt.colorcolumn
+--- @operator pow: vim.opt.colorcolumn
+vim.opt.colorcolumn = {}
+--- @return string[]
+function vim.opt.colorcolumn:get()end
+
+-- `'columns'`  `'co'` 		number	(default 80 or terminal width)
+-- 			global
+-- 	Number of columns of the screen.  Normally this is set by the terminal
+-- 	initialization and does not have to be set by hand.
+-- 	When Vim is running in the GUI or in a resizable window, setting this
+-- 	option will cause the window size to be changed.  When you only want
+-- 	to use the size for the GUI, put the command in your |ginit.vim| file.
+-- 	When you set this option and Vim is unable to change the physical
+-- 	number of columns of the display, the display may be messed up.  For
+-- 	the GUI it is always possible and Vim limits the number of columns to
+-- 	what fits on the screen.  You can use this command to get the widest
+-- 	window possible: >
+-- 		:set columns=9999
+-- <	Minimum value is 12, maximum value is 10000.
+--- @class vim.opt.columns: vim.Option
+--- @operator add: vim.opt.columns
+--- @operator sub: vim.opt.columns
+--- @operator pow: vim.opt.columns
+vim.opt.columns = {}
+--- @return number
+function vim.opt.columns:get()end
+
+-- `'comments'`  `'com'` 	string	(default
+-- 				"s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
+-- 			local to buffer
+-- 	A comma-separated list of strings that can start a comment line.  See
+-- 	|format-comments|.  See |option-backslash| about using backslashes to
+-- 	insert a space.
+--- @class vim.opt.comments: vim.Option
+--- @operator add: vim.opt.comments
+--- @operator sub: vim.opt.comments
+--- @operator pow: vim.opt.comments
+vim.opt.comments = {}
+--- @return string[]
+function vim.opt.comments:get()end
+
+-- `'commentstring'`  `'cms'` 	string	(default "//")
+-- 			local to buffer
+-- 	A template for a comment.  The "%s" in the value is replaced with the
+-- 	comment text.  Currently only used to add markers for folding, see
+-- 	|fold-marker|.
+--- @class vim.opt.commentstring: vim.Option
+--- @operator add: vim.opt.commentstring
+--- @operator sub: vim.opt.commentstring
+--- @operator pow: vim.opt.commentstring
+vim.opt.commentstring = {}
+--- @return string
+function vim.opt.commentstring:get()end
+
+--- @class vim.opt.compatible: vim.Option
+--- @operator add: vim.opt.compatible
+--- @operator sub: vim.opt.compatible
+--- @operator pow: vim.opt.compatible
+vim.opt.compatible = {}
+--- @return boolean
+function vim.opt.compatible:get()end
+
+-- `'complete'`  `'cpt'` 	string	(default: ".,w,b,u,t")
+-- 			local to buffer
+-- 	This option specifies how keyword completion |ins-completion| works
+-- 	when CTRL-P or CTRL-N are used.  It is also used for whole-line
+-- 	completion |i_CTRL-X_CTRL-L|.  It indicates the type of completion
+-- 	and the places to scan.  It is a comma-separated list of flags:
+-- 	.	scan the current buffer (`'wrapscan'`  is ignored)
+-- 	w	scan buffers from other windows
+-- 	b	scan other loaded buffers that are in the buffer list
+-- 	u	scan the unloaded buffers that are in the buffer list
+-- 	U	scan the buffers that are not in the buffer list
+-- 	k	scan the files given with the `'dictionary'`  option
+-- 	kspell  use the currently active spell checking |spell|
+-- 	k{dict}	scan the file {dict}.  Several "k" flags can be given,
+-- 		patterns are valid too.  For example: >
+-- 			:set cpt=k/usr/dict/*,k~/spanish
+-- <	s	scan the files given with the `'thesaurus'`  option
+-- 	s{tsr}	scan the file {tsr}.  Several "s" flags can be given, patterns
+-- 		are valid too.
+-- 	i	scan current and included files
+-- 	d	scan current and included files for defined name or macro
+-- 		|i_CTRL-X_CTRL-D|
+-- 	]	tag completion
+-- 	t	same as "]"
+-- 
+-- 	Unloaded buffers are not loaded, thus their autocmds |:autocmd| are
+-- 	not executed, this may lead to unexpected completions from some files
+-- 	(gzipped files for example).  Unloaded buffers are not scanned for
+-- 	whole-line completion.
+-- 
+-- 	As you can see, CTRL-N and CTRL-P can be used to do any `'iskeyword'` -
+-- 	based expansion (e.g., dictionary |i_CTRL-X_CTRL-K|, included patterns
+-- 	|i_CTRL-X_CTRL-I|, tags |i_CTRL-X_CTRL-]| and normal expansions).
+--- @class vim.opt.complete: vim.Option
+--- @operator add: vim.opt.complete
+--- @operator sub: vim.opt.complete
+--- @operator pow: vim.opt.complete
+vim.opt.complete = {}
+--- @return string[]
+function vim.opt.complete:get()end
+
+-- `'completefunc'`  `'cfu'` 	string	(default: empty)
+-- 			local to buffer
+-- 	This option specifies a function to be used for Insert mode completion
+-- 	with CTRL-X CTRL-U. |i_CTRL-X_CTRL-U|
+-- 	See |complete-functions| for an explanation of how the function is
+-- 	invoked and what it should return.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.completefunc: vim.Option
+--- @operator add: vim.opt.completefunc
+--- @operator sub: vim.opt.completefunc
+--- @operator pow: vim.opt.completefunc
+vim.opt.completefunc = {}
+--- @return string
+function vim.opt.completefunc:get()end
+
+-- `'completeopt'`  `'cot'` 	string	(default: "menu,preview")
+-- 			global
+-- 	A comma-separated list of options for Insert mode completion
+-- 	|ins-completion|.  The supported values are:
+-- 
+-- 	   menu	    Use a popup menu to show the possible completions.  The
+-- 		    menu is only shown when there is more than one match and
+-- 		    sufficient colors are available.  |ins-completion-menu|
+-- 
+-- 	   menuone  Use the popup menu also when there is only one match.
+-- 		    Useful when there is additional information about the
+-- 		    match, e.g., what file it comes from.
+-- 
+-- 	   longest  Only insert the longest common text of the matches.  If
+-- 		    the menu is displayed you can use CTRL-L to add more
+-- 		    characters.  Whether case is ignored depends on the kind
+-- 		    of completion.  For buffer text the `'ignorecase'`  option is
+-- 		    used.
+-- 
+-- 	   preview  Show extra information about the currently selected
+-- 		    completion in the preview window.  Only works in
+-- 		    combination with "menu" or "menuone".
+-- 
+-- 	  noinsert  Do not insert any text for a match until the user selects
+-- 		    a match from the menu. Only works in combination with
+-- 		    "menu" or "menuone". No effect if "longest" is present.
+-- 
+-- 	  noselect  Do not select a match in the menu, force the user to
+-- 		    select one from the menu. Only works in combination with
+-- 		    "menu" or "menuone".
+--- @class vim.opt.completeopt: vim.Option
+--- @operator add: vim.opt.completeopt
+--- @operator sub: vim.opt.completeopt
+--- @operator pow: vim.opt.completeopt
+vim.opt.completeopt = {}
+--- @return string[]
+function vim.opt.completeopt:get()end
+
+-- `'completeslash'`  `'csl'` 	string	(default: "")
+-- 			local to buffer
+-- 			{only for MS-Windows}
+-- 	When this option is set it overrules `'shellslash'`  for completion:
+-- 	- When this option is set to "slash", a forward slash is used for path
+-- 	  completion in insert mode. This is useful when editing HTML tag, or
+-- 	  Makefile with `'noshellslash'`  on MS-Windows.
+-- 	- When this option is set to "backslash", backslash is used. This is
+-- 	  useful when editing a batch file with `'shellslash'`  set on MS-Windows.
+-- 	- When this option is empty, same character is used as for
+-- 	  `'shellslash'` .
+-- 	For Insert mode completion the buffer-local value is used.  For
+-- 	command line completion the global value is used.
+--- @class vim.opt.completeslash: vim.Option
+--- @operator add: vim.opt.completeslash
+--- @operator sub: vim.opt.completeslash
+--- @operator pow: vim.opt.completeslash
+vim.opt.completeslash = {}
+--- @return string
+function vim.opt.completeslash:get()end
+
+-- `'concealcursor'`  `'cocu'` 	string (default: "")
+-- 			local to window
+-- 	Sets the modes in which text in the cursor line can also be concealed.
+-- 	When the current mode is listed then concealing happens just like in
+-- 	other lines.
+-- 	  n		Normal mode
+-- 	  v		Visual mode
+-- 	  i		Insert mode
+-- 	  c		Command line editing, for `'incsearch'` 
+-- 
+-- 	`'v'`  applies to all lines in the Visual area, not only the cursor.
+-- 	A useful value is "nc".  This is used in help files.  So long as you
+-- 	are moving around text is concealed, but when starting to insert text
+-- 	or selecting a Visual area the concealed text is displayed, so that
+-- 	you can see what you are doing.
+-- 	Keep in mind that the cursor position is not always where it's
+-- 	displayed.  E.g., when moving vertically it may change column.
+--- @class vim.opt.concealcursor: vim.Option
+--- @operator add: vim.opt.concealcursor
+--- @operator sub: vim.opt.concealcursor
+--- @operator pow: vim.opt.concealcursor
+vim.opt.concealcursor = {}
+--- @return string
+function vim.opt.concealcursor:get()end
+
+-- `'conceallevel'`  `'cole'` 	number (default 0)
+-- 			local to window
+-- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
+-- 	is shown:
+-- 
+-- 	Value		Effect ~
+-- 	0		Text is shown normally
+-- 	1		Each block of concealed text is replaced with one
+-- 			character.  If the syntax item does not have a custom
+-- 			replacement character defined (see |:syn-cchar|) the
+-- 			character defined in `'listchars'`  is used.
+-- 			It is highlighted with the "Conceal" highlight group.
+-- 	2		Concealed text is completely hidden unless it has a
+-- 			custom replacement character defined (see
+-- 			|:syn-cchar|).
+-- 	3		Concealed text is completely hidden.
+-- 
+-- 	Note: in the cursor line concealed text is not hidden, so that you can
+-- 	edit and copy the text.  This can be changed with the `'concealcursor'` 
+-- 	option.
+--- @class vim.opt.conceallevel: vim.Option
+--- @operator add: vim.opt.conceallevel
+--- @operator sub: vim.opt.conceallevel
+--- @operator pow: vim.opt.conceallevel
+vim.opt.conceallevel = {}
+--- @return number
+function vim.opt.conceallevel:get()end
+
+-- `'confirm'`  `'cf'` 		boolean (default off)
+-- 			global
+-- 	When `'confirm'`  is on, certain operations that would normally
+-- 	fail because of unsaved changes to a buffer, e.g. ":q" and ":e",
+-- 	instead raise a dialog asking if you wish to save the current
+-- 	file(s).  You can still use a ! to unconditionally |abandon| a buffer.
+-- 	If `'confirm'`  is off you can still activate confirmation for one
+-- 	command only (this is most useful in mappings) with the |:confirm|
+-- 	command.
+-- 	Also see the |confirm()| function and the `'v'`  flag in `'guioptions'` .
+--- @class vim.opt.confirm: vim.Option
+--- @operator add: vim.opt.confirm
+--- @operator sub: vim.opt.confirm
+--- @operator pow: vim.opt.confirm
+vim.opt.confirm = {}
+--- @return boolean
+function vim.opt.confirm:get()end
+
+-- `'copyindent'`  `'ci'` 	boolean	(default off)
+-- 			local to buffer
+-- 	Copy the structure of the existing lines indent when autoindenting a
+-- 	new line.  Normally the new indent is reconstructed by a series of
+-- 	tabs followed by spaces as required (unless |`'expandtab'` | is enabled,
+-- 	in which case only spaces are used).  Enabling this option makes the
+-- 	new line copy whatever characters were used for indenting on the
+-- 	existing line.  `'expandtab'`  has no effect on these characters, a Tab
+-- 	remains a Tab.  If the new indent is greater than on the existing
+-- 	line, the remaining space is filled in the normal manner.
+-- 	See `'preserveindent'` .
+--- @class vim.opt.copyindent: vim.Option
+--- @operator add: vim.opt.copyindent
+--- @operator sub: vim.opt.copyindent
+--- @operator pow: vim.opt.copyindent
+vim.opt.copyindent = {}
+--- @return boolean
+function vim.opt.copyindent:get()end
+
+-- `'cpoptions'`  `'cpo'` 	string	(default: "aABceFs_")
+-- 			global
+-- 	A sequence of single character flags.  When a character is present
+-- 	this indicates Vi-compatible behavior.  This is used for things where
+-- 	not being Vi-compatible is mostly or sometimes preferred.
+-- 	`'cpoptions'`  stands for "compatible-options".
+-- 	Commas can be added for readability.
+-- 	To avoid problems with flags that are added in the future, use the
+-- 	"+=" and "-=" feature of ":set" |add-option-flags|.
+-- 
+-- 	    contains	behavior	~
+-- 
+-- 		a	When included, a ":read" command with a file name
+-- 			argument will set the alternate file name for the
+-- 			current window.
+-- 
+-- 		A	When included, a ":write" command with a file name
+-- 			argument will set the alternate file name for the
+-- 			current window.
+-- 
+-- 		b	"\|" in a ":map" command is recognized as the end of
+-- 			the map command.  The `'\'`  is included in the mapping,
+-- 			the text after the `'|'`  is interpreted as the next
+-- 			command.  Use a CTRL-V instead of a backslash to
+-- 			include the `'|'`  in the mapping.  Applies to all
+-- 			mapping, abbreviation, menu and autocmd commands.
+-- 			See also |map_bar|.
+-- 
+-- 		B	A backslash has no special meaning in mappings,
+-- 			abbreviations, user commands and the "to" part of the
+-- 			menu commands.  Remove this flag to be able to use a
+-- 			backslash like a CTRL-V.  For example, the command
+-- 			":map X \<Esc>" results in X being mapped to:
+-- 				`'B'`  included:	"\^["	 (^[ is a real <Esc>)
+-- 				`'B'`  excluded:	"<Esc>"  (5 characters)
+-- 
+-- 		c	Searching continues at the end of any match at the
+-- 			cursor position, but not further than the start of the
+-- 			next line.  When not present searching continues
+-- 			one character from the cursor position.  With `'c'` 
+-- 			"abababababab" only gets three matches when repeating
+-- 			"/abab", without `'c'`  there are five matches.
+-- 
+-- 		C	Do not concatenate sourced lines that start with a
+-- 			backslash.  See |line-continuation|.
+-- 
+-- 		d	Using "./" in the `'tags'`  option doesn't mean to use
+-- 			the tags file relative to the current file, but the
+-- 			tags file in the current directory.
+-- 
+-- 		D	Can't use CTRL-K to enter a digraph after Normal mode
+-- 			commands with a character argument, like |r|, |f| and
+-- 			|t|.
+-- 
+-- 		e	When executing a register with ":@r", always add a
+-- 			<CR> to the last line, also when the register is not
+-- 			linewise.  If this flag is not present, the register
+-- 			is not linewise and the last line does not end in a
+-- 			<CR>, then the last line is put on the command-line
+-- 			and can be edited before hitting <CR>.
+-- 
+-- 		E	It is an error when using "y", "d", "c", "g~", "gu" or
+-- 			"gU" on an Empty region.  The operators only work when
+-- 			at least one character is to be operated on.  Example:
+-- 			This makes "y0" fail in the first column.
+-- 
+-- 		f	When included, a ":read" command with a file name
+-- 			argument will set the file name for the current buffer,
+-- 			if the current buffer doesn't have a file name yet.
+-- 
+-- 		F	When included, a ":write" command with a file name
+-- 			argument will set the file name for the current
+-- 			buffer, if the current buffer doesn't have a file name
+-- 			yet.  Also see |cpo-P|.
+-- 
+-- 		i	When included, interrupting the reading of a file will
+-- 			leave it modified.
+-- 
+-- 		I	When moving the cursor up or down just after inserting
+-- 			indent for `'autoindent'` , do not delete the indent.
+-- 
+-- 		J	A |sentence| has to be followed by two spaces after
+-- 			the `'.'` , `'!'`  or `'?'` .  A <Tab> is not recognized as
+-- 			white space.
+-- 
+-- 		K	Don't wait for a key code to complete when it is
+-- 			halfway through a mapping.  This breaks mapping
+-- 			<F1><F1> when only part of the second <F1> has been
+-- 			read.  It enables cancelling the mapping by typing
+-- 			<F1><Esc>.
+-- 
+-- 		l	Backslash in a [] range in a search pattern is taken
+-- 			literally, only "\]", "\^", "\-" and "\\" are special.
+-- 			See |/[]|
+-- 			   `'l'`  included: "/[ \t]"  finds <Space>, `'\'`  and `'t'` 
+-- 			   `'l'`  excluded: "/[ \t]"  finds <Space> and <Tab>
+-- 
+-- 		L	When the `'list'`  option is set, `'wrapmargin'` ,
+-- 			`'textwidth'` , `'softtabstop'`  and Virtual Replace mode
+-- 			(see |gR|) count a <Tab> as two characters, instead of
+-- 			the normal behavior of a <Tab>.
+-- 
+-- 		m	When included, a showmatch will always wait half a
+-- 			second.  When not included, a showmatch will wait half
+-- 			a second or until a character is typed.  |`'showmatch'` |
+-- 
+-- 		M	When excluded, "%" matching will take backslashes into
+-- 			account.  Thus in "( \( )" and "\( ( \)" the outer
+-- 			parenthesis match.  When included "%" ignores
+-- 			backslashes, which is Vi compatible.
+-- 
+-- 		n	When included, the column used for `'number'`  and
+-- 			`'relativenumber'`  will also be used for text of wrapped
+-- 			lines.
+-- 
+-- 		o	Line offset to search command is not remembered for
+-- 			next search.
+-- 
+-- 		O	Don't complain if a file is being overwritten, even
+-- 			when it didn't exist when editing it.  This is a
+-- 			protection against a file unexpectedly created by
+-- 			someone else.  Vi didn't complain about this.
+-- 
+-- 		p	Vi compatible Lisp indenting.  When not present, a
+-- 			slightly better algorithm is used.
+-- 
+-- 		P	When included, a ":write" command that appends to a
+-- 			file will set the file name for the current buffer, if
+-- 			the current buffer doesn't have a file name yet and
+-- 			the `'F'`  flag is also included |cpo-F|.
+-- 
+-- 		q	When joining multiple lines leave the cursor at the
+-- 			position where it would be when joining two lines.
+-- 
+-- 		r	Redo ("." command) uses "/" to repeat a search
+-- 			command, instead of the actually used search string.
+-- 
+-- 		R	Remove marks from filtered lines.  Without this flag
+-- 			marks are kept like |:keepmarks| was used.
+-- 
+-- 		s	Set buffer options when entering the buffer for the
+-- 			first time.  This is like it is in Vim version 3.0.
+-- 			And it is the default.  If not present the options are
+-- 			set when the buffer is created.
+-- 
+-- 		S	Set buffer options always when entering a buffer
+-- 			(except `'readonly'` , `'fileformat'` , `'filetype'`  and
+-- 			`'syntax'` ).  This is the (most) Vi compatible setting.
+-- 			The options are set to the values in the current
+-- 			buffer.  When you change an option and go to another
+-- 			buffer, the value is copied.  Effectively makes the
+-- 			buffer options global to all buffers.
+-- 
+-- 			`'s'`     `'S'`      copy buffer options
+-- 			no     no      when buffer created
+-- 			yes    no      when buffer first entered (default)
+-- 			 X     yes     each time when buffer entered (vi comp.)
+-- 
+-- 		t	Search pattern for the tag command is remembered for
+-- 			"n" command.  Otherwise Vim only puts the pattern in
+-- 			the history for search pattern, but doesn't change the
+-- 			last used search pattern.
+-- 
+-- 		u	Undo is Vi compatible.  See |undo-two-ways|.
+-- 
+-- 		v	Backspaced characters remain visible on the screen in
+-- 			Insert mode.  Without this flag the characters are
+-- 			erased from the screen right away.  With this flag the
+-- 			screen newly typed text overwrites backspaced
+-- 			characters.
+-- 
+-- 		W	Don't overwrite a readonly file.  When omitted, ":w!"
+-- 			overwrites a readonly file, if possible.
+-- 
+-- 		x	<Esc> on the command-line executes the command-line.
+-- 			The default in Vim is to abandon the command-line,
+-- 			because <Esc> normally aborts a command.  |c_<Esc>|
+-- 
+-- 		X	When using a count with "R" the replaced text is
+-- 			deleted only once.  Also when repeating "R" with "."
+-- 			and a count.
+-- 
+-- 		y	A yank command can be redone with ".".  Think twice if
+-- 			you really want to use this, it may break some
+-- 			plugins, since most people expect "." to only repeat a
+-- 			change.
+-- 
+-- 		Z	When using "w!" while the `'readonly'`  option is set,
+-- 			don't reset `'readonly'` .
+-- 
+-- 		!	When redoing a filter command, use the last used
+-- 			external command, whatever it was.  Otherwise the last
+-- 			used -filter- command is used.
+-- 
+-- 		$	When making a change to one line, don't redisplay the
+-- 			line, but put a `'$'`  at the end of the changed text.
+-- 			The changed text will be overwritten when you type the
+-- 			new text.  The line is redisplayed if you type any
+-- 			command that moves the cursor from the insertion
+-- 			point.
+-- 
+-- 		%	Vi-compatible matching is done for the "%" command.
+-- 			Does not recognize "#if", "#endif", etc.
+-- 			Does not recognize "/*" and "*/".
+-- 			Parens inside single and double quotes are also
+-- 			counted, causing a string that contains a paren to
+-- 			disturb the matching.  For example, in a line like
+-- 			"if (strcmp("foo(", s))" the first paren does not
+-- 			match the last one.  When this flag is not included,
+-- 			parens inside single and double quotes are treated
+-- 			specially.  When matching a paren outside of quotes,
+-- 			everything inside quotes is ignored.  When matching a
+-- 			paren inside quotes, it will find the matching one (if
+-- 			there is one).  This works very well for C programs.
+-- 			This flag is also used for other features, such as
+-- 			C-indenting.
+-- 
+-- 		+	When included, a ":write file" command will reset the
+-- 			`'modified'`  flag of the buffer, even though the buffer
+-- 			itself may still be different from its file.
+-- 
+-- 		>	When appending to a register, put a line break before
+-- 			the appended text.
+-- 
+-- 		;	When using |,| or |;| to repeat the last |t| search
+-- 			and the cursor is right in front of the searched
+-- 			character, the cursor won't move. When not included,
+-- 			the cursor would skip over it and jump to the
+-- 			following occurrence.
+-- 
+-- 		_	When using |cw| on a word, do not include the
+-- 			whitespace following the word in the motion.
+--- @class vim.opt.cpoptions: vim.Option
+--- @operator add: vim.opt.cpoptions
+--- @operator sub: vim.opt.cpoptions
+--- @operator pow: vim.opt.cpoptions
+vim.opt.cpoptions = {}
+--- @return string[]
+function vim.opt.cpoptions:get()end
+
+-- `'cscopepathcomp'`  `'cspc'` 	number	(default 0)
+-- 			global
+-- 	Determines how many components of the path to show in a list of tags.
+-- 	See |cscopepathcomp|.
+--- @class vim.opt.cscopepathcomp: vim.Option
+--- @operator add: vim.opt.cscopepathcomp
+--- @operator sub: vim.opt.cscopepathcomp
+--- @operator pow: vim.opt.cscopepathcomp
+vim.opt.cscopepathcomp = {}
+--- @return number
+function vim.opt.cscopepathcomp:get()end
+
+-- `'cscopeprg'`  `'csprg'` 	string	(default "cscope")
+-- 			global
+-- 	Specifies the command to execute cscope.  See |cscopeprg|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.cscopeprg: vim.Option
+--- @operator add: vim.opt.cscopeprg
+--- @operator sub: vim.opt.cscopeprg
+--- @operator pow: vim.opt.cscopeprg
+vim.opt.cscopeprg = {}
+--- @return string
+function vim.opt.cscopeprg:get()end
+
+-- `'cscopequickfix'`  `'csqf'`  string	(default "")
+-- 			global
+-- 	Specifies whether to use quickfix window to show cscope results.
+-- 	See |cscopequickfix|.
+--- @class vim.opt.cscopequickfix: vim.Option
+--- @operator add: vim.opt.cscopequickfix
+--- @operator sub: vim.opt.cscopequickfix
+--- @operator pow: vim.opt.cscopequickfix
+vim.opt.cscopequickfix = {}
+--- @return string[]
+function vim.opt.cscopequickfix:get()end
+
+-- `'cscoperelative'`  `'csre'`  boolean (default off)
+-- 			global
+-- 	In the absence of a prefix (-P) for cscope. setting this option enables
+-- 	to use the basename of cscope.out path as the prefix.
+-- 	See |cscoperelative|.
+--- @class vim.opt.cscoperelative: vim.Option
+--- @operator add: vim.opt.cscoperelative
+--- @operator sub: vim.opt.cscoperelative
+--- @operator pow: vim.opt.cscoperelative
+vim.opt.cscoperelative = {}
+--- @return boolean
+function vim.opt.cscoperelative:get()end
+
+-- `'cscopetag'`  `'cst'` 	boolean (default off)
+-- 			global
+-- 	Use cscope for tag commands.  See |cscope-options|.
+--- @class vim.opt.cscopetag: vim.Option
+--- @operator add: vim.opt.cscopetag
+--- @operator sub: vim.opt.cscopetag
+--- @operator pow: vim.opt.cscopetag
+vim.opt.cscopetag = {}
+--- @return boolean
+function vim.opt.cscopetag:get()end
+
+-- `'cscopetagorder'`  `'csto'` 	number	(default 0)
+-- 			global
+-- 	Determines the order in which ":cstag" performs a search.  See
+-- 	|cscopetagorder|.
+--- @class vim.opt.cscopetagorder: vim.Option
+--- @operator add: vim.opt.cscopetagorder
+--- @operator sub: vim.opt.cscopetagorder
+--- @operator pow: vim.opt.cscopetagorder
+vim.opt.cscopetagorder = {}
+--- @return number
+function vim.opt.cscopetagorder:get()end
+
+--- @class vim.opt.cscopeverbose: vim.Option
+--- @operator add: vim.opt.cscopeverbose
+--- @operator sub: vim.opt.cscopeverbose
+--- @operator pow: vim.opt.cscopeverbose
+vim.opt.cscopeverbose = {}
+--- @return boolean
+function vim.opt.cscopeverbose:get()end
+
+-- `'cursorbind'`  `'crb'` 	boolean  (default off)
+-- 			local to window
+-- 	When this option is set, as the cursor in the current
+-- 	window moves other cursorbound windows (windows that also have
+-- 	this option set) move their cursors to the corresponding line and
+-- 	column.  This option is useful for viewing the
+-- 	differences between two versions of a file (see `'diff'` ); in diff mode,
+-- 	inserted and deleted lines (though not characters within a line) are
+-- 	taken into account.
+--- @class vim.opt.cursorbind: vim.Option
+--- @operator add: vim.opt.cursorbind
+--- @operator sub: vim.opt.cursorbind
+--- @operator pow: vim.opt.cursorbind
+vim.opt.cursorbind = {}
+--- @return boolean
+function vim.opt.cursorbind:get()end
+
+-- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the screen column of the cursor with CursorColumn
+-- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
+-- 	slower.
+-- 	If you only want the highlighting in the current window you can use
+-- 	these autocommands: >
+-- 		au WinLeave * set nocursorline nocursorcolumn
+-- 		au WinEnter * set cursorline cursorcolumn
+-- <
+--- @class vim.opt.cursorcolumn: vim.Option
+--- @operator add: vim.opt.cursorcolumn
+--- @operator sub: vim.opt.cursorcolumn
+--- @operator pow: vim.opt.cursorcolumn
+vim.opt.cursorcolumn = {}
+--- @return boolean
+function vim.opt.cursorcolumn:get()end
+
+-- `'cursorline'`  `'cul'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
+-- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
+-- 	When Visual mode is active the highlighting isn't used to make it
+-- 	easier to see the selected text.
+--- @class vim.opt.cursorline: vim.Option
+--- @operator add: vim.opt.cursorline
+--- @operator sub: vim.opt.cursorline
+--- @operator pow: vim.opt.cursorline
+vim.opt.cursorline = {}
+--- @return boolean
+function vim.opt.cursorline:get()end
+
+-- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+--- @class vim.opt.cursorlineopt: vim.Option
+--- @operator add: vim.opt.cursorlineopt
+--- @operator sub: vim.opt.cursorlineopt
+--- @operator pow: vim.opt.cursorlineopt
+vim.opt.cursorlineopt = {}
+--- @return string[]
+function vim.opt.cursorlineopt:get()end
+
+-- `'debug'` 			string	(default "")
+-- 			global
+-- 	These values can be used:
+-- 	msg	Error messages that would otherwise be omitted will be given
+-- 		anyway.
+-- 	throw	Error messages that would otherwise be omitted will be given
+-- 		anyway and also throw an exception and set |v:errmsg|.
+-- 	beep	A message will be given when otherwise only a beep would be
+-- 		produced.
+-- 	The values can be combined, separated by a comma.
+-- 	"msg" and "throw" are useful for debugging `'foldexpr'` , `'formatexpr'`  or
+-- 	`'indentexpr'` .
+--- @class vim.opt.debug: vim.Option
+--- @operator add: vim.opt.debug
+--- @operator sub: vim.opt.debug
+--- @operator pow: vim.opt.debug
+vim.opt.debug = {}
+--- @return string
+function vim.opt.debug:get()end
+
+-- `'define'`  `'def'` 		string	(default "^\sdefine")
+-- 			global or local to buffer |global-local|
+-- 	Pattern to be used to find a macro definition.  It is a search
+-- 	pattern, just like for the "/" command.  This option is used for the
+-- 	commands like "[i" and "[d" |include-search|.  The `'isident'`  option is
+-- 	used to recognize the defined name after the match:
+-- 		{match with `'define'` }{non-ID chars}{defined name}{non-ID char}
+-- 	See |option-backslash| about inserting backslashes to include a space
+-- 	or backslash.
+-- 	The default value is for C programs.  For C++ this value would be
+-- 	useful, to include const type declarations: >
+-- 		^\(#\s\s[a-z]*\)
+-- <	You can also use "\ze" just before the name and continue the pattern
+-- 	to check what is following.  E.g. for Javascript, if a function is
+-- 	defined with "func_name = function(args)": >
+-- 		^\s=\s*function(
+-- <	If the function is defined with "func_name : function() {...": >
+-- 	        ^\s[:]\sfunction\s*(
+-- <	When using the ":set" command, you need to double the backslashes!
+-- 	To avoid that use `:let` with a single quote string: >
+-- 		let &l:define = `'^\s=\s*function('` 
+-- <
+--- @class vim.opt.define: vim.Option
+--- @operator add: vim.opt.define
+--- @operator sub: vim.opt.define
+--- @operator pow: vim.opt.define
+vim.opt.define = {}
+--- @return string
+function vim.opt.define:get()end
+
+-- `'delcombine'`  `'deco'` 	boolean (default off)
+-- 			global
+-- 	If editing Unicode and this option is set, backspace and Normal mode
+-- 	"x" delete each combining character on its own.  When it is off (the
+-- 	default) the character along with its combining characters are
+-- 	deleted.
+-- 	Note: When `'delcombine'`  is set "xx" may work differently from "2x"!
+-- 
+-- 	This is useful for Arabic, Hebrew and many other languages where one
+-- 	may have combining characters overtop of base characters, and want
+-- 	to remove only the combining ones.
+--- @class vim.opt.delcombine: vim.Option
+--- @operator add: vim.opt.delcombine
+--- @operator sub: vim.opt.delcombine
+--- @operator pow: vim.opt.delcombine
+vim.opt.delcombine = {}
+--- @return boolean
+function vim.opt.delcombine:get()end
+
+-- `'dictionary'`  `'dict'` 	string	(default "")
+-- 			global or local to buffer |global-local|
+-- 	List of file names, separated by commas, that are used to lookup words
+-- 	for keyword completion commands |i_CTRL-X_CTRL-K|.  Each file should
+-- 	contain a list of words.  This can be one word per line, or several
+-- 	words per line, separated by non-keyword characters (white space is
+-- 	preferred).  Maximum line length is 510 bytes.
+-- 
+-- 	When this option is empty or an entry "spell" is present, and spell
+-- 	checking is enabled, words in the word lists for the currently active
+-- 	`'spelllang'`  are used. See |spell|.
+-- 
+-- 	To include a comma in a file name precede it with a backslash.  Spaces
+-- 	after a comma are ignored, otherwise spaces are included in the file
+-- 	name.  See |option-backslash| about using backslashes.
+-- 	This has nothing to do with the |Dictionary| variable type.
+-- 	Where to find a list of words?
+-- 	- BSD/macOS include the "/usr/share/dict/words" file.
+-- 	- Try "apt install spell" to get the "/usr/share/dict/words" file on
+-- 	  apt-managed systems (Debian/Ubuntu).
+-- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
+-- 	directories from the list.  This avoids problems when a future version
+-- 	uses another default.
+-- 	Backticks cannot be used in this option for security reasons.
+--- @class vim.opt.dictionary: vim.Option
+--- @operator add: vim.opt.dictionary
+--- @operator sub: vim.opt.dictionary
+--- @operator pow: vim.opt.dictionary
+vim.opt.dictionary = {}
+--- @return string[]
+function vim.opt.dictionary:get()end
+
+-- `'diff'` 			boolean	(default off)
+-- 			local to window
+-- 	Join the current window in the group of windows that shows differences
+-- 	between files.  See |diff-mode|.
+--- @class vim.opt.diff: vim.Option
+--- @operator add: vim.opt.diff
+--- @operator sub: vim.opt.diff
+--- @operator pow: vim.opt.diff
+vim.opt.diff = {}
+--- @return boolean
+function vim.opt.diff:get()end
+
+-- `'diffexpr'`  `'dex'` 	string	(default "")
+-- 			global
+-- 	Expression which is evaluated to obtain a diff file (either ed-style
+-- 	or unified-style) from two versions of a file.  See |diff-diffexpr|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.diffexpr: vim.Option
+--- @operator add: vim.opt.diffexpr
+--- @operator sub: vim.opt.diffexpr
+--- @operator pow: vim.opt.diffexpr
+vim.opt.diffexpr = {}
+--- @return string
+function vim.opt.diffexpr:get()end
+
+-- `'diffopt'`  `'dip'` 		string	(default "internal,filler,closeoff")
+-- 			global
+-- 	Option settings for diff mode.  It can consist of the following items.
+-- 	All are optional.  Items must be separated by a comma.
+-- 
+-- 		filler		Show filler lines, to keep the text
+-- 				synchronized with a window that has inserted
+-- 				lines at the same position.  Mostly useful
+-- 				when windows are side-by-side and `'scrollbind'` 
+-- 				is set.
+-- 
+-- 		context:{n}	Use a context of {n} lines between a change
+-- 				and a fold that contains unchanged lines.
+-- 				When omitted a context of six lines is used.
+-- 				When using zero the context is actually one,
+-- 				since folds require a line in between, also
+-- 				for a deleted line.
+-- 				See |fold-diff|.
+-- 
+-- 		iblank		Ignore changes where lines are all blank.  Adds
+-- 				the "-B" flag to the "diff" command if
+-- 				`'diffexpr'`  is empty.  Check the documentation
+-- 				of the "diff" command for what this does
+-- 				exactly.
+-- 				NOTE: the diff windows will get out of sync,
+-- 				because no differences between blank lines are
+-- 				taken into account.
+-- 
+-- 		icase		Ignore changes in case of text.  "a" and "A"
+-- 				are considered the same.  Adds the "-i" flag
+-- 				to the "diff" command if `'diffexpr'`  is empty.
+-- 
+-- 		iwhite		Ignore changes in amount of white space.  Adds
+-- 				the "-b" flag to the "diff" command if
+-- 				`'diffexpr'`  is empty.  Check the documentation
+-- 				of the "diff" command for what this does
+-- 				exactly.  It should ignore adding trailing
+-- 				white space, but not leading white space.
+-- 
+-- 		iwhiteall	Ignore all white space changes.  Adds
+-- 				the "-w" flag to the "diff" command if
+-- 				`'diffexpr'`  is empty.  Check the documentation
+-- 				of the "diff" command for what this does
+-- 				exactly.
+-- 
+-- 		iwhiteeol	Ignore white space changes at end of line.
+-- 				Adds the "-Z" flag to the "diff" command if
+-- 				`'diffexpr'`  is empty.  Check the documentation
+-- 				of the "diff" command for what this does
+-- 				exactly.
+-- 
+-- 		horizontal	Start diff mode with horizontal splits (unless
+-- 				explicitly specified otherwise).
+-- 
+-- 		vertical	Start diff mode with vertical splits (unless
+-- 				explicitly specified otherwise).
+-- 
+-- 		closeoff	When a window is closed where `'diff'`  is set
+-- 				and there is only one window remaining in the
+-- 				same tab page with `'diff'`  set, execute
+-- 				`:diffoff` in that window.  This undoes a
+-- 				`:diffsplit` command.
+-- 
+-- 		hiddenoff	Do not use diff mode for a buffer when it
+-- 				becomes hidden.
+-- 
+-- 		foldcolumn:{n}	Set the `'foldcolumn'`  option to {n} when
+-- 				starting diff mode.  Without this 2 is used.
+-- 
+-- 		followwrap	Follow the `'wrap'`  option and leave as it is.
+-- 
+-- 		internal	Use the internal diff library.  This is
+-- 				ignored when `'diffexpr'`  is set.
+-- 				When running out of memory when writing a
+-- 				buffer this item will be ignored for diffs
+-- 				involving that buffer.  Set the `'verbose'` 
+-- 				option to see when this happens.
+-- 
+-- 		indent-heuristic
+-- 				Use the indent heuristic for the internal
+-- 				diff library.
+-- 
+--                 algorithm:{text} Use the specified diff algorithm with the
+-- 				internal diff engine. Currently supported
+-- 				algorithms are:
+-- 				myers      the default algorithm
+-- 				minimal    spend extra time to generate the
+-- 					   smallest possible diff
+-- 				patience   patience diff algorithm
+-- 				histogram  histogram diff algorithm
+-- 
+-- 	Examples: >
+-- 		:set diffopt=internal,filler,context:4
+-- 		:set diffopt=
+-- 		:set diffopt=internal,filler,foldcolumn:3
+-- 		:set diffopt-=internal  " do NOT use the internal diff parser
+-- <
+--- @class vim.opt.diffopt: vim.Option
+--- @operator add: vim.opt.diffopt
+--- @operator sub: vim.opt.diffopt
+--- @operator pow: vim.opt.diffopt
+vim.opt.diffopt = {}
+--- @return string[]
+function vim.opt.diffopt:get()end
+
+-- `'digraph'`  `'dg'` 		boolean	(default off)
+-- 			global
+-- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
+-- 	{char2}.  See |digraphs|.
+--- @class vim.opt.digraph: vim.Option
+--- @operator add: vim.opt.digraph
+--- @operator sub: vim.opt.digraph
+--- @operator pow: vim.opt.digraph
+vim.opt.digraph = {}
+--- @return boolean
+function vim.opt.digraph:get()end
+
+-- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
+-- 			global
+-- 	List of directory names for the swap file, separated with commas.
+-- 
+-- 	Possible items:
+-- 	- The swap file will be created in the first directory where this is
+-- 	  possible.  If it is not possible in any directory, but last
+-- 	  directory listed in the option does not exist, it is created.
+-- 	- Empty means that no swap file will be used (recovery is
+-- 	  impossible!) and no |E303| error will be given.
+-- 	- A directory "." means to put the swap file in the same directory as
+-- 	  the edited file.  On Unix, a dot is prepended to the file name, so
+-- 	  it doesn't show in a directory listing.  On MS-Windows the "hidden"
+-- 	  attribute is set and a dot prepended if possible.
+-- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
+-- 	  the swap file relative to where the edited file is.  The leading "."
+-- 	  is replaced with the path name of the edited file.
+-- 	- For Unix and Win32, if a directory ends in two path separators "//",
+-- 	  the swap file name will be built from the complete path to the file
+-- 	  with all path separators replaced by percent `'%'`  signs (including
+-- 	  the colon following the drive letter on Win32). This will ensure
+-- 	  file name uniqueness in the preserve directory.
+-- 	  On Win32, it is also possible to end with "\\".  However, When a
+-- 	  separating comma is following, you must use "//", since "\\" will
+-- 	  include the comma in the file name. Therefore it is recommended to
+-- 	  use `'//'` , instead of `'\\'` .
+-- 	- Spaces after the comma are ignored, other spaces are considered part
+-- 	  of the directory name.  To have a space at the start of a directory
+-- 	  name, precede it with a backslash.
+-- 	- To include a comma in a directory name precede it with a backslash.
+-- 	- A directory name may end in an `':'`  or `'/'` .
+-- 	- Environment variables are expanded |:set_env|.
+-- 	- Careful with `'\'`  characters, type one before a space, type two to
+-- 	  get one in the option (see |option-backslash|), for example: >
+-- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
+-- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
+-- 	  of the option is removed.
+-- 	Using "." first in the list is recommended.  This means that editing
+-- 	the same file twice will result in a warning.  Using "/tmp" on Unix is
+-- 	discouraged: When the system crashes you lose the swap file.
+-- 	"/var/tmp" is often not cleared when rebooting, thus is a better
+-- 	choice than "/tmp".  But others on the computer may be able to see the
+-- 	files, and it can contain a lot of files, your swap files get lost in
+-- 	the crowd.  That is why a "tmp" directory in your home directory is
+-- 	tried first.
+-- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
+-- 	directories from the list.  This avoids problems when a future version
+-- 	uses another default.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.directory: vim.Option
+--- @operator add: vim.opt.directory
+--- @operator sub: vim.opt.directory
+--- @operator pow: vim.opt.directory
+vim.opt.directory = {}
+--- @return string[]
+function vim.opt.directory:get()end
+
+-- `'display'`  `'dy'` 		string	(default "lastline")
+-- 			global
+-- 	Change the way text is displayed.  This is a comma-separated list of
+-- 	flags:
+-- 	lastline	When included, as much as possible of the last line
+-- 			in a window will be displayed.  "@@@" is put in the
+-- 			last columns of the last screen line to indicate the
+-- 			rest of the line is not displayed.
+-- 	truncate	Like "lastline", but "@@@" is displayed in the first
+-- 			column of the last screen line.  Overrules "lastline".
+-- 	uhex		Show unprintable characters hexadecimal as <xx>
+-- 			instead of using ^C and ~C.
+-- 	msgsep		Obsolete flag. Allowed but takes no effect. |msgsep|
+-- 
+-- 	When neither "lastline" nor "truncate" is included, a last line that
+-- 	doesn't fit is replaced with "@" lines.
+-- 
+-- 	The "@" character can be changed by setting the "lastline" item in
+-- 	`'fillchars'` .  The character is highlighted with |hl-NonText|.
+--- @class vim.opt.display: vim.Option
+--- @operator add: vim.opt.display
+--- @operator sub: vim.opt.display
+--- @operator pow: vim.opt.display
+vim.opt.display = {}
+--- @return string[]
+function vim.opt.display:get()end
+
+-- `'eadirection'`  `'ead'` 	string	(default "both")
+-- 			global
+-- 	Tells when the `'equalalways'`  option applies:
+-- 		ver	vertically, width of windows is not affected
+-- 		hor	horizontally, height of windows is not affected
+-- 		both	width and height of windows is affected
+--- @class vim.opt.eadirection: vim.Option
+--- @operator add: vim.opt.eadirection
+--- @operator sub: vim.opt.eadirection
+--- @operator pow: vim.opt.eadirection
+vim.opt.eadirection = {}
+--- @return string
+function vim.opt.eadirection:get()end
+
+--- @class vim.opt.edcompatible: vim.Option
+--- @operator add: vim.opt.edcompatible
+--- @operator sub: vim.opt.edcompatible
+--- @operator pow: vim.opt.edcompatible
+vim.opt.edcompatible = {}
+--- @return boolean
+function vim.opt.edcompatible:get()end
+
+-- `'emoji'`  `'emo'` 	boolean (default: on)
+-- 			global
+-- 	When on all Unicode emoji characters are considered to be full width.
+-- 	This excludes "text emoji" characters, which are normally displayed as
+-- 	single width.  Unfortunately there is no good specification for this
+-- 	and it has been determined on trial-and-error basis.  Use the
+-- 	|setcellwidths()| function to change the behavior.
+--- @class vim.opt.emoji: vim.Option
+--- @operator add: vim.opt.emoji
+--- @operator sub: vim.opt.emoji
+--- @operator pow: vim.opt.emoji
+vim.opt.emoji = {}
+--- @return boolean
+function vim.opt.emoji:get()end
+
+-- `'encoding'`  `'enc'` 
+-- 	String-encoding used internally and for |RPC| communication.
+-- 	Always UTF-8.
+-- 
+-- 	See `'fileencoding'`  to control file-content encoding.
+--- @class vim.opt.encoding: vim.Option
+--- @operator add: vim.opt.encoding
+--- @operator sub: vim.opt.encoding
+--- @operator pow: vim.opt.encoding
+vim.opt.encoding = {}
+--- @return string
+function vim.opt.encoding:get()end
+
+-- `'endofline'`  `'eol'` 	boolean	(default on)
+-- 			local to buffer
+-- 	When writing a file and this option is off and the `'binary'`  option
+-- 	is on, or `'fixeol'`  option is off, no <EOL> will be written for the
+-- 	last line in the file.  This option is automatically set or reset when
+-- 	starting to edit a new file, depending on whether file has an <EOL>
+-- 	for the last line in the file.  Normally you don't have to set or
+-- 	reset this option.
+-- 	When `'binary'`  is off and `'fixeol'`  is on the value is not used when
+-- 	writing the file.  When `'binary'`  is on or `'fixeol'`  is off it is used
+-- 	to remember the presence of a <EOL> for the last line in the file, so
+-- 	that when you write the file the situation from the original file can
+-- 	be kept.  But you can change it if you want to.
+--- @class vim.opt.endofline: vim.Option
+--- @operator add: vim.opt.endofline
+--- @operator sub: vim.opt.endofline
+--- @operator pow: vim.opt.endofline
+vim.opt.endofline = {}
+--- @return boolean
+function vim.opt.endofline:get()end
+
+-- `'equalalways'`  `'ea'` 	boolean	(default on)
+-- 			global
+-- 	When on, all the windows are automatically made the same size after
+-- 	splitting or closing a window.  This also happens the moment the
+-- 	option is switched on.  When off, splitting a window will reduce the
+-- 	size of the current window and leave the other windows the same.  When
+-- 	closing a window the extra lines are given to the window next to it
+-- 	(depending on `'splitbelow'`  and `'splitright'` ).
+-- 	When mixing vertically and horizontally split windows, a minimal size
+-- 	is computed and some windows may be larger if there is room.  The
+-- 	`'eadirection'`  option tells in which direction the size is affected.
+-- 	Changing the height and width of a window can be avoided by setting
+-- 	`'winfixheight'`  and `'winfixwidth'` , respectively.
+-- 	If a window size is specified when creating a new window sizes are
+-- 	currently not equalized (it's complicated, but may be implemented in
+-- 	the future).
+--- @class vim.opt.equalalways: vim.Option
+--- @operator add: vim.opt.equalalways
+--- @operator sub: vim.opt.equalalways
+--- @operator pow: vim.opt.equalalways
+vim.opt.equalalways = {}
+--- @return boolean
+function vim.opt.equalalways:get()end
+
+-- `'equalprg'`  `'ep'` 		string	(default "")
+-- 			global or local to buffer |global-local|
+-- 	External program to use for "=" command.  When this option is empty
+-- 	the internal formatting functions are used; either `'lisp'` , `'cindent'` 
+-- 	or `'indentexpr'` .
+-- 	Environment variables are expanded |:set_env|.  See |option-backslash|
+-- 	about including spaces and backslashes.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.equalprg: vim.Option
+--- @operator add: vim.opt.equalprg
+--- @operator sub: vim.opt.equalprg
+--- @operator pow: vim.opt.equalprg
+vim.opt.equalprg = {}
+--- @return string
+function vim.opt.equalprg:get()end
+
+-- `'errorbells'`  `'eb'` 	boolean	(default off)
+-- 			global
+-- 	Ring the bell (beep or screen flash) for error messages.  This only
+-- 	makes a difference for error messages, the bell will be used always
+-- 	for a lot of errors without a message (e.g., hitting <Esc> in Normal
+-- 	mode).  See `'visualbell'`  to make the bell behave like a screen flash
+-- 	or do nothing. See `'belloff'`  to finetune when to ring the bell.
+--- @class vim.opt.errorbells: vim.Option
+--- @operator add: vim.opt.errorbells
+--- @operator sub: vim.opt.errorbells
+--- @operator pow: vim.opt.errorbells
+vim.opt.errorbells = {}
+--- @return boolean
+function vim.opt.errorbells:get()end
+
