@@ -81,4 +81,8 @@ function M.error(msg)
   vim.notify_once(msg, vim.log.levels.ERROR, { title = "neodev.nvim" })
 end
 
+function M.warn(msg)
+  vim.notify_once(msg, vim.log.levels.WARN, { title = "neodev.nvim" })
+end
+
 return M

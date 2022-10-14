@@ -37,6 +37,9 @@ end
 function M.on_new_config(config, root_dir)
   -- don't do anything when old style setup was used
   if config.settings.legacy then
+    util.warn(
+      "You're using the old way of setting up neodev (previously lua-dev).\nPlease check the docs at https://github.com/folke/neodev.nvim#-setup"
+    )
     return
   end
 
