@@ -1,5 +1,10 @@
 ---@meta
 
+---@class vim.loop.Timer
+---@field start fun(timer:vim.loop.Timer, timeout:integer, repeat:integer, callback:fun())
+---@field stop fun(timer:vim.loop.Timer)
+
+
 -- > method form `stream:accept(client_stream)`
 -- 
 -- Parameters:
@@ -1518,6 +1523,7 @@ function vim.loop.new_thread(options, entry, ...) end
 --     end
 -- ```
 -- 
+--- @return vim.loop.Timer
 function vim.loop.new_timer() end
 
 -- Parameters:

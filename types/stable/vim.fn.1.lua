@@ -2169,6 +2169,7 @@ function vim.fn.setwinvar(nr, varname, val) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->sha256()
+--- @param string string
 --- @return string
 function vim.fn.sha256(string) end
 
@@ -2208,6 +2209,7 @@ function vim.fn.sha256(string) end
 -- 
 -- Can also be used as a |method|: >
 --   GetCommand()->shellescape()
+--- @param string string
 --- @param special? any
 --- @return string
 function vim.fn.shellescape(string, special) end
@@ -2243,6 +2245,7 @@ function vim.fn.shiftwidth(col) end
 -- List  define or update a list of signs
 --- @param list any[]
 --- @return any[]
+--- @overload fun(name:string, dict?:table)
 function vim.fn.sign_define(list) end
 
 -- List  get a list of defined signs
@@ -2569,6 +2572,7 @@ function vim.fn.spellsuggest(word, max, capital) end
 -- 
 -- Can also be used as a |method|: >
 --   GetString()->split()
+--- @param string string
 --- @param pattern? any
 --- @param keepempty? any
 --- @return any[]
@@ -2681,6 +2685,7 @@ function vim.fn.stdpath(what) end
 -- 
 -- Can also be used as a |method|: >
 --   let f = text->substitute(',', '', 'g')->str2float()
+--- @param string string
 --- @param quoted? any
 --- @return float
 function vim.fn.str2float(string, quoted) end
@@ -2701,6 +2706,7 @@ function vim.fn.str2float(string, quoted) end
 -- ```
 -- Can also be used as a |method|: >
 --   GetString()->str2list()
+--- @param string string
 --- @param utf8? any
 --- @return any[]
 function vim.fn.str2list(string, utf8) end
@@ -2726,6 +2732,7 @@ function vim.fn.str2list(string, utf8) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->str2nr()
+--- @param string string
 --- @param base? any
 --- @return number
 function vim.fn.str2nr(string, base) end
@@ -2778,6 +2785,7 @@ function vim.fn.strcharpart(src, start, len) end
 -- ```
 -- Can also be used as a |method|: >
 --   GetText()->strchars()
+--- @param string string
 --- @param skipcc? any
 --- @return number
 function vim.fn.strchars(string, skipcc) end
@@ -2797,6 +2805,7 @@ function vim.fn.strchars(string, skipcc) end
 -- 
 -- Can also be used as a |method|: >
 --   GetText()->strdisplaywidth()
+--- @param string string
 --- @param col? number
 --- @return number
 function vim.fn.strdisplaywidth(string, col) end
@@ -2904,6 +2913,7 @@ function vim.fn.string(expr) end
 -- 
 -- Can also be used as a |method|: >
 --   GetString()->strlen()
+--- @param string string
 --- @return number
 function vim.fn.strlen(string) end
 
@@ -3017,6 +3027,7 @@ function vim.fn.strridx(haystack, needle, start) end
 -- 
 -- Can also be used as a |method|: >
 --   GetString()->strtrans()
+--- @param string string
 --- @return string
 function vim.fn.strtrans(string) end
 
@@ -3030,6 +3041,7 @@ function vim.fn.strtrans(string) end
 -- 
 -- Can also be used as a |method|: >
 --   GetString()->strwidth()
+--- @param string string
 --- @return number
 function vim.fn.strwidth(string) end
 
@@ -3121,6 +3133,7 @@ function vim.fn.submatch(nr, list) end
 -- 
 -- Can also be used as a |method|: >
 --   GetString()->substitute(pat, sub, flags)
+--- @param string string
 --- @return string
 function vim.fn.substitute(string, pat, sub, flags) end
 

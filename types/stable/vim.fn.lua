@@ -1,5 +1,7 @@
 ---@meta
 
+
+
 -- Return the absolute value of {expr}.  When {expr} evaluates to
 -- a |Float| abs() returns a |Float|.  When {expr} can be
 -- converted to a |Number| abs() returns a |Number|.  Otherwise
@@ -668,6 +670,7 @@ function vim.fn.chansend(id, data) end
 -- 
 -- Can also be used as a |method|: >
 --   GetChar()->char2nr()
+--- @param string string
 --- @param utf8? any
 --- @return number
 function vim.fn.char2nr(string, utf8) end
@@ -681,6 +684,7 @@ function vim.fn.char2nr(string, utf8) end
 --   other  specific Unicode class
 -- The class is used in patterns and word motions.
 -- Returns 0 if {string} is not a |String|.
+--- @param string string
 --- @return number
 function vim.fn.charclass(string) end
 
@@ -725,6 +729,7 @@ function vim.fn.charcol(expr) end
 -- ```
 -- Can also be used as a |method|: >
 --   GetName()->charidx(idx)
+--- @param string string
 --- @param countcc? any
 --- @return number
 function vim.fn.charidx(string, idx, countcc) end
@@ -1527,6 +1532,7 @@ function vim.fn.environ() end
 --   GetText()->escape(' \')
 -- ```
 -- 
+--- @param string string
 --- @return string
 function vim.fn.escape(string, chars) end
 
@@ -1538,6 +1544,7 @@ function vim.fn.escape(string, chars) end
 -- 
 --   Can also be used as a |method|: >
 --     argv->join()->eval()
+--- @param string string
 function vim.fn.eval(string) end
 
 -- Returns 1 when inside an event handler.  That is that Vim got
@@ -1846,9 +1853,11 @@ function vim.fn.exp(expr) end
 -- 
 -- Can also be used as a |method|: >
 --   Getpattern()->expand()
---- @param nosuf? any
---- @param list? any[]
-function vim.fn.expand(string, nosuf, list) end
+--- @param string string
+--- @param nosuf? boolean
+--- @return string
+--- @overload fun(string:string, nosuf?:boolean, list:true):string[]
+function vim.fn.expand(string, nosuf) end
 
 -- Expand special items in String {string} like what is done for
 -- an Ex command such as `:edit`.  This expands special keywords,
@@ -1868,6 +1877,7 @@ function vim.fn.expand(string, nosuf, list) end
 --   GetCommand()->expandcmd()
 -- ```
 -- 
+--- @param string string
 --- @return string
 function vim.fn.expandcmd(string) end
 
@@ -1961,6 +1971,7 @@ function vim.fn.extend(expr1, expr2, expr3) end
 -- 
 -- Can also be used as a |method|: >
 --   GetInput()->feedkeys()
+--- @param string string
 --- @param mode? any
 --- @return number
 function vim.fn.feedkeys(string, mode) end
@@ -2234,6 +2245,7 @@ function vim.fn.fmod(expr1, expr2) end
 -- ```
 -- Can also be used as a |method|: >
 --   GetName()->fnameescape()
+--- @param string string
 --- @return string
 function vim.fn.fnameescape(string) end
 
@@ -3792,6 +3804,7 @@ function vim.fn.glob(expr, nosuf, list, alllinks) end
 --   GetExpr()->glob2regpat()
 -- ```
 -- 
+--- @param string string
 --- @return string
 function vim.fn.glob2regpat(string) end
 
@@ -4140,6 +4153,7 @@ function vim.fn.hostname() end
 --   GetText()->iconv('latin1', 'utf-8')
 -- ```
 -- 
+--- @param string string
 --- @param from number
 --- @param to number
 --- @return string
@@ -4709,6 +4723,7 @@ function vim.fn.keys(dict) end
 --   "\<C-Home>"->keytrans()
 -- ```
 -- 
+--- @param string string
 --- @return string
 function vim.fn.keytrans(string) end
 
