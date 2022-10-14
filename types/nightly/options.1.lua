@@ -1,26 +1,5 @@
 ---@meta
 
--- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
--- 			local to window
--- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
--- 	Valid values:
--- 	"line"		Highlight the text line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"screenline"	Highlight only the screen line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"number"	Highlight the line number of the cursor with
--- 			CursorLineNr |hl-CursorLineNr|.
--- 
--- 	Special value:
--- 	"both"		Alias for the values "line,number".
--- 
--- 	"line" and "screenline" cannot be used together.
-vim.wo.cursorlineopt = "both"
--- `'diff'` 			boolean	(default off)
--- 			local to window
--- 	Join the current window in the group of windows that shows differences
--- 	between files.  See |diff-mode|.
-vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special
@@ -4340,4 +4319,22 @@ function vim.opt.equalprg:get()end
 vim.opt.errorbells = {}
 --- @return boolean
 function vim.opt.errorbells:get()end
+
+-- `'errorfile'`  `'ef'` 	string	(default: "errors.err")
+-- 			global
+-- 	Name of the errorfile for the QuickFix mode (see |:cf|).
+-- 	When the "-q" command-line argument is used, `'errorfile'`  is set to the
+-- 	following argument.  See |-q|.
+-- 	NOT used for the ":make" command.  See `'makeef'`  for that.
+-- 	Environment variables are expanded |:set_env|.
+-- 	See |option-backslash| about including spaces and backslashes.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.errorfile: vim.Option
+--- @operator add: vim.opt.errorfile
+--- @operator sub: vim.opt.errorfile
+--- @operator pow: vim.opt.errorfile
+vim.opt.errorfile = {}
+--- @return string
+function vim.opt.errorfile:get()end
 
