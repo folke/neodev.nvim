@@ -1,71 +1,5 @@
 ---@meta
 
--- `'fillchars'`  `'fcs'` 	string	(default "")
--- 			global or local to window |global-local|
--- 	Characters to fill the statuslines, vertical separators and special
--- 	lines in the window.
--- 	It is a comma-separated list of items.  Each item has a name, a colon
--- 	and the value of that item:
--- 
--- 	  item		default		Used for ~
--- 	  stl		' ' or `'^'` 	statusline of the current window
--- 	  stlnc		' ' or `'='` 	statusline of the non-current windows
--- 	  wbr		' '		window bar
--- 	  horiz		`'─'`  or `'-'` 	horizontal separators |:split|
--- 	  horizup	`'┴'`  or `'-'` 	upwards facing horizontal separator
--- 	  horizdown	`'┬'`  or `'-'` 	downwards facing horizontal separator
--- 	  vert		`'│'`  or `'|'` 	vertical separators |:vsplit|
--- 	  vertleft	`'┤'`  or `'|'` 	left facing vertical separator
--- 	  vertright	`'├'`  or `'|'` 	right facing vertical separator
--- 	  verthoriz	`'┼'`  or `'+'` 	overlapping vertical and horizontal
--- 					separator
--- 	  fold		`'·'`  or `'-'` 	filling `'foldtext'` 
--- 	  foldopen	`'-'` 		mark the beginning of a fold
--- 	  foldclose	`'+'` 		show a closed fold
--- 	  foldsep	`'│'`  or `'|'`       open fold middle marker
--- 	  diff		`'-'` 		deleted lines of the `'diff'`  option
--- 	  msgsep	' '		message separator `'display'` 
--- 	  eob		`'~'` 		empty lines at the end of a buffer
--- 	  lastline	`'@'` 		`'display'`  contains lastline/truncate
--- 
--- 	Any one that is omitted will fall back to the default.  For "stl" and
--- 	"stlnc" the space will be used when there is highlighting, `'^'`  or `'='` 
--- 	otherwise.
--- 
--- 	Note that "horiz", "horizup", "horizdown", "vertleft", "vertright" and
--- 	"verthoriz" are only used when `'laststatus'`  is 3, since only vertical
--- 	window separators are used otherwise.
--- 
--- 	If `'ambiwidth'`  is "double" then "horiz", "horizup", "horizdown",
--- 	"vert", "vertleft", "vertright", "verthoriz", "foldsep" and "fold"
--- 	default to single-byte alternatives.
--- 
--- 	Example: >
--- 	    :set fillchars=stl:^,stlnc:=,vert:│,fold:·,diff:-
--- <	This is similar to the default, except that these characters will also
--- 	be used when there is highlighting.
--- 
--- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
--- 	single-byte and multibyte characters are supported.  But double-width
--- 	characters are not supported.
--- 
--- 	The highlighting used for these items:
--- 	  item		highlight group ~
--- 	  stl		StatusLine		|hl-StatusLine|
--- 	  stlnc		StatusLineNC		|hl-StatusLineNC|
--- 	  wbr		WinBar			|hl-WinBar| or |hl-WinBarNC|
--- 	  horiz		WinSeparator		|hl-WinSeparator|
--- 	  horizup	WinSeparator		|hl-WinSeparator|
--- 	  horizdown	WinSeparator		|hl-WinSeparator|
--- 	  vert		WinSeparator		|hl-WinSeparator|
--- 	  vertleft	WinSeparator		|hl-WinSeparator|
--- 	  vertright	WinSeparator		|hl-WinSeparator|
--- 	  verthoriz	WinSeparator		|hl-WinSeparator|
--- 	  fold		Folded			|hl-Folded|
--- 	  diff		DiffDelete		|hl-DiffDelete|
--- 	  eob		EndOfBuffer		|hl-EndOfBuffer|
--- 	  lastline	NonText			|hl-NonText|
-vim.wo.fillchars = ""
 -- `'foldcolumn'`  `'fdc'` 	string (default "0")
 -- 			local to window
 -- 	When and how to draw the foldcolumn. Valid values are:
@@ -3711,87 +3645,6 @@ vim.opt.cpoptions = {}
 --- @return string[]
 function vim.opt.cpoptions:get()end
 
--- `'cscopepathcomp'`  `'cspc'` 	number	(default 0)
--- 			global
--- 	Determines how many components of the path to show in a list of tags.
--- 	See |cscopepathcomp|.
---- @class vim.opt.cscopepathcomp: vim.Option
---- @operator add: vim.opt.cscopepathcomp
---- @operator sub: vim.opt.cscopepathcomp
---- @operator pow: vim.opt.cscopepathcomp
-vim.opt.cscopepathcomp = {}
---- @return number
-function vim.opt.cscopepathcomp:get()end
-
--- `'cscopeprg'`  `'csprg'` 	string	(default "cscope")
--- 			global
--- 	Specifies the command to execute cscope.  See |cscopeprg|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.cscopeprg: vim.Option
---- @operator add: vim.opt.cscopeprg
---- @operator sub: vim.opt.cscopeprg
---- @operator pow: vim.opt.cscopeprg
-vim.opt.cscopeprg = {}
---- @return string
-function vim.opt.cscopeprg:get()end
-
--- `'cscopequickfix'`  `'csqf'`  string	(default "")
--- 			global
--- 	Specifies whether to use quickfix window to show cscope results.
--- 	See |cscopequickfix|.
---- @class vim.opt.cscopequickfix: vim.Option
---- @operator add: vim.opt.cscopequickfix
---- @operator sub: vim.opt.cscopequickfix
---- @operator pow: vim.opt.cscopequickfix
-vim.opt.cscopequickfix = {}
---- @return string[]
-function vim.opt.cscopequickfix:get()end
-
--- `'cscoperelative'`  `'csre'`  boolean (default off)
--- 			global
--- 	In the absence of a prefix (-P) for cscope. setting this option enables
--- 	to use the basename of cscope.out path as the prefix.
--- 	See |cscoperelative|.
---- @class vim.opt.cscoperelative: vim.Option
---- @operator add: vim.opt.cscoperelative
---- @operator sub: vim.opt.cscoperelative
---- @operator pow: vim.opt.cscoperelative
-vim.opt.cscoperelative = {}
---- @return boolean
-function vim.opt.cscoperelative:get()end
-
--- `'cscopetag'`  `'cst'` 	boolean (default off)
--- 			global
--- 	Use cscope for tag commands.  See |cscope-options|.
---- @class vim.opt.cscopetag: vim.Option
---- @operator add: vim.opt.cscopetag
---- @operator sub: vim.opt.cscopetag
---- @operator pow: vim.opt.cscopetag
-vim.opt.cscopetag = {}
---- @return boolean
-function vim.opt.cscopetag:get()end
-
--- `'cscopetagorder'`  `'csto'` 	number	(default 0)
--- 			global
--- 	Determines the order in which ":cstag" performs a search.  See
--- 	|cscopetagorder|.
---- @class vim.opt.cscopetagorder: vim.Option
---- @operator add: vim.opt.cscopetagorder
---- @operator sub: vim.opt.cscopetagorder
---- @operator pow: vim.opt.cscopetagorder
-vim.opt.cscopetagorder = {}
---- @return number
-function vim.opt.cscopetagorder:get()end
-
---- @class vim.opt.cscopeverbose: vim.Option
---- @operator add: vim.opt.cscopeverbose
---- @operator sub: vim.opt.cscopeverbose
---- @operator pow: vim.opt.cscopeverbose
-vim.opt.cscopeverbose = {}
---- @return boolean
-function vim.opt.cscopeverbose:get()end
-
 -- `'cursorbind'`  `'crb'` 	boolean  (default off)
 -- 			local to window
 -- 	When this option is set, as the cursor in the current
@@ -4337,4 +4190,159 @@ function vim.opt.errorbells:get()end
 vim.opt.errorfile = {}
 --- @return string
 function vim.opt.errorfile:get()end
+
+-- `'errorformat'`  `'efm'` 	string	(default is very long)
+-- 			global or local to buffer |global-local|
+-- 	Scanf-like description of the format for the lines in the error file
+-- 	(see |errorformat|).
+--- @class vim.opt.errorformat: vim.Option
+--- @operator add: vim.opt.errorformat
+--- @operator sub: vim.opt.errorformat
+--- @operator pow: vim.opt.errorformat
+vim.opt.errorformat = {}
+--- @return string[]
+function vim.opt.errorformat:get()end
+
+-- `'eventignore'`  `'ei'` 	string	(default "")
+-- 			global
+-- 	A list of autocommand event names, which are to be ignored.
+-- 	When set to "all" or when "all" is one of the items, all autocommand
+-- 	events are ignored, autocommands will not be executed.
+-- 	Otherwise this is a comma-separated list of event names.  Example: >
+-- 	    :set ei=WinEnter,WinLeave
+-- <
+--- @class vim.opt.eventignore: vim.Option
+--- @operator add: vim.opt.eventignore
+--- @operator sub: vim.opt.eventignore
+--- @operator pow: vim.opt.eventignore
+vim.opt.eventignore = {}
+--- @return string[]
+function vim.opt.eventignore:get()end
+
+-- `'expandtab'`  `'et'` 	boolean	(default off)
+-- 			local to buffer
+-- 	In Insert mode: Use the appropriate number of spaces to insert a
+-- 	<Tab>.  Spaces are used in indents with the `'>'`  and `'<'`  commands and
+-- 	when `'autoindent'`  is on.  To insert a real tab when `'expandtab'`  is
+-- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
+-- 	This option is reset when the `'paste'`  option is set and restored when
+-- 	the `'paste'`  option is reset.
+--- @class vim.opt.expandtab: vim.Option
+--- @operator add: vim.opt.expandtab
+--- @operator sub: vim.opt.expandtab
+--- @operator pow: vim.opt.expandtab
+vim.opt.expandtab = {}
+--- @return boolean
+function vim.opt.expandtab:get()end
+
+--- @class vim.opt.exrc: vim.Option
+--- @operator add: vim.opt.exrc
+--- @operator sub: vim.opt.exrc
+--- @operator pow: vim.opt.exrc
+vim.opt.exrc = {}
+--- @return boolean
+function vim.opt.exrc:get()end
+
+-- `'fileencoding'`  `'fenc'` 	string (default: "")
+-- 			local to buffer
+-- 	File-content encoding for the current buffer. Conversion is done with
+-- 	iconv() or as specified with `'charconvert'` .
+-- 
+-- 	When `'fileencoding'`  is not UTF-8, conversion will be done when
+-- 	writing the file.  For reading see below.
+-- 	When `'fileencoding'`  is empty, the file will be saved with UTF-8
+-- 	encoding (no conversion when reading or writing a file).
+-- 
+-- 	WARNING: Conversion to a non-Unicode encoding can cause loss of
+-- 	information!
+-- 
+-- 	See |encoding-names| for the possible values.  Additionally, values may be
+-- 	specified that can be handled by the converter, see
+-- 	|mbyte-conversion|.
+-- 
+-- 	When reading a file `'fileencoding'`  will be set from `'fileencodings'` .
+-- 	To read a file in a certain encoding it won't work by setting
+-- 	`'fileencoding'` , use the |++enc| argument.  One exception: when
+-- 	`'fileencodings'`  is empty the value of `'fileencoding'`  is used.
+-- 	For a new file the global value of `'fileencoding'`  is used.
+-- 
+-- 	Prepending "8bit-" and "2byte-" has no meaning here, they are ignored.
+-- 	When the option is set, the value is converted to lowercase.  Thus
+-- 	you can set it with uppercase values too.  `'_'`  characters are
+-- 	replaced with `'-'` .  If a name is recognized from the list at
+-- 	|encoding-names|, it is replaced by the standard name.  For example
+-- 	"ISO8859-2" becomes "iso-8859-2".
+-- 
+-- 	When this option is set, after starting to edit a file, the `'modified'` 
+-- 	option is set, because the file would be different when written.
+-- 
+-- 	Keep in mind that changing `'fenc'`  from a modeline happens
+-- 	AFTER the text has been read, thus it applies to when the file will be
+-- 	written.  If you do set `'fenc'`  in a modeline, you might want to set
+-- 	`'nomodified'`  to avoid not being able to ":q".
+-- 
+-- 	This option cannot be changed when `'modifiable'`  is off.
+--- @class vim.opt.fileencoding: vim.Option
+--- @operator add: vim.opt.fileencoding
+--- @operator sub: vim.opt.fileencoding
+--- @operator pow: vim.opt.fileencoding
+vim.opt.fileencoding = {}
+--- @return string
+function vim.opt.fileencoding:get()end
+
+-- `'fileencodings'`  `'fencs'` 	string (default: "ucs-bom,utf-8,default,latin1")
+-- 			global
+-- 	This is a list of character encodings considered when starting to edit
+-- 	an existing file.  When a file is read, Vim tries to use the first
+-- 	mentioned character encoding.  If an error is detected, the next one
+-- 	in the list is tried.  When an encoding is found that works,
+-- 	`'fileencoding'`  is set to it.  If all fail, `'fileencoding'`  is set to
+-- 	an empty string, which means that UTF-8 is used.
+-- 		WARNING: Conversion can cause loss of information! You can use
+-- 		the |++bad| argument to specify what is done with characters
+-- 		that can't be converted.
+-- 	For an empty file or a file with only ASCII characters most encodings
+-- 	will work and the first entry of `'fileencodings'`  will be used (except
+-- 	"ucs-bom", which requires the BOM to be present).  If you prefer
+-- 	another encoding use an BufReadPost autocommand event to test if your
+-- 	preferred encoding is to be used.  Example: >
+-- 		au BufReadPost * if search(`'\S'` , `'w'` ) == 0 |
+-- 			\ set fenc=iso-2022-jp | endif
+-- <	This sets `'fileencoding'`  to "iso-2022-jp" if the file does not contain
+-- 	non-blank characters.
+-- 	When the |++enc| argument is used then the value of `'fileencodings'`  is
+-- 	not used.
+-- 	Note that `'fileencodings'`  is not used for a new file, the global value
+-- 	of `'fileencoding'`  is used instead.  You can set it with: >
+-- 		:setglobal fenc=iso-8859-2
+-- <	This means that a non-existing file may get a different encoding than
+-- 	an empty file.
+-- 	The special value "ucs-bom" can be used to check for a Unicode BOM
+-- 	(Byte Order Mark) at the start of the file.  It must not be preceded
+-- 	by "utf-8" or another Unicode encoding for this to work properly.
+-- 	An entry for an 8-bit encoding (e.g., "latin1") should be the last,
+-- 	because Vim cannot detect an error, thus the encoding is always
+-- 	accepted.
+-- 	The special value "default" can be used for the encoding from the
+-- 	environment.  It is useful when your environment uses a non-latin1
+-- 	encoding, such as Russian.
+-- 	When a file contains an illegal UTF-8 byte sequence it won't be
+-- 	recognized as "utf-8".  You can use the |8g8| command to find the
+-- 	illegal byte sequence.
+-- 	WRONG VALUES:			WHAT'S WRONG:
+-- 		latin1,utf-8		"latin1" will always be used
+-- 		utf-8,ucs-bom,latin1	BOM won't be recognized in an utf-8
+-- 					file
+-- 		cp1250,latin1		"cp1250" will always be used
+-- 	If `'fileencodings'`  is empty, `'fileencoding'`  is not modified.
+-- 	See `'fileencoding'`  for the possible values.
+-- 	Setting this option does not have an effect until the next time a file
+-- 	is read.
+--- @class vim.opt.fileencodings: vim.Option
+--- @operator add: vim.opt.fileencodings
+--- @operator sub: vim.opt.fileencodings
+--- @operator pow: vim.opt.fileencodings
+vim.opt.fileencodings = {}
+--- @return string[]
+function vim.opt.fileencodings:get()end
 

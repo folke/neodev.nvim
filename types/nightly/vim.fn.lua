@@ -1101,53 +1101,6 @@ function vim.fn.cosh(expr) end
 --- @return number
 function vim.fn.count(comp, expr, ic, start) end
 
---   Checks for the existence of a |cscope| connection.  If no
---   parameters are specified, then the function returns:
---     0, if there are no cscope connections;
---     1, if there is at least one cscope connection.
--- 
---   If parameters are specified, then the value of {num}
---   determines how existence of a cscope connection is checked:
--- 
---   {num}  Description of existence check
---   -----  ------------------------------
---   0  Same as no parameters (e.g., "cscope_connection()").
---   1  Ignore {prepend}, and use partial string matches for
---     {dbpath}.
---   2  Ignore {prepend}, and use exact string matches for
---     {dbpath}.
---   3  Use {prepend}, use partial string matches for both
---     {dbpath} and {prepend}.
---   4  Use {prepend}, use exact string matches for both
---     {dbpath} and {prepend}.
--- 
---   Note: All string comparisons are case sensitive!
--- 
---   Examples.  Suppose we had the following (from ":cs show"): 
--- ```vim
--- 
--- # pid    database name      prepend path
--- 0 27664  cscope.out        /usr/local
--- ```
---   Invocation          Return Val ~
---   ----------          ---------- 
--- ```vim
---   cscope_connection()          1
---   cscope_connection(1, "out")        1
---   cscope_connection(2, "out")        0
---   cscope_connection(3, "out")        0
---   cscope_connection(3, "out", "local")      1
---   cscope_connection(4, "out")        0
---   cscope_connection(4, "out", "local")      0
---   cscope_connection(4, "cscope.out", "/usr/local")  1
--- ```
--- 
---- @param num? any
---- @param dbpath? any
---- @param prepend? any
---- @return number
-function vim.fn.cscope_connection(num, dbpath, prepend) end
-
 -- Returns a |Dictionary| representing the |context| at {index}
 -- from the top of the |context-stack| (see |context-dict|).
 -- If {index} is not given, it is assumed to be 0 (i.e.: top).
@@ -2904,7 +2857,6 @@ function vim.fn.getcmdwintype() end
 -- color    color schemes
 -- command    Ex command
 -- compiler  compilers
--- cscope    |:cscope| suboptions
 -- diff_buffer     |:diffget| and |:diffput| completion
 -- dir    directory names
 -- environment  environment variable names
@@ -5868,4 +5820,108 @@ function vim.fn.mkdir(name, path, prot) end
 --     DoFull()->mode()
 --- @return string
 function vim.fn.mode() end
+
+-- Convert a list of VimL objects to msgpack. Returned value is a
+-- |readfile()|-style list. When {type} contains "B", a |Blob| is
+-- returned instead. Example: 
+-- ```vim
+--   call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
+-- ```
+-- or, using a |Blob|: 
+-- ```vim
+--   call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
+-- ```
+-- This will write the single 0x80 byte to a `fname.mpack` file
+-- (dictionary with zero items is represented by 0x80 byte in
+-- messagepack).
+-- 
+-- Limitations:
+-- 1. |Funcref|s cannot be dumped.
+-- 2. Containers that reference themselves cannot be dumped.
+-- 3. Dictionary keys are always dumped as STR strings.
+-- 4. Other strings and |Blob|s are always dumped as BIN strings.
+-- 5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
+--- @param list any[]
+--- @param type? any
+--- @return any[]
+function vim.fn.msgpackdump(list, type) end
+
+-- Convert a |readfile()|-style list or a |Blob| to a list of
+-- VimL objects.
+-- Example: 
+-- ```vim
+--   let fname = expand('~/.config/nvim/shada/main.shada')
+--   let mpack = readfile(fname, 'b')
+--   let shada_objects = msgpackparse(mpack)
+-- ```
+-- This will read ~/.config/nvim/shada/main.shada file to
+-- `shada_objects` list.
+-- 
+-- Limitations:
+-- 1. Mapping ordering is not preserved unless messagepack
+--    mapping is dumped using generic mapping
+--    (|msgpack-special-map|).
+-- 2. Since the parser aims to preserve all data untouched
+--    (except for 1.) some strings are parsed to
+--    |msgpack-special-dict| format which is not convenient to
+--    use.
+-- 
+-- Some messagepack strings may be parsed to special
+-- dictionaries. Special dictionaries are dictionaries which
+-- 
+-- 1. Contain exactly two keys: `_TYPE` and `_VAL`.
+-- 2. `_TYPE` key is one of the types found in |v:msgpack_types|
+--    variable.
+-- 3. Value for `_VAL` has the following format (Key column
+--    contains name of the key from |v:msgpack_types|):
+-- 
+-- Key  Value ~
+-- nil  Zero, ignored when dumping.  Not returned by
+--   |msgpackparse()| since |v:null| was introduced.
+-- boolean  One or zero.  When dumping it is only checked that
+--   value is a |Number|.  Not returned by |msgpackparse()|
+--   since |v:true| and |v:false| were introduced.
+-- integer  |List| with four numbers: sign (-1 or 1), highest two
+--   bits, number with bits from 62nd to 31st, lowest 31
+--   bits. I.e. to get actual number one will need to use
+--   code like 
+-- ```vim
+--     _VAL[0] * ((_VAL[1] << 62)
+--                & (_VAL[2] << 31)
+--                & _VAL[3])
+-- ```
+--   Special dictionary with this type will appear in
+--   |msgpackparse()| output under one of the following
+--   circumstances:
+--   1. |Number| is 32-bit and value is either above
+--      INT32_MAX or below INT32_MIN.
+--   2. |Number| is 64-bit and value is above INT64_MAX. It
+--      cannot possibly be below INT64_MIN because msgpack
+--      C parser does not support such values.
+-- float  |Float|. This value cannot possibly appear in
+--   |msgpackparse()| output.
+-- string  |readfile()|-style list of strings. This value will
+--   appear in |msgpackparse()| output if string contains
+--   zero byte or if string is a mapping key and mapping is
+--   being represented as special dictionary for other
+--   reasons.
+-- binary  |String|, or |Blob| if binary string contains zero
+--   byte. This value cannot appear in |msgpackparse()|
+--   output since blobs were introduced.
+-- array  |List|. This value cannot appear in |msgpackparse()|
+--   output.
+-- 
+-- map  |List| of |List|s with two items (key and value) each.
+--   This value will appear in |msgpackparse()| output if
+--   parsed mapping contains one of the following keys:
+--   1. Any key that is not a string (including keys which
+--      are binary strings).
+--   2. String with NUL byte inside.
+--   3. Duplicate key.
+--   4. Empty key.
+-- ext  |List| with two values: first is a signed integer
+--   representing extension type. Second is
+--   |readfile()|-style list of strings.
+--- @return any[]
+function vim.fn.msgpackparse(data) end
 

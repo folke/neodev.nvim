@@ -1,160 +1,5 @@
 ---@meta
 
--- `'errorformat'`  `'efm'` 	string	(default is very long)
--- 			global or local to buffer |global-local|
--- 	Scanf-like description of the format for the lines in the error file
--- 	(see |errorformat|).
---- @class vim.opt.errorformat: vim.Option
---- @operator add: vim.opt.errorformat
---- @operator sub: vim.opt.errorformat
---- @operator pow: vim.opt.errorformat
-vim.opt.errorformat = {}
---- @return string[]
-function vim.opt.errorformat:get()end
-
--- `'eventignore'`  `'ei'` 	string	(default "")
--- 			global
--- 	A list of autocommand event names, which are to be ignored.
--- 	When set to "all" or when "all" is one of the items, all autocommand
--- 	events are ignored, autocommands will not be executed.
--- 	Otherwise this is a comma-separated list of event names.  Example: >
--- 	    :set ei=WinEnter,WinLeave
--- <
---- @class vim.opt.eventignore: vim.Option
---- @operator add: vim.opt.eventignore
---- @operator sub: vim.opt.eventignore
---- @operator pow: vim.opt.eventignore
-vim.opt.eventignore = {}
---- @return string[]
-function vim.opt.eventignore:get()end
-
--- `'expandtab'`  `'et'` 	boolean	(default off)
--- 			local to buffer
--- 	In Insert mode: Use the appropriate number of spaces to insert a
--- 	<Tab>.  Spaces are used in indents with the `'>'`  and `'<'`  commands and
--- 	when `'autoindent'`  is on.  To insert a real tab when `'expandtab'`  is
--- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
--- 	This option is reset when the `'paste'`  option is set and restored when
--- 	the `'paste'`  option is reset.
---- @class vim.opt.expandtab: vim.Option
---- @operator add: vim.opt.expandtab
---- @operator sub: vim.opt.expandtab
---- @operator pow: vim.opt.expandtab
-vim.opt.expandtab = {}
---- @return boolean
-function vim.opt.expandtab:get()end
-
---- @class vim.opt.exrc: vim.Option
---- @operator add: vim.opt.exrc
---- @operator sub: vim.opt.exrc
---- @operator pow: vim.opt.exrc
-vim.opt.exrc = {}
---- @return boolean
-function vim.opt.exrc:get()end
-
--- `'fileencoding'`  `'fenc'` 	string (default: "")
--- 			local to buffer
--- 	File-content encoding for the current buffer. Conversion is done with
--- 	iconv() or as specified with `'charconvert'` .
--- 
--- 	When `'fileencoding'`  is not UTF-8, conversion will be done when
--- 	writing the file.  For reading see below.
--- 	When `'fileencoding'`  is empty, the file will be saved with UTF-8
--- 	encoding (no conversion when reading or writing a file).
--- 
--- 	WARNING: Conversion to a non-Unicode encoding can cause loss of
--- 	information!
--- 
--- 	See |encoding-names| for the possible values.  Additionally, values may be
--- 	specified that can be handled by the converter, see
--- 	|mbyte-conversion|.
--- 
--- 	When reading a file `'fileencoding'`  will be set from `'fileencodings'` .
--- 	To read a file in a certain encoding it won't work by setting
--- 	`'fileencoding'` , use the |++enc| argument.  One exception: when
--- 	`'fileencodings'`  is empty the value of `'fileencoding'`  is used.
--- 	For a new file the global value of `'fileencoding'`  is used.
--- 
--- 	Prepending "8bit-" and "2byte-" has no meaning here, they are ignored.
--- 	When the option is set, the value is converted to lowercase.  Thus
--- 	you can set it with uppercase values too.  `'_'`  characters are
--- 	replaced with `'-'` .  If a name is recognized from the list at
--- 	|encoding-names|, it is replaced by the standard name.  For example
--- 	"ISO8859-2" becomes "iso-8859-2".
--- 
--- 	When this option is set, after starting to edit a file, the `'modified'` 
--- 	option is set, because the file would be different when written.
--- 
--- 	Keep in mind that changing `'fenc'`  from a modeline happens
--- 	AFTER the text has been read, thus it applies to when the file will be
--- 	written.  If you do set `'fenc'`  in a modeline, you might want to set
--- 	`'nomodified'`  to avoid not being able to ":q".
--- 
--- 	This option cannot be changed when `'modifiable'`  is off.
---- @class vim.opt.fileencoding: vim.Option
---- @operator add: vim.opt.fileencoding
---- @operator sub: vim.opt.fileencoding
---- @operator pow: vim.opt.fileencoding
-vim.opt.fileencoding = {}
---- @return string
-function vim.opt.fileencoding:get()end
-
--- `'fileencodings'`  `'fencs'` 	string (default: "ucs-bom,utf-8,default,latin1")
--- 			global
--- 	This is a list of character encodings considered when starting to edit
--- 	an existing file.  When a file is read, Vim tries to use the first
--- 	mentioned character encoding.  If an error is detected, the next one
--- 	in the list is tried.  When an encoding is found that works,
--- 	`'fileencoding'`  is set to it.  If all fail, `'fileencoding'`  is set to
--- 	an empty string, which means that UTF-8 is used.
--- 		WARNING: Conversion can cause loss of information! You can use
--- 		the |++bad| argument to specify what is done with characters
--- 		that can't be converted.
--- 	For an empty file or a file with only ASCII characters most encodings
--- 	will work and the first entry of `'fileencodings'`  will be used (except
--- 	"ucs-bom", which requires the BOM to be present).  If you prefer
--- 	another encoding use an BufReadPost autocommand event to test if your
--- 	preferred encoding is to be used.  Example: >
--- 		au BufReadPost * if search(`'\S'` , `'w'` ) == 0 |
--- 			\ set fenc=iso-2022-jp | endif
--- <	This sets `'fileencoding'`  to "iso-2022-jp" if the file does not contain
--- 	non-blank characters.
--- 	When the |++enc| argument is used then the value of `'fileencodings'`  is
--- 	not used.
--- 	Note that `'fileencodings'`  is not used for a new file, the global value
--- 	of `'fileencoding'`  is used instead.  You can set it with: >
--- 		:setglobal fenc=iso-8859-2
--- <	This means that a non-existing file may get a different encoding than
--- 	an empty file.
--- 	The special value "ucs-bom" can be used to check for a Unicode BOM
--- 	(Byte Order Mark) at the start of the file.  It must not be preceded
--- 	by "utf-8" or another Unicode encoding for this to work properly.
--- 	An entry for an 8-bit encoding (e.g., "latin1") should be the last,
--- 	because Vim cannot detect an error, thus the encoding is always
--- 	accepted.
--- 	The special value "default" can be used for the encoding from the
--- 	environment.  It is useful when your environment uses a non-latin1
--- 	encoding, such as Russian.
--- 	When a file contains an illegal UTF-8 byte sequence it won't be
--- 	recognized as "utf-8".  You can use the |8g8| command to find the
--- 	illegal byte sequence.
--- 	WRONG VALUES:			WHAT'S WRONG:
--- 		latin1,utf-8		"latin1" will always be used
--- 		utf-8,ucs-bom,latin1	BOM won't be recognized in an utf-8
--- 					file
--- 		cp1250,latin1		"cp1250" will always be used
--- 	If `'fileencodings'`  is empty, `'fileencoding'`  is not modified.
--- 	See `'fileencoding'`  for the possible values.
--- 	Setting this option does not have an effect until the next time a file
--- 	is read.
---- @class vim.opt.fileencodings: vim.Option
---- @operator add: vim.opt.fileencodings
---- @operator sub: vim.opt.fileencodings
---- @operator pow: vim.opt.fileencodings
-vim.opt.fileencodings = {}
---- @return string[]
-function vim.opt.fileencodings:get()end
-
 -- `'fileformat'`  `'ff'` 	string (Windows default: "dos",
 -- 				Unix default: "unix")
 -- 			local to buffer
@@ -4412,6 +4257,8 @@ function vim.opt.shiftwidth:get()end
 -- 	  c	don't give |ins-completion-menu| messages.  For example,
 -- 		"-- XXX completion (YYY)", "match 1 of 2", "The only match",
 -- 		"Pattern not found", "Back at original", etc.
+-- 	  C	don't give messages while scanning for ins-completion items,
+-- 		for instance "scanning tags"
 -- 	  q	use "recording" instead of "recording @a"
 -- 	  F	don't give the file info when editing a file, like `:silent`
 -- 		was used for the command
@@ -4729,4 +4576,203 @@ function vim.opt.smarttab:get()end
 vim.opt.softtabstop = {}
 --- @return number
 function vim.opt.softtabstop:get()end
+
+-- `'spell'` 			boolean	(default off)
+-- 			local to window
+-- 	When on spell checking will be done.  See |spell|.
+-- 	The languages are specified with `'spelllang'` .
+--- @class vim.opt.spell: vim.Option
+--- @operator add: vim.opt.spell
+--- @operator sub: vim.opt.spell
+--- @operator pow: vim.opt.spell
+vim.opt.spell = {}
+--- @return boolean
+function vim.opt.spell:get()end
+
+-- `'spellcapcheck'`  `'spc'` 	string	(default "[.?!]\_[\])'" \t]\+")
+-- 			local to buffer
+-- 	Pattern to locate the end of a sentence.  The following word will be
+-- 	checked to start with a capital letter.  If not then it is highlighted
+-- 	with SpellCap |hl-SpellCap| (unless the word is also badly spelled).
+-- 	When this check is not wanted make this option empty.
+-- 	Only used when `'spell'`  is set.
+-- 	Be careful with special characters, see |option-backslash| about
+-- 	including spaces and backslashes.
+-- 	To set this option automatically depending on the language, see
+-- 	|set-spc-auto|.
+--- @class vim.opt.spellcapcheck: vim.Option
+--- @operator add: vim.opt.spellcapcheck
+--- @operator sub: vim.opt.spellcapcheck
+--- @operator pow: vim.opt.spellcapcheck
+vim.opt.spellcapcheck = {}
+--- @return string
+function vim.opt.spellcapcheck:get()end
+
+-- `'spellfile'`  `'spf'` 	string	(default empty)
+-- 			local to buffer
+-- 	Name of the word list file where words are added for the |zg| and |zw|
+-- 	commands.  It must end in ".{encoding}.add".  You need to include the
+-- 	path, otherwise the file is placed in the current directory.
+-- 
+-- 	It may also be a comma-separated list of names.  A count before the
+-- 	|zg| and |zw| commands can be used to access each.  This allows using
+-- 	a personal word list file and a project word list file.
+-- 	When a word is added while this option is empty Vim will set it for
+-- 	you: Using the first directory in `'runtimepath'`  that is writable.  If
+-- 	there is no "spell" directory yet it will be created.  For the file
+-- 	name the first language name that appears in `'spelllang'`  is used,
+-- 	ignoring the region.
+-- 	The resulting ".spl" file will be used for spell checking, it does not
+-- 	have to appear in `'spelllang'` .
+-- 	Normally one file is used for all regions, but you can add the region
+-- 	name if you want to.  However, it will then only be used when
+-- 	`'spellfile'`  is set to it, for entries in `'spelllang'`  only files
+-- 	without region name will be found.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.spellfile: vim.Option
+--- @operator add: vim.opt.spellfile
+--- @operator sub: vim.opt.spellfile
+--- @operator pow: vim.opt.spellfile
+vim.opt.spellfile = {}
+--- @return string[]
+function vim.opt.spellfile:get()end
+
+-- `'spelllang'`  `'spl'` 	string	(default "en")
+-- 			local to buffer
+-- 	A comma-separated list of word list names.  When the `'spell'`  option is
+-- 	on spellchecking will be done for these languages.  Example: >
+-- 		set spelllang=en_us,nl,medical
+-- <	This means US English, Dutch and medical words are recognized.  Words
+-- 	that are not recognized will be highlighted.
+-- 	The word list name must consist of alphanumeric characters, a dash or
+-- 	an underscore.  It should not include a comma or dot.  Using a dash is
+-- 	recommended to separate the two letter language name from a
+-- 	specification.  Thus "en-rare" is used for rare English words.
+-- 	A region name must come last and have the form "_xx", where "xx" is
+-- 	the two-letter, lower case region name.  You can use more than one
+-- 	region by listing them: "en_us,en_ca" supports both US and Canadian
+-- 	English, but not words specific for Australia, New Zealand or Great
+-- 	Britain. (Note: currently en_au and en_nz dictionaries are older than
+-- 	en_ca, en_gb and en_us).
+-- 	If the name "cjk" is included East Asian characters are excluded from
+-- 	spell checking.  This is useful when editing text that also has Asian
+-- 	words.
+-- 	Note that the "medical" dictionary does not exist, it is just an
+-- 	example of a longer name.
+-- 
+-- 	As a special case the name of a .spl file can be given as-is.  The
+-- 	first "_xx" in the name is removed and used as the region name
+-- 	(_xx is an underscore, two letters and followed by a non-letter).
+-- 	This is mainly for testing purposes.  You must make sure the correct
+-- 	encoding is used, Vim doesn't check it.
+-- 	How the related spell files are found is explained here: |spell-load|.
+-- 
+-- 	If the |spellfile.vim| plugin is active and you use a language name
+-- 	for which Vim cannot find the .spl file in `'runtimepath'`  the plugin
+-- 	will ask you if you want to download the file.
+-- 
+-- 	After this option has been set successfully, Vim will source the files
+-- 	"spell/LANG.vim" in `'runtimepath'` .  "LANG" is the value of `'spelllang'` 
+-- 	up to the first character that is not an ASCII letter or number and
+-- 	not a dash.  Also see |set-spc-auto|.
+--- @class vim.opt.spelllang: vim.Option
+--- @operator add: vim.opt.spelllang
+--- @operator sub: vim.opt.spelllang
+--- @operator pow: vim.opt.spelllang
+vim.opt.spelllang = {}
+--- @return string[]
+function vim.opt.spelllang:get()end
+
+-- `'spelloptions'`  `'spo'` 	string	(default "")
+-- 			local to buffer
+-- 	A comma-separated list of options for spell checking:
+-- 	camel		When a word is CamelCased, assume "Cased" is a
+-- 			separate word: every upper-case character in a word
+-- 			that comes after a lower case character indicates the
+-- 			start of a new word.
+-- 	noplainbuffer	Only spellcheck a buffer when `'syntax'`  is enabled,
+-- 			or when extmarks are set within the buffer. Only
+-- 			designated regions of the buffer are spellchecked in
+-- 			this case.
+--- @class vim.opt.spelloptions: vim.Option
+--- @operator add: vim.opt.spelloptions
+--- @operator sub: vim.opt.spelloptions
+--- @operator pow: vim.opt.spelloptions
+vim.opt.spelloptions = {}
+--- @return string[]
+function vim.opt.spelloptions:get()end
+
+-- `'spellsuggest'`  `'sps'` 	string	(default "best")
+-- 			global
+-- 	Methods used for spelling suggestions.  Both for the |z=| command and
+-- 	the |spellsuggest()| function.  This is a comma-separated list of
+-- 	items:
+-- 
+-- 	best		Internal method that works best for English.  Finds
+-- 			changes like "fast" and uses a bit of sound-a-like
+-- 			scoring to improve the ordering.
+-- 
+-- 	double		Internal method that uses two methods and mixes the
+-- 			results.  The first method is "fast", the other method
+-- 			computes how much the suggestion sounds like the bad
+-- 			word.  That only works when the language specifies
+-- 			sound folding.  Can be slow and doesn't always give
+-- 			better results.
+-- 
+-- 	fast		Internal method that only checks for simple changes:
+-- 			character inserts/deletes/swaps.  Works well for
+-- 			simple typing mistakes.
+-- 
+-- 	{number}	The maximum number of suggestions listed for |z=|.
+-- 			Not used for |spellsuggest()|.  The number of
+-- 			suggestions is never more than the value of `'lines'` 
+-- 			minus two.
+-- 
+-- 	timeout:{millisec}   Limit the time searching for suggestions to
+-- 			{millisec} milli seconds.  Applies to the following
+-- 			methods.  When omitted the limit is 5000. When
+-- 			negative there is no limit.
+-- 
+-- 	file:{filename} Read file {filename}, which must have two columns,
+-- 			separated by a slash.  The first column contains the
+-- 			bad word, the second column the suggested good word.
+-- 			Example:
+-- 				theribal/terrible ~
+-- 			Use this for common mistakes that do not appear at the
+-- 			top of the suggestion list with the internal methods.
+-- 			Lines without a slash are ignored, use this for
+-- 			comments.
+-- 			The word in the second column must be correct,
+-- 			otherwise it will not be used.  Add the word to an
+-- 			".add" file if it is currently flagged as a spelling
+-- 			mistake.
+-- 			The file is used for all languages.
+-- 
+-- 	expr:{expr}	Evaluate expression {expr}.  Use a function to avoid
+-- 			trouble with spaces.  |v:val| holds the badly spelled
+-- 			word.  The expression must evaluate to a List of
+-- 			Lists, each with a suggestion and a score.
+-- 			Example:
+-- 				[[`'the'` , 33], [`'that'` , 44]] ~
+-- 			Set `'verbose'`  and use |z=| to see the scores that the
+-- 			internal methods use.  A lower score is better.
+-- 			This may invoke |spellsuggest()| if you temporarily
+-- 			set `'spellsuggest'`  to exclude the "expr:" part.
+-- 			Errors are silently ignored, unless you set the
+-- 			`'verbose'`  option to a non-zero value.
+-- 
+-- 	Only one of "best", "double" or "fast" may be used.  The others may
+-- 	appear several times in any order.  Example: >
+-- 		:set sps=file:~/.config/nvim/sugg,best,expr:MySuggest()
+-- <
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.spellsuggest: vim.Option
+--- @operator add: vim.opt.spellsuggest
+--- @operator sub: vim.opt.spellsuggest
+--- @operator pow: vim.opt.spellsuggest
+vim.opt.spellsuggest = {}
+--- @return string[]
+function vim.opt.spellsuggest:get()end
 

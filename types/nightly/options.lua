@@ -731,38 +731,6 @@ vim.go.confirm = false
 -- 		_	When using |cw| on a word, do not include the
 -- 			whitespace following the word in the motion.
 vim.go.cpoptions = "aABceFs_"
--- `'cscopepathcomp'`  `'cspc'` 	number	(default 0)
--- 			global
--- 	Determines how many components of the path to show in a list of tags.
--- 	See |cscopepathcomp|.
-vim.go.cscopepathcomp = 0
--- `'cscopeprg'`  `'csprg'` 	string	(default "cscope")
--- 			global
--- 	Specifies the command to execute cscope.  See |cscopeprg|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.go.cscopeprg = "cscope"
--- `'cscopequickfix'`  `'csqf'`  string	(default "")
--- 			global
--- 	Specifies whether to use quickfix window to show cscope results.
--- 	See |cscopequickfix|.
-vim.go.cscopequickfix = ""
--- `'cscoperelative'`  `'csre'`  boolean (default off)
--- 			global
--- 	In the absence of a prefix (-P) for cscope. setting this option enables
--- 	to use the basename of cscope.out path as the prefix.
--- 	See |cscoperelative|.
-vim.go.cscoperelative = false
--- `'cscopetag'`  `'cst'` 	boolean (default off)
--- 			global
--- 	Use cscope for tag commands.  See |cscope-options|.
-vim.go.cscopetag = false
--- `'cscopetagorder'`  `'csto'` 	number	(default 0)
--- 			global
--- 	Determines the order in which ":cstag" performs a search.  See
--- 	|cscopetagorder|.
-vim.go.cscopetagorder = 0
-vim.go.cscopeverbose = true
 -- `'debug'` 			string	(default "")
 -- 			global
 -- 	These values can be used:
@@ -3188,6 +3156,8 @@ vim.go.shiftround = false
 -- 	  c	don't give |ins-completion-menu| messages.  For example,
 -- 		"-- XXX completion (YYY)", "match 1 of 2", "The only match",
 -- 		"Pattern not found", "Back at original", etc.
+-- 	  C	don't give messages while scanning for ins-completion items,
+-- 		for instance "scanning tags"
 -- 	  q	use "recording" instead of "recording @a"
 -- 	  F	don't give the file info when editing a file, like `:silent`
 -- 		was used for the command
@@ -4235,3 +4205,69 @@ vim.wo.cursorlineopt = "both"
 -- 	Join the current window in the group of windows that shows differences
 -- 	between files.  See |diff-mode|.
 vim.wo.diff = false
+-- `'fillchars'`  `'fcs'` 	string	(default "")
+-- 			global or local to window |global-local|
+-- 	Characters to fill the statuslines, vertical separators and special
+-- 	lines in the window.
+-- 	It is a comma-separated list of items.  Each item has a name, a colon
+-- 	and the value of that item:
+-- 
+-- 	  item		default		Used for ~
+-- 	  stl		' ' or `'^'` 	statusline of the current window
+-- 	  stlnc		' ' or `'='` 	statusline of the non-current windows
+-- 	  wbr		' '		window bar
+-- 	  horiz		`'─'`  or `'-'` 	horizontal separators |:split|
+-- 	  horizup	`'┴'`  or `'-'` 	upwards facing horizontal separator
+-- 	  horizdown	`'┬'`  or `'-'` 	downwards facing horizontal separator
+-- 	  vert		`'│'`  or `'|'` 	vertical separators |:vsplit|
+-- 	  vertleft	`'┤'`  or `'|'` 	left facing vertical separator
+-- 	  vertright	`'├'`  or `'|'` 	right facing vertical separator
+-- 	  verthoriz	`'┼'`  or `'+'` 	overlapping vertical and horizontal
+-- 					separator
+-- 	  fold		`'·'`  or `'-'` 	filling `'foldtext'` 
+-- 	  foldopen	`'-'` 		mark the beginning of a fold
+-- 	  foldclose	`'+'` 		show a closed fold
+-- 	  foldsep	`'│'`  or `'|'`       open fold middle marker
+-- 	  diff		`'-'` 		deleted lines of the `'diff'`  option
+-- 	  msgsep	' '		message separator `'display'` 
+-- 	  eob		`'~'` 		empty lines at the end of a buffer
+-- 	  lastline	`'@'` 		`'display'`  contains lastline/truncate
+-- 
+-- 	Any one that is omitted will fall back to the default.  For "stl" and
+-- 	"stlnc" the space will be used when there is highlighting, `'^'`  or `'='` 
+-- 	otherwise.
+-- 
+-- 	Note that "horiz", "horizup", "horizdown", "vertleft", "vertright" and
+-- 	"verthoriz" are only used when `'laststatus'`  is 3, since only vertical
+-- 	window separators are used otherwise.
+-- 
+-- 	If `'ambiwidth'`  is "double" then "horiz", "horizup", "horizdown",
+-- 	"vert", "vertleft", "vertright", "verthoriz", "foldsep" and "fold"
+-- 	default to single-byte alternatives.
+-- 
+-- 	Example: >
+-- 	    :set fillchars=stl:^,stlnc:=,vert:│,fold:·,diff:-
+-- <	This is similar to the default, except that these characters will also
+-- 	be used when there is highlighting.
+-- 
+-- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
+-- 	single-byte and multibyte characters are supported.  But double-width
+-- 	characters are not supported.
+-- 
+-- 	The highlighting used for these items:
+-- 	  item		highlight group ~
+-- 	  stl		StatusLine		|hl-StatusLine|
+-- 	  stlnc		StatusLineNC		|hl-StatusLineNC|
+-- 	  wbr		WinBar			|hl-WinBar| or |hl-WinBarNC|
+-- 	  horiz		WinSeparator		|hl-WinSeparator|
+-- 	  horizup	WinSeparator		|hl-WinSeparator|
+-- 	  horizdown	WinSeparator		|hl-WinSeparator|
+-- 	  vert		WinSeparator		|hl-WinSeparator|
+-- 	  vertleft	WinSeparator		|hl-WinSeparator|
+-- 	  vertright	WinSeparator		|hl-WinSeparator|
+-- 	  verthoriz	WinSeparator		|hl-WinSeparator|
+-- 	  fold		Folded			|hl-Folded|
+-- 	  diff		DiffDelete		|hl-DiffDelete|
+-- 	  eob		EndOfBuffer		|hl-EndOfBuffer|
+-- 	  lastline	NonText			|hl-NonText|
+vim.wo.fillchars = ""
