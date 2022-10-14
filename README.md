@@ -1,6 +1,6 @@
 # 💻 neodev.nvim
 
-Dev setup for init.lua and plugin development with full signature help, docs and
+Neovim setup for init.lua and plugin development with full signature help, docs and
 completion for the nvim lua API.
 
 ![image](https://user-images.githubusercontent.com/292349/118822916-6af02080-b86d-11eb-9990-942fe9b55541.png)
