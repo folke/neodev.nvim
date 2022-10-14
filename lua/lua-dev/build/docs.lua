@@ -213,7 +213,7 @@ function M.lua()
 end
 
 function M.luv()
-  return M.parse_functions("luvref", {
+  local ret = M.parse_functions("luvref", {
     filter = function(name)
       return not Annotations.is_lua(name)
     end,
@@ -221,6 +221,24 @@ function M.luv()
       return name:gsub("^uv%.", "vim.loop.")
     end,
   })
+  Util.for_each(ret, function(name, fun)
+    local returns = fun.doc:match("%s*Returns: (.*)\n")
+    ---@type LuaParam
+    local retval = {}
+    if returns then
+      for t in returns:gmatch("`(.-)`") do
+        if t == "nil" or t == "fail" then
+          retval.optional = true
+        elseif not retval.type then
+          retval.type = t:find("userdata") and "userdata" or t
+        end
+      end
+    end
+    if not vim.tbl_isempty(retval) then
+      fun["return"] = { retval }
+    end
+  end)
+  return ret
 end
 
 function M.functions()

@@ -30,6 +30,7 @@
 --     end)
 -- ```
 -- 
+--- @return 0
 function vim.loop.accept(stream, client_stream) end
 
 -- > method form `async:send(...)`
@@ -51,6 +52,7 @@ function vim.loop.accept(stream, client_stream) end
 -- in a row before the callback is called, the callback will only
 -- be called once. If `uv.async_send()` is called again after the
 -- callback was called, it will be called again.
+--- @return 0
 function vim.loop.async_send(async, ...) end
 
 -- Returns an estimate of the default amount of parallelism a
@@ -80,6 +82,7 @@ function vim.loop.available_parallelism() end
 -- Note: Embedding a kqueue fd in another kqueue pollset doesn't
 -- work on all platforms. It's not an error to add the fd but it
 -- never generates events.
+--- @return number
 function vim.loop.backend_fd() end
 
 -- Get the poll timeout. The return value is in milliseconds, or
@@ -167,6 +170,7 @@ function vim.loop.close(handle, callback) end
 --     - `sys` : `number`
 --     - `idle` : `number`
 --     - `irq` : `number`
+--- @return table
 function vim.loop.cpu_info() end
 
 -- Returns the current working directory.
@@ -215,6 +219,7 @@ function vim.loop.exepath() end
 -- WARNING: Be very careful when using this function. libuv
 -- assumes it's in control of the file descriptor so any change
 -- to it may lead to malfunction.
+--- @return number
 function vim.loop.fileno(handle) end
 
 -- Parameters:
@@ -1042,6 +1047,7 @@ function vim.loop.getaddrinfo(host, service, hints, callback) end
 -- 
 -- Note: This is not a libuv function and is not supported on
 -- Windows.
+--- @return number
 function vim.loop.getgid() end
 
 -- Parameters:
@@ -1093,6 +1099,7 @@ function vim.loop.getpid() end
 -- - `nsignals` : `integer` (signals received)
 -- - `nvcsw` : `integer` (voluntary context switches)
 -- - `nivcsw` : `integer` (involuntary context switches)
+--- @return table
 function vim.loop.getrusage() end
 
 -- Cross-platform implementation of `gettimeofday(2)`. Returns
@@ -1107,6 +1114,7 @@ function vim.loop.gettimeofday() end
 -- 
 -- Note: This is not a libuv function and is not supported on
 -- Windows.
+--- @return number
 function vim.loop.getuid() end
 
 -- Parameters:
@@ -1141,6 +1149,7 @@ function vim.loop.handle_get_type(handle) end
 -- Returns: `boolean` or `fail`
 -- 
 -- See |luv-reference-counting|.
+--- @return boolean
 function vim.loop.has_ref(handle) end
 
 -- Returns a current high-resolution time in nanoseconds as a
@@ -1206,6 +1215,7 @@ function vim.loop.if_indextoname(ifindex) end
 --   - `netmask` : `string`
 --   - `internal` : `boolean`
 --   - `mac` : `string`
+--- @return table
 function vim.loop.interface_addresses() end
 
 -- > method form `handle:is_active()`
@@ -1247,6 +1257,7 @@ function vim.loop.is_active(handle) end
 -- Note: This function should only be used between the
 -- initialization of the handle and the arrival of the close
 -- callback.
+--- @return boolean
 function vim.loop.is_closing(handle) end
 
 -- > method form `stream:is_readable()`
@@ -1349,6 +1360,7 @@ function vim.loop.loop_close() end
 -- 
 -- Note: Be prepared to handle the `ENOSYS` error; it means the
 -- loop option is not supported by the platform.
+--- @return 0
 function vim.loop.loop_configure(option, ...) end
 
 -- If the loop is running, returns a string indicating the mode
@@ -1385,6 +1397,7 @@ function vim.loop.metrics_idle_time() end
 -- Note: Unlike other handle initialization functions, this
 -- immediately starts the handle.
 --- @param callback? fun()
+--- @return userdata
 function vim.loop.new_async(callback) end
 
 -- Creates and initializes a new |uv_check_t|. Returns the Lua
@@ -1551,6 +1564,7 @@ function vim.loop.new_timer() end
 -- 
 -- Note: If reopening the TTY fails, libuv falls back to blocking
 -- writes.
+--- @return userdata
 function vim.loop.new_tty(fd, readable) end
 
 -- Parameters:
@@ -1606,6 +1620,7 @@ function vim.loop.new_work(work_callback, after_work_callback) end
 -- 
 -- Note: Use |uv.hrtime()| if you need sub-millisecond
 -- granularity.
+--- @return number
 function vim.loop.now() end
 
 -- Returns all environmental variables as a dynamic table of
@@ -1614,6 +1629,7 @@ function vim.loop.now() end
 -- Returns: `table`
 -- 
 -- WARNING: This function is not thread safe.
+--- @return table
 function vim.loop.os_environ() end
 
 -- Returns password file information.
@@ -1624,6 +1640,7 @@ function vim.loop.os_environ() end
 -- - `gid` : `integer`
 -- - `shell` : `string`
 -- - `homedir` : `string`
+--- @return table
 function vim.loop.os_get_passwd() end
 
 -- Parameters:
@@ -1641,6 +1658,7 @@ function vim.loop.os_get_passwd() end
 -- 
 -- WARNING: This function is not thread safe.
 --- @param size? any
+--- @return string
 function vim.loop.os_getenv(name, size) end
 
 -- Returns the hostname.
@@ -1670,6 +1688,7 @@ function vim.loop.os_getpriority(pid) end
 -- Returns: `string` or `fail`
 -- 
 -- WARNING: This function is not thread safe.
+--- @return string
 function vim.loop.os_homedir() end
 
 -- Parameters:
@@ -1682,6 +1701,7 @@ function vim.loop.os_homedir() end
 -- Returns: `boolean` or `fail`
 -- 
 -- WARNING: This function is not thread safe.
+--- @return boolean
 function vim.loop.os_setenv(name, value) end
 
 -- Parameters:
@@ -1698,6 +1718,7 @@ function vim.loop.os_setpriority(pid, priority) end
 -- Returns: `string` or `fail`
 -- 
 -- WARNING: This function is not thread safe.
+--- @return string
 function vim.loop.os_tmpdir() end
 
 -- Returns system information.
@@ -1707,11 +1728,13 @@ function vim.loop.os_tmpdir() end
 -- - `release` : `string`
 -- - `version` : `string`
 -- - `machine` : `string`
+--- @return table
 function vim.loop.os_uname() end
 
 -- Returns: `boolean` or `fail`
 -- 
 -- WARNING: This function is not thread safe.
+--- @return boolean
 function vim.loop.os_unsetenv() end
 
 -- Parameters:
@@ -1755,6 +1778,7 @@ function vim.loop.os_unsetenv() end
 --     end)
 -- ```
 -- 
+--- @return table
 function vim.loop.pipe(read_flags, write_flags) end
 
 -- > method form `pipe:bind(name)`
@@ -1770,6 +1794,7 @@ function vim.loop.pipe(read_flags, write_flags) end
 -- Note: Paths on Unix get truncated to
 -- sizeof(sockaddr_un.sun_path) bytes, typically between 92 and
 -- 108 bytes.
+--- @return 0
 function vim.loop.pipe_bind(pipe, name) end
 
 -- > method form `pipe:chmod(flags)`
@@ -1803,6 +1828,7 @@ function vim.loop.pipe_chmod(pipe, flags) end
 -- sizeof(sockaddr_un.sun_path) bytes, typically between 92 and
 -- 108 bytes.
 --- @param callback? fun()
+--- @return userdata
 function vim.loop.pipe_connect(pipe, name, callback) end
 
 -- > method form `pipe:getpeername()`
@@ -1838,6 +1864,7 @@ function vim.loop.pipe_getsockname(pipe) end
 -- Returns: `0` or `fail`
 -- 
 -- Note: The file descriptor is set to non-blocking mode.
+--- @return 0
 function vim.loop.pipe_open(pipe, fd) end
 
 -- > method form `pipe:pending_count()`
@@ -1905,6 +1932,7 @@ function vim.loop.pipe_pending_type(pipe) end
 -- active is fine. Doing so will update the events mask that is
 -- being watched for.
 --- @param callback fun()
+--- @return 0
 function vim.loop.poll_start(poll, events, callback) end
 
 -- > method form `poll:stop()`
@@ -2058,6 +2086,7 @@ function vim.loop.random(len, flags, callback) end
 -- ```
 -- 
 --- @param callback fun()
+--- @return 0
 function vim.loop.read_start(stream, callback) end
 
 -- > method form `stream:read_stop()`
@@ -2160,6 +2189,7 @@ function vim.loop.resident_set_memory() end
 -- call this after registering your initial set of event
 -- callbacks to start the event loop.
 --- @param mode? any
+--- @return boolean
 function vim.loop.run(mode) end
 
 -- > method form `handle:send_buffer_size([size])`
@@ -2336,6 +2366,7 @@ function vim.loop.sleep(msec) end
 --- @param protocol? any
 --- @param flags1? any
 --- @param flags2? any
+--- @return table
 function vim.loop.socketpair(socktype, protocol, flags1, flags2) end
 
 -- Parameters:
@@ -2492,6 +2523,7 @@ function vim.loop.stream_get_write_queue_size() end
 -- been submitted. Therefore it is recommended to set the
 -- blocking mode immediately after opening or creating the
 -- stream.
+--- @return 0
 function vim.loop.stream_set_blocking(stream, blocking) end
 
 -- > method form `tcp:bind(host, port, [flags])`
@@ -2558,6 +2590,7 @@ function vim.loop.tcp_close_reset(callback) end
 -- ```
 -- 
 --- @param callback fun()
+--- @return userdata
 function vim.loop.tcp_connect(tcp, host, port, callback) end
 
 -- > method form `tcp:getpeername()`
@@ -2571,6 +2604,7 @@ function vim.loop.tcp_connect(tcp, host, port, callback) end
 -- - `ip` : `string`
 -- - `family` : `string`
 -- - `port` : `integer`
+--- @return table
 function vim.loop.tcp_getpeername(tcp) end
 
 -- > method form `tcp:getsockname()`
@@ -2584,6 +2618,7 @@ function vim.loop.tcp_getpeername(tcp) end
 -- - `ip` : `string`
 -- - `family` : `string`
 -- - `port` : `integer`
+--- @return table
 function vim.loop.tcp_getsockname(tcp) end
 
 -- > method form `tcp:keepalive(enable, [delay])`
@@ -2624,6 +2659,7 @@ function vim.loop.tcp_nodelay(tcp, enable) end
 -- Note: The passed file descriptor or SOCKET is not checked for
 -- its type, but it's required that it represents a valid stream
 -- socket.
+--- @return 0
 function vim.loop.tcp_open(tcp, sock) end
 
 -- > method form `tcp:simultaneous_accepts(enable)`
@@ -2701,6 +2737,7 @@ function vim.loop.timer_again(timer) end
 -- Returns: `integer`
 -- 
 -- Note: New in libuv version 1.40.0.
+--- @return number
 function vim.loop.timer_get_due_in(timer) end
 
 -- > method form `timer:get_repeat()`
@@ -2933,6 +2970,7 @@ function vim.loop.udp_get_send_queue_size() end
 -- - `ip` : `string`
 -- - `family` : `string`
 -- - `port` : `integer`
+--- @return table
 function vim.loop.udp_getpeername(udp) end
 
 -- > method form `udp:getsockname()`
@@ -2946,6 +2984,7 @@ function vim.loop.udp_getpeername(udp) end
 -- - `ip` : `string`
 -- - `family` : `string`
 -- - `port` : `integer`
+--- @return table
 function vim.loop.udp_getsockname(udp) end
 
 -- > method form `udp:open(fd)`
@@ -3239,5 +3278,6 @@ function vim.loop.write(stream, data, callback) end
 -- server or a connection (listening or connected state). Bound
 -- sockets or pipes will be assumed to be servers.
 --- @param callback? fun()
+--- @return userdata
 function vim.loop.write2(stream, data, send_handle, callback) end
 
