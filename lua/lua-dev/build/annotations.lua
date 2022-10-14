@@ -8,6 +8,7 @@
 --- @field name string,
 --- @field doc string,
 --- @field deprecated? boolean
+--- @field overload? string[]
 --- @field params LuaParam[]
 --- @field return LuaParam[]
 
@@ -193,6 +194,12 @@ function M.fun(fun)
     local prefix, name = fun.name:match("(.*)%.([^.]+)$")
     fun.name = name
     signature = prefix .. "[%q] = function(%s) end"
+  end
+
+  if fun.overload then
+    for _, overload in ipairs(fun.overload) do
+      ret = ret .. "--- @overload " .. overload .. "\n"
+    end
   end
 
   ret = ret .. signature:format(fun.name, table.concat(params, ", "))
