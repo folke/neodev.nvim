@@ -51,6 +51,7 @@ end
 
 ---@param file string
 ---@param flags? string
+---@return string
 function M.read_file(file, flags)
   local fd = io.open(file, "r" .. (flags or ""))
   if not fd then

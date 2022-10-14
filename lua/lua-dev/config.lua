@@ -31,9 +31,13 @@ function M.setup(options)
 end
 
 function M.types()
+  return M.root("/types/" .. M.version())
+end
+
+---@param root? string
+function M.root(root)
   local f = debug.getinfo(1, "S").source:sub(2)
-  local ret = vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/types")
-  return vim.loop.fs_realpath(ret .. "/" .. M.version())
+  return vim.loop.fs_realpath(vim.fn.fnamemodify(f, ":h:h:h") .. "/" .. (root or ""))
 end
 
 ---@return "nightly" | "stable"
