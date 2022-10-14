@@ -1,4 +1,4 @@
-local config = require("lua-dev.config")
+local config = require("neodev.config")
 
 local M = {}
 

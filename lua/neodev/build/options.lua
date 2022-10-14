@@ -1,7 +1,7 @@
-local Docs = require("lua-dev.build.docs")
-local Writer = require("lua-dev.build.writer")
-local Annotations = require("lua-dev.build.annotations")
-local Util = require("lua-dev.util")
+local Docs = require("neodev.build.docs")
+local Writer = require("neodev.build.writer")
+local Annotations = require("neodev.build.annotations")
+local Util = require("neodev.util")
 
 ---@class OptionInfo
 ---@field allows_duplicates boolean

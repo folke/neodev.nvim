@@ -1,4 +1,4 @@
-local config = require("lua-dev.config")
+local config = require("neodev.config")
 local M = {}
 
 function M.fqn(fname)
@@ -78,7 +78,7 @@ function M.debug(msg)
 end
 
 function M.error(msg)
-  vim.notify_once(msg, vim.log.levels.ERROR, { title = "lua-dev.nvim" })
+  vim.notify_once(msg, vim.log.levels.ERROR, { title = "neodev.nvim" })
 end
 
 return M

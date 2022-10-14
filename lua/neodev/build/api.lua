@@ -1,5 +1,5 @@
-local Annotations = require("lua-dev.build.annotations")
-local Docs = require("lua-dev.build.docs")
+local Annotations = require("neodev.build.annotations")
+local Docs = require("neodev.build.docs")
 
 ---@class NvimApiInfo
 ---@field functions NvimApiFunction[]

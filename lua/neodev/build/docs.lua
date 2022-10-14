@@ -1,5 +1,5 @@
-local Util = require("lua-dev.util")
-local Annotations = require("lua-dev.build.annotations")
+local Util = require("neodev.util")
+local Annotations = require("neodev.build.annotations")
 
 local M = {}
 

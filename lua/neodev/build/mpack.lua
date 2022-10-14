@@ -1,5 +1,5 @@
-local Annotations = require("lua-dev.build.annotations")
-local util = require("lua-dev.util")
+local Annotations = require("neodev.build.annotations")
+local util = require("neodev.util")
 local M = {}
 
 ---@class MpackFunction

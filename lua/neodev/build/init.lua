@@ -1,12 +1,12 @@
-local Config = require("lua-dev.config")
-local Util = require("lua-dev.util")
+local Config = require("neodev.config")
+local Util = require("neodev.util")
 
-local Annotations = require("lua-dev.build.annotations")
-local Api = require("lua-dev.build.api")
-local Docs = require("lua-dev.build.docs")
-local Mpack = require("lua-dev.build.mpack")
-local Writer = require("lua-dev.build.writer")
-local Options = require("lua-dev.build.options")
+local Annotations = require("neodev.build.annotations")
+local Api = require("neodev.build.api")
+local Docs = require("neodev.build.docs")
+local Mpack = require("neodev.build.mpack")
+local Writer = require("neodev.build.writer")
+local Options = require("neodev.build.options")
 
 local M = {}
 

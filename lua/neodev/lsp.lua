@@ -1,9 +1,9 @@
-local util = require("lua-dev.util")
+local util = require("neodev.util")
 
 local M = {}
 
 function M.setup()
-  local opts = require("lua-dev.config").options
+  local opts = require("neodev.config").options
 
   local lsputil = require("lspconfig.util")
   local hook = lsputil.add_hook_after
@@ -45,7 +45,7 @@ function M.on_new_config(config, root_dir)
     return util.exists(dir)
   end, vim.fn.glob(root_dir .. "/**/lua", false, true))
 
-  local opts = require("lua-dev.config").merge()
+  local opts = require("neodev.config").merge()
 
   opts.library.enabled = util.is_nvim_config(root_dir)
 
@@ -55,7 +55,7 @@ function M.on_new_config(config, root_dir)
   end
 
   pcall(function()
-    opts = require("neoconf").get("lua-dev", opts, { file = root_dir })
+    opts = require("neoconf").get("neodev", opts, { file = root_dir })
   end)
 
   pcall(opts.override, root_dir, opts.library)
@@ -76,13 +76,13 @@ function M.on_new_config(config, root_dir)
     config.settings = vim.tbl_deep_extend(
       "force",
       config.settings or {},
-      require("lua-dev.sumneko").setup(opts, config.settings).settings
+      require("neodev.sumneko").setup(opts, config.settings).settings
     )
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
     end
 
-    if require("lua-dev.config").options.experimental.pathStrict then
+    if require("neodev.config").options.experimental.pathStrict then
       for _, lib in ipairs(lua_dirs) do
         table.insert(config.settings.Lua.workspace.library, lib)
       end
