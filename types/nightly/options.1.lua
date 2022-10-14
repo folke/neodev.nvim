@@ -1,5 +1,26 @@
 ---@meta
 
+-- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+vim.wo.cursorlineopt = "both"
+-- `'diff'` 			boolean	(default off)
+-- 			local to window
+-- 	Join the current window in the group of windows that shows differences
+-- 	between files.  See |diff-mode|.
+vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special

@@ -239,6 +239,7 @@ function vim.loop.fileno(handle) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_access(path, mode, callback) end
 
 -- Parameters:
@@ -255,6 +256,7 @@ function vim.loop.fs_access(path, mode, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_chmod(path, mode, callback) end
 
 -- Parameters:
@@ -272,6 +274,7 @@ function vim.loop.fs_chmod(path, mode, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_chown(path, uid, gid, callback) end
 
 -- Parameters:
@@ -287,6 +290,7 @@ function vim.loop.fs_chown(path, uid, gid, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_close(fd, callback) end
 
 -- > method form `dir:closedir([callback])`
@@ -305,6 +309,7 @@ function vim.loop.fs_close(fd, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_closedir(dir, callback) end
 
 -- Parameters:
@@ -328,6 +333,7 @@ function vim.loop.fs_closedir(dir, callback) end
 -- Returns (async version): `uv_fs_t userdata`
 --- @param flags? any
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_copyfile(path, new_path, flags, callback) end
 
 -- > method form `fs_event:getpath()`
@@ -381,6 +387,7 @@ function vim.loop.fs_event_stop() end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_fchmod(fd, mode, callback) end
 
 -- Parameters:
@@ -398,6 +405,7 @@ function vim.loop.fs_fchmod(fd, mode, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_fchown(fd, uid, gid, callback) end
 
 -- Parameters:
@@ -413,6 +421,7 @@ function vim.loop.fs_fchown(fd, uid, gid, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_fdatasync(fd, callback) end
 
 -- Parameters:
@@ -428,6 +437,7 @@ function vim.loop.fs_fdatasync(fd, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return table
 function vim.loop.fs_fstat(fd, callback) end
 
 -- Parameters:
@@ -443,6 +453,7 @@ function vim.loop.fs_fstat(fd, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_fsync(fd, callback) end
 
 -- Parameters:
@@ -459,6 +470,7 @@ function vim.loop.fs_fsync(fd, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_ftruncate(fd, offset, callback) end
 
 -- Parameters:
@@ -476,6 +488,7 @@ function vim.loop.fs_ftruncate(fd, offset, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_futime(fd, atime, mtime, callback) end
 
 -- Parameters:
@@ -493,6 +506,7 @@ function vim.loop.fs_futime(fd, atime, mtime, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_lchown(fd, uid, gid, callback) end
 
 -- Parameters:
@@ -509,6 +523,7 @@ function vim.loop.fs_lchown(fd, uid, gid, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_link(path, new_path, callback) end
 
 -- Parameters:
@@ -524,6 +539,7 @@ function vim.loop.fs_link(path, new_path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return table
 function vim.loop.fs_lstat(path, callback) end
 
 -- Parameters:
@@ -541,6 +557,7 @@ function vim.loop.fs_lstat(path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_lutime(path, atime, mtime, callback) end
 
 -- Parameters:
@@ -557,6 +574,7 @@ function vim.loop.fs_lutime(path, atime, mtime, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_mkdir(path, mode, callback) end
 
 -- Parameters:
@@ -572,6 +590,7 @@ function vim.loop.fs_mkdir(path, mode, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return string
 function vim.loop.fs_mkdtemp(template, callback) end
 
 -- Parameters:
@@ -589,6 +608,7 @@ function vim.loop.fs_mkdtemp(template, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return integer, string
 function vim.loop.fs_mkstemp(template, callback) end
 
 -- Parameters:
@@ -613,6 +633,7 @@ function vim.loop.fs_mkstemp(template, callback) end
 -- is always opened in binary mode. Because of this, the
 -- `O_BINARY` and `O_TEXT` flags are not supported.
 --- @param callback? fun()
+--- @return number
 function vim.loop.fs_open(path, flags, mode, callback) end
 
 -- Parameters:
@@ -633,6 +654,7 @@ function vim.loop.fs_open(path, flags, mode, callback) end
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
 --- @param entries? any
+--- @return userdata
 function vim.loop.fs_opendir(path, callback, entries) end
 
 -- > method form `fs_poll:getpath()`
@@ -694,6 +716,7 @@ function vim.loop.fs_poll_stop() end
 -- Returns (async version): `uv_fs_t userdata`
 --- @param offset? any
 --- @param callback? fun()
+--- @return string
 function vim.loop.fs_read(fd, size, offset, callback) end
 
 -- > method form `dir:readdir([callback])`
@@ -718,6 +741,7 @@ function vim.loop.fs_read(fd, size, offset, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return table
 function vim.loop.fs_readdir(dir, callback) end
 
 -- Parameters:
@@ -733,6 +757,7 @@ function vim.loop.fs_readdir(dir, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return string
 function vim.loop.fs_readlink(path, callback) end
 
 -- Parameters:
@@ -748,6 +773,7 @@ function vim.loop.fs_readlink(path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return string
 function vim.loop.fs_realpath(path, callback) end
 
 -- Parameters:
@@ -764,6 +790,7 @@ function vim.loop.fs_realpath(path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_rename(path, new_path, callback) end
 
 -- Parameters:
@@ -779,6 +806,7 @@ function vim.loop.fs_rename(path, new_path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_rmdir(path, callback) end
 
 -- Parameters:
@@ -831,6 +859,7 @@ function vim.loop.fs_scandir_next(fs) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return number
 function vim.loop.fs_sendfile(out_fd, in_fd, in_offset, size, callback) end
 
 -- Parameters:
@@ -871,6 +900,7 @@ function vim.loop.fs_sendfile(out_fd, in_fd, in_offset, size, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return table
 function vim.loop.fs_stat(path, callback) end
 
 -- Parameters:
@@ -913,6 +943,7 @@ function vim.loop.fs_statfs(path, callback) end
 -- Returns (async version): `uv_fs_t userdata`
 --- @param flags? any
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_symlink(path, new_path, flags, callback) end
 
 -- Parameters:
@@ -928,6 +959,7 @@ function vim.loop.fs_symlink(path, new_path, flags, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_unlink(path, callback) end
 
 -- Parameters:
@@ -945,6 +977,7 @@ function vim.loop.fs_unlink(path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
+--- @return boolean
 function vim.loop.fs_utime(path, atime, mtime, callback) end
 
 -- Parameters:
@@ -970,6 +1003,7 @@ function vim.loop.fs_utime(path, atime, mtime, callback) end
 -- Returns (async version): `uv_fs_t userdata`
 --- @param offset? any
 --- @param callback? fun()
+--- @return number
 function vim.loop.fs_write(fd, data, offset, callback) end
 
 -- Gets the amount of memory available to the process in bytes
@@ -1039,6 +1073,7 @@ function vim.loop.get_total_memory() end
 -- Returns (async version): `uv_getaddrinfo_t userdata` or `fail`
 --- @param hints? any
 --- @param callback? fun()
+--- @return table
 function vim.loop.getaddrinfo(host, service, hints, callback) end
 
 -- Returns the group ID of the process.
@@ -1071,6 +1106,7 @@ function vim.loop.getgid() end
 -- 
 -- Returns (async version): `uv_getnameinfo_t userdata` or `fail`
 --- @param callback? fun()
+--- @return string, string
 function vim.loop.getnameinfo(address, callback) end
 
 -- DEPRECATED: Please use |uv.os_getpid()| instead.
@@ -2055,6 +2091,7 @@ function vim.loop.queue_work(work_ctx, ...) end
 -- 
 -- Returns (async version): `0` or `fail`
 --- @param callback? fun()
+--- @return string
 function vim.loop.random(len, flags, callback) end
 
 -- > method form `stream:read_start(callback)`

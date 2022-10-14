@@ -223,6 +223,9 @@ function M.luv()
   })
   Util.for_each(ret, function(name, fun)
     local returns = fun.doc:match("%s*Returns: (.*)\n")
+    if not returns then
+      returns = fun.doc:match("%s*Returns %(sync version%): (.*)\n")
+    end
     ---@type LuaParam
     local retval = {}
     if returns then
