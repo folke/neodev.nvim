@@ -1,4 +1,4 @@
-# 💻 lua-dev
+# 💻 neodev
 
 Dev setup for init.lua and plugin development with full signature help, docs and
 completion for the nvim lua API.
@@ -33,23 +33,23 @@ Install the plugin with your preferred package manager:
 ### [packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
-use "folke/lua-dev.nvim"
+use "folke/neodev.nvim"
 ```
 
 ### [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-Plug 'folke/lua-dev.nvim'
+Plug 'folke/neodev.nvim'
 ```
 
 ## ⚙️ Configuration
 
-**lua-dev** comes with the following defaults:
+**neodev** comes with the following defaults:
 
 ```lua
 {
   library = {
-    enabled = true, -- when not enabled, lua-dev will not change any settings to the LSP server
+    enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
     -- these settings will be used for your Neovim config directory
     runtime = true, -- runtime path
     types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
@@ -68,18 +68,18 @@ Plug 'folke/lua-dev.nvim'
 
 ## 🚀 Setup
 
-**lua-dev** will **ONLY** change the **sumneko_lua** settings for:
+**neodev** will **ONLY** change the **sumneko_lua** settings for:
 
 - your Neovim config directory
 - your Neovim runtime directory
 - any plugin directory (this is an lsp root_dir that contains a `/lua`
   directory)
 
-For any other `root_dir`, **lua-dev** will **NOT** change any settings.
+For any other `root_dir`, **neodev** will **NOT** change any settings.
 
 ```lua
--- IMPORTANT: make sure to setup lua-dev BEFORE lspconfig
-require("lua-dev").setup({
+-- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+require("neodev").setup({
   -- add any options here, or leave empty to use the default settings
 })
 
@@ -98,14 +98,14 @@ lspconfig.sumneko_lua.setup({
 })
 ```
 
-Example for setting up **lua-dev** that overrides the settings for `/etc/nixos`
+Example for setting up **neodev** that overrides the settings for `/etc/nixos`
 
 ```lua
 -- You can override the default detection using the override function
 -- EXAMPLE: If you want a certain directory to be configured differently, you can override its settings
-require("lua-dev").setup({
+require("neodev").setup({
   override = function(root_dir, library)
-    if require("lua-dev.util").has_file(root_dir, "/etc/nixos") then
+    if require("neodev.util").has_file(root_dir, "/etc/nixos") then
       library.enabled = true
       library.plugins = true
     end
