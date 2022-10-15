@@ -52,7 +52,7 @@ vim.go.ari = vim.go.allowrevins
 -- 	by Vim with the width of glyphs in the font.  Perhaps it also has
 -- 	to be set to "double" under CJK MS-Windows when the system locale is
 -- 	set to one of CJK locales.  See Unicode Standard Annex #11
--- 	(http://www.unicode.org/reports/tr11).
+-- 	(https://www.unicode.org/reports/tr11).
 vim.go.ambiwidth = "single"
 vim.go.ambw = vim.go.ambiwidth
 -- `'arabicshape'`  `'arshape'` 	boolean (default on)

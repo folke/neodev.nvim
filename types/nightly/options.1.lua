@@ -1909,7 +1909,7 @@ vim.bo.ofu = vim.bo.omnifunc
 -- <	- A directory name may end in a `':'`  or `'/'` .
 -- 	- Environment variables are expanded |:set_env|.
 -- 	- When using |netrw.vim| URLs can be used.  For example, adding
--- 	  "http://www.vim.org" will make ":find index.html" work.
+-- 	  "https://www.vim.org" will make ":find index.html" work.
 -- 	- Search upwards and downwards in a directory tree using "*", "" and
 -- 	  ";".  See |file-searching| for info and syntax.
 -- 	- Careful with `'\'`  characters, type two to get one in the option: >
@@ -2443,7 +2443,7 @@ function vim.opt.allowrevins:get()end
 -- 	by Vim with the width of glyphs in the font.  Perhaps it also has
 -- 	to be set to "double" under CJK MS-Windows when the system locale is
 -- 	set to one of CJK locales.  See Unicode Standard Annex #11
--- 	(http://www.unicode.org/reports/tr11).
+-- 	(https://www.unicode.org/reports/tr11).
 --- @class vim.opt.ambiwidth: vim.Option
 --- @operator add: vim.opt.ambiwidth
 --- @operator sub: vim.opt.ambiwidth
