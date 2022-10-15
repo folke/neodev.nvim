@@ -1,5 +1,404 @@
 ---@meta
 
+-- `'shiftround'`  `'sr'` 	boolean	(default off)
+-- 			global
+-- 	Round indent to multiple of `'shiftwidth'` .  Applies to > and <
+-- 	commands.  CTRL-T and CTRL-D in Insert mode always round the indent to
+-- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
+--- @class vim.opt.shiftround: vim.Option
+--- @operator add: vim.opt.shiftround
+--- @operator sub: vim.opt.shiftround
+--- @operator pow: vim.opt.shiftround
+vim.opt.shiftround = {}
+vim.opt.sr = vim.opt.shiftround
+--- @return boolean
+function vim.opt.shiftround:get()end
+
+-- `'shiftwidth'`  `'sw'` 	number	(default 8)
+-- 			local to buffer
+-- 	Number of spaces to use for each step of (auto)indent.  Used for
+-- 	|`'cindent'` |, |>>|, |<<|, etc.
+-- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
+-- 	function to get the effective shiftwidth value.
+--- @class vim.opt.shiftwidth: vim.Option
+--- @operator add: vim.opt.shiftwidth
+--- @operator sub: vim.opt.shiftwidth
+--- @operator pow: vim.opt.shiftwidth
+vim.opt.shiftwidth = {}
+vim.opt.sw = vim.opt.shiftwidth
+--- @return number
+function vim.opt.shiftwidth:get()end
+
+-- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
+-- 			global
+-- 	This option helps to avoid all the |hit-enter| prompts caused by file
+-- 	messages, for example  with CTRL-G, and to avoid some other messages.
+-- 	It is a list of flags:
+-- 	 flag	meaning when present	~
+-- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
+-- 	  i	use "[noeol]" instead of "[Incomplete last line]"
+-- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
+-- 	  m	use "[+]" instead of "[Modified]"
+-- 	  n	use "[New]" instead of "[New File]"
+-- 	  r	use "[RO]" instead of "[readonly]"
+-- 	  w	use "[w]" instead of "written" for file write message
+-- 		and "[a]" instead of "appended" for ':w >> file' command
+-- 	  x	use "[dos]" instead of "[dos format]", "[unix]" instead of
+-- 		"[unix format]" and "[mac]" instead of "[mac format]".
+-- 	  a	all of the above abbreviations
+-- 
+-- 	  o	overwrite message for writing a file with subsequent message
+-- 		for reading a file (useful for ":wn" or when `'autowrite'`  on)
+-- 	  O	message for reading a file overwrites any previous message.
+-- 		Also for quickfix message (e.g., ":cn").
+-- 	  s	don't give "search hit BOTTOM, continuing at TOP" or "search
+-- 		hit TOP, continuing at BOTTOM" messages; when using the search
+-- 		count do not show "W" after the count message (see S below)
+-- 	  t	truncate file message at the start if it is too long to fit
+-- 		on the command-line, "<" will appear in the left most column.
+-- 		Ignored in Ex mode.
+-- 	  T	truncate other messages in the middle if they are too long to
+-- 		fit on the command line.  "..." will appear in the middle.
+-- 		Ignored in Ex mode.
+-- 	  W	don't give "written" or "[w]" when writing a file
+-- 	  A	don't give the "ATTENTION" message when an existing swap file
+-- 		is found.
+-- 	  I	don't give the intro message when starting Vim |:intro|.
+-- 	  c	don't give |ins-completion-menu| messages.  For example,
+-- 		"-- XXX completion (YYY)", "match 1 of 2", "The only match",
+-- 		"Pattern not found", "Back at original", etc.
+-- 	  q	use "recording" instead of "recording @a"
+-- 	  F	don't give the file info when editing a file, like `:silent`
+-- 		was used for the command
+-- 	  S     do not show search count message when searching, e.g.
+-- 	        "[1/5]"
+-- 
+-- 	This gives you the opportunity to avoid that a change between buffers
+-- 	requires you to hit <Enter>, but still gives as useful a message as
+-- 	possible for the space available.  To get the whole message that you
+-- 	would have got with `'shm'`  empty, use ":file!"
+-- 	Useful values:
+-- 	    shm=	No abbreviation of message.
+-- 	    shm=a	Abbreviation, but no loss of information.
+-- 	    shm=at	Abbreviation, and truncate message when necessary.
+--- @class vim.opt.shortmess: vim.Option
+--- @operator add: vim.opt.shortmess
+--- @operator sub: vim.opt.shortmess
+--- @operator pow: vim.opt.shortmess
+vim.opt.shortmess = {}
+vim.opt.shm = vim.opt.shortmess
+--- @return string[]
+function vim.opt.shortmess:get()end
+
+-- `'showbreak'`  `'sbr'` 	string	(default "")
+-- 			global or local to window |global-local|
+-- 	String to put at the start of lines that have been wrapped.  Useful
+-- 	values are "> " or "+++ ": >
+-- 		:set showbreak=>\
+-- <	Note the backslash to escape the trailing space.  It's easier like
+-- 	this: >
+-- 		:let &showbreak = '+++ '
+-- <	Only printable single-cell characters are allowed, excluding <Tab> and
+-- 	comma (in a future version the comma might be used to separate the
+-- 	part that is shown at the end and at the start of a line).
+-- 	The |hl-NonText| highlight group determines the highlighting.
+-- 	Note that tabs after the showbreak will be displayed differently.
+-- 	If you want the `'showbreak'`  to appear in between line numbers, add the
+-- 	"n" flag to `'cpoptions'` .
+-- 	A window-local value overrules a global value.  If the global value is
+-- 	set and you want no value in the current window use NONE: >
+-- 		:setlocal showbreak=NONE
+-- <
+--- @class vim.opt.showbreak: vim.Option
+--- @operator add: vim.opt.showbreak
+--- @operator sub: vim.opt.showbreak
+--- @operator pow: vim.opt.showbreak
+vim.opt.showbreak = {}
+vim.opt.sbr = vim.opt.showbreak
+--- @return string
+function vim.opt.showbreak:get()end
+
+-- `'showcmd'`  `'sc'` 		boolean	(default: on)
+-- 			global
+-- 	Show (partial) command in the last line of the screen.  Set this
+-- 	option off if your terminal is slow.
+-- 	The option has no effect when `'cmdheight'`  is zero.
+-- 	In Visual mode the size of the selected area is shown:
+-- 	- When selecting characters within a line, the number of characters.
+-- 	  If the number of bytes is different it is also displayed: "2-6"
+-- 	  means two characters and six bytes.
+-- 	- When selecting more than one line, the number of lines.
+-- 	- When selecting a block, the size in screen characters:
+-- 	  {lines}x{columns}.
+--- @class vim.opt.showcmd: vim.Option
+--- @operator add: vim.opt.showcmd
+--- @operator sub: vim.opt.showcmd
+--- @operator pow: vim.opt.showcmd
+vim.opt.showcmd = {}
+vim.opt.sc = vim.opt.showcmd
+--- @return boolean
+function vim.opt.showcmd:get()end
+
+-- `'showfulltag'`  `'sft'` 	boolean (default off)
+-- 			global
+-- 	When completing a word in insert mode (see |ins-completion|) from the
+-- 	tags file, show both the tag name and a tidied-up form of the search
+-- 	pattern (if there is one) as possible matches.  Thus, if you have
+-- 	matched a C function, you can see a template for what arguments are
+-- 	required (coding style permitting).
+-- 	Note that this doesn't work well together with having "longest" in
+-- 	`'completeopt'` , because the completion from the search pattern may not
+-- 	match the typed text.
+--- @class vim.opt.showfulltag: vim.Option
+--- @operator add: vim.opt.showfulltag
+--- @operator sub: vim.opt.showfulltag
+--- @operator pow: vim.opt.showfulltag
+vim.opt.showfulltag = {}
+vim.opt.sft = vim.opt.showfulltag
+--- @return boolean
+function vim.opt.showfulltag:get()end
+
+-- `'showmatch'`  `'sm'` 	boolean	(default off)
+-- 			global
+-- 	When a bracket is inserted, briefly jump to the matching one.  The
+-- 	jump is only done if the match can be seen on the screen.  The time to
+-- 	show the match can be set with `'matchtime'` .
+-- 	A Beep is given if there is no match (no matter if the match can be
+-- 	seen or not).
+-- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
+-- 	reset.
+-- 	When the `'m'`  flag is not included in `'cpoptions'` , typing a character
+-- 	will immediately move the cursor back to where it belongs.
+-- 	See the "sm" field in `'guicursor'`  for setting the cursor shape and
+-- 	blinking when showing the match.
+-- 	The `'matchpairs'`  option can be used to specify the characters to show
+-- 	matches for.  `'rightleft'`  and `'revins'`  are used to look for opposite
+-- 	matches.
+-- 	Also see the matchparen plugin for highlighting the match when moving
+-- 	around |pi_paren.txt|.
+-- 	Note: Use of the short form is rated PG.
+--- @class vim.opt.showmatch: vim.Option
+--- @operator add: vim.opt.showmatch
+--- @operator sub: vim.opt.showmatch
+--- @operator pow: vim.opt.showmatch
+vim.opt.showmatch = {}
+vim.opt.sm = vim.opt.showmatch
+--- @return boolean
+function vim.opt.showmatch:get()end
+
+-- `'showmode'`  `'smd'` 	boolean	(default: on)
+-- 			global
+-- 	If in Insert, Replace or Visual mode put a message on the last line.
+-- 	The |hl-ModeMsg| highlight group determines the highlighting.
+-- 	The option has no effect when `'cmdheight'`  is zero.
+--- @class vim.opt.showmode: vim.Option
+--- @operator add: vim.opt.showmode
+--- @operator sub: vim.opt.showmode
+--- @operator pow: vim.opt.showmode
+vim.opt.showmode = {}
+vim.opt.smd = vim.opt.showmode
+--- @return boolean
+function vim.opt.showmode:get()end
+
+-- `'showtabline'`  `'stal'` 	number	(default 1)
+-- 			global
+-- 	The value of this option specifies when the line with tab page labels
+-- 	will be displayed:
+-- 		0: never
+-- 		1: only if there are at least two tab pages
+-- 		2: always
+-- 	This is both for the GUI and non-GUI implementation of the tab pages
+-- 	line.
+-- 	See |tab-page| for more information about tab pages.
+--- @class vim.opt.showtabline: vim.Option
+--- @operator add: vim.opt.showtabline
+--- @operator sub: vim.opt.showtabline
+--- @operator pow: vim.opt.showtabline
+vim.opt.showtabline = {}
+vim.opt.stal = vim.opt.showtabline
+--- @return number
+function vim.opt.showtabline:get()end
+
+-- `'sidescroll'`  `'ss'` 	number	(default 1)
+-- 			global
+-- 	The minimal number of columns to scroll horizontally.  Used only when
+-- 	the `'wrap'`  option is off and the cursor is moved off of the screen.
+-- 	When it is zero the cursor will be put in the middle of the screen.
+-- 	When using a slow terminal set it to a large number or 0.  Not used
+-- 	for "zh" and "zl" commands.
+--- @class vim.opt.sidescroll: vim.Option
+--- @operator add: vim.opt.sidescroll
+--- @operator sub: vim.opt.sidescroll
+--- @operator pow: vim.opt.sidescroll
+vim.opt.sidescroll = {}
+vim.opt.ss = vim.opt.sidescroll
+--- @return number
+function vim.opt.sidescroll:get()end
+
+-- `'sidescrolloff'`  `'siso'` 	number (default 0)
+-- 			global or local to window |global-local|
+-- 	The minimal number of screen columns to keep to the left and to the
+-- 	right of the cursor if `'nowrap'`  is set.  Setting this option to a
+-- 	value greater than 0 while having |`'sidescroll'` | also at a non-zero
+-- 	value makes some context visible in the line you are scrolling in
+-- 	horizontally (except at beginning of the line).  Setting this option
+-- 	to a large value (like 999) has the effect of keeping the cursor
+-- 	horizontally centered in the window, as long as one does not come too
+-- 	close to the beginning of the line.
+-- 	After using the local value, go back the global value with one of
+-- 	these two: >
+-- 		setlocal sidescrolloff<
+-- 		setlocal sidescrolloff=-1
+-- <
+-- 	Example: Try this together with `'sidescroll'`  and `'listchars'`  as
+-- 		 in the following example to never allow the cursor to move
+-- 		 onto the "extends" character: >
+-- 
+-- 		 :set nowrap sidescroll=1 listchars=extends:>,precedes:<
+-- 		 :set sidescrolloff=1
+-- <
+--- @class vim.opt.sidescrolloff: vim.Option
+--- @operator add: vim.opt.sidescrolloff
+--- @operator sub: vim.opt.sidescrolloff
+--- @operator pow: vim.opt.sidescrolloff
+vim.opt.sidescrolloff = {}
+vim.opt.siso = vim.opt.sidescrolloff
+--- @return number
+function vim.opt.sidescrolloff:get()end
+
+-- `'signcolumn'`  `'scl'` 	string	(default "auto")
+-- 			local to window
+-- 	When and how to draw the signcolumn. Valid values are:
+-- 	   "auto"   	only when there is a sign to display
+-- 	   "auto:[1-9]" resize to accommodate multiple signs up to the
+-- 	                given number (maximum 9), e.g. "auto:4"
+-- 	   "auto:[1-8]-[2-9]"
+-- 	                resize to accommodate multiple signs up to the
+-- 			given maximum number (maximum 9) while keeping
+-- 			at least the given minimum (maximum 8) fixed
+-- 			space. The minimum number should always be less
+-- 			than the maximum number, e.g. "auto:2-5"
+-- 	   "no"	    	never
+-- 	   "yes"    	always
+-- 	   "yes:[1-9]"  always, with fixed space for signs up to the given
+-- 	                number (maximum 9), e.g. "yes:3"
+-- 	   "number"	display signs in the `'number'`  column. If the number
+-- 			column is not present, then behaves like "auto".
+-- 
+-- 	Note regarding 'orphaned signs': with signcolumn numbers higher than
+-- 	1, deleting lines will also remove the associated signs automatically,
+-- 	in contrast to the default Vim behavior of keeping and grouping them.
+-- 	This is done in order for the signcolumn appearance not appear weird
+-- 	during line deletion.
+--- @class vim.opt.signcolumn: vim.Option
+--- @operator add: vim.opt.signcolumn
+--- @operator sub: vim.opt.signcolumn
+--- @operator pow: vim.opt.signcolumn
+vim.opt.signcolumn = {}
+vim.opt.scl = vim.opt.signcolumn
+--- @return string
+function vim.opt.signcolumn:get()end
+
+-- `'smartcase'`  `'scs'` 	boolean	(default off)
+-- 			global
+-- 	Override the `'ignorecase'`  option if the search pattern contains upper
+-- 	case characters.  Only used when the search pattern is typed and
+-- 	`'ignorecase'`  option is on.  Used for the commands "/", "?", "n", "N",
+-- 	":g" and ":s".  Not used for "*", "#", "gd", tag search, etc.  After
+-- 	"*" and "#" you can make `'smartcase'`  used by doing a "/" command,
+-- 	recalling the search pattern from history and hitting <Enter>.
+--- @class vim.opt.smartcase: vim.Option
+--- @operator add: vim.opt.smartcase
+--- @operator sub: vim.opt.smartcase
+--- @operator pow: vim.opt.smartcase
+vim.opt.smartcase = {}
+vim.opt.scs = vim.opt.smartcase
+--- @return boolean
+function vim.opt.smartcase:get()end
+
+-- `'smartindent'`  `'si'` 	boolean	(default off)
+-- 			local to buffer
+-- 	Do smart autoindenting when starting a new line.  Works for C-like
+-- 	programs, but can also be used for other languages.  `'cindent'`  does
+-- 	something like this, works better in most cases, but is more strict,
+-- 	see |C-indenting|.  When `'cindent'`  is on or `'indentexpr'`  is set,
+-- 	setting `'si'`  has no effect.  `'indentexpr'`  is a more advanced
+-- 	alternative.
+-- 	Normally `'autoindent'`  should also be on when using `'smartindent'` .
+-- 	An indent is automatically inserted:
+-- 	- After a line ending in `'{'` .
+-- 	- After a line starting with a keyword from `'cinwords'` .
+-- 	- Before a line starting with `'}'`  (only with the "O" command).
+-- 	When typing `'}'`  as the first character in a new line, that line is
+-- 	given the same indent as the matching `'{'` .
+-- 	When typing `'#'`  as the first character in a new line, the indent for
+-- 	that line is removed, the `'#'`  is put in the first column.  The indent
+-- 	is restored for the next line.  If you don't want this, use this
+-- 	mapping: ":inoremap # X^H#", where ^H is entered with CTRL-V CTRL-H.
+-- 	When using the ">>" command, lines starting with `'#'`  are not shifted
+-- 	right.
+-- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
+-- 	reset.
+--- @class vim.opt.smartindent: vim.Option
+--- @operator add: vim.opt.smartindent
+--- @operator sub: vim.opt.smartindent
+--- @operator pow: vim.opt.smartindent
+vim.opt.smartindent = {}
+vim.opt.si = vim.opt.smartindent
+--- @return boolean
+function vim.opt.smartindent:get()end
+
+-- `'smarttab'`  `'sta'` 	boolean	(default on)
+-- 			global
+-- 	When on, a <Tab> in front of a line inserts blanks according to
+-- 	`'shiftwidth'` .  `'tabstop'`  or `'softtabstop'`  is used in other places.  A
+-- 	<BS> will delete a `'shiftwidth'`  worth of space at the start of the
+-- 	line.
+-- 	When off, a <Tab> always inserts blanks according to `'tabstop'`  or
+-- 	`'softtabstop'` .  `'shiftwidth'`  is only used for shifting text left or
+-- 	right |shift-left-right|.
+-- 	What gets inserted (a <Tab> or spaces) depends on the `'expandtab'` 
+-- 	option.  Also see |ins-expandtab|.  When `'expandtab'`  is not set, the
+-- 	number of spaces is minimized by using <Tab>s.
+-- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
+-- 	reset.
+--- @class vim.opt.smarttab: vim.Option
+--- @operator add: vim.opt.smarttab
+--- @operator sub: vim.opt.smarttab
+--- @operator pow: vim.opt.smarttab
+vim.opt.smarttab = {}
+vim.opt.sta = vim.opt.smarttab
+--- @return boolean
+function vim.opt.smarttab:get()end
+
+-- `'softtabstop'`  `'sts'` 	number	(default 0)
+-- 			local to buffer
+-- 	Number of spaces that a <Tab> counts for while performing editing
+-- 	operations, like inserting a <Tab> or using <BS>.  It "feels" like
+-- 	<Tab>s are being inserted, while in fact a mix of spaces and <Tab>s is
+-- 	used.  This is useful to keep the `'ts'`  setting at its standard value
+-- 	of 8, while being able to edit like it is set to `'sts'` .  However,
+-- 	commands like "x" still work on the actual characters.
+-- 	When `'sts'`  is zero, this feature is off.
+-- 	When `'sts'`  is negative, the value of `'shiftwidth'`  is used.
+-- 	`'softtabstop'`  is set to 0 when the `'paste'`  option is set and restored
+-- 	when `'paste'`  is reset.
+-- 	See also |ins-expandtab|.  When `'expandtab'`  is not set, the number of
+-- 	spaces is minimized by using <Tab>s.
+-- 	The `'L'`  flag in `'cpoptions'`  changes how tabs are used when `'list'`  is
+-- 	set.
+-- 
+-- 	The value of `'softtabstop'`  will be ignored if |`'varsofttabstop'` | is set
+-- 	to anything other than an empty string.
+--- @class vim.opt.softtabstop: vim.Option
+--- @operator add: vim.opt.softtabstop
+--- @operator sub: vim.opt.softtabstop
+--- @operator pow: vim.opt.softtabstop
+vim.opt.softtabstop = {}
+vim.opt.sts = vim.opt.softtabstop
+--- @return number
+function vim.opt.softtabstop:get()end
+
 -- `'spell'` 			boolean	(default off)
 -- 			local to window
 -- 	When on spell checking will be done.  See |spell|.
@@ -28,6 +427,7 @@ function vim.opt.spell:get()end
 --- @operator sub: vim.opt.spellcapcheck
 --- @operator pow: vim.opt.spellcapcheck
 vim.opt.spellcapcheck = {}
+vim.opt.spc = vim.opt.spellcapcheck
 --- @return string
 function vim.opt.spellcapcheck:get()end
 
@@ -58,6 +458,7 @@ function vim.opt.spellcapcheck:get()end
 --- @operator sub: vim.opt.spellfile
 --- @operator pow: vim.opt.spellfile
 vim.opt.spellfile = {}
+vim.opt.spf = vim.opt.spellfile
 --- @return string[]
 function vim.opt.spellfile:get()end
 
@@ -104,6 +505,7 @@ function vim.opt.spellfile:get()end
 --- @operator sub: vim.opt.spelllang
 --- @operator pow: vim.opt.spelllang
 vim.opt.spelllang = {}
+vim.opt.spl = vim.opt.spelllang
 --- @return string[]
 function vim.opt.spelllang:get()end
 
@@ -123,6 +525,7 @@ function vim.opt.spelllang:get()end
 --- @operator sub: vim.opt.spelloptions
 --- @operator pow: vim.opt.spelloptions
 vim.opt.spelloptions = {}
+vim.opt.spo = vim.opt.spelloptions
 --- @return string[]
 function vim.opt.spelloptions:get()end
 
@@ -196,6 +599,7 @@ function vim.opt.spelloptions:get()end
 --- @operator sub: vim.opt.spellsuggest
 --- @operator pow: vim.opt.spellsuggest
 vim.opt.spellsuggest = {}
+vim.opt.sps = vim.opt.spellsuggest
 --- @return string[]
 function vim.opt.spellsuggest:get()end
 
@@ -208,6 +612,7 @@ function vim.opt.spellsuggest:get()end
 --- @operator sub: vim.opt.splitbelow
 --- @operator pow: vim.opt.splitbelow
 vim.opt.splitbelow = {}
+vim.opt.sb = vim.opt.splitbelow
 --- @return boolean
 function vim.opt.splitbelow:get()end
 
@@ -220,6 +625,7 @@ function vim.opt.splitbelow:get()end
 --- @operator sub: vim.opt.splitright
 --- @operator pow: vim.opt.splitright
 vim.opt.splitright = {}
+vim.opt.spr = vim.opt.splitright
 --- @return boolean
 function vim.opt.splitright:get()end
 
@@ -239,6 +645,7 @@ function vim.opt.splitright:get()end
 --- @operator sub: vim.opt.startofline
 --- @operator pow: vim.opt.startofline
 vim.opt.startofline = {}
+vim.opt.sol = vim.opt.startofline
 --- @return boolean
 function vim.opt.startofline:get()end
 
@@ -452,6 +859,7 @@ function vim.opt.startofline:get()end
 --- @operator sub: vim.opt.statusline
 --- @operator pow: vim.opt.statusline
 vim.opt.statusline = {}
+vim.opt.stl = vim.opt.statusline
 --- @return string
 function vim.opt.statusline:get()end
 
@@ -472,6 +880,7 @@ function vim.opt.statusline:get()end
 --- @operator sub: vim.opt.suffixes
 --- @operator pow: vim.opt.suffixes
 vim.opt.suffixes = {}
+vim.opt.su = vim.opt.suffixes
 --- @return string[]
 function vim.opt.suffixes:get()end
 
@@ -486,6 +895,7 @@ function vim.opt.suffixes:get()end
 --- @operator sub: vim.opt.suffixesadd
 --- @operator pow: vim.opt.suffixesadd
 vim.opt.suffixesadd = {}
+vim.opt.sua = vim.opt.suffixesadd
 --- @return string[]
 function vim.opt.suffixesadd:get()end
 
@@ -514,6 +924,7 @@ function vim.opt.suffixesadd:get()end
 --- @operator sub: vim.opt.swapfile
 --- @operator pow: vim.opt.swapfile
 vim.opt.swapfile = {}
+vim.opt.swf = vim.opt.swapfile
 --- @return boolean
 function vim.opt.swapfile:get()end
 
@@ -547,6 +958,7 @@ function vim.opt.swapfile:get()end
 --- @operator sub: vim.opt.switchbuf
 --- @operator pow: vim.opt.switchbuf
 vim.opt.switchbuf = {}
+vim.opt.swb = vim.opt.switchbuf
 --- @return string[]
 function vim.opt.switchbuf:get()end
 
@@ -563,6 +975,7 @@ function vim.opt.switchbuf:get()end
 --- @operator sub: vim.opt.synmaxcol
 --- @operator pow: vim.opt.synmaxcol
 vim.opt.synmaxcol = {}
+vim.opt.smc = vim.opt.synmaxcol
 --- @return number
 function vim.opt.synmaxcol:get()end
 
@@ -596,6 +1009,7 @@ function vim.opt.synmaxcol:get()end
 --- @operator sub: vim.opt.syntax
 --- @operator pow: vim.opt.syntax
 vim.opt.syntax = {}
+vim.opt.syn = vim.opt.syntax
 --- @return string
 function vim.opt.syntax:get()end
 
@@ -626,6 +1040,7 @@ function vim.opt.syntax:get()end
 --- @operator sub: vim.opt.tabline
 --- @operator pow: vim.opt.tabline
 vim.opt.tabline = {}
+vim.opt.tal = vim.opt.tabline
 --- @return string
 function vim.opt.tabline:get()end
 
@@ -638,6 +1053,7 @@ function vim.opt.tabline:get()end
 --- @operator sub: vim.opt.tabpagemax
 --- @operator pow: vim.opt.tabpagemax
 vim.opt.tabpagemax = {}
+vim.opt.tpm = vim.opt.tabpagemax
 --- @return number
 function vim.opt.tabpagemax:get()end
 
@@ -675,6 +1091,7 @@ function vim.opt.tabpagemax:get()end
 --- @operator sub: vim.opt.tabstop
 --- @operator pow: vim.opt.tabstop
 vim.opt.tabstop = {}
+vim.opt.ts = vim.opt.tabstop
 --- @return number
 function vim.opt.tabstop:get()end
 
@@ -733,6 +1150,7 @@ function vim.opt.tabstop:get()end
 --- @operator sub: vim.opt.tagbsearch
 --- @operator pow: vim.opt.tagbsearch
 vim.opt.tagbsearch = {}
+vim.opt.tbs = vim.opt.tagbsearch
 --- @return boolean
 function vim.opt.tagbsearch:get()end
 
@@ -750,6 +1168,7 @@ function vim.opt.tagbsearch:get()end
 --- @operator sub: vim.opt.tagcase
 --- @operator pow: vim.opt.tagcase
 vim.opt.tagcase = {}
+vim.opt.tc = vim.opt.tagcase
 --- @return string
 function vim.opt.tagcase:get()end
 
@@ -764,6 +1183,7 @@ function vim.opt.tagcase:get()end
 --- @operator sub: vim.opt.tagfunc
 --- @operator pow: vim.opt.tagfunc
 vim.opt.tagfunc = {}
+vim.opt.tfu = vim.opt.tagfunc
 --- @return string
 function vim.opt.tagfunc:get()end
 
@@ -775,6 +1195,7 @@ function vim.opt.tagfunc:get()end
 --- @operator sub: vim.opt.taglength
 --- @operator pow: vim.opt.taglength
 vim.opt.taglength = {}
+vim.opt.tl = vim.opt.taglength
 --- @return number
 function vim.opt.taglength:get()end
 
@@ -787,6 +1208,7 @@ function vim.opt.taglength:get()end
 --- @operator sub: vim.opt.tagrelative
 --- @operator pow: vim.opt.tagrelative
 vim.opt.tagrelative = {}
+vim.opt.tr = vim.opt.tagrelative
 --- @return boolean
 function vim.opt.tagrelative:get()end
 
@@ -814,6 +1236,7 @@ function vim.opt.tagrelative:get()end
 --- @operator sub: vim.opt.tags
 --- @operator pow: vim.opt.tags
 vim.opt.tags = {}
+vim.opt.tag = vim.opt.tags
 --- @return string[]
 function vim.opt.tags:get()end
 
@@ -831,6 +1254,7 @@ function vim.opt.tags:get()end
 --- @operator sub: vim.opt.tagstack
 --- @operator pow: vim.opt.tagstack
 vim.opt.tagstack = {}
+vim.opt.tgst = vim.opt.tagstack
 --- @return boolean
 function vim.opt.tagstack:get()end
 
@@ -849,6 +1273,7 @@ function vim.opt.tagstack:get()end
 --- @operator sub: vim.opt.termbidi
 --- @operator pow: vim.opt.termbidi
 vim.opt.termbidi = {}
+vim.opt.tbidi = vim.opt.termbidi
 --- @return boolean
 function vim.opt.termbidi:get()end
 
@@ -857,6 +1282,7 @@ function vim.opt.termbidi:get()end
 --- @operator sub: vim.opt.termencoding
 --- @operator pow: vim.opt.termencoding
 vim.opt.termencoding = {}
+vim.opt.tenc = vim.opt.termencoding
 --- @return string
 function vim.opt.termencoding:get()end
 
@@ -870,6 +1296,7 @@ function vim.opt.termencoding:get()end
 --- @operator sub: vim.opt.termguicolors
 --- @operator pow: vim.opt.termguicolors
 vim.opt.termguicolors = {}
+vim.opt.tgc = vim.opt.termguicolors
 --- @return boolean
 function vim.opt.termguicolors:get()end
 
@@ -898,6 +1325,7 @@ function vim.opt.termguicolors:get()end
 --- @operator sub: vim.opt.termpastefilter
 --- @operator pow: vim.opt.termpastefilter
 vim.opt.termpastefilter = {}
+vim.opt.tpf = vim.opt.termpastefilter
 --- @return string[]
 function vim.opt.termpastefilter:get()end
 
@@ -924,6 +1352,7 @@ function vim.opt.terse:get()end
 --- @operator sub: vim.opt.textwidth
 --- @operator pow: vim.opt.textwidth
 vim.opt.textwidth = {}
+vim.opt.tw = vim.opt.textwidth
 --- @return number
 function vim.opt.textwidth:get()end
 
@@ -948,6 +1377,7 @@ function vim.opt.textwidth:get()end
 --- @operator sub: vim.opt.thesaurus
 --- @operator pow: vim.opt.thesaurus
 vim.opt.thesaurus = {}
+vim.opt.tsr = vim.opt.thesaurus
 --- @return string[]
 function vim.opt.thesaurus:get()end
 
@@ -963,6 +1393,7 @@ function vim.opt.thesaurus:get()end
 --- @operator sub: vim.opt.thesaurusfunc
 --- @operator pow: vim.opt.thesaurusfunc
 vim.opt.thesaurusfunc = {}
+vim.opt.tsrfu = vim.opt.thesaurusfunc
 --- @return string
 function vim.opt.thesaurusfunc:get()end
 
@@ -974,6 +1405,7 @@ function vim.opt.thesaurusfunc:get()end
 --- @operator sub: vim.opt.tildeop
 --- @operator pow: vim.opt.tildeop
 vim.opt.tildeop = {}
+vim.opt.top = vim.opt.tildeop
 --- @return boolean
 function vim.opt.tildeop:get()end
 
@@ -988,6 +1420,7 @@ function vim.opt.tildeop:get()end
 --- @operator sub: vim.opt.timeout
 --- @operator pow: vim.opt.timeout
 vim.opt.timeout = {}
+vim.opt.to = vim.opt.timeout
 --- @return boolean
 function vim.opt.timeout:get()end
 
@@ -999,6 +1432,7 @@ function vim.opt.timeout:get()end
 --- @operator sub: vim.opt.timeoutlen
 --- @operator pow: vim.opt.timeoutlen
 vim.opt.timeoutlen = {}
+vim.opt.tm = vim.opt.timeoutlen
 --- @return number
 function vim.opt.timeoutlen:get()end
 
@@ -1116,6 +1550,7 @@ function vim.opt.ttimeout:get()end
 --- @operator sub: vim.opt.ttimeoutlen
 --- @operator pow: vim.opt.ttimeoutlen
 vim.opt.ttimeoutlen = {}
+vim.opt.ttm = vim.opt.ttimeoutlen
 --- @return number
 function vim.opt.ttimeoutlen:get()end
 
@@ -1124,6 +1559,7 @@ function vim.opt.ttimeoutlen:get()end
 --- @operator sub: vim.opt.ttyfast
 --- @operator pow: vim.opt.ttyfast
 vim.opt.ttyfast = {}
+vim.opt.tf = vim.opt.ttyfast
 --- @return boolean
 function vim.opt.ttyfast:get()end
 
@@ -1154,6 +1590,7 @@ function vim.opt.ttyfast:get()end
 --- @operator sub: vim.opt.undodir
 --- @operator pow: vim.opt.undodir
 vim.opt.undodir = {}
+vim.opt.udir = vim.opt.undodir
 --- @return string[]
 function vim.opt.undodir:get()end
 
@@ -1172,6 +1609,7 @@ function vim.opt.undodir:get()end
 --- @operator sub: vim.opt.undofile
 --- @operator pow: vim.opt.undofile
 vim.opt.undofile = {}
+vim.opt.udf = vim.opt.undofile
 --- @return boolean
 function vim.opt.undofile:get()end
 
@@ -1199,6 +1637,7 @@ function vim.opt.undofile:get()end
 --- @operator sub: vim.opt.undolevels
 --- @operator pow: vim.opt.undolevels
 vim.opt.undolevels = {}
+vim.opt.ul = vim.opt.undolevels
 --- @return number
 function vim.opt.undolevels:get()end
 
@@ -1220,6 +1659,7 @@ function vim.opt.undolevels:get()end
 --- @operator sub: vim.opt.undoreload
 --- @operator pow: vim.opt.undoreload
 vim.opt.undoreload = {}
+vim.opt.ur = vim.opt.undoreload
 --- @return number
 function vim.opt.undoreload:get()end
 
@@ -1241,6 +1681,7 @@ function vim.opt.undoreload:get()end
 --- @operator sub: vim.opt.updatecount
 --- @operator pow: vim.opt.updatecount
 vim.opt.updatecount = {}
+vim.opt.uc = vim.opt.updatecount
 --- @return number
 function vim.opt.updatecount:get()end
 
@@ -1254,6 +1695,7 @@ function vim.opt.updatecount:get()end
 --- @operator sub: vim.opt.updatetime
 --- @operator pow: vim.opt.updatetime
 vim.opt.updatetime = {}
+vim.opt.ut = vim.opt.updatetime
 --- @return number
 function vim.opt.updatetime:get()end
 
@@ -1279,6 +1721,7 @@ function vim.opt.updatetime:get()end
 --- @operator sub: vim.opt.varsofttabstop
 --- @operator pow: vim.opt.varsofttabstop
 vim.opt.varsofttabstop = {}
+vim.opt.vsts = vim.opt.varsofttabstop
 --- @return string[]
 function vim.opt.varsofttabstop:get()end
 
@@ -1298,6 +1741,7 @@ function vim.opt.varsofttabstop:get()end
 --- @operator sub: vim.opt.vartabstop
 --- @operator pow: vim.opt.vartabstop
 vim.opt.vartabstop = {}
+vim.opt.vts = vim.opt.vartabstop
 --- @return string[]
 function vim.opt.vartabstop:get()end
 
@@ -1330,6 +1774,7 @@ function vim.opt.vartabstop:get()end
 --- @operator sub: vim.opt.verbose
 --- @operator pow: vim.opt.verbose
 vim.opt.verbose = {}
+vim.opt.vbs = vim.opt.verbose
 --- @return number
 function vim.opt.verbose:get()end
 
@@ -1347,6 +1792,7 @@ function vim.opt.verbose:get()end
 --- @operator sub: vim.opt.verbosefile
 --- @operator pow: vim.opt.verbosefile
 vim.opt.verbosefile = {}
+vim.opt.vfile = vim.opt.verbosefile
 --- @return string
 function vim.opt.verbosefile:get()end
 
@@ -1360,6 +1806,7 @@ function vim.opt.verbosefile:get()end
 --- @operator sub: vim.opt.viewdir
 --- @operator pow: vim.opt.viewdir
 vim.opt.viewdir = {}
+vim.opt.vdir = vim.opt.viewdir
 --- @return string
 function vim.opt.viewdir:get()end
 
@@ -1382,6 +1829,7 @@ function vim.opt.viewdir:get()end
 --- @operator sub: vim.opt.viewoptions
 --- @operator pow: vim.opt.viewoptions
 vim.opt.viewoptions = {}
+vim.opt.vop = vim.opt.viewoptions
 --- @return string[]
 function vim.opt.viewoptions:get()end
 
@@ -1390,6 +1838,7 @@ function vim.opt.viewoptions:get()end
 --- @operator sub: vim.opt.viminfo
 --- @operator pow: vim.opt.viminfo
 vim.opt.viminfo = {}
+vim.opt.vi = vim.opt.viminfo
 --- @return string[]
 function vim.opt.viminfo:get()end
 
@@ -1398,6 +1847,7 @@ function vim.opt.viminfo:get()end
 --- @operator sub: vim.opt.viminfofile
 --- @operator pow: vim.opt.viminfofile
 vim.opt.viminfofile = {}
+vim.opt.vif = vim.opt.viminfofile
 --- @return string[]
 function vim.opt.viminfofile:get()end
 
@@ -1434,6 +1884,7 @@ function vim.opt.viminfofile:get()end
 --- @operator sub: vim.opt.virtualedit
 --- @operator pow: vim.opt.virtualedit
 vim.opt.virtualedit = {}
+vim.opt.ve = vim.opt.virtualedit
 --- @return string[]
 function vim.opt.virtualedit:get()end
 
@@ -1445,6 +1896,7 @@ function vim.opt.virtualedit:get()end
 --- @operator sub: vim.opt.visualbell
 --- @operator pow: vim.opt.visualbell
 vim.opt.visualbell = {}
+vim.opt.vb = vim.opt.visualbell
 --- @return boolean
 function vim.opt.visualbell:get()end
 
@@ -1493,6 +1945,7 @@ function vim.opt.warn:get()end
 --- @operator sub: vim.opt.whichwrap
 --- @operator pow: vim.opt.whichwrap
 vim.opt.whichwrap = {}
+vim.opt.ww = vim.opt.whichwrap
 --- @return string[]
 function vim.opt.whichwrap:get()end
 
@@ -1512,6 +1965,7 @@ function vim.opt.whichwrap:get()end
 --- @operator sub: vim.opt.wildchar
 --- @operator pow: vim.opt.wildchar
 vim.opt.wildchar = {}
+vim.opt.wc = vim.opt.wildchar
 --- @return number
 function vim.opt.wildchar:get()end
 
@@ -1530,6 +1984,7 @@ function vim.opt.wildchar:get()end
 --- @operator sub: vim.opt.wildcharm
 --- @operator pow: vim.opt.wildcharm
 vim.opt.wildcharm = {}
+vim.opt.wcm = vim.opt.wildcharm
 --- @return number
 function vim.opt.wildcharm:get()end
 
@@ -1551,6 +2006,7 @@ function vim.opt.wildcharm:get()end
 --- @operator sub: vim.opt.wildignore
 --- @operator pow: vim.opt.wildignore
 vim.opt.wildignore = {}
+vim.opt.wig = vim.opt.wildignore
 --- @return string[]
 function vim.opt.wildignore:get()end
 
@@ -1565,6 +2021,7 @@ function vim.opt.wildignore:get()end
 --- @operator sub: vim.opt.wildignorecase
 --- @operator pow: vim.opt.wildignorecase
 vim.opt.wildignorecase = {}
+vim.opt.wic = vim.opt.wildignorecase
 --- @return boolean
 function vim.opt.wildignorecase:get()end
 
@@ -1609,6 +2066,7 @@ function vim.opt.wildignorecase:get()end
 --- @operator sub: vim.opt.wildmenu
 --- @operator pow: vim.opt.wildmenu
 vim.opt.wildmenu = {}
+vim.opt.wmnu = vim.opt.wildmenu
 --- @return boolean
 function vim.opt.wildmenu:get()end
 
@@ -1662,6 +2120,7 @@ function vim.opt.wildmenu:get()end
 --- @operator sub: vim.opt.wildmode
 --- @operator pow: vim.opt.wildmode
 vim.opt.wildmode = {}
+vim.opt.wim = vim.opt.wildmode
 --- @return string[]
 function vim.opt.wildmode:get()end
 
@@ -1681,6 +2140,7 @@ function vim.opt.wildmode:get()end
 --- @operator sub: vim.opt.wildoptions
 --- @operator pow: vim.opt.wildoptions
 vim.opt.wildoptions = {}
+vim.opt.wop = vim.opt.wildoptions
 --- @return string[]
 function vim.opt.wildoptions:get()end
 
@@ -1706,6 +2166,7 @@ function vim.opt.wildoptions:get()end
 --- @operator sub: vim.opt.winaltkeys
 --- @operator pow: vim.opt.winaltkeys
 vim.opt.winaltkeys = {}
+vim.opt.wak = vim.opt.winaltkeys
 --- @return string
 function vim.opt.winaltkeys:get()end
 
@@ -1729,6 +2190,7 @@ function vim.opt.winaltkeys:get()end
 --- @operator sub: vim.opt.winbar
 --- @operator pow: vim.opt.winbar
 vim.opt.winbar = {}
+vim.opt.wbr = vim.opt.winbar
 --- @return string
 function vim.opt.winbar:get()end
 
@@ -1744,6 +2206,7 @@ function vim.opt.winbar:get()end
 --- @operator sub: vim.opt.winblend
 --- @operator pow: vim.opt.winblend
 vim.opt.winblend = {}
+vim.opt.winbl = vim.opt.winblend
 --- @return number
 function vim.opt.winblend:get()end
 
@@ -1763,6 +2226,7 @@ function vim.opt.winblend:get()end
 --- @operator sub: vim.opt.window
 --- @operator pow: vim.opt.window
 vim.opt.window = {}
+vim.opt.wi = vim.opt.window
 --- @return number
 function vim.opt.window:get()end
 
@@ -1777,6 +2241,7 @@ function vim.opt.window:get()end
 --- @operator sub: vim.opt.winfixheight
 --- @operator pow: vim.opt.winfixheight
 vim.opt.winfixheight = {}
+vim.opt.wfh = vim.opt.winfixheight
 --- @return boolean
 function vim.opt.winfixheight:get()end
 
@@ -1790,6 +2255,7 @@ function vim.opt.winfixheight:get()end
 --- @operator sub: vim.opt.winfixwidth
 --- @operator pow: vim.opt.winfixwidth
 vim.opt.winfixwidth = {}
+vim.opt.wfw = vim.opt.winfixwidth
 --- @return boolean
 function vim.opt.winfixwidth:get()end
 
@@ -1816,6 +2282,7 @@ function vim.opt.winfixwidth:get()end
 --- @operator sub: vim.opt.winheight
 --- @operator pow: vim.opt.winheight
 vim.opt.winheight = {}
+vim.opt.wh = vim.opt.winheight
 --- @return number
 function vim.opt.winheight:get()end
 
@@ -1843,6 +2310,7 @@ function vim.opt.winheight:get()end
 --- @operator sub: vim.opt.winhighlight
 --- @operator pow: vim.opt.winhighlight
 vim.opt.winhighlight = {}
+vim.opt.winhl = vim.opt.winhighlight
 --- @return table<string, string>
 function vim.opt.winhighlight:get()end
 
@@ -1862,6 +2330,7 @@ function vim.opt.winhighlight:get()end
 --- @operator sub: vim.opt.winminheight
 --- @operator pow: vim.opt.winminheight
 vim.opt.winminheight = {}
+vim.opt.wmh = vim.opt.winminheight
 --- @return number
 function vim.opt.winminheight:get()end
 
@@ -1882,6 +2351,7 @@ function vim.opt.winminheight:get()end
 --- @operator sub: vim.opt.winminwidth
 --- @operator pow: vim.opt.winminwidth
 vim.opt.winminwidth = {}
+vim.opt.wmw = vim.opt.winminwidth
 --- @return number
 function vim.opt.winminwidth:get()end
 
@@ -1901,6 +2371,7 @@ function vim.opt.winminwidth:get()end
 --- @operator sub: vim.opt.winwidth
 --- @operator pow: vim.opt.winwidth
 vim.opt.winwidth = {}
+vim.opt.wiw = vim.opt.winwidth
 --- @return number
 function vim.opt.winwidth:get()end
 
@@ -1943,6 +2414,7 @@ function vim.opt.wrap:get()end
 --- @operator sub: vim.opt.wrapmargin
 --- @operator pow: vim.opt.wrapmargin
 vim.opt.wrapmargin = {}
+vim.opt.wm = vim.opt.wrapmargin
 --- @return number
 function vim.opt.wrapmargin:get()end
 
@@ -1955,6 +2427,7 @@ function vim.opt.wrapmargin:get()end
 --- @operator sub: vim.opt.wrapscan
 --- @operator pow: vim.opt.wrapscan
 vim.opt.wrapscan = {}
+vim.opt.ws = vim.opt.wrapscan
 --- @return boolean
 function vim.opt.wrapscan:get()end
 
@@ -1981,6 +2454,7 @@ function vim.opt.write:get()end
 --- @operator sub: vim.opt.writeany
 --- @operator pow: vim.opt.writeany
 vim.opt.writeany = {}
+vim.opt.wa = vim.opt.writeany
 --- @return boolean
 function vim.opt.writeany:get()end
 
@@ -2003,6 +2477,7 @@ function vim.opt.writeany:get()end
 --- @operator sub: vim.opt.writebackup
 --- @operator pow: vim.opt.writebackup
 vim.opt.writebackup = {}
+vim.opt.wb = vim.opt.writebackup
 --- @return boolean
 function vim.opt.writebackup:get()end
 
@@ -2011,6 +2486,7 @@ function vim.opt.writebackup:get()end
 --- @operator sub: vim.opt.writedelay
 --- @operator pow: vim.opt.writedelay
 vim.opt.writedelay = {}
+vim.opt.wd = vim.opt.writedelay
 --- @return number
 function vim.opt.writedelay:get()end
 

@@ -12,6 +12,7 @@ vim.go = {}
 -- 	aleph=128 applies to PC code, and aleph=224 applies to ISO 8859-8.
 -- 	See |rileft.txt|.
 vim.go.aleph = 224
+vim.go.al = vim.go.aleph
 -- `'allowrevins'`  `'ari'` 	boolean	(default off)
 -- 			global
 -- 	Allow CTRL-_ in Insert and Command-line mode.  This is default off, to
@@ -19,6 +20,7 @@ vim.go.aleph = 224
 -- 	into reverse Insert mode, and don't know how to get out.  See
 -- 	`'revins'` .
 vim.go.allowrevins = false
+vim.go.ari = vim.go.allowrevins
 -- `'ambiwidth'`  `'ambw'` 	string (default: "single")
 -- 			global
 -- 	Tells Vim what to do with characters with East Asian Width Class
@@ -50,8 +52,9 @@ vim.go.allowrevins = false
 -- 	by Vim with the width of glyphs in the font.  Perhaps it also has
 -- 	to be set to "double" under CJK MS-Windows when the system locale is
 -- 	set to one of CJK locales.  See Unicode Standard Annex #11
--- 	(http://www.unicode.org/reports/tr11).
+-- 	(https://www.unicode.org/reports/tr11).
 vim.go.ambiwidth = "single"
+vim.go.ambw = vim.go.ambiwidth
 -- `'arabicshape'`  `'arshape'` 	boolean (default on)
 -- 			global
 -- 	When on and `'termbidi'`  is off, the required visual character
@@ -67,6 +70,7 @@ vim.go.ambiwidth = "single"
 -- 	Arabic is a complex language which requires other settings, for
 -- 	further details see |arabic.txt|.
 vim.go.arabicshape = true
+vim.go.arshape = vim.go.arabicshape
 -- `'autochdir'`  `'acd'` 	boolean (default off)
 -- 			global
 -- 	When on, Vim will change the current working directory whenever you
@@ -76,6 +80,7 @@ vim.go.arabicshape = true
 -- 	the current directory won't change when navigating to it.
 -- 	Note: When this option is on some plugins may not work.
 vim.go.autochdir = false
+vim.go.acd = vim.go.autochdir
 -- `'autowrite'`  `'aw'` 	boolean	(default off)
 -- 			global
 -- 	Write the contents of the file, if it has been modified, on each
@@ -90,6 +95,7 @@ vim.go.autochdir = false
 -- 	Some buffers will not be written, specifically when `'buftype'`  is
 -- 	"nowrite", "nofile", "terminal" or "prompt".
 vim.go.autowrite = false
+vim.go.aw = vim.go.autowrite
 -- `'autowriteall'`  `'awa'` 	boolean	(default off)
 -- 			global
 -- 	Like `'autowrite'` , but also used for commands ":edit", ":enew", ":quit",
@@ -97,6 +103,7 @@ vim.go.autowrite = false
 -- 	Setting this option also implies that Vim behaves like `'autowrite'`  has
 -- 	been set.
 vim.go.autowriteall = false
+vim.go.awa = vim.go.autowriteall
 -- `'background'`  `'bg'` 	string	(default "dark")
 -- 			global
 -- 	When set to "dark" or "light", adjusts the default color groups for
@@ -126,6 +133,7 @@ vim.go.autowriteall = false
 -- 	option, you must load syntax.vim again to see the result.  This can be
 -- 	done with ":syntax on".
 vim.go.background = "dark"
+vim.go.bg = vim.go.background
 -- `'backspace'`  `'bs'` 	string	(default "indent,eol,start")
 -- 			global
 -- 	Influences the working of <BS>, <Del>, CTRL-W and CTRL-U in Insert
@@ -149,6 +157,7 @@ vim.go.background = "dark"
 -- 	  2	same as ":set backspace=indent,eol,start"
 -- 	  3	same as ":set backspace=indent,eol,nostop"
 vim.go.backspace = "indent,eol,start"
+vim.go.bs = vim.go.backspace
 -- `'backup'`  `'bk'` 		boolean	(default off)
 -- 			global
 -- 	Make a backup before overwriting a file.  Leave it around after the
@@ -162,6 +171,7 @@ vim.go.backspace = "indent,eol,start"
 -- 	When `'patchmode'`  is set, the backup may be renamed to become the
 -- 	oldest version of a file.
 vim.go.backup = false
+vim.go.bk = vim.go.backup
 -- `'backupdir'`  `'bdir'` 	string	(default ".,$XDG_STATE_HOME/nvim/backup//")
 -- 			global
 -- 	List of directories for the backup file, separated with commas.
@@ -205,7 +215,8 @@ vim.go.backup = false
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.backupdir = ".,/home/runner/.local/state/nvim/backup//"
+vim.go.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.go.bdir = vim.go.backupdir
 -- `'backupext'`  `'bex'` 	string	(default "~")
 -- 			global
 -- 	String which is appended to a file name to make the name of the
@@ -221,6 +232,7 @@ vim.go.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 -- 		:au BufWritePre * let &bex = `'-'`  .. strftime("%Y%b%d%X") .. `'~'` 
 -- <	Use `'backupdir'`  to put the backup in a different directory.
 vim.go.backupext = "~"
+vim.go.bex = vim.go.backupext
 -- `'backupskip'`  `'bsk'` 	string	(default: "$TMPDIR/,$TEMP/*"
 -- 				 Unix: "/tmp/,$TMP/"
 -- 				 Mac: "/private/tmp/,$TMP/")
@@ -246,6 +258,7 @@ vim.go.backupext = "~"
 -- 	backup would be made by renaming the original file crontab won't see
 -- 	the newly created file).  Also see `'backupcopy'`  and |crontab|.
 vim.go.backupskip = "/tmp/*"
+vim.go.bsk = vim.go.backupskip
 -- `'belloff'`  `'bo'` 		string	(default "all")
 -- 			global
 -- 	Specifies for which events the bell will not be rung. It is a comma-
@@ -283,11 +296,13 @@ vim.go.backupskip = "/tmp/*"
 -- 	indicate that an error occurred. It can be silenced by adding the
 -- 	"error" keyword.
 vim.go.belloff = "all"
+vim.go.bo = vim.go.belloff
 -- `'breakat'`  `'brk'` 		string	(default " ^I!@*-+;:,./?")
 -- 			global
 -- 	This option lets you choose which characters might cause a line
 -- 	break if `'linebreak'`  is on.  Only works for ASCII characters.
 vim.go.breakat = " \9!@*-+;:,./?"
+vim.go.brk = vim.go.breakat
 -- `'browsedir'`  `'bsdir'` 	string	(default: "last")
 -- 			global
 -- 	Which directory to use for the file browser:
@@ -297,6 +312,7 @@ vim.go.breakat = " \9!@*-+;:,./?"
 -- 	   current	Use the current directory.
 -- 	   {path}	Use the specified directory
 vim.go.browsedir = ""
+vim.go.bsdir = vim.go.browsedir
 -- `'casemap'`  `'cmp'` 		string	(default: "internal,keepascii")
 -- 			global
 -- 	Specifies details about changing the case of letters.  It may contain
@@ -309,6 +325,7 @@ vim.go.browsedir = ""
 -- 			case mapping, the current locale is not effective.
 -- 			This probably only matters for Turkish.
 vim.go.casemap = "internal,keepascii"
+vim.go.cmp = vim.go.casemap
 -- `'cdhome'`  `'cdh'` 		boolean	(default: off)
 -- 			global
 -- 	When on, |:cd|, |:tcd| and |:lcd| without an argument changes the
@@ -316,6 +333,7 @@ vim.go.casemap = "internal,keepascii"
 -- 	When off, those commands just print the current directory name.
 -- 	On Unix this option has no effect.
 vim.go.cdhome = false
+vim.go.cdh = vim.go.cdhome
 -- `'cdpath'`  `'cd'` 		string	(default: equivalent to $CDPATH or ",,")
 -- 			global
 -- 	This is a list of directories which will be searched when using the
@@ -334,6 +352,7 @@ vim.go.cdhome = false
 -- 	security reasons.
 -- 	(parts of `'cdpath'`  can be passed to the shell to expand file names).
 vim.go.cdpath = ",,"
+vim.go.cd = vim.go.cdpath
 -- `'cedit'` 			string	(default: CTRL-F)
 -- 			global
 -- 	The key used in Command-line Mode to open the command-line window.
@@ -380,6 +399,7 @@ vim.go.cedit = "\6"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.charconvert = ""
+vim.go.ccv = vim.go.charconvert
 -- `'clipboard'`  `'cb'` 	string	(default "")
 -- 			global
 -- 	This option is a list of comma-separated names.
@@ -405,6 +425,7 @@ vim.go.charconvert = ""
 -- 			will additionally copy the text into register
 -- 			`'*'` . See |clipboard|.
 vim.go.clipboard = ""
+vim.go.cb = vim.go.clipboard
 -- `'cmdheight'`  `'ch'` 	number	(default 1)
 -- 			global or local to tab page
 -- 	Number of screen lines to use for the command-line.  Helps avoiding
@@ -422,10 +443,12 @@ vim.go.clipboard = ""
 -- 	prompts.  Some informative messages, both from Nvim itself and
 -- 	plugins, will not be displayed.
 vim.go.cmdheight = 1
+vim.go.ch = vim.go.cmdheight
 -- `'cmdwinheight'`  `'cwh'` 	number	(default 7)
 -- 			global
 -- 	Number of screen lines to use for the command-line window. |cmdwin|
 vim.go.cmdwinheight = 7
+vim.go.cwh = vim.go.cmdwinheight
 -- `'columns'`  `'co'` 		number	(default 80 or terminal width)
 -- 			global
 -- 	Number of columns of the screen.  Normally this is set by the terminal
@@ -441,7 +464,9 @@ vim.go.cmdwinheight = 7
 -- 		:set columns=9999
 -- <	Minimum value is 12, maximum value is 10000.
 vim.go.columns = 80
+vim.go.co = vim.go.columns
 vim.go.compatible = false
+vim.go.cp = vim.go.compatible
 -- `'completeopt'`  `'cot'` 	string	(default: "menu,preview")
 -- 			global
 -- 	A comma-separated list of options for Insert mode completion
@@ -473,6 +498,7 @@ vim.go.compatible = false
 -- 		    select one from the menu. Only works in combination with
 -- 		    "menu" or "menuone".
 vim.go.completeopt = "menu,preview"
+vim.go.cot = vim.go.completeopt
 -- `'completeslash'`  `'csl'` 	string	(default: "")
 -- 			local to buffer
 -- 			{only for MS-Windows}
@@ -487,6 +513,7 @@ vim.go.completeopt = "menu,preview"
 -- 	For Insert mode completion the buffer-local value is used.  For
 -- 	command line completion the global value is used.
 vim.go.completeslash = ""
+vim.go.csl = vim.go.completeslash
 -- `'confirm'`  `'cf'` 		boolean (default off)
 -- 			global
 -- 	When `'confirm'`  is on, certain operations that would normally
@@ -498,6 +525,7 @@ vim.go.completeslash = ""
 -- 	command.
 -- 	Also see the |confirm()| function and the `'v'`  flag in `'guioptions'` .
 vim.go.confirm = false
+vim.go.cf = vim.go.confirm
 -- `'cpoptions'`  `'cpo'` 	string	(default: "aABceFs_")
 -- 			global
 -- 	A sequence of single character flags.  When a character is present
@@ -731,6 +759,7 @@ vim.go.confirm = false
 -- 		_	When using |cw| on a word, do not include the
 -- 			whitespace following the word in the motion.
 vim.go.cpoptions = "aABceFs_"
+vim.go.cpo = vim.go.cpoptions
 -- `'debug'` 			string	(default "")
 -- 			global
 -- 	These values can be used:
@@ -756,6 +785,7 @@ vim.go.debug = ""
 -- 	may have combining characters overtop of base characters, and want
 -- 	to remove only the combining ones.
 vim.go.delcombine = false
+vim.go.deco = vim.go.delcombine
 -- `'diffexpr'`  `'dex'` 	string	(default "")
 -- 			global
 -- 	Expression which is evaluated to obtain a diff file (either ed-style
@@ -763,6 +793,7 @@ vim.go.delcombine = false
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.diffexpr = ""
+vim.go.dex = vim.go.diffexpr
 -- `'diffopt'`  `'dip'` 		string	(default "internal,filler,closeoff")
 -- 			global
 -- 	Option settings for diff mode.  It can consist of the following items.
@@ -861,11 +892,13 @@ vim.go.diffexpr = ""
 -- 		:set diffopt-=internal  " do NOT use the internal diff parser
 -- <
 vim.go.diffopt = "internal,filler,closeoff"
+vim.go.dip = vim.go.diffopt
 -- `'digraph'`  `'dg'` 		boolean	(default off)
 -- 			global
 -- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
 -- 	{char2}.  See |digraphs|.
 vim.go.digraph = false
+vim.go.dg = vim.go.digraph
 -- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
 -- 			global
 -- 	List of directory names for the swap file, separated with commas.
@@ -916,7 +949,8 @@ vim.go.digraph = false
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.directory = "/home/runner/.local/state/nvim/swap//"
+vim.go.directory = "/home/folke/.local/state/nvim/swap//"
+vim.go.dir = vim.go.directory
 -- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
 -- 	Change the way text is displayed.  This is a comma-separated list of
@@ -937,6 +971,7 @@ vim.go.directory = "/home/runner/.local/state/nvim/swap//"
 -- 	The "@" character can be changed by setting the "lastline" item in
 -- 	`'fillchars'` .  The character is highlighted with |hl-NonText|.
 vim.go.display = "lastline"
+vim.go.dy = vim.go.display
 -- `'eadirection'`  `'ead'` 	string	(default "both")
 -- 			global
 -- 	Tells when the `'equalalways'`  option applies:
@@ -944,7 +979,9 @@ vim.go.display = "lastline"
 -- 		hor	horizontally, height of windows is not affected
 -- 		both	width and height of windows is affected
 vim.go.eadirection = "both"
+vim.go.ead = vim.go.eadirection
 vim.go.edcompatible = false
+vim.go.ed = vim.go.edcompatible
 -- `'emoji'`  `'emo'` 	boolean (default: on)
 -- 			global
 -- 	When on all Unicode emoji characters are considered to be full width.
@@ -953,12 +990,14 @@ vim.go.edcompatible = false
 -- 	and it has been determined on trial-and-error basis.  Use the
 -- 	|setcellwidths()| function to change the behavior.
 vim.go.emoji = true
+vim.go.emo = vim.go.emoji
 -- `'encoding'`  `'enc'` 
 -- 	String-encoding used internally and for |RPC| communication.
 -- 	Always UTF-8.
 -- 
 -- 	See `'fileencoding'`  to control file-content encoding.
 vim.go.encoding = "utf-8"
+vim.go.enc = vim.go.encoding
 -- `'equalalways'`  `'ea'` 	boolean	(default on)
 -- 			global
 -- 	When on, all the windows are automatically made the same size after
@@ -976,6 +1015,7 @@ vim.go.encoding = "utf-8"
 -- 	currently not equalized (it's complicated, but may be implemented in
 -- 	the future).
 vim.go.equalalways = true
+vim.go.ea = vim.go.equalalways
 -- `'errorbells'`  `'eb'` 	boolean	(default off)
 -- 			global
 -- 	Ring the bell (beep or screen flash) for error messages.  This only
@@ -984,6 +1024,7 @@ vim.go.equalalways = true
 -- 	mode).  See `'visualbell'`  to make the bell behave like a screen flash
 -- 	or do nothing. See `'belloff'`  to finetune when to ring the bell.
 vim.go.errorbells = false
+vim.go.eb = vim.go.errorbells
 -- `'errorfile'`  `'ef'` 	string	(default: "errors.err")
 -- 			global
 -- 	Name of the errorfile for the QuickFix mode (see |:cf|).
@@ -995,6 +1036,7 @@ vim.go.errorbells = false
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.errorfile = "errors.err"
+vim.go.ef = vim.go.errorfile
 -- `'eventignore'`  `'ei'` 	string	(default "")
 -- 			global
 -- 	A list of autocommand event names, which are to be ignored.
@@ -1004,7 +1046,9 @@ vim.go.errorfile = "errors.err"
 -- 	    :set ei=WinEnter,WinLeave
 -- <
 vim.go.eventignore = ""
+vim.go.ei = vim.go.eventignore
 vim.go.exrc = false
+vim.go.ex = vim.go.exrc
 -- `'fileencodings'`  `'fencs'` 	string (default: "ucs-bom,utf-8,default,latin1")
 -- 			global
 -- 	This is a list of character encodings considered when starting to edit
@@ -1054,6 +1098,7 @@ vim.go.exrc = false
 -- 	Setting this option does not have an effect until the next time a file
 -- 	is read.
 vim.go.fileencodings = "ucs-bom,utf-8,default,latin1"
+vim.go.fencs = vim.go.fileencodings
 -- `'fileformats'`  `'ffs'` 	string (default:
 -- 				Win32: "dos,unix",
 -- 				Unix: "unix,dos")
@@ -1104,18 +1149,21 @@ vim.go.fileencodings = "ucs-bom,utf-8,default,latin1"
 -- 	  used.
 -- 	Also see |file-formats|.
 vim.go.fileformats = "unix,dos"
+vim.go.ffs = vim.go.fileformats
 -- `'fileignorecase'`  `'fic'` 	boolean	(default on for systems where case in file
 -- 				 names is normally ignored)
 -- 			global
 -- 	When set case is ignored when using file names and directories.
 -- 	See `'wildignorecase'`  for only ignoring case when doing completion.
 vim.go.fileignorecase = false
+vim.go.fic = vim.go.fileignorecase
 -- `'foldclose'`  `'fcl'` 	string (default "")
 -- 			global
 -- 	When set to "all", a fold is closed when the cursor isn't in it and
 -- 	its level is higher than `'foldlevel'` .  Useful if you want folds to
 -- 	automatically close when moving out of them.
 vim.go.foldclose = ""
+vim.go.fcl = vim.go.foldclose
 -- `'foldlevelstart'`  `'fdls'` 	number (default: -1)
 -- 			global
 -- 	Sets `'foldlevel'`  when starting to edit another buffer in a window.
@@ -1128,6 +1176,7 @@ vim.go.foldclose = ""
 -- 	overrule the `'foldlevel'`  value for specific files.
 -- 	When the value is negative, it is not used.
 vim.go.foldlevelstart = -1
+vim.go.fdls = vim.go.foldlevelstart
 -- `'foldopen'`  `'fdo'` 	string (default: "block,hor,mark,percent,quickfix,
 -- 							     search,tag,undo")
 -- 			global
@@ -1162,6 +1211,7 @@ vim.go.foldlevelstart = -1
 -- 	To close folds you can re-apply `'foldlevel'`  with the |zx| command or
 -- 	set the `'foldclose'`  option to "all".
 vim.go.foldopen = "block,hor,mark,percent,quickfix,search,tag,undo"
+vim.go.fdo = vim.go.foldopen
 -- `'fsync'`  `'fs'` 		boolean	(default off)
 -- 			global
 -- 	When on, the OS function fsync() will be called after saving a file
@@ -1179,6 +1229,7 @@ vim.go.foldopen = "block,hor,mark,percent,quickfix,search,tag,undo"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.fsync = false
+vim.go.fs = vim.go.fsync
 -- `'gdefault'`  `'gd'` 		boolean	(default off)
 -- 			global
 -- 	When on, the ":substitute" flag `'g'`  is default on.  This means that
@@ -1195,12 +1246,14 @@ vim.go.fsync = false
 -- 	of this option.  Also, many users get confused that adding the /g flag
 -- 	has the opposite effect of that it normally does.
 vim.go.gdefault = false
+vim.go.gd = vim.go.gdefault
 -- `'grepformat'`  `'gfm'` 	string	(default "%f:%l:%m,%f:%l%m,%f  %l%m")
 -- 			global
 -- 	Format to recognize for the ":grep" command output.
 -- 	This is a scanf-like string that uses the same format as the
 -- 	`'errorformat'`  option: see |errorformat|.
 vim.go.grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
+vim.go.gfm = vim.go.grepformat
 -- `'guicursor'`  `'gcr'` 	string	(default "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20")
 -- 			global
 -- 	Configures the cursor style for each mode. Works in the GUI and many
@@ -1287,6 +1340,7 @@ vim.go.grepformat = "%f:%l:%m,%f:%l%m,%f  %l%m"
 -- 	    :highlight Cursor gui=NONE guifg=bg guibg=fg
 -- <
 vim.go.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+vim.go.gcr = vim.go.guicursor
 -- `'guifont'`  `'gfn'` 		string	(default "")
 -- 			global
 -- 	This is a list of fonts which will be used for the GUI version of Vim.
@@ -1347,6 +1401,7 @@ vim.go.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 -- 	    :set guifont=Andale_Mono:h7.5:w4.5
 -- <
 vim.go.guifont = ""
+vim.go.gfn = vim.go.guifont
 -- `'guifontwide'`  `'gfw'` 	string	(default "")
 -- 			global
 -- 	Comma-separated list of fonts to be used for double-width characters.
@@ -1357,6 +1412,7 @@ vim.go.guifont = ""
 -- 	When `'guifont'`  has a valid font and `'guifontwide'`  is empty Vim will
 -- 	attempt to set `'guifontwide'`  to a matching double-width font.
 vim.go.guifontwide = ""
+vim.go.gfw = vim.go.guifontwide
 -- `'guioptions'`  `'go'` 	string	(default "egmrLT"   (MS-Windows))
 -- 			global
 -- 	This option only has an effect in the GUI version of Vim.  It is a
@@ -1459,6 +1515,7 @@ vim.go.guifontwide = ""
 -- 		try to keep `'lines'`  and `'columns'`  the same when adding and
 -- 		removing GUI components.
 vim.go.guioptions = ""
+vim.go.go = vim.go.guioptions
 -- `'guitablabel'`  `'gtl'` 	string	(default empty)
 -- 			global
 -- 	When non-empty describes the text to use in a label of the GUI tab
@@ -1475,6 +1532,7 @@ vim.go.guioptions = ""
 -- 	present in `'guioptions'` .  For the non-GUI tab pages line `'tabline'`  is
 -- 	used.
 vim.go.guitablabel = ""
+vim.go.gtl = vim.go.guitablabel
 -- `'guitabtooltip'`  `'gtt'` 	string	(default empty)
 -- 			global
 -- 	When non-empty describes the text to use in a tooltip for the GUI tab
@@ -1484,6 +1542,7 @@ vim.go.guitablabel = ""
 -- 		:let &guitabtooltip = "line one\nline two"
 -- <
 vim.go.guitabtooltip = ""
+vim.go.gtt = vim.go.guitabtooltip
 -- `'helpfile'`  `'hf'` 		string	(default (MS-Windows) "$VIMRUNTIME\doc\help.txt"
 -- 					 (others) "$VIMRUNTIME/doc/help.txt")
 -- 			global
@@ -1496,7 +1555,8 @@ vim.go.guitabtooltip = ""
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
+vim.go.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.go.hf = vim.go.helpfile
 -- `'helpheight'`  `'hh'` 	number	(default 20)
 -- 			global
 -- 	Minimal initial height of the help window when it is opened with the
@@ -1505,6 +1565,7 @@ vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 -- 	windows.  When the height is less than `'helpheight'` , the height is
 -- 	set to `'helpheight'` .  Set to zero to disable.
 vim.go.helpheight = 20
+vim.go.hh = vim.go.helpheight
 -- `'helplang'`  `'hlg'` 	string	(default: messages language or empty)
 -- 			global
 -- 	Comma-separated list of languages.  Vim will use the first language
@@ -1520,6 +1581,7 @@ vim.go.helpheight = 20
 -- 	try to find the tag in the current language before using this option.
 -- 	See |help-translated|.
 vim.go.helplang = ""
+vim.go.hlg = vim.go.helplang
 -- `'hidden'`  `'hid'` 		boolean	(default on)
 -- 			global
 -- 	When off a buffer is unloaded (including loss of undo information)
@@ -1537,7 +1599,9 @@ vim.go.helplang = ""
 -- 	To hide a specific buffer use the `'bufhidden'`  option.
 -- 	`'hidden'`  is set for one command with ":hide {command}" |:hide|.
 vim.go.hidden = true
+vim.go.hid = vim.go.hidden
 vim.go.highlight = "8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:NonText,d:Directory,e:ErrorMsg,i:IncSearch,l:Search,y:CurSearch,m:MoreMsg,M:ModeMsg,n:LineNr,a:LineNrAbove,b:LineNrBelow,N:CursorLineNr,G:CursorLineSign,O:CursorLineFoldr:Question,s:StatusLine,S:StatusLineNC,c:VertSplit,t:Title,v:Visual,V:VisualNOS,w:WarningMsg,W:WildMenu,f:Folded,F:FoldColumn,A:DiffAdd,C:DiffChange,D:DiffDelete,T:DiffText,>:SignColumn,-:Conceal,B:SpellBad,P:SpellCap,R:SpellRare,L:SpellLocal,+:Pmenu,=:PmenuSel,x:PmenuSbar,X:PmenuThumb,*:TabLine,#:TabLineSel,_:TabLineFill,!:CursorColumn,.:CursorLine,o:ColorColumn,q:QuickFixLine,0:Whitespace,I:NormalNC"
+vim.go.hl = vim.go.highlight
 -- `'history'`  `'hi'` 		number	(default: 10000)
 -- 			global
 -- 	A history of ":" commands, and a history of previous search patterns
@@ -1545,18 +1609,21 @@ vim.go.highlight = "8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:Non
 -- 	each of these histories (see |cmdline-editing|).
 -- 	The maximum value is 10000.
 vim.go.history = 10000
+vim.go.hi = vim.go.history
 -- `'hkmap'`  `'hk'` 		boolean (default off)
 -- 			global
 -- 	When on, the keyboard is mapped for the Hebrew character set.
 -- 	Normally you would set `'allowrevins'`  and use CTRL-_ in insert mode to
 -- 	toggle this option.  See |rileft.txt|.
 vim.go.hkmap = false
+vim.go.hk = vim.go.hkmap
 -- `'hkmapp'`  `'hkp'` 		boolean (default off)
 -- 			global
 -- 	When on, phonetic keyboard mapping is used.  `'hkmap'`  must also be on.
 -- 	This is useful if you have a non-Hebrew keyboard.
 -- 	See |rileft.txt|.
 vim.go.hkmapp = false
+vim.go.hkp = vim.go.hkmapp
 -- `'hlsearch'`  `'hls'` 	boolean	(default on)
 -- 			global
 -- 	When there is a previous search pattern, highlight all its matches.
@@ -1579,6 +1646,7 @@ vim.go.hkmapp = false
 -- 	You can specify whether the highlight status is restored on startup
 -- 	with the `'h'`  flag in `'shada'`  |shada-h|.
 vim.go.hlsearch = true
+vim.go.hls = vim.go.hlsearch
 -- `'icon'` 			boolean	(default off, on when title can be restored)
 -- 			global
 -- 	When on, the icon text of the window will be set to the value of
@@ -1605,6 +1673,7 @@ vim.go.iconstring = ""
 -- 	Can be overruled by using "\c" or "\C" in the pattern, see
 -- 	|/ignorecase|.
 vim.go.ignorecase = false
+vim.go.ic = vim.go.ignorecase
 -- `'imcmdline'`  `'imc'` 	boolean (default off)
 -- 			global
 -- 	When set the Input Method is always on when starting to edit a command
@@ -1613,6 +1682,7 @@ vim.go.ignorecase = false
 -- 	English characters directly, e.g., when it's used to type accented
 -- 	characters with dead keys.
 vim.go.imcmdline = false
+vim.go.imc = vim.go.imcmdline
 -- `'imdisable'`  `'imd'` 	boolean (default off, on for some systems (SGI))
 -- 			global
 -- 	When set the Input Method is never used.  This is useful to disable
@@ -1620,6 +1690,7 @@ vim.go.imcmdline = false
 -- 	Currently this option is on by default for SGI/IRIX machines.  This
 -- 	may change in later releases.
 vim.go.imdisable = false
+vim.go.imd = vim.go.imdisable
 -- `'inccommand'`  `'icm'` 	string	(default "nosplit")
 -- 			global
 -- 
@@ -1637,6 +1708,7 @@ vim.go.imdisable = false
 -- 	`'redrawtime'` ) then `'inccommand'`  is automatically disabled until
 -- 	|Command-line-mode| is done.
 vim.go.inccommand = "nosplit"
+vim.go.icm = vim.go.inccommand
 -- `'incsearch'`  `'is'` 	boolean	(default on)
 -- 			global
 -- 	While typing a search command, show where the pattern, as it was typed
@@ -1671,7 +1743,9 @@ vim.go.inccommand = "nosplit"
 -- 	CTRL-R CTRL-W can be used to add the word at the end of the current
 -- 	match, excluding the characters that were already typed.
 vim.go.incsearch = true
+vim.go.is = vim.go.incsearch
 vim.go.insertmode = false
+vim.go.im = vim.go.insertmode
 -- `'isfname'`  `'isf'` 		string	(default for Windows:
 -- 			     "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],:,@-@,!,~,="
 -- 			    otherwise: "@,48-57,/,.,-,_,+,,,#,$,%,~,=")
@@ -1722,6 +1796,7 @@ vim.go.insertmode = false
 -- 				comma, plus <Tab>.
 -- 	See |option-backslash| about including spaces and backslashes.
 vim.go.isfname = "@,48-57,/,.,-,_,+,,,#,$,%,~,="
+vim.go.isf = vim.go.isfname
 -- `'isident'`  `'isi'` 		string	(default for Windows:
 -- 					   "@,48-57,_,128-167,224-235"
 -- 				otherwise: "@,48-57,_,192-255")
@@ -1736,6 +1811,7 @@ vim.go.isfname = "@,48-57,/,.,-,_,+,,,#,$,%,~,="
 -- 	expand "$HOME/.local/state/nvim/shada/main.shada".  Maybe you should
 -- 	change `'iskeyword'`  instead.
 vim.go.isident = "@,48-57,_,192-255"
+vim.go.isi = vim.go.isident
 -- `'isprint'`  `'isp'` 	string	(default: "@,161-255")
 -- 			global
 -- 	The characters given by this option are displayed directly on the
@@ -1765,11 +1841,13 @@ vim.go.isident = "@,48-57,_,192-255"
 -- 	Unprintable and zero-width Unicode characters are displayed as <xxxx>.
 -- 	There is no option to specify these characters.
 vim.go.isprint = "@,161-255"
+vim.go.isp = vim.go.isprint
 -- `'joinspaces'`  `'js'` 	boolean	(default off)
 -- 			global
 -- 	Insert two spaces after a `'.'` , `'?'`  and `'!'`  with a join command.
 -- 	Otherwise only one space is inserted.
 vim.go.joinspaces = false
+vim.go.js = vim.go.joinspaces
 -- `'jumpoptions'`  `'jop'` 	string	(default "")
 -- 			global
 -- 	List of words that change the behavior of the |jumplist|.
@@ -1784,6 +1862,7 @@ vim.go.joinspaces = false
 -- 			|alternate-file| or using |mark-motions| try to
 -- 			restore the |mark-view| in which the action occurred.
 vim.go.jumpoptions = ""
+vim.go.jop = vim.go.jumpoptions
 -- `'keymodel'`  `'km'` 		string	(default "")
 -- 			global
 -- 	List of comma-separated words, which enable special things that keys
@@ -1796,6 +1875,7 @@ vim.go.jumpoptions = ""
 -- 	<PageUp> and <PageDown>.
 -- 	The `'keymodel'`  option is set by the |:behave| command.
 vim.go.keymodel = ""
+vim.go.km = vim.go.keymodel
 -- `'langmap'`  `'lmap'` 	string	(default "")
 -- 			global
 -- 	This option allows switching your keyboard into a special language
@@ -1838,6 +1918,7 @@ vim.go.keymodel = ""
 -- 	allowing to switch between mappings for different languages/encodings.
 -- 	Use a mapping to avoid having to type it each time!
 vim.go.langmap = ""
+vim.go.lmap = vim.go.langmap
 -- `'langmenu'`  `'lm'` 		string	(default "")
 -- 			global
 -- 	Language to use for menu translation.  Tells which file is loaded
@@ -1859,13 +1940,16 @@ vim.go.langmap = ""
 -- 		:source $VIMRUNTIME/menu.vim
 -- <	Warning: This deletes all menus that you defined yourself!
 vim.go.langmenu = ""
+vim.go.lm = vim.go.langmenu
 vim.go.langnoremap = true
+vim.go.lnr = vim.go.langnoremap
 -- `'langremap'`  `'lrm'` 	boolean (default off)
 -- 			global
 -- 	When off, setting `'langmap'`  does not apply to characters resulting from
 -- 	a mapping.  If setting `'langmap'`  disables some of your mappings, make
 -- 	sure this option is off.
 vim.go.langremap = false
+vim.go.lrm = vim.go.langremap
 -- `'laststatus'`  `'ls'` 	number	(default 2)
 -- 			global
 -- 	The value of this option influences when the last window will have a
@@ -1877,6 +1961,7 @@ vim.go.langremap = false
 -- 	The screen looks nicer with a status line if you have several
 -- 	windows, but it takes another screen line. |status-line|
 vim.go.laststatus = 2
+vim.go.ls = vim.go.laststatus
 -- `'lazyredraw'`  `'lz'` 	boolean	(default off)
 -- 			global
 -- 	When this option is set, the screen will not be redrawn while
@@ -1887,6 +1972,7 @@ vim.go.laststatus = 2
 -- 	temporarily when performing an operation where redrawing may cause
 -- 	flickering or cause a slow down.
 vim.go.lazyredraw = false
+vim.go.lz = vim.go.lazyredraw
 -- `'lines'` 			number	(default 24 or terminal height)
 -- 			global
 -- 	Number of lines of the Vim window.
@@ -1911,6 +1997,7 @@ vim.go.lines = 24
 -- 	`'linespace'`  to a negative value.  This may cause display problems
 -- 	though!
 vim.go.linespace = 0
+vim.go.lsp = vim.go.linespace
 -- `'loadplugins'`  `'lpl'` 	boolean	(default on)
 -- 			global
 -- 	When on the plugin scripts are loaded when starting up |load-plugins|.
@@ -1919,6 +2006,7 @@ vim.go.linespace = 0
 -- 	Note that using the "-u NONE" and "--noplugin" command line arguments
 -- 	reset this option. |-u| |--noplugin|
 vim.go.loadplugins = true
+vim.go.lpl = vim.go.loadplugins
 -- `'magic'` 			boolean	(default on)
 -- 			global
 -- 	Changes the special characters that can be used in search patterns.
@@ -1943,13 +2031,16 @@ vim.go.magic = true
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.makeef = ""
+vim.go.mef = vim.go.makeef
 -- `'matchtime'`  `'mat'` 	number	(default 5)
 -- 			global
 -- 	Tenths of a second to show the matching paren, when `'showmatch'`  is
 -- 	set.  Note that this is not in milliseconds, like other options that
 -- 	set a time.  This is to be compatible with Nvi.
 vim.go.matchtime = 5
+vim.go.mat = vim.go.matchtime
 vim.go.maxcombine = 6
+vim.go.mco = vim.go.maxcombine
 -- `'maxfuncdepth'`  `'mfd'` 	number	(default 100)
 -- 			global
 -- 	Maximum depth of function calls for user functions.  This normally
@@ -1960,6 +2051,7 @@ vim.go.maxcombine = 6
 -- 	command recursion, see |E169|.
 -- 	See also |:function|.
 vim.go.maxfuncdepth = 100
+vim.go.mfd = vim.go.maxfuncdepth
 -- `'maxmapdepth'`  `'mmd'` 	number	(default 1000)
 -- 			global
 -- 	Maximum number of times a mapping is done without resulting in a
@@ -1968,6 +2060,7 @@ vim.go.maxfuncdepth = 100
 -- 	because the `'w'`  is used before the next mapping is done.  See also
 -- 	|key-mapping|.
 vim.go.maxmapdepth = 1000
+vim.go.mmd = vim.go.maxmapdepth
 -- `'maxmempattern'`  `'mmp'` 	number	(default 1000)
 -- 			global
 -- 	Maximum amount of memory (in Kbyte) to use for pattern matching.
@@ -1983,12 +2076,14 @@ vim.go.maxmapdepth = 1000
 -- 	Vim may run out of memory before hitting the `'maxmempattern'`  limit, in
 -- 	which case you get an "Out of memory" error instead.
 vim.go.maxmempattern = 1000
+vim.go.mmp = vim.go.maxmempattern
 -- `'menuitems'`  `'mis'` 	number	(default 25)
 -- 			global
 -- 	Maximum number of items to use in a menu.  Used for menus that are
 -- 	generated from a list of items, e.g., the Buffers menu.  Changing this
 -- 	option has no direct effect, the menu must be refreshed first.
 vim.go.menuitems = 25
+vim.go.mis = vim.go.menuitems
 -- `'mkspellmem'`  `'msm'` 	string	(default "460000,2000,500")
 -- 			global
 -- 	Parameters for |:mkspell|.  This tunes when to start compressing the
@@ -2026,6 +2121,7 @@ vim.go.menuitems = 25
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|.
 vim.go.mkspellmem = "460000,2000,500"
+vim.go.msm = vim.go.mkspellmem
 -- `'modelineexpr'`  `'mle'` 	boolean (default: off)
 -- 			global
 -- 	When on allow some options that are an expression to be set in the
@@ -2034,12 +2130,14 @@ vim.go.mkspellmem = "460000,2000,500"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.modelineexpr = false
+vim.go.mle = vim.go.modelineexpr
 -- `'modelines'`  `'mls'` 	number	(default 5)
 -- 			global
 -- 	If `'modeline'`  is on `'modelines'`  gives the number of lines that is
 -- 	checked for set commands.  If `'modeline'`  is off or `'modelines'`  is zero
 -- 	no lines are checked.  See |modeline|.
 vim.go.modelines = 5
+vim.go.mls = vim.go.modelines
 -- `'more'` 			boolean	(default: on)
 -- 			global
 -- 	When on, listings pause when the whole screen is filled.  You will get
@@ -2108,12 +2206,14 @@ vim.go.mouse = "nvi"
 -- 	default because it makes using the pull down menus a little goofy, as
 -- 	a pointer transit may activate a window unintentionally.
 vim.go.mousefocus = false
+vim.go.mousef = vim.go.mousefocus
 -- `'mousehide'`  `'mh'` 	boolean	(default on)
 -- 			global
 -- 			{only works in the GUI}
 -- 	When on, the mouse pointer is hidden when characters are typed.
 -- 	The mouse pointer is restored when the mouse is moved.
 vim.go.mousehide = true
+vim.go.mh = vim.go.mousehide
 -- `'mousemodel'`  `'mousem'` 	string	(default "popup_setpos")
 -- 			global
 -- 	Sets the model to use for the mouse.  The name mostly specifies what
@@ -2166,6 +2266,7 @@ vim.go.mousehide = true
 -- 
 -- 	The `'mousemodel'`  option is set by the |:behave| command.
 vim.go.mousemodel = "popup_setpos"
+vim.go.mousem = vim.go.mousemodel
 -- `'mousemoveevent'`  `'mousemev'`   boolean	(default off)
 -- 			global
 -- 	When on, mouse move events are delivered to the input queue and are
@@ -2174,6 +2275,7 @@ vim.go.mousemodel = "popup_setpos"
 -- 	Warning: Setting this option can make pending mappings to be aborted
 -- 	when the mouse is moved.
 vim.go.mousemoveevent = false
+vim.go.mousemev = vim.go.mousemoveevent
 -- `'mousescroll'` 		string	(default "ver:3,hor:6")
 -- 			global
 -- 	This option controls the number of lines / columns to scroll by when
@@ -2255,11 +2357,13 @@ vim.go.mousescroll = "ver:3,hor:6"
 -- 	indicate no input when the hit-enter prompt is displayed (since
 -- 	clicking the mouse has no effect in this state.)
 vim.go.mouseshape = ""
+vim.go.mouses = vim.go.mouseshape
 -- `'mousetime'`  `'mouset'` 	number	(default 500)
 -- 			global
 -- 	Defines the maximum time in msec between two mouse clicks for the
 -- 	second click to be recognized as a multi click.
 vim.go.mousetime = 500
+vim.go.mouset = vim.go.mousetime
 -- `'opendevice'`  `'odev'` 	boolean	(default off)
 -- 			global
 -- 			{only for Windows}
@@ -2269,6 +2373,7 @@ vim.go.mousetime = 500
 -- 	Note that on Windows editing "aux.h", "lpt1.txt" and the like also
 -- 	result in editing a device.
 vim.go.opendevice = false
+vim.go.odev = vim.go.opendevice
 -- `'operatorfunc'`  `'opfunc'` 	string	(default: empty)
 -- 			global
 -- 	This option specifies a function to be called by the |g@| operator.
@@ -2279,14 +2384,17 @@ vim.go.opendevice = false
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.operatorfunc = ""
+vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
 -- 	Specifies the nroff macros that separate paragraphs.  These are pairs
 -- 	of two letters (see |object-motions|).
 vim.go.paragraphs = "IPLPPPQPP TPHPLIPpLpItpplpipbp"
+vim.go.para = vim.go.paragraphs
 -- `'paste'` 			boolean	(default off)
 -- 			global
 -- 	This option is obsolete; |bracketed-paste-mode| is built-in.
@@ -2356,11 +2464,13 @@ vim.go.paste = false
 -- 	sequence.
 -- 	When the value has several bytes `'ttimeoutlen'`  applies.
 vim.go.pastetoggle = ""
+vim.go.pt = vim.go.pastetoggle
 -- `'patchexpr'`  `'pex'` 	string	(default "")
 -- 			global
 -- 	Expression which is evaluated to apply a patch to a file and generate
 -- 	the resulting new version of the file.  See |diff-patchexpr|.
 vim.go.patchexpr = ""
+vim.go.pex = vim.go.patchexpr
 -- `'patchmode'`  `'pm'` 	string	(default "")
 -- 			global
 -- 	When non-empty the oldest version of a file is kept.  This can be used
@@ -2380,11 +2490,13 @@ vim.go.patchexpr = ""
 -- 	recognized as a compressed file.
 -- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
 vim.go.patchmode = ""
+vim.go.pm = vim.go.patchmode
 -- `'previewheight'`  `'pvh'` 	number (default 12)
 -- 			global
 -- 	Default height for a preview window.  Used for |:ptag| and associated
 -- 	commands.  Used for |CTRL-W_}| when no count is given.
 vim.go.previewheight = 12
+vim.go.pvh = vim.go.previewheight
 -- `'printdevice'`  `'pdev'` 	string	(default empty)
 -- 			global
 -- 	The name of the printer to be used for |:hardcopy|.
@@ -2392,11 +2504,13 @@ vim.go.previewheight = 12
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.printdevice = ""
+vim.go.pdev = vim.go.printdevice
 -- `'printencoding'`  `'penc'` 	string	(default empty, except for some systems)
 -- 			global
 -- 	Sets the character encoding used when printing.
 -- 	See |penc-option|.
 vim.go.printencoding = ""
+vim.go.penc = vim.go.printencoding
 -- `'printexpr'`  `'pexpr'` 	string	(default: see below)
 -- 			global
 -- 	Expression used to print the PostScript produced with |:hardcopy|.
@@ -2404,31 +2518,37 @@ vim.go.printencoding = ""
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"
+vim.go.pexpr = vim.go.printexpr
 -- `'printfont'`  `'pfn'` 	string	(default "courier")
 -- 			global
 -- 	The name of the font that will be used for |:hardcopy|.
 -- 	See |pfn-option|.
 vim.go.printfont = "courier"
+vim.go.pfn = vim.go.printfont
 -- `'printheader'`  `'pheader'`   string  (default "%<%f%h%m%=Page %N")
 -- 			global
 -- 	The format of the header produced in |:hardcopy| output.
 -- 	See |pheader-option|.
 vim.go.printheader = "%<%f%h%m%=Page %N"
+vim.go.pheader = vim.go.printheader
 -- `'printmbcharset'`  `'pmbcs'`   string (default "")
 -- 			global
 -- 	The CJK character set to be used for CJK output from |:hardcopy|.
 -- 	See |pmbcs-option|.
 vim.go.printmbcharset = ""
+vim.go.pmbcs = vim.go.printmbcharset
 -- `'printmbfont'`  `'pmbfn'` 	string (default "")
 -- 			global
 -- 	List of font names to be used for CJK output from |:hardcopy|.
 -- 	See |pmbfn-option|.
 vim.go.printmbfont = ""
+vim.go.pmbfn = vim.go.printmbfont
 -- `'printoptions'`  `'popt'`  string (default "")
 -- 			global
 -- 	List of items that control the format of the output of |:hardcopy|.
 -- 	See |popt-option|.
 vim.go.printoptions = ""
+vim.go.popt = vim.go.printoptions
 vim.go.prompt = true
 -- `'pumblend'`  `'pb'` 		number	(default 0)
 -- 			global
@@ -2445,17 +2565,20 @@ vim.go.prompt = true
 -- <
 -- 	UI-dependent. Works best with RGB colors. `'termguicolors'` 
 vim.go.pumblend = 0
+vim.go.pb = vim.go.pumblend
 -- `'pumheight'`  `'ph'` 	number	(default 0)
 -- 			global
 -- 	Maximum number of items to show in the popup menu
 -- 	(|ins-completion-menu|). Zero means "use available screen space".
 vim.go.pumheight = 0
+vim.go.ph = vim.go.pumheight
 -- `'pumwidth'`  `'pw'` 		number	(default 15)
 -- 			global
 -- 	Minimum width for the popup menu (|ins-completion-menu|).  If the
 -- 	cursor column + `'pumwidth'`  exceeds screen width, the popup menu is
 -- 	nudged to fit on the screen.
 vim.go.pumwidth = 15
+vim.go.pw = vim.go.pumwidth
 -- `'pyxversion'`  `'pyx'` 	number	(default 3)
 -- 			global
 -- 	Specifies the python version used for pyx* functions and commands
@@ -2465,6 +2588,7 @@ vim.go.pumwidth = 15
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.pyxversion = 3
+vim.go.pyx = vim.go.pyxversion
 -- `'quickfixtextfunc'`  `'qftf'` 	string (default "")
 -- 			global
 -- 	This option specifies a function to be used to get the text to display
@@ -2479,6 +2603,7 @@ vim.go.pyxversion = 3
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.quickfixtextfunc = ""
+vim.go.qftf = vim.go.quickfixtextfunc
 -- `'redrawdebug'`  `'rdb'` 	string	(default `''` )
 -- 			global
 -- 	Flags to change the way redrawing works, for debugging purposes.
@@ -2507,6 +2632,7 @@ vim.go.quickfixtextfunc = ""
 -- 	    nodelta	Send all internally redrawn cells to the UI, even if
 -- 	                they are unchanged from the already displayed state.
 vim.go.redrawdebug = ""
+vim.go.rdb = vim.go.redrawdebug
 -- `'redrawtime'`  `'rdt'` 	number	(default 2000)
 -- 			global
 -- 	Time in milliseconds for redrawing the display.  Applies to
@@ -2519,6 +2645,7 @@ vim.go.redrawdebug = ""
 -- 	This is used to avoid that Vim hangs when using a very complicated
 -- 	pattern.
 vim.go.redrawtime = 2000
+vim.go.rdt = vim.go.redrawtime
 -- `'regexpengine'`  `'re'` 	number	(default 0)
 -- 			global
 -- 	This selects the default regexp engine. |two-engines|
@@ -2534,6 +2661,7 @@ vim.go.redrawtime = 2000
 -- 	many states.  This should prevent Vim from hanging on a combination of
 -- 	a complex pattern with long text.
 vim.go.regexpengine = 0
+vim.go.re = vim.go.regexpengine
 vim.go.remap = true
 -- `'report'` 		number	(default 2)
 -- 			global
@@ -2551,6 +2679,7 @@ vim.go.report = 2
 -- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
 -- 	reset.
 vim.go.revins = false
+vim.go.ri = vim.go.revins
 -- `'ruler'`  `'ru'` 		boolean	(default on)
 -- 			global
 -- 	Show the line and column number of the cursor position, separated by a
@@ -2578,6 +2707,7 @@ vim.go.revins = false
 -- 	If you don't want to see the ruler all the time but want to know where
 -- 	you are, use "g CTRL-G" |g_CTRL-G|.
 vim.go.ruler = true
+vim.go.ru = vim.go.ruler
 -- `'rulerformat'`  `'ruf'` 	string	(default empty)
 -- 			global
 -- 	When this option is not empty, it determines the content of the ruler
@@ -2591,6 +2721,7 @@ vim.go.ruler = true
 -- 		:set rulerformat=%15(%c%V\ %p%%%)
 -- <
 vim.go.rulerformat = ""
+vim.go.ruf = vim.go.rulerformat
 -- `'runtimepath'`  `'rtp'` 	string	(default:     "$XDG_CONFIG_HOME/nvim,
 -- 					       $XDG_CONFIG_DIRS[1]/nvim,
 -- 					       $XDG_CONFIG_DIRS[2]/nvim,
@@ -2677,7 +2808,8 @@ vim.go.rulerformat = ""
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
 -- 	Minimal number of lines to scroll when the cursor gets off the
@@ -2687,6 +2819,7 @@ vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.loca
 -- 	percentage of the window height.  Thus -50 scrolls half the window
 -- 	height.
 vim.go.scrolljump = 1
+vim.go.sj = vim.go.scrolljump
 -- `'scrollopt'`  `'sbo'` 	string	(default "ver,jump")
 -- 			global
 -- 	This is a comma-separated list of words that specifies how
@@ -2717,12 +2850,14 @@ vim.go.scrolljump = 1
 -- 	When `'diff'`  mode is active there always is vertical scroll binding,
 -- 	even when "ver" isn't there.
 vim.go.scrollopt = "ver,jump"
+vim.go.sbo = vim.go.scrollopt
 -- `'sections'`  `'sect'` 	string	(default "SHNHH HUnhsh")
 -- 			global
 -- 	Specifies the nroff macros that separate sections.  These are pairs of
 -- 	two letters (See |object-motions|).  The default makes a section start
 -- 	at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
 vim.go.sections = "SHNHH HUnhsh"
+vim.go.sect = vim.go.sections
 -- `'secure'` 		boolean	(default off)
 -- 			global
 -- 	When on, ":autocmd", shell and write commands are not allowed in
@@ -2757,6 +2892,7 @@ vim.go.secure = false
 -- 
 -- 	The `'selection'`  option is set by the |:behave| command.
 vim.go.selection = "inclusive"
+vim.go.sel = vim.go.selection
 -- `'selectmode'`  `'slm'` 	string	(default "")
 -- 			global
 -- 	This is a comma-separated list of words, which specifies when to start
@@ -2768,6 +2904,7 @@ vim.go.selection = "inclusive"
 -- 	See |Select-mode|.
 -- 	The `'selectmode'`  option is set by the |:behave| command.
 vim.go.selectmode = ""
+vim.go.slm = vim.go.selectmode
 -- `'sessionoptions'`  `'ssop'` 	string	(default: "blank,buffers,curdir,folds,
 -- 					       help,tabpages,winsize,terminal")
 -- 			global
@@ -2809,6 +2946,7 @@ vim.go.selectmode = ""
 -- 	If you leave out "options" many things won't work well after restoring
 -- 	the session.
 vim.go.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
+vim.go.ssop = vim.go.sessionoptions
 -- `'shada'`  `'sd'` 		string	(default for
 -- 				   Win32:  !,'100,<50,s10,h,rA:,rB:
 -- 				   others: !,'100,<50,s10,h)
@@ -2924,6 +3062,7 @@ vim.go.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,termin
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.shada = "!,'100,<50,s10,h"
+vim.go.sd = vim.go.shada
 -- `'shadafile'`  `'sdf'` 	string	(default: "")
 -- 			global
 -- 	When non-empty, overrides the file name used for |shada| (viminfo).
@@ -2933,6 +3072,7 @@ vim.go.shada = "!,'100,<50,s10,h"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.shadafile = ""
+vim.go.sdf = vim.go.shadafile
 -- `'shell'`  `'sh'` 		string	(default $SHELL or "sh", Win32: "cmd.exe")
 -- 			global
 -- 	Name of the shell to use for ! and :! commands.  When changing the
@@ -2980,7 +3120,8 @@ vim.go.shadafile = ""
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shell = "sh"
+vim.go.shell = "/usr/bin/fish"
+vim.go.sh = vim.go.shell
 -- `'shellcmdflag'`  `'shcf'` 	string	(default: "-c"; Windows: "/s /c")
 -- 			global
 -- 	Flag passed to the shell to execute "!" and ":!" commands; e.g.,
@@ -2995,6 +3136,7 @@ vim.go.shell = "sh"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.shellcmdflag = "-c"
+vim.go.shcf = vim.go.shellcmdflag
 -- `'shellpipe'`  `'sp'` 	string	(default ">", ">%s 2>&1", "| tee", "|& tee" or
 -- 				 "2>&1| tee")
 -- 			global
@@ -3026,7 +3168,8 @@ vim.go.shellcmdflag = "-c"
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellpipe = "| tee"
+vim.go.shellpipe = "2>&1| tee"
+vim.go.sp = vim.go.shellpipe
 -- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
 -- 					contains "sh" somewhere: "\"")
 -- 			global
@@ -3042,6 +3185,7 @@ vim.go.shellpipe = "| tee"
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.shellquote = ""
+vim.go.shq = vim.go.shellquote
 -- `'shellredir'`  `'srr'` 	string	(default ">", ">&" or ">%s 2>&1")
 -- 			global
 -- 	String to be used to put the output of a filter command in a temporary
@@ -3065,7 +3209,8 @@ vim.go.shellquote = ""
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellredir = ">"
+vim.go.shellredir = ">%s 2>&1"
+vim.go.srr = vim.go.shellredir
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
 -- 			{only for MS-Windows}
@@ -3081,6 +3226,7 @@ vim.go.shellredir = ">"
 -- 		if exists(`'+shellslash'` )
 -- <	Also see `'completeslash'` .
 vim.go.shellslash = false
+vim.go.ssl = vim.go.shellslash
 -- `'shelltemp'`  `'stmp'` 	boolean	(default on)
 -- 			global
 -- 	When on, use temp files for shell commands.  When off use a pipe.
@@ -3094,12 +3240,14 @@ vim.go.shellslash = false
 -- 	`'shelltemp'`  is off.
 -- 	|system()| does not respect this option, it always uses pipes.
 vim.go.shelltemp = true
+vim.go.stmp = vim.go.shelltemp
 -- `'shellxescape'`  `'sxe'` 	string	(default: "")
 -- 			global
 -- 	When `'shellxquote'`  is set to "(" then the characters listed in this
 -- 	option will be escaped with a `'^'`  character.  This makes it possible
 -- 	to execute most external commands with cmd.exe.
 vim.go.shellxescape = ""
+vim.go.sxe = vim.go.shellxescape
 -- `'shellxquote'`  `'sxq'` 	string	(default: "", Windows: "\"")
 -- 			global
 -- 	Quoting character(s), put around the command passed to the shell, for
@@ -3112,12 +3260,14 @@ vim.go.shellxescape = ""
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.shellxquote = ""
+vim.go.sxq = vim.go.shellxquote
 -- `'shiftround'`  `'sr'` 	boolean	(default off)
 -- 			global
 -- 	Round indent to multiple of `'shiftwidth'` .  Applies to > and <
 -- 	commands.  CTRL-T and CTRL-D in Insert mode always round the indent to
 -- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
 vim.go.shiftround = false
+vim.go.sr = vim.go.shiftround
 -- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
 -- 			global
 -- 	This option helps to avoid all the |hit-enter| prompts caused by file
@@ -3173,6 +3323,7 @@ vim.go.shiftround = false
 -- 	    shm=a	Abbreviation, but no loss of information.
 -- 	    shm=at	Abbreviation, and truncate message when necessary.
 vim.go.shortmess = "filnxtToOF"
+vim.go.shm = vim.go.shortmess
 -- `'showcmd'`  `'sc'` 		boolean	(default: on)
 -- 			global
 -- 	Show (partial) command in the last line of the screen.  Set this
@@ -3186,6 +3337,7 @@ vim.go.shortmess = "filnxtToOF"
 -- 	- When selecting a block, the size in screen characters:
 -- 	  {lines}x{columns}.
 vim.go.showcmd = true
+vim.go.sc = vim.go.showcmd
 -- `'showfulltag'`  `'sft'` 	boolean (default off)
 -- 			global
 -- 	When completing a word in insert mode (see |ins-completion|) from the
@@ -3197,6 +3349,7 @@ vim.go.showcmd = true
 -- 	`'completeopt'` , because the completion from the search pattern may not
 -- 	match the typed text.
 vim.go.showfulltag = false
+vim.go.sft = vim.go.showfulltag
 -- `'showmatch'`  `'sm'` 	boolean	(default off)
 -- 			global
 -- 	When a bracket is inserted, briefly jump to the matching one.  The
@@ -3217,12 +3370,14 @@ vim.go.showfulltag = false
 -- 	around |pi_paren.txt|.
 -- 	Note: Use of the short form is rated PG.
 vim.go.showmatch = false
+vim.go.sm = vim.go.showmatch
 -- `'showmode'`  `'smd'` 	boolean	(default: on)
 -- 			global
 -- 	If in Insert, Replace or Visual mode put a message on the last line.
 -- 	The |hl-ModeMsg| highlight group determines the highlighting.
 -- 	The option has no effect when `'cmdheight'`  is zero.
 vim.go.showmode = true
+vim.go.smd = vim.go.showmode
 -- `'showtabline'`  `'stal'` 	number	(default 1)
 -- 			global
 -- 	The value of this option specifies when the line with tab page labels
@@ -3234,6 +3389,7 @@ vim.go.showmode = true
 -- 	line.
 -- 	See |tab-page| for more information about tab pages.
 vim.go.showtabline = 1
+vim.go.stal = vim.go.showtabline
 -- `'sidescroll'`  `'ss'` 	number	(default 1)
 -- 			global
 -- 	The minimal number of columns to scroll horizontally.  Used only when
@@ -3242,6 +3398,7 @@ vim.go.showtabline = 1
 -- 	When using a slow terminal set it to a large number or 0.  Not used
 -- 	for "zh" and "zl" commands.
 vim.go.sidescroll = 1
+vim.go.ss = vim.go.sidescroll
 -- `'smartcase'`  `'scs'` 	boolean	(default off)
 -- 			global
 -- 	Override the `'ignorecase'`  option if the search pattern contains upper
@@ -3251,6 +3408,7 @@ vim.go.sidescroll = 1
 -- 	"*" and "#" you can make `'smartcase'`  used by doing a "/" command,
 -- 	recalling the search pattern from history and hitting <Enter>.
 vim.go.smartcase = false
+vim.go.scs = vim.go.smartcase
 -- `'smarttab'`  `'sta'` 	boolean	(default on)
 -- 			global
 -- 	When on, a <Tab> in front of a line inserts blanks according to
@@ -3266,6 +3424,7 @@ vim.go.smartcase = false
 -- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
 -- 	reset.
 vim.go.smarttab = true
+vim.go.sta = vim.go.smarttab
 -- `'spellsuggest'`  `'sps'` 	string	(default "best")
 -- 			global
 -- 	Methods used for spelling suggestions.  Both for the |z=| command and
@@ -3332,11 +3491,13 @@ vim.go.smarttab = true
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.spellsuggest = "best"
+vim.go.sps = vim.go.spellsuggest
 -- `'splitbelow'`  `'sb'` 	boolean	(default off)
 -- 			global
 -- 	When on, splitting a window will put the new window below the current
 -- 	one. |:split|
 vim.go.splitbelow = false
+vim.go.sb = vim.go.splitbelow
 -- `'splitkeep'`  `'spk'` 	string	(default "cursor")
 -- 			global
 -- 	The value of this option determines the scroll behavior when opening,
@@ -3352,11 +3513,13 @@ vim.go.splitbelow = false
 -- 	with the previous cursor position. For "screen", the text cannot always
 -- 	be kept on the same screen line	when `'wrap'`  is enabled.
 vim.go.splitkeep = "cursor"
+vim.go.spk = vim.go.splitkeep
 -- `'splitright'`  `'spr'` 	boolean	(default off)
 -- 			global
 -- 	When on, splitting a window will put the new window right of the
 -- 	current one. |:vsplit|
 vim.go.splitright = false
+vim.go.spr = vim.go.splitright
 -- `'startofline'`  `'sol'` 	boolean	(default off)
 -- 			global
 -- 	When "on" the commands listed below move the cursor to the first
@@ -3369,6 +3532,7 @@ vim.go.splitright = false
 -- 	In case of buffer changing commands the cursor is placed at the column
 -- 	where it was the last time the buffer was edited.
 vim.go.startofline = false
+vim.go.sol = vim.go.startofline
 -- `'suffixes'`  `'su'` 		string	(default ".bak,~,.o,.h,.info,.swp,.obj")
 -- 			global
 -- 	Files with these suffixes get a lower priority when multiple files
@@ -3382,6 +3546,7 @@ vim.go.startofline = false
 -- 	suffixes from the list.  This avoids problems when a future version
 -- 	uses another default.
 vim.go.suffixes = ".bak,~,.o,.h,.info,.swp,.obj"
+vim.go.su = vim.go.suffixes
 -- `'switchbuf'`  `'swb'` 	string	(default "uselast")
 -- 			global
 -- 	This option controls the behavior when switching between buffers.
@@ -3408,6 +3573,7 @@ vim.go.suffixes = ".bak,~,.o,.h,.info,.swp,.obj"
 -- 	   uselast	If included, jump to the previously used window when
 -- 			jumping to errors with |quickfix| commands.
 vim.go.switchbuf = "uselast"
+vim.go.swb = vim.go.switchbuf
 -- `'tabline'`  `'tal'` 		string	(default empty)
 -- 			global
 -- 	When non-empty, this option determines the content of the tab pages
@@ -3431,11 +3597,13 @@ vim.go.switchbuf = "uselast"
 -- 	Keep in mind that only one of the tab pages is the current one, others
 -- 	are invisible and you can't jump to their windows.
 vim.go.tabline = ""
+vim.go.tal = vim.go.tabline
 -- `'tabpagemax'`  `'tpm'` 	number	(default 50)
 -- 			global
 -- 	Maximum number of tab pages to be opened by the |-p| command line
 -- 	argument or the ":tab all" command. |tabpage|
 vim.go.tabpagemax = 50
+vim.go.tpm = vim.go.tabpagemax
 -- `'tagbsearch'`  `'tbs'` 	boolean	(default on)
 -- 			global
 -- 	When searching for a tag (e.g., for the |:ta| command), Vim can either
@@ -3487,15 +3655,18 @@ vim.go.tabpagemax = 50
 -- 	This option doesn't affect commands that find all matching tags (e.g.,
 -- 	command-line completion and ":help").
 vim.go.tagbsearch = true
+vim.go.tbs = vim.go.tagbsearch
 -- `'taglength'`  `'tl'` 	number	(default 0)
 -- 			global
 -- 	If non-zero, tags are significant up to this number of characters.
 vim.go.taglength = 0
+vim.go.tl = vim.go.taglength
 -- `'tagrelative'`  `'tr'` 	boolean	(default: on)
 -- 			global
 -- 	If on and using a tags file in another directory, file names in that
 -- 	tags file are relative to the directory where the tags file is.
 vim.go.tagrelative = true
+vim.go.tr = vim.go.tagrelative
 -- `'tagstack'`  `'tgst'` 	boolean	(default on)
 -- 			global
 -- 	When on, the |tagstack| is used normally.  When off, a ":tag" or
@@ -3506,6 +3677,7 @@ vim.go.tagrelative = true
 -- 	Resetting this option is useful when using a ":tag" command in a
 -- 	mapping which should not change the tagstack.
 vim.go.tagstack = true
+vim.go.tgst = vim.go.tagstack
 -- `'termbidi'`  `'tbidi'` 	boolean (default off)
 -- 			global
 -- 	The terminal is in charge of Bi-directionality of text (as specified
@@ -3517,13 +3689,16 @@ vim.go.tagstack = true
 -- 	`'arabicshape'`  is ignored, but `'rightleft'`  isn't changed automatically.
 -- 	For further details see |arabic.txt|.
 vim.go.termbidi = false
+vim.go.tbidi = vim.go.termbidi
 vim.go.termencoding = ""
+vim.go.tenc = vim.go.termencoding
 -- `'termguicolors'`  `'tgc'` 	boolean (default off)
 -- 			global
 -- 	Enables 24-bit RGB color in the |TUI|.  Uses "gui" |:highlight|
 -- 	attributes instead of "cterm" attributes. |guifg|
 -- 	Requires an ISO-8613-3 compatible terminal.
 vim.go.termguicolors = false
+vim.go.tgc = vim.go.termguicolors
 -- `'termpastefilter'`  `'tpf'` 	string	(default: "BS,HT,ESC,DEL")
 -- 			global
 -- 	A comma-separated list of options for specifying control characters
@@ -3545,11 +3720,13 @@ vim.go.termguicolors = false
 -- 
 -- 	   C1	    Control characters 0x80...0x9F
 vim.go.termpastefilter = "BS,HT,ESC,DEL"
+vim.go.tpf = vim.go.termpastefilter
 vim.go.terse = false
 -- `'tildeop'`  `'top'` 		boolean	(default off)
 -- 			global
 -- 	When on: The tilde command "~" behaves like an operator.
 vim.go.tildeop = false
+vim.go.top = vim.go.tildeop
 -- `'timeout'`  `'to'` 		boolean (default on)
 -- 			global
 -- 	This option and `'timeoutlen'`  determine the behavior when part of a
@@ -3557,10 +3734,12 @@ vim.go.tildeop = false
 -- 	pressed and `'timeout'`  is set, Nvim will wait `'timeoutlen'`  milliseconds
 -- 	for any key that can follow <c-f> in a mapping.
 vim.go.timeout = true
+vim.go.to = vim.go.timeout
 -- `'timeoutlen'`  `'tm'` 	number	(default 1000)
 -- 			global
 -- 	Time in milliseconds to wait for a mapped sequence to complete.
 vim.go.timeoutlen = 1000
+vim.go.tm = vim.go.timeoutlen
 -- `'title'` 			boolean	(default off)
 -- 			global
 -- 	When on, the title of the window will be set to the value of
@@ -3636,7 +3815,9 @@ vim.go.ttimeout = true
 -- 	used for CTRL-\ CTRL-N and CTRL-\ CTRL-G when part of a command has
 -- 	been typed.
 vim.go.ttimeoutlen = 50
+vim.go.ttm = vim.go.ttimeoutlen
 vim.go.ttyfast = true
+vim.go.tf = vim.go.ttyfast
 -- `'undodir'`  `'udir'` 	string	(default "$XDG_STATE_HOME/nvim/undo//")
 -- 			global
 -- 	List of directory names for undo files, separated with commas.
@@ -3659,7 +3840,8 @@ vim.go.ttyfast = true
 -- 	Note that unlike `'directory'`  and `'backupdir'` , `'undodir'`  always acts as
 -- 	though the trailing slashes are present (see `'backupdir'`  for what this
 -- 	means).
-vim.go.undodir = "/home/runner/.local/state/nvim/undo//"
+vim.go.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.go.udir = vim.go.undodir
 -- `'undoreload'`  `'ur'` 	number	(default 10000)
 -- 			global
 -- 	Save the whole buffer for undo when reloading it.  This applies to the
@@ -3674,6 +3856,7 @@ vim.go.undodir = "/home/runner/.local/state/nvim/undo//"
 -- 	Note that this causes the whole buffer to be stored in memory.  Set
 -- 	this option to a lower value if you run out of memory.
 vim.go.undoreload = 10000
+vim.go.ur = vim.go.undoreload
 -- `'updatecount'`  `'uc'` 	number	(default: 200)
 -- 			global
 -- 	After typing this many characters the swap file will be written to
@@ -3688,12 +3871,14 @@ vim.go.undoreload = 10000
 -- 	This option has no meaning in buffers where |`'buftype'` | is "nofile"
 -- 	or "nowrite".
 vim.go.updatecount = 200
+vim.go.uc = vim.go.updatecount
 -- `'updatetime'`  `'ut'` 	number	(default 4000)
 -- 			global
 -- 	If this many milliseconds nothing is typed the swap file will be
 -- 	written to disk (see |crash-recovery|).  Also used for the
 -- 	|CursorHold| autocommand event.
 vim.go.updatetime = 4000
+vim.go.ut = vim.go.updatetime
 -- `'verbose'`  `'vbs'` 		number	(default 0)
 -- 			global
 -- 	Sets the verbosity level.  Also set by |-V| and |:verbose|.
@@ -3722,6 +3907,7 @@ vim.go.updatetime = 4000
 -- 
 -- 	If `'verbosefile'`  is set then the verbose messages are not displayed.
 vim.go.verbose = 0
+vim.go.vbs = vim.go.verbose
 -- `'verbosefile'`  `'vfile'` 	string	(default empty)
 -- 			global
 -- 	When not empty all messages are written in a file with this name.
@@ -3732,12 +3918,14 @@ vim.go.verbose = 0
 -- 	The difference with |:redir| is that verbose messages are not
 -- 	displayed when `'verbosefile'`  is set.
 vim.go.verbosefile = ""
+vim.go.vfile = vim.go.verbosefile
 -- `'viewdir'`  `'vdir'` 	string	(default: "$XDG_STATE_HOME/nvim/view//")
 -- 			global
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.viewdir = "/home/runner/.local/state/nvim/view//"
+vim.go.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.go.vdir = vim.go.viewdir
 -- `'viewoptions'`  `'vop'` 	string	(default: "folds,cursor,curdir")
 -- 			global
 -- 	Changes the effect of the |:mkview| command.  It is a comma-separated
@@ -3753,12 +3941,16 @@ vim.go.viewdir = "/home/runner/.local/state/nvim/view//"
 -- 	   slash	|deprecated| Always enabled. Uses "/" in filenames.
 -- 	   unix		|deprecated| Always enabled. Uses "\n" line endings.
 vim.go.viewoptions = "folds,cursor,curdir"
+vim.go.vop = vim.go.viewoptions
 vim.go.viminfo = ""
+vim.go.vi = vim.go.viminfo
 vim.go.viminfofile = ""
+vim.go.vif = vim.go.viminfofile
 -- `'visualbell'`  `'vb'` 	boolean	(default off)
 -- 			global
 -- 	Use visual bell instead of beeping.  Also see `'errorbells'` .
 vim.go.visualbell = false
+vim.go.vb = vim.go.visualbell
 -- `'warn'` 			boolean	(default on)
 -- 			global
 -- 	Give a warning message when a shell command is used while the buffer
@@ -3793,6 +3985,7 @@ vim.go.warn = true
 -- 	line (not an empty line) then it will not move to the next line.  This
 -- 	makes "dl", "cl", "yl" etc. work normally.
 vim.go.whichwrap = "b,s"
+vim.go.ww = vim.go.whichwrap
 -- `'wildchar'`  `'wc'` 		number	(default: <Tab>)
 -- 			global
 -- 	Character you have to type to start wildcard expansion in the
@@ -3805,6 +3998,7 @@ vim.go.whichwrap = "b,s"
 -- 		:set wc=<Tab>
 -- <
 vim.go.wildchar = 9
+vim.go.wc = vim.go.wildchar
 -- `'wildcharm'`  `'wcm'` 	number	(default: none (0))
 -- 			global
 -- 	`'wildcharm'`  works exactly like `'wildchar'` , except that it is
@@ -3816,6 +4010,7 @@ vim.go.wildchar = 9
 -- 		:cnoremap ss so $vim/sessions/*.vim<C-Z>
 -- <	Then after typing :ss you can use CTRL-P & CTRL-N.
 vim.go.wildcharm = 0
+vim.go.wcm = vim.go.wildcharm
 -- `'wildignore'`  `'wig'` 	string	(default "")
 -- 			global
 -- 	A list of file patterns.  A file that matches with one of these
@@ -3830,6 +4025,7 @@ vim.go.wildcharm = 0
 -- 	a pattern from the list.  This avoids problems when a future version
 -- 	uses another default.
 vim.go.wildignore = ""
+vim.go.wig = vim.go.wildignore
 -- `'wildignorecase'`  `'wic'` 	boolean	(default off)
 -- 			global
 -- 	When set case is ignored when completing file names and directories.
@@ -3837,6 +4033,7 @@ vim.go.wildignore = ""
 -- 	Does not apply when the shell is used to expand wildcards, which
 -- 	happens when there are special characters.
 vim.go.wildignorecase = false
+vim.go.wic = vim.go.wildignorecase
 -- `'wildmenu'`  `'wmnu'` 	boolean	(default on)
 -- 			global
 -- 	When `'wildmenu'`  is on, command-line completion operates in an enhanced
@@ -3874,6 +4071,7 @@ vim.go.wildignorecase = false
 -- <
 -- 	|hl-WildMenu| highlights the current match.
 vim.go.wildmenu = true
+vim.go.wmnu = vim.go.wildmenu
 -- `'wildmode'`  `'wim'` 	string	(default: "full")
 -- 			global
 -- 	Completion mode that is used for the character specified with
@@ -3920,6 +4118,7 @@ vim.go.wildmenu = true
 -- <	Complete longest common string, then list alternatives.
 -- 	More info here: |cmdline-completion|.
 vim.go.wildmode = "full"
+vim.go.wim = vim.go.wildmode
 -- `'wildoptions'`  `'wop'` 	string	(default "pum,tagfile")
 -- 			global
 -- 	A list of words that change how |cmdline-completion| is done.
@@ -3932,6 +4131,7 @@ vim.go.wildmode = "full"
 -- 				d	#define
 -- 				f	function
 vim.go.wildoptions = "pum,tagfile"
+vim.go.wop = vim.go.wildoptions
 -- `'winaltkeys'`  `'wak'` 	string	(default "menu")
 -- 			global
 -- 			{only used in Win32}
@@ -3950,6 +4150,7 @@ vim.go.wildoptions = "pum,tagfile"
 -- 	key is never used for the menu.
 -- 	This option is not used for <F10>; on Win32.
 vim.go.winaltkeys = "menu"
+vim.go.wak = vim.go.winaltkeys
 -- `'window'`  `'wi'` 		number  (default screen height - 1)
 -- 			global
 -- 	Window height used for |CTRL-F| and |CTRL-B| when there is only one
@@ -3962,6 +4163,7 @@ vim.go.winaltkeys = "menu"
 -- 	Note: Do not confuse this with the height of the Vim window, use
 -- 	`'lines'`  for that.
 vim.go.window = 23
+vim.go.wi = vim.go.window
 -- `'winheight'`  `'wh'` 	number	(default 1)
 -- 			global
 -- 	Minimal number of lines for the current window.  This is not a hard
@@ -3981,6 +4183,7 @@ vim.go.window = 23
 -- 	`'winheight'`  applies to the current window.  Use `'winminheight'`  to set
 -- 	the minimal height for other windows.
 vim.go.winheight = 1
+vim.go.wh = vim.go.winheight
 -- `'winminheight'`  `'wmh'` 	number	(default 1)
 -- 			global
 -- 	The minimal height of a window, when it's not the current window.
@@ -3993,6 +4196,7 @@ vim.go.winheight = 1
 -- 	large number, it will cause errors when opening more than a few
 -- 	windows.  A value of 0 to 3 is reasonable.
 vim.go.winminheight = 1
+vim.go.wmh = vim.go.winminheight
 -- `'winminwidth'`  `'wmw'` 	number	(default 1)
 -- 			global
 -- 	The minimal width of a window, when it's not the current window.
@@ -4006,6 +4210,7 @@ vim.go.winminheight = 1
 -- 	large number, it will cause errors when opening more than a few
 -- 	windows.  A value of 0 to 12 is reasonable.
 vim.go.winminwidth = 1
+vim.go.wmw = vim.go.winminwidth
 -- `'winwidth'`  `'wiw'` 	number	(default 20)
 -- 			global
 -- 	Minimal number of columns for the current window.  This is not a hard
@@ -4018,11 +4223,13 @@ vim.go.winminwidth = 1
 -- 	`'winwidth'`  applies to the current window.  Use `'winminwidth'`  to set
 -- 	the minimal width for other windows.
 vim.go.winwidth = 20
+vim.go.wiw = vim.go.winwidth
 -- `'wrapscan'`  `'ws'` 		boolean	(default on)
 -- 			global
 -- 	Searches wrap around the end of the file.  Also applies to |]s| and
 -- 	|[s|, searching for spelling mistakes.
 vim.go.wrapscan = true
+vim.go.ws = vim.go.wrapscan
 -- `'write'` 			boolean	(default on)
 -- 			global
 -- 	Allows writing files.  When not set, writing a file is not allowed.
@@ -4035,6 +4242,7 @@ vim.go.write = true
 -- 			global
 -- 	Allows writing to any file with no need for "!" override.
 vim.go.writeany = false
+vim.go.wa = vim.go.writeany
 -- `'writebackup'`  `'wb'` 	boolean	(default on)
 -- 			global
 -- 	Make a backup before overwriting a file.  The backup is removed after
@@ -4050,7 +4258,9 @@ vim.go.writeany = false
 -- 	Depending on `'backupcopy'`  the backup is a new file or the original
 -- 	file renamed (and a new file is written).
 vim.go.writebackup = true
+vim.go.wb = vim.go.writebackup
 vim.go.writedelay = 0
+vim.go.wd = vim.go.writedelay
 
 
 ---@class vim.wo
@@ -4073,201 +4283,11 @@ vim.wo = {}
 -- 	option).
 -- 	Also see |arabic.txt|.
 vim.wo.arabic = false
+vim.wo.arab = vim.wo.arabic
 -- `'breakindent'`  `'bri'` 	boolean (default off)
 -- 			local to window
 -- 	Every wrapped line will continue visually indented (same amount of
 -- 	space as the beginning of that line), thus preserving horizontal blocks
 -- 	of text.
 vim.wo.breakindent = false
--- `'breakindentopt'`  `'briopt'`  string (default empty)
--- 			local to window
--- 	Settings for `'breakindent'` . It can consist of the following optional
--- 	items and must be separated by a comma:
--- 		min:{n}	    Minimum text width that will be kept after
--- 			    applying `'breakindent'` , even if the resulting
--- 			    text should normally be narrower. This prevents
--- 			    text indented almost to the right window border
--- 			    occupying lot of vertical space when broken.
--- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
--- 			    beginning will be shifted by the given number of
--- 			    characters.  It permits dynamic French paragraph
--- 			    indentation (negative) or emphasizing the line
--- 			    continuation (positive).
--- 		sbr	    Display the `'showbreak'`  value before applying the
--- 			    additional indent.
--- 		list:{n}    Adds an additional indent for lines that match a
--- 			    numbered or bulleted list (using the
--- 			    `'formatlistpat'`  setting).
--- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
--- 			    for indentation.
--- 	The default value for min is 20, shift and list is 0.
-vim.wo.breakindentopt = ""
--- `'colorcolumn'`  `'cc'` 	string	(default "")
--- 			local to window
--- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
--- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
--- 	text.  Will make screen redrawing slower.
--- 	The screen column can be an absolute number, or a number preceded with
--- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
--- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
--- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
--- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
--- <
--- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
--- 	A maximum of 256 columns are highlighted.
-vim.wo.colorcolumn = ""
--- `'concealcursor'`  `'cocu'` 	string (default: "")
--- 			local to window
--- 	Sets the modes in which text in the cursor line can also be concealed.
--- 	When the current mode is listed then concealing happens just like in
--- 	other lines.
--- 	  n		Normal mode
--- 	  v		Visual mode
--- 	  i		Insert mode
--- 	  c		Command line editing, for `'incsearch'` 
--- 
--- 	`'v'`  applies to all lines in the Visual area, not only the cursor.
--- 	A useful value is "nc".  This is used in help files.  So long as you
--- 	are moving around text is concealed, but when starting to insert text
--- 	or selecting a Visual area the concealed text is displayed, so that
--- 	you can see what you are doing.
--- 	Keep in mind that the cursor position is not always where it's
--- 	displayed.  E.g., when moving vertically it may change column.
-vim.wo.concealcursor = ""
--- `'conceallevel'`  `'cole'` 	number (default 0)
--- 			local to window
--- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
--- 	is shown:
--- 
--- 	Value		Effect ~
--- 	0		Text is shown normally
--- 	1		Each block of concealed text is replaced with one
--- 			character.  If the syntax item does not have a custom
--- 			replacement character defined (see |:syn-cchar|) the
--- 			character defined in `'listchars'`  is used.
--- 			It is highlighted with the "Conceal" highlight group.
--- 	2		Concealed text is completely hidden unless it has a
--- 			custom replacement character defined (see
--- 			|:syn-cchar|).
--- 	3		Concealed text is completely hidden.
--- 
--- 	Note: in the cursor line concealed text is not hidden, so that you can
--- 	edit and copy the text.  This can be changed with the `'concealcursor'` 
--- 	option.
-vim.wo.conceallevel = 0
--- `'cursorbind'`  `'crb'` 	boolean  (default off)
--- 			local to window
--- 	When this option is set, as the cursor in the current
--- 	window moves other cursorbound windows (windows that also have
--- 	this option set) move their cursors to the corresponding line and
--- 	column.  This option is useful for viewing the
--- 	differences between two versions of a file (see `'diff'` ); in diff mode,
--- 	inserted and deleted lines (though not characters within a line) are
--- 	taken into account.
-vim.wo.cursorbind = false
--- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the screen column of the cursor with CursorColumn
--- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
--- 	slower.
--- 	If you only want the highlighting in the current window you can use
--- 	these autocommands: >
--- 		au WinLeave * set nocursorline nocursorcolumn
--- 		au WinEnter * set cursorline cursorcolumn
--- <
-vim.wo.cursorcolumn = false
--- `'cursorline'`  `'cul'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
--- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
--- 	When Visual mode is active the highlighting isn't used to make it
--- 	easier to see the selected text.
-vim.wo.cursorline = false
--- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
--- 			local to window
--- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
--- 	Valid values:
--- 	"line"		Highlight the text line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"screenline"	Highlight only the screen line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"number"	Highlight the line number of the cursor with
--- 			CursorLineNr |hl-CursorLineNr|.
--- 
--- 	Special value:
--- 	"both"		Alias for the values "line,number".
--- 
--- 	"line" and "screenline" cannot be used together.
-vim.wo.cursorlineopt = "both"
--- `'diff'` 			boolean	(default off)
--- 			local to window
--- 	Join the current window in the group of windows that shows differences
--- 	between files.  See |diff-mode|.
-vim.wo.diff = false
--- `'fillchars'`  `'fcs'` 	string	(default "")
--- 			global or local to window |global-local|
--- 	Characters to fill the statuslines, vertical separators and special
--- 	lines in the window.
--- 	It is a comma-separated list of items.  Each item has a name, a colon
--- 	and the value of that item:
--- 
--- 	  item		default		Used for ~
--- 	  stl		' ' or `'^'` 	statusline of the current window
--- 	  stlnc		' ' or `'='` 	statusline of the non-current windows
--- 	  wbr		' '		window bar
--- 	  horiz		`'─'`  or `'-'` 	horizontal separators |:split|
--- 	  horizup	`'┴'`  or `'-'` 	upwards facing horizontal separator
--- 	  horizdown	`'┬'`  or `'-'` 	downwards facing horizontal separator
--- 	  vert		`'│'`  or `'|'` 	vertical separators |:vsplit|
--- 	  vertleft	`'┤'`  or `'|'` 	left facing vertical separator
--- 	  vertright	`'├'`  or `'|'` 	right facing vertical separator
--- 	  verthoriz	`'┼'`  or `'+'` 	overlapping vertical and horizontal
--- 					separator
--- 	  fold		`'·'`  or `'-'` 	filling `'foldtext'` 
--- 	  foldopen	`'-'` 		mark the beginning of a fold
--- 	  foldclose	`'+'` 		show a closed fold
--- 	  foldsep	`'│'`  or `'|'`       open fold middle marker
--- 	  diff		`'-'` 		deleted lines of the `'diff'`  option
--- 	  msgsep	' '		message separator `'display'` 
--- 	  eob		`'~'` 		empty lines at the end of a buffer
--- 	  lastline	`'@'` 		`'display'`  contains lastline/truncate
--- 
--- 	Any one that is omitted will fall back to the default.  For "stl" and
--- 	"stlnc" the space will be used when there is highlighting, `'^'`  or `'='` 
--- 	otherwise.
--- 
--- 	Note that "horiz", "horizup", "horizdown", "vertleft", "vertright" and
--- 	"verthoriz" are only used when `'laststatus'`  is 3, since only vertical
--- 	window separators are used otherwise.
--- 
--- 	If `'ambiwidth'`  is "double" then "horiz", "horizup", "horizdown",
--- 	"vert", "vertleft", "vertright", "verthoriz", "foldsep" and "fold"
--- 	default to single-byte alternatives.
--- 
--- 	Example: >
--- 	    :set fillchars=stl:^,stlnc:=,vert:│,fold:·,diff:-
--- <	This is similar to the default, except that these characters will also
--- 	be used when there is highlighting.
--- 
--- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
--- 	single-byte and multibyte characters are supported.  But double-width
--- 	characters are not supported.
--- 
--- 	The highlighting used for these items:
--- 	  item		highlight group ~
--- 	  stl		StatusLine		|hl-StatusLine|
--- 	  stlnc		StatusLineNC		|hl-StatusLineNC|
--- 	  wbr		WinBar			|hl-WinBar| or |hl-WinBarNC|
--- 	  horiz		WinSeparator		|hl-WinSeparator|
--- 	  horizup	WinSeparator		|hl-WinSeparator|
--- 	  horizdown	WinSeparator		|hl-WinSeparator|
--- 	  vert		WinSeparator		|hl-WinSeparator|
--- 	  vertleft	WinSeparator		|hl-WinSeparator|
--- 	  vertright	WinSeparator		|hl-WinSeparator|
--- 	  verthoriz	WinSeparator		|hl-WinSeparator|
--- 	  fold		Folded			|hl-Folded|
--- 	  diff		DiffDelete		|hl-DiffDelete|
--- 	  eob		EndOfBuffer		|hl-EndOfBuffer|
--- 	  lastline	NonText			|hl-NonText|
-vim.wo.fillchars = ""
+vim.wo.bri = vim.wo.breakindent

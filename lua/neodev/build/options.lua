@@ -56,6 +56,9 @@ function M.build()
           str = str .. Annotations.comment(docs[name]) .. "\n"
         end
         str = str .. ("%s.%s = %s\n"):format(var, name, default)
+        if option.shortname ~= "" then
+          str = str .. ("%s.%s = %s.%s\n"):format(var, option.shortname, var, name)
+        end
         writer:write(str)
       end
     end)
@@ -77,6 +80,9 @@ function M.build()
     str = str .. ("--- @operator sub: vim.opt.%s\n"):format(name)
     str = str .. ("--- @operator pow: vim.opt.%s\n"):format(name)
     str = str .. ("vim.opt.%s = {}\n"):format(name)
+    if option.shortname ~= "" then
+      str = str .. ("vim.opt.%s = vim.opt.%s\n"):format(option.shortname, name)
+    end
     ---@type string
     local return_type = option.type
 
