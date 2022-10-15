@@ -43,10 +43,17 @@ function M.on_new_config(config, root_dir)
     return
   end
 
+  local lua_dirs = vim.fn.glob(root_dir .. "/**/lua", false, true)
+  table.insert(lua_dirs, "../lua")
+
+  lua_dirs = vim.tbl_map(function(f)
+    return util.fqn(f)
+  end, lua_dirs)
+
   ---@type string[]
-  local lua_dirs = vim.tbl_filter(function(dir)
-    return util.exists(dir)
-  end, vim.fn.glob(root_dir .. "/**/lua", false, true))
+  lua_dirs = vim.tbl_filter(function(dir)
+    return dir and dir or nil
+  end, lua_dirs)
 
   local opts = require("neodev.config").merge()
 

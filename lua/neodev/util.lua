@@ -29,7 +29,7 @@ function M.is_plugin(path)
 end
 
 function M.is_nvim_config(path)
-  return M.has_file(M.fqn(path), M.config_path())
+  return M.has_file(M.fqn(path), M.config_path()) or M.has_file(M.config_path(), M.fqn(path))
 end
 
 function M.keys(tbl)
