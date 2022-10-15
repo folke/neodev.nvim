@@ -1,29 +1,5 @@
 ---@meta
 
--- `'breakindentopt'`  `'briopt'`  string (default empty)
--- 			local to window
--- 	Settings for `'breakindent'` . It can consist of the following optional
--- 	items and must be separated by a comma:
--- 		min:{n}	    Minimum text width that will be kept after
--- 			    applying `'breakindent'` , even if the resulting
--- 			    text should normally be narrower. This prevents
--- 			    text indented almost to the right window border
--- 			    occupying lot of vertical space when broken.
--- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
--- 			    beginning will be shifted by the given number of
--- 			    characters.  It permits dynamic French paragraph
--- 			    indentation (negative) or emphasizing the line
--- 			    continuation (positive).
--- 		sbr	    Display the `'showbreak'`  value before applying the
--- 			    additional indent.
--- 		list:{n}    Adds an additional indent for lines that match a
--- 			    numbered or bulleted list (using the
--- 			    `'formatlistpat'`  setting).
--- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
--- 			    for indentation.
--- 	The default value for min is 20, shift and list is 0.
-vim.wo.breakindentopt = ""
-vim.wo.briopt = vim.wo.breakindentopt
 -- `'colorcolumn'`  `'cc'` 	string	(default "")
 -- 			local to window
 -- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
@@ -1933,7 +1909,7 @@ vim.bo.ofu = vim.bo.omnifunc
 -- <	- A directory name may end in a `':'`  or `'/'` .
 -- 	- Environment variables are expanded |:set_env|.
 -- 	- When using |netrw.vim| URLs can be used.  For example, adding
--- 	  "https://www.vim.org" will make ":find index.html" work.
+-- 	  "http://www.vim.org" will make ":find index.html" work.
 -- 	- Search upwards and downwards in a directory tree using "*", "" and
 -- 	  ";".  See |file-searching| for info and syntax.
 -- 	- Careful with `'\'`  characters, type two to get one in the option: >
@@ -2467,7 +2443,7 @@ function vim.opt.allowrevins:get()end
 -- 	by Vim with the width of glyphs in the font.  Perhaps it also has
 -- 	to be set to "double" under CJK MS-Windows when the system locale is
 -- 	set to one of CJK locales.  See Unicode Standard Annex #11
--- 	(https://www.unicode.org/reports/tr11).
+-- 	(http://www.unicode.org/reports/tr11).
 --- @class vim.opt.ambiwidth: vim.Option
 --- @operator add: vim.opt.ambiwidth
 --- @operator sub: vim.opt.ambiwidth
