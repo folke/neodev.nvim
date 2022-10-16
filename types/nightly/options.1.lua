@@ -1642,7 +1642,7 @@ vim.bo.inex = vim.bo.includeexpr
 -- 	in Insert mode as specified with the `'indentkeys'`  option.
 -- 	When this option is not empty, it overrules the `'cindent'`  and
 -- 	`'smartindent'`  indenting.  When `'lisp'`  is set, this option is
--- 	overridden by the Lisp indentation algorithm.
+-- 	is only used when `'lispoptions'`  contains "expr:1".
 -- 	When `'paste'`  is set this option is not used for indenting.
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
@@ -1744,6 +1744,17 @@ vim.bo.kp = vim.bo.keywordprg
 -- 	calling an external program if `'equalprg'`  is empty.
 -- 	This option is not used when `'paste'`  is set.
 vim.bo.lisp = false
+-- `'lispoptions'`  `'lop'` 	string	(default "")
+-- 			local to buffer
+-- 	Comma-separated list of items that influence the Lisp indenting when
+-- 	enabled with the |`'lisp'` | option.  Currently only one item is
+-- 	supported:
+-- 		expr:1	use `'indentexpr'`  for Lisp indenting when it is set
+-- 		expr:0	do not use `'indentexpr'`  for Lisp indenting (default)
+-- 	Note that when using `'indentexpr'`  the `=` operator indents all the
+-- 	lines, otherwise the first line is not indented (Vi-compatible).
+vim.bo.lispoptions = ""
+vim.bo.lop = vim.bo.lispoptions
 -- `'lispwords'`  `'lw'` 	string	(default is very long)
 -- 			global or local to buffer |global-local|
 -- 	Comma-separated list of words that influence the Lisp indenting when

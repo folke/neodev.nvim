@@ -1750,7 +1750,7 @@ function vim.opt.incsearch:get()end
 -- 	in Insert mode as specified with the `'indentkeys'`  option.
 -- 	When this option is not empty, it overrules the `'cindent'`  and
 -- 	`'smartindent'`  indenting.  When `'lisp'`  is set, this option is
--- 	overridden by the Lisp indentation algorithm.
+-- 	is only used when `'lispoptions'`  contains "expr:1".
 -- 	When `'paste'`  is set this option is not used for indenting.
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
@@ -2279,6 +2279,24 @@ function vim.opt.linespace:get()end
 vim.opt.lisp = {}
 --- @return boolean
 function vim.opt.lisp:get()end
+
+-- `'lispoptions'`  `'lop'` 	string	(default "")
+-- 			local to buffer
+-- 	Comma-separated list of items that influence the Lisp indenting when
+-- 	enabled with the |`'lisp'` | option.  Currently only one item is
+-- 	supported:
+-- 		expr:1	use `'indentexpr'`  for Lisp indenting when it is set
+-- 		expr:0	do not use `'indentexpr'`  for Lisp indenting (default)
+-- 	Note that when using `'indentexpr'`  the `=` operator indents all the
+-- 	lines, otherwise the first line is not indented (Vi-compatible).
+--- @class vim.opt.lispoptions: vim.Option
+--- @operator add: vim.opt.lispoptions
+--- @operator sub: vim.opt.lispoptions
+--- @operator pow: vim.opt.lispoptions
+vim.opt.lispoptions = {}
+vim.opt.lop = vim.opt.lispoptions
+--- @return string[]
+function vim.opt.lispoptions:get()end
 
 -- `'lispwords'`  `'lw'` 	string	(default is very long)
 -- 			global or local to buffer |global-local|
