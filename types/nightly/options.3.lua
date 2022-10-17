@@ -539,7 +539,7 @@ function vim.opt.splitbelow:get()end
 -- 	For the "screen" and "topline" values, the cursor position will be
 -- 	changed when necessary. In this case, the jumplist will be populated
 -- 	with the previous cursor position. For "screen", the text cannot always
--- 	be kept on the same screen line	when `'wrap'`  is enabled.
+-- 	be kept on the same screen line when `'wrap'`  is enabled.
 --- @class vim.opt.splitkeep: vim.Option
 --- @operator add: vim.opt.splitkeep
 --- @operator sub: vim.opt.splitkeep

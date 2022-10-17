@@ -2741,8 +2741,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 					       $XDG_CONFIG_HOME/nvim/after")
 -- 			global
 -- 	List of directories to be searched for these runtime files:
--- 	  filetype.vim	filetypes by file name |new-filetype|
--- 	  scripts.vim	filetypes by file contents |new-filetype-scripts|
+-- 	  filetype.lua	filetypes |new-filetype|
 -- 	  autoload/	automatically loaded scripts |autoload-functions|
 -- 	  colors/	color scheme files |:colorscheme|
 -- 	  compiler/	compiler files |:compiler|
@@ -3511,7 +3510,7 @@ vim.go.sb = vim.go.splitbelow
 -- 	For the "screen" and "topline" values, the cursor position will be
 -- 	changed when necessary. In this case, the jumplist will be populated
 -- 	with the previous cursor position. For "screen", the text cannot always
--- 	be kept on the same screen line	when `'wrap'`  is enabled.
+-- 	be kept on the same screen line when `'wrap'`  is enabled.
 vim.go.splitkeep = "cursor"
 vim.go.spk = vim.go.splitkeep
 -- `'splitright'`  `'spr'` 	boolean	(default off)

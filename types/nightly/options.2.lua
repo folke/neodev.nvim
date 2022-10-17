@@ -3984,8 +3984,7 @@ function vim.opt.rulerformat:get()end
 -- 					       $XDG_CONFIG_HOME/nvim/after")
 -- 			global
 -- 	List of directories to be searched for these runtime files:
--- 	  filetype.vim	filetypes by file name |new-filetype|
--- 	  scripts.vim	filetypes by file contents |new-filetype-scripts|
+-- 	  filetype.lua	filetypes |new-filetype|
 -- 	  autoload/	automatically loaded scripts |autoload-functions|
 -- 	  colors/	color scheme files |:colorscheme|
 -- 	  compiler/	compiler files |:compiler|
