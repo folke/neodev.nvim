@@ -2426,19 +2426,21 @@ function vim.api.nvim_put(lines, type, after, follow) end
 --- @return string
 function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 
--- Selects an item in the completion popupmenu.
+-- Selects an item in the completion popup menu.
 -- 
--- If |ins-completion| is not active this API call is silently ignored.
--- Useful for an external UI using |ui-popupmenu| to control the popupmenu
--- with the mouse. Can also be used in a mapping; use <cmd> |:map-cmd| to
--- ensure the mapping doesn't end completion mode.
+-- If neither |ins-completion| nor |cmdline-completion| popup menu is active
+-- this API call is silently ignored. Useful for an external UI using
+-- |ui-popupmenu| to control the popup menu with the mouse. Can also be used
+-- in a mapping; use <Cmd> |:map-cmd| or a Lua mapping to ensure the mapping
+-- doesn't end completion mode.
 -- 
 -- Parameters: ~
 --   • {item}    Index (zero-based) of the item to select. Value of -1
 --               selects nothing and restores the original text.
---   • {insert}  Whether the selection should be inserted in the buffer.
---   • {finish}  Finish the completion and dismiss the popupmenu. Implies
---               `insert`.
+--   • {insert}  For |ins-completion|, whether the selection should be
+--               inserted in the buffer. Ignored for |cmdline-completion|.
+--   • {finish}  Finish the completion and dismiss the popup menu. Implies
+--               {insert}.
 --   • {opts}    Optional parameters. Reserved for future use.
 --- @param item number
 --- @param insert boolean
