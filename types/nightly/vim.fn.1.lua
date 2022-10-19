@@ -1396,17 +1396,27 @@ function vim.fn.serverlist() end
 -- |RPC| messages. Clients can send |API| commands to the
 -- returned address to control Nvim.
 -- 
--- Returns the address string (may differ from the requested
--- {address}).
+-- Returns the address string (which may differ from the
+-- {address} argument, see below).
 -- 
--- - If {address} contains a colon ":" it is interpreted as
---   a TCP/IPv4/IPv6 address where the last ":" separates host
---   and port (empty or zero assigns a random port).
--- - Else it is interpreted as a named pipe or Unix domain socket
---   path. If there are no slashes it is treated as a name and
---   appended to a generated path.
--- - If {address} is empty it generates a path.
--- 
+-- - If {address} has a colon (":") it is a TCP/IPv4/IPv6 address
+--   where the last ":" separates host and port (empty or zero
+--   assigns a random port).
+-- - Else {address} is the path to a named pipe (except on Windows).
+--   - If {address} has no slashes ("/") it is treated as the
+--     "name" part of a generated path in this format: 
+-- ```vim
+--   stdpath("run").."/{name}.{pid}.{counter}"
+-- ```
+--   - If {address} is omitted the name is "nvim". 
+-- ```vim
+--   :echo serverstart()
+--   => /tmp/nvim.bram/oknANW/nvim.15430.5
+-- ```
+-- Example bash command to list all Nvim servers: 
+-- ```vim
+--   ls ${XDG_RUNTIME_DIR:-${TMPDIR}nvim.${USER}}/.0
+-- ```
 -- Example named pipe: 
 -- ```vim
 --   if has('win32')
