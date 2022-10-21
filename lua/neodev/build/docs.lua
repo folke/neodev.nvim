@@ -20,8 +20,7 @@ M.vim_type_map = {
 
 ---@param name string
 function M.read(name)
-  --- FIXME: vim.fn.expand
-  local docs = vim.fn.expand("$VIMRUNTIME/doc", false, false)
+  local docs = vim.fn.expand("$VIMRUNTIME/doc")
   local txtfile = docs .. "/" .. name .. ".txt"
 
   ---@type string[]

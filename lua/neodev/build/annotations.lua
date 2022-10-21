@@ -54,7 +54,6 @@ function M.comment(str, first)
   return first .. prefix .. str:gsub("\n", "\n" .. prefix)
 end
 
--- TODO: use infer_type or analogue in M.emmy_param
 ---@param param LuaParam
 function M.type(param)
   local type = param.type and param.type ~= "" and param.type or "any"

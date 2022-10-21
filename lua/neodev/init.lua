@@ -26,10 +26,11 @@ function M.setup(opts)
   neoconf(config)
 
   -- leave this for now for backward compatibility
-  local ret = require("neodev.sumneko").setup()
-  ret.settings.legacy = true
-  ---@diagnostic disable-next-line: undefined-field
-  return vim.tbl_deep_extend("force", {}, ret, config.options.lspconfig or {})
+  return {
+    settings = {
+      legacy = true,
+    },
+  }
 end
 
 return M
