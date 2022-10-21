@@ -34,6 +34,33 @@ function M.setup_jsonls(config)
   })
 end
 
+---@return string[]
+function M.get_lua_dirs(root_dir)
+  ---@type table<string, boolean>
+  local lua_dirs = {}
+
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    local name = vim.api.nvim_buf_get_name(buf) or ""
+    local lua_dir = name:match("^(.*/lua/)")
+    if lua_dir and util.has_file(root_dir, lua_dir) then
+      lua_dirs[lua_dir] = true
+    end
+  end
+
+  lua_dirs = vim.tbl_keys(lua_dirs)
+
+  table.insert(lua_dirs, "../lua")
+
+  lua_dirs = vim.tbl_map(function(f)
+    return util.fqn(f)
+  end, lua_dirs)
+
+  ---@type string[]
+  return vim.tbl_filter(function(dir)
+    return dir and util.exists(dir)
+  end, lua_dirs)
+end
+
 function M.on_new_config(config, root_dir)
   -- don't do anything when old style setup was used
   if config.settings.legacy then
@@ -43,17 +70,7 @@ function M.on_new_config(config, root_dir)
     return
   end
 
-  local lua_dirs = vim.fn.glob(root_dir .. "/**/lua", false, true)
-  table.insert(lua_dirs, "../lua")
-
-  lua_dirs = vim.tbl_map(function(f)
-    return util.fqn(f)
-  end, lua_dirs)
-
-  ---@type string[]
-  lua_dirs = vim.tbl_filter(function(dir)
-    return dir and dir or nil
-  end, lua_dirs)
+  local lua_dirs = M.get_lua_dirs(root_dir)
 
   local opts = require("neodev.config").merge()
 
