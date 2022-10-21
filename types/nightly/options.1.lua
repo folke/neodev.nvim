@@ -598,7 +598,7 @@ vim.wo.siso = vim.wo.sidescrolloff
 -- 	   "number"	display signs in the `'number'`  column. If the number
 -- 			column is not present, then behaves like "auto".
 -- 
--- 	Note regarding 'orphaned signs': with signcolumn numbers higher than
+-- 	Note regarding "orphaned signs": with signcolumn numbers higher than
 -- 	1, deleting lines will also remove the associated signs automatically,
 -- 	in contrast to the default Vim behavior of keeping and grouping them.
 -- 	This is done in order for the signcolumn appearance not appear weird
@@ -1302,9 +1302,9 @@ vim.bo.ci = vim.bo.copyindent
 -- 		^\(#\s\s[a-z]*\)
 -- <	You can also use "\ze" just before the name and continue the pattern
 -- 	to check what is following.  E.g. for Javascript, if a function is
--- 	defined with "func_name = function(args)": >
+-- 	defined with `func_name = function(args)`: >
 -- 		^\s=\s*function(
--- <	If the function is defined with "func_name : function() {...": >
+-- <	If the function is defined with `func_name : function() {...`: >
 -- 	        ^\s[:]\sfunction\s*(
 -- <	When using the ":set" command, you need to double the backslashes!
 -- 	To avoid that use `:let` with a single quote string: >
@@ -1452,13 +1452,13 @@ vim.bo.ff = vim.bo.fileformat
 -- 	this use the ":filetype on" command. |:filetype|
 -- 	Setting this option to a different value is most useful in a modeline,
 -- 	for a file for which the file type is not automatically recognized.
--- 	Example, for in an IDL file:
--- 		/* vim: set filetype=idl : */ ~
--- 	|FileType| |filetypes|
+-- 	Example, for in an IDL file: >
+-- 		/* vim: set filetype=idl : */
+-- <	|FileType| |filetypes|
 -- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example:
--- 		/* vim: set filetype=c.doxygen : */ ~
--- 	This will use the "c" filetype first, then the "doxygen" filetype.
+-- 	names.  Example: >
+-- 		/* vim: set filetype=c.doxygen : */
+-- <	This will use the "c" filetype first, then the "doxygen" filetype.
 -- 	This works both for filetype plugins and for syntax files.  More than
 -- 	one dot may appear.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
@@ -2183,12 +2183,12 @@ vim.bo.smc = vim.bo.synmaxcol
 -- 	Otherwise this option does not always reflect the current syntax (the
 -- 	b:current_syntax variable does).
 -- 	This option is most useful in a modeline, for a file which syntax is
--- 	not automatically recognized.  Example, in an IDL file:
--- 		/* vim: set syntax=idl : */ ~
--- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example:
--- 		/* vim: set syntax=c.doxygen : */ ~
--- 	This will use the "c" syntax first, then the "doxygen" syntax.
+-- 	not automatically recognized.  Example, in an IDL file: >
+-- 		/* vim: set syntax=idl : */
+-- <	When a dot appears in the value then this separates two filetype
+-- 	names.  Example: >
+-- 		/* vim: set syntax=c.doxygen : */
+-- <	This will use the "c" syntax first, then the "doxygen" syntax.
 -- 	Note that the second one must be prepared to be loaded as an addition,
 -- 	otherwise it will be skipped.  More than one dot may appear.
 -- 	To switch off syntax highlighting for the current file, use: >
@@ -4105,9 +4105,9 @@ function vim.opt.debug:get()end
 -- 		^\(#\s\s[a-z]*\)
 -- <	You can also use "\ze" just before the name and continue the pattern
 -- 	to check what is following.  E.g. for Javascript, if a function is
--- 	defined with "func_name = function(args)": >
+-- 	defined with `func_name = function(args)`: >
 -- 		^\s=\s*function(
--- <	If the function is defined with "func_name : function() {...": >
+-- <	If the function is defined with `func_name : function() {...`: >
 -- 	        ^\s[:]\sfunction\s*(
 -- <	When using the ":set" command, you need to double the backslashes!
 -- 	To avoid that use `:let` with a single quote string: >

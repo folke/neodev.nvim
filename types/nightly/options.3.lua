@@ -195,7 +195,7 @@ function vim.opt.sidescrolloff:get()end
 -- 	   "number"	display signs in the `'number'`  column. If the number
 -- 			column is not present, then behaves like "auto".
 -- 
--- 	Note regarding 'orphaned signs': with signcolumn numbers higher than
+-- 	Note regarding "orphaned signs": with signcolumn numbers higher than
 -- 	1, deleting lines will also remove the associated signs automatically,
 -- 	in contrast to the default Vim behavior of keeping and grouping them.
 -- 	This is done in order for the signcolumn appearance not appear weird
@@ -919,12 +919,12 @@ function vim.opt.synmaxcol:get()end
 -- 	Otherwise this option does not always reflect the current syntax (the
 -- 	b:current_syntax variable does).
 -- 	This option is most useful in a modeline, for a file which syntax is
--- 	not automatically recognized.  Example, in an IDL file:
--- 		/* vim: set syntax=idl : */ ~
--- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example:
--- 		/* vim: set syntax=c.doxygen : */ ~
--- 	This will use the "c" syntax first, then the "doxygen" syntax.
+-- 	not automatically recognized.  Example, in an IDL file: >
+-- 		/* vim: set syntax=idl : */
+-- <	When a dot appears in the value then this separates two filetype
+-- 	names.  Example: >
+-- 		/* vim: set syntax=c.doxygen : */
+-- <	This will use the "c" syntax first, then the "doxygen" syntax.
 -- 	Note that the second one must be prepared to be loaded as an addition,
 -- 	otherwise it will be skipped.  More than one dot may appear.
 -- 	To switch off syntax highlighting for the current file, use: >

@@ -453,13 +453,13 @@ function vim.opt.fileignorecase:get()end
 -- 	this use the ":filetype on" command. |:filetype|
 -- 	Setting this option to a different value is most useful in a modeline,
 -- 	for a file for which the file type is not automatically recognized.
--- 	Example, for in an IDL file:
--- 		/* vim: set filetype=idl : */ ~
--- 	|FileType| |filetypes|
+-- 	Example, for in an IDL file: >
+-- 		/* vim: set filetype=idl : */
+-- <	|FileType| |filetypes|
 -- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example:
--- 		/* vim: set filetype=c.doxygen : */ ~
--- 	This will use the "c" filetype first, then the "doxygen" filetype.
+-- 	names.  Example: >
+-- 		/* vim: set filetype=c.doxygen : */
+-- <	This will use the "c" filetype first, then the "doxygen" filetype.
 -- 	This works both for filetype plugins and for syntax files.  More than
 -- 	one dot may appear.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
