@@ -13,6 +13,7 @@ function M.setup()
     end
     if config.name == "sumneko_lua" then
       config.on_new_config = hook(config.on_new_config, M.on_new_config)
+      -- config.before_init = hook(config.before_init, M.before_init)
     end
   end)
 end
@@ -59,6 +60,10 @@ function M.get_lua_dirs(root_dir)
   return vim.tbl_filter(function(dir)
     return dir and util.exists(dir)
   end, lua_dirs)
+end
+
+function M.before_init(params, config)
+  M.on_new_config(config, params.rootPath)
 end
 
 function M.on_new_config(config, root_dir)

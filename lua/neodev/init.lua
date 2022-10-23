@@ -17,11 +17,14 @@ local function neoconf(config)
   end)
 end
 
----@param opts LuaDevOptions
+---@param opts? LuaDevOptions
 function M.setup(opts)
   local config = require("neodev.config")
   config.setup(opts)
-  require("neodev.lsp").setup()
+
+  if config.options.lspconfig then
+    require("neodev.lsp").setup()
+  end
 
   neoconf(config)
 

@@ -62,7 +62,10 @@ Plug 'folke/neodev.nvim'
   -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
   -- for any other directory, config.library.enabled will be set to false
   override = function(root_dir, options) end,
-
+  -- With lspconfig, Neodev will automatically setup your lua-language-server
+  -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
+  -- in your lsp start options
+  lspconfig = true,
 }
 ```
 
@@ -112,6 +115,25 @@ require("neodev").setup({
   end,
 })
 ```
+
+It's possible to setup Neodev without lspconfig, by configuring the `before_init`
+of the options passed to `vim.lsp.start`.
+
+<details>
+<summary>Example without lspconfig</summary>
+
+```lua
+require("neodev").setup()
+vim.lsp.start({
+  name = "lua-language-server",
+  cmd = { "lua-language-server" },
+  before_init = require("neodev.lsp").before_init,
+  root_dir = vim.fn.getcwd(),
+  settings = { Lua = {} },
+})
+```
+
+</details>
 
 ## ❓ How?
 

@@ -17,6 +17,10 @@ M.defaults = {
   -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
   -- for any other directory, config.library.enabled will be set to false
   override = function(root_dir, options) end,
+  -- With lspconfig, Neodev will automatically setup your lua-language-server
+  -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
+  -- in your lsp start options
+  lspconfig = true,
   debug = false,
   experimental = {
     pathStrict = false, -- much faster, but needs a nightly built of lua-language-server

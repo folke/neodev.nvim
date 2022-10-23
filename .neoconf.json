@@ -6,7 +6,7 @@
       }
     }
   },
-  "lua-dev": {
+  "neodev": {
     "library": {
       "enabled": true,
       "plugins": [
