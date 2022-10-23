@@ -88,7 +88,10 @@ CONFIGURATION                                           *neodev-configuration*
       -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
       -- for any other directory, config.library.enabled will be set to false
       override = function(root_dir, options) end,
-    
+      -- With lspconfig, Neodev will automatically setup your lua-language-server
+      -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
+      -- in your lsp start options
+      lspconfig = true,
     }
 <
 
@@ -140,6 +143,23 @@ Example for setting up **neodev** that overrides the settings for `/etc/nixos`
           library.plugins = true
         end
       end,
+    })
+<
+
+
+It’s possible to setup Neodev without lspconfig, by configuring the
+`before_init` of the options passed to `vim.lsp.start`.
+
+Example without lspconfig
+
+>
+    require("neodev").setup()
+    vim.lsp.start({
+      name = "lua-language-server",
+      cmd = { "lua-language-server" },
+      before_init = require("neodev.lsp").before_init,
+      root_dir = vim.fn.getcwd(),
+      settings = { Lua = {} },
     })
 <
 
