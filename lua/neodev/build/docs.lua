@@ -118,20 +118,38 @@ function M.parse_signature(line)
   if name then
     -- Parse args
     local optional_from = sig:find("%[")
+    sig = sig:gsub("%[", "")
+    sig = sig:gsub("%]", "")
+    sig = sig:gsub("\n", " ")
+    sig = sig:gsub("\t", " ")
     local params = {}
+    local index = {}
     local from = 0
     local to = 0
     local param = ""
     while from do
       ---@type number, number, string
-      from, to, param = sig:find("{(%S-)}", to)
+      from, to, param = sig:find("{?([^ ,{}]+)}?", to + 1)
       if from then
-        local optional = optional_from and from > optional_from and true or nil
+        local optional = optional_from and from >= optional_from and true or nil
         if param:sub(1, 1) == "*" then
           optional = true
           param = param:sub(2)
         end
         param = param:gsub("%-", "_")
+        if param:find("^%d+$") then
+          param = "p" .. param
+        end
+
+        -- check for duplicate params
+        local p = param
+        local c = 1
+        while index[param] do
+          param = p .. c
+          c = c + 1
+        end
+        index[param] = true
+
         table.insert(params, {
           name = param,
           optional = optional,

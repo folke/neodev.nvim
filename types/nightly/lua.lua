@@ -115,7 +115,8 @@ function vim.regex(re) end
 -- 
 -- This function also works in a fast callback |lua-loop-callbacks|.
 --- @param args? any[]
-function vim.rpcnotify(channel, method, args) end
+--- @param ...? any
+function vim.rpcnotify(channel, method, args, ...) end
 
 -- Sends a request to {channel} to invoke {method} via |RPC| and blocks until
 -- a response is received.
@@ -123,7 +124,8 @@ function vim.rpcnotify(channel, method, args) end
 -- Note: NIL values as part of the return value is represented as |vim.NIL|
 -- special value
 --- @param args? any[]
-function vim.rpcrequest(channel, method, args) end
+--- @param ...? any
+function vim.rpcrequest(channel, method, args, ...) end
 
 -- Schedules {callback} to be invoked soon by the main event-loop. Useful
 -- to avoid |textlock| or other temporary restrictions.

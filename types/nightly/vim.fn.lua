@@ -72,7 +72,7 @@ function vim.fn.add(object, expr) end
 -- Can also be used as a |method|: >
 --   :let flag = bits->and(0x80)
 --- @return number
-vim.fn["and"] = function(expr, expr) end
+vim.fn["and"] = function(expr, expr1) end
 
 -- Returns Dictionary of |api-metadata|.
 -- 
@@ -2707,8 +2707,9 @@ function vim.fn.getchangelist(buf) end
 --   :endfunction
 -- ```
 -- 
+--- @param expr? any
 --- @return number
-function vim.fn.getchar() end
+function vim.fn.getchar(expr) end
 
 -- The result is a Number which is the state of the modifiers for
 -- the last obtained character with getchar() or in another way.
@@ -2775,8 +2776,9 @@ function vim.fn.getcharsearch() end
 --   if no character is available.
 -- Otherwise this works like |getchar()|, except that a number
 -- result is converted to a string.
+--- @param expr? any
 --- @return string
-function vim.fn.getcharstr() end
+function vim.fn.getcharstr(expr) end
 
 -- Return the type of the current command-line completion.
 -- Only works when the command line is being edited, thus
@@ -3447,9 +3449,10 @@ function vim.fn.getqflist(what) end
 -- Can also be used as a |method|: >
 --   GetRegname()->getreg()
 --- @param regname? any
+--- @param p1? any
 --- @param list? any[]
 --- @return string
-function vim.fn.getreg(regname, list) end
+function vim.fn.getreg(regname, p1, list) end
 
 -- Returns detailed information about register {regname} as a
 -- Dictionary with the following entries:
@@ -4912,8 +4915,8 @@ function vim.fn.log10(expr) end
 -- 
 -- Can also be used as a |method|: >
 --   GetExpr()->luaeval()
---- @param expr? any
-function vim.fn.luaeval(expr, expr) end
+--- @param expr1? any
+function vim.fn.luaeval(expr, expr1) end
 
 -- {expr1} must be a |List|, |Blob| or |Dictionary|.
 -- Replace each item in {expr1} with the result of evaluating
@@ -5818,8 +5821,9 @@ function vim.fn.mkdir(name, path, prot) end
 -- 
 --   Can also be used as a |method|: >
 --     DoFull()->mode()
+--- @param expr? any
 --- @return string
-function vim.fn.mode() end
+function vim.fn.mode(expr) end
 
 -- Convert a list of VimL objects to msgpack. Returned value is a
 -- |readfile()|-style list. When {type} contains "B", a |Blob| is

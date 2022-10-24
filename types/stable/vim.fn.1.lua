@@ -159,7 +159,7 @@ function vim.fn.nr2char(expr, utf8) end
 -- to separate commands.  In many places it would not be clear if
 -- "|" is an operator or a command separator.
 --- @return number
-vim.fn["or"] = function(expr, expr) end
+vim.fn["or"] = function(expr, expr1) end
 
 -- Shorten directory names in the path {path} and return the
 -- result.  The tail, the file name, is kept as-is.  The other
@@ -447,7 +447,7 @@ function vim.fn.prevnonblank(lnum) end
 -- of "%" items.  If there are not sufficient or too many
 -- arguments an error is given.  Up to 18 arguments can be used.
 --- @return string
-function vim.fn.printf(fmt, expr1) end
+function vim.fn.printf(fmt, expr1, ...) end
 
 -- Returns the effective prompt text for buffer {buf}.  {buf} can
 -- be a buffer name or number.  See |prompt-buffer|.
@@ -926,14 +926,16 @@ function vim.fn.round(expr) end
 -- Example: >
 --   :au VimLeave call rpcnotify(0, "leaving")
 --- @param args? any[]
-function vim.fn.rpcnotify(channel, event, args) end
+--- @param ...? any
+function vim.fn.rpcnotify(channel, event, args, ...) end
 
 -- Sends a request to {channel} to invoke {method} via
 -- |RPC| and blocks until a response is received.
 -- Example: >
 --   :let result = rpcrequest(rpc_chan, "func", 1, 2, 3)
 --- @param args? any[]
-function vim.fn.rpcrequest(channel, method, args) end
+--- @param ...? any
+function vim.fn.rpcrequest(channel, method, args, ...) end
 
 -- Deprecated. Replace  
 -- ```vim
@@ -4489,5 +4491,5 @@ function vim.fn.writefile(object, fname, flags) end
 -- ```
 -- 
 --- @return number
-function vim.fn.xor(expr, expr) end
+function vim.fn.xor(expr, expr1) end
 
