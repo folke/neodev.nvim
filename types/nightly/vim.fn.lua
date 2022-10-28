@@ -3599,6 +3599,19 @@ function vim.fn.gettabwinvar(tabnr, winnr, varname, def) end
 --- @return table<string, any>
 function vim.fn.gettagstack(winnr) end
 
+-- Translate String {text} if possible.
+-- This is mainly for use in the distributed Vim scripts.  When
+-- generating message translations the {text} is extracted by
+-- xgettext, the translator can add the translated message in the
+-- .po file and Vim will lookup the translation when gettext() is
+-- called.
+-- For {text} double quoted strings are preferred, because
+-- xgettext does not understand escaping in single quoted
+-- strings.
+--- @param text string
+--- @return string
+function vim.fn.gettext(text) end
+
 -- Returns information about windows as a |List| with Dictionaries.
 -- 
 -- If {winid} is given Information about the window with that ID
@@ -5849,83 +5862,4 @@ function vim.fn.mode(expr) end
 --- @param type? any
 --- @return any[]
 function vim.fn.msgpackdump(list, type) end
-
--- Convert a |readfile()|-style list or a |Blob| to a list of
--- VimL objects.
--- Example: 
--- ```vim
---   let fname = expand('~/.config/nvim/shada/main.shada')
---   let mpack = readfile(fname, 'b')
---   let shada_objects = msgpackparse(mpack)
--- ```
--- This will read ~/.config/nvim/shada/main.shada file to
--- `shada_objects` list.
--- 
--- Limitations:
--- 1. Mapping ordering is not preserved unless messagepack
---    mapping is dumped using generic mapping
---    (|msgpack-special-map|).
--- 2. Since the parser aims to preserve all data untouched
---    (except for 1.) some strings are parsed to
---    |msgpack-special-dict| format which is not convenient to
---    use.
--- 
--- Some messagepack strings may be parsed to special
--- dictionaries. Special dictionaries are dictionaries which
--- 
--- 1. Contain exactly two keys: `_TYPE` and `_VAL`.
--- 2. `_TYPE` key is one of the types found in |v:msgpack_types|
---    variable.
--- 3. Value for `_VAL` has the following format (Key column
---    contains name of the key from |v:msgpack_types|):
--- 
--- Key  Value ~
--- nil  Zero, ignored when dumping.  Not returned by
---   |msgpackparse()| since |v:null| was introduced.
--- boolean  One or zero.  When dumping it is only checked that
---   value is a |Number|.  Not returned by |msgpackparse()|
---   since |v:true| and |v:false| were introduced.
--- integer  |List| with four numbers: sign (-1 or 1), highest two
---   bits, number with bits from 62nd to 31st, lowest 31
---   bits. I.e. to get actual number one will need to use
---   code like 
--- ```vim
---     _VAL[0] * ((_VAL[1] << 62)
---                & (_VAL[2] << 31)
---                & _VAL[3])
--- ```
---   Special dictionary with this type will appear in
---   |msgpackparse()| output under one of the following
---   circumstances:
---   1. |Number| is 32-bit and value is either above
---      INT32_MAX or below INT32_MIN.
---   2. |Number| is 64-bit and value is above INT64_MAX. It
---      cannot possibly be below INT64_MIN because msgpack
---      C parser does not support such values.
--- float  |Float|. This value cannot possibly appear in
---   |msgpackparse()| output.
--- string  |readfile()|-style list of strings. This value will
---   appear in |msgpackparse()| output if string contains
---   zero byte or if string is a mapping key and mapping is
---   being represented as special dictionary for other
---   reasons.
--- binary  |String|, or |Blob| if binary string contains zero
---   byte. This value cannot appear in |msgpackparse()|
---   output since blobs were introduced.
--- array  |List|. This value cannot appear in |msgpackparse()|
---   output.
--- 
--- map  |List| of |List|s with two items (key and value) each.
---   This value will appear in |msgpackparse()| output if
---   parsed mapping contains one of the following keys:
---   1. Any key that is not a string (including keys which
---      are binary strings).
---   2. String with NUL byte inside.
---   3. Duplicate key.
---   4. Empty key.
--- ext  |List| with two values: first is a signed integer
---   representing extension type. Second is
---   |readfile()|-style list of strings.
---- @return any[]
-function vim.fn.msgpackparse(data) end
 

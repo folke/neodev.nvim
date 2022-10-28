@@ -1099,6 +1099,13 @@ function vim.api.nvim_create_augroup(name, opts) end
 --   pattern = { "*.py", "*.pyi" }
 -- ```
 -- 
+-- Note: The `pattern` is passed to callbacks and commands as a literal string; environment
+-- variables like `$HOME` and `~` are not automatically expanded as they are by |:autocmd|. Instead,
+-- |expand()| such variables explicitly: 
+-- ```lua
+--   pattern = vim.fn.expand("~") .. "/some/path/*.py"
+-- ```
+-- 
 -- Example values for event: 
 -- ```lua
 --   "BufWritePre"
@@ -1112,7 +1119,7 @@ function vim.api.nvim_create_augroup(name, opts) end
 --              • group (string|integer) optional: the autocommand group name
 --                or id to match against.
 --              • pattern (string|array) optional: pattern or patterns to
---                match against |autocmd-pattern|.
+--                match literally against |autocmd-pattern|.
 --              • buffer (integer) optional: buffer number for buffer local
 --                autocommands |autocmd-buflocal|. Cannot be used with
 --                {pattern}.
