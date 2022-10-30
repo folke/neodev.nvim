@@ -82,6 +82,22 @@ vim.opt.enc = vim.opt.encoding
 --- @return string
 function vim.opt.encoding:get()end
 
+-- `'endoffile'`  `'eof'` 	boolean	(default on)
+-- 			local to buffer
+-- 	Indicates that a CTRL-Z character was found at the end of the file
+-- 	when reading it.  Normally only happens when `'fileformat'`  is "dos".
+-- 	When writing a file and this option is off and the `'binary'`  option
+-- 	is on, or `'fixeol'`  option is off, no CTRL-Z will be written at the
+-- 	end of the file.
+--- @class vim.opt.endoffile: vim.Option
+--- @operator add: vim.opt.endoffile
+--- @operator sub: vim.opt.endoffile
+--- @operator pow: vim.opt.endoffile
+vim.opt.endoffile = {}
+vim.opt.eof = vim.opt.endoffile
+--- @return boolean
+function vim.opt.endoffile:get()end
+
 -- `'endofline'`  `'eol'` 	boolean	(default on)
 -- 			local to buffer
 -- 	When writing a file and this option is off and the `'binary'`  option
@@ -551,7 +567,7 @@ function vim.opt.fillchars:get()end
 -- `'fixendofline'`  `'fixeol'` 	boolean	(default on)
 -- 			local to buffer
 -- 	When writing a file and this option is on, <EOL> at the end of file
--- 	will be restored if missing. Turn this option off if you want to
+-- 	will be restored if missing.  Turn this option off if you want to
 -- 	preserve the situation from the original file.
 -- 	When the `'binary'`  option is set the value of this option doesn't
 -- 	matter.

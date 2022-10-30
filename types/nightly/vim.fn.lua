@@ -822,12 +822,10 @@ function vim.fn.clearmatches(win) end
 --   buffer.
 --   For the cursor position, when 'virtualedit' is active, the
 --   column is one higher if the cursor is after the end of the
---   line.  This can be used to obtain the column in Insert mode: 
+--   line.  Also, when using a <Cmd> mapping the cursor isn't
+--   moved, this can be used to obtain the column in Insert mode: 
 -- ```vim
---     :imap <F2> <C-O>:let save_ve = &ve<CR>
---       \<C-O>:set ve=all<CR>
---       \<C-O>:echo col(".") .. "\n" <Bar>
---       \let &ve = save_ve<CR>
+--     :imap <F2> <Cmd>echo col(".")<CR>
 -- ```
 --   Can also be used as a |method|: 
 -- ```vim
