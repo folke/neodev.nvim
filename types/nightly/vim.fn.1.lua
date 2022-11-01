@@ -609,6 +609,12 @@ function vim.fn.rand(expr) end
 --- @return any[]
 function vim.fn.range(expr, max, stride) end
 
+-- Read file {fname} in binary mode and return a |Blob|.
+-- When the file can't be opened an error message is given and
+-- the result is an empty |Blob|.
+-- Also see |readfile()| and |writefile()|.
+function vim.fn.readblob(fname) end
+
 -- Return a list with file and directory names in {directory}.
 -- You can also use |glob()| if you don't need to do complicated
 -- things, such as limiting the number of matches.
@@ -660,8 +666,6 @@ function vim.fn.readdir(directory, expr) end
 -- - When the last line ends in a NL an extra empty list item is
 --   added.
 -- - No CR characters are removed.
--- When {type} contains "B" a |Blob| is returned with the binary
--- data of the file unmodified.
 -- Otherwise:
 -- - CR characters that appear before a NL are removed.
 -- - Whether the last line ends in a NL or not does not matter.
@@ -680,6 +684,9 @@ function vim.fn.readdir(directory, expr) end
 -- Note that without {max} the whole file is read into memory.
 -- Also note that there is no recognition of encoding.  Read a
 -- file into a buffer if you need to.
+-- Deprecated (use |readblob()| instead): When {type} contains
+-- "B" a |Blob| is returned with the binary data of the file
+-- unmodified.
 -- When the file can't be opened an error message is given and
 -- the result is an empty list.
 -- Also see |writefile()|.
@@ -4017,6 +4024,12 @@ function vim.fn.wildmenumode() end
 -- ```vim
 --   call win_execute(winid, 'syntax enable')
 -- ```
+-- Doing the same with `setwinvar()` would not trigger
+-- autocommands and not actually show syntax highlighting.
+-- 
+-- When window {id} does not exist then no error is given and
+-- an empty string is returned.
+-- 
 -- Can also be used as a |method|, the base is passed as the
 -- second argument: >
 --   GetCommand()->win_execute(winid)
