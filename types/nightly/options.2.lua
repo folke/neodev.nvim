@@ -89,6 +89,7 @@ function vim.opt.encoding:get()end
 -- 	When writing a file and this option is off and the `'binary'`  option
 -- 	is on, or `'fixeol'`  option is off, no CTRL-Z will be written at the
 -- 	end of the file.
+-- 	See |eol-and-eof| for example settings.
 --- @class vim.opt.endoffile: vim.Option
 --- @operator add: vim.opt.endoffile
 --- @operator sub: vim.opt.endoffile
@@ -111,6 +112,7 @@ function vim.opt.endoffile:get()end
 -- 	to remember the presence of a <EOL> for the last line in the file, so
 -- 	that when you write the file the situation from the original file can
 -- 	be kept.  But you can change it if you want to.
+-- 	See |eol-and-eof| for example settings.
 --- @class vim.opt.endofline: vim.Option
 --- @operator add: vim.opt.endofline
 --- @operator sub: vim.opt.endofline
@@ -572,6 +574,7 @@ function vim.opt.fillchars:get()end
 -- 	When the `'binary'`  option is set the value of this option doesn't
 -- 	matter.
 -- 	See the `'endofline'`  option.
+-- 	See |eol-and-eof| for example settings.
 --- @class vim.opt.fixendofline: vim.Option
 --- @operator add: vim.opt.fixendofline
 --- @operator sub: vim.opt.fixendofline

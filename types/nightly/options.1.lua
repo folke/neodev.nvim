@@ -1345,6 +1345,7 @@ vim.bo.dict = vim.bo.dictionary
 -- 	When writing a file and this option is off and the `'binary'`  option
 -- 	is on, or `'fixeol'`  option is off, no CTRL-Z will be written at the
 -- 	end of the file.
+-- 	See |eol-and-eof| for example settings.
 vim.bo.endoffile = true
 vim.bo.eof = vim.bo.endoffile
 -- `'endofline'`  `'eol'` 	boolean	(default on)
@@ -1360,6 +1361,7 @@ vim.bo.eof = vim.bo.endoffile
 -- 	to remember the presence of a <EOL> for the last line in the file, so
 -- 	that when you write the file the situation from the original file can
 -- 	be kept.  But you can change it if you want to.
+-- 	See |eol-and-eof| for example settings.
 vim.bo.endofline = true
 vim.bo.eol = vim.bo.endofline
 -- `'equalprg'`  `'ep'` 		string	(default "")
@@ -1483,6 +1485,7 @@ vim.bo.ft = vim.bo.filetype
 -- 	When the `'binary'`  option is set the value of this option doesn't
 -- 	matter.
 -- 	See the `'endofline'`  option.
+-- 	See |eol-and-eof| for example settings.
 vim.bo.fixendofline = true
 vim.bo.fixeol = vim.bo.fixendofline
 -- `'formatexpr'`  `'fex'` 	string (default "")
