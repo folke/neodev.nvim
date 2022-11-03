@@ -1,4 +1,4 @@
-*neodev.txt*           For NVIM v0.5.0           Last change: 2022 November 02
+*neodev.txt*           For NVIM v0.5.0           Last change: 2022 November 03
 
 ==============================================================================
 Table of Contents                                   *neodev-table-of-contents*
