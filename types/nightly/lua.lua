@@ -42,6 +42,9 @@ function vim.call(func, ...) end
 --                • "unified": (default) String in unified format.
 --                • "indices": Array of hunk locations.
 --                Note: This option is ignored if `on_hunk` is used.
+--              • `linematch` (boolean): Run linematch on the resulting hunks
+--                from xdiff. Requires `result_type = indices`, ignored
+--                otherwise.
 --              • `algorithm` (string):
 --                Diff algorithm to use. Values:
 --                • "myers"      the default algorithm

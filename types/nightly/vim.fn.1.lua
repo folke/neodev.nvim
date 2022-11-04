@@ -1997,6 +1997,7 @@ function vim.fn.setpos(expr, list) end
 function vim.fn.setqflist(list, action, what) end
 
 -- Set the register {regname} to {value}.
+-- If {regname} is "" or "@", the unnamed register '"' is used.
 -- The {regname} argument is a string.
 -- 
 -- {value} may be any value returned by |getreg()| or

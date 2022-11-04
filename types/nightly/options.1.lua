@@ -1,5 +1,29 @@
 ---@meta
 
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 	The default value for min is 20, shift and list is 0.
+vim.wo.breakindentopt = ""
+vim.wo.briopt = vim.wo.breakindentopt
 -- `'colorcolumn'`  `'cc'` 	string	(default "")
 -- 			local to window
 -- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
@@ -4295,6 +4319,16 @@ function vim.opt.diffexpr:get()end
 -- 		indent-heuristic
 -- 				Use the indent heuristic for the internal
 -- 				diff library.
+-- 
+-- 		linematch:{n}   Enable a second stage diff on each generated
+-- 				hunk in order to align lines. When the total
+-- 				number of lines in a hunk exceeds {n}, the
+-- 				second stage diff will not be performed as
+-- 				very large hunks can cause noticeable lag. A
+-- 				recommended setting is "linematch:60", as this
+-- 				will enable alignment for a 2 buffer diff with
+-- 				hunks of up to 30 lines each, or a 3 buffer
+-- 				diff with hunks of up to 20 lines each.
 -- 
 --                 algorithm:{text} Use the specified diff algorithm with the
 -- 				internal diff engine. Currently supported
