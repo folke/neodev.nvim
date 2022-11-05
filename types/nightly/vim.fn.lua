@@ -107,9 +107,10 @@ function vim.fn.append(lnum, text) end
 -- 
 -- For the use of {buf}, see |bufname()|.
 -- 
--- {lnum} is used like with |append()|.  Note that using |line()|
--- would use the current buffer, not the one appending to.
--- Use "$" to append at the end of the buffer.
+-- {lnum} is the line number to append below.  Note that using
+-- |line()| would use the current buffer, not the one appending
+-- to.  Use "$" to append at the end of the buffer.  Other string
+-- values are not supported.
 -- 
 -- On success 0 is returned, on failure 1 is returned.
 -- 
@@ -1816,22 +1817,31 @@ function vim.fn.expand(string, nosuf) end
 -- like with |expand()|, and environment variables, anywhere in
 -- {string}.  "~user" and "~/path" are only expanded at the
 -- start.
+-- 
+-- The following items are supported in the {options} Dict
+-- argument:
+--     errmsg  If set to TRUE, error messages are displayed
+--     if an error is encountered during expansion.
+--     By default, error messages are not displayed.
+-- 
 -- Returns the expanded string.  If an error is encountered
 -- during expansion, the unmodified {string} is returned.
+-- 
 -- Example: 
 -- ```vim
 --   :echo expandcmd('make %<.o')
+--   make /path/runtime/doc/builtin.o
+--   :echo expandcmd('make %<.o', {'errmsg': v:true})
 -- ```
---   make /path/runtime/doc/builtin.o ~
--- 
 -- Can also be used as a |method|: 
 -- ```vim
 --   GetCommand()->expandcmd()
 -- ```
 -- 
 --- @param string string
+--- @param options? table<string, any>
 --- @return string
-function vim.fn.expandcmd(string) end
+function vim.fn.expandcmd(string, options) end
 
 -- {expr1} and {expr2} must be both |Lists| or both
 -- |Dictionaries|.

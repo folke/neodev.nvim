@@ -1801,8 +1801,8 @@ function vim.fn.setline(lnum, text) end
 --- @return number
 function vim.fn.setloclist(nr, list, action, what) end
 
--- Restores a list of matches saved by |getmatches() for the
--- current window|.  Returns 0 if successful, otherwise -1.  All
+-- Restores a list of matches saved by |getmatches()| for the
+-- current window.  Returns 0 if successful, otherwise -1.  All
 -- current matches are cleared before the list is restored.  See
 -- example for |getmatches()|.
 -- If {win} is specified, use the window with this number or
@@ -2732,6 +2732,21 @@ function vim.fn.str2list(string, utf8) end
 --- @return number
 function vim.fn.str2nr(string, base) end
 
+-- The result is a Number, which is the number of characters
+-- in String {string}.  Composing characters are ignored.
+-- |strchars()| can count the number of characters, counting
+-- composing characters separately.
+-- 
+-- Returns 0 if {string} is empty or on error.
+-- 
+-- Also see |strlen()|, |strdisplaywidth()| and |strwidth()|.
+-- 
+-- Can also be used as a |method|: >
+--   GetText()->strcharlen()
+--- @param string string
+--- @return number
+function vim.fn.strcharlen(string) end
+
 -- Like |strpart()| but using character index and length instead
 -- of byte index and length.  Composing characters are counted
 -- separately.
@@ -2756,6 +2771,7 @@ function vim.fn.strcharpart(src, start, len) end
 -- When {skipcc} is omitted or zero, composing characters are
 -- counted separately.
 -- When {skipcc} set to 1, Composing characters are ignored.
+-- |strcharlen()| always does this.
 -- 
 -- Returns zero on error.
 -- 
