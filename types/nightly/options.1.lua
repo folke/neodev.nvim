@@ -1301,7 +1301,9 @@ vim.bo.cpt = vim.bo.complete
 -- 	This option specifies a function to be used for Insert mode completion
 -- 	with CTRL-X CTRL-U. |i_CTRL-X_CTRL-U|
 -- 	See |complete-functions| for an explanation of how the function is
--- 	invoked and what it should return.
+-- 	invoked and what it should return.  The value can be the name of a
+-- 	function, a |lambda| or a |Funcref|. See |option-value-function| for
+-- 	more information.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.bo.completefunc = ""
@@ -1931,7 +1933,9 @@ vim.bo.nf = vim.bo.nrformats
 -- 	This option specifies a function to be used for Insert mode omni
 -- 	completion with CTRL-X CTRL-O. |i_CTRL-X_CTRL-O|
 -- 	See |complete-functions| for an explanation of how the function is
--- 	invoked and what it should return.
+-- 	invoked and what it should return.  The value can be the name of a
+-- 	function, a |lambda| or a |Funcref|. See |option-value-function| for
+-- 	more information.
 -- 	This option is usually set by a filetype plugin:
 -- 	|:filetype-plugin-on|
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
@@ -2293,7 +2297,9 @@ vim.bo.tc = vim.bo.tagcase
 -- 	This option specifies a function to be used to perform tag searches.
 -- 	The function gets the tag pattern and should return a List of matching
 -- 	tags.  See |tag-function| for an explanation of how to write the
--- 	function and an example.
+-- 	function and an example.  The value can be the name of a function, a
+-- 	|lambda| or a |Funcref|. See |option-value-function| for more
+-- 	information.
 vim.bo.tagfunc = ""
 vim.bo.tfu = vim.bo.tagfunc
 -- `'tags'`  `'tag'` 		string	(default "./tags;,tags")
@@ -2351,6 +2357,8 @@ vim.bo.tsr = vim.bo.thesaurus
 -- 			global or local to buffer |global-local|
 -- 	This option specifies a function to be used for thesaurus completion
 -- 	with CTRL-X CTRL-T. |i_CTRL-X_CTRL-T| See |compl-thesaurusfunc|.
+-- 	The value can be the name of a function, a |lambda| or a |Funcref|.
+-- 	See |option-value-function| for more information.
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
@@ -3637,7 +3645,9 @@ function vim.opt.complete:get()end
 -- 	This option specifies a function to be used for Insert mode completion
 -- 	with CTRL-X CTRL-U. |i_CTRL-X_CTRL-U|
 -- 	See |complete-functions| for an explanation of how the function is
--- 	invoked and what it should return.
+-- 	invoked and what it should return.  The value can be the name of a
+-- 	function, a |lambda| or a |Funcref|. See |option-value-function| for
+-- 	more information.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 --- @class vim.opt.completefunc: vim.Option
@@ -4367,17 +4377,4 @@ vim.opt.diffopt = {}
 vim.opt.dip = vim.opt.diffopt
 --- @return string[]
 function vim.opt.diffopt:get()end
-
--- `'digraph'`  `'dg'` 		boolean	(default off)
--- 			global
--- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
--- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option
---- @operator add: vim.opt.digraph
---- @operator sub: vim.opt.digraph
---- @operator pow: vim.opt.digraph
-vim.opt.digraph = {}
-vim.opt.dg = vim.opt.digraph
---- @return boolean
-function vim.opt.digraph:get()end
 

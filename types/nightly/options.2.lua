@@ -1,5 +1,18 @@
 ---@meta
 
+-- `'digraph'`  `'dg'` 		boolean	(default off)
+-- 			global
+-- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
+-- 	{char2}.  See |digraphs|.
+--- @class vim.opt.digraph: vim.Option
+--- @operator add: vim.opt.digraph
+--- @operator sub: vim.opt.digraph
+--- @operator pow: vim.opt.digraph
+vim.opt.digraph = {}
+vim.opt.dg = vim.opt.digraph
+--- @return boolean
+function vim.opt.digraph:get()end
+
 -- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
 -- 			global
 -- 	List of directory names for the swap file, separated with commas.
@@ -3257,7 +3270,9 @@ function vim.opt.numberwidth:get()end
 -- 	This option specifies a function to be used for Insert mode omni
 -- 	completion with CTRL-X CTRL-O. |i_CTRL-X_CTRL-O|
 -- 	See |complete-functions| for an explanation of how the function is
--- 	invoked and what it should return.
+-- 	invoked and what it should return.  The value can be the name of a
+-- 	function, a |lambda| or a |Funcref|. See |option-value-function| for
+-- 	more information.
 -- 	This option is usually set by a filetype plugin:
 -- 	|:filetype-plugin-on|
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
@@ -4753,18 +4768,4 @@ vim.opt.shelltemp = {}
 vim.opt.stmp = vim.opt.shelltemp
 --- @return boolean
 function vim.opt.shelltemp:get()end
-
--- `'shellxescape'`  `'sxe'` 	string	(default: "")
--- 			global
--- 	When `'shellxquote'`  is set to "(" then the characters listed in this
--- 	option will be escaped with a `'^'`  character.  This makes it possible
--- 	to execute most external commands with cmd.exe.
---- @class vim.opt.shellxescape: vim.Option
---- @operator add: vim.opt.shellxescape
---- @operator sub: vim.opt.shellxescape
---- @operator pow: vim.opt.shellxescape
-vim.opt.shellxescape = {}
-vim.opt.sxe = vim.opt.shellxescape
---- @return string
-function vim.opt.shellxescape:get()end
 

@@ -2185,7 +2185,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 -- 
 --               • title: Title (optional) in window border, String or list.
 --                 List is [text, highlight] tuples. if is string the default
---                 highlight group is `FloatBorderTitle`.
+--                 highlight group is `FloatTitle`.
 --               • title_pos: Title position must set with title option.
 --                 value can be of `left` `center` `right` default is left.
 --               • noautocmd: If true then no buffer-related autocommand

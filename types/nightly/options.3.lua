@@ -1,5 +1,19 @@
 ---@meta
 
+-- `'shellxescape'`  `'sxe'` 	string	(default: "")
+-- 			global
+-- 	When `'shellxquote'`  is set to "(" then the characters listed in this
+-- 	option will be escaped with a `'^'`  character.  This makes it possible
+-- 	to execute most external commands with cmd.exe.
+--- @class vim.opt.shellxescape: vim.Option
+--- @operator add: vim.opt.shellxescape
+--- @operator sub: vim.opt.shellxescape
+--- @operator pow: vim.opt.shellxescape
+vim.opt.shellxescape = {}
+vim.opt.sxe = vim.opt.shellxescape
+--- @return string
+function vim.opt.shellxescape:get()end
+
 -- `'shellxquote'`  `'sxq'` 	string	(default: "", Windows: "\"")
 -- 			global
 -- 	Quoting character(s), put around the command passed to the shell, for
@@ -1222,7 +1236,9 @@ function vim.opt.tagcase:get()end
 -- 	This option specifies a function to be used to perform tag searches.
 -- 	The function gets the tag pattern and should return a List of matching
 -- 	tags.  See |tag-function| for an explanation of how to write the
--- 	function and an example.
+-- 	function and an example.  The value can be the name of a function, a
+-- 	|lambda| or a |Funcref|. See |option-value-function| for more
+-- 	information.
 --- @class vim.opt.tagfunc: vim.Option
 --- @operator add: vim.opt.tagfunc
 --- @operator sub: vim.opt.tagfunc
@@ -1430,6 +1446,8 @@ function vim.opt.thesaurus:get()end
 -- 			global or local to buffer |global-local|
 -- 	This option specifies a function to be used for thesaurus completion
 -- 	with CTRL-X CTRL-T. |i_CTRL-X_CTRL-T| See |compl-thesaurusfunc|.
+-- 	The value can be the name of a function, a |lambda| or a |Funcref|.
+-- 	See |option-value-function| for more information.
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
