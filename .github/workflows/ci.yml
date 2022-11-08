@@ -12,9 +12,10 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          sudo add-apt-repository -y ppa:neovim-ppa/unstable
+          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
+          sudo dpkg -i ./nvim-linux64.deb
           sudo apt-get -y update
-          sudo apt-get -y install doxygen luajit neovim python3-msgpack
+          sudo apt-get -y install doxygen luajit python3-msgpack
       - name: Clone Neovim's repo and run gen_vimdoc.py
         run: |
           git clone --depth=1 https://github.com/neovim/neovim.git /tmp/neovim-repo
