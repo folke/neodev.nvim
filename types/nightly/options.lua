@@ -2397,7 +2397,7 @@ vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
@@ -2817,7 +2817,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/usr/lib/x86_64-linux-gnu/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
@@ -4300,3 +4300,34 @@ vim.wo.arab = vim.wo.arabic
 -- 	of text.
 vim.wo.breakindent = false
 vim.wo.bri = vim.wo.breakindent
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 			    (default: 20)
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 			    (default: 0)
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 			    (default: off)
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 			    (default: 0)
+-- 		column:{n}  Indent at column {n}. Will overrule the other
+-- 			    sub-options. Note: an additional indent may be
+-- 			    added for the `'showbreak'`  setting.
+-- 			    (default: off)
+vim.wo.breakindentopt = ""
+vim.wo.briopt = vim.wo.breakindentopt
