@@ -1217,6 +1217,7 @@ function vim.api.nvim_create_namespace(name) end
 --                executed. When called from Lua, the command can also be a
 --                Lua function. The function is called with a single table
 --                argument that contains the following keys:
+--                • name: (string) Command name
 --                • args: (string) The args passed to the command, if any
 --                  |<args>|
 --                • fargs: (table) The args split by unescaped whitespace
