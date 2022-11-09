@@ -9,6 +9,7 @@ jobs:
   update-docs:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v3
       - name: Install dependencies
         run: |
           sudo apt-get -y install doxygen luajit python3-msgpack
