@@ -1,40 +1,23 @@
 name: CI
 on:
-  workflow_dispatch:
   push:
-  schedule:
-    # Run this every day
-    - cron: "0 * * * *"
 
 jobs:
+  types:
+    uses: ./.github/workflows/types.yml
   update-docs:
     runs-on: ubuntu-22.04
     steps:
-      - name: Install dependencies
-        run: |
-          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-          sudo dpkg -i ./nvim-linux64.deb
-          sudo apt-get -y update
-          sudo apt-get -y install doxygen luajit python3-msgpack
-      - name: Clone Neovim's repo and run gen_vimdoc.py
-        run: |
-          git clone --depth=1 https://github.com/neovim/neovim.git /tmp/neovim-repo
-          cd /tmp/neovim-repo
-          python3 ./scripts/gen_vimdoc.py
       - uses: actions/checkout@v3
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
           vimdoc: neodev
           demojify: true
-      - name: Generate new docs
-        run: |
-          cp /tmp/neovim-repo/runtime/doc/*.mpack ./data/
-          nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/neodev/build/init.lua" --cmd q
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: update api docs"
+          commit_message: "chore: auto generated vimdoc"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
