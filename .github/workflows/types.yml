@@ -10,16 +10,17 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
+      - name: Setup ./data
+        run: mkdir ./data
       - name: Install dependencies
         run: |
           sudo apt-get -y install doxygen luajit python3-msgpack
       - name: Install Neovim
         run: |
-          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-          sudo dpkg -i ./nvim-linux64.deb
+          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb -O ./data/nvim.deb
+          sudo dpkg -i ./data/nvim.deb
       - name: Clone Neovim's repo and run gen_vimdoc.py
         run: |
-          mkdir ./data
           git clone --depth=1 https://github.com/neovim/neovim.git ./data/neovim
           cd ./data/neovim
           python3 ./scripts/gen_vimdoc.py
