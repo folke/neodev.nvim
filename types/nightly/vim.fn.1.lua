@@ -1,5 +1,30 @@
 ---@meta
 
+-- Convert a list of VimL objects to msgpack. Returned value is a
+-- |readfile()|-style list. When {type} contains "B", a |Blob| is
+-- returned instead. Example: 
+-- ```vim
+--   call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
+-- ```
+-- or, using a |Blob|: 
+-- ```vim
+--   call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
+-- ```
+-- This will write the single 0x80 byte to a `fname.mpack` file
+-- (dictionary with zero items is represented by 0x80 byte in
+-- messagepack).
+-- 
+-- Limitations:
+-- 1. |Funcref|s cannot be dumped.
+-- 2. Containers that reference themselves cannot be dumped.
+-- 3. Dictionary keys are always dumped as STR strings.
+-- 4. Other strings and |Blob|s are always dumped as BIN strings.
+-- 5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
+--- @param list any[]
+--- @param type? any
+--- @return any[]
+function vim.fn.msgpackdump(list, type) end
+
 -- Convert a |readfile()|-style list or a |Blob| to a list of
 -- VimL objects.
 -- Example: 
@@ -4142,6 +4167,7 @@ function vim.fn.win_id2win(expr) end
 -- FALSE otherwise.
 -- This will fail for the rightmost window and a full-width
 -- window, since it has no separator on the right.
+-- Only works for the current tab page.
 -- 
 -- Can also be used as a |method|: >
 --   GetWinnr()->win_move_separator(offset)
@@ -4158,6 +4184,7 @@ function vim.fn.win_move_separator(nr, offset) end
 -- movement may be smaller than specified (e.g., as a consequence
 -- of maintaining 'winminheight'). Returns TRUE if the window can
 -- be found and FALSE otherwise.
+-- Only works for the current tab page.
 -- 
 -- Can also be used as a |method|: >
 --   GetWinnr()->win_move_statusline(offset)

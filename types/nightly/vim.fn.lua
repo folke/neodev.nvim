@@ -484,7 +484,8 @@ function vim.fn.bufnr(buf, create) end
 -- 
 -- echo "A window containing buffer 1 is " .. (bufwinid(1))
 -- ```
---   Only deals with the current tab page.
+--   Only deals with the current tab page.  See |win_findbuf()| for
+--   finding more.
 -- 
 --   Can also be used as a |method|: >
 --     FindBuffer()->bufwinid()
@@ -826,7 +827,7 @@ function vim.fn.clearmatches(win) end
 --   line.  Also, when using a <Cmd> mapping the cursor isn't
 --   moved, this can be used to obtain the column in Insert mode: 
 -- ```vim
---     :imap <F2> <Cmd>echo col(".")<CR>
+--     :imap <F2> <Cmd>echo col(".").."\n"<CR>
 -- ```
 --   Can also be used as a |method|: 
 -- ```vim
@@ -2106,7 +2107,7 @@ function vim.fn.flatten(list, maxdepth) end
 
 -- Convert {expr} to a Number by omitting the part after the
 -- decimal point.
--- {expr} must evaluate to a |Float| or a Number.
+-- {expr} must evaluate to a |Float| or a |Number|.
 -- Returns 0 if {expr} is not a |Float| or a |Number|.
 -- When the value of {expr} is out of range for a |Number| the
 -- result is truncated to 0x7fffffff or -0x7fffffff (or when
@@ -5845,29 +5846,4 @@ function vim.fn.mkdir(name, path, prot) end
 --- @param expr? any
 --- @return string
 function vim.fn.mode(expr) end
-
--- Convert a list of VimL objects to msgpack. Returned value is a
--- |readfile()|-style list. When {type} contains "B", a |Blob| is
--- returned instead. Example: 
--- ```vim
---   call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
--- ```
--- or, using a |Blob|: 
--- ```vim
---   call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
--- ```
--- This will write the single 0x80 byte to a `fname.mpack` file
--- (dictionary with zero items is represented by 0x80 byte in
--- messagepack).
--- 
--- Limitations:
--- 1. |Funcref|s cannot be dumped.
--- 2. Containers that reference themselves cannot be dumped.
--- 3. Dictionary keys are always dumped as STR strings.
--- 4. Other strings and |Blob|s are always dumped as BIN strings.
--- 5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
---- @param list any[]
---- @param type? any
---- @return any[]
-function vim.fn.msgpackdump(list, type) end
 
