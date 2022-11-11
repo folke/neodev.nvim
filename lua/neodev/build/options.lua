@@ -79,7 +79,7 @@ function M.build()
     str = str .. ("--- @operator add: vim.opt.%s\n"):format(name)
     str = str .. ("--- @operator sub: vim.opt.%s\n"):format(name)
     str = str .. ("--- @operator pow: vim.opt.%s\n"):format(name)
-    str = str .. ("vim.opt.%s = {}\n"):format(name)
+    str = str .. ("vim.opt.%s = %s\n"):format(name, vim.inspect(option.default))
     if option.shortname ~= "" then
       str = str .. ("vim.opt.%s = vim.opt.%s\n"):format(option.shortname, name)
     end
