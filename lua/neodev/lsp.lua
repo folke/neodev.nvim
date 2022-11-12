@@ -51,6 +51,9 @@ function M.get_lua_dirs(root_dir)
   lua_dirs = vim.tbl_keys(lua_dirs)
 
   table.insert(lua_dirs, "../lua")
+  table.insert(lua_dirs, "./lua")
+  table.insert(lua_dirs, root_dir .. "../lua")
+  table.insert(lua_dirs, root_dir .. "/lua")
 
   lua_dirs = vim.tbl_map(function(f)
     return util.fqn(f)
