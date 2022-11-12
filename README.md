@@ -3,9 +3,7 @@
 Neovim setup for init.lua and plugin development with full signature help, docs and
 completion for the nvim lua API.
 
-![image](https://user-images.githubusercontent.com/292349/118822916-6af02080-b86d-11eb-9990-942fe9b55541.png)
-
-![image](https://user-images.githubusercontent.com/292349/118823099-9115c080-b86d-11eb-9a68-521c6cb9905a.png)
+![image](https://user-images.githubusercontent.com/292349/201495543-ff532160-c8bd-4651-a16f-4fb682c9b945.png)
 
 ## ✨ Features
 
