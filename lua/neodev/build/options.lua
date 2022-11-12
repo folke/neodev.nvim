@@ -47,10 +47,7 @@ function M.build()
     writer:write(var .. " = {}\n\n")
     Util.for_each(info, function(name, option)
       if option.scope == scope then
-        local default = option.default
-        if option.type == "string" then
-          default = ("%q"):format(default)
-        end
+        local default = vim.inspect(option.default)
         local str = ""
         if docs[name] then
           str = str .. Annotations.comment(docs[name]) .. "\n"
