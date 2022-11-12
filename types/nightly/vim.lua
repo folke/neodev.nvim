@@ -13,8 +13,20 @@ vim.keymap = require("vim.keymap")
 vim.lsp = require("vim.lsp")
 vim.treesitter = require("vim.treesitter")
 vim.treesitter.highlighter = require("vim.treesitter.highlighter")
+vim.treesitter.query = require("vim.treesitter.query")
 vim.ui = require("vim.ui")
 vim.uri_from_bufnr = require("vim.uri").uri_from_bufnr
 vim.uri_from_fname = require("vim.uri").uri_from_fname
 vim.uri_to_bufnr = require("vim.uri").uri_to_bufnr
 vim.uri_to_fname = require("vim.uri").uri_to_fname
+
+---@type table<string,any>
+vim.g = {}
+---@type table<string,any>
+vim.v = {}
+---@type table<number,table<string, any>>
+vim.b = {}
+---@type table<number,table<string, any>>
+vim.w = {}
+---@type table<number,table<string, any>>
+vim.t = {}

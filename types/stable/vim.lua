@@ -17,3 +17,14 @@ vim.lsp = require("vim.lsp")
 vim.treesitter = require("vim.treesitter")
 vim.treesitter.highlighter = require("vim.treesitter.highlighter")
 vim.ui = require("vim.ui")
+
+---@type table<string,any>
+vim.g = {}
+---@type table<string,any>
+vim.v = {}
+---@type table<number,table<string, any>>
+vim.b = {}
+---@type table<number,table<string, any>>
+vim.w = {}
+---@type table<number,table<string, any>>
+vim.t = {}
