@@ -301,7 +301,7 @@ vim.go.bo = vim.go.belloff
 -- 			global
 -- 	This option lets you choose which characters might cause a line
 -- 	break if `'linebreak'`  is on.  Only works for ASCII characters.
-vim.go.breakat = " \9!@*-+;:,./?"
+vim.go.breakat = " \t!@*-+;:,./?"
 vim.go.brk = vim.go.breakat
 -- `'browsedir'`  `'bsdir'` 	string	(default: "last")
 -- 			global
