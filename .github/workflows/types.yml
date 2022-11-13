@@ -6,7 +6,7 @@ on:
     - cron: "0 * * * *"
 
 jobs:
-  build-types:
+  build-types-nightly:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -17,8 +17,8 @@ jobs:
           sudo apt-get -y install doxygen luajit python3-msgpack
       - name: Install Neovim
         run: |
-          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb -O ./data/nvim.deb
-          sudo dpkg -i ./data/nvim.deb
+          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb -O /tmp/nvim.deb
+          sudo dpkg -i /tmp/nvim.deb
       - name: Clone Neovim's repo and run gen_vimdoc.py
         run: |
           git clone --depth=1 https://github.com/neovim/neovim.git ./data/neovim
@@ -26,12 +26,33 @@ jobs:
           python3 ./scripts/gen_vimdoc.py
       - name: Generate new docs
         run: |
+          nvim --version
           cp ./data/neovim/runtime/doc/*.mpack ./data/
           nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/neodev/build/init.lua" --cmd q
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: auto-generated types"
+          commit_message: "chore: auto-generated types for Neovim nightly"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+  build-types-stable:
+    needs: build-types-nightly
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Neovim
+        run: |
+          wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb -O /tmp/nvim.deb
+          sudo dpkg -i /tmp/nvim.deb
+      - name: Generate new docs
+        run: |
+          nvim --version
+          nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/neodev/build/init.lua" --cmd q
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: auto-generated types for Neovim stable"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
