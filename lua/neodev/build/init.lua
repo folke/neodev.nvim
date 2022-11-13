@@ -42,7 +42,7 @@ function M.override(fname)
 end
 
 ---@param fname string
----@param functions table<string, LuaApiFunction>
+---@param functions table<string, LuaFunction>
 function M.write(fname, functions)
   local override, override_code = M.override(fname)
   functions = vim.tbl_deep_extend("force", functions, override)
@@ -66,6 +66,19 @@ function M.alias()
   writer:close()
 end
 
+function M.commands()
+  local writer = Writer("cmd")
+  Util.for_each(Docs.commands(), function(cmd, desc)
+    writer:write(Annotations.comment(desc) .. "\n")
+    if Annotations.is_keyword(cmd) then
+      writer:write(("vim.cmd[%q] = function(...)end"):format(cmd) .. "\n\n")
+    else
+      writer:write(("function vim.cmd.%s(...)end"):format(cmd) .. "\n\n")
+    end
+  end)
+  writer:close()
+end
+
 function M.clean()
   local types = Config.types()
   for _, f in pairs(vim.fn.expand(types .. "/*.lua", false, true)) do
@@ -79,6 +92,7 @@ function M.build()
   M.clean()
 
   M.alias()
+  M.commands()
 
   Options.build()
 

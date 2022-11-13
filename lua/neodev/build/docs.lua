@@ -123,6 +123,7 @@ function M.parse_signature(line)
     sig = sig:gsub("\n", " ")
     sig = sig:gsub("\t", " ")
     local params = {}
+    ---@type table<string,boolean>
     local index = {}
     local from = 0
     local to = 0
@@ -235,10 +236,11 @@ function M.luv()
       return not Annotations.is_lua(name)
     end,
     name = function(name)
-      return name:gsub("^uv%.", "vim.loop.")
+      local ret = name:gsub("^uv%.", "vim.loop.")
+      return ret
     end,
   })
-  Util.for_each(ret, function(name, fun)
+  Util.for_each(ret, function(_, fun)
     local returns = fun.doc:match("%s*Returns: (.*)\n")
     if not returns then
       returns = fun.doc:match("%s*Returns %(sync version%): (.*)\n")
@@ -246,6 +248,7 @@ function M.luv()
     ---@type LuaParam
     local retval = {}
     if returns then
+      ---@diagnostic disable-next-line: no-unknown
       for t in returns:gmatch("`(.-)`") do
         if t == "nil" or t == "fail" then
           retval.optional = true
@@ -258,6 +261,26 @@ function M.luv()
       fun["return"] = { retval }
     end
   end)
+  return ret
+end
+
+function M.commands()
+  local pattern = "|:%S-|%s+:([a-z]%S-)%s+(.*)"
+  local builtins = M.parse("index", { pattern = pattern, context = 0, continuation = "^%s+" })
+  ---@type table<string,string>
+  local ret = {}
+  for _, builtin in ipairs(builtins) do
+    if vim.tbl_contains(builtin.tags, "ex-cmd-index") then
+      local cmd = builtin.match[1]
+      local desc = builtin.match[2]
+      local i = cmd:find("%[")
+      if i then
+        ret[cmd:sub(1, i - 1)] = desc
+        cmd = cmd:gsub("[%[%]]", "")
+      end
+      ret[cmd] = desc
+    end
+  end
   return ret
 end
 
@@ -299,7 +322,7 @@ function M.functions()
       if name:find("%.") then
         return false
       end
-      return name and vim.fn.exists("*" .. name)
+      return name and (vim.fn.exists("*" .. name) == 1)
     end,
     name = function(name)
       return "vim.fn." .. name

@@ -25,7 +25,8 @@ M.name2type = {
   ["any[]"] = { "args", "list", "array" },
   ["nil"] = { "void", "none" },
 }
-M.keywords = { "or", "and", "repeat", "function", "end", "return" }
+M.keywords =
+  { "or", "and", "repeat", "function", "end", "return", "do", "break", "else", "elseif", "for", "goto", "if", "while" }
 M.nvim_types = {
   window = "number",
   buffer = "number",
@@ -45,6 +46,10 @@ M.lua_types = {
   ["function"] = "fun()",
   table = "table",
 }
+
+function M.is_keyword(str)
+  return vim.tbl_contains(M.keywords, str)
+end
 
 ---@param str string
 ---@param first? string
@@ -97,7 +102,7 @@ end
 function M.param(param)
   local parts = {}
   if param.name then
-    if vim.tbl_contains(M.keywords, param.name) then
+    if M.is_keyword(param.name) then
       param.name = param.name .. "_"
     end
     table.insert(parts, param.name .. (param.optional and "?" or ""))
@@ -189,7 +194,7 @@ function M.fun(fun)
   local signature = "function %s(%s) end"
 
   -- handle special Lua names. Set as a field instead of a function
-  if vim.tbl_contains(M.keywords, fun.name:match("[^.]+$")) then
+  if M.is_keyword(fun.name:match("[^.]+$")) then
     local prefix, name = fun.name:match("(.*)%.([^.]+)$")
     fun.name = name
     signature = prefix .. "[%q] = function(%s) end"
