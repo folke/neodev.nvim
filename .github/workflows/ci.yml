@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
+      - name: Pull Updates
+        run: git pull
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
