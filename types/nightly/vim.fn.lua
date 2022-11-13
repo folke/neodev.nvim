@@ -691,21 +691,22 @@ function vim.fn.char2nr(string, utf8) end
 function vim.fn.charclass(string) end
 
 -- Same as |col()| but returns the character index of the column
---   position given with {expr} instead of the byte position.
+-- position given with {expr} instead of the byte position.
 -- 
---   Example:
---   With the cursor on '세' in line 5 with text "여보세요": 
+-- Example:
+-- With the cursor on '세' in line 5 with text "여보세요": 
 -- ```vim
---     charcol('.')    returns 3
---     col('.')    returns 7
+--   charcol('.')    returns 3
+--   col('.')    returns 7
 -- ```
---   Can also be used as a |method|: 
+-- Can also be used as a |method|: 
 -- ```vim
---     GetPos()->col()
+--   GetPos()->col()
 -- ```
 -- 
+--- @param winid? window
 --- @return number
-function vim.fn.charcol(expr) end
+function vim.fn.charcol(expr, winid) end
 
 -- Return the character index of the byte at {idx} in {string}.
 -- The index of the first character is zero.
@@ -793,49 +794,53 @@ function vim.fn.cindent(lnum) end
 function vim.fn.clearmatches(win) end
 
 -- The result is a Number, which is the byte index of the column
---   position given with {expr}.  The accepted positions are:
---       .      the cursor position
---       $      the end of the cursor line (the result is the
---         number of bytes in the cursor line plus one)
---       'x      position of mark x (if the mark is not set, 0 is
---         returned)
---       v       In Visual mode: the start of the Visual area (the
---         cursor is the end).  When not in Visual mode
---         returns the cursor position.  Differs from |'<| in
---         that it's updated right away.
---   Additionally {expr} can be [lnum, col]: a |List| with the line
---   and column number. Most useful when the column is "$", to get
---   the last column of a specific line.  When "lnum" or "col" is
---   out of range then col() returns zero.
---   To get the line number use |line()|.  To get both use
---   |getpos()|.
---   For the screen column position use |virtcol()|.  For the
---   character position use |charcol()|.
---   Note that only marks in the current file can be used.
---   Examples: 
+-- position given with {expr}.  The accepted positions are:
+--     .      the cursor position
+--     $      the end of the cursor line (the result is the
+--       number of bytes in the cursor line plus one)
+--     'x      position of mark x (if the mark is not set, 0 is
+--       returned)
+--     v       In Visual mode: the start of the Visual area (the
+--       cursor is the end).  When not in Visual mode
+--       returns the cursor position.  Differs from |'<| in
+--       that it's updated right away.
+-- Additionally {expr} can be [lnum, col]: a |List| with the line
+-- and column number. Most useful when the column is "$", to get
+-- the last column of a specific line.  When "lnum" or "col" is
+-- out of range then col() returns zero.
+-- With the optional {winid} argument the values are obtained for
+-- that window instead of the current window.
+-- To get the line number use |line()|.  To get both use
+-- |getpos()|.
+-- For the screen column position use |virtcol()|.  For the
+-- character position use |charcol()|.
+-- Note that only marks in the current file can be used.
+-- Examples: 
 -- ```vim
---     col(".")    column of cursor
---     col("$")    length of cursor line plus one
---     col("'t")    column of mark t
---     col("'" .. markname)  column of mark markname
+--   col(".")    column of cursor
+--   col("$")    length of cursor line plus one
+--   col("'t")    column of mark t
+--   col("'" .. markname)  column of mark markname
 -- ```
---   The first column is 1.  Returns 0 if {expr} is invalid.
---   For an uppercase mark the column may actually be in another
---   buffer.
---   For the cursor position, when 'virtualedit' is active, the
---   column is one higher if the cursor is after the end of the
---   line.  Also, when using a <Cmd> mapping the cursor isn't
---   moved, this can be used to obtain the column in Insert mode: 
+-- The first column is 1.  Returns 0 if {expr} is invalid or when
+-- the window with ID {winid} is not found.
+-- For an uppercase mark the column may actually be in another
+-- buffer.
+-- For the cursor position, when 'virtualedit' is active, the
+-- column is one higher if the cursor is after the end of the
+-- line.  Also, when using a <Cmd> mapping the cursor isn't
+-- moved, this can be used to obtain the column in Insert mode: 
 -- ```vim
---     :imap <F2> <Cmd>echo col(".").."\n"<CR>
+--   :imap <F2> <Cmd>echo col(".").."\n"<CR>
 -- ```
---   Can also be used as a |method|: 
+-- Can also be used as a |method|: 
 -- ```vim
---     GetPos()->col()
+--   GetPos()->col()
 -- ```
 -- 
+--- @param winid? window
 --- @return number
-function vim.fn.col(expr) end
+function vim.fn.col(expr, winid) end
 
 --   Set the matches for Insert mode completion.
 --   Can only be used in Insert mode.  You need to use a mapping

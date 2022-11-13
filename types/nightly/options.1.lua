@@ -1340,7 +1340,7 @@ vim.bo.def = vim.bo.define
 -- 	Backticks cannot be used in this option for security reasons.
 vim.bo.dictionary = ""
 vim.bo.dict = vim.bo.dictionary
--- `'endoffile'`  `'eof'` 	boolean	(default on)
+-- `'endoffile'`  `'eof'` 	boolean	(default off)
 -- 			local to buffer
 -- 	Indicates that a CTRL-Z character was found at the end of the file
 -- 	when reading it.  Normally only happens when `'fileformat'`  is "dos".
@@ -1348,7 +1348,7 @@ vim.bo.dict = vim.bo.dictionary
 -- 	is on, or `'fixeol'`  option is off, no CTRL-Z will be written at the
 -- 	end of the file.
 -- 	See |eol-and-eof| for example settings.
-vim.bo.endoffile = true
+vim.bo.endoffile = false
 vim.bo.eof = vim.bo.endoffile
 -- `'endofline'`  `'eol'` 	boolean	(default on)
 -- 			local to buffer

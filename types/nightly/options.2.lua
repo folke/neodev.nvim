@@ -82,7 +82,7 @@ vim.opt.enc = vim.opt.encoding
 --- @return string
 function vim.opt.encoding:get()end
 
--- `'endoffile'`  `'eof'` 	boolean	(default on)
+-- `'endoffile'`  `'eof'` 	boolean	(default off)
 -- 			local to buffer
 -- 	Indicates that a CTRL-Z character was found at the end of the file
 -- 	when reading it.  Normally only happens when `'fileformat'`  is "dos".
@@ -94,7 +94,7 @@ function vim.opt.encoding:get()end
 --- @operator add: vim.opt.endoffile
 --- @operator sub: vim.opt.endoffile
 --- @operator pow: vim.opt.endoffile
-vim.opt.endoffile = true
+vim.opt.endoffile = false
 vim.opt.eof = vim.opt.endoffile
 --- @return boolean
 function vim.opt.endoffile:get()end
