@@ -1,28 +1,5 @@
 ---@meta
 
-
-
----@class vim.wo
-vim.wo = {}
-
--- `'arabic'`  `'arab'` 		boolean (default off)
--- 			local to window
--- 	This option can be set to start editing Arabic text.
--- 	Setting this option will:
--- 	- Set the `'rightleft'`  option, unless `'termbidi'`  is set.
--- 	- Set the `'arabicshape'`  option, unless `'termbidi'`  is set.
--- 	- Set the `'keymap'`  option to "arabic"; in Insert mode CTRL-^ toggles
--- 	  between typing English and Arabic key mapping.
--- 	- Set the `'delcombine'`  option
--- 
--- 	Resetting this option will:
--- 	- Reset the `'rightleft'`  option.
--- 	- Disable the use of `'keymap'`  (without changing its value).
--- 	Note that `'arabicshape'`  and `'delcombine'`  are not reset (it is a global
--- 	option).
--- 	Also see |arabic.txt|.
-vim.wo.arabic = false
-vim.wo.arab = vim.wo.arabic
 -- `'breakindent'`  `'bri'` 	boolean (default off)
 -- 			local to window
 -- 	Every wrapped line will continue visually indented (same amount of
@@ -2862,7 +2839,7 @@ function vim.opt.backupcopy:get()end
 --- @operator add: vim.opt.backupdir
 --- @operator sub: vim.opt.backupdir
 --- @operator pow: vim.opt.backupdir
-vim.opt.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.opt.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 vim.opt.bdir = vim.opt.backupdir
 --- @return string[]
 function vim.opt.backupdir:get()end

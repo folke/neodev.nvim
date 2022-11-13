@@ -215,7 +215,7 @@ vim.go.bk = vim.go.backup
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.go.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 vim.go.bdir = vim.go.backupdir
 -- `'backupext'`  `'bex'` 	string	(default "~")
 -- 			global
@@ -988,7 +988,7 @@ vim.go.dg = vim.go.digraph
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.directory = "/home/folke/.local/state/nvim/swap//"
+vim.go.directory = "/home/runner/.local/state/nvim/swap//"
 vim.go.dir = vim.go.directory
 -- `'display'`  `'dy'` 		string	(default "lastline,msgsep")
 -- 			global
@@ -1594,7 +1594,7 @@ vim.go.gtt = vim.go.guitabtooltip
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.helpfile = "/home/folke/.local/share/bob/v0.8.0/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 vim.go.hf = vim.go.helpfile
 -- `'helpheight'`  `'hh'` 	number	(default 20)
 -- 			global
@@ -2426,7 +2426,7 @@ vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/v0.8.0/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/v0.8.0/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
@@ -2849,7 +2849,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 	included.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/v0.8.0/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/v0.8.0/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
@@ -3161,7 +3161,7 @@ vim.go.sdf = vim.go.shadafile
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shell = "/usr/bin/fish"
+vim.go.shell = "sh"
 vim.go.sh = vim.go.shell
 -- `'shellcmdflag'`  `'shcf'` 	string	(default: "-c"; Windows: "/s /c")
 -- 			global
@@ -3209,7 +3209,7 @@ vim.go.shcf = vim.go.shellcmdflag
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellpipe = "2>&1| tee"
+vim.go.shellpipe = "| tee"
 vim.go.sp = vim.go.shellpipe
 -- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
 -- 					contains "sh" somewhere: "\"")
@@ -3250,7 +3250,7 @@ vim.go.shq = vim.go.shellquote
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellredir = ">%s 2>&1"
+vim.go.shellredir = ">"
 vim.go.srr = vim.go.shellredir
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
@@ -3863,7 +3863,7 @@ vim.go.tf = vim.go.ttyfast
 -- 	Note that unlike `'directory'`  and `'backupdir'` , `'undodir'`  always acts as
 -- 	though the trailing slashes are present (see `'backupdir'`  for what this
 -- 	means).
-vim.go.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.go.undodir = "/home/runner/.local/state/nvim/undo//"
 vim.go.udir = vim.go.undodir
 -- `'undoreload'`  `'ur'` 	number	(default 10000)
 -- 			global
@@ -3944,7 +3944,7 @@ vim.go.vfile = vim.go.verbosefile
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.go.viewdir = "/home/runner/.local/state/nvim/view//"
 vim.go.vdir = vim.go.viewdir
 -- `'viewoptions'`  `'vop'` 	string	(default: "folds,cursor,curdir")
 -- 			global
@@ -4281,3 +4281,26 @@ vim.go.writebackup = true
 vim.go.wb = vim.go.writebackup
 vim.go.writedelay = 0
 vim.go.wd = vim.go.writedelay
+
+
+---@class vim.wo
+vim.wo = {}
+
+-- `'arabic'`  `'arab'` 		boolean (default off)
+-- 			local to window
+-- 	This option can be set to start editing Arabic text.
+-- 	Setting this option will:
+-- 	- Set the `'rightleft'`  option, unless `'termbidi'`  is set.
+-- 	- Set the `'arabicshape'`  option, unless `'termbidi'`  is set.
+-- 	- Set the `'keymap'`  option to "arabic"; in Insert mode CTRL-^ toggles
+-- 	  between typing English and Arabic key mapping.
+-- 	- Set the `'delcombine'`  option
+-- 
+-- 	Resetting this option will:
+-- 	- Reset the `'rightleft'`  option.
+-- 	- Disable the use of `'keymap'`  (without changing its value).
+-- 	Note that `'arabicshape'`  and `'delcombine'`  are not reset (it is a global
+-- 	option).
+-- 	Also see |arabic.txt|.
+vim.wo.arabic = false
+vim.wo.arab = vim.wo.arabic
