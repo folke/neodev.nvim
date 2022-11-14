@@ -2553,9 +2553,9 @@ function vim.opt.makeef:get()end
 -- 	`:lgrepadd`, `:cfile`, `:cgetfile`, `:caddfile`, `:lfile`, `:lgetfile`,
 -- 	and `:laddfile`.
 -- 
--- 	This would be mostly useful when you use MS-Windows.  If |+iconv| is
--- 	enabled and GNU libiconv is used, setting `'makeencoding'`  to "char" has
--- 	the same effect as setting to the system locale encoding.  Example: >
+-- 	This would be mostly useful when you use MS-Windows.  If iconv is
+-- 	enabled, setting `'makeencoding'`  to "char" has the same effect as
+-- 	setting to the system locale encoding.  Example: >
 -- 		:set makeencoding=char	" system locale is used
 -- <
 --- @class vim.opt.makeencoding: vim.Option
@@ -3453,7 +3453,7 @@ function vim.opt.patchmode:get()end
 -- <	- A directory name may end in a `':'`  or `'/'` .
 -- 	- Environment variables are expanded |:set_env|.
 -- 	- When using |netrw.vim| URLs can be used.  For example, adding
--- 	  "http://www.vim.org" will make ":find index.html" work.
+-- 	  "https://www.vim.org" will make ":find index.html" work.
 -- 	- Search upwards and downwards in a directory tree using "*", "" and
 -- 	  ";".  See |file-searching| for info and syntax.
 -- 	- Careful with `'\'`  characters, type two to get one in the option: >
@@ -4046,10 +4046,13 @@ function vim.opt.rulerformat:get()end
 -- 	  indent/	indent scripts |indent-expression|
 -- 	  keymap/	key mapping files |mbyte-keymap|
 -- 	  lang/		menu translations |:menutrans|
+-- 	  lua/		|Lua| plugins
 -- 	  menu.vim	GUI menus |menu.vim|
 -- 	  pack/		packages |:packadd|
+-- 	  parser/	|treesitter| syntax parsers
 -- 	  plugin/	plugin scripts |write-plugin|
 -- 	  print/	files for printing |postscript-print-encoding|
+-- 	  query/	|treesitter| queries
 -- 	  rplugin/	|remote-plugin| scripts
 -- 	  spell/	spell checking files |spell|
 -- 	  syntax/	syntax files |mysyntaxfile|
@@ -4070,20 +4073,20 @@ function vim.opt.rulerformat:get()end
 -- 	   but are not part of the Nvim distribution. XDG_DATA_DIRS defaults
 -- 	   to /usr/local/share/:/usr/share/, so system administrators are
 -- 	   expected to install site plugins to /usr/share/nvim/site.
--- 	5. Applications state home directory, for files that contain your
--- 	   session state (eg. backupdir, viewdir, undodir, etc).
+-- 	5. Session state directory, for state data such as swap, backupdir,
+-- 	   viewdir, undodir, etc.
 -- 	   Given by `stdpath("state")`.  |$XDG_STATE_HOME|
--- 	6. $VIMRUNTIME, for files distributed with Neovim.
+-- 	6. $VIMRUNTIME, for files distributed with Nvim.
 -- 
 -- 	7, 8, 9, 10. In after/ subdirectories of 1, 2, 3 and 4, with reverse
 -- 	   ordering.  This is for preferences to overrule or add to the
 -- 	   distributed defaults or system-wide settings (rarely needed).
 -- 
 -- 
--- 	"start" packages will additionally be used to search for runtime files
--- 	after these, but package entries are not visible in `:set rtp`.
--- 	See |runtime-search-path| for more information. "opt" packages
--- 	will be explicitly added to &rtp when |:packadd| is used.
+-- 	"start" packages will also be searched (|runtime-search-path|) for
+-- 	runtime files after these, though such packages are not explicitly
+-- 	reported in &runtimepath. But "opt" packages are explicitly added to
+-- 	&runtimepath by |:packadd|.
 -- 
 -- 	Note that, unlike `'path'` , no wildcards like "" are allowed.  Normal
 -- 	wildcards are allowed, but can significantly slow down searching for
@@ -4093,18 +4096,13 @@ function vim.opt.rulerformat:get()end
 -- 	Example: >
 -- 		:set runtimepath=~/vimruntime,/mygroup/vim,$VIMRUNTIME
 -- <	This will use the directory "~/vimruntime" first (containing your
--- 	personal Vim runtime files), then "/mygroup/vim" (shared between a
--- 	group of people) and finally "$VIMRUNTIME" (the distributed runtime
--- 	files).
--- 	You probably should always include $VIMRUNTIME somewhere, to use the
--- 	distributed runtime files.  You can put a directory before $VIMRUNTIME
--- 	to find files which replace a distributed runtime files.  You can put
--- 	a directory after $VIMRUNTIME to find files which add to distributed
--- 	runtime files.
--- 	When Vim is started with |--clean| the home directory entries are not
--- 	included.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
+-- 	personal Nvim runtime files), then "/mygroup/vim", and finally
+-- 	"$VIMRUNTIME" (the default runtime files).
+-- 	You can put a directory before $VIMRUNTIME to find files which replace
+-- 	distributed runtime files.  You can put a directory after $VIMRUNTIME
+-- 	to find files which add to distributed runtime files.
+-- 
+-- 	With |--clean| the home directory entries are not included.
 --- @class vim.opt.runtimepath: vim.Option
 --- @operator add: vim.opt.runtimepath
 --- @operator sub: vim.opt.runtimepath
@@ -4555,7 +4553,7 @@ function vim.opt.shadafile:get()end
 -- 	To use PowerShell: >
 -- 		let &shell = executable(`'pwsh'` ) ? `'pwsh'`  : `'powershell'` 
 -- 		let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
--- 		let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
+-- 		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 -- 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 -- 		set shellquote= shellxquote=
 -- 

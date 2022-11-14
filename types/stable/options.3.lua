@@ -1825,28 +1825,31 @@ function vim.opt.vartabstop:get()end
 
 -- `'verbose'`  `'vbs'` 		number	(default 0)
 -- 			global
--- 	When bigger than zero, Vim will give messages about what it is doing.
--- 	Currently, these messages are given:
--- 	>= 1	Lua assignments to options, mappings, etc.
--- 	>= 2	When a file is ":source"'ed and when the shada file is read or written..
--- 	>= 3	UI info, terminal capabilities
--- 	>= 4	Shell commands.
--- 	>= 5	Every searched tags file and include file.
--- 	>= 8	Files for which a group of autocommands is executed.
--- 	>= 9	Every executed autocommand.
--- 	>= 11	Finding items in a path
--- 	>= 12	Every executed function.
--- 	>= 13	When an exception is thrown, caught, finished, or discarded.
--- 	>= 14	Anything pending in a ":finally" clause.
--- 	>= 15	Every executed Ex command from a script (truncated at 200
--- 		characters).
--- 	>= 16	Every executed Ex command.
+-- 	Sets the verbosity level.  Also set by |-V| and |:verbose|.
 -- 
--- 	This option can also be set with the "-V" argument.  See |-V|.
--- 	This option is also set by the |:verbose| command.
+-- 	Tracing of options in Lua scripts is activated at level 1; Lua scripts
+-- 	are not traced with verbose=0, for performance.
 -- 
--- 	When the `'verbosefile'`  option is set then the verbose messages are not
--- 	displayed.
+-- 	If greater than or equal to a given level, Nvim produces the following
+-- 	messages:
+-- 
+-- 	Level   Messages ~
+-- 	----------------------------------------------------------------------
+-- 	1	Lua assignments to options, mappings, etc.
+-- 	2	When a file is ":source"'ed, or |shada| file is read or written.
+-- 	3	UI info, terminal capabilities.
+-- 	4	Shell commands.
+-- 	5	Every searched tags file and include file.
+-- 	8	Files for which a group of autocommands is executed.
+-- 	9	Executed autocommands.
+-- 	11	Finding items in a path.
+-- 	12	Vimscript function calls.
+-- 	13	When an exception is thrown, caught, finished, or discarded.
+-- 	14	Anything pending in a ":finally" clause.
+-- 	15	Ex commands from a script (truncated at 200 characters).
+-- 	16	Ex commands.
+-- 
+-- 	If `'verbosefile'`  is set then the verbose messages are not displayed.
 --- @class vim.opt.verbose: vim.Option
 --- @operator add: vim.opt.verbose
 --- @operator sub: vim.opt.verbose

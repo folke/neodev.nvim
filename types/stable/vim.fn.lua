@@ -3867,17 +3867,17 @@ function vim.fn.globpath(path, expr, nosuf, list, allinks) end
 --   {feature} argument is a feature name like "nvim-0.2.1" or
 --   "win32", see below.  See also |exists()|.
 -- 
---   If the code has a syntax error, then Nvim may skip the rest
---   of the line and miss |:endif|. 
+--   To get the system name use |vim.loop|.os_uname() in Lua: 
 -- ```vim
--- if has('feature') | let x = this->breaks->without->the->feature | endif
+--     :lua print(vim.loop.os_uname().sysname)
 -- ```
---   Put |:if| and |:endif| on separate lines to avoid the
---   syntax error. 
+--   If the code has a syntax error then Vimscript may skip the
+--   rest of the line.  Put |:if| and |:endif| on separate lines to
+--   avoid the syntax error: 
 -- ```vim
--- if has('feature')
---   let x = this->breaks->without->the->feature
--- endif
+--     if has('feature')
+--       let x = this->breaks->without->the->feature
+--     endif
 -- ```
 --   Vim's compile-time feature-names (prefixed with "+") are not
 --   recognized because Nvim is always compiled with all possible

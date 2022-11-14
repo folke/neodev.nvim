@@ -52,7 +52,7 @@ vim.go.ari = vim.go.allowrevins
 -- 	by Vim with the width of glyphs in the font.  Perhaps it also has
 -- 	to be set to "double" under CJK MS-Windows when the system locale is
 -- 	set to one of CJK locales.  See Unicode Standard Annex #11
--- 	(http://www.unicode.org/reports/tr11).
+-- 	(https://www.unicode.org/reports/tr11).
 vim.go.ambiwidth = "single"
 vim.go.ambw = vim.go.ambiwidth
 -- `'arabicshape'`  `'arshape'` 	boolean (default on)
@@ -2790,10 +2790,13 @@ vim.go.ruf = vim.go.rulerformat
 -- 	  indent/	indent scripts |indent-expression|
 -- 	  keymap/	key mapping files |mbyte-keymap|
 -- 	  lang/		menu translations |:menutrans|
+-- 	  lua/		|Lua| plugins
 -- 	  menu.vim	GUI menus |menu.vim|
 -- 	  pack/		packages |:packadd|
+-- 	  parser/	|treesitter| syntax parsers
 -- 	  plugin/	plugin scripts |write-plugin|
 -- 	  print/	files for printing |postscript-print-encoding|
+-- 	  query/	|treesitter| queries
 -- 	  rplugin/	|remote-plugin| scripts
 -- 	  spell/	spell checking files |spell|
 -- 	  syntax/	syntax files |mysyntaxfile|
@@ -2814,20 +2817,20 @@ vim.go.ruf = vim.go.rulerformat
 -- 	   but are not part of the Nvim distribution. XDG_DATA_DIRS defaults
 -- 	   to /usr/local/share/:/usr/share/, so system administrators are
 -- 	   expected to install site plugins to /usr/share/nvim/site.
--- 	5. Applications state home directory, for files that contain your
--- 	   session state (eg. backupdir, viewdir, undodir, etc).
+-- 	5. Session state directory, for state data such as swap, backupdir,
+-- 	   viewdir, undodir, etc.
 -- 	   Given by `stdpath("state")`.  |$XDG_STATE_HOME|
--- 	6. $VIMRUNTIME, for files distributed with Neovim.
+-- 	6. $VIMRUNTIME, for files distributed with Nvim.
 -- 
 -- 	7, 8, 9, 10. In after/ subdirectories of 1, 2, 3 and 4, with reverse
 -- 	   ordering.  This is for preferences to overrule or add to the
 -- 	   distributed defaults or system-wide settings (rarely needed).
 -- 
 -- 
--- 	"start" packages will additionally be used to search for runtime files
--- 	after these, but package entries are not visible in `:set rtp`.
--- 	See |runtime-search-path| for more information. "opt" packages
--- 	will be explicitly added to &rtp when |:packadd| is used.
+-- 	"start" packages will also be searched (|runtime-search-path|) for
+-- 	runtime files after these, though such packages are not explicitly
+-- 	reported in &runtimepath. But "opt" packages are explicitly added to
+-- 	&runtimepath by |:packadd|.
 -- 
 -- 	Note that, unlike `'path'` , no wildcards like "" are allowed.  Normal
 -- 	wildcards are allowed, but can significantly slow down searching for
@@ -2837,18 +2840,13 @@ vim.go.ruf = vim.go.rulerformat
 -- 	Example: >
 -- 		:set runtimepath=~/vimruntime,/mygroup/vim,$VIMRUNTIME
 -- <	This will use the directory "~/vimruntime" first (containing your
--- 	personal Vim runtime files), then "/mygroup/vim" (shared between a
--- 	group of people) and finally "$VIMRUNTIME" (the distributed runtime
--- 	files).
--- 	You probably should always include $VIMRUNTIME somewhere, to use the
--- 	distributed runtime files.  You can put a directory before $VIMRUNTIME
--- 	to find files which replace a distributed runtime files.  You can put
--- 	a directory after $VIMRUNTIME to find files which add to distributed
--- 	runtime files.
--- 	When Vim is started with |--clean| the home directory entries are not
--- 	included.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
+-- 	personal Nvim runtime files), then "/mygroup/vim", and finally
+-- 	"$VIMRUNTIME" (the default runtime files).
+-- 	You can put a directory before $VIMRUNTIME to find files which replace
+-- 	distributed runtime files.  You can put a directory after $VIMRUNTIME
+-- 	to find files which add to distributed runtime files.
+-- 
+-- 	With |--clean| the home directory entries are not included.
 vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
@@ -3155,7 +3153,7 @@ vim.go.sdf = vim.go.shadafile
 -- 	To use PowerShell: >
 -- 		let &shell = executable(`'pwsh'` ) ? `'pwsh'`  : `'powershell'` 
 -- 		let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
--- 		let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
+-- 		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 -- 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 -- 		set shellquote= shellxquote=
 -- 
@@ -3904,28 +3902,31 @@ vim.go.updatetime = 4000
 vim.go.ut = vim.go.updatetime
 -- `'verbose'`  `'vbs'` 		number	(default 0)
 -- 			global
--- 	When bigger than zero, Vim will give messages about what it is doing.
--- 	Currently, these messages are given:
--- 	>= 1	Lua assignments to options, mappings, etc.
--- 	>= 2	When a file is ":source"'ed and when the shada file is read or written..
--- 	>= 3	UI info, terminal capabilities
--- 	>= 4	Shell commands.
--- 	>= 5	Every searched tags file and include file.
--- 	>= 8	Files for which a group of autocommands is executed.
--- 	>= 9	Every executed autocommand.
--- 	>= 11	Finding items in a path
--- 	>= 12	Every executed function.
--- 	>= 13	When an exception is thrown, caught, finished, or discarded.
--- 	>= 14	Anything pending in a ":finally" clause.
--- 	>= 15	Every executed Ex command from a script (truncated at 200
--- 		characters).
--- 	>= 16	Every executed Ex command.
+-- 	Sets the verbosity level.  Also set by |-V| and |:verbose|.
 -- 
--- 	This option can also be set with the "-V" argument.  See |-V|.
--- 	This option is also set by the |:verbose| command.
+-- 	Tracing of options in Lua scripts is activated at level 1; Lua scripts
+-- 	are not traced with verbose=0, for performance.
 -- 
--- 	When the `'verbosefile'`  option is set then the verbose messages are not
--- 	displayed.
+-- 	If greater than or equal to a given level, Nvim produces the following
+-- 	messages:
+-- 
+-- 	Level   Messages ~
+-- 	----------------------------------------------------------------------
+-- 	1	Lua assignments to options, mappings, etc.
+-- 	2	When a file is ":source"'ed, or |shada| file is read or written.
+-- 	3	UI info, terminal capabilities.
+-- 	4	Shell commands.
+-- 	5	Every searched tags file and include file.
+-- 	8	Files for which a group of autocommands is executed.
+-- 	9	Executed autocommands.
+-- 	11	Finding items in a path.
+-- 	12	Vimscript function calls.
+-- 	13	When an exception is thrown, caught, finished, or discarded.
+-- 	14	Anything pending in a ":finally" clause.
+-- 	15	Ex commands from a script (truncated at 200 characters).
+-- 	16	Ex commands.
+-- 
+-- 	If `'verbosefile'`  is set then the verbose messages are not displayed.
 vim.go.verbose = 0
 vim.go.vbs = vim.go.verbose
 -- `'verbosefile'`  `'vfile'` 	string	(default empty)
@@ -4304,3 +4305,10 @@ vim.wo = {}
 -- 	Also see |arabic.txt|.
 vim.wo.arabic = false
 vim.wo.arab = vim.wo.arabic
+-- `'breakindent'`  `'bri'` 	boolean (default off)
+-- 			local to window
+-- 	Every wrapped line will continue visually indented (same amount of
+-- 	space as the beginning of that line), thus preserving horizontal blocks
+-- 	of text.
+vim.wo.breakindent = false
+vim.wo.bri = vim.wo.breakindent

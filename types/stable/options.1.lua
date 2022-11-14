@@ -1,12 +1,5 @@
 ---@meta
 
--- `'breakindent'`  `'bri'` 	boolean (default off)
--- 			local to window
--- 	Every wrapped line will continue visually indented (same amount of
--- 	space as the beginning of that line), thus preserving horizontal blocks
--- 	of text.
-vim.wo.breakindent = false
-vim.wo.bri = vim.wo.breakindent
 -- `'breakindentopt'`  `'briopt'`  string (default empty)
 -- 			local to window
 -- 	Settings for `'breakindent'` . It can consist of the following optional
@@ -1787,9 +1780,9 @@ vim.bo.lw = vim.bo.lispwords
 -- 	`:lgrepadd`, `:cfile`, `:cgetfile`, `:caddfile`, `:lfile`, `:lgetfile`,
 -- 	and `:laddfile`.
 -- 
--- 	This would be mostly useful when you use MS-Windows.  If |+iconv| is
--- 	enabled and GNU libiconv is used, setting `'makeencoding'`  to "char" has
--- 	the same effect as setting to the system locale encoding.  Example: >
+-- 	This would be mostly useful when you use MS-Windows.  If iconv is
+-- 	enabled, setting `'makeencoding'`  to "char" has the same effect as
+-- 	setting to the system locale encoding.  Example: >
 -- 		:set makeencoding=char	" system locale is used
 -- <
 vim.bo.makeencoding = ""
@@ -1938,7 +1931,7 @@ vim.bo.ofu = vim.bo.omnifunc
 -- <	- A directory name may end in a `':'`  or `'/'` .
 -- 	- Environment variables are expanded |:set_env|.
 -- 	- When using |netrw.vim| URLs can be used.  For example, adding
--- 	  "http://www.vim.org" will make ":find index.html" work.
+-- 	  "https://www.vim.org" will make ":find index.html" work.
 -- 	- Search upwards and downwards in a directory tree using "*", "" and
 -- 	  ";".  See |file-searching| for info and syntax.
 -- 	- Careful with `'\'`  characters, type two to get one in the option: >
@@ -2472,7 +2465,7 @@ function vim.opt.allowrevins:get()end
 -- 	by Vim with the width of glyphs in the font.  Perhaps it also has
 -- 	to be set to "double" under CJK MS-Windows when the system locale is
 -- 	set to one of CJK locales.  See Unicode Standard Annex #11
--- 	(http://www.unicode.org/reports/tr11).
+-- 	(https://www.unicode.org/reports/tr11).
 --- @class vim.opt.ambiwidth: vim.Option
 --- @operator add: vim.opt.ambiwidth
 --- @operator sub: vim.opt.ambiwidth

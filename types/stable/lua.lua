@@ -14,22 +14,22 @@ function vim.call(func, ...) end
 -- ```lua
 -- 
 --     vim.diff('a\n', 'b\nc\n')
---     -->
+--     =>
 --     @@ -1 +1,2 @@
 --     -a
 --     +b
 --     +c
 -- 
 --     vim.diff('a\n', 'b\nc\n', {result_type = 'indices'})
---     -->
+--     =>
 --     {
 --         {1, 1, 1, 2}
 --     }
 -- ```
 -- Parameters: ~
---     {a}      First string to compare
---     {b}      Second string to compare
---     {opts}   Optional parameters:
+--   • {a}      First string to compare
+--   • {b}      Second string to compare
+--   • {opts}   Optional parameters:
 --              • `on_hunk` (callback):
 --                Invoked for each hunk in the diff. Return a negative number
 --                to cancel the callback for any remaining hunks.
@@ -79,9 +79,9 @@ function vim.diff(a, b, opts) end
 -- can accept, see ":Man 3 iconv".
 -- 
 -- Parameters: ~
---     {str}   (string) Text to convert
---     {from}  (string) Encoding of {str}
---     {to}    (string) Target encoding
+--   • {str}   (string) Text to convert
+--   • {from}  (string) Encoding of {str}
+--   • {to}    (string) Target encoding
 -- 
 -- Returns: ~
 --     Converted string if conversion succeeds, `nil` otherwise.
@@ -143,13 +143,13 @@ function vim.schedule(callback) end
 -- ```lua
 -- 
 --     vim.spell.check("the quik brown fox")
---     -->
+--     =>
 --     {
 --         {'quik', 'bad', 4}
 --     }
 -- ```
 -- Parameters: ~
---     {str}    String to spell check.
+--   • {str}    String to spell check.
 -- 
 -- Return: ~
 --   List of tuples with three items:
@@ -241,10 +241,10 @@ function vim.version() end
 -- this time.
 -- 
 -- Parameters: ~
---     {time}      Number of milliseconds to wait
---     {callback}  Optional callback. Waits until {callback} returns true
---     {interval}  (Approximate) number of milliseconds to wait between polls
---     {fast_only} If true, only |api-fast| events will be processed.
+--   • {time}      Number of milliseconds to wait
+--   • {callback}  Optional callback. Waits until {callback} returns true
+--   • {interval}  (Approximate) number of milliseconds to wait between polls
+--   • {fast_only} If true, only |api-fast| events will be processed.
 --                     If called from while in an |api-fast| event, will
 --                     automatically be set to `true`.
 -- 
