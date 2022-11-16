@@ -78,6 +78,9 @@ Plug 'folke/neodev.nvim'
 
 For any other `root_dir`, **neodev** will **NOT** change any settings.
 
+> **TIP** with [neoconf.nvim](https://github.com/folke/neoconf.nvim), you can easily set project local **Neodev** settings.
+> See the example [.neoconf.json](https://github.com/folke/neodev.nvim/blob/main/.neoconf.json) file in this repository
+
 ```lua
 -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
 require("neodev").setup({
@@ -99,7 +102,8 @@ lspconfig.sumneko_lua.setup({
 })
 ```
 
-Example for setting up **neodev** that overrides the settings for `/etc/nixos`
+<details>
+<summary>Example for setting up **neodev** that overrides the settings for `/etc/nixos`</summary>
 
 ```lua
 -- You can override the default detection using the override function
@@ -113,6 +117,8 @@ require("neodev").setup({
   end,
 })
 ```
+
+</details>
 
 It's possible to setup Neodev without lspconfig, by configuring the `before_init`
 of the options passed to `vim.lsp.start`.
@@ -132,17 +138,3 @@ vim.lsp.start({
 ```
 
 </details>
-
-## ❓ How?
-
-**Neovim** includes a
-[script](https://github.com/neovim/neovim/blob/master/scripts/gen_vimdoc.py) to
-generate the nvim docs. That script also creates message pack files containing
-all the API metadata in a structured way. Unfortunately these files are not
-packaged in the releases.
-
-Using the message pack files, I converted all the API data to
-[EmmyLua annotations](https://github.com/sumneko/lua-language-server/wiki/EmmyLua-Annotations)
-and make them available for the
-[Sumneko LSP](https://github.com/sumneko/lua-language-server) as a workspace
-library.
