@@ -1,11 +1,4 @@
 {
-  "settings": {
-    "plugins": {
-      "sumneko_lua": {
-        "enabled": true
-      }
-    }
-  },
   "neodev": {
     "library": {
       "enabled": true,
