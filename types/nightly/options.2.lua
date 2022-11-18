@@ -247,6 +247,18 @@ vim.opt.et = vim.opt.expandtab
 --- @return boolean
 function vim.opt.expandtab:get()end
 
+-- `'exrc'`  `'ex'` 		boolean (default off)
+-- 			global
+-- 	Enables the reading of .nvimrc and .exrc files in the current
+-- 	directory.
+-- 
+-- 	The file is only sourced if the user indicates the file is trusted. If
+-- 	it is, the SHA256 hash of the file contents and the full path of the
+-- 	file are persisted to a trust database. The user is only prompted
+-- 	again if the file contents change. See |vim.secure.read()|.
+-- 
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.exrc: vim.Option
 --- @operator add: vim.opt.exrc
 --- @operator sub: vim.opt.exrc
@@ -4223,17 +4235,6 @@ vim.opt.sect = vim.opt.sections
 --- @return string
 function vim.opt.sections:get()end
 
--- `'secure'` 		boolean	(default off)
--- 			global
--- 	When on, ":autocmd", shell and write commands are not allowed in
--- 	".nvimrc" and ".exrc" in the current directory and map commands are
--- 	displayed.  Switch it off only if you know that you will not run into
--- 	problems, or when the `'exrc'`  option is off.  On Unix this option is
--- 	only used if the ".nvimrc" or ".exrc" is not owned by you.  This can be
--- 	dangerous if the systems allows users to do a "chown".  You better set
--- 	`'secure'`  at the end of your |init.vim| then.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
 --- @class vim.opt.secure: vim.Option
 --- @operator add: vim.opt.secure
 --- @operator sub: vim.opt.secure

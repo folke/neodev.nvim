@@ -1057,6 +1057,18 @@ vim.go.ef = vim.go.errorfile
 -- <
 vim.go.eventignore = ""
 vim.go.ei = vim.go.eventignore
+-- `'exrc'`  `'ex'` 		boolean (default off)
+-- 			global
+-- 	Enables the reading of .nvimrc and .exrc files in the current
+-- 	directory.
+-- 
+-- 	The file is only sourced if the user indicates the file is trusted. If
+-- 	it is, the SHA256 hash of the file contents and the full path of the
+-- 	file are persisted to a trust database. The user is only prompted
+-- 	again if the file contents change. See |vim.secure.read()|.
+-- 
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.exrc = false
 vim.go.ex = vim.go.exrc
 -- `'fileencodings'`  `'fencs'` 	string (default: "ucs-bom,utf-8,default,latin1")
@@ -2867,17 +2879,6 @@ vim.go.sbo = vim.go.scrollopt
 -- 	at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
 vim.go.sections = "SHNHH HUnhsh"
 vim.go.sect = vim.go.sections
--- `'secure'` 		boolean	(default off)
--- 			global
--- 	When on, ":autocmd", shell and write commands are not allowed in
--- 	".nvimrc" and ".exrc" in the current directory and map commands are
--- 	displayed.  Switch it off only if you know that you will not run into
--- 	problems, or when the `'exrc'`  option is off.  On Unix this option is
--- 	only used if the ".nvimrc" or ".exrc" is not owned by you.  This can be
--- 	dangerous if the systems allows users to do a "chown".  You better set
--- 	`'secure'`  at the end of your |init.vim| then.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
 vim.go.secure = false
 -- `'selection'`  `'sel'` 	string	(default "inclusive")
 -- 			global
