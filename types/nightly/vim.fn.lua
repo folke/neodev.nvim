@@ -85,6 +85,7 @@ function vim.fn.api_info() end
 -- text line below line {lnum} in the current buffer.
 -- Otherwise append {text} as one text line below line {lnum} in
 -- the current buffer.
+-- Any type of item is accepted and converted to a String.
 -- {lnum} can be zero to insert a line before the first one.
 -- {lnum} is used like with |getline()|.
 -- Returns 1 for failure ({lnum} out of range or out of memory),
@@ -2572,7 +2573,8 @@ function vim.fn.getbufinfo(dict) end
 
 -- Return a |List| with the lines starting from {lnum} to {end}
 -- (inclusive) in the buffer {buf}.  If {end} is omitted, a
--- |List| with only the line {lnum} is returned.
+-- |List| with only the line {lnum} is returned.  See
+-- `getbufoneline()` for only getting the line.
 -- 
 -- For the use of {buf}, see |bufname()| above.
 -- 
@@ -2594,13 +2596,23 @@ function vim.fn.getbufinfo(dict) end
 -- ```vim
 --   :let lines = getbufline(bufnr("myfile"), 1, "$")
 -- ```
--- Can also be used as a |method|: >
+-- Can also be used as a |method|: 
+-- ```vim
 --   GetBufnr()->getbufline(lnum)
+-- ```
+-- 
 --- @param buf buffer
 --- @param lnum number
 --- @param end_? number
 --- @return any[]
 function vim.fn.getbufline(buf, lnum, end_) end
+
+-- Just like `getbufline()` but only get one line and return it
+-- as a string.
+--- @param buf buffer
+--- @param lnum number
+--- @return string
+function vim.fn.getbufoneline(buf, lnum) end
 
 -- The result is the value of option or local buffer variable
 -- {varname} in buffer {buf}.  Note that the name without "b:"
@@ -3160,7 +3172,8 @@ function vim.fn.getjumplist(winnr, tabnr) end
 -- ```vim
 --   ComputeLnum()->getline()
 -- ```
--- To get lines from another buffer see |getbufline()|
+-- To get lines from another buffer see |getbufline()| and
+-- |getbufoneline()|
 --- @param lnum number
 --- @param end_? number
 --- @return any[]

@@ -1772,6 +1772,8 @@ function vim.fn.setfperm(fname, mode) end
 -- {lnum} is used like with |getline()|.
 -- When {lnum} is just below the last line the {text} will be
 -- added below the last line.
+-- {text} can be any type or a List of any type, each item is
+-- converted to a String.
 -- 
 -- If this succeeds, FALSE is returned.  If this fails (most likely
 -- because {lnum} is invalid) TRUE is returned.
