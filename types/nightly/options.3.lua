@@ -1,5 +1,63 @@
 ---@meta
 
+-- `'shellslash'`  `'ssl'` 	boolean	(default off)
+-- 			global
+-- 			{only for MS-Windows}
+-- 	When set, a forward slash is used when expanding file names.  This is
+-- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
+-- 	slashes can still be typed, but they are changed to forward slashes by
+-- 	Vim.
+-- 	Note that setting or resetting this option has no effect for some
+-- 	existing file names, thus this option needs to be set before opening
+-- 	any file for best results.  This might change in the future.
+-- 	`'shellslash'`  only works when a backslash can be used as a path
+-- 	separator.  To test if this is so use: >
+-- 		if exists(`'+shellslash'` )
+-- <	Also see `'completeslash'` .
+--- @class vim.opt.shellslash: vim.Option
+--- @operator add: vim.opt.shellslash
+--- @operator sub: vim.opt.shellslash
+--- @operator pow: vim.opt.shellslash
+vim.opt.shellslash = false
+vim.opt.ssl = vim.opt.shellslash
+--- @return boolean
+function vim.opt.shellslash:get()end
+
+-- `'shelltemp'`  `'stmp'` 	boolean	(default on)
+-- 			global
+-- 	When on, use temp files for shell commands.  When off use a pipe.
+-- 	When using a pipe is not possible temp files are used anyway.
+-- 	The advantage of using a pipe is that nobody can read the temp file
+-- 	and the `'shell'`  command does not need to support redirection.
+-- 	The advantage of using a temp file is that the file type and encoding
+-- 	can be detected.
+-- 	The |FilterReadPre|, |FilterReadPost| and |FilterWritePre|,
+-- 	|FilterWritePost| autocommands event are not triggered when
+-- 	`'shelltemp'`  is off.
+-- 	|system()| does not respect this option, it always uses pipes.
+--- @class vim.opt.shelltemp: vim.Option
+--- @operator add: vim.opt.shelltemp
+--- @operator sub: vim.opt.shelltemp
+--- @operator pow: vim.opt.shelltemp
+vim.opt.shelltemp = true
+vim.opt.stmp = vim.opt.shelltemp
+--- @return boolean
+function vim.opt.shelltemp:get()end
+
+-- `'shellxescape'`  `'sxe'` 	string	(default: "")
+-- 			global
+-- 	When `'shellxquote'`  is set to "(" then the characters listed in this
+-- 	option will be escaped with a `'^'`  character.  This makes it possible
+-- 	to execute most external commands with cmd.exe.
+--- @class vim.opt.shellxescape: vim.Option
+--- @operator add: vim.opt.shellxescape
+--- @operator sub: vim.opt.shellxescape
+--- @operator pow: vim.opt.shellxescape
+vim.opt.shellxescape = ""
+vim.opt.sxe = vim.opt.shellxescape
+--- @return string
+function vim.opt.shellxescape:get()end
+
 -- `'shellxquote'`  `'sxq'` 	string	(default: "", Windows: "\"")
 -- 			global
 -- 	Quoting character(s), put around the command passed to the shell, for

@@ -1604,31 +1604,39 @@ function vim.fn.setbufline(buf, lnum, text) end
 function vim.fn.setbufvar(buf, varname, val) end
 
 -- Specify overrides for cell widths of character ranges.  This
--- tells Vim how wide characters are, counted in screen cells.
--- This overrides 'ambiwidth'.  Example: 
+-- tells Vim how wide characters are when displayed in the
+-- terminal, counted in screen cells.  The values override
+-- 'ambiwidth'.  Example: 
 -- ```vim
---    setcellwidths([[0xad, 0xad, 1],
---     \ [0x2194, 0x2199, 2]])
+--    call setcellwidths([
+--     \ [0x111, 0x111, 1],
+--     \ [0x2194, 0x2199, 2],
+--     \ ])
 -- ```
--- The {list} argument is a list of lists with each three
--- numbers. These three numbers are [low, high, width].  "low"
--- and "high" can be the same, in which case this refers to one
--- character. Otherwise it is the range of characters from "low"
--- to "high" (inclusive).  "width" is either 1 or 2, indicating
--- the character width in screen cells.
+-- The {list} argument is a List of Lists with each three
+-- numbers: [{low}, {high}, {width}].
+-- {low} and {high} can be the same, in which case this refers to
+-- one character.  Otherwise it is the range of characters from
+-- {low} to {high} (inclusive).
+-- Only characters with value 0x100 and higher can be used.
+-- 
+-- {width} must be either 1 or 2, indicating the character width
+-- in screen cells.
 -- An error is given if the argument is invalid, also when a
 -- range overlaps with another.
--- Only characters with value 0x100 and higher can be used.
 -- 
 -- If the new value causes 'fillchars' or 'listchars' to become
 -- invalid it is rejected and an error is given.
 -- 
--- To clear the overrides pass an empty list: 
+-- To clear the overrides pass an empty {list}: 
 -- ```vim
---    setcellwidths([]);
+--    call setcellwidths([])
 -- ```
 -- You can use the script $VIMRUNTIME/tools/emoji_list.vim to see
--- the effect for known emoji characters.
+-- the effect for known emoji characters.  Move the cursor
+-- through the text to check if the cell widths of your terminal
+-- match with what Vim knows about each emoji.  If it doesn't
+-- look right you need to adjust the {list} argument.
 --- @param list any[]
 function vim.fn.setcellwidths(list) end
 
