@@ -1,5 +1,37 @@
 ---@meta
 
+-- `'shellredir'`  `'srr'` 	string	(default ">", ">&" or ">%s 2>&1")
+-- 			global
+-- 	String to be used to put the output of a filter command in a temporary
+-- 	file.  See also |:!|.  See |option-backslash| about including spaces
+-- 	and backslashes.
+-- 	The name of the temporary file can be represented by "%s" if necessary
+-- 	(the file name is appended automatically if no %s appears in the value
+-- 	of this option).
+-- 	The default is ">".  For Unix, if the `'shell'`  option is "csh" or
+-- 	"tcsh" during initializations, the default becomes ">&".  If the
+-- 	`'shell'`  option is "sh", "ksh", "mksh", "pdksh", "zsh", "zsh-beta",
+-- 	"bash" or "fish", the default becomes ">%s 2>&1".  This means that
+-- 	stderr is also included.  For Win32, the Unix checks are done and
+-- 	additionally "cmd" is checked for, which makes the default ">%s 2>&1".
+-- 	Also, the same names with ".exe" appended are checked for.
+-- 	The initialization of this option is done after reading the vimrc
+-- 	and the other initializations, so that when the `'shell'`  option is set
+-- 	there, the `'shellredir'`  option changes automatically unless it was
+-- 	explicitly set before.
+-- 	In the future pipes may be used for filtering and this option will
+-- 	become obsolete (at least for Unix).
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.shellredir: vim.Option
+--- @operator add: vim.opt.shellredir
+--- @operator sub: vim.opt.shellredir
+--- @operator pow: vim.opt.shellredir
+vim.opt.shellredir = ">%s 2>&1"
+vim.opt.srr = vim.opt.shellredir
+--- @return string
+function vim.opt.shellredir:get()end
+
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
 -- 			{only for MS-Windows}
@@ -1696,7 +1728,7 @@ function vim.opt.ttyfast:get()end
 --- @operator add: vim.opt.undodir
 --- @operator sub: vim.opt.undodir
 --- @operator pow: vim.opt.undodir
-vim.opt.undodir = "/home/runner/.local/state/nvim/undo//"
+vim.opt.undodir = "/home/folke/.local/state/nvim/undo//"
 vim.opt.udir = vim.opt.undodir
 --- @return string[]
 function vim.opt.undodir:get()end
@@ -1915,7 +1947,7 @@ function vim.opt.verbosefile:get()end
 --- @operator add: vim.opt.viewdir
 --- @operator sub: vim.opt.viewdir
 --- @operator pow: vim.opt.viewdir
-vim.opt.viewdir = "/home/runner/.local/state/nvim/view//"
+vim.opt.viewdir = "/home/folke/.local/state/nvim/view//"
 vim.opt.vdir = vim.opt.viewdir
 --- @return string
 function vim.opt.viewdir:get()end

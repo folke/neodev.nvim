@@ -1,5 +1,18 @@
 ---@meta
 
+-- `'digraph'`  `'dg'` 		boolean	(default off)
+-- 			global
+-- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
+-- 	{char2}.  See |digraphs|.
+--- @class vim.opt.digraph: vim.Option
+--- @operator add: vim.opt.digraph
+--- @operator sub: vim.opt.digraph
+--- @operator pow: vim.opt.digraph
+vim.opt.digraph = false
+vim.opt.dg = vim.opt.digraph
+--- @return boolean
+function vim.opt.digraph:get()end
+
 -- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
 -- 			global
 -- 	List of directory names for the swap file, separated with commas.
@@ -54,7 +67,7 @@
 --- @operator add: vim.opt.directory
 --- @operator sub: vim.opt.directory
 --- @operator pow: vim.opt.directory
-vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
+vim.opt.directory = "/home/folke/.local/state/nvim/swap//"
 vim.opt.dir = vim.opt.directory
 --- @return string[]
 function vim.opt.directory:get()end
@@ -1441,7 +1454,7 @@ function vim.opt.guitabtooltip:get()end
 --- @operator add: vim.opt.helpfile
 --- @operator sub: vim.opt.helpfile
 --- @operator pow: vim.opt.helpfile
-vim.opt.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
+vim.opt.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
 vim.opt.hf = vim.opt.helpfile
 --- @return string
 function vim.opt.helpfile:get()end
@@ -3330,7 +3343,7 @@ function vim.opt.operatorfunc:get()end
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath
 --- @operator pow: vim.opt.packpath
-vim.opt.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.opt.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
 vim.opt.pp = vim.opt.packpath
 --- @return string[]
 function vim.opt.packpath:get()end
@@ -4150,7 +4163,7 @@ function vim.opt.rulerformat:get()end
 --- @operator add: vim.opt.runtimepath
 --- @operator sub: vim.opt.runtimepath
 --- @operator pow: vim.opt.runtimepath
-vim.opt.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.opt.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
 vim.opt.rtp = vim.opt.runtimepath
 --- @return string[]
 function vim.opt.runtimepath:get()end
@@ -4595,7 +4608,7 @@ function vim.opt.shadafile:get()end
 --- @operator add: vim.opt.shell
 --- @operator sub: vim.opt.shell
 --- @operator pow: vim.opt.shell
-vim.opt.shell = "sh"
+vim.opt.shell = "/usr/bin/fish"
 vim.opt.sh = vim.opt.shell
 --- @return string
 function vim.opt.shell:get()end
@@ -4657,7 +4670,7 @@ function vim.opt.shellcmdflag:get()end
 --- @operator add: vim.opt.shellpipe
 --- @operator sub: vim.opt.shellpipe
 --- @operator pow: vim.opt.shellpipe
-vim.opt.shellpipe = "| tee"
+vim.opt.shellpipe = "2>&1| tee"
 vim.opt.sp = vim.opt.shellpipe
 --- @return string
 function vim.opt.shellpipe:get()end
@@ -4684,36 +4697,4 @@ vim.opt.shellquote = ""
 vim.opt.shq = vim.opt.shellquote
 --- @return string
 function vim.opt.shellquote:get()end
-
--- `'shellredir'`  `'srr'` 	string	(default ">", ">&" or ">%s 2>&1")
--- 			global
--- 	String to be used to put the output of a filter command in a temporary
--- 	file.  See also |:!|.  See |option-backslash| about including spaces
--- 	and backslashes.
--- 	The name of the temporary file can be represented by "%s" if necessary
--- 	(the file name is appended automatically if no %s appears in the value
--- 	of this option).
--- 	The default is ">".  For Unix, if the `'shell'`  option is "csh" or
--- 	"tcsh" during initializations, the default becomes ">&".  If the
--- 	`'shell'`  option is "sh", "ksh", "mksh", "pdksh", "zsh", "zsh-beta",
--- 	"bash" or "fish", the default becomes ">%s 2>&1".  This means that
--- 	stderr is also included.  For Win32, the Unix checks are done and
--- 	additionally "cmd" is checked for, which makes the default ">%s 2>&1".
--- 	Also, the same names with ".exe" appended are checked for.
--- 	The initialization of this option is done after reading the vimrc
--- 	and the other initializations, so that when the `'shell'`  option is set
--- 	there, the `'shellredir'`  option changes automatically unless it was
--- 	explicitly set before.
--- 	In the future pipes may be used for filtering and this option will
--- 	become obsolete (at least for Unix).
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.shellredir: vim.Option
---- @operator add: vim.opt.shellredir
---- @operator sub: vim.opt.shellredir
---- @operator pow: vim.opt.shellredir
-vim.opt.shellredir = ">"
-vim.opt.srr = vim.opt.shellredir
---- @return string
-function vim.opt.shellredir:get()end
 
