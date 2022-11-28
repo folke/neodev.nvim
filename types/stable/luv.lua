@@ -4,6 +4,24 @@
 ---@field start fun(timer:vim.loop.Timer, timeout:integer, repeat:integer, callback:fun())
 ---@field stop fun(timer:vim.loop.Timer)
 
+---@class vim.loop.Handle
+local Handle = {}
+function Handle:close() end
+---@return boolean
+function Handle:is_closing() end
+---@return boolean
+function Handle:is_active() end
+
+---@class vim.loop.Pipe: vim.loop.Handle
+
+---@class vim.loop.Check
+local Check = {}
+---@param fn fun()
+function Check:start(fn) end
+function Check:stop() end
+
+---@class vim.loop.Process: vim.loop.Handle
+
 
 -- > method form `stream:accept(client_stream)`
 -- 
@@ -1440,6 +1458,7 @@ function vim.loop.new_async(callback) end
 -- userdata wrapping it.
 -- 
 -- Returns: `uv_check_t userdata` or `fail`
+--- @return vim.loop.Check
 function vim.loop.new_check() end
 
 -- Creates and initializes a new |uv_fs_event_t|. Returns the Lua
@@ -1470,6 +1489,7 @@ function vim.loop.new_idle() end
 -- 
 -- Returns: `uv_pipe_t userdata` or `fail`
 --- @param ipc? any
+--- @return vim.loop.Pipe
 function vim.loop.new_pipe(ipc) end
 
 -- Parameters:
@@ -2520,6 +2540,7 @@ function vim.loop.socketpair(socktype, protocol, flags1, flags2) end
 -- 
 -- Returns: `uv_process_t userdata`, `integer`
 --- @param options table<string, any>
+--- @return vim.loop.Process
 function vim.loop.spawn(path, options, on_exit) end
 
 -- Stop the event loop, causing |uv.run()| to end as soon as
