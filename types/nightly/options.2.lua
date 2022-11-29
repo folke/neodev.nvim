@@ -316,6 +316,8 @@ function vim.opt.expandtab:get()end
 -- 	file are persisted to a trust database. The user is only prompted
 -- 	again if the file contents change. See |vim.secure.read()|.
 -- 
+-- 	Use |:trust| to manage the trusted file database.
+-- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 --- @class vim.opt.exrc: vim.Option
@@ -4684,36 +4686,4 @@ vim.opt.shellquote = ""
 vim.opt.shq = vim.opt.shellquote
 --- @return string
 function vim.opt.shellquote:get()end
-
--- `'shellredir'`  `'srr'` 	string	(default ">", ">&" or ">%s 2>&1")
--- 			global
--- 	String to be used to put the output of a filter command in a temporary
--- 	file.  See also |:!|.  See |option-backslash| about including spaces
--- 	and backslashes.
--- 	The name of the temporary file can be represented by "%s" if necessary
--- 	(the file name is appended automatically if no %s appears in the value
--- 	of this option).
--- 	The default is ">".  For Unix, if the `'shell'`  option is "csh" or
--- 	"tcsh" during initializations, the default becomes ">&".  If the
--- 	`'shell'`  option is "sh", "ksh", "mksh", "pdksh", "zsh", "zsh-beta",
--- 	"bash" or "fish", the default becomes ">%s 2>&1".  This means that
--- 	stderr is also included.  For Win32, the Unix checks are done and
--- 	additionally "cmd" is checked for, which makes the default ">%s 2>&1".
--- 	Also, the same names with ".exe" appended are checked for.
--- 	The initialization of this option is done after reading the vimrc
--- 	and the other initializations, so that when the `'shell'`  option is set
--- 	there, the `'shellredir'`  option changes automatically unless it was
--- 	explicitly set before.
--- 	In the future pipes may be used for filtering and this option will
--- 	become obsolete (at least for Unix).
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.shellredir: vim.Option
---- @operator add: vim.opt.shellredir
---- @operator sub: vim.opt.shellredir
---- @operator pow: vim.opt.shellredir
-vim.opt.shellredir = ">"
-vim.opt.srr = vim.opt.shellredir
---- @return string
-function vim.opt.shellredir:get()end
 

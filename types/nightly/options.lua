@@ -1067,6 +1067,8 @@ vim.go.ei = vim.go.eventignore
 -- 	file are persisted to a trust database. The user is only prompted
 -- 	again if the file contents change. See |vim.secure.read()|.
 -- 
+-- 	Use |:trust| to manage the trusted file database.
+-- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.go.exrc = false

@@ -2751,6 +2751,9 @@ function vim.cmd.tr(...)end
 -- jump to first matching tag
 function vim.cmd.trewind(...)end
 
+-- add or remove file from trust database
+function vim.cmd.trust(...)end
+
 -- execute commands, abort on error or exception
 function vim.cmd.try(...)end
 

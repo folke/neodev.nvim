@@ -1493,7 +1493,7 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 -- Parameters: ~
 --   • {keys}       to be typed
 --   • {mode}       behavior flags, see |feedkeys()|
---   • {escape_ks}  If true, escape K_SPECIAL bytes in `keys` This should be
+--   • {escape_ks}  If true, escape K_SPECIAL bytes in `keys`. This should be
 --                  false if you already used |nvim_replace_termcodes()|, and
 --                  true otherwise.
 -- 
