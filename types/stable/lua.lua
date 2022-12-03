@@ -2,8 +2,10 @@
 
 -- Invokes |vim-function| or |user-function| {func} with arguments {...}.
 -- See also |vim.fn|.
--- Equivalent to: >
+-- Equivalent to: 
+-- ```lua
 --     vim.fn[func]({...})
+-- ```
 --- @param func fun()
 function vim.call(func, ...) end
 
@@ -206,7 +208,8 @@ function vim.stricmp(a, b) end
 -- used to handle messages when setting 'cmdheight' to zero (which is
 -- likewise experimental).
 -- 
--- Example (stub for a |ui-popupmenu| implementation): >
+-- Example (stub for a |ui-popupmenu| implementation): 
+-- ```lua
 -- 
 --   ns = vim.api.nvim_create_namespace('my_fancy_pum')
 -- 
@@ -221,6 +224,7 @@ function vim.stricmp(a, b) end
 --       print("FIN")
 --     end
 --   end)
+-- ```
 --- @param ns number
 --- @param options table<string, any>
 --- @param callback fun()
@@ -284,7 +288,6 @@ function vim.version() end
 --   print('Only waiting a little bit of time!')
 -- end
 -- ```
--- 
 --- @param callback? fun()
 --- @param interval? any
 --- @param fast_only? any
