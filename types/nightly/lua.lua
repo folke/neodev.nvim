@@ -2,7 +2,7 @@
 
 -- Invokes |vim-function| or |user-function| {func} with arguments {...}.
 -- See also |vim.fn|.
--- Equivalent to: >
+-- Equivalent to: >lua
 --     vim.fn[func]({...})
 --- @param func fun()
 function vim.call(func, ...) end
@@ -10,21 +10,20 @@ function vim.call(func, ...) end
 -- Run diff on strings {a} and {b}. Any indices returned by this function,
 -- either directly or via callback arguments, are 1-based.
 -- 
--- Examples: 
--- ```lua
--- 
+-- Examples: >lua
 --     vim.diff('a\n', 'b\nc\n')
---     =>
---     @@ -1 +1,2 @@
---     -a
---     +b
---     +c
+--     -- =
+-- ```lua
+--     -- @@ -1 +1,2 @@
+--     -- -a
+--     -- +b
+--     -- +c
 -- 
 --     vim.diff('a\n', 'b\nc\n', {result_type = 'indices'})
---     =>
---     {
---         {1, 1, 1, 2}
---     }
+--     -- =>
+--     -- {
+--     --   {1, 1, 1, 2}
+--     -- }
 -- ```
 -- Parameters: ~
 --   • {a}      First string to compare
@@ -142,14 +141,13 @@ function vim.schedule(callback) end
 -- 'spellfile', 'spellcapcheck' and 'spelloptions' which can all be local to
 -- the buffer. Consider calling this with |nvim_buf_call()|.
 -- 
--- Example: 
--- ```lua
--- 
+-- Example: >lua
 --     vim.spell.check("the quik brown fox")
---     =>
---     {
---         {'quik', 'bad', 4}
---     }
+--     -- =
+-- ```lua
+--     -- {
+--     --     {'quik', 'bad', 4}
+--     -- }
 -- ```
 -- Parameters: ~
 --   • {str}    String to spell check.
@@ -209,7 +207,7 @@ function vim.stricmp(a, b) end
 -- used to handle messages when setting 'cmdheight' to zero (which is
 -- likewise experimental).
 -- 
--- Example (stub for a |ui-popupmenu| implementation): >
+-- Example (stub for a |ui-popupmenu| implementation): >lua
 -- 
 --   ns = vim.api.nvim_create_namespace('my_fancy_pum')
 -- 
@@ -263,8 +261,7 @@ function vim.version() end
 -- 
 --     If {callback} errors, the error is raised.
 -- 
---     Examples: 
--- ```lua
+--     Examples: >lua
 -- 
 -- ---
 -- -- Wait for 100 ms, allowing other events to process
@@ -286,8 +283,7 @@ function vim.version() end
 -- if vim.wait(10000, function() return vim.g.timer_result end) then
 --   print('Only waiting a little bit of time!')
 -- end
--- ```
--- 
+-- <
 --- @param callback? fun()
 --- @param interval? any
 --- @param fast_only? any

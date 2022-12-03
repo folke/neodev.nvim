@@ -1517,6 +1517,11 @@ vim.bo.fixeol = vim.bo.fixendofline
 -- 	When the expression evaluates to non-zero Vim will fall back to using
 -- 	the internal format mechanism.
 -- 
+-- 	If the expression starts with s: or |<SID>|, then it is replaced with
+-- 	the script ID (|local-function|). Example: >
+-- 		set formatexpr=s:MyFormatExpr()
+-- 		set formatexpr=<SID>SomeFormatExpr()
+-- <
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.  That stops the option from working,
 -- 	since changing the buffer text is not allowed.
@@ -1645,6 +1650,11 @@ vim.bo.inc = vim.bo.include
 -- 	found.  Allows doing "gf" on the name after an `'include'`  statement.
 -- 	Also used for |<cfile>|.
 -- 
+-- 	If the expression starts with s: or |<SID>|, then it is replaced with
+-- 	the script ID (|local-function|). Example: >
+-- 		set includeexpr=s:MyIncludeExpr(v:fname)
+-- 		set includeexpr=<SID>SomeIncludeExpr(v:fname)
+-- <
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
@@ -1665,6 +1675,11 @@ vim.bo.inex = vim.bo.includeexpr
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
+-- 	If the expression starts with s: or |<SID>|, then it is replaced with
+-- 	the script ID (|local-function|). Example: >
+-- 		set indentexpr=s:MyIndentExpr()
+-- 		set indentexpr=<SID>SomeIndentExpr()
+-- <
 -- 	The expression must return the number of spaces worth of indent.  It
 -- 	can return "-1" to keep the current indent (this means `'autoindent'`  is
 -- 	used for the indent).
@@ -4350,17 +4365,4 @@ vim.opt.diffopt = "internal,filler,closeoff"
 vim.opt.dip = vim.opt.diffopt
 --- @return string[]
 function vim.opt.diffopt:get()end
-
--- `'digraph'`  `'dg'` 		boolean	(default off)
--- 			global
--- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
--- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option
---- @operator add: vim.opt.digraph
---- @operator sub: vim.opt.digraph
---- @operator pow: vim.opt.digraph
-vim.opt.digraph = false
-vim.opt.dg = vim.opt.digraph
---- @return boolean
-function vim.opt.digraph:get()end
 

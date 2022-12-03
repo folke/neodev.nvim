@@ -1,5 +1,18 @@
 ---@meta
 
+-- `'digraph'`  `'dg'` 		boolean	(default off)
+-- 			global
+-- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
+-- 	{char2}.  See |digraphs|.
+--- @class vim.opt.digraph: vim.Option
+--- @operator add: vim.opt.digraph
+--- @operator sub: vim.opt.digraph
+--- @operator pow: vim.opt.digraph
+vim.opt.digraph = false
+vim.opt.dg = vim.opt.digraph
+--- @return boolean
+function vim.opt.digraph:get()end
+
 -- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
 -- 			global
 -- 	List of directory names for the swap file, separated with commas.
@@ -933,6 +946,11 @@ function vim.opt.foldtext:get()end
 -- 	When the expression evaluates to non-zero Vim will fall back to using
 -- 	the internal format mechanism.
 -- 
+-- 	If the expression starts with s: or |<SID>|, then it is replaced with
+-- 	the script ID (|local-function|). Example: >
+-- 		set formatexpr=s:MyFormatExpr()
+-- 		set formatexpr=<SID>SomeFormatExpr()
+-- <
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.  That stops the option from working,
 -- 	since changing the buffer text is not allowed.
@@ -1782,6 +1800,11 @@ function vim.opt.include:get()end
 -- 	found.  Allows doing "gf" on the name after an `'include'`  statement.
 -- 	Also used for |<cfile>|.
 -- 
+-- 	If the expression starts with s: or |<SID>|, then it is replaced with
+-- 	the script ID (|local-function|). Example: >
+-- 		set includeexpr=s:MyIncludeExpr(v:fname)
+-- 		set includeexpr=<SID>SomeIncludeExpr(v:fname)
+-- <
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
@@ -1851,6 +1874,11 @@ function vim.opt.incsearch:get()end
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
+-- 	If the expression starts with s: or |<SID>|, then it is replaced with
+-- 	the script ID (|local-function|). Example: >
+-- 		set indentexpr=s:MyIndentExpr()
+-- 		set indentexpr=<SID>SomeIndentExpr()
+-- <
 -- 	The expression must return the number of spaces worth of indent.  It
 -- 	can return "-1" to keep the current indent (this means `'autoindent'`  is
 -- 	used for the indent).
@@ -4663,27 +4691,4 @@ vim.opt.shellpipe = "| tee"
 vim.opt.sp = vim.opt.shellpipe
 --- @return string
 function vim.opt.shellpipe:get()end
-
--- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
--- 					contains "sh" somewhere: "\"")
--- 			global
--- 	Quoting character(s), put around the command passed to the shell, for
--- 	the "!" and ":!" commands.  The redirection is kept outside of the
--- 	quoting.  See `'shellxquote'`  to include the redirection.  It's
--- 	probably not useful to set both options.
--- 	This is an empty string by default.  Only known to be useful for
--- 	third-party shells on Windows systems, such as the MKS Korn Shell
--- 	or bash, where it should be "\"".  The default is adjusted according
--- 	the value of `'shell'` , to reduce the need to set this option by the
--- 	user.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.shellquote: vim.Option
---- @operator add: vim.opt.shellquote
---- @operator sub: vim.opt.shellquote
---- @operator pow: vim.opt.shellquote
-vim.opt.shellquote = ""
-vim.opt.shq = vim.opt.shellquote
---- @return string
-function vim.opt.shellquote:get()end
 

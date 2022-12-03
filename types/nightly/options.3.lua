@@ -1,5 +1,28 @@
 ---@meta
 
+-- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
+-- 					contains "sh" somewhere: "\"")
+-- 			global
+-- 	Quoting character(s), put around the command passed to the shell, for
+-- 	the "!" and ":!" commands.  The redirection is kept outside of the
+-- 	quoting.  See `'shellxquote'`  to include the redirection.  It's
+-- 	probably not useful to set both options.
+-- 	This is an empty string by default.  Only known to be useful for
+-- 	third-party shells on Windows systems, such as the MKS Korn Shell
+-- 	or bash, where it should be "\"".  The default is adjusted according
+-- 	the value of `'shell'` , to reduce the need to set this option by the
+-- 	user.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.shellquote: vim.Option
+--- @operator add: vim.opt.shellquote
+--- @operator sub: vim.opt.shellquote
+--- @operator pow: vim.opt.shellquote
+vim.opt.shellquote = ""
+vim.opt.shq = vim.opt.shellquote
+--- @return string
+function vim.opt.shellquote:get()end
+
 -- `'shellredir'`  `'srr'` 	string	(default ">", ">&" or ">%s 2>&1")
 -- 			global
 -- 	String to be used to put the output of a filter command in a temporary
