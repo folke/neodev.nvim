@@ -215,7 +215,7 @@ vim.go.bk = vim.go.backup
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.backupdir = ".,/home/folke/.local/state/nvim/backup//"
+vim.go.backupdir = ".,/home/runner/.local/state/nvim/backup//"
 vim.go.bdir = vim.go.backupdir
 -- `'backupext'`  `'bex'` 	string	(default "~")
 -- 			global
@@ -959,7 +959,7 @@ vim.go.dg = vim.go.digraph
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.directory = "/home/folke/.local/state/nvim/swap//"
+vim.go.directory = "/home/runner/.local/state/nvim/swap//"
 vim.go.dir = vim.go.directory
 -- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
@@ -1579,7 +1579,7 @@ vim.go.gtt = vim.go.guitabtooltip
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 vim.go.hf = vim.go.helpfile
 -- `'helpheight'`  `'hh'` 	number	(default 20)
 -- 			global
@@ -2411,7 +2411,7 @@ vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
@@ -2831,7 +2831,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.go.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
@@ -3132,7 +3132,7 @@ vim.go.sdf = vim.go.shadafile
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shell = "/usr/bin/fish"
+vim.go.shell = "sh"
 vim.go.sh = vim.go.shell
 -- `'shellcmdflag'`  `'shcf'` 	string	(default: "-c"; Windows: "/s /c")
 -- 			global
@@ -3180,7 +3180,7 @@ vim.go.shcf = vim.go.shellcmdflag
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellpipe = "2>&1| tee"
+vim.go.shellpipe = "| tee"
 vim.go.sp = vim.go.shellpipe
 -- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
 -- 					contains "sh" somewhere: "\"")
@@ -3221,7 +3221,7 @@ vim.go.shq = vim.go.shellquote
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.shellredir = ">%s 2>&1"
+vim.go.shellredir = ">"
 vim.go.srr = vim.go.shellredir
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
@@ -3852,7 +3852,7 @@ vim.go.tf = vim.go.ttyfast
 -- 	Note that unlike `'directory'`  and `'backupdir'` , `'undodir'`  always acts as
 -- 	though the trailing slashes are present (see `'backupdir'`  for what this
 -- 	means).
-vim.go.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.go.undodir = "/home/runner/.local/state/nvim/undo//"
 vim.go.udir = vim.go.undodir
 -- `'undoreload'`  `'ur'` 	number	(default 10000)
 -- 			global
@@ -3936,7 +3936,7 @@ vim.go.vfile = vim.go.verbosefile
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.go.viewdir = "/home/runner/.local/state/nvim/view//"
 vim.go.vdir = vim.go.viewdir
 -- `'viewoptions'`  `'vop'` 	string	(default: "folds,cursor,curdir")
 -- 			global
@@ -4296,3 +4296,41 @@ vim.wo = {}
 -- 	Also see |arabic.txt|.
 vim.wo.arabic = false
 vim.wo.arab = vim.wo.arabic
+-- `'breakindent'`  `'bri'` 	boolean (default off)
+-- 			local to window
+-- 	Every wrapped line will continue visually indented (same amount of
+-- 	space as the beginning of that line), thus preserving horizontal blocks
+-- 	of text.
+vim.wo.breakindent = false
+vim.wo.bri = vim.wo.breakindent
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 			    (default: 20)
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 			    (default: 0)
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 			    (default: off)
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 			    (default: 0)
+-- 		column:{n}  Indent at column {n}. Will overrule the other
+-- 			    sub-options. Note: an additional indent may be
+-- 			    added for the `'showbreak'`  setting.
+-- 			    (default: off)
+vim.wo.breakindentopt = ""
+vim.wo.briopt = vim.wo.breakindentopt

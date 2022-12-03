@@ -50,7 +50,7 @@ function vim.opt.shellquote:get()end
 --- @operator add: vim.opt.shellredir
 --- @operator sub: vim.opt.shellredir
 --- @operator pow: vim.opt.shellredir
-vim.opt.shellredir = ">%s 2>&1"
+vim.opt.shellredir = ">"
 vim.opt.srr = vim.opt.shellredir
 --- @return string
 function vim.opt.shellredir:get()end
@@ -1751,7 +1751,7 @@ function vim.opt.ttyfast:get()end
 --- @operator add: vim.opt.undodir
 --- @operator sub: vim.opt.undodir
 --- @operator pow: vim.opt.undodir
-vim.opt.undodir = "/home/folke/.local/state/nvim/undo//"
+vim.opt.undodir = "/home/runner/.local/state/nvim/undo//"
 vim.opt.udir = vim.opt.undodir
 --- @return string[]
 function vim.opt.undodir:get()end
@@ -1970,7 +1970,7 @@ function vim.opt.verbosefile:get()end
 --- @operator add: vim.opt.viewdir
 --- @operator sub: vim.opt.viewdir
 --- @operator pow: vim.opt.viewdir
-vim.opt.viewdir = "/home/folke/.local/state/nvim/view//"
+vim.opt.viewdir = "/home/runner/.local/state/nvim/view//"
 vim.opt.vdir = vim.opt.viewdir
 --- @return string
 function vim.opt.viewdir:get()end

@@ -67,7 +67,7 @@ function vim.opt.digraph:get()end
 --- @operator add: vim.opt.directory
 --- @operator sub: vim.opt.directory
 --- @operator pow: vim.opt.directory
-vim.opt.directory = "/home/folke/.local/state/nvim/swap//"
+vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
 vim.opt.dir = vim.opt.directory
 --- @return string[]
 function vim.opt.directory:get()end
@@ -1461,7 +1461,7 @@ function vim.opt.guitabtooltip:get()end
 --- @operator add: vim.opt.helpfile
 --- @operator sub: vim.opt.helpfile
 --- @operator pow: vim.opt.helpfile
-vim.opt.helpfile = "/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime/doc/help.txt"
+vim.opt.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
 vim.opt.hf = vim.opt.helpfile
 --- @return string
 function vim.opt.helpfile:get()end
@@ -3360,7 +3360,7 @@ function vim.opt.operatorfunc:get()end
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath
 --- @operator pow: vim.opt.packpath
-vim.opt.packpath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.opt.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.opt.pp = vim.opt.packpath
 --- @return string[]
 function vim.opt.packpath:get()end
@@ -4180,7 +4180,7 @@ function vim.opt.rulerformat:get()end
 --- @operator add: vim.opt.runtimepath
 --- @operator sub: vim.opt.runtimepath
 --- @operator pow: vim.opt.runtimepath
-vim.opt.runtimepath = "/home/folke/.config/nvim,/etc/xdg/nvim,/home/folke/.local/share/nvim/site,/home/folke/.local/share/flatpak/exports/share/nvim/site,/var/lib/flatpak/exports/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/home/folke/.local/share/bob/nightly/nvim-linux64/share/nvim/runtime,/home/folke/.local/share/bob/nightly/nvim-linux64/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/var/lib/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/flatpak/exports/share/nvim/site/after,/home/folke/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/folke/.config/nvim/after"
+vim.opt.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.opt.rtp = vim.opt.runtimepath
 --- @return string[]
 function vim.opt.runtimepath:get()end
@@ -4625,7 +4625,7 @@ function vim.opt.shadafile:get()end
 --- @operator add: vim.opt.shell
 --- @operator sub: vim.opt.shell
 --- @operator pow: vim.opt.shell
-vim.opt.shell = "/usr/bin/fish"
+vim.opt.shell = "sh"
 vim.opt.sh = vim.opt.shell
 --- @return string
 function vim.opt.shell:get()end
@@ -4687,7 +4687,7 @@ function vim.opt.shellcmdflag:get()end
 --- @operator add: vim.opt.shellpipe
 --- @operator sub: vim.opt.shellpipe
 --- @operator pow: vim.opt.shellpipe
-vim.opt.shellpipe = "2>&1| tee"
+vim.opt.shellpipe = "| tee"
 vim.opt.sp = vim.opt.shellpipe
 --- @return string
 function vim.opt.shellpipe:get()end
