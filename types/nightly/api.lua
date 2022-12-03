@@ -138,11 +138,12 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 
 -- Activates buffer-update events on a channel, or as Lua callbacks.
 -- 
--- Example (Lua): capture buffer updates in a global `events` variable (use "print(vim.inspect(events))" to see its contents): >lua
+-- Example (Lua): capture buffer updates in a global `events` variable (use "print(vim.inspect(events))" to see its contents): 
+-- ```lua
 --   events = {}
 --   vim.api.nvim_buf_attach(0, false, {
 --     on_lines=function(...) table.insert(events, {...}) end})
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {buffer}       Buffer handle, or 0 for current buffer
@@ -402,15 +403,17 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- 
 -- Region can be given as (row,col) tuples, or valid extmark ids (whose
 -- positions define the bounds). 0 and -1 are understood as (0,0) and (-1,-1)
--- respectively, thus the following are equivalent: >lua
+-- respectively, thus the following are equivalent: 
+-- ```lua
 --   nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
 --   nvim_buf_get_extmarks(0, my_ns, [0,0], [-1,-1], {})
--- <
+-- ```
 -- 
 -- If `end` is less than `start`, traversal works backwards. (Useful with
 -- `limit`, to get the first marks prior to a given position.)
 -- 
--- Example: >lua
+-- Example: 
+-- ```lua
 --   local a   = vim.api
 --   local pos = a.nvim_win_get_cursor(0)
 --   local ns  = a.nvim_create_namespace('my-plugin')
@@ -423,7 +426,7 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --   -- Get all marks in this buffer + namespace.
 --   local all = a.nvim_buf_get_extmarks(0, ns, 0, -1, {})
 --   print(vim.inspect(ms))
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -1024,11 +1027,12 @@ function vim.api.nvim_command(command) end
 
 -- Create or get an autocommand group |autocmd-groups|.
 -- 
--- To get an existing group id, do: >lua
+-- To get an existing group id, do: 
+-- ```lua
 --     local id = vim.api.nvim_create_augroup("MyGroup", {
 --         clear = false
 --     })
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {name}  String: The name of the group
@@ -1052,7 +1056,8 @@ function vim.api.nvim_create_augroup(name, opts) end
 -- executed when the autocommand triggers: a callback function (Lua or
 -- Vimscript), or a command (like regular autocommands).
 -- 
--- Example using callback: >lua
+-- Example using callback: 
+-- ```lua
 --     -- Lua function
 --     local myluafun = function() print("This buffer enters") end
 -- 
@@ -1063,11 +1068,12 @@ function vim.api.nvim_create_augroup(name, opts) end
 --       pattern = {"*.c", "*.h"},
 --       callback = myluafun,  -- Or myvimfun
 --     })
--- <
+-- ```
 -- 
 -- Lua functions receive a table with information about the autocmd event as
 -- an argument. To use a function which itself accepts another (optional)
--- parameter, wrap the function in a lambda: >lua
+-- parameter, wrap the function in a lambda: 
+-- ```lua
 --     -- Lua function with an optional parameter.
 --     -- The autocmd callback would pass a table as argument but this
 --     -- function expects number|nil
@@ -1077,30 +1083,34 @@ function vim.api.nvim_create_augroup(name, opts) end
 --       pattern = {"*.c", "*.h"},
 --       callback = function() myluafun() end,
 --     })
--- <
+-- ```
 -- 
--- Example using command: >lua
+-- Example using command: 
+-- ```lua
 --     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 --       pattern = {"*.c", "*.h"},
 --       command = "echo 'Entering a C or C++ file'",
 --     })
--- <
+-- ```
 -- 
--- Example values for pattern: >lua
+-- Example values for pattern: 
+-- ```lua
 --   pattern = "*.py"
 --   pattern = { "*.py", "*.pyi" }
--- <
+-- ```
 -- 
 -- Note: The `pattern` is passed to callbacks and commands as a literal string; environment
 -- variables like `$HOME` and `~` are not automatically expanded as they are by |:autocmd|. Instead,
--- |expand()| such variables explicitly: >lua
+-- |expand()| such variables explicitly: 
+-- ```lua
 --   pattern = vim.fn.expand("~") .. "/some/path/*.py"
--- <
+-- ```
 -- 
--- Example values for event: >lua
+-- Example values for event: 
+-- ```lua
 --   event = "BufWritePre"
 --   event = {"CursorHold", "BufWritePre", "BufWritePost"}
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {event}  (string|array) The event or events to register this
@@ -1193,11 +1203,12 @@ function vim.api.nvim_create_namespace(name) end
 -- 
 -- {command} is the replacement text or Lua function to execute.
 -- 
--- Example: >vim
+-- Example: 
+-- ```vim
 --    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {})
 --    :SayHello
 --    Hello world!
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {name}     Name of the new user command. Must begin with an uppercase
@@ -1473,10 +1484,11 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 -- with escape_ks=false) to replace |keycodes|, then pass the result to
 -- nvim_feedkeys().
 -- 
--- Example: >vim
+-- Example: 
+-- ```vim
 --     :let key = nvim_replace_termcodes("<C-o>", v:true, v:false, v:true)
 --     :call nvim_feedkeys(key, 'n', v:false)
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {keys}       to be typed
@@ -1505,7 +1517,8 @@ function vim.api.nvim_get_all_options_info() end
 
 -- Get all autocommands that match the corresponding {opts}.
 -- 
--- These examples will get autocommands matching ALL the given criteria: >lua
+-- These examples will get autocommands matching ALL the given criteria: 
+-- ```lua
 --   -- Matches all criteria
 --   autocommands = vim.api.nvim_get_autocmds({
 --     group = "MyGroup",
@@ -1517,7 +1530,7 @@ function vim.api.nvim_get_all_options_info() end
 --   autocommands = vim.api.nvim_get_autocmds({
 --     group = "MyGroup",
 --   })
--- <
+-- ```
 -- 
 -- NOTE: When multiple patterns or events are provided, it will find all the
 -- autocommands that match any combination of them.
@@ -1585,10 +1598,11 @@ function vim.api.nvim_get_chan_info(chan) end
 -- Returns the 24-bit RGB value of a |nvim_get_color_map()| color name or
 -- "#rrggbb" hexadecimal string.
 -- 
--- Example: >vim
+-- Example: 
+-- ```vim
 --     :echo nvim_get_color_by_name("Pink")
 --     :echo nvim_get_color_by_name("#cbcbcb")
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {name}  Color name or "#rrggbb" string
@@ -2066,15 +2080,17 @@ function vim.api.nvim_open_term(buffer, opts) end
 -- could let floats hover outside of the main window like a tooltip, but this
 -- should not be used to specify arbitrary WM screen positions.
 -- 
--- Example (Lua): window-relative float >lua
+-- Example (Lua): window-relative float 
+-- ```lua
 --     vim.api.nvim_open_win(0, false,
 --       {relative='win', row=3, col=3, width=12, height=3})
--- <
+-- ```
 -- 
--- Example (Lua): buffer-relative float (travels as buffer is scrolled) >lua
+-- Example (Lua): buffer-relative float (travels as buffer is scrolled) 
+-- ```lua
 --     vim.api.nvim_open_win(0, false,
 --       {relative='win', width=12, height=3, bufpos={100,10}})
--- <
+-- ```
 -- 
 -- Attributes: ~
 --     not allowed when |textlock| is active
@@ -2614,13 +2630,15 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 -- Unlike |:map|, leading/trailing whitespace is accepted as part of the
 -- {lhs} or {rhs}. Empty {rhs} is |<Nop>|. |keycodes| are replaced as usual.
 -- 
--- Example: >vim
+-- Example: 
+-- ```vim
 --     call nvim_set_keymap('n', ' <NL>', '', {'nowait': v:true})
--- <
+-- ```
 -- 
--- is equivalent to: >vim
+-- is equivalent to: 
+-- ```vim
 --     nmap <nowait> <Space><NL> <Nop>
--- <
+-- ```
 -- 
 -- Parameters: ~
 --   • {mode}  Mode short-name (map command prefix: "n", "i", "v", "x", …) or

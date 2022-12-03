@@ -170,7 +170,33 @@ function M.fun(fun)
   if fun.doc ~= "" then
     -- make markdown lua code blocks for code regions
     local ft = fun.name:find("vim.fn") and "vim" or "lua"
-    local doc = fun.doc:gsub("\n*>\n(.-)\n+<\n?", "\n```" .. ft .. "\n%1\n```\n")
+    local lines = vim.split(fun.doc, "\n")
+
+    local l = 1
+    while l < #lines do
+      local line = lines[l]
+      local from, to, before, lang = line:find("^(%s*.*)>([a-z]*)%s*$")
+      if from then
+        before = (not before:find("^%s*$")) and before or nil
+        lang = lang ~= "" and lang or nil
+        for i = l + 1, #lines do
+          if lines[i]:find("^%S") or lines[i]:find("^%s*<") or i == #lines then
+            lines[l] = (before and (before .. "\n") or "") .. "```" .. (lang or ft)
+            if lines[i]:find("^%s*<%s*$") then
+              lines[i] = "```"
+            elseif lines[i]:find("^%s*<") then
+              lines[i] = "```\n" .. lines[i]:gsub("<", "")
+            else
+              lines[i] = lines[i] .. "\n```"
+            end
+            l = i
+            break
+          end
+        end
+      end
+      l = l + 1
+    end
+    local doc = table.concat(lines, "\n")
     doc = M.fix_indent(doc)
     ret = ret .. (M.comment(doc)) .. "\n"
   end

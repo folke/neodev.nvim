@@ -1,5 +1,43 @@
 ---@meta
 
+-- `'breakindent'`  `'bri'` 	boolean (default off)
+-- 			local to window
+-- 	Every wrapped line will continue visually indented (same amount of
+-- 	space as the beginning of that line), thus preserving horizontal blocks
+-- 	of text.
+vim.wo.breakindent = false
+vim.wo.bri = vim.wo.breakindent
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 			    (default: 20)
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 			    (default: 0)
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 			    (default: off)
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 			    (default: 0)
+-- 		column:{n}  Indent at column {n}. Will overrule the other
+-- 			    sub-options. Note: an additional indent may be
+-- 			    added for the `'showbreak'`  setting.
+-- 			    (default: off)
+vim.wo.breakindentopt = ""
+vim.wo.briopt = vim.wo.breakindentopt
 -- `'colorcolumn'`  `'cc'` 	string	(default "")
 -- 			local to window
 -- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
@@ -2860,7 +2898,7 @@ function vim.opt.backupcopy:get()end
 --- @operator add: vim.opt.backupdir
 --- @operator sub: vim.opt.backupdir
 --- @operator pow: vim.opt.backupdir
-vim.opt.backupdir = ".,/home/runner/.local/state/nvim/backup//"
+vim.opt.backupdir = ".,/home/folke/.local/state/nvim/backup//"
 vim.opt.bdir = vim.opt.backupdir
 --- @return string[]
 function vim.opt.backupdir:get()end

@@ -40,12 +40,12 @@ function Check:stop() end
 -- 
 -- Returns: `0` or `fail`
 -- 
---     >lua
+-- ```lua
 --     server:listen(128, function (err)
 --       local client = uv.new_tcp()
 --       server:accept(client)
 --     end)
--- <
+-- ```
 --- @return 0
 function vim.loop.accept(stream, client_stream) end
 
@@ -1403,9 +1403,9 @@ function vim.loop.loop_close() end
 -- 
 -- An example of a valid call to this function is:
 -- 
---     >lua
+-- ```lua
 --     uv.loop_configure("block_signal", "sigprof")
--- <
+-- ```
 -- 
 -- Returns: `0` or `fail`
 -- 
@@ -1560,7 +1560,7 @@ function vim.loop.new_thread(options, entry, ...) end
 -- 
 -- Returns: `uv_timer_t userdata` or `fail`
 -- 
---     >lua
+-- ```lua
 --     -- Creating a simple setTimeout wrapper
 --     local function setTimeout(timeout, callback)
 --       local timer = uv.new_timer()
@@ -1586,7 +1586,7 @@ function vim.loop.new_thread(options, entry, ...) end
 --       timer:stop()
 --       timer:close()
 --     end
--- <
+-- ```
 --- @return vim.loop.Timer
 function vim.loop.new_timer() end
 
@@ -1811,7 +1811,7 @@ function vim.loop.os_unsetenv() end
 -- - `read` : `integer` (file descriptor)
 -- - `write` : `integer` (file descriptor)
 -- 
---     >lua
+-- ```lua
 --     -- Simple read/write with pipe_open
 --     local fds = uv.pipe({nonblock=true}, {nonblock=true})
 -- 
@@ -1826,7 +1826,7 @@ function vim.loop.os_unsetenv() end
 --       assert(not err, err)
 --       print(chunk)
 --     end)
--- <
+-- ```
 --- @return table
 function vim.loop.pipe(read_flags, write_flags) end
 
@@ -2122,7 +2122,7 @@ function vim.loop.random(len, flags, callback) end
 -- 
 -- Returns: `0` or `fail`
 -- 
---     >lua
+-- ```lua
 --     stream:read_start(function (err, chunk)
 --       if err then
 --         -- handle read error
@@ -2132,7 +2132,7 @@ function vim.loop.random(len, flags, callback) end
 --         -- handle disconnect
 --       end
 --     end)
--- <
+-- ```
 --- @param callback fun()
 --- @return 0
 function vim.loop.read_start(stream, callback) end
@@ -2392,7 +2392,7 @@ function vim.loop.sleep(msec) end
 -- Returns: `table` or `fail`
 -- - `[1, 2]` : `integer` (file descriptor)
 -- 
---     >lua
+-- ```lua
 --     -- Simple read/write with tcp
 --     local fds = uv.socketpair(nil, nil, {nonblock=true}, {nonblock=true})
 -- 
@@ -2407,7 +2407,7 @@ function vim.loop.sleep(msec) end
 --       assert(not err, err)
 --       print(chunk)
 --     end)
--- <
+-- ```
 --- @param socktype? any
 --- @param protocol? any
 --- @param flags1? any
@@ -2431,7 +2431,7 @@ function vim.loop.socketpair(socktype, protocol, flags1, flags2) end
 -- permissions to use the setuid or setgid specified, or not
 -- having enough memory to allocate for the new process.
 -- 
---     >lua
+-- ```lua
 --     local stdin = uv.new_pipe()
 --     local stdout = uv.new_pipe()
 --     local stderr = uv.new_pipe()
@@ -2475,7 +2475,7 @@ function vim.loop.socketpair(socktype, protocol, flags1, flags2) end
 --         print("process closed", handle, pid)
 --       end)
 --     end)
--- <
+-- ```
 -- 
 -- The `options` table accepts the following fields:
 -- 
@@ -2627,12 +2627,12 @@ function vim.loop.tcp_close_reset(callback) end
 -- 
 -- Returns: `uv_connect_t userdata` or `fail`
 -- 
---     >lua
+-- ```lua
 --     local client = uv.new_tcp()
 --     client:connect("127.0.0.1", 8080, function (err)
 --       -- check error and carry on.
 --     end)
--- <
+-- ```
 --- @param callback fun()
 --- @return userdata
 function vim.loop.tcp_connect(tcp, host, port, callback) end
@@ -3269,7 +3269,7 @@ function vim.loop.version_string() end
 -- 
 -- Returns: Nothing.
 -- 
---     >lua
+-- ```lua
 --     -- Example usage of uv.walk to close all handles that
 --     -- aren't already closing.
 --     uv.walk(function (handle)
@@ -3277,7 +3277,7 @@ function vim.loop.version_string() end
 --         handle:close()
 --       end
 --     end)
--- <
+-- ```
 --- @param callback fun()
 function vim.loop.walk(callback) end
 
