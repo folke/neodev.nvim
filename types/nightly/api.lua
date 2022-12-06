@@ -2234,7 +2234,8 @@ function vim.api.nvim_out_write(str) end
 --       cannot take a register.
 --     • bang: (boolean) Whether command contains a |<bang>| (!) modifier.
 --     • args: (array) Command arguments.
---     • addr: (string) Value of |:command-addr|. Uses short name.
+--     • addr: (string) Value of |:command-addr|. Uses short name or "line"
+--       for -addr=lines.
 --     • nargs: (string) Value of |:command-nargs|.
 --     • nextcmd: (string) Next command if there are multiple commands
 --       separated by a |:bar|. Empty if there isn't a next command.
