@@ -148,7 +148,7 @@ function vim.schedule(callback) end
 --     vim.spell.check("the quik brown fox")
 --     -- =>
 --     -- {
---     --     {'quik', 'bad', 4}
+--     --     {'quik', 'bad', 5}
 --     -- }
 -- ```
 -- Parameters: ~
