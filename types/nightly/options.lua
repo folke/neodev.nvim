@@ -3294,35 +3294,39 @@ vim.go.sr = vim.go.shiftround
 -- 	  r	use "[RO]" instead of "[readonly]"
 -- 	  w	use "[w]" instead of "written" for file write message
 -- 		and "[a]" instead of "appended" for ':w >> file' command
--- 	  x	use "[dos]" instead of "[dos format]", "[unix]" instead of
--- 		"[unix format]" and "[mac]" instead of "[mac format]".
+-- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
+-- 		instead of "[unix format]" and "[mac]" instead of "[mac
+-- 		format]".
 -- 	  a	all of the above abbreviations
 -- 
--- 	  o	overwrite message for writing a file with subsequent message
--- 		for reading a file (useful for ":wn" or when `'autowrite'`  on)
--- 	  O	message for reading a file overwrites any previous message.
--- 		Also for quickfix message (e.g., ":cn").
--- 	  s	don't give "search hit BOTTOM, continuing at TOP" or "search
--- 		hit TOP, continuing at BOTTOM" messages; when using the search
--- 		count do not show "W" after the count message (see S below)
--- 	  t	truncate file message at the start if it is too long to fit
--- 		on the command-line, "<" will appear in the left most column.
--- 		Ignored in Ex mode.
--- 	  T	truncate other messages in the middle if they are too long to
--- 		fit on the command line.  "..." will appear in the middle.
--- 		Ignored in Ex mode.
+-- 	  o	overwrite message for writing a file with subsequent
+-- 		message for reading a file (useful for ":wn" or when
+-- 		`'autowrite'`  on)
+-- 	  O	message for reading a file overwrites any previous
+-- 		message.  Also for quickfix message (e.g., ":cn").
+-- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
+-- 		"search hit TOP, continuing at BOTTOM" messages; when using
+-- 		the search count do not show "W" after the count message (see
+-- 		S below)
+-- 	  t	truncate file message at the start if it is too long
+-- 		to fit on the command-line, "<" will appear in the left most
+-- 		column.  Ignored in Ex mode.
+-- 	  T	truncate other messages in the middle if they are too
+-- 		long to fit on the command line.  "..." will appear in the
+-- 		middle.  Ignored in Ex mode.
 -- 	  W	don't give "written" or "[w]" when writing a file
--- 	  A	don't give the "ATTENTION" message when an existing swap file
--- 		is found.
--- 	  I	don't give the intro message when starting Vim |:intro|.
--- 	  c	don't give |ins-completion-menu| messages.  For example,
--- 		"-- XXX completion (YYY)", "match 1 of 2", "The only match",
--- 		"Pattern not found", "Back at original", etc.
--- 	  C	don't give messages while scanning for ins-completion items,
--- 		for instance "scanning tags"
+-- 	  A	don't give the "ATTENTION" message when an existing
+-- 		swap file is found.
+-- 	  I	don't give the intro message when starting Vim,
+-- 	  	see |:intro|.
+-- 	  c	don't give |ins-completion-menu| messages.  For
+-- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
+-- 		match", "Pattern not found", "Back at original", etc.
+-- 	  C	don't give messages while scanning for ins-completion
+-- 		items, for instance "scanning tags"
 -- 	  q	use "recording" instead of "recording @a"
--- 	  F	don't give the file info when editing a file, like `:silent`
--- 		was used for the command
+-- 	  F	don't give the file info when editing a file, like
+-- 		`:silent` was used for the command
 -- 	  S     do not show search count message when searching, e.g.
 -- 	        "[1/5]"
 -- 

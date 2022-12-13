@@ -242,7 +242,7 @@ function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 --- @return object
 function vim.api.nvim_buf_call(buffer, fun) end
 
--- Clears namespaced objects (highlights, extmarks, virtual text) from a
+-- Clears |namespace|d objects (highlights, |extmarks|, virtual text) from a
 -- region.
 -- 
 -- Lines are 0-indexed. |api-indexing| To clear the namespace in the entire
@@ -273,7 +273,7 @@ function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) e
 --- @param opts? table<string, any>
 function vim.api.nvim_buf_create_user_command(buffer, name, command, opts) end
 
--- Removes an extmark.
+-- Removes an |extmark|.
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -380,7 +380,7 @@ function vim.api.nvim_buf_get_changedtick(buffer) end
 --- @return table<string, any>
 function vim.api.nvim_buf_get_commands(buffer, opts) end
 
--- Gets the position (0-indexed) of an extmark.
+-- Gets the position (0-indexed) of an |extmark|.
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -398,7 +398,7 @@ function vim.api.nvim_buf_get_commands(buffer, opts) end
 --- @return any[]
 function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 
--- Gets extmarks in "traversal order" from a |charwise| region defined by
+-- Gets |extmarks| in "traversal order" from a |charwise| region defined by
 -- buffer positions (inclusive, 0-indexed |api-indexing|).
 -- 
 -- Region can be given as (row,col) tuples, or valid extmark ids (whose
@@ -634,7 +634,7 @@ function vim.api.nvim_buf_is_valid(buffer) end
 --- @return number
 function vim.api.nvim_buf_line_count(buffer) end
 
--- Creates or updates an extmark.
+-- Creates or updates an |extmark|.
 -- 
 -- By default a new extmark is created when no id is passed in, but it is
 -- also possible to create a new mark by passing in a previously unused id or
@@ -1725,7 +1725,7 @@ function vim.api.nvim_get_mark(name, opts) end
 --- @return table<string, any>
 function vim.api.nvim_get_mode() end
 
--- Gets existing, non-anonymous namespaces.
+-- Gets existing, non-anonymous |namespace|s.
 -- 
 -- Return: ~
 --     dict that maps from names to namespace ids.
@@ -2471,12 +2471,12 @@ function vim.api.nvim_set_current_tabpage(tabpage) end
 --- @param window window
 function vim.api.nvim_set_current_win(window) end
 
--- Set or change decoration provider for a namespace
+-- Set or change decoration provider for a |namespace|
 -- 
 -- This is a very general purpose interface for having lua callbacks being
 -- triggered during the redraw code.
 -- 
--- The expected usage is to set extmarks for the currently redrawn buffer.
+-- The expected usage is to set |extmarks| for the currently redrawn buffer.
 -- |nvim_buf_set_extmark()| can be called to add marks on a per-window or
 -- per-lines basis. Use the `ephemeral` key to only use the mark for the
 -- current screen redraw (the callback will be called again for the next
