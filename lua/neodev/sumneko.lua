@@ -44,7 +44,7 @@ function M.library(opts)
     end
     -- add support for lazy.nvim
     if package.loaded["lazy"] then
-      for _, plugin in ipairs(require("lazy").get()) do
+      for _, plugin in ipairs(require("lazy").plugins()) do
         add(plugin.dir, filter)
       end
     end
