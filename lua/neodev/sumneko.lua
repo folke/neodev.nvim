@@ -42,6 +42,12 @@ function M.library(opts)
       add(site .. "/pack/*/opt/*", filter)
       add(site .. "/pack/*/start/*", filter)
     end
+    -- add support for lazy.nvim
+    if package.loaded["lazy"] then
+      for _, plugin in ipairs(require("lazy").get()) do
+        add(plugin.dir, filter)
+      end
+    end
   end
 
   return ret

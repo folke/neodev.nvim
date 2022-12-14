@@ -5,8 +5,16 @@
       "plugins": [
         "neoconf.nvim",
         "nvim-lspconfig",
-        "lsp"
+        "lsp",
+        "lazy.nvim"
       ]
+    }
+  },
+  "neoconf": {
+    "plugins": {
+      "sumneko_lua": {
+        "enabled": true
+      },
     }
   },
   "lspconfig": {
