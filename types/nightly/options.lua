@@ -1059,7 +1059,7 @@ vim.go.eventignore = ""
 vim.go.ei = vim.go.eventignore
 -- `'exrc'`  `'ex'` 		boolean (default off)
 -- 			global
--- 	Enables the reading of .nvimrc and .exrc files in the current
+-- 	Enables the reading of .nvim.lua, .nvimrc, and .exrc files in the current
 -- 	directory.
 -- 
 -- 	The file is only sourced if the user indicates the file is trusted. If
