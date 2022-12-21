@@ -1315,10 +1315,14 @@ function vim.api.nvim_del_var(name) end
 --                chunk with specified highlight. `hl_group` element can be
 --                omitted for no highlight.
 --   • {history}  if true, add to |message-history|.
---   • {opts}     Optional parameters. Reserved for future use.
+--   • {opts}     Optional parameters.
+--                • verbose: Message was printed as a result of 'verbose'
+--                  option if Nvim was invoked with -V3log_file, the message
+--                  will be redirected to the log_file and surpressed from
+--                  direct output.
 --- @param chunks any[]
 --- @param history boolean
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 function vim.api.nvim_echo(chunks, history, opts) end
 
 -- Writes a message to the Vim error buffer. Does not append "\n", the
