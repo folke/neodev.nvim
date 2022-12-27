@@ -3344,7 +3344,6 @@ vim.go.shm = vim.go.shortmess
 -- 			global
 -- 	Show (partial) command in the last line of the screen.  Set this
 -- 	option off if your terminal is slow.
--- 	The option has no effect when `'cmdheight'`  is zero.
 -- 	In Visual mode the size of the selected area is shown:
 -- 	- When selecting characters within a line, the number of characters.
 -- 	  If the number of bytes is different it is also displayed: "2-6"
@@ -3352,8 +3351,24 @@ vim.go.shm = vim.go.shortmess
 -- 	- When selecting more than one line, the number of lines.
 -- 	- When selecting a block, the size in screen characters:
 -- 	  {lines}x{columns}.
+-- 	This information can be displayed in an alternative location using the
+-- 	`'showcmdloc'`  option, useful when `'cmdheight'`  is 0.
 vim.go.showcmd = true
 vim.go.sc = vim.go.showcmd
+-- `'showcmdloc'`  `'sloc'` 	string	(default "last")
+-- 	This option can be used to display the (partially) entered command in
+-- 	another location.  Possible values are:
+-- 	  last		Last line of the screen (default).
+-- 	  statusline	Status line of the current window.
+-- 	  tabline	First line of the screen if `'showtabline'`  is enabled.
+-- 	Setting this option to "statusline" or "tabline" means that these will
+-- 	be redrawn whenever the command changes, which can be on every key
+-- 	pressed.
+-- 	The %S `'statusline'`  item can be used in `'statusline'`  or `'tabline'`  to
+-- 	place the text.  Without a custom `'statusline'`  or `'tabline'`  it will be
+-- 	displayed in a convenient location.
+vim.go.showcmdloc = "last"
+vim.go.sloc = vim.go.showcmdloc
 -- `'showfulltag'`  `'sft'` 	boolean (default off)
 -- 			global
 -- 	When completing a word in insert mode (see |ins-completion|) from the
@@ -4300,41 +4315,3 @@ vim.wo = {}
 -- 	Also see |arabic.txt|.
 vim.wo.arabic = false
 vim.wo.arab = vim.wo.arabic
--- `'breakindent'`  `'bri'` 	boolean (default off)
--- 			local to window
--- 	Every wrapped line will continue visually indented (same amount of
--- 	space as the beginning of that line), thus preserving horizontal blocks
--- 	of text.
-vim.wo.breakindent = false
-vim.wo.bri = vim.wo.breakindent
--- `'breakindentopt'`  `'briopt'`  string (default empty)
--- 			local to window
--- 	Settings for `'breakindent'` . It can consist of the following optional
--- 	items and must be separated by a comma:
--- 		min:{n}	    Minimum text width that will be kept after
--- 			    applying `'breakindent'` , even if the resulting
--- 			    text should normally be narrower. This prevents
--- 			    text indented almost to the right window border
--- 			    occupying lot of vertical space when broken.
--- 			    (default: 20)
--- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
--- 			    beginning will be shifted by the given number of
--- 			    characters.  It permits dynamic French paragraph
--- 			    indentation (negative) or emphasizing the line
--- 			    continuation (positive).
--- 			    (default: 0)
--- 		sbr	    Display the `'showbreak'`  value before applying the
--- 			    additional indent.
--- 			    (default: off)
--- 		list:{n}    Adds an additional indent for lines that match a
--- 			    numbered or bulleted list (using the
--- 			    `'formatlistpat'`  setting).
--- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
--- 			    for indentation.
--- 			    (default: 0)
--- 		column:{n}  Indent at column {n}. Will overrule the other
--- 			    sub-options. Note: an additional indent may be
--- 			    added for the `'showbreak'`  setting.
--- 			    (default: off)
-vim.wo.breakindentopt = ""
-vim.wo.briopt = vim.wo.breakindentopt
