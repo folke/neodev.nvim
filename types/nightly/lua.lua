@@ -102,6 +102,18 @@ function vim.iconv(str, from, to, opts) end
 -- to other restrictions such as |textlock|).
 function vim.in_fast_event() end
 
+-- Decodes (or "unpacks") the JSON-encoded {str} to a Lua object.
+-- 
+-- {opts} is a table with the key `luanil = { object: bool, array: bool }`
+-- that controls whether `null` in JSON objects or arrays should be converted
+-- to Lua `nil` instead of `vim.NIL`.
+--- @param str string
+--- @param opts? table<string, any>
+function vim.json.decode(str, opts) end
+
+-- Encodes (or "packs") Lua object {obj} as JSON in a Lua string.
+function vim.json.encode(obj) end
+
 -- Decodes (or "unpacks") the msgpack-encoded {str} to a Lua object.
 --- @param str string
 function vim.mpack.decode(str) end
