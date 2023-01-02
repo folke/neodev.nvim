@@ -406,7 +406,7 @@ vim.go.ccv = vim.go.charconvert
 -- 	These names are recognized:
 -- 
 -- 
--- 	unnamed		When included, Vim will use the clipboard register `'*'` 
+-- 	unnamed		When included, Vim will use the clipboard register "*"
 -- 			for all yank, delete, change and put operations which
 -- 			would normally go to the unnamed register.  When a
 -- 			register is explicitly specified, it will always be
@@ -417,8 +417,8 @@ vim.go.ccv = vim.go.charconvert
 -- 
 -- 
 -- 	unnamedplus	A variant of the "unnamed" flag which uses the
--- 			clipboard register `'+'`  (|quoteplus|) instead of
--- 			register `'*'`  for all yank, delete, change and put
+-- 			clipboard register "+" (|quoteplus|) instead of
+-- 			register "*" for all yank, delete, change and put
 -- 			operations which would normally go to the unnamed
 -- 			register.  When "unnamed" is also included to the
 -- 			option, yank and delete operations (but not put)
@@ -2358,7 +2358,7 @@ vim.go.mousescroll = "ver:3,hor:6"
 -- 	w x	updown		up-down sizing arrows
 -- 	w x	leftright	left-right sizing arrows
 -- 	w x	busy		The system's usual busy pointer
--- 	w x	no		The system's usual 'no input' pointer
+-- 	w x	no		The system's usual "no input" pointer
 -- 	  x	udsizing	indicates up-down resizing
 -- 	  x	lrsizing	indicates left-right resizing
 -- 	  x	crosshair	like a big thin +
@@ -3296,30 +3296,30 @@ vim.go.sr = vim.go.shiftround
 -- 		and "[a]" instead of "appended" for ':w >> file' command
 -- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
 -- 		instead of "[unix format]" and "[mac]" instead of "[mac
--- 		format]".
+-- 		format]"
 -- 	  a	all of the above abbreviations
 -- 
 -- 	  o	overwrite message for writing a file with subsequent
 -- 		message for reading a file (useful for ":wn" or when
 -- 		`'autowrite'`  on)
 -- 	  O	message for reading a file overwrites any previous
--- 		message.  Also for quickfix message (e.g., ":cn").
+-- 		message;  also for quickfix message (e.g., ":cn")
 -- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
 -- 		"search hit TOP, continuing at BOTTOM" messages; when using
 -- 		the search count do not show "W" after the count message (see
 -- 		S below)
 -- 	  t	truncate file message at the start if it is too long
 -- 		to fit on the command-line, "<" will appear in the left most
--- 		column.  Ignored in Ex mode.
+-- 		column; ignored in Ex mode
 -- 	  T	truncate other messages in the middle if they are too
--- 		long to fit on the command line.  "..." will appear in the
--- 		middle.  Ignored in Ex mode.
+-- 		long to fit on the command line; "..." will appear in the
+-- 		middle; ignored in Ex mode
 -- 	  W	don't give "written" or "[w]" when writing a file
 -- 	  A	don't give the "ATTENTION" message when an existing
--- 		swap file is found.
+-- 		swap file is found
 -- 	  I	don't give the intro message when starting Vim,
--- 	  	see |:intro|.
--- 	  c	don't give |ins-completion-menu| messages.  For
+-- 	  	see |:intro|
+-- 	  c	don't give |ins-completion-menu| messages; for
 -- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
 -- 		match", "Pattern not found", "Back at original", etc.
 -- 	  C	don't give messages while scanning for ins-completion
@@ -3356,6 +3356,7 @@ vim.go.shm = vim.go.shortmess
 vim.go.showcmd = true
 vim.go.sc = vim.go.showcmd
 -- `'showcmdloc'`  `'sloc'` 	string	(default "last")
+-- 			global
 -- 	This option can be used to display the (partially) entered command in
 -- 	another location.  Possible values are:
 -- 	  last		Last line of the screen (default).

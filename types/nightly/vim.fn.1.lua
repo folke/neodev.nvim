@@ -1344,7 +1344,7 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 --   pos    |List|    `[lnum, col, off]` value
 --         when recomputing the result.
 --         this changes "current" result
---         value. see |cursor()|, |getpos()
+--         value. see |cursor()|, |getpos()|
 --         (default: cursor's position)
 -- 
 -- Can also be used as a |method|: 
@@ -3199,7 +3199,7 @@ function vim.fn.strwidth(string) end
 
 -- Only for an expression in a |:substitute| command or
 -- substitute() function.
--- Returns the {nr}'th submatch of the matched text.  When {nr}
+-- Returns the {nr}th submatch of the matched text.  When {nr}
 -- is 0 the whole matched text is returned.
 -- Note that a NL in the string can stand for a line break of a
 -- multi-line match or a NUL character in the text.

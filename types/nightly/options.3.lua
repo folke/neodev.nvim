@@ -178,30 +178,30 @@ function vim.opt.shiftwidth:get()end
 -- 		and "[a]" instead of "appended" for ':w >> file' command
 -- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
 -- 		instead of "[unix format]" and "[mac]" instead of "[mac
--- 		format]".
+-- 		format]"
 -- 	  a	all of the above abbreviations
 -- 
 -- 	  o	overwrite message for writing a file with subsequent
 -- 		message for reading a file (useful for ":wn" or when
 -- 		`'autowrite'`  on)
 -- 	  O	message for reading a file overwrites any previous
--- 		message.  Also for quickfix message (e.g., ":cn").
+-- 		message;  also for quickfix message (e.g., ":cn")
 -- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
 -- 		"search hit TOP, continuing at BOTTOM" messages; when using
 -- 		the search count do not show "W" after the count message (see
 -- 		S below)
 -- 	  t	truncate file message at the start if it is too long
 -- 		to fit on the command-line, "<" will appear in the left most
--- 		column.  Ignored in Ex mode.
+-- 		column; ignored in Ex mode
 -- 	  T	truncate other messages in the middle if they are too
--- 		long to fit on the command line.  "..." will appear in the
--- 		middle.  Ignored in Ex mode.
+-- 		long to fit on the command line; "..." will appear in the
+-- 		middle; ignored in Ex mode
 -- 	  W	don't give "written" or "[w]" when writing a file
 -- 	  A	don't give the "ATTENTION" message when an existing
--- 		swap file is found.
+-- 		swap file is found
 -- 	  I	don't give the intro message when starting Vim,
--- 	  	see |:intro|.
--- 	  c	don't give |ins-completion-menu| messages.  For
+-- 	  	see |:intro|
+-- 	  c	don't give |ins-completion-menu| messages; for
 -- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
 -- 		match", "Pattern not found", "Back at original", etc.
 -- 	  C	don't give messages while scanning for ins-completion
@@ -280,6 +280,7 @@ vim.opt.sc = vim.opt.showcmd
 function vim.opt.showcmd:get()end
 
 -- `'showcmdloc'`  `'sloc'` 	string	(default "last")
+-- 			global
 -- 	This option can be used to display the (partially) entered command in
 -- 	another location.  Possible values are:
 -- 	  last		Last line of the screen (default).
@@ -487,11 +488,11 @@ function vim.opt.smartcase:get()end
 -- 	alternative.
 -- 	Normally `'autoindent'`  should also be on when using `'smartindent'` .
 -- 	An indent is automatically inserted:
--- 	- After a line ending in `'{'` .
+-- 	- After a line ending in "{".
 -- 	- After a line starting with a keyword from `'cinwords'` .
--- 	- Before a line starting with `'}'`  (only with the "O" command).
+-- 	- Before a line starting with "}" (only with the "O" command).
 -- 	When typing `'}'`  as the first character in a new line, that line is
--- 	given the same indent as the matching `'{'` .
+-- 	given the same indent as the matching "{".
 -- 	When typing `'#'`  as the first character in a new line, the indent for
 -- 	that line is removed, the `'#'`  is put in the first column.  The indent
 -- 	is restored for the next line.  If you don't want this, use this
@@ -863,12 +864,12 @@ function vim.opt.startofline:get()end
 -- 	field	    meaning ~
 -- 	-	    Left justify the item.  The default is right justified
 -- 		    when minwid is larger than the length of the item.
--- 	0	    Leading zeroes in numeric items.  Overridden by `'-'` .
--- 	minwid	    Minimum width of the item, padding as set by `'-'`  & `'0'` .
+-- 	0	    Leading zeroes in numeric items.  Overridden by "-".
+-- 	minwid	    Minimum width of the item, padding as set by "-" & "0".
 -- 		    Value must be 50 or less.
--- 	maxwid	    Maximum width of the item.  Truncation occurs with a `'<'` 
+-- 	maxwid	    Maximum width of the item.  Truncation occurs with a "<"
 -- 		    on the left for text items.  Numeric items will be
--- 		    shifted down to maxwid-2 digits followed by `'>'` number
+-- 		    shifted down to maxwid-2 digits followed by ">"number
 -- 		    where number is the amount of missing digits, much like
 -- 		    an exponential notation.
 -- 	item	    A one letter code as described below.
@@ -917,22 +918,22 @@ function vim.opt.startofline:get()end
 -- 	S S   `'showcmd'`  content, see `'showcmdloc'` .
 -- 	a S   Argument list status as in default title.  ({current} of {max})
 -- 	      Empty if the argument file count is zero or one.
--- 	{ NF  Evaluate expression between `'%{'`  and `'}'`  and substitute result.
--- 	      Note that there is no `'%'`  before the closing `'}'` .  The
--- 	      expression cannot contain a `'}'`  character, call a function to
+-- 	{ NF  Evaluate expression between "%{" and "}" and substitute result.
+-- 	      Note that there is no "%" before the closing "}".  The
+-- 	      expression cannot contain a "}" character, call a function to
 -- 	      work around that.  See |stl-%{| below.
--- 	{% -  This is almost same as { except the result of the expression is
+-- 	`{%` -  This is almost same as "{" except the result of the expression is
 -- 	      re-evaluated as a statusline format string.  Thus if the
--- 	      return value of expr contains % items they will get expanded.
--- 	      The expression can contain the } character, the end of
--- 	      expression is denoted by %}.
+-- 	      return value of expr contains "%" items they will get expanded.
+-- 	      The expression can contain the "}" character, the end of
+-- 	      expression is denoted by "%}".
 -- 	      For example: >
 -- 		func! Stl_filename() abort
 -- 		    return "%t"
 -- 		endfunc
 -- <	        `stl=%{Stl_filename()}`   results in `"%t"`
 -- 	        `stl=%{%Stl_filename()%}` results in `"Name of current file"`
--- 	%} -  End of `{%` expression
+-- 	%} -  End of "{%" expression
 -- 	( -   Start of item group.  Can be used for setting the width and
 -- 	      alignment of a section.  Must be followed by %) somewhere.
 -- 	) -   End of item group.  No width fields allowed.

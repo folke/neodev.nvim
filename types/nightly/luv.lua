@@ -722,7 +722,7 @@ function vim.loop.fs_poll_stop() end
 -- indicates EOF.
 -- 
 -- If `offset` is nil or omitted, it will default to `-1`, which
--- indicates 'use and update the current file offset.'
+-- indicates "use and update the current file offset."
 -- 
 -- Note: When `offset` is >= 0, the current file offset will not
 -- be updated by the read.
@@ -1009,7 +1009,7 @@ function vim.loop.fs_utime(path, atime, mtime, callback) end
 -- written.
 -- 
 -- If `offset` is nil or omitted, it will default to `-1`, which
--- indicates 'use and update the current file offset.'
+-- indicates "use and update the current file offset."
 -- 
 -- Note: When `offset` is >= 0, the current file offset will not
 -- be updated by the write.

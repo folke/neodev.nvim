@@ -3165,7 +3165,7 @@ function vim.opt.mousescroll:get()end
 -- 	w x	updown		up-down sizing arrows
 -- 	w x	leftright	left-right sizing arrows
 -- 	w x	busy		The system's usual busy pointer
--- 	w x	no		The system's usual 'no input' pointer
+-- 	w x	no		The system's usual "no input" pointer
 -- 	  x	udsizing	indicates up-down resizing
 -- 	  x	lrsizing	indicates left-right resizing
 -- 	  x	crosshair	like a big thin +
@@ -3263,11 +3263,12 @@ function vim.opt.nrformats:get()end
 -- 
 -- 		`'nonu'`           `'nu'`             `'nonu'`           `'nu'` 
 -- 		`'nornu'`          `'nornu'`          `'rnu'`            `'rnu'` 
--- 
+-- >
 -- 	    |apple          |  1 apple      |  2 apple      |  2 apple
 -- 	    |pear           |  2 pear       |  1 pear       |  1 pear
 -- 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
 -- 	    |there          |  4 there      |  1 there      |  1 there
+-- <
 --- @class vim.opt.number: vim.Option
 --- @operator add: vim.opt.number
 --- @operator sub: vim.opt.number

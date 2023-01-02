@@ -461,11 +461,12 @@ vim.wo.lcs = vim.wo.listchars
 -- 
 -- 		`'nonu'`           `'nu'`             `'nonu'`           `'nu'` 
 -- 		`'nornu'`          `'nornu'`          `'rnu'`            `'rnu'` 
--- 
+-- >
 -- 	    |apple          |  1 apple      |  2 apple      |  2 apple
 -- 	    |pear           |  2 pear       |  1 pear       |  1 pear
 -- 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
 -- 	    |there          |  4 there      |  1 there      |  1 there
+-- <
 vim.wo.number = false
 vim.wo.nu = vim.wo.number
 -- `'numberwidth'`  `'nuw'` 	number	(default: 4)
@@ -678,12 +679,12 @@ vim.wo.spell = false
 -- 	field	    meaning ~
 -- 	-	    Left justify the item.  The default is right justified
 -- 		    when minwid is larger than the length of the item.
--- 	0	    Leading zeroes in numeric items.  Overridden by `'-'` .
--- 	minwid	    Minimum width of the item, padding as set by `'-'`  & `'0'` .
+-- 	0	    Leading zeroes in numeric items.  Overridden by "-".
+-- 	minwid	    Minimum width of the item, padding as set by "-" & "0".
 -- 		    Value must be 50 or less.
--- 	maxwid	    Maximum width of the item.  Truncation occurs with a `'<'` 
+-- 	maxwid	    Maximum width of the item.  Truncation occurs with a "<"
 -- 		    on the left for text items.  Numeric items will be
--- 		    shifted down to maxwid-2 digits followed by `'>'` number
+-- 		    shifted down to maxwid-2 digits followed by ">"number
 -- 		    where number is the amount of missing digits, much like
 -- 		    an exponential notation.
 -- 	item	    A one letter code as described below.
@@ -732,22 +733,22 @@ vim.wo.spell = false
 -- 	S S   `'showcmd'`  content, see `'showcmdloc'` .
 -- 	a S   Argument list status as in default title.  ({current} of {max})
 -- 	      Empty if the argument file count is zero or one.
--- 	{ NF  Evaluate expression between `'%{'`  and `'}'`  and substitute result.
--- 	      Note that there is no `'%'`  before the closing `'}'` .  The
--- 	      expression cannot contain a `'}'`  character, call a function to
+-- 	{ NF  Evaluate expression between "%{" and "}" and substitute result.
+-- 	      Note that there is no "%" before the closing "}".  The
+-- 	      expression cannot contain a "}" character, call a function to
 -- 	      work around that.  See |stl-%{| below.
--- 	{% -  This is almost same as { except the result of the expression is
+-- 	`{%` -  This is almost same as "{" except the result of the expression is
 -- 	      re-evaluated as a statusline format string.  Thus if the
--- 	      return value of expr contains % items they will get expanded.
--- 	      The expression can contain the } character, the end of
--- 	      expression is denoted by %}.
+-- 	      return value of expr contains "%" items they will get expanded.
+-- 	      The expression can contain the "}" character, the end of
+-- 	      expression is denoted by "%}".
 -- 	      For example: >
 -- 		func! Stl_filename() abort
 -- 		    return "%t"
 -- 		endfunc
 -- <	        `stl=%{Stl_filename()}`   results in `"%t"`
 -- 	        `stl=%{%Stl_filename()%}` results in `"Name of current file"`
--- 	%} -  End of `{%` expression
+-- 	%} -  End of "{%" expression
 -- 	( -   Start of item group.  Can be used for setting the width and
 -- 	      alignment of a section.  Must be followed by %) somewhere.
 -- 	) -   End of item group.  No width fields allowed.
@@ -2084,11 +2085,11 @@ vim.bo.sw = vim.bo.shiftwidth
 -- 	alternative.
 -- 	Normally `'autoindent'`  should also be on when using `'smartindent'` .
 -- 	An indent is automatically inserted:
--- 	- After a line ending in `'{'` .
+-- 	- After a line ending in "{".
 -- 	- After a line starting with a keyword from `'cinwords'` .
--- 	- Before a line starting with `'}'`  (only with the "O" command).
+-- 	- Before a line starting with "}" (only with the "O" command).
 -- 	When typing `'}'`  as the first character in a new line, that line is
--- 	given the same indent as the matching `'{'` .
+-- 	given the same indent as the matching "{".
 -- 	When typing `'#'`  as the first character in a new line, the indent for
 -- 	that line is removed, the `'#'`  is put in the first column.  The indent
 -- 	is restored for the next line.  If you don't want this, use this
@@ -3477,7 +3478,7 @@ function vim.opt.cinwords:get()end
 -- 	These names are recognized:
 -- 
 -- 
--- 	unnamed		When included, Vim will use the clipboard register `'*'` 
+-- 	unnamed		When included, Vim will use the clipboard register "*"
 -- 			for all yank, delete, change and put operations which
 -- 			would normally go to the unnamed register.  When a
 -- 			register is explicitly specified, it will always be
@@ -3488,8 +3489,8 @@ function vim.opt.cinwords:get()end
 -- 
 -- 
 -- 	unnamedplus	A variant of the "unnamed" flag which uses the
--- 			clipboard register `'+'`  (|quoteplus|) instead of
--- 			register `'*'`  for all yank, delete, change and put
+-- 			clipboard register "+" (|quoteplus|) instead of
+-- 			register "*" for all yank, delete, change and put
 -- 			operations which would normally go to the unnamed
 -- 			register.  When "unnamed" is also included to the
 -- 			option, yank and delete operations (but not put)

@@ -405,8 +405,8 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- positions define the bounds). 0 and -1 are understood as (0,0) and (-1,-1)
 -- respectively, thus the following are equivalent: 
 -- ```lua
---   nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
---   nvim_buf_get_extmarks(0, my_ns, [0,0], [-1,-1], {})
+--   vim.api.nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
+--   vim.api.nvim_buf_get_extmarks(0, my_ns, {0,0}, {-1,-1}, {})
 -- ```
 -- 
 -- If `end` is less than `start`, traversal works backwards. (Useful with
@@ -2147,8 +2147,8 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                   borders but not horizontal ones. By default,
 --                   `FloatBorder` highlight is used, which links to
 --                   `WinSeparator` when not defined. It could also be
---                   specified by character: [ {"+", "MyCorner"}, {"x",
---                   "MyBorder"} ].
+--                   specified by character: [ ["+", "MyCorner"], ["x",
+--                   "MyBorder"] ].
 -- 
 --               • title: Title (optional) in window border, String or list.
 --                 List is [text, highlight] tuples. if is string the default

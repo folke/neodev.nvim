@@ -549,7 +549,7 @@ function vim.fn.bufwinnr(buf) end
 --- @return number
 function vim.fn.byte2line(byte) end
 
--- Return byte index of the {nr}'th character in the String
+-- Return byte index of the {nr}th character in the String
 -- {expr}.  Use zero for the first character, it then returns
 -- zero.
 -- If there are no multibyte characters the returned value is
@@ -1214,7 +1214,7 @@ function vim.fn.cursor(list) end
 -- Specifically used to interrupt a program being debugged.  It
 -- will cause process {pid} to get a SIGTRAP.  Behavior for other
 -- processes is undefined. See |terminal-debug|.
--- {Sends a SIGINT to a process {pid} other than MS-Windows}
+-- (Sends a SIGINT to a process {pid} other than MS-Windows)
 -- 
 -- Returns |TRUE| if successfully interrupted the program.
 -- Otherwise returns |FALSE|.
@@ -1319,9 +1319,9 @@ function vim.fn.deletebufline(buf, first, last) end
 --   call dictwatcheradd(g:, '*', 'OnDictChanged')
 -- ```
 -- For now {pattern} only accepts very simple patterns that can
--- contain a '*' at the end of the string, in which case it will
--- match every key that begins with the substring before the '*'.
--- That means if '*' is not the last character of {pattern}, only
+-- contain a "*" at the end of the string, in which case it will
+-- match every key that begins with the substring before the "*".
+-- That means if "*" is not the last character of {pattern}, only
 -- keys that are exactly equal as {pattern} will be matched.
 -- 
 -- The {callback} receives three arguments:
@@ -5326,7 +5326,7 @@ function vim.fn.mapset(mode, abbr, dict) end
 -- If {start} is out of range ({start} > strlen({expr}) for a
 -- String or {start} > len({expr}) for a |List|) -1 is returned.
 -- 
--- When {count} is given use the {count}'th match.  When a match
+-- When {count} is given use the {count}th match.  When a match
 -- is found in a String the search for the next one starts one
 -- character further.  Thus this example results in 1: 
 -- ```vim
@@ -5607,7 +5607,7 @@ function vim.fn.matchend(expr, pat, start, count) end
 -- ```vim
 --    :echo ['one two', 'two one']->matchfuzzy('two one')
 -- ```
--- results in ['two one', 'one two']. >
+-- results in `['two one', 'one two']` . >
 --    :echo ['one two', 'two one']->matchfuzzy('two one',
 --         \ {'matchseq': 1})
 -- <    results in ['two one'].
