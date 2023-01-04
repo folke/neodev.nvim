@@ -3612,114 +3612,6 @@ vim.opt.pvw = vim.opt.previewwindow
 --- @return boolean
 function vim.opt.previewwindow:get()end
 
--- `'printdevice'`  `'pdev'` 	string	(default empty)
--- 			global
--- 	The name of the printer to be used for |:hardcopy|.
--- 	See |pdev-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.printdevice: vim.Option
---- @operator add: vim.opt.printdevice
---- @operator sub: vim.opt.printdevice
---- @operator pow: vim.opt.printdevice
-vim.opt.printdevice = ""
-vim.opt.pdev = vim.opt.printdevice
---- @return string
-function vim.opt.printdevice:get()end
-
--- `'printencoding'`  `'penc'` 	string	(default empty, except for some systems)
--- 			global
--- 	Sets the character encoding used when printing.
--- 	See |penc-option|.
---- @class vim.opt.printencoding: vim.Option
---- @operator add: vim.opt.printencoding
---- @operator sub: vim.opt.printencoding
---- @operator pow: vim.opt.printencoding
-vim.opt.printencoding = ""
-vim.opt.penc = vim.opt.printencoding
---- @return string
-function vim.opt.printencoding:get()end
-
--- `'printexpr'`  `'pexpr'` 	string	(default: see below)
--- 			global
--- 	Expression used to print the PostScript produced with |:hardcopy|.
--- 	See |pexpr-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.printexpr: vim.Option
---- @operator add: vim.opt.printexpr
---- @operator sub: vim.opt.printexpr
---- @operator pow: vim.opt.printexpr
-vim.opt.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"
-vim.opt.pexpr = vim.opt.printexpr
---- @return string
-function vim.opt.printexpr:get()end
-
--- `'printfont'`  `'pfn'` 	string	(default "courier")
--- 			global
--- 	The name of the font that will be used for |:hardcopy|.
--- 	See |pfn-option|.
---- @class vim.opt.printfont: vim.Option
---- @operator add: vim.opt.printfont
---- @operator sub: vim.opt.printfont
---- @operator pow: vim.opt.printfont
-vim.opt.printfont = "courier"
-vim.opt.pfn = vim.opt.printfont
---- @return string
-function vim.opt.printfont:get()end
-
--- `'printheader'`  `'pheader'`   string  (default "%<%f%h%m%=Page %N")
--- 			global
--- 	The format of the header produced in |:hardcopy| output.
--- 	See |pheader-option|.
---- @class vim.opt.printheader: vim.Option
---- @operator add: vim.opt.printheader
---- @operator sub: vim.opt.printheader
---- @operator pow: vim.opt.printheader
-vim.opt.printheader = "%<%f%h%m%=Page %N"
-vim.opt.pheader = vim.opt.printheader
---- @return string
-function vim.opt.printheader:get()end
-
--- `'printmbcharset'`  `'pmbcs'`   string (default "")
--- 			global
--- 	The CJK character set to be used for CJK output from |:hardcopy|.
--- 	See |pmbcs-option|.
---- @class vim.opt.printmbcharset: vim.Option
---- @operator add: vim.opt.printmbcharset
---- @operator sub: vim.opt.printmbcharset
---- @operator pow: vim.opt.printmbcharset
-vim.opt.printmbcharset = ""
-vim.opt.pmbcs = vim.opt.printmbcharset
---- @return string
-function vim.opt.printmbcharset:get()end
-
--- `'printmbfont'`  `'pmbfn'` 	string (default "")
--- 			global
--- 	List of font names to be used for CJK output from |:hardcopy|.
--- 	See |pmbfn-option|.
---- @class vim.opt.printmbfont: vim.Option
---- @operator add: vim.opt.printmbfont
---- @operator sub: vim.opt.printmbfont
---- @operator pow: vim.opt.printmbfont
-vim.opt.printmbfont = ""
-vim.opt.pmbfn = vim.opt.printmbfont
---- @return string
-function vim.opt.printmbfont:get()end
-
--- `'printoptions'`  `'popt'`  string (default "")
--- 			global
--- 	List of items that control the format of the output of |:hardcopy|.
--- 	See |popt-option|.
---- @class vim.opt.printoptions: vim.Option
---- @operator add: vim.opt.printoptions
---- @operator sub: vim.opt.printoptions
---- @operator pow: vim.opt.printoptions
-vim.opt.printoptions = ""
-vim.opt.popt = vim.opt.printoptions
---- @return string[]
-function vim.opt.printoptions:get()end
-
 --- @class vim.opt.prompt: vim.Option
 --- @operator add: vim.opt.prompt
 --- @operator sub: vim.opt.prompt
@@ -4125,7 +4017,6 @@ function vim.opt.rulerformat:get()end
 -- 	  pack/		packages |:packadd|
 -- 	  parser/	|treesitter| syntax parsers
 -- 	  plugin/	plugin scripts |write-plugin|
--- 	  print/	files for printing |postscript-print-encoding|
 -- 	  query/	|treesitter| queries
 -- 	  rplugin/	|remote-plugin| scripts
 -- 	  spell/	spell checking files |spell|
@@ -4692,4 +4583,103 @@ vim.opt.shellpipe = "| tee"
 vim.opt.sp = vim.opt.shellpipe
 --- @return string
 function vim.opt.shellpipe:get()end
+
+-- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
+-- 					contains "sh" somewhere: "\"")
+-- 			global
+-- 	Quoting character(s), put around the command passed to the shell, for
+-- 	the "!" and ":!" commands.  The redirection is kept outside of the
+-- 	quoting.  See `'shellxquote'`  to include the redirection.  It's
+-- 	probably not useful to set both options.
+-- 	This is an empty string by default.  Only known to be useful for
+-- 	third-party shells on Windows systems, such as the MKS Korn Shell
+-- 	or bash, where it should be "\"".  The default is adjusted according
+-- 	the value of `'shell'` , to reduce the need to set this option by the
+-- 	user.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.shellquote: vim.Option
+--- @operator add: vim.opt.shellquote
+--- @operator sub: vim.opt.shellquote
+--- @operator pow: vim.opt.shellquote
+vim.opt.shellquote = ""
+vim.opt.shq = vim.opt.shellquote
+--- @return string
+function vim.opt.shellquote:get()end
+
+-- `'shellredir'`  `'srr'` 	string	(default ">", ">&" or ">%s 2>&1")
+-- 			global
+-- 	String to be used to put the output of a filter command in a temporary
+-- 	file.  See also |:!|.  See |option-backslash| about including spaces
+-- 	and backslashes.
+-- 	The name of the temporary file can be represented by "%s" if necessary
+-- 	(the file name is appended automatically if no %s appears in the value
+-- 	of this option).
+-- 	The default is ">".  For Unix, if the `'shell'`  option is "csh" or
+-- 	"tcsh" during initializations, the default becomes ">&".  If the
+-- 	`'shell'`  option is "sh", "ksh", "mksh", "pdksh", "zsh", "zsh-beta",
+-- 	"bash" or "fish", the default becomes ">%s 2>&1".  This means that
+-- 	stderr is also included.  For Win32, the Unix checks are done and
+-- 	additionally "cmd" is checked for, which makes the default ">%s 2>&1".
+-- 	Also, the same names with ".exe" appended are checked for.
+-- 	The initialization of this option is done after reading the vimrc
+-- 	and the other initializations, so that when the `'shell'`  option is set
+-- 	there, the `'shellredir'`  option changes automatically unless it was
+-- 	explicitly set before.
+-- 	In the future pipes may be used for filtering and this option will
+-- 	become obsolete (at least for Unix).
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.shellredir: vim.Option
+--- @operator add: vim.opt.shellredir
+--- @operator sub: vim.opt.shellredir
+--- @operator pow: vim.opt.shellredir
+vim.opt.shellredir = ">"
+vim.opt.srr = vim.opt.shellredir
+--- @return string
+function vim.opt.shellredir:get()end
+
+-- `'shellslash'`  `'ssl'` 	boolean	(default off)
+-- 			global
+-- 			{only for MS-Windows}
+-- 	When set, a forward slash is used when expanding file names.  This is
+-- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
+-- 	slashes can still be typed, but they are changed to forward slashes by
+-- 	Vim.
+-- 	Note that setting or resetting this option has no effect for some
+-- 	existing file names, thus this option needs to be set before opening
+-- 	any file for best results.  This might change in the future.
+-- 	`'shellslash'`  only works when a backslash can be used as a path
+-- 	separator.  To test if this is so use: >
+-- 		if exists(`'+shellslash'` )
+-- <	Also see `'completeslash'` .
+--- @class vim.opt.shellslash: vim.Option
+--- @operator add: vim.opt.shellslash
+--- @operator sub: vim.opt.shellslash
+--- @operator pow: vim.opt.shellslash
+vim.opt.shellslash = false
+vim.opt.ssl = vim.opt.shellslash
+--- @return boolean
+function vim.opt.shellslash:get()end
+
+-- `'shelltemp'`  `'stmp'` 	boolean	(default on)
+-- 			global
+-- 	When on, use temp files for shell commands.  When off use a pipe.
+-- 	When using a pipe is not possible temp files are used anyway.
+-- 	The advantage of using a pipe is that nobody can read the temp file
+-- 	and the `'shell'`  command does not need to support redirection.
+-- 	The advantage of using a temp file is that the file type and encoding
+-- 	can be detected.
+-- 	The |FilterReadPre|, |FilterReadPost| and |FilterWritePre|,
+-- 	|FilterWritePost| autocommands event are not triggered when
+-- 	`'shelltemp'`  is off.
+-- 	|system()| does not respect this option, it always uses pipes.
+--- @class vim.opt.shelltemp: vim.Option
+--- @operator add: vim.opt.shelltemp
+--- @operator sub: vim.opt.shelltemp
+--- @operator pow: vim.opt.shelltemp
+vim.opt.shelltemp = true
+vim.opt.stmp = vim.opt.shelltemp
+--- @return boolean
+function vim.opt.shelltemp:get()end
 

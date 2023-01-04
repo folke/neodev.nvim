@@ -2521,58 +2521,6 @@ vim.go.pm = vim.go.patchmode
 -- 	commands.  Used for |CTRL-W_}| when no count is given.
 vim.go.previewheight = 12
 vim.go.pvh = vim.go.previewheight
--- `'printdevice'`  `'pdev'` 	string	(default empty)
--- 			global
--- 	The name of the printer to be used for |:hardcopy|.
--- 	See |pdev-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.go.printdevice = ""
-vim.go.pdev = vim.go.printdevice
--- `'printencoding'`  `'penc'` 	string	(default empty, except for some systems)
--- 			global
--- 	Sets the character encoding used when printing.
--- 	See |penc-option|.
-vim.go.printencoding = ""
-vim.go.penc = vim.go.printencoding
--- `'printexpr'`  `'pexpr'` 	string	(default: see below)
--- 			global
--- 	Expression used to print the PostScript produced with |:hardcopy|.
--- 	See |pexpr-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.go.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"
-vim.go.pexpr = vim.go.printexpr
--- `'printfont'`  `'pfn'` 	string	(default "courier")
--- 			global
--- 	The name of the font that will be used for |:hardcopy|.
--- 	See |pfn-option|.
-vim.go.printfont = "courier"
-vim.go.pfn = vim.go.printfont
--- `'printheader'`  `'pheader'`   string  (default "%<%f%h%m%=Page %N")
--- 			global
--- 	The format of the header produced in |:hardcopy| output.
--- 	See |pheader-option|.
-vim.go.printheader = "%<%f%h%m%=Page %N"
-vim.go.pheader = vim.go.printheader
--- `'printmbcharset'`  `'pmbcs'`   string (default "")
--- 			global
--- 	The CJK character set to be used for CJK output from |:hardcopy|.
--- 	See |pmbcs-option|.
-vim.go.printmbcharset = ""
-vim.go.pmbcs = vim.go.printmbcharset
--- `'printmbfont'`  `'pmbfn'` 	string (default "")
--- 			global
--- 	List of font names to be used for CJK output from |:hardcopy|.
--- 	See |pmbfn-option|.
-vim.go.printmbfont = ""
-vim.go.pmbfn = vim.go.printmbfont
--- `'printoptions'`  `'popt'`  string (default "")
--- 			global
--- 	List of items that control the format of the output of |:hardcopy|.
--- 	See |popt-option|.
-vim.go.printoptions = ""
-vim.go.popt = vim.go.printoptions
 vim.go.prompt = true
 -- `'pumblend'`  `'pb'` 		number	(default 0)
 -- 			global
@@ -2779,7 +2727,6 @@ vim.go.ruf = vim.go.rulerformat
 -- 	  pack/		packages |:packadd|
 -- 	  parser/	|treesitter| syntax parsers
 -- 	  plugin/	plugin scripts |write-plugin|
--- 	  print/	files for printing |postscript-print-encoding|
 -- 	  query/	|treesitter| queries
 -- 	  rplugin/	|remote-plugin| scripts
 -- 	  spell/	spell checking files |spell|
@@ -4316,3 +4263,41 @@ vim.wo = {}
 -- 	Also see |arabic.txt|.
 vim.wo.arabic = false
 vim.wo.arab = vim.wo.arabic
+-- `'breakindent'`  `'bri'` 	boolean (default off)
+-- 			local to window
+-- 	Every wrapped line will continue visually indented (same amount of
+-- 	space as the beginning of that line), thus preserving horizontal blocks
+-- 	of text.
+vim.wo.breakindent = false
+vim.wo.bri = vim.wo.breakindent
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 			    (default: 20)
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 			    (default: 0)
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 			    (default: off)
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 			    (default: 0)
+-- 		column:{n}  Indent at column {n}. Will overrule the other
+-- 			    sub-options. Note: an additional indent may be
+-- 			    added for the `'showbreak'`  setting.
+-- 			    (default: off)
+vim.wo.breakindentopt = ""
+vim.wo.briopt = vim.wo.breakindentopt

@@ -1008,12 +1008,6 @@ function vim.cmd.gvim(...)end
 -- open a help window
 function vim.cmd.h(...)end
 
--- send text to the printer
-function vim.cmd.ha(...)end
-
--- send text to the printer
-function vim.cmd.hardcopy(...)end
-
 -- open a help window
 function vim.cmd.help(...)end
 
