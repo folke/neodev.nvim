@@ -2071,6 +2071,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                 • "win" Window given by the `win` field, or current
 --                   window.
 --                 • "cursor" Cursor position in current window.
+--                 • "mouse" Mouse position
 -- 
 --               • win: |window-ID| for relative="win".
 --               • anchor: Decides which corner of the float to place at
@@ -2118,10 +2119,10 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                   Disables 'number', 'relativenumber', 'cursorline',
 --                   'cursorcolumn', 'foldcolumn', 'spell' and 'list'
 --                   options. 'signcolumn' is changed to `auto` and
---                   'colorcolumn' is cleared. The end-of-buffer region is
---                   hidden by setting `eob` flag of 'fillchars' to a space
---                   char, and clearing the |hl-EndOfBuffer| region in
---                   'winhighlight'.
+--                   'colorcolumn' is cleared. 'statuscolumn' is changed to
+--                   empty. The end-of-buffer region is hidden by setting
+--                   `eob` flag of 'fillchars' to a space char, and clearing
+--                   the |hl-EndOfBuffer| region in 'winhighlight'.
 -- 
 --               • border: Style of (optional) window border. This can either
 --                 be a string or an array. The string values are
