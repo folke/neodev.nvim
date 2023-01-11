@@ -1,6 +1,6 @@
 name: Types
 on:
-  workflow_call:
+  workflow_dispatch:
   schedule:
     # Run this every hour
     - cron: "0 * * * *"
