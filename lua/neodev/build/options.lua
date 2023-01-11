@@ -72,14 +72,6 @@ function M.build()
     if docs[name] then
       str = str .. Annotations.comment(docs[name]) .. "\n"
     end
-    str = str .. ("--- @class vim.opt.%s: vim.Option\n"):format(name)
-    str = str .. ("--- @operator add: vim.opt.%s\n"):format(name)
-    str = str .. ("--- @operator sub: vim.opt.%s\n"):format(name)
-    str = str .. ("--- @operator pow: vim.opt.%s\n"):format(name)
-    str = str .. ("vim.opt.%s = %s\n"):format(name, vim.inspect(option.default))
-    if option.shortname ~= "" then
-      str = str .. ("vim.opt.%s = vim.opt.%s\n"):format(option.shortname, name)
-    end
     ---@type string
     local return_type = option.type
 
@@ -91,6 +83,15 @@ function M.build()
         return_type = M.metatype2lua[return_type](option)
       end
     end)
+
+    str = str .. ("--- @class vim.opt.%s: vim.Option,%s\n"):format(name, return_type)
+    str = str .. ("--- @operator add: vim.opt.%s\n"):format(name)
+    str = str .. ("--- @operator sub: vim.opt.%s\n"):format(name)
+    str = str .. ("--- @operator pow: vim.opt.%s\n"):format(name)
+    str = str .. ("vim.opt.%s = %s\n"):format(name, vim.inspect(option.default))
+    if option.shortname ~= "" then
+      str = str .. ("vim.opt.%s = vim.opt.%s\n"):format(option.shortname, name)
+    end
 
     str = str .. ("--- @return %s\nfunction vim.opt.%s:get()end\n\n"):format(return_type, name)
     writer:write(str)
