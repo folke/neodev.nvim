@@ -35,36 +35,6 @@ function M.setup_jsonls(config)
   })
 end
 
----@return string[]
-function M.get_lua_dirs(root_dir)
-  ---@type table<string, boolean>
-  local lua_dirs = {}
-
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    local name = vim.api.nvim_buf_get_name(buf) or ""
-    local lua_dir = name:match("^(.*/lua/)")
-    if lua_dir and util.has_file(root_dir, lua_dir) then
-      lua_dirs[lua_dir] = true
-    end
-  end
-
-  lua_dirs = vim.tbl_keys(lua_dirs)
-
-  table.insert(lua_dirs, "../lua")
-  table.insert(lua_dirs, "./lua")
-  table.insert(lua_dirs, root_dir .. "../lua")
-  table.insert(lua_dirs, root_dir .. "/lua")
-
-  lua_dirs = vim.tbl_map(function(f)
-    return util.fqn(f)
-  end, lua_dirs)
-
-  ---@type string[]
-  return vim.tbl_filter(function(dir)
-    return dir and util.exists(dir)
-  end, lua_dirs)
-end
-
 function M.before_init(params, config)
   M.on_new_config(config, params.rootPath)
 end
@@ -78,13 +48,13 @@ function M.on_new_config(config, root_dir)
     return
   end
 
-  local lua_dirs = M.get_lua_dirs(root_dir)
+  local lua_root = util.find_root()
 
   local opts = require("neodev.config").merge()
 
-  opts.library.enabled = util.is_nvim_config(root_dir)
+  opts.library.enabled = util.is_nvim_config()
 
-  if not opts.library.enabled and #lua_dirs > 0 then
+  if not opts.library.enabled and #lua_root then
     opts.library.enabled = true
     opts.library.plugins = false
   end
@@ -117,10 +87,8 @@ function M.on_new_config(config, root_dir)
       table.insert(config.settings.Lua.workspace.library, lib)
     end
 
-    if require("neodev.config").options.experimental.pathStrict then
-      for _, lib in ipairs(lua_dirs) do
-        table.insert(config.settings.Lua.workspace.library, lib)
-      end
+    if require("neodev.config").options.pathStrict and lua_root then
+      table.insert(config.settings.Lua.workspace.library, lua_root)
     end
 
     for _, dir in ipairs(ignoreDir) do

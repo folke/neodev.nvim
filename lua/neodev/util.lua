@@ -1,35 +1,24 @@
 local config = require("neodev.config")
+
 local M = {}
 
-function M.fqn(fname)
-  fname = vim.fn.fnamemodify(fname, ":p")
-  return vim.loop.fs_realpath(fname) or fname
+--- find the root directory that has /lua
+---@param path string?
+---@return string?
+function M.find_root(path)
+  path = path or vim.api.nvim_buf_get_name(0)
+  return vim.fs.find({ "lua" }, { path = path, upward = true, type = "directory" })[1]
 end
 
-function M.exists(fname)
-  local stat = vim.loop.fs_stat(fname)
-  return (stat and stat.type) or false
-end
-
----@param root_dir string
----@param file string
-function M.has_file(root_dir, file)
-  root_dir = M.fqn(root_dir)
-  file = M.fqn(file)
-  return M.exists(file) and file:find(root_dir, 1, true) == 1
-end
-
----@return string
-function M.config_path()
-  return vim.loop.fs_realpath(vim.fn.stdpath("config"))
-end
-
-function M.is_plugin(path)
-  return M.fqn(path):find("/lua[/$]") ~= nil or M.has_file(path, path .. "/lua")
-end
-
-function M.is_nvim_config(path)
-  return M.has_file(M.fqn(path), M.config_path()) or M.has_file(M.config_path(), M.fqn(path))
+function M.is_nvim_config()
+  local path = vim.loop.fs_realpath(vim.api.nvim_buf_get_name(0))
+  if path then
+    path = vim.fs.normalize(path)
+    local config_root = vim.loop.fs_realpath(vim.fn.stdpath("config"))
+    config_root = vim.fs.normalize(config_root)
+    return path:find(config_root, 1, true) == 1
+  end
+  return false
 end
 
 function M.keys(tbl)

@@ -5,8 +5,6 @@
       "plugins": [
         "neoconf.nvim",
         "nvim-lspconfig",
-        "lsp",
-        "lazy.nvim"
       ]
     }
   },

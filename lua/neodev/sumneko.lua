@@ -16,7 +16,7 @@ function M.library(opts)
     for _, p in ipairs(vim.fn.expand(lib .. "/lua", false, true)) do
       p = vim.loop.fs_realpath(p)
       if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
-        if config.options.experimental.pathStrict then
+        if config.options.pathStrict then
           table.insert(ret, p)
         else
           table.insert(ret, vim.fn.fnamemodify(p, ":h"))
@@ -55,16 +55,16 @@ end
 
 ---@param settings? lspconfig.settings.sumneko_lua
 function M.path(settings)
+  if config.options.pathStrict then
+    return { "?.lua", "?/init.lua" }
+  end
+
   settings = settings or {}
   local runtime = settings.Lua and settings.Lua.runtime or {}
   local meta = runtime.meta or "${version} ${language} ${encoding}"
   meta = meta:gsub("%${version}", runtime.version or "LuaJIT")
   meta = meta:gsub("%${language}", "en-us")
   meta = meta:gsub("%${encoding}", runtime.fileEncoding or "utf8")
-
-  if config.options.experimental.pathStrict then
-    return { "?.lua", "?/init.lua" }
-  end
 
   return {
     -- paths for builtin libraries
@@ -90,7 +90,7 @@ function M.setup(opts, settings)
         runtime = {
           version = "LuaJIT",
           path = M.path(settings),
-          pathStrict = config.options.experimental.pathStrict,
+          pathStrict = config.options.pathStrict,
         },
         ---@diagnostic disable-next-line: undefined-field
         completion = opts.snippet and { callSnippet = "Replace" } or nil,
