@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.0.0](https://github.com/folke/neodev.nvim/compare/v1.0.0...v2.0.0) (2023-01-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* `config.pathStrict` is now enabled by default. Needs sumneko >= 3.6.0. Much better performance
+
+### Features
+
+* **options:** allow setting an option to its type ([1569664](https://github.com/folke/neodev.nvim/commit/156966470d19a8b095f9ae620720be3fb85a3772))
+
+
+### Bug Fixes
+
+* simplified and improved plugin/config detection ([a34a9e7](https://github.com/folke/neodev.nvim/commit/a34a9e7e775f1513466940c31285292b7b8375de))
+
+
+### Performance Improvements
+
+* `config.pathStrict` is now enabled by default. Needs sumneko &gt;= 3.6.0. Much better performance ([5ff32d4](https://github.com/folke/neodev.nvim/commit/5ff32d4d50491f94667733362a52d0fe178e4714))
+
 ## 1.0.0 (2023-01-04)
 
 
