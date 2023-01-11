@@ -21,10 +21,10 @@ M.defaults = {
   -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
   -- in your lsp start options
   lspconfig = true,
+  -- much faster, but needs a recent built of lua-language-server
+  -- needs lua-language-server >= 3.6.0
+  pathStrict = true,
   debug = false,
-  experimental = {
-    pathStrict = false, -- much faster, but needs a nightly built of lua-language-server
-  },
 }
 
 --- @type LuaDevOptions
