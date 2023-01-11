@@ -4,7 +4,7 @@
 -- 			global
 -- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
 -- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option
+--- @class vim.opt.digraph: vim.Option,boolean
 --- @operator add: vim.opt.digraph
 --- @operator sub: vim.opt.digraph
 --- @operator pow: vim.opt.digraph
@@ -63,7 +63,7 @@ function vim.opt.digraph:get()end
 -- 	uses another default.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.directory: vim.Option
+--- @class vim.opt.directory: vim.Option,string[]
 --- @operator add: vim.opt.directory
 --- @operator sub: vim.opt.directory
 --- @operator pow: vim.opt.directory
@@ -91,7 +91,7 @@ function vim.opt.directory:get()end
 -- 
 -- 	When neither "lastline" nor "truncate" is included, a last line that
 -- 	doesn't fit is replaced with "@" lines.
---- @class vim.opt.display: vim.Option
+--- @class vim.opt.display: vim.Option,string[]
 --- @operator add: vim.opt.display
 --- @operator sub: vim.opt.display
 --- @operator pow: vim.opt.display
@@ -106,7 +106,7 @@ function vim.opt.display:get()end
 -- 		ver	vertically, width of windows is not affected
 -- 		hor	horizontally, height of windows is not affected
 -- 		both	width and height of windows is affected
---- @class vim.opt.eadirection: vim.Option
+--- @class vim.opt.eadirection: vim.Option,string
 --- @operator add: vim.opt.eadirection
 --- @operator sub: vim.opt.eadirection
 --- @operator pow: vim.opt.eadirection
@@ -115,7 +115,7 @@ vim.opt.ead = vim.opt.eadirection
 --- @return string
 function vim.opt.eadirection:get()end
 
---- @class vim.opt.edcompatible: vim.Option
+--- @class vim.opt.edcompatible: vim.Option,boolean
 --- @operator add: vim.opt.edcompatible
 --- @operator sub: vim.opt.edcompatible
 --- @operator pow: vim.opt.edcompatible
@@ -131,7 +131,7 @@ function vim.opt.edcompatible:get()end
 -- 	single width.  Unfortunately there is no good specification for this
 -- 	and it has been determined on trial-and-error basis.  Use the
 -- 	|setcellwidths()| function to change the behavior.
---- @class vim.opt.emoji: vim.Option
+--- @class vim.opt.emoji: vim.Option,boolean
 --- @operator add: vim.opt.emoji
 --- @operator sub: vim.opt.emoji
 --- @operator pow: vim.opt.emoji
@@ -145,7 +145,7 @@ function vim.opt.emoji:get()end
 -- 	Always UTF-8.
 -- 
 -- 	See `'fileencoding'`  to control file-content encoding.
---- @class vim.opt.encoding: vim.Option
+--- @class vim.opt.encoding: vim.Option,string
 --- @operator add: vim.opt.encoding
 --- @operator sub: vim.opt.encoding
 --- @operator pow: vim.opt.encoding
@@ -167,7 +167,7 @@ function vim.opt.encoding:get()end
 -- 	to remember the presence of a <EOL> for the last line in the file, so
 -- 	that when you write the file the situation from the original file can
 -- 	be kept.  But you can change it if you want to.
---- @class vim.opt.endofline: vim.Option
+--- @class vim.opt.endofline: vim.Option,boolean
 --- @operator add: vim.opt.endofline
 --- @operator sub: vim.opt.endofline
 --- @operator pow: vim.opt.endofline
@@ -192,7 +192,7 @@ function vim.opt.endofline:get()end
 -- 	If a window size is specified when creating a new window sizes are
 -- 	currently not equalized (it's complicated, but may be implemented in
 -- 	the future).
---- @class vim.opt.equalalways: vim.Option
+--- @class vim.opt.equalalways: vim.Option,boolean
 --- @operator add: vim.opt.equalalways
 --- @operator sub: vim.opt.equalalways
 --- @operator pow: vim.opt.equalalways
@@ -210,7 +210,7 @@ function vim.opt.equalalways:get()end
 -- 	about including spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.equalprg: vim.Option
+--- @class vim.opt.equalprg: vim.Option,string
 --- @operator add: vim.opt.equalprg
 --- @operator sub: vim.opt.equalprg
 --- @operator pow: vim.opt.equalprg
@@ -226,7 +226,7 @@ function vim.opt.equalprg:get()end
 -- 	for a lot of errors without a message (e.g., hitting <Esc> in Normal
 -- 	mode).  See `'visualbell'`  to make the bell behave like a screen flash
 -- 	or do nothing. See `'belloff'`  to finetune when to ring the bell.
---- @class vim.opt.errorbells: vim.Option
+--- @class vim.opt.errorbells: vim.Option,boolean
 --- @operator add: vim.opt.errorbells
 --- @operator sub: vim.opt.errorbells
 --- @operator pow: vim.opt.errorbells
@@ -245,7 +245,7 @@ function vim.opt.errorbells:get()end
 -- 	See |option-backslash| about including spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.errorfile: vim.Option
+--- @class vim.opt.errorfile: vim.Option,string
 --- @operator add: vim.opt.errorfile
 --- @operator sub: vim.opt.errorfile
 --- @operator pow: vim.opt.errorfile
@@ -258,7 +258,7 @@ function vim.opt.errorfile:get()end
 -- 			global or local to buffer |global-local|
 -- 	Scanf-like description of the format for the lines in the error file
 -- 	(see |errorformat|).
---- @class vim.opt.errorformat: vim.Option
+--- @class vim.opt.errorformat: vim.Option,string[]
 --- @operator add: vim.opt.errorformat
 --- @operator sub: vim.opt.errorformat
 --- @operator pow: vim.opt.errorformat
@@ -275,7 +275,7 @@ function vim.opt.errorformat:get()end
 -- 	Otherwise this is a comma-separated list of event names.  Example: >
 -- 	    :set ei=WinEnter,WinLeave
 -- <
---- @class vim.opt.eventignore: vim.Option
+--- @class vim.opt.eventignore: vim.Option,string[]
 --- @operator add: vim.opt.eventignore
 --- @operator sub: vim.opt.eventignore
 --- @operator pow: vim.opt.eventignore
@@ -292,7 +292,7 @@ function vim.opt.eventignore:get()end
 -- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
 -- 	This option is reset when the `'paste'`  option is set and restored when
 -- 	the `'paste'`  option is reset.
---- @class vim.opt.expandtab: vim.Option
+--- @class vim.opt.expandtab: vim.Option,boolean
 --- @operator add: vim.opt.expandtab
 --- @operator sub: vim.opt.expandtab
 --- @operator pow: vim.opt.expandtab
@@ -301,7 +301,7 @@ vim.opt.et = vim.opt.expandtab
 --- @return boolean
 function vim.opt.expandtab:get()end
 
---- @class vim.opt.exrc: vim.Option
+--- @class vim.opt.exrc: vim.Option,boolean
 --- @operator add: vim.opt.exrc
 --- @operator sub: vim.opt.exrc
 --- @operator pow: vim.opt.exrc
@@ -349,7 +349,7 @@ function vim.opt.exrc:get()end
 -- 	`'nomodified'`  to avoid not being able to ":q".
 -- 
 -- 	This option cannot be changed when `'modifiable'`  is off.
---- @class vim.opt.fileencoding: vim.Option
+--- @class vim.opt.fileencoding: vim.Option,string
 --- @operator add: vim.opt.fileencoding
 --- @operator sub: vim.opt.fileencoding
 --- @operator pow: vim.opt.fileencoding
@@ -406,7 +406,7 @@ function vim.opt.fileencoding:get()end
 -- 	See `'fileencoding'`  for the possible values.
 -- 	Setting this option does not have an effect until the next time a file
 -- 	is read.
---- @class vim.opt.fileencodings: vim.Option
+--- @class vim.opt.fileencodings: vim.Option,string[]
 --- @operator add: vim.opt.fileencodings
 --- @operator sub: vim.opt.fileencodings
 --- @operator pow: vim.opt.fileencodings
@@ -433,7 +433,7 @@ function vim.opt.fileencodings:get()end
 -- 	When this option is set, after starting to edit a file, the `'modified'` 
 -- 	option is set, because the file would be different when written.
 -- 	This option cannot be changed when `'modifiable'`  is off.
---- @class vim.opt.fileformat: vim.Option
+--- @class vim.opt.fileformat: vim.Option,string
 --- @operator add: vim.opt.fileformat
 --- @operator sub: vim.opt.fileformat
 --- @operator pow: vim.opt.fileformat
@@ -491,7 +491,7 @@ function vim.opt.fileformat:get()end
 -- 	  <CR> in front of it, Dos format is used, otherwise Unix format is
 -- 	  used.
 -- 	Also see |file-formats|.
---- @class vim.opt.fileformats: vim.Option
+--- @class vim.opt.fileformats: vim.Option,string[]
 --- @operator add: vim.opt.fileformats
 --- @operator sub: vim.opt.fileformats
 --- @operator pow: vim.opt.fileformats
@@ -505,7 +505,7 @@ function vim.opt.fileformats:get()end
 -- 			global
 -- 	When set case is ignored when using file names and directories.
 -- 	See `'wildignorecase'`  for only ignoring case when doing completion.
---- @class vim.opt.fileignorecase: vim.Option
+--- @class vim.opt.fileignorecase: vim.Option,boolean
 --- @operator add: vim.opt.fileignorecase
 --- @operator sub: vim.opt.fileignorecase
 --- @operator pow: vim.opt.fileignorecase
@@ -537,7 +537,7 @@ function vim.opt.fileignorecase:get()end
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
 -- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
---- @class vim.opt.filetype: vim.Option
+--- @class vim.opt.filetype: vim.Option,string
 --- @operator add: vim.opt.filetype
 --- @operator sub: vim.opt.filetype
 --- @operator pow: vim.opt.filetype
@@ -609,7 +609,7 @@ function vim.opt.filetype:get()end
 -- 	  fold		Folded			|hl-Folded|
 -- 	  diff		DiffDelete		|hl-DiffDelete|
 -- 	  eob		EndOfBuffer		|hl-EndOfBuffer|
---- @class vim.opt.fillchars: vim.Option
+--- @class vim.opt.fillchars: vim.Option,table<string, string>
 --- @operator add: vim.opt.fillchars
 --- @operator sub: vim.opt.fillchars
 --- @operator pow: vim.opt.fillchars
@@ -626,7 +626,7 @@ function vim.opt.fillchars:get()end
 -- 	When the `'binary'`  option is set the value of this option doesn't
 -- 	matter.
 -- 	See the `'endofline'`  option.
---- @class vim.opt.fixendofline: vim.Option
+--- @class vim.opt.fixendofline: vim.Option,boolean
 --- @operator add: vim.opt.fixendofline
 --- @operator sub: vim.opt.fixendofline
 --- @operator pow: vim.opt.fixendofline
@@ -640,7 +640,7 @@ function vim.opt.fixendofline:get()end
 -- 	When set to "all", a fold is closed when the cursor isn't in it and
 -- 	its level is higher than `'foldlevel'` .  Useful if you want folds to
 -- 	automatically close when moving out of them.
---- @class vim.opt.foldclose: vim.Option
+--- @class vim.opt.foldclose: vim.Option,string[]
 --- @operator add: vim.opt.foldclose
 --- @operator sub: vim.opt.foldclose
 --- @operator pow: vim.opt.foldclose
@@ -658,7 +658,7 @@ function vim.opt.foldclose:get()end
 --             0:            to disable foldcolumn
 -- 	    "[1-9]":      to display a fixed number of columns
 -- 	See |folding|.
---- @class vim.opt.foldcolumn: vim.Option
+--- @class vim.opt.foldcolumn: vim.Option,string
 --- @operator add: vim.opt.foldcolumn
 --- @operator sub: vim.opt.foldcolumn
 --- @operator pow: vim.opt.foldcolumn
@@ -676,7 +676,7 @@ function vim.opt.foldcolumn:get()end
 -- 	`'foldenable'`  is off.
 -- 	This option is set by commands that create a new fold or close a fold.
 -- 	See |folding|.
---- @class vim.opt.foldenable: vim.Option
+--- @class vim.opt.foldenable: vim.Option,boolean
 --- @operator add: vim.opt.foldenable
 --- @operator sub: vim.opt.foldenable
 --- @operator pow: vim.opt.foldenable
@@ -697,7 +697,7 @@ function vim.opt.foldenable:get()end
 -- 
 -- 	It is not allowed to change text or jump to another window while
 -- 	evaluating `'foldexpr'`  |textlock|.
---- @class vim.opt.foldexpr: vim.Option
+--- @class vim.opt.foldexpr: vim.Option,string
 --- @operator add: vim.opt.foldexpr
 --- @operator sub: vim.opt.foldexpr
 --- @operator pow: vim.opt.foldexpr
@@ -712,7 +712,7 @@ function vim.opt.foldexpr:get()end
 -- 	characters in `'foldignore'`  will get their fold level from surrounding
 -- 	lines.  White space is skipped before checking for this character.
 -- 	The default "#" works well for C programs.  See |fold-indent|.
---- @class vim.opt.foldignore: vim.Option
+--- @class vim.opt.foldignore: vim.Option,string
 --- @operator add: vim.opt.foldignore
 --- @operator sub: vim.opt.foldignore
 --- @operator pow: vim.opt.foldignore
@@ -728,7 +728,7 @@ function vim.opt.foldignore:get()end
 -- 	close fewer folds.
 -- 	This option is set by commands like |zm|, |zM| and |zR|.
 -- 	See |fold-foldlevel|.
---- @class vim.opt.foldlevel: vim.Option
+--- @class vim.opt.foldlevel: vim.Option,number
 --- @operator add: vim.opt.foldlevel
 --- @operator sub: vim.opt.foldlevel
 --- @operator pow: vim.opt.foldlevel
@@ -748,7 +748,7 @@ function vim.opt.foldlevel:get()end
 -- 	It is also done before BufReadPre autocommands, to allow an autocmd to
 -- 	overrule the `'foldlevel'`  value for specific files.
 -- 	When the value is negative, it is not used.
---- @class vim.opt.foldlevelstart: vim.Option
+--- @class vim.opt.foldlevelstart: vim.Option,number
 --- @operator add: vim.opt.foldlevelstart
 --- @operator sub: vim.opt.foldlevelstart
 --- @operator pow: vim.opt.foldlevelstart
@@ -763,7 +763,7 @@ function vim.opt.foldlevelstart:get()end
 -- 	must be one comma, which separates the start and end marker.  The
 -- 	marker is a literal string (a regular expression would be too slow).
 -- 	See |fold-marker|.
---- @class vim.opt.foldmarker: vim.Option
+--- @class vim.opt.foldmarker: vim.Option,string[]
 --- @operator add: vim.opt.foldmarker
 --- @operator sub: vim.opt.foldmarker
 --- @operator pow: vim.opt.foldmarker
@@ -781,7 +781,7 @@ function vim.opt.foldmarker:get()end
 -- 	|fold-marker|	marker	    Markers are used to specify folds.
 -- 	|fold-syntax|	syntax	    Syntax highlighting items specify folds.
 -- 	|fold-diff|	diff	    Fold text that is not changed.
---- @class vim.opt.foldmethod: vim.Option
+--- @class vim.opt.foldmethod: vim.Option,string
 --- @operator add: vim.opt.foldmethod
 --- @operator sub: vim.opt.foldmethod
 --- @operator pow: vim.opt.foldmethod
@@ -799,7 +799,7 @@ function vim.opt.foldmethod:get()end
 -- 	Note that this only has an effect on what is displayed.  After using
 -- 	"zc" to close a fold, which is displayed open because it's smaller
 -- 	than `'foldminlines'` , a following "zc" may close a containing fold.
---- @class vim.opt.foldminlines: vim.Option
+--- @class vim.opt.foldminlines: vim.Option,number
 --- @operator add: vim.opt.foldminlines
 --- @operator sub: vim.opt.foldminlines
 --- @operator pow: vim.opt.foldminlines
@@ -813,7 +813,7 @@ function vim.opt.foldminlines:get()end
 -- 	Sets the maximum nesting of folds for the "indent" and "syntax"
 -- 	methods.  This avoids that too many folds will be created.  Using more
 -- 	than 20 doesn't work, because the internal limit is 20.
---- @class vim.opt.foldnestmax: vim.Option
+--- @class vim.opt.foldnestmax: vim.Option,number
 --- @operator add: vim.opt.foldnestmax
 --- @operator sub: vim.opt.foldnestmax
 --- @operator pow: vim.opt.foldnestmax
@@ -855,7 +855,7 @@ function vim.opt.foldnestmax:get()end
 -- 	when text is inserted.
 -- 	To close folds you can re-apply `'foldlevel'`  with the |zx| command or
 -- 	set the `'foldclose'`  option to "all".
---- @class vim.opt.foldopen: vim.Option
+--- @class vim.opt.foldopen: vim.Option,string[]
 --- @operator add: vim.opt.foldopen
 --- @operator sub: vim.opt.foldopen
 --- @operator pow: vim.opt.foldopen
@@ -875,7 +875,7 @@ function vim.opt.foldopen:get()end
 -- 
 -- 	It is not allowed to change text or jump to another window while
 -- 	evaluating `'foldtext'`  |textlock|.
---- @class vim.opt.foldtext: vim.Option
+--- @class vim.opt.foldtext: vim.Option,string
 --- @operator add: vim.opt.foldtext
 --- @operator sub: vim.opt.foldtext
 --- @operator pow: vim.opt.foldtext
@@ -916,7 +916,7 @@ function vim.opt.foldtext:get()end
 -- 	since changing the buffer text is not allowed.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
 -- 	NOTE: This option is set to "" when `'compatible'`  is set.
---- @class vim.opt.formatexpr: vim.Option
+--- @class vim.opt.formatexpr: vim.Option,string
 --- @operator add: vim.opt.formatexpr
 --- @operator sub: vim.opt.formatexpr
 --- @operator pow: vim.opt.formatexpr
@@ -936,7 +936,7 @@ function vim.opt.formatexpr:get()end
 -- 	like there is no match.
 -- 	The default recognizes a number, followed by an optional punctuation
 -- 	character and white space.
---- @class vim.opt.formatlistpat: vim.Option
+--- @class vim.opt.formatlistpat: vim.Option,string
 --- @operator add: vim.opt.formatlistpat
 --- @operator sub: vim.opt.formatlistpat
 --- @operator pow: vim.opt.formatlistpat
@@ -953,7 +953,7 @@ function vim.opt.formatlistpat:get()end
 -- 	be inserted for readability.
 -- 	To avoid problems with flags that are added in the future, use the
 -- 	"+=" and "-=" feature of ":set" |add-option-flags|.
---- @class vim.opt.formatoptions: vim.Option
+--- @class vim.opt.formatoptions: vim.Option,string[]
 --- @operator add: vim.opt.formatoptions
 --- @operator sub: vim.opt.formatoptions
 --- @operator pow: vim.opt.formatoptions
@@ -975,7 +975,7 @@ function vim.opt.formatoptions:get()end
 -- 	about including spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.formatprg: vim.Option
+--- @class vim.opt.formatprg: vim.Option,string
 --- @operator add: vim.opt.formatprg
 --- @operator sub: vim.opt.formatprg
 --- @operator pow: vim.opt.formatprg
@@ -1000,7 +1000,7 @@ function vim.opt.formatprg:get()end
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.fsync: vim.Option
+--- @class vim.opt.fsync: vim.Option,boolean
 --- @operator add: vim.opt.fsync
 --- @operator sub: vim.opt.fsync
 --- @operator pow: vim.opt.fsync
@@ -1024,7 +1024,7 @@ function vim.opt.fsync:get()end
 -- 	DEPRECATED: Setting this option may break plugins that are not aware
 -- 	of this option.  Also, many users get confused that adding the /g flag
 -- 	has the opposite effect of that it normally does.
---- @class vim.opt.gdefault: vim.Option
+--- @class vim.opt.gdefault: vim.Option,boolean
 --- @operator add: vim.opt.gdefault
 --- @operator sub: vim.opt.gdefault
 --- @operator pow: vim.opt.gdefault
@@ -1038,7 +1038,7 @@ function vim.opt.gdefault:get()end
 -- 	Format to recognize for the ":grep" command output.
 -- 	This is a scanf-like string that uses the same format as the
 -- 	`'errorformat'`  option: see |errorformat|.
---- @class vim.opt.grepformat: vim.Option
+--- @class vim.opt.grepformat: vim.Option,string[]
 --- @operator add: vim.opt.grepformat
 --- @operator sub: vim.opt.grepformat
 --- @operator pow: vim.opt.grepformat
@@ -1065,7 +1065,7 @@ function vim.opt.grepformat:get()end
 -- 	apply equally to `'grepprg'` .
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.grepprg: vim.Option
+--- @class vim.opt.grepprg: vim.Option,string
 --- @operator add: vim.opt.grepprg
 --- @operator sub: vim.opt.grepprg
 --- @operator pow: vim.opt.grepprg
@@ -1159,7 +1159,7 @@ function vim.opt.grepprg:get()end
 -- 	    :highlight Cursor gui=reverse guifg=NONE guibg=NONE
 -- 	    :highlight Cursor gui=NONE guifg=bg guibg=fg
 -- <
---- @class vim.opt.guicursor: vim.Option
+--- @class vim.opt.guicursor: vim.Option,string[]
 --- @operator add: vim.opt.guicursor
 --- @operator sub: vim.opt.guicursor
 --- @operator pow: vim.opt.guicursor
@@ -1227,7 +1227,7 @@ function vim.opt.guicursor:get()end
 -- 	    :set guifont=courier_new:h12:w5:b:cRUSSIAN
 -- 	    :set guifont=Andale_Mono:h7.5:w4.5
 -- <
---- @class vim.opt.guifont: vim.Option
+--- @class vim.opt.guifont: vim.Option,string[]
 --- @operator add: vim.opt.guifont
 --- @operator sub: vim.opt.guifont
 --- @operator pow: vim.opt.guifont
@@ -1245,7 +1245,7 @@ function vim.opt.guifont:get()end
 -- 
 -- 	When `'guifont'`  has a valid font and `'guifontwide'`  is empty Vim will
 -- 	attempt to set `'guifontwide'`  to a matching double-width font.
---- @class vim.opt.guifontwide: vim.Option
+--- @class vim.opt.guifontwide: vim.Option,string[]
 --- @operator add: vim.opt.guifontwide
 --- @operator sub: vim.opt.guifontwide
 --- @operator pow: vim.opt.guifontwide
@@ -1355,7 +1355,7 @@ function vim.opt.guifontwide:get()end
 -- 		`'columns'`  to fit to the window.  Without the `'k'`  flag Vim will
 -- 		try to keep `'lines'`  and `'columns'`  the same when adding and
 -- 		removing GUI components.
---- @class vim.opt.guioptions: vim.Option
+--- @class vim.opt.guioptions: vim.Option,string
 --- @operator add: vim.opt.guioptions
 --- @operator sub: vim.opt.guioptions
 --- @operator pow: vim.opt.guioptions
@@ -1379,7 +1379,7 @@ function vim.opt.guioptions:get()end
 -- 	Only used when the GUI tab pages line is displayed.  `'e'`  must be
 -- 	present in `'guioptions'` .  For the non-GUI tab pages line `'tabline'`  is
 -- 	used.
---- @class vim.opt.guitablabel: vim.Option
+--- @class vim.opt.guitablabel: vim.Option,string
 --- @operator add: vim.opt.guitablabel
 --- @operator sub: vim.opt.guitablabel
 --- @operator pow: vim.opt.guitablabel
@@ -1396,7 +1396,7 @@ function vim.opt.guitablabel:get()end
 -- 	You can include a line break.  Simplest method is to use |:let|: >
 -- 		:let &guitabtooltip = "line one\nline two"
 -- <
---- @class vim.opt.guitabtooltip: vim.Option
+--- @class vim.opt.guitabtooltip: vim.Option,string
 --- @operator add: vim.opt.guitabtooltip
 --- @operator sub: vim.opt.guitabtooltip
 --- @operator pow: vim.opt.guitabtooltip
@@ -1417,7 +1417,7 @@ function vim.opt.guitabtooltip:get()end
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.helpfile: vim.Option
+--- @class vim.opt.helpfile: vim.Option,string
 --- @operator add: vim.opt.helpfile
 --- @operator sub: vim.opt.helpfile
 --- @operator pow: vim.opt.helpfile
@@ -1433,7 +1433,7 @@ function vim.opt.helpfile:get()end
 -- 	current window, or (when the `'ea'`  option is on) the same as other
 -- 	windows.  When the height is less than `'helpheight'` , the height is
 -- 	set to `'helpheight'` .  Set to zero to disable.
---- @class vim.opt.helpheight: vim.Option
+--- @class vim.opt.helpheight: vim.Option,number
 --- @operator add: vim.opt.helpheight
 --- @operator sub: vim.opt.helpheight
 --- @operator pow: vim.opt.helpheight
@@ -1456,7 +1456,7 @@ function vim.opt.helpheight:get()end
 -- 	When using |CTRL-]| and ":help!" in a non-English help file Vim will
 -- 	try to find the tag in the current language before using this option.
 -- 	See |help-translated|.
---- @class vim.opt.helplang: vim.Option
+--- @class vim.opt.helplang: vim.Option,string[]
 --- @operator add: vim.opt.helplang
 --- @operator sub: vim.opt.helplang
 --- @operator pow: vim.opt.helplang
@@ -1481,7 +1481,7 @@ function vim.opt.helplang:get()end
 -- 
 -- 	To hide a specific buffer use the `'bufhidden'`  option.
 -- 	`'hidden'`  is set for one command with ":hide {command}" |:hide|.
---- @class vim.opt.hidden: vim.Option
+--- @class vim.opt.hidden: vim.Option,boolean
 --- @operator add: vim.opt.hidden
 --- @operator sub: vim.opt.hidden
 --- @operator pow: vim.opt.hidden
@@ -1490,7 +1490,7 @@ vim.opt.hid = vim.opt.hidden
 --- @return boolean
 function vim.opt.hidden:get()end
 
---- @class vim.opt.highlight: vim.Option
+--- @class vim.opt.highlight: vim.Option,string[]
 --- @operator add: vim.opt.highlight
 --- @operator sub: vim.opt.highlight
 --- @operator pow: vim.opt.highlight
@@ -1505,7 +1505,7 @@ function vim.opt.highlight:get()end
 -- 	is remembered.  This option decides how many entries may be stored in
 -- 	each of these histories (see |cmdline-editing|).
 -- 	The maximum value is 10000.
---- @class vim.opt.history: vim.Option
+--- @class vim.opt.history: vim.Option,number
 --- @operator add: vim.opt.history
 --- @operator sub: vim.opt.history
 --- @operator pow: vim.opt.history
@@ -1519,7 +1519,7 @@ function vim.opt.history:get()end
 -- 	When on, the keyboard is mapped for the Hebrew character set.
 -- 	Normally you would set `'allowrevins'`  and use CTRL-_ in insert mode to
 -- 	toggle this option.  See |rileft.txt|.
---- @class vim.opt.hkmap: vim.Option
+--- @class vim.opt.hkmap: vim.Option,boolean
 --- @operator add: vim.opt.hkmap
 --- @operator sub: vim.opt.hkmap
 --- @operator pow: vim.opt.hkmap
@@ -1533,7 +1533,7 @@ function vim.opt.hkmap:get()end
 -- 	When on, phonetic keyboard mapping is used.  `'hkmap'`  must also be on.
 -- 	This is useful if you have a non-Hebrew keyboard.
 -- 	See |rileft.txt|.
---- @class vim.opt.hkmapp: vim.Option
+--- @class vim.opt.hkmapp: vim.Option,boolean
 --- @operator add: vim.opt.hkmapp
 --- @operator sub: vim.opt.hkmapp
 --- @operator pow: vim.opt.hkmapp
@@ -1563,7 +1563,7 @@ function vim.opt.hkmapp:get()end
 -- 	drawn may not continue in a newly drawn line.
 -- 	You can specify whether the highlight status is restored on startup
 -- 	with the `'h'`  flag in `'shada'`  |shada-h|.
---- @class vim.opt.hlsearch: vim.Option
+--- @class vim.opt.hlsearch: vim.Option,boolean
 --- @operator add: vim.opt.hlsearch
 --- @operator sub: vim.opt.hlsearch
 --- @operator pow: vim.opt.hlsearch
@@ -1579,7 +1579,7 @@ function vim.opt.hlsearch:get()end
 -- 	currently being edited.  Only the last part of the name is used.
 -- 	Overridden by the `'iconstring'`  option.
 -- 	Only works if the terminal supports setting window icons.
---- @class vim.opt.icon: vim.Option
+--- @class vim.opt.icon: vim.Option,boolean
 --- @operator add: vim.opt.icon
 --- @operator sub: vim.opt.icon
 --- @operator pow: vim.opt.icon
@@ -1596,7 +1596,7 @@ function vim.opt.icon:get()end
 -- 	expanded according to the rules used for `'statusline'` .  See
 -- 	`'titlestring'`  for example settings.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
---- @class vim.opt.iconstring: vim.Option
+--- @class vim.opt.iconstring: vim.Option,string
 --- @operator add: vim.opt.iconstring
 --- @operator sub: vim.opt.iconstring
 --- @operator pow: vim.opt.iconstring
@@ -1611,7 +1611,7 @@ function vim.opt.iconstring:get()end
 -- 	Also see `'smartcase'`  and `'tagcase'` .
 -- 	Can be overruled by using "\c" or "\C" in the pattern, see
 -- 	|/ignorecase|.
---- @class vim.opt.ignorecase: vim.Option
+--- @class vim.opt.ignorecase: vim.Option,boolean
 --- @operator add: vim.opt.ignorecase
 --- @operator sub: vim.opt.ignorecase
 --- @operator pow: vim.opt.ignorecase
@@ -1627,7 +1627,7 @@ function vim.opt.ignorecase:get()end
 -- 	Setting this option is useful when your input method allows entering
 -- 	English characters directly, e.g., when it's used to type accented
 -- 	characters with dead keys.
---- @class vim.opt.imcmdline: vim.Option
+--- @class vim.opt.imcmdline: vim.Option,boolean
 --- @operator add: vim.opt.imcmdline
 --- @operator sub: vim.opt.imcmdline
 --- @operator pow: vim.opt.imcmdline
@@ -1642,7 +1642,7 @@ function vim.opt.imcmdline:get()end
 -- 	the IM when it doesn't work properly.
 -- 	Currently this option is on by default for SGI/IRIX machines.  This
 -- 	may change in later releases.
---- @class vim.opt.imdisable: vim.Option
+--- @class vim.opt.imdisable: vim.Option,boolean
 --- @operator add: vim.opt.imdisable
 --- @operator sub: vim.opt.imdisable
 --- @operator pow: vim.opt.imdisable
@@ -1667,7 +1667,7 @@ function vim.opt.imdisable:get()end
 -- 	|i_CTRL-^|.
 -- 	The value is set to 1 when setting `'keymap'`  to a valid keymap name.
 -- 	It is also used for the argument of commands like "r" and "f".
---- @class vim.opt.iminsert: vim.Option
+--- @class vim.opt.iminsert: vim.Option,number
 --- @operator add: vim.opt.iminsert
 --- @operator sub: vim.opt.iminsert
 --- @operator pow: vim.opt.iminsert
@@ -1689,7 +1689,7 @@ function vim.opt.iminsert:get()end
 -- 	|c_CTRL-^|.
 -- 	The value is set to 1 when it is not -1 and setting the `'keymap'` 
 -- 	option to a valid keymap name.
---- @class vim.opt.imsearch: vim.Option
+--- @class vim.opt.imsearch: vim.Option,number
 --- @operator add: vim.opt.imsearch
 --- @operator sub: vim.opt.imsearch
 --- @operator pow: vim.opt.imsearch
@@ -1714,7 +1714,7 @@ function vim.opt.imsearch:get()end
 -- 	If the preview for built-in commands is too slow (exceeds
 -- 	`'redrawtime'` ) then `'inccommand'`  is automatically disabled until
 -- 	|Command-line-mode| is done.
---- @class vim.opt.inccommand: vim.Option
+--- @class vim.opt.inccommand: vim.Option,string
 --- @operator add: vim.opt.inccommand
 --- @operator sub: vim.opt.inccommand
 --- @operator pow: vim.opt.inccommand
@@ -1736,7 +1736,7 @@ function vim.opt.inccommand:get()end
 -- 	that are not in `'isfname'` , such as a space.  You can then use
 -- 	`'includeexpr'`  to process the matched text.
 -- 	See |option-backslash| about including spaces and backslashes.
---- @class vim.opt.include: vim.Option
+--- @class vim.opt.include: vim.Option,string
 --- @operator add: vim.opt.include
 --- @operator sub: vim.opt.include
 --- @operator pow: vim.opt.include
@@ -1762,7 +1762,7 @@ function vim.opt.include:get()end
 -- 
 -- 	It is not allowed to change text or jump to another window while
 -- 	evaluating `'includeexpr'`  |textlock|.
---- @class vim.opt.includeexpr: vim.Option
+--- @class vim.opt.includeexpr: vim.Option,string
 --- @operator add: vim.opt.includeexpr
 --- @operator sub: vim.opt.includeexpr
 --- @operator pow: vim.opt.includeexpr
@@ -1804,7 +1804,7 @@ function vim.opt.includeexpr:get()end
 -- 	converted to lowercase.
 -- 	CTRL-R CTRL-W can be used to add the word at the end of the current
 -- 	match, excluding the characters that were already typed.
---- @class vim.opt.incsearch: vim.Option
+--- @class vim.opt.incsearch: vim.Option,boolean
 --- @operator add: vim.opt.incsearch
 --- @operator sub: vim.opt.incsearch
 --- @operator pow: vim.opt.incsearch
@@ -1845,7 +1845,7 @@ function vim.opt.incsearch:get()end
 -- 
 -- 	It is not allowed to change text or jump to another window while
 -- 	evaluating `'indentexpr'`  |textlock|.
---- @class vim.opt.indentexpr: vim.Option
+--- @class vim.opt.indentexpr: vim.Option,string
 --- @operator add: vim.opt.indentexpr
 --- @operator sub: vim.opt.indentexpr
 --- @operator pow: vim.opt.indentexpr
@@ -1860,7 +1860,7 @@ function vim.opt.indentexpr:get()end
 -- 	the current line.  Only happens if `'indentexpr'`  isn't empty.
 -- 	The format is identical to `'cinkeys'` , see |indentkeys-format|.
 -- 	See |C-indenting| and |indent-expression|.
---- @class vim.opt.indentkeys: vim.Option
+--- @class vim.opt.indentkeys: vim.Option,string[]
 --- @operator add: vim.opt.indentkeys
 --- @operator sub: vim.opt.indentkeys
 --- @operator pow: vim.opt.indentkeys
@@ -1879,7 +1879,7 @@ function vim.opt.indentkeys:get()end
 -- 	has a lowercase letter where the typed text has an uppercase letter,
 -- 	and there is a letter before it, the completed part is made uppercase.
 -- 	With `'noinfercase'`  the match is used as-is.
---- @class vim.opt.infercase: vim.Option
+--- @class vim.opt.infercase: vim.Option,boolean
 --- @operator add: vim.opt.infercase
 --- @operator sub: vim.opt.infercase
 --- @operator pow: vim.opt.infercase
@@ -1888,7 +1888,7 @@ vim.opt.inf = vim.opt.infercase
 --- @return boolean
 function vim.opt.infercase:get()end
 
---- @class vim.opt.insertmode: vim.Option
+--- @class vim.opt.insertmode: vim.Option,boolean
 --- @operator add: vim.opt.insertmode
 --- @operator sub: vim.opt.insertmode
 --- @operator pow: vim.opt.insertmode
@@ -1946,7 +1946,7 @@ function vim.opt.insertmode:get()end
 -- 		" -~,^,,9"	All characters from space to `'~'` , excluding
 -- 				comma, plus <Tab>.
 -- 	See |option-backslash| about including spaces and backslashes.
---- @class vim.opt.isfname: vim.Option
+--- @class vim.opt.isfname: vim.Option,string[]
 --- @operator add: vim.opt.isfname
 --- @operator sub: vim.opt.isfname
 --- @operator pow: vim.opt.isfname
@@ -1968,7 +1968,7 @@ function vim.opt.isfname:get()end
 -- 	environment variables.  E.g., when `'/'`  is included and Vim tries to
 -- 	expand "$HOME/.local/state/nvim/shada/main.shada".  Maybe you should
 -- 	change `'iskeyword'`  instead.
---- @class vim.opt.isident: vim.Option
+--- @class vim.opt.isident: vim.Option,string[]
 --- @operator add: vim.opt.isident
 --- @operator sub: vim.opt.isident
 --- @operator pow: vim.opt.isident
@@ -1991,7 +1991,7 @@ function vim.opt.isident:get()end
 -- 	When the `'lisp'`  option is on the `'-'`  character is always included.
 -- 	This option also influences syntax highlighting, unless the syntax
 -- 	uses |:syn-iskeyword|.
---- @class vim.opt.iskeyword: vim.Option
+--- @class vim.opt.iskeyword: vim.Option,string[]
 --- @operator add: vim.opt.iskeyword
 --- @operator sub: vim.opt.iskeyword
 --- @operator pow: vim.opt.iskeyword
@@ -2028,7 +2028,7 @@ function vim.opt.iskeyword:get()end
 -- 	replacement character will be shown.
 -- 	Unprintable and zero-width Unicode characters are displayed as <xxxx>.
 -- 	There is no option to specify these characters.
---- @class vim.opt.isprint: vim.Option
+--- @class vim.opt.isprint: vim.Option,string[]
 --- @operator add: vim.opt.isprint
 --- @operator sub: vim.opt.isprint
 --- @operator pow: vim.opt.isprint
@@ -2041,7 +2041,7 @@ function vim.opt.isprint:get()end
 -- 			global
 -- 	Insert two spaces after a `'.'` , `'?'`  and `'!'`  with a join command.
 -- 	Otherwise only one space is inserted.
---- @class vim.opt.joinspaces: vim.Option
+--- @class vim.opt.joinspaces: vim.Option,boolean
 --- @operator add: vim.opt.joinspaces
 --- @operator sub: vim.opt.joinspaces
 --- @operator pow: vim.opt.joinspaces
@@ -2063,7 +2063,7 @@ function vim.opt.joinspaces:get()end
 -- 	  view          When moving through the jumplist, |changelist|,
 -- 			|alternate-file| or using |mark-motions| try to
 -- 			restore the |mark-view| in which the action occurred.
---- @class vim.opt.jumpoptions: vim.Option
+--- @class vim.opt.jumpoptions: vim.Option,string[]
 --- @operator add: vim.opt.jumpoptions
 --- @operator sub: vim.opt.jumpoptions
 --- @operator pow: vim.opt.jumpoptions
@@ -2079,7 +2079,7 @@ function vim.opt.jumpoptions:get()end
 -- 	setting `'iminsert'`  to one, so that the keymap becomes effective.
 -- 	`'imsearch'`  is also set to one, unless it was -1
 -- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
---- @class vim.opt.keymap: vim.Option
+--- @class vim.opt.keymap: vim.Option,string
 --- @operator add: vim.opt.keymap
 --- @operator sub: vim.opt.keymap
 --- @operator pow: vim.opt.keymap
@@ -2099,7 +2099,7 @@ function vim.opt.keymap:get()end
 -- 	Special keys in this context are the cursor keys, <End>, <Home>,
 -- 	<PageUp> and <PageDown>.
 -- 	The `'keymodel'`  option is set by the |:behave| command.
---- @class vim.opt.keymodel: vim.Option
+--- @class vim.opt.keymodel: vim.Option,string[]
 --- @operator add: vim.opt.keymodel
 --- @operator sub: vim.opt.keymodel
 --- @operator pow: vim.opt.keymodel
@@ -2124,7 +2124,7 @@ function vim.opt.keymodel:get()end
 -- 		:set keywordprg=:Man
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.keywordprg: vim.Option
+--- @class vim.opt.keywordprg: vim.Option,string
 --- @operator add: vim.opt.keywordprg
 --- @operator sub: vim.opt.keywordprg
 --- @operator pow: vim.opt.keywordprg
@@ -2174,7 +2174,7 @@ function vim.opt.keywordprg:get()end
 -- 	this option.   Note that this option can be changed at any time
 -- 	allowing to switch between mappings for different languages/encodings.
 -- 	Use a mapping to avoid having to type it each time!
---- @class vim.opt.langmap: vim.Option
+--- @class vim.opt.langmap: vim.Option,string[]
 --- @operator add: vim.opt.langmap
 --- @operator sub: vim.opt.langmap
 --- @operator pow: vim.opt.langmap
@@ -2203,7 +2203,7 @@ function vim.opt.langmap:get()end
 -- 		:set langmenu=de_DE.ISO_8859-1
 -- 		:source $VIMRUNTIME/menu.vim
 -- <	Warning: This deletes all menus that you defined yourself!
---- @class vim.opt.langmenu: vim.Option
+--- @class vim.opt.langmenu: vim.Option,string
 --- @operator add: vim.opt.langmenu
 --- @operator sub: vim.opt.langmenu
 --- @operator pow: vim.opt.langmenu
@@ -2212,7 +2212,7 @@ vim.opt.lm = vim.opt.langmenu
 --- @return string
 function vim.opt.langmenu:get()end
 
---- @class vim.opt.langnoremap: vim.Option
+--- @class vim.opt.langnoremap: vim.Option,boolean
 --- @operator add: vim.opt.langnoremap
 --- @operator sub: vim.opt.langnoremap
 --- @operator pow: vim.opt.langnoremap
@@ -2226,7 +2226,7 @@ function vim.opt.langnoremap:get()end
 -- 	When off, setting `'langmap'`  does not apply to characters resulting from
 -- 	a mapping.  If setting `'langmap'`  disables some of your mappings, make
 -- 	sure this option is off.
---- @class vim.opt.langremap: vim.Option
+--- @class vim.opt.langremap: vim.Option,boolean
 --- @operator add: vim.opt.langremap
 --- @operator sub: vim.opt.langremap
 --- @operator pow: vim.opt.langremap
@@ -2245,7 +2245,7 @@ function vim.opt.langremap:get()end
 -- 		3: always and ONLY the last window
 -- 	The screen looks nicer with a status line if you have several
 -- 	windows, but it takes another screen line. |status-line|
---- @class vim.opt.laststatus: vim.Option
+--- @class vim.opt.laststatus: vim.Option,number
 --- @operator add: vim.opt.laststatus
 --- @operator sub: vim.opt.laststatus
 --- @operator pow: vim.opt.laststatus
@@ -2263,7 +2263,7 @@ function vim.opt.laststatus:get()end
 -- 	This may occasionally cause display errors.  It is only meant to be set
 -- 	temporarily when performing an operation where redrawing may cause
 -- 	flickering or cause a slow down.
---- @class vim.opt.lazyredraw: vim.Option
+--- @class vim.opt.lazyredraw: vim.Option,boolean
 --- @operator add: vim.opt.lazyredraw
 --- @operator sub: vim.opt.lazyredraw
 --- @operator pow: vim.opt.lazyredraw
@@ -2283,7 +2283,7 @@ function vim.opt.lazyredraw:get()end
 -- 	is not used when the `'wrap'`  option is off.
 -- 	Note that <Tab> characters after an <EOL> are mostly not displayed
 -- 	with the right amount of white space.
---- @class vim.opt.linebreak: vim.Option
+--- @class vim.opt.linebreak: vim.Option,boolean
 --- @operator add: vim.opt.linebreak
 --- @operator sub: vim.opt.linebreak
 --- @operator pow: vim.opt.linebreak
@@ -2304,7 +2304,7 @@ function vim.opt.linebreak:get()end
 -- 	use this command to get the tallest window possible: >
 -- 		:set lines=999
 -- <	Minimum value is 2, maximum value is 1000.
---- @class vim.opt.lines: vim.Option
+--- @class vim.opt.lines: vim.Option,number
 --- @operator add: vim.opt.lines
 --- @operator sub: vim.opt.lines
 --- @operator pow: vim.opt.lines
@@ -2322,7 +2322,7 @@ function vim.opt.lines:get()end
 -- 	space for ascents and descents).  Then it makes sense to set
 -- 	`'linespace'`  to a negative value.  This may cause display problems
 -- 	though!
---- @class vim.opt.linespace: vim.Option
+--- @class vim.opt.linespace: vim.Option,number
 --- @operator add: vim.opt.linespace
 --- @operator sub: vim.opt.linespace
 --- @operator pow: vim.opt.linespace
@@ -2342,7 +2342,7 @@ function vim.opt.linespace:get()end
 -- 	"=" operator to use this same indentation algorithm rather than
 -- 	calling an external program if `'equalprg'`  is empty.
 -- 	This option is not used when `'paste'`  is set.
---- @class vim.opt.lisp: vim.Option
+--- @class vim.opt.lisp: vim.Option,boolean
 --- @operator add: vim.opt.lisp
 --- @operator sub: vim.opt.lisp
 --- @operator pow: vim.opt.lisp
@@ -2354,7 +2354,7 @@ function vim.opt.lisp:get()end
 -- 			global or local to buffer |global-local|
 -- 	Comma-separated list of words that influence the Lisp indenting when
 -- 	enabled with the |`'lisp'` | option.
---- @class vim.opt.lispwords: vim.Option
+--- @class vim.opt.lispwords: vim.Option,string[]
 --- @operator add: vim.opt.lispwords
 --- @operator sub: vim.opt.lispwords
 --- @operator pow: vim.opt.lispwords
@@ -2378,7 +2378,7 @@ function vim.opt.lispwords:get()end
 -- 	Note that list mode will also affect formatting (set with `'textwidth'` 
 -- 	or `'wrapmargin'` ) when `'cpoptions'`  includes `'L'` .  See `'listchars'`  for
 -- 	changing the way tabs are displayed.
---- @class vim.opt.list: vim.Option
+--- @class vim.opt.list: vim.Option,boolean
 --- @operator add: vim.opt.list
 --- @operator sub: vim.opt.list
 --- @operator pow: vim.opt.list
@@ -2481,7 +2481,7 @@ function vim.opt.list:get()end
 -- <	|hl-NonText| highlighting will be used for "eol", "extends" and
 -- 	"precedes". |hl-Whitespace| for "nbsp", "space", "tab", "multispace",
 -- 	"lead" and "trail".
---- @class vim.opt.listchars: vim.Option
+--- @class vim.opt.listchars: vim.Option,table<string, string>
 --- @operator add: vim.opt.listchars
 --- @operator sub: vim.opt.listchars
 --- @operator pow: vim.opt.listchars
@@ -2497,7 +2497,7 @@ function vim.opt.listchars:get()end
 -- 	of plugins.
 -- 	Note that using the "-u NONE" and "--noplugin" command line arguments
 -- 	reset this option. |-u| |--noplugin|
---- @class vim.opt.loadplugins: vim.Option
+--- @class vim.opt.loadplugins: vim.Option,boolean
 --- @operator add: vim.opt.loadplugins
 --- @operator sub: vim.opt.loadplugins
 --- @operator pow: vim.opt.loadplugins
@@ -2515,7 +2515,7 @@ function vim.opt.loadplugins:get()end
 -- 	Only switch it off when working with old Vi scripts.  In any other
 -- 	situation write patterns that work when `'magic'`  is on.  Include "\M"
 -- 	when you want to |/\M|.
---- @class vim.opt.magic: vim.Option
+--- @class vim.opt.magic: vim.Option,boolean
 --- @operator add: vim.opt.magic
 --- @operator sub: vim.opt.magic
 --- @operator pow: vim.opt.magic
@@ -2536,7 +2536,7 @@ function vim.opt.magic:get()end
 -- 	See |option-backslash| about including spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.makeef: vim.Option
+--- @class vim.opt.makeef: vim.Option,string
 --- @operator add: vim.opt.makeef
 --- @operator sub: vim.opt.makeef
 --- @operator pow: vim.opt.makeef
@@ -2558,7 +2558,7 @@ function vim.opt.makeef:get()end
 -- 	setting to the system locale encoding.  Example: >
 -- 		:set makeencoding=char	" system locale is used
 -- <
---- @class vim.opt.makeencoding: vim.Option
+--- @class vim.opt.makeencoding: vim.Option,string
 --- @operator add: vim.opt.makeencoding
 --- @operator sub: vim.opt.makeencoding
 --- @operator pow: vim.opt.makeencoding
@@ -2584,7 +2584,7 @@ function vim.opt.makeencoding:get()end
 -- 	    :set makeprg=latex\ \\\\nonstopmode\ \\\\input\\{$*}
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.makeprg: vim.Option
+--- @class vim.opt.makeprg: vim.Option,string
 --- @operator add: vim.opt.makeprg
 --- @operator sub: vim.opt.makeprg
 --- @operator pow: vim.opt.makeprg
@@ -2610,7 +2610,7 @@ function vim.opt.makeprg:get()end
 -- 
 -- <	For a more advanced way of using "%", see the matchit.vim plugin in
 -- 	the $VIMRUNTIME/plugin directory. |add-local-help|
---- @class vim.opt.matchpairs: vim.Option
+--- @class vim.opt.matchpairs: vim.Option,string[]
 --- @operator add: vim.opt.matchpairs
 --- @operator sub: vim.opt.matchpairs
 --- @operator pow: vim.opt.matchpairs
@@ -2624,7 +2624,7 @@ function vim.opt.matchpairs:get()end
 -- 	Tenths of a second to show the matching paren, when `'showmatch'`  is
 -- 	set.  Note that this is not in milliseconds, like other options that
 -- 	set a time.  This is to be compatible with Nvi.
---- @class vim.opt.matchtime: vim.Option
+--- @class vim.opt.matchtime: vim.Option,number
 --- @operator add: vim.opt.matchtime
 --- @operator sub: vim.opt.matchtime
 --- @operator pow: vim.opt.matchtime
@@ -2633,7 +2633,7 @@ vim.opt.mat = vim.opt.matchtime
 --- @return number
 function vim.opt.matchtime:get()end
 
---- @class vim.opt.maxcombine: vim.Option
+--- @class vim.opt.maxcombine: vim.Option,number
 --- @operator add: vim.opt.maxcombine
 --- @operator sub: vim.opt.maxcombine
 --- @operator pow: vim.opt.maxcombine
@@ -2651,7 +2651,7 @@ function vim.opt.maxcombine:get()end
 -- 	Increasing this limit above 200 also changes the maximum for Ex
 -- 	command recursion, see |E169|.
 -- 	See also |:function|.
---- @class vim.opt.maxfuncdepth: vim.Option
+--- @class vim.opt.maxfuncdepth: vim.Option,number
 --- @operator add: vim.opt.maxfuncdepth
 --- @operator sub: vim.opt.maxfuncdepth
 --- @operator pow: vim.opt.maxfuncdepth
@@ -2667,7 +2667,7 @@ function vim.opt.maxfuncdepth:get()end
 -- 	":map x y" with ":map y x".  It still does not catch ":map g wg",
 -- 	because the `'w'`  is used before the next mapping is done.  See also
 -- 	|key-mapping|.
---- @class vim.opt.maxmapdepth: vim.Option
+--- @class vim.opt.maxmapdepth: vim.Option,number
 --- @operator add: vim.opt.maxmapdepth
 --- @operator sub: vim.opt.maxmapdepth
 --- @operator pow: vim.opt.maxmapdepth
@@ -2690,7 +2690,7 @@ function vim.opt.maxmapdepth:get()end
 -- 	text structure.
 -- 	Vim may run out of memory before hitting the `'maxmempattern'`  limit, in
 -- 	which case you get an "Out of memory" error instead.
---- @class vim.opt.maxmempattern: vim.Option
+--- @class vim.opt.maxmempattern: vim.Option,number
 --- @operator add: vim.opt.maxmempattern
 --- @operator sub: vim.opt.maxmempattern
 --- @operator pow: vim.opt.maxmempattern
@@ -2704,7 +2704,7 @@ function vim.opt.maxmempattern:get()end
 -- 	Maximum number of items to use in a menu.  Used for menus that are
 -- 	generated from a list of items, e.g., the Buffers menu.  Changing this
 -- 	option has no direct effect, the menu must be refreshed first.
---- @class vim.opt.menuitems: vim.Option
+--- @class vim.opt.menuitems: vim.Option,number
 --- @operator add: vim.opt.menuitems
 --- @operator sub: vim.opt.menuitems
 --- @operator pow: vim.opt.menuitems
@@ -2749,7 +2749,7 @@ function vim.opt.menuitems:get()end
 -- 	languages, no matter what you set `'mkspellmem'`  to.
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|.
---- @class vim.opt.mkspellmem: vim.Option
+--- @class vim.opt.mkspellmem: vim.Option,string
 --- @operator add: vim.opt.mkspellmem
 --- @operator sub: vim.opt.mkspellmem
 --- @operator pow: vim.opt.mkspellmem
@@ -2763,7 +2763,7 @@ function vim.opt.mkspellmem:get()end
 -- 	If `'modeline'`  is on `'modelines'`  gives the number of lines that is
 -- 	checked for set commands.  If `'modeline'`  is off or `'modelines'`  is zero
 -- 	no lines are checked.  See |modeline|.
---- @class vim.opt.modeline: vim.Option
+--- @class vim.opt.modeline: vim.Option,boolean
 --- @operator add: vim.opt.modeline
 --- @operator sub: vim.opt.modeline
 --- @operator pow: vim.opt.modeline
@@ -2779,7 +2779,7 @@ function vim.opt.modeline:get()end
 -- 	`'modelineexpr'` .  Also see |modeline|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.modelineexpr: vim.Option
+--- @class vim.opt.modelineexpr: vim.Option,boolean
 --- @operator add: vim.opt.modelineexpr
 --- @operator sub: vim.opt.modelineexpr
 --- @operator pow: vim.opt.modelineexpr
@@ -2793,7 +2793,7 @@ function vim.opt.modelineexpr:get()end
 -- 	If `'modeline'`  is on `'modelines'`  gives the number of lines that is
 -- 	checked for set commands.  If `'modeline'`  is off or `'modelines'`  is zero
 -- 	no lines are checked.  See |modeline|.
---- @class vim.opt.modelines: vim.Option
+--- @class vim.opt.modelines: vim.Option,number
 --- @operator add: vim.opt.modelines
 --- @operator sub: vim.opt.modelines
 --- @operator pow: vim.opt.modelines
@@ -2807,7 +2807,7 @@ function vim.opt.modelines:get()end
 -- 	When off the buffer contents cannot be changed.  The `'fileformat'`  and
 -- 	`'fileencoding'`  options also can't be changed.
 -- 	Can be reset on startup with the |-M| command line argument.
---- @class vim.opt.modifiable: vim.Option
+--- @class vim.opt.modifiable: vim.Option,boolean
 --- @operator add: vim.opt.modifiable
 --- @operator sub: vim.opt.modifiable
 --- @operator pow: vim.opt.modifiable
@@ -2839,7 +2839,7 @@ function vim.opt.modifiable:get()end
 -- 	will be ignored.
 -- 	Note that the text may actually be the same, e.g. `'modified'`  is set
 -- 	when using "rA" on an "A".
---- @class vim.opt.modified: vim.Option
+--- @class vim.opt.modified: vim.Option,boolean
 --- @operator add: vim.opt.modified
 --- @operator sub: vim.opt.modified
 --- @operator pow: vim.opt.modified
@@ -2853,7 +2853,7 @@ function vim.opt.modified:get()end
 -- 	When on, listings pause when the whole screen is filled.  You will get
 -- 	the |more-prompt|.  When this option is off there are no pauses, the
 -- 	listing continues until finished.
---- @class vim.opt.more: vim.Option
+--- @class vim.opt.more: vim.Option,boolean
 --- @operator add: vim.opt.more
 --- @operator sub: vim.opt.more
 --- @operator pow: vim.opt.more
@@ -2914,7 +2914,7 @@ function vim.opt.more:get()end
 -- 				`'mousemodel'` 	"popup"			"extend"
 -- 				`'keymodel'` 	"startsel,stopsel"	""
 -- 				`'selection'` 	"exclusive"		"inclusive"
---- @class vim.opt.mouse: vim.Option
+--- @class vim.opt.mouse: vim.Option,string[]
 --- @operator add: vim.opt.mouse
 --- @operator sub: vim.opt.mouse
 --- @operator pow: vim.opt.mouse
@@ -2929,7 +2929,7 @@ function vim.opt.mouse:get()end
 -- 	mouse pointer is moved to the window with keyboard focus.  Off is the
 -- 	default because it makes using the pull down menus a little goofy, as
 -- 	a pointer transit may activate a window unintentionally.
---- @class vim.opt.mousefocus: vim.Option
+--- @class vim.opt.mousefocus: vim.Option,boolean
 --- @operator add: vim.opt.mousefocus
 --- @operator sub: vim.opt.mousefocus
 --- @operator pow: vim.opt.mousefocus
@@ -2943,7 +2943,7 @@ function vim.opt.mousefocus:get()end
 -- 			{only works in the GUI}
 -- 	When on, the mouse pointer is hidden when characters are typed.
 -- 	The mouse pointer is restored when the mouse is moved.
---- @class vim.opt.mousehide: vim.Option
+--- @class vim.opt.mousehide: vim.Option,boolean
 --- @operator add: vim.opt.mousehide
 --- @operator sub: vim.opt.mousehide
 --- @operator pow: vim.opt.mousehide
@@ -3003,7 +3003,7 @@ function vim.opt.mousehide:get()end
 -- 	    "g<RightMouse>" is "<C-RightMouse>	("CTRL-T")
 -- 
 -- 	The `'mousemodel'`  option is set by the |:behave| command.
---- @class vim.opt.mousemodel: vim.Option
+--- @class vim.opt.mousemodel: vim.Option,string
 --- @operator add: vim.opt.mousemodel
 --- @operator sub: vim.opt.mousemodel
 --- @operator pow: vim.opt.mousemodel
@@ -3019,7 +3019,7 @@ function vim.opt.mousemodel:get()end
 -- 	overhead except when needed.
 -- 	Warning: Setting this option can make pending mappings to be aborted
 -- 	when the mouse is moved.
---- @class vim.opt.mousemoveevent: vim.Option
+--- @class vim.opt.mousemoveevent: vim.Option,boolean
 --- @operator add: vim.opt.mousemoveevent
 --- @operator sub: vim.opt.mousemoveevent
 --- @operator pow: vim.opt.mousemoveevent
@@ -3046,7 +3046,7 @@ function vim.opt.mousemoveevent:get()end
 -- 		:set mousescroll=ver:5,hor:2
 -- <	Will make Nvim scroll 5 lines at a time when scrolling vertically, and
 -- 	scroll 2 columns at a time when scrolling horizontally.
---- @class vim.opt.mousescroll: vim.Option
+--- @class vim.opt.mousescroll: vim.Option,string[]
 --- @operator add: vim.opt.mousescroll
 --- @operator sub: vim.opt.mousescroll
 --- @operator pow: vim.opt.mousescroll
@@ -3115,7 +3115,7 @@ function vim.opt.mousescroll:get()end
 -- <	will make the mouse turn to a sizing arrow over the status lines and
 -- 	indicate no input when the hit-enter prompt is displayed (since
 -- 	clicking the mouse has no effect in this state.)
---- @class vim.opt.mouseshape: vim.Option
+--- @class vim.opt.mouseshape: vim.Option,string
 --- @operator add: vim.opt.mouseshape
 --- @operator sub: vim.opt.mouseshape
 --- @operator pow: vim.opt.mouseshape
@@ -3128,7 +3128,7 @@ function vim.opt.mouseshape:get()end
 -- 			global
 -- 	Defines the maximum time in msec between two mouse clicks for the
 -- 	second click to be recognized as a multi click.
---- @class vim.opt.mousetime: vim.Option
+--- @class vim.opt.mousetime: vim.Option,number
 --- @operator add: vim.opt.mousetime
 --- @operator sub: vim.opt.mousetime
 --- @operator pow: vim.opt.mousetime
@@ -3165,7 +3165,7 @@ function vim.opt.mousetime:get()end
 -- 	Numbers which simply begin with a digit in the range 1-9 are always
 -- 	considered decimal.  This also happens for numbers that are not
 -- 	recognized as octal or hex.
---- @class vim.opt.nrformats: vim.Option
+--- @class vim.opt.nrformats: vim.Option,string[]
 --- @operator add: vim.opt.nrformats
 --- @operator sub: vim.opt.nrformats
 --- @operator pow: vim.opt.nrformats
@@ -3196,7 +3196,7 @@ function vim.opt.nrformats:get()end
 -- 	    |pear           |  2 pear       |  1 pear       |  1 pear
 -- 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
 -- 	    |there          |  4 there      |  1 there      |  1 there
---- @class vim.opt.number: vim.Option
+--- @class vim.opt.number: vim.Option,boolean
 --- @operator add: vim.opt.number
 --- @operator sub: vim.opt.number
 --- @operator pow: vim.opt.number
@@ -3217,7 +3217,7 @@ function vim.opt.number:get()end
 -- 	is set. Thus with the Vim default of 4 there is room for a line number
 -- 	up to 999. When the buffer has 1000 lines five columns will be used.
 -- 	The minimum value is 1, the maximum value is 20.
---- @class vim.opt.numberwidth: vim.Option
+--- @class vim.opt.numberwidth: vim.Option,number
 --- @operator add: vim.opt.numberwidth
 --- @operator sub: vim.opt.numberwidth
 --- @operator pow: vim.opt.numberwidth
@@ -3236,7 +3236,7 @@ function vim.opt.numberwidth:get()end
 -- 	|:filetype-plugin-on|
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.omnifunc: vim.Option
+--- @class vim.opt.omnifunc: vim.Option,string
 --- @operator add: vim.opt.omnifunc
 --- @operator sub: vim.opt.omnifunc
 --- @operator pow: vim.opt.omnifunc
@@ -3253,7 +3253,7 @@ function vim.opt.omnifunc:get()end
 -- 	it is off by default.
 -- 	Note that on Windows editing "aux.h", "lpt1.txt" and the like also
 -- 	result in editing a device.
---- @class vim.opt.opendevice: vim.Option
+--- @class vim.opt.opendevice: vim.Option,boolean
 --- @operator add: vim.opt.opendevice
 --- @operator sub: vim.opt.opendevice
 --- @operator pow: vim.opt.opendevice
@@ -3271,7 +3271,7 @@ function vim.opt.opendevice:get()end
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.operatorfunc: vim.Option
+--- @class vim.opt.operatorfunc: vim.Option,string
 --- @operator add: vim.opt.operatorfunc
 --- @operator sub: vim.opt.operatorfunc
 --- @operator pow: vim.opt.operatorfunc
@@ -3282,7 +3282,7 @@ function vim.opt.operatorfunc:get()end
 
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
---- @class vim.opt.packpath: vim.Option
+--- @class vim.opt.packpath: vim.Option,string[]
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath
 --- @operator pow: vim.opt.packpath
@@ -3295,7 +3295,7 @@ function vim.opt.packpath:get()end
 -- 			global
 -- 	Specifies the nroff macros that separate paragraphs.  These are pairs
 -- 	of two letters (see |object-motions|).
---- @class vim.opt.paragraphs: vim.Option
+--- @class vim.opt.paragraphs: vim.Option,string
 --- @operator add: vim.opt.paragraphs
 --- @operator sub: vim.opt.paragraphs
 --- @operator pow: vim.opt.paragraphs
@@ -3349,7 +3349,7 @@ function vim.opt.paragraphs:get()end
 -- 	Resetting `'paste'`  before ever setting it does not have any effect.
 -- 	Since mapping doesn't work while `'paste'`  is active, you need to use
 -- 	the `'pastetoggle'`  option to toggle the `'paste'`  option with some key.
---- @class vim.opt.paste: vim.Option
+--- @class vim.opt.paste: vim.Option,boolean
 --- @operator add: vim.opt.paste
 --- @operator sub: vim.opt.paste
 --- @operator pow: vim.opt.paste
@@ -3379,7 +3379,7 @@ function vim.opt.paste:get()end
 -- 	mode everything is inserted literally, except the `'pastetoggle'`  key
 -- 	sequence.
 -- 	When the value has several bytes `'ttimeoutlen'`  applies.
---- @class vim.opt.pastetoggle: vim.Option
+--- @class vim.opt.pastetoggle: vim.Option,string
 --- @operator add: vim.opt.pastetoggle
 --- @operator sub: vim.opt.pastetoggle
 --- @operator pow: vim.opt.pastetoggle
@@ -3392,7 +3392,7 @@ function vim.opt.pastetoggle:get()end
 -- 			global
 -- 	Expression which is evaluated to apply a patch to a file and generate
 -- 	the resulting new version of the file.  See |diff-patchexpr|.
---- @class vim.opt.patchexpr: vim.Option
+--- @class vim.opt.patchexpr: vim.Option,string
 --- @operator add: vim.opt.patchexpr
 --- @operator sub: vim.opt.patchexpr
 --- @operator pow: vim.opt.patchexpr
@@ -3419,7 +3419,7 @@ function vim.opt.patchexpr:get()end
 -- 	end (e.g., "file.gz.orig"), thus the resulting name isn't always
 -- 	recognized as a compressed file.
 -- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
---- @class vim.opt.patchmode: vim.Option
+--- @class vim.opt.patchmode: vim.Option,string
 --- @operator add: vim.opt.patchmode
 --- @operator sub: vim.opt.patchmode
 --- @operator pow: vim.opt.patchmode
@@ -3478,7 +3478,7 @@ function vim.opt.patchmode:get()end
 -- 		:let &path = &path .. "," .. substitute($INCL, `';'` , `','` , `'g'` )
 -- <	Replace the `';'`  with a `':'`  or whatever separator is used.  Note that
 -- 	this doesn't work when $INCL contains a comma or white space.
---- @class vim.opt.path: vim.Option
+--- @class vim.opt.path: vim.Option,string[]
 --- @operator add: vim.opt.path
 --- @operator sub: vim.opt.path
 --- @operator pow: vim.opt.path
@@ -3501,7 +3501,7 @@ function vim.opt.path:get()end
 -- 	tabs and spaces.  You might not like this.
 -- 	Also see `'copyindent'` .
 -- 	Use |:retab| to clean up white space.
---- @class vim.opt.preserveindent: vim.Option
+--- @class vim.opt.preserveindent: vim.Option,boolean
 --- @operator add: vim.opt.preserveindent
 --- @operator sub: vim.opt.preserveindent
 --- @operator pow: vim.opt.preserveindent
@@ -3514,7 +3514,7 @@ function vim.opt.preserveindent:get()end
 -- 			global
 -- 	Default height for a preview window.  Used for |:ptag| and associated
 -- 	commands.  Used for |CTRL-W_}| when no count is given.
---- @class vim.opt.previewheight: vim.Option
+--- @class vim.opt.previewheight: vim.Option,number
 --- @operator add: vim.opt.previewheight
 --- @operator sub: vim.opt.previewheight
 --- @operator pow: vim.opt.previewheight
@@ -3528,7 +3528,7 @@ function vim.opt.previewheight:get()end
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
 -- 	|:ptag|, |:pedit|, etc.
---- @class vim.opt.previewwindow: vim.Option
+--- @class vim.opt.previewwindow: vim.Option,boolean
 --- @operator add: vim.opt.previewwindow
 --- @operator sub: vim.opt.previewwindow
 --- @operator pow: vim.opt.previewwindow
@@ -3543,7 +3543,7 @@ function vim.opt.previewwindow:get()end
 -- 	See |pdev-option|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.printdevice: vim.Option
+--- @class vim.opt.printdevice: vim.Option,string
 --- @operator add: vim.opt.printdevice
 --- @operator sub: vim.opt.printdevice
 --- @operator pow: vim.opt.printdevice
@@ -3556,7 +3556,7 @@ function vim.opt.printdevice:get()end
 -- 			global
 -- 	Sets the character encoding used when printing.
 -- 	See |penc-option|.
---- @class vim.opt.printencoding: vim.Option
+--- @class vim.opt.printencoding: vim.Option,string
 --- @operator add: vim.opt.printencoding
 --- @operator sub: vim.opt.printencoding
 --- @operator pow: vim.opt.printencoding
@@ -3571,7 +3571,7 @@ function vim.opt.printencoding:get()end
 -- 	See |pexpr-option|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.printexpr: vim.Option
+--- @class vim.opt.printexpr: vim.Option,string
 --- @operator add: vim.opt.printexpr
 --- @operator sub: vim.opt.printexpr
 --- @operator pow: vim.opt.printexpr
@@ -3584,7 +3584,7 @@ function vim.opt.printexpr:get()end
 -- 			global
 -- 	The name of the font that will be used for |:hardcopy|.
 -- 	See |pfn-option|.
---- @class vim.opt.printfont: vim.Option
+--- @class vim.opt.printfont: vim.Option,string
 --- @operator add: vim.opt.printfont
 --- @operator sub: vim.opt.printfont
 --- @operator pow: vim.opt.printfont
@@ -3597,7 +3597,7 @@ function vim.opt.printfont:get()end
 -- 			global
 -- 	The format of the header produced in |:hardcopy| output.
 -- 	See |pheader-option|.
---- @class vim.opt.printheader: vim.Option
+--- @class vim.opt.printheader: vim.Option,string
 --- @operator add: vim.opt.printheader
 --- @operator sub: vim.opt.printheader
 --- @operator pow: vim.opt.printheader
@@ -3610,7 +3610,7 @@ function vim.opt.printheader:get()end
 -- 			global
 -- 	The CJK character set to be used for CJK output from |:hardcopy|.
 -- 	See |pmbcs-option|.
---- @class vim.opt.printmbcharset: vim.Option
+--- @class vim.opt.printmbcharset: vim.Option,string
 --- @operator add: vim.opt.printmbcharset
 --- @operator sub: vim.opt.printmbcharset
 --- @operator pow: vim.opt.printmbcharset
@@ -3623,7 +3623,7 @@ function vim.opt.printmbcharset:get()end
 -- 			global
 -- 	List of font names to be used for CJK output from |:hardcopy|.
 -- 	See |pmbfn-option|.
---- @class vim.opt.printmbfont: vim.Option
+--- @class vim.opt.printmbfont: vim.Option,string
 --- @operator add: vim.opt.printmbfont
 --- @operator sub: vim.opt.printmbfont
 --- @operator pow: vim.opt.printmbfont
@@ -3636,7 +3636,7 @@ function vim.opt.printmbfont:get()end
 -- 			global
 -- 	List of items that control the format of the output of |:hardcopy|.
 -- 	See |popt-option|.
---- @class vim.opt.printoptions: vim.Option
+--- @class vim.opt.printoptions: vim.Option,string[]
 --- @operator add: vim.opt.printoptions
 --- @operator sub: vim.opt.printoptions
 --- @operator pow: vim.opt.printoptions
@@ -3645,7 +3645,7 @@ vim.opt.popt = vim.opt.printoptions
 --- @return string[]
 function vim.opt.printoptions:get()end
 
---- @class vim.opt.prompt: vim.Option
+--- @class vim.opt.prompt: vim.Option,boolean
 --- @operator add: vim.opt.prompt
 --- @operator sub: vim.opt.prompt
 --- @operator pow: vim.opt.prompt
@@ -3667,7 +3667,7 @@ function vim.opt.prompt:get()end
 -- 		:hi PmenuSel blend=0
 -- <
 -- 	UI-dependent. Works best with RGB colors. `'termguicolors'` 
---- @class vim.opt.pumblend: vim.Option
+--- @class vim.opt.pumblend: vim.Option,number
 --- @operator add: vim.opt.pumblend
 --- @operator sub: vim.opt.pumblend
 --- @operator pow: vim.opt.pumblend
@@ -3680,7 +3680,7 @@ function vim.opt.pumblend:get()end
 -- 			global
 -- 	Maximum number of items to show in the popup menu
 -- 	(|ins-completion-menu|). Zero means "use available screen space".
---- @class vim.opt.pumheight: vim.Option
+--- @class vim.opt.pumheight: vim.Option,number
 --- @operator add: vim.opt.pumheight
 --- @operator sub: vim.opt.pumheight
 --- @operator pow: vim.opt.pumheight
@@ -3694,7 +3694,7 @@ function vim.opt.pumheight:get()end
 -- 	Minimum width for the popup menu (|ins-completion-menu|).  If the
 -- 	cursor column + `'pumwidth'`  exceeds screen width, the popup menu is
 -- 	nudged to fit on the screen.
---- @class vim.opt.pumwidth: vim.Option
+--- @class vim.opt.pumwidth: vim.Option,number
 --- @operator add: vim.opt.pumwidth
 --- @operator sub: vim.opt.pumwidth
 --- @operator pow: vim.opt.pumwidth
@@ -3711,7 +3711,7 @@ function vim.opt.pumwidth:get()end
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.pyxversion: vim.Option
+--- @class vim.opt.pyxversion: vim.Option,number
 --- @operator add: vim.opt.pyxversion
 --- @operator sub: vim.opt.pyxversion
 --- @operator pow: vim.opt.pyxversion
@@ -3733,7 +3733,7 @@ function vim.opt.pyxversion:get()end
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.quickfixtextfunc: vim.Option
+--- @class vim.opt.quickfixtextfunc: vim.Option,string
 --- @operator add: vim.opt.quickfixtextfunc
 --- @operator sub: vim.opt.quickfixtextfunc
 --- @operator pow: vim.opt.quickfixtextfunc
@@ -3749,7 +3749,7 @@ function vim.opt.quickfixtextfunc:get()end
 -- 	When one of the characters in this option is found inside a string,
 -- 	the following character will be skipped.  The default value makes the
 -- 	text "foo\"bar\\" considered to be one string.
---- @class vim.opt.quoteescape: vim.Option
+--- @class vim.opt.quoteescape: vim.Option,string
 --- @operator add: vim.opt.quoteescape
 --- @operator sub: vim.opt.quoteescape
 --- @operator pow: vim.opt.quoteescape
@@ -3768,7 +3768,7 @@ function vim.opt.quoteescape:get()end
 -- 	When using the ":view" command the `'readonly'`  option is set for the
 -- 	newly edited buffer.
 -- 	See `'modifiable'`  for disallowing changes to the buffer.
---- @class vim.opt.readonly: vim.Option
+--- @class vim.opt.readonly: vim.Option,boolean
 --- @operator add: vim.opt.readonly
 --- @operator sub: vim.opt.readonly
 --- @operator pow: vim.opt.readonly
@@ -3804,7 +3804,7 @@ function vim.opt.readonly:get()end
 -- 			the test suite).
 -- 	    nodelta	Send all internally redrawn cells to the UI, even if
 -- 	                they are unchanged from the already displayed state.
---- @class vim.opt.redrawdebug: vim.Option
+--- @class vim.opt.redrawdebug: vim.Option,string[]
 --- @operator add: vim.opt.redrawdebug
 --- @operator sub: vim.opt.redrawdebug
 --- @operator pow: vim.opt.redrawdebug
@@ -3824,7 +3824,7 @@ function vim.opt.redrawdebug:get()end
 -- 	limit syntax highlighting is disabled until |CTRL-L| is used.
 -- 	This is used to avoid that Vim hangs when using a very complicated
 -- 	pattern.
---- @class vim.opt.redrawtime: vim.Option
+--- @class vim.opt.redrawtime: vim.Option,number
 --- @operator add: vim.opt.redrawtime
 --- @operator sub: vim.opt.redrawtime
 --- @operator pow: vim.opt.redrawtime
@@ -3847,7 +3847,7 @@ function vim.opt.redrawtime:get()end
 -- 	default engine becomes too costly.  E.g., when the NFA engine uses too
 -- 	many states.  This should prevent Vim from hanging on a combination of
 -- 	a complex pattern with long text.
---- @class vim.opt.regexpengine: vim.Option
+--- @class vim.opt.regexpengine: vim.Option,number
 --- @operator add: vim.opt.regexpengine
 --- @operator sub: vim.opt.regexpengine
 --- @operator pow: vim.opt.regexpengine
@@ -3875,7 +3875,7 @@ function vim.opt.regexpengine:get()end
 -- 	The number in front of the cursor line also depends on the value of
 -- 	`'number'` , see |number_relativenumber| for all combinations of the two
 -- 	options.
---- @class vim.opt.relativenumber: vim.Option
+--- @class vim.opt.relativenumber: vim.Option,boolean
 --- @operator add: vim.opt.relativenumber
 --- @operator sub: vim.opt.relativenumber
 --- @operator pow: vim.opt.relativenumber
@@ -3884,7 +3884,7 @@ vim.opt.rnu = vim.opt.relativenumber
 --- @return boolean
 function vim.opt.relativenumber:get()end
 
---- @class vim.opt.remap: vim.Option
+--- @class vim.opt.remap: vim.Option,boolean
 --- @operator add: vim.opt.remap
 --- @operator sub: vim.opt.remap
 --- @operator pow: vim.opt.remap
@@ -3899,7 +3899,7 @@ function vim.opt.remap:get()end
 -- 	":" commands.  If you want it always, set `'report'`  to 0.
 -- 	For the ":substitute" command the number of substitutions is used
 -- 	instead of the number of lines.
---- @class vim.opt.report: vim.Option
+--- @class vim.opt.report: vim.Option,number
 --- @operator add: vim.opt.report
 --- @operator sub: vim.opt.report
 --- @operator pow: vim.opt.report
@@ -3914,7 +3914,7 @@ function vim.opt.report:get()end
 -- 	command in Insert mode, when `'allowrevins'`  is set.
 -- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
 -- 	reset.
---- @class vim.opt.revins: vim.Option
+--- @class vim.opt.revins: vim.Option,boolean
 --- @operator add: vim.opt.revins
 --- @operator sub: vim.opt.revins
 --- @operator pow: vim.opt.revins
@@ -3934,7 +3934,7 @@ function vim.opt.revins:get()end
 -- 	useful whenever you have a mixed text file with both right-to-left
 -- 	and left-to-right strings so that both sets are displayed properly
 -- 	in different windows).  Also see |rileft.txt|.
---- @class vim.opt.rightleft: vim.Option
+--- @class vim.opt.rightleft: vim.Option,boolean
 --- @operator add: vim.opt.rightleft
 --- @operator sub: vim.opt.rightleft
 --- @operator pow: vim.opt.rightleft
@@ -3952,7 +3952,7 @@ function vim.opt.rightleft:get()end
 -- 
 -- 	This is useful for languages such as Hebrew, Arabic and Farsi.
 -- 	The `'rightleft'`  option must be set for `'rightleftcmd'`  to take effect.
---- @class vim.opt.rightleftcmd: vim.Option
+--- @class vim.opt.rightleftcmd: vim.Option,string
 --- @operator add: vim.opt.rightleftcmd
 --- @operator sub: vim.opt.rightleftcmd
 --- @operator pow: vim.opt.rightleftcmd
@@ -3987,7 +3987,7 @@ function vim.opt.rightleftcmd:get()end
 -- 	reset.
 -- 	If you don't want to see the ruler all the time but want to know where
 -- 	you are, use "g CTRL-G" |g_CTRL-G|.
---- @class vim.opt.ruler: vim.Option
+--- @class vim.opt.ruler: vim.Option,boolean
 --- @operator add: vim.opt.ruler
 --- @operator sub: vim.opt.ruler
 --- @operator pow: vim.opt.ruler
@@ -4008,7 +4008,7 @@ function vim.opt.ruler:get()end
 -- 	Example: >
 -- 		:set rulerformat=%15(%c%V\ %p%%%)
 -- <
---- @class vim.opt.rulerformat: vim.Option
+--- @class vim.opt.rulerformat: vim.Option,string
 --- @operator add: vim.opt.rulerformat
 --- @operator sub: vim.opt.rulerformat
 --- @operator pow: vim.opt.rulerformat
@@ -4103,7 +4103,7 @@ function vim.opt.rulerformat:get()end
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
---- @class vim.opt.runtimepath: vim.Option
+--- @class vim.opt.runtimepath: vim.Option,string[]
 --- @operator add: vim.opt.runtimepath
 --- @operator sub: vim.opt.runtimepath
 --- @operator pow: vim.opt.runtimepath
@@ -4121,7 +4121,7 @@ function vim.opt.runtimepath:get()end
 -- 	If you give a count to the CTRL-U or CTRL-D command it will
 -- 	be used as the new value for `'scroll'` .  Reset to half the window
 -- 	height with ":set scroll=0".
---- @class vim.opt.scroll: vim.Option
+--- @class vim.opt.scroll: vim.Option,number
 --- @operator add: vim.opt.scroll
 --- @operator sub: vim.opt.scroll
 --- @operator pow: vim.opt.scroll
@@ -4136,7 +4136,7 @@ function vim.opt.scroll:get()end
 -- 	top are deleted if new lines exceed this limit.
 -- 	Minimum is 1, maximum is 100000.
 -- 	Only in |terminal| buffers.
---- @class vim.opt.scrollback: vim.Option
+--- @class vim.opt.scrollback: vim.Option,number
 --- @operator add: vim.opt.scrollback
 --- @operator sub: vim.opt.scrollback
 --- @operator pow: vim.opt.scrollback
@@ -4156,7 +4156,7 @@ function vim.opt.scrollback:get()end
 -- 	This option is mostly reset when splitting a window to edit another
 -- 	file.  This means that ":split | edit file" results in two windows
 -- 	with scroll-binding, but ":split file" does not.
---- @class vim.opt.scrollbind: vim.Option
+--- @class vim.opt.scrollbind: vim.Option,boolean
 --- @operator add: vim.opt.scrollbind
 --- @operator sub: vim.opt.scrollbind
 --- @operator pow: vim.opt.scrollbind
@@ -4173,7 +4173,7 @@ function vim.opt.scrollbind:get()end
 -- 	When set to a negative number from -1 to -100 this is used as the
 -- 	percentage of the window height.  Thus -50 scrolls half the window
 -- 	height.
---- @class vim.opt.scrolljump: vim.Option
+--- @class vim.opt.scrolljump: vim.Option,number
 --- @operator add: vim.opt.scrolljump
 --- @operator sub: vim.opt.scrolljump
 --- @operator pow: vim.opt.scrolljump
@@ -4194,7 +4194,7 @@ function vim.opt.scrolljump:get()end
 -- 		setlocal scrolloff<
 -- 		setlocal scrolloff=-1
 -- <	For scrolling horizontally see `'sidescrolloff'` .
---- @class vim.opt.scrolloff: vim.Option
+--- @class vim.opt.scrolloff: vim.Option,number
 --- @operator add: vim.opt.scrolloff
 --- @operator sub: vim.opt.scrolloff
 --- @operator pow: vim.opt.scrolloff
@@ -4232,7 +4232,7 @@ function vim.opt.scrolloff:get()end
 -- 	Also see |scroll-binding|.
 -- 	When `'diff'`  mode is active there always is vertical scroll binding,
 -- 	even when "ver" isn't there.
---- @class vim.opt.scrollopt: vim.Option
+--- @class vim.opt.scrollopt: vim.Option,string[]
 --- @operator add: vim.opt.scrollopt
 --- @operator sub: vim.opt.scrollopt
 --- @operator pow: vim.opt.scrollopt
@@ -4246,7 +4246,7 @@ function vim.opt.scrollopt:get()end
 -- 	Specifies the nroff macros that separate sections.  These are pairs of
 -- 	two letters (See |object-motions|).  The default makes a section start
 -- 	at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
---- @class vim.opt.sections: vim.Option
+--- @class vim.opt.sections: vim.Option,string
 --- @operator add: vim.opt.sections
 --- @operator sub: vim.opt.sections
 --- @operator pow: vim.opt.sections
@@ -4266,7 +4266,7 @@ function vim.opt.sections:get()end
 -- 	`'secure'`  at the end of your |init.vim| then.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.secure: vim.Option
+--- @class vim.opt.secure: vim.Option,boolean
 --- @operator add: vim.opt.secure
 --- @operator sub: vim.opt.secure
 --- @operator pow: vim.opt.secure
@@ -4295,7 +4295,7 @@ function vim.opt.secure:get()end
 -- 	starting in Normal mode and `'virtualedit'`  empty.
 -- 
 -- 	The `'selection'`  option is set by the |:behave| command.
---- @class vim.opt.selection: vim.Option
+--- @class vim.opt.selection: vim.Option,string
 --- @operator add: vim.opt.selection
 --- @operator sub: vim.opt.selection
 --- @operator pow: vim.opt.selection
@@ -4314,7 +4314,7 @@ function vim.opt.selection:get()end
 -- 	   cmd		when using "v", "V" or CTRL-V
 -- 	See |Select-mode|.
 -- 	The `'selectmode'`  option is set by the |:behave| command.
---- @class vim.opt.selectmode: vim.Option
+--- @class vim.opt.selectmode: vim.Option,string[]
 --- @operator add: vim.opt.selectmode
 --- @operator sub: vim.opt.selectmode
 --- @operator pow: vim.opt.selectmode
@@ -4363,7 +4363,7 @@ function vim.opt.selectmode:get()end
 -- 	filenames are stored as absolute paths.
 -- 	If you leave out "options" many things won't work well after restoring
 -- 	the session.
---- @class vim.opt.sessionoptions: vim.Option
+--- @class vim.opt.sessionoptions: vim.Option,string[]
 --- @operator add: vim.opt.sessionoptions
 --- @operator sub: vim.opt.sessionoptions
 --- @operator pow: vim.opt.sessionoptions
@@ -4486,7 +4486,7 @@ function vim.opt.sessionoptions:get()end
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shada: vim.Option
+--- @class vim.opt.shada: vim.Option,string[]
 --- @operator add: vim.opt.shada
 --- @operator sub: vim.opt.shada
 --- @operator pow: vim.opt.shada
@@ -4503,7 +4503,7 @@ function vim.opt.shada:get()end
 -- 	command line flag sets it to "NONE".
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shadafile: vim.Option
+--- @class vim.opt.shadafile: vim.Option,string[]
 --- @operator add: vim.opt.shadafile
 --- @operator sub: vim.opt.shadafile
 --- @operator pow: vim.opt.shadafile
@@ -4559,7 +4559,7 @@ function vim.opt.shadafile:get()end
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shell: vim.Option
+--- @class vim.opt.shell: vim.Option,string
 --- @operator add: vim.opt.shell
 --- @operator sub: vim.opt.shell
 --- @operator pow: vim.opt.shell
@@ -4581,7 +4581,7 @@ function vim.opt.shell:get()end
 -- 	multiple arguments.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shellcmdflag: vim.Option
+--- @class vim.opt.shellcmdflag: vim.Option,string
 --- @operator add: vim.opt.shellcmdflag
 --- @operator sub: vim.opt.shellcmdflag
 --- @operator pow: vim.opt.shellcmdflag
@@ -4621,7 +4621,7 @@ function vim.opt.shellcmdflag:get()end
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shellpipe: vim.Option
+--- @class vim.opt.shellpipe: vim.Option,string
 --- @operator add: vim.opt.shellpipe
 --- @operator sub: vim.opt.shellpipe
 --- @operator pow: vim.opt.shellpipe
@@ -4644,7 +4644,7 @@ function vim.opt.shellpipe:get()end
 -- 	user.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shellquote: vim.Option
+--- @class vim.opt.shellquote: vim.Option,string
 --- @operator add: vim.opt.shellquote
 --- @operator sub: vim.opt.shellquote
 --- @operator pow: vim.opt.shellquote
@@ -4676,7 +4676,7 @@ function vim.opt.shellquote:get()end
 -- 	become obsolete (at least for Unix).
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
---- @class vim.opt.shellredir: vim.Option
+--- @class vim.opt.shellredir: vim.Option,string
 --- @operator add: vim.opt.shellredir
 --- @operator sub: vim.opt.shellredir
 --- @operator pow: vim.opt.shellredir
