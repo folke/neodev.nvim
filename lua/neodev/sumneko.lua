@@ -99,7 +99,7 @@ function M.setup(opts, settings)
           library = M.library(opts),
           -- when pathStrict=false, we need to add the other types to ignoreDir,
           -- otherwise they get indexed
-          ignoreDir = { config.version() == "stable" and "types/nightly" or "types/stable" },
+          ignoreDir = { config.version() == "stable" and "types/nightly" or "types/stable", "lua" },
         },
       },
     },
