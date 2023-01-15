@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/folke/neodev.nvim/compare/v2.0.0...v2.0.1) (2023-01-15)
+
+
+### Bug Fixes
+
+* ignore lua directory ([82c8586](https://github.com/folke/neodev.nvim/commit/82c85862e2aaa9c0b63f3176eb8dc513803f2865))
+* **lsp:** make sure everything works when lua root not found. Fixes [#108](https://github.com/folke/neodev.nvim/issues/108) ([31cba85](https://github.com/folke/neodev.nvim/commit/31cba8554a8e37ecf240fa2e242f0e43e72ae930))
+
 ## [2.0.0](https://github.com/folke/neodev.nvim/compare/v1.0.0...v2.0.0) (2023-01-11)
 
 
