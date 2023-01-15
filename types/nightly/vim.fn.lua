@@ -2926,7 +2926,8 @@ function vim.fn.getcmdwintype() end
 -- arglist    file names in argument list
 -- augroup    autocmd groups
 -- buffer    buffer names
--- behave    :behave suboptions
+-- behave    |:behave| suboptions
+-- breakpoint  |:breakadd| and |:breakdel| suboptions
 -- cmdline    |cmdline-completion| result
 -- color    color schemes
 -- command    Ex command
@@ -2942,7 +2943,7 @@ function vim.fn.getcmdwintype() end
 -- function  function name
 -- help    help subjects
 -- highlight  highlight groups
--- history    :history suboptions
+-- history    |:history| suboptions
 -- locale    locale names (as output of locale -a)
 -- mapclear  buffer argument
 -- mapping    mapping name

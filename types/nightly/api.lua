@@ -1957,7 +1957,7 @@ function vim.api.nvim_list_tabpages() end
 --     • "width" Requested width of the UI
 --     • "rgb" true if the UI uses RGB colors (false implies |cterm-colors|)
 --     • "ext_..." Requested UI extensions, see |ui-option|
---     • "chan" Channel id of remote UI or 0 for TUI
+--     • "chan" |channel-id| of remote UI
 --- @return any[]
 function vim.api.nvim_list_uis() end
 
