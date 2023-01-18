@@ -1,5 +1,63 @@
 ---@meta
 
+-- Return a string that indicates the current mode.
+--   If [expr] is supplied and it evaluates to a non-zero Number or
+--   a non-empty String (|non-zero-arg|), then the full mode is
+--   returned, otherwise only the first letter is returned.
+-- 
+--      n      Normal
+--      no      Operator-pending
+--      nov      Operator-pending (forced charwise |o_v|)
+--      noV      Operator-pending (forced linewise |o_V|)
+--      noCTRL-V Operator-pending (forced blockwise |o_CTRL-V|)
+--       CTRL-V is one character
+--      niI      Normal using |i_CTRL-O| in |Insert-mode|
+--      niR      Normal using |i_CTRL-O| in |Replace-mode|
+--      niV      Normal using |i_CTRL-O| in |Virtual-Replace-mode|
+--      nt      Normal in |terminal-emulator| (insert goes to
+--       Terminal mode)
+--      ntT      Normal using |t_CTRL-\_CTRL-O| in |Terminal-mode|
+--      v      Visual by character
+--      vs      Visual by character using |v_CTRL-O| in Select mode
+--      V      Visual by line
+--      Vs      Visual by line using |v_CTRL-O| in Select mode
+--      CTRL-V   Visual blockwise
+--      CTRL-Vs  Visual blockwise using |v_CTRL-O| in Select mode
+--      s      Select by character
+--      S      Select by line
+--      CTRL-S   Select blockwise
+--      i      Insert
+--      ic      Insert mode completion |compl-generic|
+--      ix      Insert mode |i_CTRL-X| completion
+--      R      Replace |R|
+--      Rc      Replace mode completion |compl-generic|
+--      Rx      Replace mode |i_CTRL-X| completion
+--      Rv      Virtual Replace |gR|
+--      Rvc      Virtual Replace mode completion |compl-generic|
+--      Rvx      Virtual Replace mode |i_CTRL-X| completion
+--      c      Command-line editing
+--      cv      Vim Ex mode |gQ|
+--      r      Hit-enter prompt
+--      rm      The -- more -- prompt
+--      r?      A |:confirm| query of some sort
+--      !      Shell or external command is executing
+--      t      Terminal mode: keys go to the job
+-- 
+--   This is useful in the 'statusline' option or RPC calls. In
+--   most other places it always returns "c" or "n".
+--   Note that in the future more modes and more specific modes may
+--   be added. It's better not to compare the whole string but only
+--   the leading character(s).
+--   Also see |visualmode()|.
+-- 
+--   Can also be used as a |method|: 
+-- ```vim
+--     DoFull()->mode()
+-- ```
+--- @param expr? any
+--- @return string
+function vim.fn.mode(expr) end
+
 -- Convert a list of VimL objects to msgpack. Returned value is a
 -- |readfile()|-style list. When {type} contains "B", a |Blob| is
 -- returned instead. Example: 

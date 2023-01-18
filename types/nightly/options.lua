@@ -4102,6 +4102,14 @@ vim.go.wim = vim.go.wildmode
 -- 			global
 -- 	A list of words that change how |cmdline-completion| is done.
 -- 	The following values are supported:
+-- 	  fuzzy		Use |fuzzy-matching| to find completion matches. When
+-- 			this value is specified, wildcard expansion will not
+-- 			be used for completion.  The matches will be sorted by
+-- 			the "best match" rather than alphabetically sorted.
+-- 			This will find more matches than the wildcard
+-- 			expansion. Currently fuzzy matching based completion
+-- 			is not supported for file and directory names and
+-- 			instead wildcard expansion is used.
 -- 	  pum		Display the completion matches using the popup menu
 -- 			in the same style as the |ins-completion-menu|.
 -- 	  tagfile	When using CTRL-D to list matching tags, the kind of
