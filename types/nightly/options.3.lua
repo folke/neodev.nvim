@@ -804,6 +804,11 @@ function vim.opt.startofline:get()end
 -- 		      when drawing the actual buffer line, and positive when
 -- 		      drawing the wrapped part of a buffer line.
 -- 
+-- 	NOTE: The %@ click execute function item is supported as well but the
+-- 	specified function will be the same for each row in the same column.
+-- 	It cannot be switched out through a dynamic `'statuscolumn'`  format, the
+-- 	handler should be written with this in mind.
+-- 
 -- 	Examples: >vim
 -- 		" Relative number with bar separator and click handlers:
 -- 		:set statuscolumn=%@SignCb@%s%=%T%@NumCb@%r│%T
