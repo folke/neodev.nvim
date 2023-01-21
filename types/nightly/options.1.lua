@@ -323,21 +323,21 @@ vim.wo.list = false
 -- 			The third character is optional.
 -- 
 -- 	  tab:xy	The `'x'`  is always used, then `'y'`  as many times as will
--- 			fit.  Thus "tab:>-" displays:
+-- 			fit.  Thus "tab:>-" displays: >
 -- 				>
 -- 				>-
 -- 				>--
 -- 				etc.
--- 
+-- <
 -- 	  tab:xyz	The `'z'`  is always used, then `'x'`  is prepended, and
 -- 			then `'y'`  is used as many times as will fit.  Thus
--- 			"tab:<->" displays:
+-- 			"tab:<->" displays: >
 -- 				>
 -- 				<>
 -- 				<->
 -- 				<-->
 -- 				etc.
--- 
+-- <
 -- 			When "tab:" is omitted, a tab is shown as ^I.
 -- 
 -- 	  space:c	Character to show for a space.  When omitted, spaces
@@ -349,8 +349,9 @@ vim.wo.list = false
 -- 			setting, except for single spaces.  When omitted, the
 -- 			"space" setting is used.  For example,
 -- 			`:set listchars=multispace:---+` shows ten consecutive
--- 			spaces as:
--- 				---+---+-- ~
+-- 			spaces as: >
+-- 				---+---+--
+-- <
 -- 
 -- 	  lead:c	Character to show for leading spaces.  When omitted,
 -- 			leading spaces are blank.  Overrides the "space" and
@@ -358,13 +359,15 @@ vim.wo.list = false
 -- 			combine it with "tab:", for example: >
 -- 				:set listchars+=tab:>-,lead:.
 -- <
+-- 
 -- 	  leadmultispace:c...
 -- 			Like the |lcs-multispace| value, but for leading
 -- 			spaces only.  Also overrides |lcs-lead| for leading
 -- 			multiple spaces.
 -- 			`:set listchars=leadmultispace:---+` shows ten
--- 			consecutive leading spaces as:
--- 				---+---+--XXX ~
+-- 			consecutive leading spaces as: >
+-- 				---+---+--XXX
+-- <
 -- 			Where "XXX" denotes the first non-blank characters in
 -- 			the line.
 -- 

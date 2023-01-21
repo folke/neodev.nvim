@@ -1717,7 +1717,7 @@ function vim.fn.setbufvar(buf, varname, val) end
 -- {low} and {high} can be the same, in which case this refers to
 -- one character.  Otherwise it is the range of characters from
 -- {low} to {high} (inclusive).
--- Only characters with value 0x100 and higher can be used.
+-- Only characters with value 0x80 and higher can be used.
 -- 
 -- {width} must be either 1 or 2, indicating the character width
 -- in screen cells.
