@@ -1101,7 +1101,7 @@ function vim.api.nvim_create_augroup(name, opts) end
 --                • match: (string) expanded value of |<amatch>|
 --                • buf: (number) expanded value of |<abuf>|
 --                • file: (string) expanded value of |<afile>|
---                • data: (any) arbitrary data passed to
+--                • data: (any) arbitrary data passed from
 --                  |nvim_exec_autocmds()|
 -- 
 --              • command (string) optional: Vim command to execute on event.
