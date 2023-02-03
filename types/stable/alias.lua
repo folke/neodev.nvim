@@ -1,11 +1,11 @@
 ---@meta
 
 ---@alias blob number
----@alias buffer number
----@alias channel number
+---@alias buffer integer
+---@alias channel integer
 ---@alias float number
 ---@alias job number
 ---@alias object any
 ---@alias sends number
----@alias tabpage number
----@alias window number
+---@alias tabpage integer
+---@alias window integer
