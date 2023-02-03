@@ -28,11 +28,11 @@ M.name2type = {
 M.keywords =
   { "or", "and", "repeat", "function", "end", "return", "do", "break", "else", "elseif", "for", "goto", "if", "while" }
 M.nvim_types = {
-  window = "number",
-  buffer = "number",
-  tabpage = "number",
+  window = "integer",
+  buffer = "integer",
+  tabpage = "integer",
   job = "number",
-  channel = "number",
+  channel = "integer",
   sends = "number",
   blob = "number",
   object = "any",
