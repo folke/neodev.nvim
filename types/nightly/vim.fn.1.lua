@@ -2513,10 +2513,14 @@ function vim.fn.sin(expr) end
 function vim.fn.sinh(expr) end
 
 -- Connect a socket to an address. If {mode} is "pipe" then
--- {address} should be the path of a named pipe. If {mode} is
--- "tcp" then {address} should be of the form "host:port" where
--- the host should be an ip adderess or host name, and port the
--- port number.
+-- {address} should be the path of a local domain socket (on
+-- unix) or named pipe (on Windows). If {mode} is "tcp" then
+-- {address} should be of the form "host:port" where the host
+-- should be an ip adderess or host name, and port the port
+-- number.
+-- 
+-- For "pipe" mode, see |luv-pipe-handle|. For "tcp" mode, see
+-- |luv-tcp-handle|.
 -- 
 -- Returns a |channel| ID. Close the socket with |chanclose()|.
 -- Use |chansend()| to send data over a bytes socket, and
