@@ -2493,8 +2493,8 @@ function vim.opt.list:get()end
 -- 			are left blank.
 -- 
 -- 	  multispace:c...
--- 	 		One or more characters to use cyclically to show for
--- 	 		multiple consecutive spaces.  Overrides the "space"
+-- 			One or more characters to use cyclically to show for
+-- 			multiple consecutive spaces.  Overrides the "space"
 -- 			setting, except for single spaces.  When omitted, the
 -- 			"space" setting is used.  For example,
 -- 			`:set listchars=multispace:---+` shows ten consecutive

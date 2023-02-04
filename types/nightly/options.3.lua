@@ -986,8 +986,8 @@ function vim.opt.statuscolumn:get()end
 -- 	      windows.
 -- 	* -   Set highlight group to User{N}, where {N} is taken from the
 -- 	      minwid field, e.g. %1*.  Restore normal highlight with %* or %0*.
--- 	      The difference between User{N} and StatusLine  will be applied
--- 	      to StatusLineNC for the statusline of non-current windows.
+-- 	      The difference between User{N} and StatusLine will be applied to
+-- 	      StatusLineNC for the statusline of non-current windows.
 -- 	      The number N must be between 1 and 9.  See |hl-User1..9|
 -- 
 -- 	When displaying a flag, Vim removes the leading comma, if any, when
