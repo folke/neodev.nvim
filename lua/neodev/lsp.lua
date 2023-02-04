@@ -52,8 +52,6 @@ function M.on_new_config(config, root_dir)
 
   local opts = require("neodev.config").merge()
 
-  opts.library.enabled = util.is_nvim_config()
-
   if not opts.library.enabled and lua_root then
     opts.library.enabled = true
     opts.library.plugins = false
