@@ -1,8 +1,12 @@
----@class vim.loop.Timer
----@field start fun(timer:vim.loop.Timer, timeout:integer, repeat:integer, callback:fun())
----@field stop fun(timer:vim.loop.Timer)
+---@class uv
+local uv = vim.loop
+vim.loop = uv
 
----@class vim.loop.Handle
+---@class uv.Timer
+---@field start fun(timer:uv.Timer, timeout:integer, repeat:integer, callback:fun())
+---@field stop fun(timer:uv.Timer)
+
+---@class uv.Handle
 local Handle = {}
 function Handle:close() end
 ---@return boolean
@@ -10,35 +14,35 @@ function Handle:is_closing() end
 ---@return boolean
 function Handle:is_active() end
 
----@class vim.loop.Pipe: vim.loop.Handle
+---@class uv.Pipe: uv.Handle
 
----@class vim.loop.Check
+---@class uv.Check
 local Check = {}
 ---@param fn fun()
 function Check:start(fn) end
 function Check:stop() end
 
----@class vim.loop.Process: vim.loop.Handle
+---@class uv.Process: uv.Handle
 
 return {
-  ["vim.loop.new_timer"] = {
+  ["uv.new_timer"] = {
     ["return"] = { {
-      ["type"] = "vim.loop.Timer",
+      ["type"] = "uv.Timer",
     } },
   },
-  ["vim.loop.new_pipe"] = {
+  ["uv.new_pipe"] = {
     ["return"] = { {
-      ["type"] = "vim.loop.Pipe",
+      ["type"] = "uv.Pipe",
     } },
   },
-  ["vim.loop.new_check"] = {
+  ["uv.new_check"] = {
     ["return"] = { {
-      ["type"] = "vim.loop.Check",
+      ["type"] = "uv.Check",
     } },
   },
-  ["vim.loop.spawn"] = {
+  ["uv.spawn"] = {
     ["return"] = { {
-      ["type"] = "vim.loop.Process",
+      ["type"] = "uv.Process",
     } },
   },
 }

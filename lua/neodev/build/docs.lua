@@ -233,12 +233,9 @@ end
 function M.luv()
   local ret = M.parse_functions("luvref", {
     filter = function(name)
-      return not Annotations.is_lua(name)
-    end,
-    name = function(name)
-      local ret = name:gsub("^uv%.", "vim.loop.")
-      return ret
-    end,
+      local nvim_name = name:gsub("^uv%.", "vim.loop.")
+      return not Annotations.is_lua(nvim_name)
+    end
   })
   Util.for_each(ret, function(_, fun)
     local returns = fun.doc:match("%s*Returns: (.*)\n")

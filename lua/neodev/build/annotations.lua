@@ -136,7 +136,7 @@ end
 function M.fqn(name)
   local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
   if vim.api[name] then
-    return "vim.api." .. name
+    return "api." .. name
   elseif vim[name] then
     return "vim." .. name
   elseif name:find("^[a-zA-Z_]+$") and vim.fn.exists("*" .. name) == 1 then
@@ -151,7 +151,7 @@ function M.is_lua(name)
   local real_fn = vim.tbl_get(_G, unpack(vim.split(name, ".", { plain = true })))
 
   -- some plugins (like Noice) wrap api functions. This deals with that
-  if real_fn and name:find("vim%.api%.") then
+  if real_fn and name:find("api%.") then
     return false
   elseif type(real_fn) == "function" then
     local info = debug.getinfo(real_fn, "S")

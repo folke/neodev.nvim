@@ -1,17 +1,23 @@
 ---@meta
 
+
+---@class vim.api
+local api = vim.api
+vim.api = api
+
+
 --- @param buffer buffer
 --- @param first number
 --- @param last number
-function vim.api.nvim__buf_redraw_range(buffer, first, last) end
+function api.nvim__buf_redraw_range(buffer, first, last) end
 
 --- @param buffer buffer
-function vim.api.nvim__buf_stats(buffer) end
+function api.nvim__buf_stats(buffer) end
 
 --- @param ns_id number
-function vim.api.nvim__get_hl_defs(ns_id) end
+function api.nvim__get_hl_defs(ns_id) end
 
-function vim.api.nvim__get_lib_dir() end
+function api.nvim__get_lib_dir() end
 
 -- Find files in runtime directories
 -- 
@@ -26,7 +32,7 @@ function vim.api.nvim__get_lib_dir() end
 -- Return: ~
 --     list of absolute paths to the found files
 --- @param opts? table<string, any>
-function vim.api.nvim__get_runtime(pat, all, opts) end
+function api.nvim__get_runtime(pat, all, opts) end
 
 -- Returns object given as argument.
 -- 
@@ -38,7 +44,7 @@ function vim.api.nvim__get_runtime(pat, all, opts) end
 -- 
 -- Return: ~
 --     its argument.
-function vim.api.nvim__id(obj) end
+function api.nvim__id(obj) end
 
 -- Returns array given as argument.
 -- 
@@ -50,7 +56,7 @@ function vim.api.nvim__id(obj) end
 -- 
 -- Return: ~
 --     its argument.
-function vim.api.nvim__id_array(arr) end
+function api.nvim__id_array(arr) end
 
 -- Returns dictionary given as argument.
 -- 
@@ -62,7 +68,7 @@ function vim.api.nvim__id_array(arr) end
 -- 
 -- Return: ~
 --     its argument.
-function vim.api.nvim__id_dictionary(dct) end
+function api.nvim__id_dictionary(dct) end
 
 -- Returns floating-point value given as argument.
 -- 
@@ -74,26 +80,26 @@ function vim.api.nvim__id_dictionary(dct) end
 -- 
 -- Return: ~
 --     its argument.
-function vim.api.nvim__id_float(flt) end
+function api.nvim__id_float(flt) end
 
 -- NB: if your UI doesn't use hlstate, this will not return hlstate first
 -- time.
 --- @param col number
-function vim.api.nvim__inspect_cell(grid, row, col) end
+function api.nvim__inspect_cell(grid, row, col) end
 
-function vim.api.nvim__runtime_inspect() end
+function api.nvim__runtime_inspect() end
 
 --- @param path string
-function vim.api.nvim__screenshot(path) end
+function api.nvim__screenshot(path) end
 
 -- Gets internal stats.
 -- 
 -- Return: ~
 --     Map of various internal stats.
-function vim.api.nvim__stats() end
+function api.nvim__stats() end
 
 --- @param str string
-function vim.api.nvim__unpack(str) end
+function api.nvim__unpack(str) end
 
 -- Adds a highlight to buffer.
 -- 
@@ -134,7 +140,7 @@ function vim.api.nvim__unpack(str) end
 --- @param col_start number
 --- @param col_end number
 --- @return number
-function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start, col_end) end
+function api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start, col_end) end
 
 -- Activates buffer-update events on a channel, or as Lua callbacks.
 -- 
@@ -212,7 +218,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --- @param send_buffer boolean
 --- @param opts table<string, any>
 --- @return boolean
-function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
+function api.nvim_buf_attach(buffer, send_buffer, opts) end
 
 -- call a function with buffer as temporary current buffer
 -- 
@@ -240,7 +246,7 @@ function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 --- @param buffer buffer
 --- @param fun fun()
 --- @return object
-function vim.api.nvim_buf_call(buffer, fun) end
+function api.nvim_buf_call(buffer, fun) end
 
 -- Clears |namespace|d objects (highlights, |extmarks|, virtual text) from a
 -- region.
@@ -258,7 +264,7 @@ function vim.api.nvim_buf_call(buffer, fun) end
 --- @param ns_id number
 --- @param line_start number
 --- @param line_end number
-function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) end
+function api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) end
 
 -- Create a new user command |user-commands| in the given buffer.
 -- 
@@ -271,7 +277,7 @@ function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) e
 --- @param name string
 --- @param command object
 --- @param opts? table<string, any>
-function vim.api.nvim_buf_create_user_command(buffer, name, command, opts) end
+function api.nvim_buf_create_user_command(buffer, name, command, opts) end
 
 -- Removes an |extmark|.
 -- 
@@ -286,7 +292,7 @@ function vim.api.nvim_buf_create_user_command(buffer, name, command, opts) end
 --- @param ns_id number
 --- @param id number
 --- @return boolean
-function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
+function api.nvim_buf_del_extmark(buffer, ns_id, id) end
 
 -- Unmaps a buffer-local |mapping| for the given mode.
 -- 
@@ -298,7 +304,7 @@ function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
 --- @param buffer buffer
 --- @param mode string
 --- @param lhs string
-function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
+function api.nvim_buf_del_keymap(buffer, mode, lhs) end
 
 -- Deletes a named mark in the buffer. See |mark-motions|.
 -- 
@@ -319,7 +325,7 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 --- @param buffer buffer
 --- @param name string
 --- @return boolean
-function vim.api.nvim_buf_del_mark(buffer, name) end
+function api.nvim_buf_del_mark(buffer, name) end
 
 -- Delete a buffer-local user-defined command.
 -- 
@@ -331,7 +337,7 @@ function vim.api.nvim_buf_del_mark(buffer, name) end
 --   • {name}    Name of the command to delete.
 --- @param buffer buffer
 --- @param name string
-function vim.api.nvim_buf_del_user_command(buffer, name) end
+function api.nvim_buf_del_user_command(buffer, name) end
 
 -- Removes a buffer-scoped (b:) variable
 -- 
@@ -340,7 +346,7 @@ function vim.api.nvim_buf_del_user_command(buffer, name) end
 --   • {name}    Variable name
 --- @param buffer buffer
 --- @param name string
-function vim.api.nvim_buf_del_var(buffer, name) end
+function api.nvim_buf_del_var(buffer, name) end
 
 -- Deletes the buffer. See |:bwipeout|
 -- 
@@ -354,7 +360,7 @@ function vim.api.nvim_buf_del_var(buffer, name) end
 --               • unload: Unloaded only, do not delete. See |:bunload|
 --- @param buffer buffer
 --- @param opts table<string, any>
-function vim.api.nvim_buf_delete(buffer, opts) end
+function api.nvim_buf_delete(buffer, opts) end
 
 -- Gets a changed tick of a buffer
 -- 
@@ -365,7 +371,7 @@ function vim.api.nvim_buf_delete(buffer, opts) end
 --     `b:changedtick` value.
 --- @param buffer buffer
 --- @return number
-function vim.api.nvim_buf_get_changedtick(buffer) end
+function api.nvim_buf_get_changedtick(buffer) end
 
 -- Gets a map of buffer-local |user-commands|.
 -- 
@@ -378,7 +384,7 @@ function vim.api.nvim_buf_get_changedtick(buffer) end
 --- @param buffer buffer
 --- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_buf_get_commands(buffer, opts) end
+function api.nvim_buf_get_commands(buffer, opts) end
 
 -- Gets the position (0-indexed) of an |extmark|.
 -- 
@@ -396,7 +402,7 @@ function vim.api.nvim_buf_get_commands(buffer, opts) end
 --- @param id number
 --- @param opts table<string, any>
 --- @return any[]
-function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
+function api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 
 -- Gets |extmarks| in "traversal order" from a |charwise| region defined by
 -- buffer positions (inclusive, 0-indexed |api-indexing|).
@@ -448,7 +454,7 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --- @param end_ object
 --- @param opts table<string, any>
 --- @return any[]
-function vim.api.nvim_buf_get_extmarks(buffer, ns_id, start, end_, opts) end
+function api.nvim_buf_get_extmarks(buffer, ns_id, start, end_, opts) end
 
 -- Gets a list of buffer-local |mapping| definitions.
 -- 
@@ -462,7 +468,7 @@ function vim.api.nvim_buf_get_extmarks(buffer, ns_id, start, end_, opts) end
 --- @param buffer buffer
 --- @param mode string
 --- @return any[]
-function vim.api.nvim_buf_get_keymap(buffer, mode) end
+function api.nvim_buf_get_keymap(buffer, mode) end
 
 -- Gets a line-range from the buffer.
 -- 
@@ -486,7 +492,7 @@ function vim.api.nvim_buf_get_keymap(buffer, mode) end
 --- @param end_ number
 --- @param strict_indexing boolean
 --- @return string[]
-function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
+function api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 
 -- Returns a tuple (row,col) representing the position of the named mark. See
 -- |mark-motions|.
@@ -507,7 +513,7 @@ function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 --- @param buffer buffer
 --- @param name string
 --- @return number[]
-function vim.api.nvim_buf_get_mark(buffer, name) end
+function api.nvim_buf_get_mark(buffer, name) end
 
 -- Gets the full file name for the buffer
 -- 
@@ -518,7 +524,7 @@ function vim.api.nvim_buf_get_mark(buffer, name) end
 --     Buffer name
 --- @param buffer buffer
 --- @return string
-function vim.api.nvim_buf_get_name(buffer) end
+function api.nvim_buf_get_name(buffer) end
 
 -- Returns the byte offset of a line (0-indexed). |api-indexing|
 -- 
@@ -539,7 +545,7 @@ function vim.api.nvim_buf_get_name(buffer) end
 --- @param buffer buffer
 --- @param index number
 --- @return number
-function vim.api.nvim_buf_get_offset(buffer, index) end
+function api.nvim_buf_get_offset(buffer, index) end
 
 -- Gets a buffer option value
 -- 
@@ -552,7 +558,7 @@ function vim.api.nvim_buf_get_offset(buffer, index) end
 --- @param buffer buffer
 --- @param name string
 --- @return object
-function vim.api.nvim_buf_get_option(buffer, name) end
+function api.nvim_buf_get_option(buffer, name) end
 
 -- Gets a range from the buffer.
 -- 
@@ -581,7 +587,7 @@ function vim.api.nvim_buf_get_option(buffer, name) end
 --- @param end_col number
 --- @param opts table<string, any>
 --- @return string[]
-function vim.api.nvim_buf_get_text(buffer, start_row, start_col, end_row, end_col, opts) end
+function api.nvim_buf_get_text(buffer, start_row, start_col, end_row, end_col, opts) end
 
 -- Gets a buffer-scoped (b:) variable.
 -- 
@@ -594,7 +600,7 @@ function vim.api.nvim_buf_get_text(buffer, start_row, start_col, end_row, end_co
 --- @param buffer buffer
 --- @param name string
 --- @return object
-function vim.api.nvim_buf_get_var(buffer, name) end
+function api.nvim_buf_get_var(buffer, name) end
 
 -- Checks if a buffer is valid and loaded. See |api-buffer| for more info
 -- about unloaded buffers.
@@ -606,7 +612,7 @@ function vim.api.nvim_buf_get_var(buffer, name) end
 --     true if the buffer is valid and loaded, false otherwise.
 --- @param buffer buffer
 --- @return boolean
-function vim.api.nvim_buf_is_loaded(buffer) end
+function api.nvim_buf_is_loaded(buffer) end
 
 -- Checks if a buffer is valid.
 -- 
@@ -621,7 +627,7 @@ function vim.api.nvim_buf_is_loaded(buffer) end
 --     true if the buffer is valid, false otherwise.
 --- @param buffer buffer
 --- @return boolean
-function vim.api.nvim_buf_is_valid(buffer) end
+function api.nvim_buf_is_valid(buffer) end
 
 -- Returns the number of lines in the given buffer.
 -- 
@@ -632,7 +638,7 @@ function vim.api.nvim_buf_is_valid(buffer) end
 --     Line count, or 0 for unloaded buffer. |api-buffer|
 --- @param buffer buffer
 --- @return number
-function vim.api.nvim_buf_line_count(buffer) end
+function api.nvim_buf_line_count(buffer) end
 
 -- Creates or updates an |extmark|.
 -- 
@@ -751,7 +757,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 --- @param col number
 --- @param opts? table<string, any>
 --- @return number
-function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
+function api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 
 -- Sets a buffer-local |mapping| for the given mode.
 -- 
@@ -765,7 +771,7 @@ function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 --- @param lhs string
 --- @param rhs string
 --- @param opts? table<string, any>
-function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
+function api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 
 -- Sets (replaces) a line-range in the buffer.
 -- 
@@ -796,7 +802,7 @@ function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 --- @param end_ number
 --- @param strict_indexing boolean
 --- @param replacement string[]
-function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replacement) end
+function api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replacement) end
 
 -- Sets a named mark in the given buffer, all marks are allowed
 -- file/uppercase, visual, last change, etc. See |mark-motions|.
@@ -825,7 +831,7 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 --- @param col number
 --- @param opts table<string, any>
 --- @return boolean
-function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
+function api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 
 -- Sets the full file name for a buffer
 -- 
@@ -834,7 +840,7 @@ function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 --   • {name}    Buffer name
 --- @param buffer buffer
 --- @param name string
-function vim.api.nvim_buf_set_name(buffer, name) end
+function api.nvim_buf_set_name(buffer, name) end
 
 -- Sets a buffer option value. Passing `nil` as value deletes the option
 -- (only works if there's a global fallback)
@@ -846,7 +852,7 @@ function vim.api.nvim_buf_set_name(buffer, name) end
 --- @param buffer buffer
 --- @param name string
 --- @param value object
-function vim.api.nvim_buf_set_option(buffer, name, value) end
+function api.nvim_buf_set_option(buffer, name, value) end
 
 -- Sets (replaces) a range in the buffer
 -- 
@@ -880,7 +886,7 @@ function vim.api.nvim_buf_set_option(buffer, name, value) end
 --- @param end_row number
 --- @param end_col number
 --- @param replacement string[]
-function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_col, replacement) end
+function api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_col, replacement) end
 
 -- Sets a buffer-scoped (b:) variable
 -- 
@@ -891,7 +897,7 @@ function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_co
 --- @param buffer buffer
 --- @param name string
 --- @param value object
-function vim.api.nvim_buf_set_var(buffer, name, value) end
+function api.nvim_buf_set_var(buffer, name, value) end
 
 -- Calls a VimL |Dictionary-function| with the given arguments.
 -- 
@@ -908,7 +914,7 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 --- @param fn string
 --- @param args any[]
 --- @return object
-function vim.api.nvim_call_dict_function(dict, fn, args) end
+function api.nvim_call_dict_function(dict, fn, args) end
 
 -- Calls a VimL function with the given arguments.
 -- 
@@ -923,7 +929,7 @@ function vim.api.nvim_call_dict_function(dict, fn, args) end
 --- @param fn string
 --- @param args any[]
 --- @return object
-function vim.api.nvim_call_function(fn, args) end
+function api.nvim_call_function(fn, args) end
 
 -- Send data to channel `id`. For a job, it writes it to the stdin of the
 -- process. For the stdio channel |channel-stdio|, it writes to Nvim's
@@ -943,7 +949,7 @@ function vim.api.nvim_call_function(fn, args) end
 --   • {data}  data to write. 8-bit clean: can contain NUL bytes.
 --- @param chan number
 --- @param data string
-function vim.api.nvim_chan_send(chan, data) end
+function api.nvim_chan_send(chan, data) end
 
 -- Clear all autocommands that match the corresponding {opts}. To delete a
 -- particular autocmd, see |nvim_del_autocmd()|.
@@ -971,7 +977,7 @@ function vim.api.nvim_chan_send(chan, data) end
 --             • group: (string|int) The augroup name or id.
 --               • NOTE: If not passed, will only delete autocmds not in any group.
 --- @param opts? table<string, any>
-function vim.api.nvim_clear_autocmds(opts) end
+function api.nvim_clear_autocmds(opts) end
 
 -- Executes an Ex command.
 -- 
@@ -1008,7 +1014,7 @@ function vim.api.nvim_clear_autocmds(opts) end
 --- @param cmd? table<string, any>
 --- @param opts? table<string, any>
 --- @return string
-function vim.api.nvim_cmd(cmd, opts) end
+function api.nvim_cmd(cmd, opts) end
 
 -- Executes an Ex command.
 -- 
@@ -1023,7 +1029,7 @@ function vim.api.nvim_cmd(cmd, opts) end
 -- Parameters: ~
 --   • {command}  Ex command string
 --- @param command string
-function vim.api.nvim_command(command) end
+function api.nvim_command(command) end
 
 -- Create or get an autocommand group |autocmd-groups|.
 -- 
@@ -1048,7 +1054,7 @@ function vim.api.nvim_command(command) end
 --- @param name string
 --- @param opts? table<string, any>
 --- @return number
-function vim.api.nvim_create_augroup(name, opts) end
+function api.nvim_create_augroup(name, opts) end
 
 -- Creates an |autocommand| event handler, defined by `callback` (Lua function or Vimscript function name string) or `command` (Ex command string).
 -- 
@@ -1120,7 +1126,7 @@ function vim.api.nvim_create_augroup(name, opts) end
 --- @param event object
 --- @param opts? table<string, any>
 --- @return number
-function vim.api.nvim_create_autocmd(event, opts) end
+function api.nvim_create_autocmd(event, opts) end
 
 -- Creates a new, empty, unnamed buffer.
 -- 
@@ -1138,7 +1144,7 @@ function vim.api.nvim_create_autocmd(event, opts) end
 --- @param listed boolean
 --- @param scratch boolean
 --- @return buffer
-function vim.api.nvim_create_buf(listed, scratch) end
+function api.nvim_create_buf(listed, scratch) end
 
 -- Creates a new namespace or gets an existing one.
 -- 
@@ -1156,7 +1162,7 @@ function vim.api.nvim_create_buf(listed, scratch) end
 --     Namespace id
 --- @param name string
 --- @return number
-function vim.api.nvim_create_namespace(name) end
+function api.nvim_create_namespace(name) end
 
 -- Create a new user command |user-commands|
 -- 
@@ -1215,7 +1221,7 @@ function vim.api.nvim_create_namespace(name) end
 --- @param name string
 --- @param command object
 --- @param opts? table<string, any>
-function vim.api.nvim_create_user_command(name, command, opts) end
+function api.nvim_create_user_command(name, command, opts) end
 
 -- Delete an autocommand group by id.
 -- 
@@ -1232,7 +1238,7 @@ function vim.api.nvim_create_user_command(name, command, opts) end
 --     |nvim_del_augroup_by_name()|
 --     |nvim_create_augroup()|
 --- @param id number
-function vim.api.nvim_del_augroup_by_id(id) end
+function api.nvim_del_augroup_by_id(id) end
 
 -- Delete an autocommand group by name.
 -- 
@@ -1246,7 +1252,7 @@ function vim.api.nvim_del_augroup_by_id(id) end
 -- See also: ~
 --     |autocmd-groups|
 --- @param name string
-function vim.api.nvim_del_augroup_by_name(name) end
+function api.nvim_del_augroup_by_name(name) end
 
 -- Delete an autocommand by id.
 -- 
@@ -1258,13 +1264,13 @@ function vim.api.nvim_del_augroup_by_name(name) end
 -- See also: ~
 --     |nvim_create_autocmd()|
 --- @param id number
-function vim.api.nvim_del_autocmd(id) end
+function api.nvim_del_autocmd(id) end
 
 -- Deletes the current line.
 -- 
 -- Attributes: ~
 --     not allowed when |textlock| is active
-function vim.api.nvim_del_current_line() end
+function api.nvim_del_current_line() end
 
 -- Unmaps a global |mapping| for the given mode.
 -- 
@@ -1274,7 +1280,7 @@ function vim.api.nvim_del_current_line() end
 --     |nvim_set_keymap()|
 --- @param mode string
 --- @param lhs string
-function vim.api.nvim_del_keymap(mode, lhs) end
+function api.nvim_del_keymap(mode, lhs) end
 
 -- Deletes an uppercase/file named mark. See |mark-motions|.
 -- 
@@ -1292,21 +1298,21 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 --     |nvim_get_mark()|
 --- @param name string
 --- @return boolean
-function vim.api.nvim_del_mark(name) end
+function api.nvim_del_mark(name) end
 
 -- Delete a user-defined command.
 -- 
 -- Parameters: ~
 --   • {name}  Name of the command to delete.
 --- @param name string
-function vim.api.nvim_del_user_command(name) end
+function api.nvim_del_user_command(name) end
 
 -- Removes a global (g:) variable.
 -- 
 -- Parameters: ~
 --   • {name}  Variable name
 --- @param name string
-function vim.api.nvim_del_var(name) end
+function api.nvim_del_var(name) end
 
 -- Echo a message.
 -- 
@@ -1323,7 +1329,7 @@ function vim.api.nvim_del_var(name) end
 --- @param chunks any[]
 --- @param history boolean
 --- @param opts? table<string, any>
-function vim.api.nvim_echo(chunks, history, opts) end
+function api.nvim_echo(chunks, history, opts) end
 
 -- Writes a message to the Vim error buffer. Does not append "\n", the
 -- message is buffered (won't display) until a linefeed is written.
@@ -1331,7 +1337,7 @@ function vim.api.nvim_echo(chunks, history, opts) end
 -- Parameters: ~
 --   • {str}  Message
 --- @param str string
-function vim.api.nvim_err_write(str) end
+function api.nvim_err_write(str) end
 
 -- Writes a message to the Vim error buffer. Appends "\n", so the buffer is
 -- flushed (and displayed).
@@ -1342,7 +1348,7 @@ function vim.api.nvim_err_write(str) end
 -- See also: ~
 --     nvim_err_write()
 --- @param str string
-function vim.api.nvim_err_writeln(str) end
+function api.nvim_err_writeln(str) end
 
 -- Evaluates a VimL |expression|. Dictionaries and Lists are recursively
 -- expanded.
@@ -1356,7 +1362,7 @@ function vim.api.nvim_err_writeln(str) end
 --     Evaluation result or expanded object
 --- @param expr string
 --- @return object
-function vim.api.nvim_eval(expr) end
+function api.nvim_eval(expr) end
 
 -- Evaluates statusline string.
 -- 
@@ -1391,7 +1397,7 @@ function vim.api.nvim_eval(expr) end
 --- @param str string
 --- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_eval_statusline(str, opts) end
+function api.nvim_eval_statusline(str, opts) end
 
 -- Executes Vimscript (multiline block of Ex commands), like anonymous
 -- |:source|.
@@ -1416,7 +1422,7 @@ function vim.api.nvim_eval_statusline(str, opts) end
 --- @param src string
 --- @param output boolean
 --- @return string
-function vim.api.nvim_exec(src, output) end
+function api.nvim_exec(src, output) end
 
 -- Execute all autocommands for {event} that match the corresponding {opts}
 -- |autocmd-execute|.
@@ -1439,7 +1445,7 @@ function vim.api.nvim_exec(src, output) end
 --     |:doautocmd|
 --- @param event object
 --- @param opts? table<string, any>
-function vim.api.nvim_exec_autocmds(event, opts) end
+function api.nvim_exec_autocmds(event, opts) end
 
 -- Sends input-keys to Nvim, subject to various quirks controlled by `mode`
 -- flags. This is a blocking call, unlike |nvim_input()|.
@@ -1469,7 +1475,7 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 --- @param keys string
 --- @param mode string
 --- @param escape_ks boolean
-function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
+function api.nvim_feedkeys(keys, mode, escape_ks) end
 
 -- Gets the option information for all options.
 -- 
@@ -1479,7 +1485,7 @@ function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
 -- Return: ~
 --     dictionary of all options
 --- @return table<string, any>
-function vim.api.nvim_get_all_options_info() end
+function api.nvim_get_all_options_info() end
 
 -- Get all autocommands that match the corresponding {opts}.
 -- 
@@ -1532,7 +1538,7 @@ function vim.api.nvim_get_all_options_info() end
 --     • buffer (number): the buffer number.
 --- @param opts? table<string, any>
 --- @return any[]
-function vim.api.nvim_get_autocmds(opts) end
+function api.nvim_get_autocmds(opts) end
 
 -- Gets information about a channel.
 -- 
@@ -1559,7 +1565,7 @@ function vim.api.nvim_get_autocmds(opts) end
 --       the RPC channel), if provided by it via |nvim_set_client_info()|.
 --- @param chan number
 --- @return table<string, any>
-function vim.api.nvim_get_chan_info(chan) end
+function api.nvim_get_chan_info(chan) end
 
 -- Returns the 24-bit RGB value of a |nvim_get_color_map()| color name or
 -- "#rrggbb" hexadecimal string.
@@ -1577,7 +1583,7 @@ function vim.api.nvim_get_chan_info(chan) end
 --     24-bit RGB value, or -1 for invalid argument.
 --- @param name string
 --- @return number
-function vim.api.nvim_get_color_by_name(name) end
+function api.nvim_get_color_by_name(name) end
 
 -- Returns a map of color names and RGB values.
 -- 
@@ -1587,7 +1593,7 @@ function vim.api.nvim_get_color_by_name(name) end
 -- Return: ~
 --     Map of color names and RGB values.
 --- @return table<string, any>
-function vim.api.nvim_get_color_map() end
+function api.nvim_get_color_map() end
 
 -- Gets a map of global (non-buffer-local) Ex commands.
 -- 
@@ -1600,7 +1606,7 @@ function vim.api.nvim_get_color_map() end
 --     Map of maps describing commands.
 --- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_get_commands(opts) end
+function api.nvim_get_commands(opts) end
 
 -- Gets a map of the current editor state.
 -- 
@@ -1613,35 +1619,35 @@ function vim.api.nvim_get_commands(opts) end
 --     map of global |context|.
 --- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_get_context(opts) end
+function api.nvim_get_context(opts) end
 
 -- Gets the current buffer.
 -- 
 -- Return: ~
 --     Buffer handle
 --- @return buffer
-function vim.api.nvim_get_current_buf() end
+function api.nvim_get_current_buf() end
 
 -- Gets the current line.
 -- 
 -- Return: ~
 --     Current line string
 --- @return string
-function vim.api.nvim_get_current_line() end
+function api.nvim_get_current_line() end
 
 -- Gets the current tabpage.
 -- 
 -- Return: ~
 --     Tabpage handle
 --- @return tabpage
-function vim.api.nvim_get_current_tabpage() end
+function api.nvim_get_current_tabpage() end
 
 -- Gets the current window.
 -- 
 -- Return: ~
 --     Window handle
 --- @return window
-function vim.api.nvim_get_current_win() end
+function api.nvim_get_current_win() end
 
 -- Gets a highlight definition by id. |hlID()|
 -- 
@@ -1657,7 +1663,7 @@ function vim.api.nvim_get_current_win() end
 --- @param hl_id number
 --- @param rgb boolean
 --- @return table<string, any>
-function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
+function api.nvim_get_hl_by_id(hl_id, rgb) end
 
 -- Gets a highlight definition by name.
 -- 
@@ -1673,14 +1679,14 @@ function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
 --- @param name string
 --- @param rgb boolean
 --- @return table<string, any>
-function vim.api.nvim_get_hl_by_name(name, rgb) end
+function api.nvim_get_hl_by_name(name, rgb) end
 
 -- Gets a highlight group by name
 -- 
 -- similar to |hlID()|, but allocates a new ID if not present.
 --- @param name string
 --- @return number
-function vim.api.nvim_get_hl_id_by_name(name) end
+function api.nvim_get_hl_id_by_name(name) end
 
 -- Gets a list of global (non-buffer-local) |mapping| definitions.
 -- 
@@ -1692,7 +1698,7 @@ function vim.api.nvim_get_hl_id_by_name(name) end
 --     "buffer" key is always zero.
 --- @param mode string
 --- @return any[]
-function vim.api.nvim_get_keymap(mode) end
+function api.nvim_get_keymap(mode) end
 
 -- Return a tuple (row, col, buffer, buffername) representing the position of
 -- the uppercase/file named mark. See |mark-motions|.
@@ -1716,7 +1722,7 @@ function vim.api.nvim_get_keymap(mode) end
 --- @param name string
 --- @param opts table<string, any>
 --- @return any[]
-function vim.api.nvim_get_mark(name, opts) end
+function api.nvim_get_mark(name, opts) end
 
 -- Gets the current mode. |mode()| "blocking" is true if Nvim is waiting for
 -- input.
@@ -1727,14 +1733,14 @@ function vim.api.nvim_get_mark(name, opts) end
 -- Attributes: ~
 --     |api-fast|
 --- @return table<string, any>
-function vim.api.nvim_get_mode() end
+function api.nvim_get_mode() end
 
 -- Gets existing, non-anonymous |namespace|s.
 -- 
 -- Return: ~
 --     dict that maps from names to namespace ids.
 --- @return table<string, any>
-function vim.api.nvim_get_namespaces() end
+function api.nvim_get_namespaces() end
 
 -- Gets the global value of an option.
 -- 
@@ -1745,7 +1751,7 @@ function vim.api.nvim_get_namespaces() end
 --     Option value (global)
 --- @param name string
 --- @return object
-function vim.api.nvim_get_option(name) end
+function api.nvim_get_option(name) end
 
 -- Gets the option information for one option
 -- 
@@ -1770,7 +1776,7 @@ function vim.api.nvim_get_option(name) end
 --     Option Information
 --- @param name string
 --- @return table<string, any>
-function vim.api.nvim_get_option_info(name) end
+function api.nvim_get_option_info(name) end
 
 -- Gets the value of an option. The behavior of this function matches that of
 -- |:set|: the local value of an option is returned if it exists; otherwise,
@@ -1791,7 +1797,7 @@ function vim.api.nvim_get_option_info(name) end
 --- @param name string
 --- @param opts? table<string, any>
 --- @return object
-function vim.api.nvim_get_option_value(name, opts) end
+function api.nvim_get_option_value(name, opts) end
 
 -- Gets info describing process `pid`.
 -- 
@@ -1799,7 +1805,7 @@ function vim.api.nvim_get_option_value(name, opts) end
 --     Map of process properties, or NIL if process not found.
 --- @param pid number
 --- @return object
-function vim.api.nvim_get_proc(pid) end
+function api.nvim_get_proc(pid) end
 
 -- Gets the immediate children of process `pid`.
 -- 
@@ -1807,7 +1813,7 @@ function vim.api.nvim_get_proc(pid) end
 --     Array of child process ids, empty if process not found.
 --- @param pid number
 --- @return any[]
-function vim.api.nvim_get_proc_children(pid) end
+function api.nvim_get_proc_children(pid) end
 
 -- Find files in runtime directories
 -- 
@@ -1830,7 +1836,7 @@ function vim.api.nvim_get_proc_children(pid) end
 --- @param name string
 --- @param all boolean
 --- @return string[]
-function vim.api.nvim_get_runtime_file(name, all) end
+function api.nvim_get_runtime_file(name, all) end
 
 -- Gets a global (g:) variable.
 -- 
@@ -1841,7 +1847,7 @@ function vim.api.nvim_get_runtime_file(name, all) end
 --     Variable value
 --- @param name string
 --- @return object
-function vim.api.nvim_get_var(name) end
+function api.nvim_get_var(name) end
 
 -- Gets a v: variable.
 -- 
@@ -1852,7 +1858,7 @@ function vim.api.nvim_get_var(name) end
 --     Variable value
 --- @param name string
 --- @return object
-function vim.api.nvim_get_vvar(name) end
+function api.nvim_get_vvar(name) end
 
 -- Queues raw user-input. Unlike |nvim_feedkeys()|, this uses a low-level
 -- input buffer and the call is non-blocking (input is processed
@@ -1879,7 +1885,7 @@ function vim.api.nvim_get_vvar(name) end
 --     buffer becomes full).
 --- @param keys string
 --- @return number
-function vim.api.nvim_input(keys) end
+function api.nvim_input(keys) end
 
 -- Send mouse event from GUI.
 -- 
@@ -1915,7 +1921,7 @@ function vim.api.nvim_input(keys) end
 --- @param grid number
 --- @param row number
 --- @param col number
-function vim.api.nvim_input_mouse(button, action, modifier, grid, row, col) end
+function api.nvim_input_mouse(button, action, modifier, grid, row, col) end
 
 -- Gets the current list of buffer handles
 -- 
@@ -1925,7 +1931,7 @@ function vim.api.nvim_input_mouse(button, action, modifier, grid, row, col) end
 -- Return: ~
 --     List of buffer handles
 --- @return any[]
-function vim.api.nvim_list_bufs() end
+function api.nvim_list_bufs() end
 
 -- Get information about all open channels.
 -- 
@@ -1933,21 +1939,21 @@ function vim.api.nvim_list_bufs() end
 --     Array of Dictionaries, each describing a channel with the format
 --     specified at |nvim_get_chan_info()|.
 --- @return any[]
-function vim.api.nvim_list_chans() end
+function api.nvim_list_chans() end
 
 -- Gets the paths contained in 'runtimepath'.
 -- 
 -- Return: ~
 --     List of paths
 --- @return string[]
-function vim.api.nvim_list_runtime_paths() end
+function api.nvim_list_runtime_paths() end
 
 -- Gets the current list of tabpage handles.
 -- 
 -- Return: ~
 --     List of tabpage handles
 --- @return any[]
-function vim.api.nvim_list_tabpages() end
+function api.nvim_list_tabpages() end
 
 -- Gets a list of dictionaries representing attached UIs.
 -- 
@@ -1959,14 +1965,14 @@ function vim.api.nvim_list_tabpages() end
 --     • "ext_..." Requested UI extensions, see |ui-option|
 --     • "chan" |channel-id| of remote UI
 --- @return any[]
-function vim.api.nvim_list_uis() end
+function api.nvim_list_uis() end
 
 -- Gets the current list of window handles.
 -- 
 -- Return: ~
 --     List of window handles
 --- @return any[]
-function vim.api.nvim_list_wins() end
+function api.nvim_list_wins() end
 
 -- Sets the current editor state from the given |context| map.
 -- 
@@ -1974,7 +1980,7 @@ function vim.api.nvim_list_wins() end
 --   • {dict}  |Context| map.
 --- @param dict table<string, any>
 --- @return object
-function vim.api.nvim_load_context(dict) end
+function api.nvim_load_context(dict) end
 
 -- Notify the user with a message
 -- 
@@ -1989,7 +1995,7 @@ function vim.api.nvim_load_context(dict) end
 --- @param log_level number
 --- @param opts table<string, any>
 --- @return object
-function vim.api.nvim_notify(msg, log_level, opts) end
+function api.nvim_notify(msg, log_level, opts) end
 
 -- Open a terminal instance in a buffer
 -- 
@@ -2020,7 +2026,7 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 --- @param buffer buffer
 --- @param opts table<string, any>
 --- @return number
-function vim.api.nvim_open_term(buffer, opts) end
+function api.nvim_open_term(buffer, opts) end
 
 -- Open a new window.
 -- 
@@ -2166,7 +2172,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 --- @param enter boolean
 --- @param config? table<string, any>
 --- @return window
-function vim.api.nvim_open_win(buffer, enter, config) end
+function api.nvim_open_win(buffer, enter, config) end
 
 -- Writes a message to the Vim output buffer. Does not append "\n", the
 -- message is buffered (won't display) until a linefeed is written.
@@ -2174,7 +2180,7 @@ function vim.api.nvim_open_win(buffer, enter, config) end
 -- Parameters: ~
 --   • {str}  Message
 --- @param str string
-function vim.api.nvim_out_write(str) end
+function api.nvim_out_write(str) end
 
 -- Parse command line.
 -- 
@@ -2248,7 +2254,7 @@ function vim.api.nvim_out_write(str) end
 --- @param str string
 --- @param opts table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_parse_cmd(str, opts) end
+function api.nvim_parse_cmd(str, opts) end
 
 -- Parse a VimL expression.
 -- 
@@ -2331,7 +2337,7 @@ function vim.api.nvim_parse_cmd(str, opts) end
 --- @param flags string
 --- @param highlight boolean
 --- @return table<string, any>
-function vim.api.nvim_parse_expression(expr, flags, highlight) end
+function api.nvim_parse_expression(expr, flags, highlight) end
 
 -- Pastes at cursor, in any mode.
 -- 
@@ -2363,7 +2369,7 @@ function vim.api.nvim_parse_expression(expr, flags, highlight) end
 --- @param crlf boolean
 --- @param phase number
 --- @return boolean
-function vim.api.nvim_paste(data, crlf, phase) end
+function api.nvim_paste(data, crlf, phase) end
 
 -- Puts text at cursor, in any mode.
 -- 
@@ -2386,7 +2392,7 @@ function vim.api.nvim_paste(data, crlf, phase) end
 --- @param type string
 --- @param after boolean
 --- @param follow boolean
-function vim.api.nvim_put(lines, type, after, follow) end
+function api.nvim_put(lines, type, after, follow) end
 
 -- Replaces terminal codes and |keycodes| (<CR>, <Esc>, ...) in a string with
 -- the internal representation.
@@ -2405,7 +2411,7 @@ function vim.api.nvim_put(lines, type, after, follow) end
 --- @param do_lt boolean
 --- @param special boolean
 --- @return string
-function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
+function api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 
 -- Selects an item in the completion popup menu.
 -- 
@@ -2427,7 +2433,7 @@ function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 --- @param insert boolean
 --- @param finish boolean
 --- @param opts table<string, any>
-function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
+function api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 
 -- Sets the current buffer.
 -- 
@@ -2437,14 +2443,14 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 -- Parameters: ~
 --   • {buffer}  Buffer handle
 --- @param buffer buffer
-function vim.api.nvim_set_current_buf(buffer) end
+function api.nvim_set_current_buf(buffer) end
 
 -- Changes the global working directory.
 -- 
 -- Parameters: ~
 --   • {dir}  Directory path
 --- @param dir string
-function vim.api.nvim_set_current_dir(dir) end
+function api.nvim_set_current_dir(dir) end
 
 -- Sets the current line.
 -- 
@@ -2454,7 +2460,7 @@ function vim.api.nvim_set_current_dir(dir) end
 -- Parameters: ~
 --   • {line}  Line contents
 --- @param line string
-function vim.api.nvim_set_current_line(line) end
+function api.nvim_set_current_line(line) end
 
 -- Sets the current tabpage.
 -- 
@@ -2464,7 +2470,7 @@ function vim.api.nvim_set_current_line(line) end
 -- Parameters: ~
 --   • {tabpage}  Tabpage handle
 --- @param tabpage tabpage
-function vim.api.nvim_set_current_tabpage(tabpage) end
+function api.nvim_set_current_tabpage(tabpage) end
 
 -- Sets the current window.
 -- 
@@ -2474,7 +2480,7 @@ function vim.api.nvim_set_current_tabpage(tabpage) end
 -- Parameters: ~
 --   • {window}  Window handle
 --- @param window window
-function vim.api.nvim_set_current_win(window) end
+function api.nvim_set_current_win(window) end
 
 -- Set or change decoration provider for a |namespace|
 -- 
@@ -2520,7 +2526,7 @@ function vim.api.nvim_set_current_win(window) end
 --              • on_end: called at the end of a redraw cycle ["end", tick]
 --- @param ns_id number
 --- @param opts? table<string, any>
-function vim.api.nvim_set_decoration_provider(ns_id, opts) end
+function api.nvim_set_decoration_provider(ns_id, opts) end
 
 -- Sets a highlight group.
 -- 
@@ -2567,7 +2573,7 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --- @param ns_id number
 --- @param name string
 --- @param val? table<string, any>
-function vim.api.nvim_set_hl(ns_id, name, val) end
+function api.nvim_set_hl(ns_id, name, val) end
 
 -- Set active namespace for highlights. This can be set for a single window,
 -- see |nvim_win_set_hl_ns()|.
@@ -2575,7 +2581,7 @@ function vim.api.nvim_set_hl(ns_id, name, val) end
 -- Parameters: ~
 --   • {ns_id}  the namespace to use
 --- @param ns_id number
-function vim.api.nvim_set_hl_ns(ns_id) end
+function api.nvim_set_hl_ns(ns_id) end
 
 -- Set active namespace for highlights while redrawing.
 -- 
@@ -2589,7 +2595,7 @@ function vim.api.nvim_set_hl_ns(ns_id) end
 -- Parameters: ~
 --   • {ns_id}  the namespace to activate
 --- @param ns_id number
-function vim.api.nvim_set_hl_ns_fast(ns_id) end
+function api.nvim_set_hl_ns_fast(ns_id) end
 
 -- Sets a global |mapping| for the given mode.
 -- 
@@ -2627,7 +2633,7 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --- @param lhs string
 --- @param rhs string
 --- @param opts? table<string, any>
-function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
+function api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
 -- Sets the global value of an option.
 -- 
@@ -2636,7 +2642,7 @@ function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 --   • {value}  New option value
 --- @param name string
 --- @param value object
-function vim.api.nvim_set_option(name, value) end
+function api.nvim_set_option(name, value) end
 
 -- Sets the value of an option. The behavior of this function matches that of
 -- |:set|: for global-local options, both the global and local value are set
@@ -2655,7 +2661,7 @@ function vim.api.nvim_set_option(name, value) end
 --- @param name string
 --- @param value object
 --- @param opts? table<string, any>
-function vim.api.nvim_set_option_value(name, value, opts) end
+function api.nvim_set_option_value(name, value, opts) end
 
 -- Sets a global (g:) variable.
 -- 
@@ -2664,7 +2670,7 @@ function vim.api.nvim_set_option_value(name, value, opts) end
 --   • {value}  Variable value
 --- @param name string
 --- @param value object
-function vim.api.nvim_set_var(name, value) end
+function api.nvim_set_var(name, value) end
 
 -- Sets a v: variable, if it is not readonly.
 -- 
@@ -2673,7 +2679,7 @@ function vim.api.nvim_set_var(name, value) end
 --   • {value}  Variable value
 --- @param name string
 --- @param value object
-function vim.api.nvim_set_vvar(name, value) end
+function api.nvim_set_vvar(name, value) end
 
 -- Calculates the number of display cells occupied by `text`. Control
 -- characters including <Tab> count as one cell.
@@ -2685,7 +2691,7 @@ function vim.api.nvim_set_vvar(name, value) end
 --     Number of cells
 --- @param text string
 --- @return number
-function vim.api.nvim_strwidth(text) end
+function api.nvim_strwidth(text) end
 
 -- Removes a tab-scoped (t:) variable
 -- 
@@ -2694,7 +2700,7 @@ function vim.api.nvim_strwidth(text) end
 --   • {name}     Variable name
 --- @param tabpage tabpage
 --- @param name string
-function vim.api.nvim_tabpage_del_var(tabpage, name) end
+function api.nvim_tabpage_del_var(tabpage, name) end
 
 -- Gets the tabpage number
 -- 
@@ -2705,7 +2711,7 @@ function vim.api.nvim_tabpage_del_var(tabpage, name) end
 --     Tabpage number
 --- @param tabpage tabpage
 --- @return number
-function vim.api.nvim_tabpage_get_number(tabpage) end
+function api.nvim_tabpage_get_number(tabpage) end
 
 -- Gets a tab-scoped (t:) variable
 -- 
@@ -2718,7 +2724,7 @@ function vim.api.nvim_tabpage_get_number(tabpage) end
 --- @param tabpage tabpage
 --- @param name string
 --- @return object
-function vim.api.nvim_tabpage_get_var(tabpage, name) end
+function api.nvim_tabpage_get_var(tabpage, name) end
 
 -- Gets the current window in a tabpage
 -- 
@@ -2729,7 +2735,7 @@ function vim.api.nvim_tabpage_get_var(tabpage, name) end
 --     Window handle
 --- @param tabpage tabpage
 --- @return window
-function vim.api.nvim_tabpage_get_win(tabpage) end
+function api.nvim_tabpage_get_win(tabpage) end
 
 -- Checks if a tabpage is valid
 -- 
@@ -2740,7 +2746,7 @@ function vim.api.nvim_tabpage_get_win(tabpage) end
 --     true if the tabpage is valid, false otherwise
 --- @param tabpage tabpage
 --- @return boolean
-function vim.api.nvim_tabpage_is_valid(tabpage) end
+function api.nvim_tabpage_is_valid(tabpage) end
 
 -- Gets the windows in a tabpage
 -- 
@@ -2751,7 +2757,7 @@ function vim.api.nvim_tabpage_is_valid(tabpage) end
 --     List of windows in `tabpage`
 --- @param tabpage tabpage
 --- @return any[]
-function vim.api.nvim_tabpage_list_wins(tabpage) end
+function api.nvim_tabpage_list_wins(tabpage) end
 
 -- Sets a tab-scoped (t:) variable
 -- 
@@ -2762,7 +2768,7 @@ function vim.api.nvim_tabpage_list_wins(tabpage) end
 --- @param tabpage tabpage
 --- @param name string
 --- @param value object
-function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
+function api.nvim_tabpage_set_var(tabpage, name, value) end
 
 -- Calls a function with window as temporary current window.
 -- 
@@ -2784,7 +2790,7 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 --- @param window window
 --- @param fun fun()
 --- @return object
-function vim.api.nvim_win_call(window, fun) end
+function api.nvim_win_call(window, fun) end
 
 -- Closes the window (like |:close| with a |window-ID|).
 -- 
@@ -2798,7 +2804,7 @@ function vim.api.nvim_win_call(window, fun) end
 --               hidden, even if 'hidden' is not set.
 --- @param window window
 --- @param force boolean
-function vim.api.nvim_win_close(window, force) end
+function api.nvim_win_close(window, force) end
 
 -- Removes a window-scoped (w:) variable
 -- 
@@ -2807,7 +2813,7 @@ function vim.api.nvim_win_close(window, force) end
 --   • {name}    Variable name
 --- @param window window
 --- @param name string
-function vim.api.nvim_win_del_var(window, name) end
+function api.nvim_win_del_var(window, name) end
 
 -- Gets the current buffer in a window
 -- 
@@ -2818,7 +2824,7 @@ function vim.api.nvim_win_del_var(window, name) end
 --     Buffer handle
 --- @param window window
 --- @return buffer
-function vim.api.nvim_win_get_buf(window) end
+function api.nvim_win_get_buf(window) end
 
 -- Gets window configuration.
 -- 
@@ -2833,7 +2839,7 @@ function vim.api.nvim_win_get_buf(window) end
 --     Map defining the window configuration, see |nvim_open_win()|
 --- @param window window
 --- @return table<string, any>
-function vim.api.nvim_win_get_config(window) end
+function api.nvim_win_get_config(window) end
 
 -- Gets the (1,0)-indexed, buffer-relative cursor position for a given window
 -- (different windows showing the same buffer have independent cursor
@@ -2846,7 +2852,7 @@ function vim.api.nvim_win_get_config(window) end
 --     (row, col) tuple
 --- @param window window
 --- @return number[]
-function vim.api.nvim_win_get_cursor(window) end
+function api.nvim_win_get_cursor(window) end
 
 -- Gets the window height
 -- 
@@ -2857,7 +2863,7 @@ function vim.api.nvim_win_get_cursor(window) end
 --     Height as a count of rows
 --- @param window window
 --- @return number
-function vim.api.nvim_win_get_height(window) end
+function api.nvim_win_get_height(window) end
 
 -- Gets the window number
 -- 
@@ -2868,7 +2874,7 @@ function vim.api.nvim_win_get_height(window) end
 --     Window number
 --- @param window window
 --- @return number
-function vim.api.nvim_win_get_number(window) end
+function api.nvim_win_get_number(window) end
 
 -- Gets a window option value
 -- 
@@ -2881,7 +2887,7 @@ function vim.api.nvim_win_get_number(window) end
 --- @param window window
 --- @param name string
 --- @return object
-function vim.api.nvim_win_get_option(window, name) end
+function api.nvim_win_get_option(window, name) end
 
 -- Gets the window position in display cells. First position is zero.
 -- 
@@ -2892,7 +2898,7 @@ function vim.api.nvim_win_get_option(window, name) end
 --     (row, col) tuple with the window position
 --- @param window window
 --- @return number[]
-function vim.api.nvim_win_get_position(window) end
+function api.nvim_win_get_position(window) end
 
 -- Gets the window tabpage
 -- 
@@ -2903,7 +2909,7 @@ function vim.api.nvim_win_get_position(window) end
 --     Tabpage that contains the window
 --- @param window window
 --- @return tabpage
-function vim.api.nvim_win_get_tabpage(window) end
+function api.nvim_win_get_tabpage(window) end
 
 -- Gets a window-scoped (w:) variable
 -- 
@@ -2916,7 +2922,7 @@ function vim.api.nvim_win_get_tabpage(window) end
 --- @param window window
 --- @param name string
 --- @return object
-function vim.api.nvim_win_get_var(window, name) end
+function api.nvim_win_get_var(window, name) end
 
 -- Gets the window width
 -- 
@@ -2927,7 +2933,7 @@ function vim.api.nvim_win_get_var(window, name) end
 --     Width as a count of columns
 --- @param window window
 --- @return number
-function vim.api.nvim_win_get_width(window) end
+function api.nvim_win_get_width(window) end
 
 -- Closes the window and hide the buffer it contains (like |:hide| with a
 -- |window-ID|).
@@ -2942,7 +2948,7 @@ function vim.api.nvim_win_get_width(window) end
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
 --- @param window window
-function vim.api.nvim_win_hide(window) end
+function api.nvim_win_hide(window) end
 
 -- Checks if a window is valid
 -- 
@@ -2953,7 +2959,7 @@ function vim.api.nvim_win_hide(window) end
 --     true if the window is valid, false otherwise
 --- @param window window
 --- @return boolean
-function vim.api.nvim_win_is_valid(window) end
+function api.nvim_win_is_valid(window) end
 
 -- Sets the current buffer in a window, without side effects
 -- 
@@ -2965,7 +2971,7 @@ function vim.api.nvim_win_is_valid(window) end
 --   • {buffer}  Buffer handle
 --- @param window window
 --- @param buffer buffer
-function vim.api.nvim_win_set_buf(window, buffer) end
+function api.nvim_win_set_buf(window, buffer) end
 
 -- Configures window layout. Currently only for floating and external windows
 -- (including changing a split window to those layouts).
@@ -2981,7 +2987,7 @@ function vim.api.nvim_win_set_buf(window, buffer) end
 --     |nvim_open_win()|
 --- @param window window
 --- @param config? table<string, any>
-function vim.api.nvim_win_set_config(window, config) end
+function api.nvim_win_set_config(window, config) end
 
 -- Sets the (1,0)-indexed cursor position in the window. |api-indexing| This
 -- scrolls the window even if it is not the current one.
@@ -2991,7 +2997,7 @@ function vim.api.nvim_win_set_config(window, config) end
 --   • {pos}     (row, col) tuple representing the new position
 --- @param window window
 --- @param pos number[]
-function vim.api.nvim_win_set_cursor(window, pos) end
+function api.nvim_win_set_cursor(window, pos) end
 
 -- Sets the window height.
 -- 
@@ -3000,7 +3006,7 @@ function vim.api.nvim_win_set_cursor(window, pos) end
 --   • {height}  Height as a count of rows
 --- @param window window
 --- @param height number
-function vim.api.nvim_win_set_height(window, height) end
+function api.nvim_win_set_height(window, height) end
 
 -- Set highlight namespace for a window. This will use highlights defined in
 -- this namespace, but fall back to global highlights (ns=0) when missing.
@@ -3011,7 +3017,7 @@ function vim.api.nvim_win_set_height(window, height) end
 --   • {ns_id}  the namespace to use
 --- @param window window
 --- @param ns_id number
-function vim.api.nvim_win_set_hl_ns(window, ns_id) end
+function api.nvim_win_set_hl_ns(window, ns_id) end
 
 -- Sets a window option value. Passing `nil` as value deletes the option
 -- (only works if there's a global fallback)
@@ -3023,7 +3029,7 @@ function vim.api.nvim_win_set_hl_ns(window, ns_id) end
 --- @param window window
 --- @param name string
 --- @param value object
-function vim.api.nvim_win_set_option(window, name, value) end
+function api.nvim_win_set_option(window, name, value) end
 
 -- Sets a window-scoped (w:) variable
 -- 
@@ -3034,7 +3040,7 @@ function vim.api.nvim_win_set_option(window, name, value) end
 --- @param window window
 --- @param name string
 --- @param value object
-function vim.api.nvim_win_set_var(window, name, value) end
+function api.nvim_win_set_var(window, name, value) end
 
 -- Sets the window width. This will only succeed if the screen is split
 -- vertically.
@@ -3044,5 +3050,5 @@ function vim.api.nvim_win_set_var(window, name, value) end
 --   • {width}   Width as a count of columns
 --- @param window window
 --- @param width number
-function vim.api.nvim_win_set_width(window, width) end
+function api.nvim_win_set_width(window, width) end
 
