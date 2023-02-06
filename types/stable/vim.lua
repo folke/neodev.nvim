@@ -17,7 +17,7 @@ vim.lsp = require("vim.lsp")
 vim.treesitter = require("vim.treesitter")
 vim.treesitter.highlighter = require("vim.treesitter.highlighter")
 vim.treesitter.query = require("vim.treesitter.query")
-vim.treesitter.language = require("vim.treesitter.langauge")
+vim.treesitter.language = require("vim.treesitter.language")
 vim.ui = require("vim.ui")
 
 ---@type table<string,any>
