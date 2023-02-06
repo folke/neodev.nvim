@@ -1,5 +1,9 @@
 ---@meta
 
+---@class vim.loop
+local luv = vim.loop
+vim.loop = luv
+
 ---@class vim.loop.Timer
 ---@field start fun(timer:vim.loop.Timer, timeout:integer, repeat:integer, callback:fun())
 ---@field stop fun(timer:vim.loop.Timer)
