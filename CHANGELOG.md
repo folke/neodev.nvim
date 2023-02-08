@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.1.0](https://github.com/folke/neodev.nvim/compare/v2.0.1...v2.1.0) (2023-02-08)
+
+
+### Features
+
+* Add `treesitter.query` and `treesitter.language` to stable ([#119](https://github.com/folke/neodev.nvim/issues/119)) ([4b6ade9](https://github.com/folke/neodev.nvim/commit/4b6ade9bb879aad4d1b2e94e82c36957262ead53))
+* add class to vim.api and vim.loop ([e27c03b](https://github.com/folke/neodev.nvim/commit/e27c03b3e312c08e2d4aeed2a0f76199a9729529))
+
+
+### Bug Fixes
+
+* handle cases where `vim.fn.stdpath("config")` does not exist. Fixes [#109](https://github.com/folke/neodev.nvim/issues/109) ([fc20483](https://github.com/folke/neodev.nvim/commit/fc20483383dac11b97df43c83db1bbbd35305172))
+* provide a class for vim.api ([#117](https://github.com/folke/neodev.nvim/issues/117)) ([9737bfc](https://github.com/folke/neodev.nvim/commit/9737bfc085cbb8879c19471a65b12fe9bd1ae878))
+* revert [#117](https://github.com/folke/neodev.nvim/issues/117) ([dd63031](https://github.com/folke/neodev.nvim/commit/dd630312eb978f554006a020554d64c197887644))
+* use integer for buffer, window, etc ([#116](https://github.com/folke/neodev.nvim/issues/116)) ([71e3e0c](https://github.com/folke/neodev.nvim/commit/71e3e0c2239593e29e06ecc725ba346e29d3186a))
+
 ## [2.0.1](https://github.com/folke/neodev.nvim/compare/v2.0.0...v2.0.1) (2023-01-15)
 
 
