@@ -1,5 +1,9 @@
 ---@meta
 
+---@class vim.api
+vim.api = {}
+
+
 --- @param buffer buffer
 --- @param first number
 --- @param last number
