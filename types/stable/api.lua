@@ -1,5 +1,9 @@
 ---@meta
 
+---@class vim.api
+vim.api = {}
+
+
 -- Find files in runtime directories
 -- 
 -- Attributes: ~
