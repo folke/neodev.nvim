@@ -33,7 +33,11 @@ function M.override(fname)
   local override = Config.root("/types/override/" .. fname .. ".lua")
   if override then
     local code = Util.read_file(override)
-    local mod = dofile(override) or {}
+    local mod = {}
+    local mod_code = code:match("\n(return.*)") or code:match("^(return.*)")
+    if mod_code then
+      mod = load(mod_code)()
+    end
     code = code:gsub("\nreturn.*", "")
     code = code:gsub("^return.*", "")
     return mod, code
