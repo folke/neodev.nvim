@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/folke/neodev.nvim/compare/v2.1.0...v2.2.0) (2023-02-10)
+
+
+### Features
+
+* add more luv methods and types ([#122](https://github.com/folke/neodev.nvim/issues/122)) ([fc01efe](https://github.com/folke/neodev.nvim/commit/fc01efe11447a99808b06e362d95a296218fed68))
+
 ## [2.1.0](https://github.com/folke/neodev.nvim/compare/v2.0.1...v2.1.0) (2023-02-08)
 
 
