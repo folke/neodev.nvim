@@ -4,26 +4,37 @@
 vim.loop = {}
 
 ---@class vim.loop.Timer
----@field start fun(timer:vim.loop.Timer, timeout:integer, repeat:integer, callback:fun())
----@field stop fun(timer:vim.loop.Timer)
+---@field start fun(timer: vim.loop.Timer, timeout: integer, repeat: integer, callback: fun())
+---@field stop fun(timer: vim.loop.Timer)
 
 ---@class vim.loop.Handle
-local Handle = {}
-function Handle:close() end
----@return boolean
-function Handle:is_closing() end
----@return boolean
-function Handle:is_active() end
+---@field close fun(handle: vim.loop.Handle)
+---@field is_closing fun(handle: vim.loop.Handle): boolean
+---@field is_active fun(handle: vim.loop.Handle): boolean
 
----@class vim.loop.Pipe: vim.loop.Handle
+---@class vim.loop.Stream: vim.loop.Handle
+---@field shutdown fun(stream: vim.loop.Stream, callback?: fun()): boolean
+---@field read_start fun(stream: vim.loop.Stream, callback? fun(err: string?, chunk: string): 0|'fail'
+---@field read_stop fun(stream: vim.loop.Stream): 0|'fail'
+---@field write fun(stream: vim.loop.Stream, data: string, callback?: function)
+---@field try_write fun(stream: vim.loop.Stream, data: string)
 
----@class vim.loop.Check
-local Check = {}
----@param fn fun()
-function Check:start(fn) end
-function Check:stop() end
+---@class vim.loop.Pipe: vim.loop.Stream
+
+---@class vim.loop.Prepare: vim.loop.Handle
+---@field start fun(prepare: vim.loop.Prepare, callback: function): 0|'fail'
+---@field stop fun(prepare: vim.loop.Prepare): 0|'fail'
+
+---@class vim.loop.Check: vim.loop.Handle
+---@field start fun(check: vim.loop.Check, callback: function): 0|'fail'
+---@field stop fun(check: vim.loop.Check): 0|'fail'
 
 ---@class vim.loop.Process: vim.loop.Handle
+---@field kill fun(process: vim.loop.Process, signum: integer|string): 0|'fail'
+---@field get_pid fun(process: vim.loop.Process): integer
+
+---@class vim.loop.TCP: vim.loop.Stream
+---@field connect fun(tcp: vim.loop.TCP, host: string, port: integer, callback?: fun(err?: string))
 
 
 -- > method form `stream:accept(client_stream)`
@@ -1506,6 +1517,7 @@ function vim.loop.new_poll(fd) end
 -- userdata wrapping it.
 -- 
 -- Returns: `uv_prepare_t userdata` or `fail`
+--- @return vim.loop.Prepare
 function vim.loop.new_prepare() end
 
 -- Creates and initializes a new |uv_signal_t|. Returns the Lua
@@ -1536,6 +1548,7 @@ function vim.loop.new_socket_poll(fd) end
 -- 
 -- Returns: `uv_tcp_t userdata` or `fail`
 --- @param flags? any
+--- @return vim.loop.TCP
 function vim.loop.new_tcp(flags) end
 
 -- Parameters:
