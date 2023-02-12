@@ -72,7 +72,7 @@ Plug 'folke/neodev.nvim'
 
 ## 🚀 Setup
 
-**neodev** will **ONLY** change the **sumneko_lua** settings for:
+**neodev** will **ONLY** change the **lua_ls** settings for:
 
 - your Neovim config directory
 - your Neovim runtime directory
@@ -94,7 +94,7 @@ require("neodev").setup({
 local lspconfig = require('lspconfig')
 
 -- example to setup sumneko and enable call snippets
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   settings = {
     Lua = {
       completion = {

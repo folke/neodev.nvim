@@ -53,7 +53,7 @@ function M.library(opts)
   return ret
 end
 
----@param settings? lspconfig.settings.sumneko_lua
+---@param settings? lspconfig.settings.lua_ls
 function M.path(settings)
   if config.options.pathStrict then
     return { "?.lua", "?/init.lua" }
@@ -80,11 +80,11 @@ function M.path(settings)
 end
 
 ---@param opts? LuaDevOptions
----@param settings? lspconfig.settings.sumneko_lua
+---@param settings? lspconfig.settings.lua_ls
 function M.setup(opts, settings)
   opts = config.merge(opts)
   return {
-    ---@type lspconfig.settings.sumneko_lua
+    ---@type lspconfig.settings.lua_ls
     settings = {
       Lua = {
         runtime = {
