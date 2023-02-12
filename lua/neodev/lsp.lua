@@ -11,7 +11,7 @@ function M.setup()
     if opts.setup_jsonls and config.name == "jsonls" then
       M.setup_jsonls(config)
     end
-    if config.name == "sumneko_lua" then
+    if config.name == "lua_ls" then
       config.on_new_config = hook(config.on_new_config, M.on_new_config)
       -- config.before_init = hook(config.before_init, M.before_init)
     end
