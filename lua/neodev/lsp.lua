@@ -21,8 +21,8 @@ end
 function M.setup_jsonls(config)
   local schemas = config.settings.json and config.settings.json.schemas or {}
   table.insert(schemas, {
-    name = "Sumneko Lua Settings",
-    url = "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    name = "LuaLS Settings",
+    url = "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
     fileMatch = { ".luarc.json", ".luarc.jsonc" },
   })
   config.settings = vim.tbl_deep_extend("force", config.settings, {
@@ -78,11 +78,8 @@ function M.on_new_config(config, root_dir)
     or {}
 
   if opts.library.enabled then
-    config.settings = vim.tbl_deep_extend(
-      "force",
-      config.settings or {},
-      require("neodev.sumneko").setup(opts, config.settings).settings
-    )
+    config.settings =
+      vim.tbl_deep_extend("force", config.settings or {}, require("neodev.luals").setup(opts, config.settings).settings)
     for _, lib in ipairs(library) do
       table.insert(config.settings.Lua.workspace.library, lib)
     end

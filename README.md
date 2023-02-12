@@ -9,7 +9,7 @@ completion for the nvim lua API.
 
 - Automatically configures **lua-language-server** for your **Neovim** config, **Neovim** runtime and plugin
   directories
-- [Annotations](https://github.com/sumneko/lua-language-server/wiki/Annotations) for completion, hover and signatures of:
+- [Annotations](https://github.com/LuaLS/lua-language-server/wiki/Annotations) for completion, hover and signatures of:
   - Vim functions
   - Neovim api functions
   - `vim.opt`
@@ -93,7 +93,7 @@ require("neodev").setup({
 -- then setup your lsp server as usual
 local lspconfig = require('lspconfig')
 
--- example to setup sumneko and enable call snippets
+-- example to setup lua_ls and enable call snippets
 lspconfig.lua_ls.setup({
   settings = {
     Lua = {
