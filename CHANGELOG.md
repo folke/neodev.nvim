@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.1](https://github.com/folke/neodev.nvim/compare/v2.2.0...v2.2.1) (2023-02-12)
+
+
+### Bug Fixes
+
+* s/sumneko_lua/lua_ls/ ([#124](https://github.com/folke/neodev.nvim/issues/124)) ([307d0fb](https://github.com/folke/neodev.nvim/commit/307d0fbce02068eebdaa4ef7da279fdb1bfe6d8e))
+* sumneko_lua -&gt; lua_ls ([5076ebb](https://github.com/folke/neodev.nvim/commit/5076ebbcbfd0e2164d91ff2073a6f21a561804df))
+
 ## [2.2.0](https://github.com/folke/neodev.nvim/compare/v2.1.0...v2.2.0) (2023-02-10)
 
 
