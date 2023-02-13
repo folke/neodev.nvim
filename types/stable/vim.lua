@@ -1,5 +1,8 @@
 ---@meta
 
+---@type uv
+vim.loop = {}
+
 vim = require("vim.shared")
 vim = require("vim.uri")
 vim = require("vim.inspect")

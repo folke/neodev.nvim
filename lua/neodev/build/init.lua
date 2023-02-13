@@ -102,7 +102,7 @@ function M.build()
 
   M.api()
 
-  M.write("luv", Docs.luv())
+  -- M.write("luv", Docs.luv())
   M.write("lua", Docs.lua())
   M.write("vim.fn", Docs.functions())
 end
