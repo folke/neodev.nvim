@@ -34,7 +34,48 @@ vim.loop = {}
 ---@class vim.loop.TCP: vim.loop.Stream
 ---@field connect fun(tcp: vim.loop.TCP, host: string, port: integer, callback?: fun(err?: string))
 
+---@alias vim.loop.StatTime {sec: integer, nsec: integer}
+
+---@class vim.loop.Stat
+---@field dev integer
+---@field mode integer
+---@field nlink integer
+---@field uid integer
+---@field gid integer
+---@field rdev integer
+---@field ino integer
+---@field size integer
+---@field blksize integer
+---@field blocks integer
+---@field flags integer
+---@field gen integer
+---@field atime vim.loop.StatTime
+---@field mtime vim.loop.StatTime
+---@field ctime vim.loop.StatTime
+---@field birthtime vim.loop.StatTime
+---@field type "link"|"directory"|"file"
+
 return {
+  ["vim.loop.fs_stat"] = {
+    ["return"] = { {
+      ["type"] = "vim.loop.Stat?",
+    } },
+  },
+  ["vim.loop.fs_lstat"] = {
+    ["return"] = { {
+      ["type"] = "vim.loop.Stat?",
+    } },
+  },
+  ["vim.loop.fs_fstat"] = {
+    ["return"] = { {
+      ["type"] = "vim.loop.Stat?",
+    } },
+  },
+  ["vim.loop.fs_scandir_next"] = {
+    ["return"] = { {
+      ["type"] = [[string?, "file"|"link"|"directory"|nil]],
+    } },
+  },
   ["vim.loop.new_timer"] = {
     ["return"] = { {
       ["type"] = "vim.loop.Timer",
