@@ -36,6 +36,27 @@ vim.loop = {}
 ---@class vim.loop.TCP: vim.loop.Stream
 ---@field connect fun(tcp: vim.loop.TCP, host: string, port: integer, callback?: fun(err?: string))
 
+---@alias vim.loop.StatTime {sec: integer, nsec: integer}
+
+---@class vim.loop.Stat
+---@field dev integer
+---@field mode integer
+---@field nlink integer
+---@field uid integer
+---@field gid integer
+---@field rdev integer
+---@field ino integer
+---@field size integer
+---@field blksize integer
+---@field blocks integer
+---@field flags integer
+---@field gen integer
+---@field atime vim.loop.StatTime
+---@field mtime vim.loop.StatTime
+---@field ctime vim.loop.StatTime
+---@field birthtime vim.loop.StatTime
+---@field type "link"|"directory"|"file"
+
 
 -- > method form `stream:accept(client_stream)`
 -- 
@@ -467,7 +488,7 @@ function vim.loop.fs_fdatasync(fd, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
---- @return table
+--- @return vim.loop.Stat?
 function vim.loop.fs_fstat(fd, callback) end
 
 -- Parameters:
@@ -569,7 +590,7 @@ function vim.loop.fs_link(path, new_path, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
---- @return table
+--- @return vim.loop.Stat?
 function vim.loop.fs_lstat(path, callback) end
 
 -- Parameters:
@@ -870,6 +891,7 @@ function vim.loop.fs_scandir(path, callback) end
 -- asynchronous version.
 -- 
 -- Returns: `string, string` or `nil` or `fail`
+--- @return string?, "file"|"link"|"directory"|nil
 function vim.loop.fs_scandir_next(fs) end
 
 -- Parameters:
@@ -930,7 +952,7 @@ function vim.loop.fs_sendfile(out_fd, in_fd, in_offset, size, callback) end
 -- 
 -- Returns (async version): `uv_fs_t userdata`
 --- @param callback? fun()
---- @return table
+--- @return vim.loop.Stat?
 function vim.loop.fs_stat(path, callback) end
 
 -- Parameters:
