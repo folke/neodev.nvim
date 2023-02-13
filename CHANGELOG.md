@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/folke/neodev.nvim/compare/v2.3.0...v2.4.0) (2023-02-13)
+
+
+### Features
+
+* added lua_ls luv builtin library. Fixes [#127](https://github.com/folke/neodev.nvim/issues/127) ([8c32d8b](https://github.com/folke/neodev.nvim/commit/8c32d8b4e765de26b27b76f0072e7c12038cde52))
+
 ## [2.3.0](https://github.com/folke/neodev.nvim/compare/v2.2.1...v2.3.0) (2023-02-13)
 
 
