@@ -677,7 +677,7 @@ function vim.fn.changenr() end
 -- ```vim
 --   :call chansend(id, ["abc", "123\n456", ""])
 -- ```
---      will send "abcNL>123NUL>456NL>".
+-- will send "abcNL>123NUL>456NL>".
 -- 
 -- chansend() writes raw data, not RPC messages.  If the channel
 -- was created with `"rpc":v:true` then the channel expects RPC
@@ -5192,7 +5192,7 @@ function vim.fn.map(expr1, expr2) end
 --   "lhs"       The {lhs} of the mapping as it would be typed
 --   "lhsraw"   The {lhs} of the mapping as raw bytes
 --   "lhsrawalt" The {lhs} of the mapping as raw bytes, alternate
---           form, only present when it differs from "lhsraw"
+--         form, only present when it differs from "lhsraw"
 --   "rhs"       The {rhs} of the mapping as typed.
 --   "silent"   1 for a |:map-silent| mapping, else 0.
 --   "noremap"  1 if the {rhs} of the mapping is not remappable.
@@ -5913,8 +5913,11 @@ function vim.fn.min(expr) end
 
 -- Create directory {name}.
 -- 
--- If {path} is "p" then intermediate directories are created as
--- necessary.  Otherwise it must be "".
+-- When {flags} is present it must be a string.  An empty string
+-- has no effect.
+-- 
+-- If {flags} is "p" then intermediate directories are created as
+-- necessary.
 -- 
 -- If {prot} is given it is used to set the protection bits of
 -- the new directory.  The default is 0o755 (rwxr-xr-x: r/w for
@@ -5929,7 +5932,7 @@ function vim.fn.min(expr) end
 -- ```
 -- This function is not available in the |sandbox|.
 -- 
--- If you try to create an existing directory with {path} set to
+-- If you try to create an existing directory with {flags} set to
 -- "p" mkdir() will silently exit.
 -- 
 -- The function result is a Number, which is TRUE if the call was
@@ -5940,8 +5943,8 @@ function vim.fn.min(expr) end
 -- ```vim
 --   GetName()->mkdir()
 -- ```
---- @param path? any
+--- @param flags? any
 --- @param prot? any
 --- @return number
-function vim.fn.mkdir(name, path, prot) end
+function vim.fn.mkdir(name, flags, prot) end
 

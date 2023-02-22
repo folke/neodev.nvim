@@ -708,7 +708,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 buffer.
 --               • right_gravity : boolean that indicates the direction the
 --                 extmark will be shifted in when new text is inserted (true
---                 for right, false for left). defaults to true.
+--                 for right, false for left). Defaults to true.
 --               • end_right_gravity : boolean that indicates the direction
 --                 the extmark end position (if it exists) will be shifted in
 --                 when new text is inserted (true for right, false for

@@ -145,7 +145,7 @@ function vim.opt.shiftwidth:get()end
 -- 	  A	don't give the "ATTENTION" message when an existing
 -- 		swap file is found
 -- 	  I	don't give the intro message when starting Vim,
--- 	  	see |:intro|
+-- 		see |:intro|
 -- 	  c	don't give |ins-completion-menu| messages; for
 -- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
 -- 		match", "Pattern not found", "Back at original", etc.
@@ -154,8 +154,8 @@ function vim.opt.shiftwidth:get()end
 -- 	  q	use "recording" instead of "recording @a"
 -- 	  F	don't give the file info when editing a file, like
 -- 		`:silent` was used for the command
--- 	  S     do not show search count message when searching, e.g.
--- 	        "[1/5]"
+-- 	  S	do not show search count message when searching, e.g.
+-- 		"[1/5]"
 -- 
 -- 	This gives you the opportunity to avoid that a change between buffers
 -- 	requires you to hit <Enter>, but still gives as useful a message as
@@ -376,7 +376,7 @@ function vim.opt.sidescrolloff:get()end
 -- `'signcolumn'`  `'scl'` 	string	(default "auto")
 -- 			local to window
 -- 	When and how to draw the signcolumn. Valid values are:
--- 	   "auto"   	only when there is a sign to display
+-- 	   "auto"	only when there is a sign to display
 -- 	   "auto:[1-9]" resize to accommodate multiple signs up to the
 -- 	                given number (maximum 9), e.g. "auto:4"
 -- 	   "auto:[1-8]-[2-9]"
@@ -385,8 +385,8 @@ function vim.opt.sidescrolloff:get()end
 -- 			at least the given minimum (maximum 8) fixed
 -- 			space. The minimum number should always be less
 -- 			than the maximum number, e.g. "auto:2-5"
--- 	   "no"	    	never
--- 	   "yes"    	always
+-- 	   "no"		never
+-- 	   "yes"	always
 -- 	   "yes:[1-9]"  always, with fixed space for signs up to the given
 -- 	                number (maximum 9), e.g. "yes:3"
 -- 	   "number"	display signs in the `'number'`  column. If the number

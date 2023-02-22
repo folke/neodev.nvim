@@ -3270,7 +3270,7 @@ vim.go.sr = vim.go.shiftround
 -- 	  A	don't give the "ATTENTION" message when an existing
 -- 		swap file is found
 -- 	  I	don't give the intro message when starting Vim,
--- 	  	see |:intro|
+-- 		see |:intro|
 -- 	  c	don't give |ins-completion-menu| messages; for
 -- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
 -- 		match", "Pattern not found", "Back at original", etc.
@@ -3279,8 +3279,8 @@ vim.go.sr = vim.go.shiftround
 -- 	  q	use "recording" instead of "recording @a"
 -- 	  F	don't give the file info when editing a file, like
 -- 		`:silent` was used for the command
--- 	  S     do not show search count message when searching, e.g.
--- 	        "[1/5]"
+-- 	  S	do not show search count message when searching, e.g.
+-- 		"[1/5]"
 -- 
 -- 	This gives you the opportunity to avoid that a change between buffers
 -- 	requires you to hit <Enter>, but still gives as useful a message as

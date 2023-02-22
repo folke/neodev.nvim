@@ -586,7 +586,7 @@ vim.wo.siso = vim.wo.sidescrolloff
 -- `'signcolumn'`  `'scl'` 	string	(default "auto")
 -- 			local to window
 -- 	When and how to draw the signcolumn. Valid values are:
--- 	   "auto"   	only when there is a sign to display
+-- 	   "auto"	only when there is a sign to display
 -- 	   "auto:[1-9]" resize to accommodate multiple signs up to the
 -- 	                given number (maximum 9), e.g. "auto:4"
 -- 	   "auto:[1-8]-[2-9]"
@@ -595,8 +595,8 @@ vim.wo.siso = vim.wo.sidescrolloff
 -- 			at least the given minimum (maximum 8) fixed
 -- 			space. The minimum number should always be less
 -- 			than the maximum number, e.g. "auto:2-5"
--- 	   "no"	    	never
--- 	   "yes"    	always
+-- 	   "no"		never
+-- 	   "yes"	always
 -- 	   "yes:[1-9]"  always, with fixed space for signs up to the given
 -- 	                number (maximum 9), e.g. "yes:3"
 -- 	   "number"	display signs in the `'number'`  column. If the number
