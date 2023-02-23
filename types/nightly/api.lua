@@ -264,7 +264,7 @@ function vim.api.nvim_buf_call(buffer, fun) end
 --- @param line_end number
 function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) end
 
--- Create a new user command |user-commands| in the given buffer.
+-- Creates a buffer-local command |user-commands|.
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer.
@@ -1162,16 +1162,13 @@ function vim.api.nvim_create_buf(listed, scratch) end
 --- @return number
 function vim.api.nvim_create_namespace(name) end
 
--- Create a new user command |user-commands|
+-- Creates a global |user-commands| command.
 -- 
--- {name} is the name of the new command. The name must begin with an
--- uppercase letter.
--- 
--- {command} is the replacement text or Lua function to execute.
+-- For Lua usage see |lua-guide-commands-create|.
 -- 
 -- Example: 
 -- ```vim
---    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {})
+--    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
 --    :SayHello
 --    Hello world!
 -- ```
@@ -1203,19 +1200,20 @@ function vim.api.nvim_create_namespace(name) end
 --                • smods: (table) Command modifiers in a structured format.
 --                  Has the same structure as the "mods" key of
 --                  |nvim_parse_cmd()|.
---   • {opts}     Optional command attributes. See |command-attributes| for
---                more details. To use boolean attributes (such as
---                |:command-bang| or |:command-bar|) set the value to "true".
---                In addition to the string options listed in
---                |:command-complete|, the "complete" key also accepts a Lua
---                function which works like the "customlist" completion mode
---                |:command-completion-customlist|. Additional parameters:
---                • desc: (string) Used for listing the command when a Lua
---                  function is used for {command}.
---                • force: (boolean, default true) Override any previous
---                  definition.
---                • preview: (function) Preview callback for 'inccommand'
---                  |:command-preview|
+--   • {opts}     Optional |command-attributes|.
+--                • Set boolean attributes such as |:command-bang| or
+--                  |:command-bar| to true (but not |:command-buffer|, use
+--                  |nvim_buf_create_user_command()| instead).
+--                • "complete" |:command-complete| also accepts a Lua
+--                  function which works like
+--                  |:command-completion-customlist|.
+--                • Other parameters:
+--                  • desc: (string) Used for listing the command when a Lua
+--                    function is used for {command}.
+--                  • force: (boolean, default true) Override any previous
+--                    definition.
+--                  • preview: (function) Preview callback for 'inccommand'
+--                    |:command-preview|
 --- @param name string
 --- @param command object
 --- @param opts? table<string, any>
@@ -2617,16 +2615,15 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --             "!" for |:map!|, or empty string for |:map|.
 --   • {lhs}   Left-hand-side |{lhs}| of the mapping.
 --   • {rhs}   Right-hand-side |{rhs}| of the mapping.
---   • {opts}  Optional parameters map: keys are |:map-arguments|, values are
---             booleans (default false). Accepts all |:map-arguments| as keys
---             excluding |<buffer>| but including |:noremap| and "desc".
---             Unknown key is an error. "desc" can be used to give a
---             description to the mapping. When called from Lua, also accepts
---             a "callback" key that takes a Lua function to call when the
---             mapping is executed. When "expr" is true, "replace_keycodes"
---             (boolean) can be used to replace keycodes in the resulting
---             string (see |nvim_replace_termcodes()|), and a Lua callback
---             returning `nil` is equivalent to returning an empty string.
+--   • {opts}  Optional parameters map: Accepts all |:map-arguments| as keys
+--             except |<buffer>|, values are booleans (default false). Also:
+--             • "noremap" non-recursive mapping |:noremap|
+--             • "desc" human-readable description.
+--             • "callback" Lua function called when the mapping is executed.
+--             • "replace_keycodes" (boolean) When "expr" is true, replace
+--               keycodes in the resulting string (see
+--               |nvim_replace_termcodes()|). Returning nil from the Lua
+--               "callback" is equivalent to returning an empty string.
 --- @param mode string
 --- @param lhs string
 --- @param rhs string

@@ -321,15 +321,13 @@ function vim.opt.expandtab:get()end
 
 -- `'exrc'`  `'ex'` 		boolean (default off)
 -- 			global
--- 	Enables the reading of .nvim.lua, .nvimrc, and .exrc files in the current
--- 	directory.
+-- 	Automatically execute .nvim.lua, .nvimrc, and .exrc files in the
+-- 	current directory, if the file is in the |trust| list. Use |:trust| to
+-- 	manage trusted files. See also |vim.secure.read()|.
 -- 
--- 	The file is only sourced if the user indicates the file is trusted. If
--- 	it is, the SHA256 hash of the file contents and the full path of the
--- 	file are persisted to a trust database. The user is only prompted
--- 	again if the file contents change. See |vim.secure.read()|.
--- 
--- 	Use |:trust| to manage the trusted file database.
+-- 	Compare `'exrc'`  to |editorconfig|:
+-- 	- `'exrc'`  can execute any code; editorconfig only specifies settings.
+-- 	- `'exrc'`  is Nvim-specific; editorconfig works in other editors.
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
