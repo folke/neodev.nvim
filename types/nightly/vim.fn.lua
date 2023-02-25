@@ -2134,7 +2134,7 @@ function vim.fn.findfile(name, path, count) end
 -- Flatten {list} up to {maxdepth} levels.  Without {maxdepth}
 -- the result is a |List| without nesting, as if {maxdepth} is
 -- a very large number.
--- The {list} is changed in place, make a copy first if you do
+-- The {list} is changed in place, use |flattennew()| if you do
 -- not want that.
 -- 
 -- {maxdepth} means how deep in nested lists changes are made.
@@ -2159,6 +2159,12 @@ function vim.fn.findfile(name, path, count) end
 --- @param maxdepth? any
 --- @return any[]
 function vim.fn.flatten(list, maxdepth) end
+
+-- Like |flatten()| but first make a copy of {list}.
+--- @param list any[]
+--- @param maxdepth? any
+--- @return any[]
+function vim.fn.flattennew(list, maxdepth) end
 
 -- Convert {expr} to a Number by omitting the part after the
 -- decimal point.
