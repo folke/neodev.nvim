@@ -1,5 +1,61 @@
 ---@meta
 
+-- Return the minimum value of all items in {expr}. Example:  
+-- ```vim
+--     echo min([apples, pears, oranges])
+-- 
+-- ```
+--   {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
+--   it returns the minimum of all values in the Dictionary.
+--   If {expr} is neither a List nor a Dictionary, or one of the
+--   items in {expr} cannot be used as a Number this results in
+--   an error.  An empty |List| or |Dictionary| results in zero.
+-- 
+--   Can also be used as a |method|: 
+-- ```vim
+--     mylist->min()
+-- 
+-- ```
+--- @return number
+function vim.fn.min(expr) end
+
+-- Create directory {name}.
+-- 
+-- When {flags} is present it must be a string.  An empty string
+-- has no effect.
+-- 
+-- If {flags} is "p" then intermediate directories are created as
+-- necessary.
+-- 
+-- If {prot} is given it is used to set the protection bits of
+-- the new directory.  The default is 0o755 (rwxr-xr-x: r/w for
+-- the user, readable for others).  Use 0o700 to make it
+-- unreadable for others.
+-- 
+-- {prot} is applied for all parts of {name}.  Thus if you create
+-- /tmp/foo/bar then /tmp/foo will be created with 0o700. Example: 
+-- ```vim
+--   :call mkdir($HOME .. "/tmp/foo/bar", "p", 0o700)
+-- 
+-- ```
+-- This function is not available in the |sandbox|.
+-- 
+-- If you try to create an existing directory with {flags} set to
+-- "p" mkdir() will silently exit.
+-- 
+-- The function result is a Number, which is TRUE if the call was
+-- successful or FALSE if the directory creation failed or partly
+-- failed.
+-- 
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetName()->mkdir()
+-- ```
+--- @param flags? any
+--- @param prot? any
+--- @return number
+function vim.fn.mkdir(name, flags, prot) end
+
 -- Return a string that indicates the current mode.
 --   If [expr] is supplied and it evaluates to a non-zero Number or
 --   a non-empty String (|non-zero-arg|), then the full mode is

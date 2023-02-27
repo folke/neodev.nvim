@@ -1938,6 +1938,14 @@ function vim.fn.expandcmd(string, options) end
 --- @return any[]
 function vim.fn.extend(expr1, expr2, expr3) end
 
+-- Like |extend()| but instead of adding items to {expr1} a new
+-- List or Dictionary is created and returned.  {expr1} remains
+-- unchanged.  Items can still be changed by {expr2}, if you
+-- don't want that use |deepcopy()| first.
+--- @param expr3? any
+--- @return any[]
+function vim.fn.extendnew(expr1, expr2, expr3) end
+
 -- Characters in {string} are queued for processing as if they
 -- come from a mapping or were typed by the user.
 -- 
@@ -4299,19 +4307,25 @@ function vim.fn.id(expr) end
 --- @return number
 function vim.fn.indent(lnum) end
 
+-- Find {expr} in {object} and return its index.  See
+-- |indexof()| for using a lambda to select the item.
+-- 
 -- If {object} is a |List| return the lowest index where the item
 -- has a value equal to {expr}.  There is no automatic
 -- conversion, so the String "4" is different from the Number 4.
 -- And the Number 4 is different from the Float 4.0.  The value
--- of 'ignorecase' is not used here, case always matters.
+-- of 'ignorecase' is not used here, case matters as indicated by
+-- the {ic} argument.
 -- 
 -- If {object} is a |Blob| return the lowest index where the byte
 -- value is equal to {expr}.
 -- 
 -- If {start} is given then start looking at the item with index
 -- {start} (may be negative for an item relative to the end).
+-- 
 -- When {ic} is given and it is |TRUE|, ignore case.  Otherwise
 -- case must match.
+-- 
 -- -1 is returned when {expr} is not found in {object}.
 -- Example: 
 -- ```vim
@@ -4325,6 +4339,51 @@ function vim.fn.indent(lnum) end
 --- @param ic? any
 --- @return number
 function vim.fn.index(object, expr, start, ic) end
+
+-- Returns the index of an item in {object} where {expr} is
+-- v:true.  {object} must be a |List| or a |Blob|.
+-- 
+-- If {object} is a |List|, evaluate {expr} for each item in the
+-- List until the expression is v:true and return the index of
+-- this item.
+-- 
+-- If {object} is a |Blob| evaluate {expr} for each byte in the
+-- Blob until the expression is v:true and return the index of
+-- this byte.
+-- 
+-- {expr} must be a |string| or |Funcref|.
+-- 
+-- If {expr} is a |string|: If {object} is a |List|, inside
+-- {expr} |v:key| has the index of the current List item and
+-- |v:val| has the value of the item.  If {object} is a |Blob|,
+-- inside {expr} |v:key| has the index of the current byte and
+-- |v:val| has the byte value.
+-- 
+-- If {expr} is a |Funcref| it must take two arguments:
+--   1. the key or the index of the current item.
+--   2. the value of the current item.
+-- The function must return |TRUE| if the item is found and the
+-- search should stop.
+-- 
+-- The optional argument {opts} is a Dict and supports the
+-- following items:
+--     startidx  start evaluating {expr} at the item with this
+--     index; may be negative for an item relative to
+--     the end
+-- Returns -1 when {expr} evaluates to v:false for all the items.
+-- Example: 
+-- ```vim
+--   :let l = [#{n: 10}, #{n: 20}, #{n: 30}]
+--   :echo indexof(l, "v:val.n == 20")
+--   :echo indexof(l, {i, v -> v.n == 30})
+--   :echo indexof(l, "v:val.n == 20", #{startidx: 1})
+-- 
+-- ```
+-- Can also be used as a |method|: >
+--   mylist->indexof(expr)
+--- @param opts? table<string, any>
+--- @return number
+function vim.fn.indexof(object, expr, opts) end
 
 -- The result is a String, which is whatever the user typed on
 -- the command-line.  The {prompt} argument is either a prompt
@@ -5897,60 +5956,4 @@ function vim.fn.menu_get(path, modes) end
 --- @param mode? any
 --- @return table<string, any>
 function vim.fn.menu_info(name, mode) end
-
--- Return the minimum value of all items in {expr}. Example:  
--- ```vim
---     echo min([apples, pears, oranges])
--- 
--- ```
---   {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
---   it returns the minimum of all values in the Dictionary.
---   If {expr} is neither a List nor a Dictionary, or one of the
---   items in {expr} cannot be used as a Number this results in
---   an error.  An empty |List| or |Dictionary| results in zero.
--- 
---   Can also be used as a |method|: 
--- ```vim
---     mylist->min()
--- 
--- ```
---- @return number
-function vim.fn.min(expr) end
-
--- Create directory {name}.
--- 
--- When {flags} is present it must be a string.  An empty string
--- has no effect.
--- 
--- If {flags} is "p" then intermediate directories are created as
--- necessary.
--- 
--- If {prot} is given it is used to set the protection bits of
--- the new directory.  The default is 0o755 (rwxr-xr-x: r/w for
--- the user, readable for others).  Use 0o700 to make it
--- unreadable for others.
--- 
--- {prot} is applied for all parts of {name}.  Thus if you create
--- /tmp/foo/bar then /tmp/foo will be created with 0o700. Example: 
--- ```vim
---   :call mkdir($HOME .. "/tmp/foo/bar", "p", 0o700)
--- 
--- ```
--- This function is not available in the |sandbox|.
--- 
--- If you try to create an existing directory with {flags} set to
--- "p" mkdir() will silently exit.
--- 
--- The function result is a Number, which is TRUE if the call was
--- successful or FALSE if the directory creation failed or partly
--- failed.
--- 
--- Can also be used as a |method|: 
--- ```vim
---   GetName()->mkdir()
--- ```
---- @param flags? any
---- @param prot? any
---- @return number
-function vim.fn.mkdir(name, flags, prot) end
 
