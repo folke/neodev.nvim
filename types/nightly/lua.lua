@@ -1,5 +1,7 @@
 ---@meta
 
+
+
 -- Invokes |vim-function| or |user-function| {func} with arguments {...}.
 -- See also |vim.fn|.
 -- Equivalent to: 
@@ -305,6 +307,6 @@ function vim.version() end
 --- @param condition? fun(): boolean
 --- @param interval? number
 --- @param fast_only? boolean
---- @return (boolean, nil|number)
+--- @return boolean, nil|number
 function vim.wait(time, condition, interval, fast_only) end
 
