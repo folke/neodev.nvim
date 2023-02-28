@@ -1,5 +1,7 @@
 ---@meta
 
+
+
 -- Invokes |vim-function| or |user-function| {func} with arguments {...}.
 -- See also |vim.fn|.
 -- Equivalent to: 
@@ -288,9 +290,10 @@ function vim.version() end
 --   print('Only waiting a little bit of time!')
 -- end
 -- ```
---- @param time integer
---- @param callback? fun(): boolean
---- @param interval? integer
+--- @param time number
+--- @param condition? fun(): boolean
+--- @param interval? number
 --- @param fast_only? boolean
-function vim.wait(time, callback, interval, fast_only) end
+--- @return boolean, nil|number
+function vim.wait(time, condition, interval, fast_only) end
 
