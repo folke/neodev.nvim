@@ -1,14 +1,14 @@
-*neodev.nvim.txt*       For Neovim >= 0.8.0      Last change: 2023 February 13
+*neodev.nvim.txt*       For Neovim >= 0.8.0      Last change: 2023 February 28
 
 ==============================================================================
 Table of Contents                              *neodev.nvim-table-of-contents*
 
 1. neodev.nvim                                       |neodev.nvim-neodev.nvim|
-  - Features                                            |neodev.nvim-features|
-  - Requirements                                    |neodev.nvim-requirements|
-  - Installation                                    |neodev.nvim-installation|
-  - Configuration                                  |neodev.nvim-configuration|
-  - Setup                                                  |neodev.nvim-setup|
+  - Features                                |neodev.nvim-neodev.nvim-features|
+  - Requirements                        |neodev.nvim-neodev.nvim-requirements|
+  - Installation                        |neodev.nvim-neodev.nvim-installation|
+  - Configuration                      |neodev.nvim-neodev.nvim-configuration|
+  - Setup                                      |neodev.nvim-neodev.nvim-setup|
 
 ==============================================================================
 1. neodev.nvim                                       *neodev.nvim-neodev.nvim*
@@ -16,12 +16,8 @@ Table of Contents                              *neodev.nvim-table-of-contents*
 Neovim setup for init.lua and plugin development with full signature help, docs
 and completion for the nvim lua API.
 
-<div class="figure">
-<img src="https://user-images.githubusercontent.com/292349/201495543-ff532160-c8bd-4651-a16f-4fb682c9b945.png" title="fig:"/>
-<p class="caption">image</p>
-</div>
 
-FEATURES                                                *neodev.nvim-features*
+FEATURES                                    *neodev.nvim-neodev.nvim-features*
 
 
 - Automatically configures **lua-language-server** for your **Neovim** config, **Neovim** runtime and plugin
@@ -37,32 +33,33 @@ FEATURES                                                *neodev.nvim-features*
 - properly configure the vim runtime
 
 
-REQUIREMENTS                                        *neodev.nvim-requirements*
+REQUIREMENTS                            *neodev.nvim-neodev.nvim-requirements*
 
 
 - Neovim >= 0.7.0
 - completion plugin like nvim-cmp <https://github.com/hrsh7th/nvim-cmp>
 
 
-INSTALLATION                                        *neodev.nvim-installation*
+INSTALLATION                            *neodev.nvim-neodev.nvim-installation*
 
 Install the plugin with your preferred package manager:
 
-PACKER <HTTPS://GITHUB.COM/WBTHOMASON/PACKER.NVIM> ~
+
+PACKER ~
 
 >lua
     use "folke/neodev.nvim"
 <
 
 
-VIM-PLUG <HTTPS://GITHUB.COM/JUNEGUNN/VIM-PLUG> ~
+VIM-PLUG ~
 
 >vim
     Plug 'folke/neodev.nvim'
 <
 
 
-CONFIGURATION                                      *neodev.nvim-configuration*
+CONFIGURATION                          *neodev.nvim-neodev.nvim-configuration*
 
 **neodev** comes with the following defaults:
 
@@ -93,7 +90,7 @@ CONFIGURATION                                      *neodev.nvim-configuration*
 <
 
 
-SETUP                                                      *neodev.nvim-setup*
+SETUP                                          *neodev.nvim-neodev.nvim-setup*
 
 **neodev** will **ONLY** change the **lua_ls** settings for:
 
@@ -103,7 +100,6 @@ SETUP                                                      *neodev.nvim-setup*
 - any plugin directory (this is an lsp root_dir that contains a `/lua`
     directory)
 
-
 For any other `root_dir`, **neodev** will **NOT** change any settings.
 
 
@@ -111,8 +107,6 @@ For any other `root_dir`, **neodev** will **NOT** change any settings.
   easily set project local **Neodev** settings. See the example .neoconf.json
   <https://github.com/folke/neodev.nvim/blob/main/.neoconf.json> file in this
   repository
-
-
 >lua
     -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
     require("neodev").setup({
@@ -134,8 +128,7 @@ For any other `root_dir`, **neodev** will **NOT** change any settings.
     })
 <
 
-
-Example for setting up **neodev** that overrides the settings for `/etc/nixos`
+Example for setting up **neodev** that overrides the settings for `/etc/nixos` ~
 
 >lua
     -- You can override the default detection using the override function
@@ -150,11 +143,10 @@ Example for setting up **neodev** that overrides the settings for `/etc/nixos`
     })
 <
 
-
 It’s possible to setup Neodev without lspconfig, by configuring the
 `before_init` of the options passed to `vim.lsp.start`.
 
-Example without lspconfig
+Example without lspconfig ~
 
 >lua
     require("neodev").setup()
@@ -167,8 +159,10 @@ Example without lspconfig
     })
 <
 
+==============================================================================
+2. Links                                                   *neodev.nvim-links*
 
-
+1. *image*: https://user-images.githubusercontent.com/292349/201495543-ff532160-c8bd-4651-a16f-4fb682c9b945.png
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
