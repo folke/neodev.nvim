@@ -29,4 +29,12 @@ return {
       "fun(name:string, dict?:table)",
     },
   },
+  ["vim.fn.input"] = {
+    params = {
+      { name = "opts", type = "string|table<string, any>" },
+    },
+    ["return"] = {
+      { type = "string" },
+    },
+  },
 }

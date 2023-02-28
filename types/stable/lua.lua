@@ -288,8 +288,9 @@ function vim.version() end
 --   print('Only waiting a little bit of time!')
 -- end
 -- ```
---- @param callback? fun()
---- @param interval? any
---- @param fast_only? any
+--- @param time integer
+--- @param callback? fun(): boolean
+--- @param interval? integer
+--- @param fast_only? boolean
 function vim.wait(time, callback, interval, fast_only) end
 

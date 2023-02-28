@@ -4429,7 +4429,7 @@ function vim.fn.index(object, expr, start, ic) end
 -- ```
 -- Can also be used as a |method|: >
 --   GetPrompt()->input()
---- @param opts table<string, any>
+--- @param opts string|table<string, any>
 --- @return string
 function vim.fn.input(opts) end
 
