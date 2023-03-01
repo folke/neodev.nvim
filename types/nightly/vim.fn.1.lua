@@ -760,10 +760,36 @@ function vim.fn.rand(expr) end
 function vim.fn.range(expr, max, stride) end
 
 -- Read file {fname} in binary mode and return a |Blob|.
+-- If {offset} is specified, read the file from the specified
+-- offset.  If it is a negative value, it is used as an offset
+-- from the end of the file.  E.g., to read the last 12 bytes: 
+-- ```vim
+--   readblob('file.bin', -12)
+-- ```
+-- If {size} is specified, only the specified size will be read.
+-- E.g. to read the first 100 bytes of a file: 
+-- ```vim
+--   readblob('file.bin', 0, 100)
+-- ```
+-- If {size} is -1 or omitted, the whole data starting from
+-- {offset} will be read.
+-- This can be also used to read the data from a character device
+-- on Unix when {size} is explicitly set.  Only if the device
+-- supports seeking {offset} can be used.  Otherwise it should be
+-- zero.  E.g. to read 10 bytes from a serial console: 
+-- ```vim
+--   readblob('/dev/ttyS0', 0, 10)
+-- ```
 -- When the file can't be opened an error message is given and
 -- the result is an empty |Blob|.
+-- When the offset is beyond the end of the file the result is an
+-- empty blob.
+-- When trying to read more bytes than are available the result
+-- is truncated.
 -- Also see |readfile()| and |writefile()|.
-function vim.fn.readblob(fname) end
+--- @param offset? any
+--- @param size? any
+function vim.fn.readblob(fname, offset, size) end
 
 -- Return a list with file and directory names in {directory}.
 -- You can also use |glob()| if you don't need to do complicated
@@ -989,8 +1015,8 @@ function vim.fn.rename(from, to) end
 --   :let separator = repeat('-', 80)
 -- ```
 -- When {count} is zero or negative the result is empty.
--- When {expr} is a |List| the result is {expr} concatenated
--- {count} times.  Example: 
+-- When {expr} is a |List| or a |Blob| the result is {expr}
+-- concatenated {count} times.  Example: 
 -- ```vim
 --   :let longlist = repeat(['a', 'b'], 3)
 -- ```
@@ -1000,7 +1026,7 @@ function vim.fn.rename(from, to) end
 -- ```vim
 --   mylist->repeat(count)
 -- ```
---- @return string
+--- @return any[]
 vim.fn["repeat"] = function(expr, count) end
 
 -- On MS-Windows, when {filename} is a shortcut (a .lnk file),
@@ -3906,6 +3932,8 @@ function vim.fn.timer_pause(timer, paused) end
 -- {time} is the waiting time in milliseconds. This is the
 -- minimum time before invoking the callback.  When the system is
 -- busy or Vim is not waiting for input the time will be longer.
+-- Zero can be used to execute the callback when Vim is back in
+-- the main loop.
 -- 
 -- {callback} is the function to call.  It can be the name of a
 -- function or a |Funcref|.  It is called with one argument, which

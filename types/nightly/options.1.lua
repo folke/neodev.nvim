@@ -1,21 +1,5 @@
 ---@meta
 
--- `'colorcolumn'`  `'cc'` 	string	(default "")
--- 			local to window
--- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
--- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
--- 	text.  Will make screen redrawing slower.
--- 	The screen column can be an absolute number, or a number preceded with
--- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
--- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
--- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
--- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
--- <
--- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
--- 	A maximum of 256 columns are highlighted.
-vim.wo.colorcolumn = ""
-vim.wo.cc = vim.wo.colorcolumn
 -- `'concealcursor'`  `'cocu'` 	string (default: "")
 -- 			local to window
 -- 	Sets the modes in which text in the cursor line can also be concealed.
@@ -2494,14 +2478,6 @@ vim.bo.wrapmargin = 0
 vim.bo.wm = vim.bo.wrapmargin
 
 
--- `'aleph'`  `'al'` 		number	(default 224)
--- 			global
--- 	The ASCII code for the first letter of the Hebrew alphabet.  The
--- 	routine that maps the keyboard in Hebrew mode, both in Insert mode
--- 	(when hkmap is set) and on the command-line (when hitting CTRL-_)
--- 	outputs the Hebrew characters in the range [aleph..aleph+26].
--- 	aleph=128 applies to PC code, and aleph=224 applies to ISO 8859-8.
--- 	See |rileft.txt|.
 --- @class vim.opt.aleph: vim.Option,number
 --- @operator add: vim.opt.aleph
 --- @operator sub: vim.opt.aleph

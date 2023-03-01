@@ -315,6 +315,22 @@ function vim.fn.atan(expr) end
 --- @return float
 function vim.fn.atan2(expr1, expr2) end
 
+-- Return a List containing the number value of each byte in Blob
+-- {blob}.  Examples: 
+-- ```vim
+--   blob2list(0z0102.0304)  returns [1, 2, 3, 4]
+--   blob2list(0z)    returns []
+-- ```
+-- Returns an empty List on error.  |list2blob()| does the
+-- opposite.
+-- 
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetBlob()->blob2list()
+-- ```
+--- @return any[]
+function vim.fn.blob2list(blob) end
+
 -- Put up a file requester.  This only works when "has("browse")"
 -- returns |TRUE| (only in some GUI versions).
 -- The input fields are:
@@ -1940,8 +1956,7 @@ function vim.fn.extend(expr1, expr2, expr3) end
 
 -- Like |extend()| but instead of adding items to {expr1} a new
 -- List or Dictionary is created and returned.  {expr1} remains
--- unchanged.  Items can still be changed by {expr2}, if you
--- don't want that use |deepcopy()| first.
+-- unchanged.
 --- @param expr3? any
 --- @return any[]
 function vim.fn.extendnew(expr1, expr2, expr3) end
@@ -3996,6 +4011,7 @@ function vim.fn.globpath(path, expr, nosuf, list, allinks) end
 --     clipboard  |clipboard| provider is available.
 --     fname_case  Case in file names matters (for Darwin and MS-Windows
 --         this is not present).
+--                       gui_running  Nvim has a GUI.
 --     iconv    Can use |iconv()| for conversion.
 --     linux    Linux system.
 --     mac    MacOS system.
@@ -5081,6 +5097,24 @@ function vim.fn.line2byte(lnum) end
 --- @param lnum number
 --- @return number
 function vim.fn.lispindent(lnum) end
+
+-- Return a Blob concatenating all the number values in {list}.
+-- Examples: 
+-- ```vim
+--   list2blob([1, 2, 3, 4])  returns 0z01020304
+--   list2blob([])    returns 0z
+-- ```
+-- Returns an empty Blob on error.  If one of the numbers is
+-- negative or more than 255 error  is given.
+-- 
+-- |blob2list()| does the opposite.
+-- 
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetList()->list2blob()
+-- ```
+--- @param list any[]
+function vim.fn.list2blob(list) end
 
 -- Convert each number in {list} to a character string can
 -- concatenate them all.  Examples: 

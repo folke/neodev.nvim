@@ -1552,11 +1552,6 @@ vim.opt.hi = vim.opt.history
 --- @return number
 function vim.opt.history:get()end
 
--- `'hkmap'`  `'hk'` 		boolean (default off)
--- 			global
--- 	When on, the keyboard is mapped for the Hebrew character set.
--- 	Normally you would set `'allowrevins'`  and use CTRL-_ in insert mode to
--- 	toggle this option.  See |rileft.txt|.
 --- @class vim.opt.hkmap: vim.Option,boolean
 --- @operator add: vim.opt.hkmap
 --- @operator sub: vim.opt.hkmap
@@ -1566,11 +1561,6 @@ vim.opt.hk = vim.opt.hkmap
 --- @return boolean
 function vim.opt.hkmap:get()end
 
--- `'hkmapp'`  `'hkp'` 		boolean (default off)
--- 			global
--- 	When on, phonetic keyboard mapping is used.  `'hkmap'`  must also be on.
--- 	This is useful if you have a non-Hebrew keyboard.
--- 	See |rileft.txt|.
 --- @class vim.opt.hkmapp: vim.Option,boolean
 --- @operator add: vim.opt.hkmapp
 --- @operator sub: vim.opt.hkmapp

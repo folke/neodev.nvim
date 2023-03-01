@@ -3,14 +3,6 @@
 ---@class vim.go
 vim.go = {}
 
--- `'aleph'`  `'al'` 		number	(default 224)
--- 			global
--- 	The ASCII code for the first letter of the Hebrew alphabet.  The
--- 	routine that maps the keyboard in Hebrew mode, both in Insert mode
--- 	(when hkmap is set) and on the command-line (when hitting CTRL-_)
--- 	outputs the Hebrew characters in the range [aleph..aleph+26].
--- 	aleph=128 applies to PC code, and aleph=224 applies to ISO 8859-8.
--- 	See |rileft.txt|.
 vim.go.aleph = 224
 vim.go.al = vim.go.aleph
 -- `'allowrevins'`  `'ari'` 	boolean	(default off)
@@ -1632,18 +1624,8 @@ vim.go.hl = vim.go.highlight
 -- 	The maximum value is 10000.
 vim.go.history = 10000
 vim.go.hi = vim.go.history
--- `'hkmap'`  `'hk'` 		boolean (default off)
--- 			global
--- 	When on, the keyboard is mapped for the Hebrew character set.
--- 	Normally you would set `'allowrevins'`  and use CTRL-_ in insert mode to
--- 	toggle this option.  See |rileft.txt|.
 vim.go.hkmap = false
 vim.go.hk = vim.go.hkmap
--- `'hkmapp'`  `'hkp'` 		boolean (default off)
--- 			global
--- 	When on, phonetic keyboard mapping is used.  `'hkmap'`  must also be on.
--- 	This is useful if you have a non-Hebrew keyboard.
--- 	See |rileft.txt|.
 vim.go.hkmapp = false
 vim.go.hkp = vim.go.hkmapp
 -- `'hlsearch'`  `'hls'` 	boolean	(default on)
@@ -4312,3 +4294,19 @@ vim.wo.bri = vim.wo.breakindent
 -- 			    (default: off)
 vim.wo.breakindentopt = ""
 vim.wo.briopt = vim.wo.breakindentopt
+-- `'colorcolumn'`  `'cc'` 	string	(default "")
+-- 			local to window
+-- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
+-- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
+-- 	text.  Will make screen redrawing slower.
+-- 	The screen column can be an absolute number, or a number preceded with
+-- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
+-- 
+-- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
+-- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+-- <
+-- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
+-- 	A maximum of 256 columns are highlighted.
+vim.wo.colorcolumn = ""
+vim.wo.cc = vim.wo.colorcolumn
