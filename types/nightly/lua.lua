@@ -250,9 +250,6 @@ function vim.ui_attach(ns, options, callback) end
 --- @param ns number
 function vim.ui_detach(ns) end
 
--- Gets the version of the current Nvim build.
-function vim.version() end
-
 -- Wait for {time} in milliseconds until {callback} returns `true`.
 -- 
 -- Executes {callback} immediately and at approximately {interval}
