@@ -1209,6 +1209,8 @@ function vim.fn.screencol() end
 -- as if 'conceallevel' is zero.  You can set the cursor to the
 -- right position and use |screencol()| to get the value with
 -- |conceal| taken into account.
+-- If the position is in a closed fold the screen position of the
+-- first character is returned, {col} is not used.
 -- Returns an empty Dict if {winid} is invalid.
 -- 
 -- Can also be used as a |method|: 
@@ -4719,10 +4721,14 @@ function vim.fn.winrestview(dict) end
 --   The return value includes:
 --     lnum    cursor line number
 --     col    cursor column (Note: the first column
---         zero, as opposed to what getpos()
+--         zero, as opposed to what |getcurpos()|
 --         returns)
 --     coladd    cursor column offset for 'virtualedit'
---     curswant  column for vertical movement
+--     curswant  column for vertical movement (Note:
+--         the first column is zero, as opposed
+--         to what |getcurpos()| returns).  After
+--         |$| command it will be a very large
+--         number equal to |v:maxcol|.
 --     topline    first line in the window
 --     topfill    filler lines, only in diff mode
 --     leftcol    first column displayed; only used when

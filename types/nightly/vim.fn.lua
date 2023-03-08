@@ -2837,6 +2837,9 @@ function vim.fn.getcharmod() end
 -- Get the position for String {expr}. Same as |getpos()| but the
 -- column number in the returned List is a character index
 -- instead of a byte index.
+-- If |getpos()| returns a very large column number, equal to
+-- |v:maxcol|, then getcharpos() will return the character index
+-- of the last character.
 -- 
 -- Example:
 -- With the cursor on '세' in line 5 with text "여보세요": 
@@ -3031,10 +3034,11 @@ function vim.fn.getcmdwintype() end
 function vim.fn.getcompletion(pat, type, filtered) end
 
 -- Get the position of the cursor.  This is like getpos('.'), but
--- includes an extra "curswant" in the list:
+-- includes an extra "curswant" item in the list:
 --     [0, lnum, col, off, curswant] ~
 -- The "curswant" number is the preferred column when moving the
--- cursor vertically.  Also see |getcursorcharpos()| and
+-- cursor vertically.  After |$| command it will be a very large
+-- number equal to |v:maxcol|.  Also see |getcursorcharpos()| and
 -- |getpos()|.
 -- The first "bufnum" item is always zero. The byte position of
 -- the cursor is returned in "col". To get the character
@@ -3427,12 +3431,12 @@ function vim.fn.getpid() end
 --   character.
 --   Note that for '< and '> Visual mode matters: when it is "V"
 --   (visual line mode) the column of '< is zero and the column of
---   '> is a large number.
+--   '> is a large number equal to |v:maxcol|.
 --   The column number in the returned List is the byte position
 --   within the line. To get the character position in the line,
 --   use |getcharpos()|.
---   The column number can be very large, e.g. 2147483647, in which
---   case it means "after the end of the line".
+--   A very large column number equal to |v:maxcol| can be returned,
+--   in which case it means "after the end of the line".
 --   If {expr} is invalid, returns a list with all zeros.
 --   This can be used to save and restore the position of a mark: 
 -- ```vim
