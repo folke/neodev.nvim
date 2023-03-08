@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/folke/neodev.nvim/compare/v2.4.1...v2.4.2) (2023-03-08)
+
+
+### Bug Fixes
+
+* parameter types for searchpair and searchpairpos ([#130](https://github.com/folke/neodev.nvim/issues/130)) ([c87f69c](https://github.com/folke/neodev.nvim/commit/c87f69c856505ea778f6fd883a90397e55c8e59d))
+
 ## [2.4.1](https://github.com/folke/neodev.nvim/compare/v2.4.0...v2.4.1) (2023-02-28)
 
 
