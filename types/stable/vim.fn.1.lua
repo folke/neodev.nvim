@@ -1467,12 +1467,13 @@ function vim.fn.searchdecl(name, global, thisblock) end
 -- :echo searchpair('{', '', '}', 'bW',
 --      \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "string"')
 -- ```
---- @param start number
---- @param end_ number
---- @param flags? any
---- @param skip? any
---- @param stopline? any
---- @param timeout? any
+--- @param start string
+--- @param middle? string
+--- @param end_ string
+--- @param flags? string
+--- @param skip? string
+--- @param stopline? number
+--- @param timeout? number
 --- @return number
 function vim.fn.searchpair(start, middle, end_, flags, skip, stopline, timeout) end
 
@@ -1486,12 +1487,13 @@ function vim.fn.searchpair(start, middle, end_, flags, skip, stopline, timeout) 
 --   :let [lnum,col] = searchpairpos('{', '', '}', 'n')
 -- ```
 -- See |match-parens| for a bigger and more useful example.
---- @param start number
---- @param end_ number
---- @param flags? any
---- @param skip? any
---- @param stopline? any
---- @param timeout? any
+--- @param start string
+--- @param middle? string
+--- @param end_ string
+--- @param flags? string
+--- @param skip? string
+--- @param stopline? number
+--- @param timeout? number
 --- @return any[]
 function vim.fn.searchpairpos(start, middle, end_, flags, skip, stopline, timeout) end
 
