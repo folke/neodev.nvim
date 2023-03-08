@@ -37,4 +37,26 @@ return {
       { type = "string" },
     },
   },
+  ["vim.fn.searchpair"] = {
+    params = {
+      { name = "start", type = "string" },
+      { name = "middle", type = "string", optional = true },
+      { name = "end", type = "string" },
+      { name = "flags", type = "string", optional = true },
+      { name = "skip", type = "string", optional = true },
+      { name = "stopline", type = "number", optional = true },
+      { name = "timeout", type = "number", optional = true },
+    },
+  },
+  ["vim.fn.searchpairpos"] = {
+    params = {
+      { name = "start", type = "string" },
+      { name = "middle", type = "string", optional = true },
+      { name = "end", type = "string" },
+      { name = "flags", type = "string", optional = true },
+      { name = "skip", type = "string", optional = true },
+      { name = "stopline", type = "number", optional = true },
+      { name = "timeout", type = "number", optional = true },
+    },
+  },
 }
