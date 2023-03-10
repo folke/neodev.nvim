@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/folke/neodev.nvim/compare/v2.4.2...v2.5.0) (2023-03-10)
+
+
+### Features
+
+* **luv:** use the luv addon instead of the deprecated 3rd party ([f06c113](https://github.com/folke/neodev.nvim/commit/f06c11344f76fadf2cd497b9490125dfc02946cb))
+
 ## [2.4.2](https://github.com/folke/neodev.nvim/compare/v2.4.1...v2.4.2) (2023-03-08)
 
 
