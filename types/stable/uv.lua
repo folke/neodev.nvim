@@ -3262,8 +3262,8 @@ local luv_thread_t = {}
 
 ---
 ---Creates and initializes a `luv_thread_t` (not `uv_thread_t`). Returns the Lua
----userdata wrapping it and asynchronously executes `entry`, which can be either
----which can be either a Lua function or a string containing Lua code or bytecode dumped from a function. Additional arguments `...`
+---userdata wrapping it and asynchronously executes `entry`, which can be
+---either a Lua function or a string containing Lua code or bytecode dumped from a function. Additional arguments `...`
 ---are passed to the `entry` function and an optional `options` table may be
 ---provided. Currently accepted `option` fields are `stack_size`.
 ---
