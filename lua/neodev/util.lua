@@ -10,6 +10,16 @@ function M.find_root(path)
   return vim.fs.find({ "lua" }, { path = path, upward = true, type = "directory" })[1]
 end
 
+function M.fetch(url)
+  local fd = io.popen(string.format("curl -s -k %q", url))
+  if not fd then
+    error(("Could not download %s"):format(url))
+  end
+  local ret = fd:read("*a")
+  fd:close()
+  return ret
+end
+
 function M.is_nvim_config()
   local path = vim.loop.fs_realpath(vim.api.nvim_buf_get_name(0))
   if path then

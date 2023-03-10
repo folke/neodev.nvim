@@ -5,7 +5,7 @@ local M = {}
 ---@param opts LuaDevOptions
 function M.library(opts)
   opts = config.merge(opts)
-  local ret = { "${3rd}/luv/library" }
+  local ret = {}
 
   if opts.library.types then
     table.insert(ret, config.types())

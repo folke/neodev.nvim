@@ -92,8 +92,14 @@ function M.clean()
   end
 end
 
+function M.uv()
+  local writer = Writer("uv")
+  writer:write(Util.fetch("https://raw.githubusercontent.com/Bilal2453/luvit-meta/main/library/uv.lua"))
+end
+
 function M.build()
   M.clean()
+  M.uv()
 
   M.alias()
   M.commands()
