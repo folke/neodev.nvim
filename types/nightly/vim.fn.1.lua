@@ -3863,15 +3863,13 @@ function vim.fn.tan(expr) end
 --- @return float
 function vim.fn.tanh(expr) end
 
--- The result is a String, which is the name of a file that
--- doesn't exist.  It can be used for a temporary file.  Example: 
+-- Generates a (non-existent) filename located in the Nvim root
+-- |tempdir|. Scripts can use the filename as a temporary file.
+-- Example: 
 -- ```vim
 --   :let tmpfile = tempname()
 --   :exe "redir > " .. tmpfile
 -- ```
--- For Unix, the file will be in a private directory |tempfile|.
--- For MS-Windows forward slashes are used when the 'shellslash'
--- option is set or when 'shellcmdflag' starts with '-'.
 --- @return string
 function vim.fn.tempname() end
 
