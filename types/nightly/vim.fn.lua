@@ -3641,6 +3641,17 @@ function vim.fn.getreginfo(regname) end
 --- @return string
 function vim.fn.getregtype(regname) end
 
+-- Returns a |List| with information about all the sourced Vim
+-- scripts in the order they were sourced.
+-- 
+-- Each item in the returned List is a |Dict| with the following
+-- items:
+--     autoload  always set to FALSE.
+--     name  vim script file name.
+--     sid    script ID |<SID>|.
+--- @return any[]
+function vim.fn.getscriptinfo() end
+
 -- If {tabnr} is not specified, then information about all the
 -- tab pages is returned as a |List|. Each List item is a
 -- |Dictionary|.  Otherwise, {tabnr} specifies the tab page

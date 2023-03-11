@@ -1614,7 +1614,7 @@ vim.go.hlg = vim.go.helplang
 -- 	`'hidden'`  is set for one command with ":hide {command}" |:hide|.
 vim.go.hidden = true
 vim.go.hid = vim.go.hidden
-vim.go.highlight = "8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:NonText,d:Directory,e:ErrorMsg,i:IncSearch,l:Search,y:CurSearch,m:MoreMsg,M:ModeMsg,n:LineNr,a:LineNrAbove,b:LineNrBelow,N:CursorLineNr,G:CursorLineSign,O:CursorLineFoldr:Question,s:StatusLine,S:StatusLineNC,c:VertSplit,t:Title,v:Visual,V:VisualNOS,w:WarningMsg,W:WildMenu,f:Folded,F:FoldColumn,A:DiffAdd,C:DiffChange,D:DiffDelete,T:DiffText,>:SignColumn,-:Conceal,B:SpellBad,P:SpellCap,R:SpellRare,L:SpellLocal,+:Pmenu,=:PmenuSel,x:PmenuSbar,X:PmenuThumb,*:TabLine,#:TabLineSel,_:TabLineFill,!:CursorColumn,.:CursorLine,o:ColorColumn,q:QuickFixLine,0:Whitespace,I:NormalNC"
+vim.go.highlight = "8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:NonText,d:Directory,e:ErrorMsg,i:IncSearch,l:Search,y:CurSearch,m:MoreMsg,M:ModeMsg,n:LineNr,a:LineNrAbove,b:LineNrBelow,N:CursorLineNr,G:CursorLineSign,O:CursorLineFoldr:Question,s:StatusLine,S:StatusLineNC,c:VertSplit,t:Title,v:Visual,V:VisualNOS,w:WarningMsg,W:WildMenu,f:Folded,F:FoldColumn,A:DiffAdd,C:DiffChange,D:DiffDelete,T:DiffText,>:SignColumn,-:Conceal,B:SpellBad,P:SpellCap,R:SpellRare,L:SpellLocal,+:Pmenu,=:PmenuSel,[:PmenuKind,]:PmenuKindSel,{:PmenuExtra,}:PmenuExtraSel,x:PmenuSbar,X:PmenuThumb,*:TabLine,#:TabLineSel,_:TabLineFill,!:CursorColumn,.:CursorLine,o:ColorColumn,q:QuickFixLine,0:Whitespace,I:NormalNC"
 vim.go.hl = vim.go.highlight
 -- `'history'`  `'hi'` 		number	(default: 10000)
 -- 			global
@@ -4294,19 +4294,3 @@ vim.wo.bri = vim.wo.breakindent
 -- 			    (default: off)
 vim.wo.breakindentopt = ""
 vim.wo.briopt = vim.wo.breakindentopt
--- `'colorcolumn'`  `'cc'` 	string	(default "")
--- 			local to window
--- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
--- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
--- 	text.  Will make screen redrawing slower.
--- 	The screen column can be an absolute number, or a number preceded with
--- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
--- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
--- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
--- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
--- <
--- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
--- 	A maximum of 256 columns are highlighted.
-vim.wo.colorcolumn = ""
-vim.wo.cc = vim.wo.colorcolumn
