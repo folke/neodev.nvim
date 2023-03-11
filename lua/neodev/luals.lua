@@ -14,8 +14,9 @@ function M.library(opts)
   local function add(lib, filter)
     ---@diagnostic disable-next-line: param-type-mismatch
     for _, p in ipairs(vim.fn.expand(lib .. "/lua", false, true)) do
+      local plugin_name = vim.fn.fnamemodify(p, ":h:t")
       p = vim.loop.fs_realpath(p)
-      if p and (not filter or filter[vim.fn.fnamemodify(p, ":h:t")]) then
+      if p and (not filter or filter[plugin_name]) then
         if config.options.pathStrict then
           table.insert(ret, p)
         else
