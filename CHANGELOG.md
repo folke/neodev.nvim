@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/folke/neodev.nvim/compare/v2.5.0...v2.5.1) (2023-03-12)
+
+
+### Bug Fixes
+
+* **lua_ls:** plugin name detection of symlinked plugins ([#140](https://github.com/folke/neodev.nvim/issues/140)) ([a60eaee](https://github.com/folke/neodev.nvim/commit/a60eaee19e0c3dcb7e54c64fe9bcfb71420a95c0))
+
 ## [2.5.0](https://github.com/folke/neodev.nvim/compare/v2.4.2...v2.5.0) (2023-03-10)
 
 
