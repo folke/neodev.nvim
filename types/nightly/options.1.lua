@@ -1,93 +1,5 @@
 ---@meta
 
--- `'colorcolumn'`  `'cc'` 	string	(default "")
--- 			local to window
--- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
--- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
--- 	text.  Will make screen redrawing slower.
--- 	The screen column can be an absolute number, or a number preceded with
--- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
--- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
--- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
--- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
--- <
--- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
--- 	A maximum of 256 columns are highlighted.
-vim.wo.colorcolumn = ""
-vim.wo.cc = vim.wo.colorcolumn
--- `'concealcursor'`  `'cocu'` 	string (default: "")
--- 			local to window
--- 	Sets the modes in which text in the cursor line can also be concealed.
--- 	When the current mode is listed then concealing happens just like in
--- 	other lines.
--- 	  n		Normal mode
--- 	  v		Visual mode
--- 	  i		Insert mode
--- 	  c		Command line editing, for `'incsearch'` 
--- 
--- 	`'v'`  applies to all lines in the Visual area, not only the cursor.
--- 	A useful value is "nc".  This is used in help files.  So long as you
--- 	are moving around text is concealed, but when starting to insert text
--- 	or selecting a Visual area the concealed text is displayed, so that
--- 	you can see what you are doing.
--- 	Keep in mind that the cursor position is not always where it's
--- 	displayed.  E.g., when moving vertically it may change column.
-vim.wo.concealcursor = ""
-vim.wo.cocu = vim.wo.concealcursor
--- `'conceallevel'`  `'cole'` 	number (default 0)
--- 			local to window
--- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
--- 	is shown:
--- 
--- 	Value		Effect ~
--- 	0		Text is shown normally
--- 	1		Each block of concealed text is replaced with one
--- 			character.  If the syntax item does not have a custom
--- 			replacement character defined (see |:syn-cchar|) the
--- 			character defined in `'listchars'`  is used.
--- 			It is highlighted with the "Conceal" highlight group.
--- 	2		Concealed text is completely hidden unless it has a
--- 			custom replacement character defined (see
--- 			|:syn-cchar|).
--- 	3		Concealed text is completely hidden.
--- 
--- 	Note: in the cursor line concealed text is not hidden, so that you can
--- 	edit and copy the text.  This can be changed with the `'concealcursor'` 
--- 	option.
-vim.wo.conceallevel = 0
-vim.wo.cole = vim.wo.conceallevel
--- `'cursorbind'`  `'crb'` 	boolean  (default off)
--- 			local to window
--- 	When this option is set, as the cursor in the current
--- 	window moves other cursorbound windows (windows that also have
--- 	this option set) move their cursors to the corresponding line and
--- 	column.  This option is useful for viewing the
--- 	differences between two versions of a file (see `'diff'` ); in diff mode,
--- 	inserted and deleted lines (though not characters within a line) are
--- 	taken into account.
-vim.wo.cursorbind = false
-vim.wo.crb = vim.wo.cursorbind
--- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the screen column of the cursor with CursorColumn
--- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
--- 	slower.
--- 	If you only want the highlighting in the current window you can use
--- 	these autocommands: >
--- 		au WinLeave * set nocursorline nocursorcolumn
--- 		au WinEnter * set cursorline cursorcolumn
--- <
-vim.wo.cursorcolumn = false
-vim.wo.cuc = vim.wo.cursorcolumn
--- `'cursorline'`  `'cul'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
--- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
--- 	When Visual mode is active the highlighting isn't used to make it
--- 	easier to see the selected text.
-vim.wo.cursorline = false
-vim.wo.cul = vim.wo.cursorline
 -- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
 -- 			local to window
 -- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
@@ -1009,8 +921,6 @@ vim.bo = {}
 -- 	line.
 -- 	When `'smartindent'`  or `'cindent'`  is on the indent is changed in
 -- 	a different way.
--- 	The `'autoindent'`  option is reset when the `'paste'`  option is set and
--- 	restored when `'paste'`  is reset.
 -- 	{small difference from Vi: After the indent is deleted when typing
 -- 	<Esc> or <CR>, the cursor position when moving up or down is after the
 -- 	deleted indent; Vi puts the cursor somewhere in the deleted indent}.
@@ -1240,7 +1150,6 @@ vim.bo.channel = 0
 -- 	See |C-indenting|.
 -- 	When you don't like the way `'cindent'`  works, try the `'smartindent'` 
 -- 	option or `'indentexpr'` .
--- 	This option is not used when `'paste'`  is set.
 vim.bo.cindent = false
 vim.bo.cin = vim.bo.cindent
 -- `'cinkeys'`  `'cink'` 	string	(default "0{,0},0),0],:,0#,!^F,o,O,e")
@@ -1453,8 +1362,6 @@ vim.bo.efm = vim.bo.errorformat
 -- 	<Tab>.  Spaces are used in indents with the `'>'`  and `'<'`  commands and
 -- 	when `'autoindent'`  is on.  To insert a real tab when `'expandtab'`  is
 -- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
--- 	This option is reset when the `'paste'`  option is set and restored when
--- 	the `'paste'`  option is reset.
 vim.bo.expandtab = false
 vim.bo.et = vim.bo.expandtab
 -- `'fileencoding'`  `'fenc'` 	string (default: "")
@@ -1609,9 +1516,8 @@ vim.bo.flp = vim.bo.formatlistpat
 -- `'formatoptions'`  `'fo'` 	string (default: "tcqj")
 -- 			local to buffer
 -- 	This is a sequence of letters which describes how automatic
--- 	formatting is to be done.  See |fo-table|.  When the `'paste'`  option is
--- 	on, no formatting is done (like `'formatoptions'`  is empty).  Commas can
--- 	be inserted for readability.
+-- 	formatting is to be done.  See |fo-table|.  Commas can be inserted for
+-- 	readability.
 -- 	To avoid problems with flags that are added in the future, use the
 -- 	"+=" and "-=" feature of ":set" |add-option-flags|.
 vim.bo.formatoptions = "tcqj"
@@ -1735,7 +1641,6 @@ vim.bo.inex = vim.bo.includeexpr
 -- 	When this option is not empty, it overrules the `'cindent'`  and
 -- 	`'smartindent'`  indenting.  When `'lisp'`  is set, this option is
 -- 	is only used when `'lispoptions'`  contains "expr:1".
--- 	When `'paste'`  is set this option is not used for indenting.
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
@@ -1839,7 +1744,6 @@ vim.bo.kp = vim.bo.keywordprg
 -- 	The `'-'`  character is included in keyword characters.  Redefines the
 -- 	"=" operator to use this same indentation algorithm rather than
 -- 	calling an external program if `'equalprg'`  is empty.
--- 	This option is not used when `'paste'`  is set.
 vim.bo.lisp = false
 -- `'lispoptions'`  `'lop'` 	string	(default "")
 -- 			local to buffer
@@ -2120,8 +2024,6 @@ vim.bo.sw = vim.bo.shiftwidth
 -- 	mapping: ":inoremap # X^H#", where ^H is entered with CTRL-V CTRL-H.
 -- 	When using the ">>" command, lines starting with `'#'`  are not shifted
 -- 	right.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 vim.bo.smartindent = false
 vim.bo.si = vim.bo.smartindent
 -- `'softtabstop'`  `'sts'` 	number	(default 0)
@@ -2134,8 +2036,6 @@ vim.bo.si = vim.bo.smartindent
 -- 	commands like "x" still work on the actual characters.
 -- 	When `'sts'`  is zero, this feature is off.
 -- 	When `'sts'`  is negative, the value of `'shiftwidth'`  is used.
--- 	`'softtabstop'`  is set to 0 when the `'paste'`  option is set and restored
--- 	when `'paste'`  is reset.
 -- 	See also |ins-expandtab|.  When `'expandtab'`  is not set, the number of
 -- 	spaces is minimized by using <Tab>s.
 -- 	The `'L'`  flag in `'cpoptions'`  changes how tabs are used when `'list'`  is
@@ -2380,8 +2280,6 @@ vim.bo.tag = vim.bo.tags
 -- 	Maximum width of text that is being inserted.  A longer line will be
 -- 	broken after white space to get this width.  A zero value disables
 -- 	this.
--- 	`'textwidth'`  is set to 0 when the `'paste'`  option is set and restored
--- 	when `'paste'`  is reset.
 -- 	When `'textwidth'`  is zero, `'wrapmargin'`  may be used.  See also
 -- 	`'formatoptions'`  and |ins-textwidth|.
 -- 	When `'formatexpr'`  is set it will be used to break the line.
@@ -2637,8 +2535,6 @@ function vim.opt.autochdir:get()end
 -- 	line.
 -- 	When `'smartindent'`  or `'cindent'`  is on the indent is changed in
 -- 	a different way.
--- 	The `'autoindent'`  option is reset when the `'paste'`  option is set and
--- 	restored when `'paste'`  is reset.
 -- 	{small difference from Vi: After the indent is deleted when typing
 -- 	<Esc> or <CR>, the cursor position when moving up or down is after the
 -- 	deleted indent; Vi puts the cursor somewhere in the deleted indent}.
@@ -3414,7 +3310,6 @@ function vim.opt.charconvert:get()end
 -- 	See |C-indenting|.
 -- 	When you don't like the way `'cindent'`  works, try the `'smartindent'` 
 -- 	option or `'indentexpr'` .
--- 	This option is not used when `'paste'`  is set.
 --- @class vim.opt.cindent: vim.Option,boolean
 --- @operator add: vim.opt.cindent
 --- @operator sub: vim.opt.cindent
@@ -4421,4 +4316,76 @@ vim.opt.diffopt = "internal,filler,closeoff"
 vim.opt.dip = vim.opt.diffopt
 --- @return string[]
 function vim.opt.diffopt:get()end
+
+-- `'digraph'`  `'dg'` 		boolean	(default off)
+-- 			global
+-- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
+-- 	{char2}.  See |digraphs|.
+--- @class vim.opt.digraph: vim.Option,boolean
+--- @operator add: vim.opt.digraph
+--- @operator sub: vim.opt.digraph
+--- @operator pow: vim.opt.digraph
+vim.opt.digraph = false
+vim.opt.dg = vim.opt.digraph
+--- @return boolean
+function vim.opt.digraph:get()end
+
+-- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
+-- 			global
+-- 	List of directory names for the swap file, separated with commas.
+-- 
+-- 	Possible items:
+-- 	- The swap file will be created in the first directory where this is
+-- 	  possible.  If it is not possible in any directory, but last
+-- 	  directory listed in the option does not exist, it is created.
+-- 	- Empty means that no swap file will be used (recovery is
+-- 	  impossible!) and no |E303| error will be given.
+-- 	- A directory "." means to put the swap file in the same directory as
+-- 	  the edited file.  On Unix, a dot is prepended to the file name, so
+-- 	  it doesn't show in a directory listing.  On MS-Windows the "hidden"
+-- 	  attribute is set and a dot prepended if possible.
+-- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
+-- 	  the swap file relative to where the edited file is.  The leading "."
+-- 	  is replaced with the path name of the edited file.
+-- 	- For Unix and Win32, if a directory ends in two path separators "//",
+-- 	  the swap file name will be built from the complete path to the file
+-- 	  with all path separators replaced by percent `'%'`  signs (including
+-- 	  the colon following the drive letter on Win32). This will ensure
+-- 	  file name uniqueness in the preserve directory.
+-- 	  On Win32, it is also possible to end with "\\".  However, When a
+-- 	  separating comma is following, you must use "//", since "\\" will
+-- 	  include the comma in the file name. Therefore it is recommended to
+-- 	  use `'//'` , instead of `'\\'` .
+-- 	- Spaces after the comma are ignored, other spaces are considered part
+-- 	  of the directory name.  To have a space at the start of a directory
+-- 	  name, precede it with a backslash.
+-- 	- To include a comma in a directory name precede it with a backslash.
+-- 	- A directory name may end in an `':'`  or `'/'` .
+-- 	- Environment variables are expanded |:set_env|.
+-- 	- Careful with `'\'`  characters, type one before a space, type two to
+-- 	  get one in the option (see |option-backslash|), for example: >
+-- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
+-- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
+-- 	  of the option is removed.
+-- 	Using "." first in the list is recommended.  This means that editing
+-- 	the same file twice will result in a warning.  Using "/tmp" on Unix is
+-- 	discouraged: When the system crashes you lose the swap file.
+-- 	"/var/tmp" is often not cleared when rebooting, thus is a better
+-- 	choice than "/tmp".  But others on the computer may be able to see the
+-- 	files, and it can contain a lot of files, your swap files get lost in
+-- 	the crowd.  That is why a "tmp" directory in your home directory is
+-- 	tried first.
+-- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
+-- 	directories from the list.  This avoids problems when a future version
+-- 	uses another default.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.directory: vim.Option,string[]
+--- @operator add: vim.opt.directory
+--- @operator sub: vim.opt.directory
+--- @operator pow: vim.opt.directory
+vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
+vim.opt.dir = vim.opt.directory
+--- @return string[]
+function vim.opt.directory:get()end
 

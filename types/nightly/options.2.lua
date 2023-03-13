@@ -1,77 +1,5 @@
 ---@meta
 
--- `'digraph'`  `'dg'` 		boolean	(default off)
--- 			global
--- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
--- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option,boolean
---- @operator add: vim.opt.digraph
---- @operator sub: vim.opt.digraph
---- @operator pow: vim.opt.digraph
-vim.opt.digraph = false
-vim.opt.dg = vim.opt.digraph
---- @return boolean
-function vim.opt.digraph:get()end
-
--- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
--- 			global
--- 	List of directory names for the swap file, separated with commas.
--- 
--- 	Possible items:
--- 	- The swap file will be created in the first directory where this is
--- 	  possible.  If it is not possible in any directory, but last
--- 	  directory listed in the option does not exist, it is created.
--- 	- Empty means that no swap file will be used (recovery is
--- 	  impossible!) and no |E303| error will be given.
--- 	- A directory "." means to put the swap file in the same directory as
--- 	  the edited file.  On Unix, a dot is prepended to the file name, so
--- 	  it doesn't show in a directory listing.  On MS-Windows the "hidden"
--- 	  attribute is set and a dot prepended if possible.
--- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
--- 	  the swap file relative to where the edited file is.  The leading "."
--- 	  is replaced with the path name of the edited file.
--- 	- For Unix and Win32, if a directory ends in two path separators "//",
--- 	  the swap file name will be built from the complete path to the file
--- 	  with all path separators replaced by percent `'%'`  signs (including
--- 	  the colon following the drive letter on Win32). This will ensure
--- 	  file name uniqueness in the preserve directory.
--- 	  On Win32, it is also possible to end with "\\".  However, When a
--- 	  separating comma is following, you must use "//", since "\\" will
--- 	  include the comma in the file name. Therefore it is recommended to
--- 	  use `'//'` , instead of `'\\'` .
--- 	- Spaces after the comma are ignored, other spaces are considered part
--- 	  of the directory name.  To have a space at the start of a directory
--- 	  name, precede it with a backslash.
--- 	- To include a comma in a directory name precede it with a backslash.
--- 	- A directory name may end in an `':'`  or `'/'` .
--- 	- Environment variables are expanded |:set_env|.
--- 	- Careful with `'\'`  characters, type one before a space, type two to
--- 	  get one in the option (see |option-backslash|), for example: >
--- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
--- 	  of the option is removed.
--- 	Using "." first in the list is recommended.  This means that editing
--- 	the same file twice will result in a warning.  Using "/tmp" on Unix is
--- 	discouraged: When the system crashes you lose the swap file.
--- 	"/var/tmp" is often not cleared when rebooting, thus is a better
--- 	choice than "/tmp".  But others on the computer may be able to see the
--- 	files, and it can contain a lot of files, your swap files get lost in
--- 	the crowd.  That is why a "tmp" directory in your home directory is
--- 	tried first.
--- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
--- 	directories from the list.  This avoids problems when a future version
--- 	uses another default.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.directory: vim.Option,string[]
---- @operator add: vim.opt.directory
---- @operator sub: vim.opt.directory
---- @operator pow: vim.opt.directory
-vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
-vim.opt.dir = vim.opt.directory
---- @return string[]
-function vim.opt.directory:get()end
-
 -- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
 -- 	Change the way text is displayed.  This is a comma-separated list of
@@ -308,8 +236,6 @@ function vim.opt.eventignore:get()end
 -- 	<Tab>.  Spaces are used in indents with the `'>'`  and `'<'`  commands and
 -- 	when `'autoindent'`  is on.  To insert a real tab when `'expandtab'`  is
 -- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
--- 	This option is reset when the `'paste'`  option is set and restored when
--- 	the `'paste'`  option is reset.
 --- @class vim.opt.expandtab: vim.Option,boolean
 --- @operator add: vim.opt.expandtab
 --- @operator sub: vim.opt.expandtab
@@ -986,9 +912,8 @@ function vim.opt.formatlistpat:get()end
 -- `'formatoptions'`  `'fo'` 	string (default: "tcqj")
 -- 			local to buffer
 -- 	This is a sequence of letters which describes how automatic
--- 	formatting is to be done.  See |fo-table|.  When the `'paste'`  option is
--- 	on, no formatting is done (like `'formatoptions'`  is empty).  Commas can
--- 	be inserted for readability.
+-- 	formatting is to be done.  See |fo-table|.  Commas can be inserted for
+-- 	readability.
 -- 	To avoid problems with flags that are added in the future, use the
 -- 	"+=" and "-=" feature of ":set" |add-option-flags|.
 --- @class vim.opt.formatoptions: vim.Option,string[]
@@ -1858,7 +1783,6 @@ function vim.opt.incsearch:get()end
 -- 	When this option is not empty, it overrules the `'cindent'`  and
 -- 	`'smartindent'`  indenting.  When `'lisp'`  is set, this option is
 -- 	is only used when `'lispoptions'`  contains "expr:1".
--- 	When `'paste'`  is set this option is not used for indenting.
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
@@ -2383,7 +2307,6 @@ function vim.opt.linespace:get()end
 -- 	The `'-'`  character is included in keyword characters.  Redefines the
 -- 	"=" operator to use this same indentation algorithm rather than
 -- 	calling an external program if `'equalprg'`  is empty.
--- 	This option is not used when `'paste'`  is set.
 --- @class vim.opt.lisp: vim.Option,boolean
 --- @operator add: vim.opt.lisp
 --- @operator sub: vim.opt.lisp
@@ -3370,51 +3293,6 @@ vim.opt.para = vim.opt.paragraphs
 --- @return string
 function vim.opt.paragraphs:get()end
 
--- `'paste'` 			boolean	(default off)
--- 			global
--- 	This option is obsolete; |bracketed-paste-mode| is built-in.
--- 
--- 	Put Vim in Paste mode.  This is useful if you want to cut or copy
--- 	some text from one window and paste it in Vim.  This will avoid
--- 	unexpected effects.
--- 	Setting this option is useful when using Vim in a terminal, where Vim
--- 	cannot distinguish between typed text and pasted text.  In the GUI, Vim
--- 	knows about pasting and will mostly do the right thing without `'paste'` 
--- 	being set.  The same is true for a terminal where Vim handles the
--- 	mouse clicks itself.
--- 	This option is reset when starting the GUI.  Thus if you set it in
--- 	your vimrc it will work in a terminal, but not in the GUI.  Setting
--- 	`'paste'`  in the GUI has side effects: e.g., the Paste toolbar button
--- 	will no longer work in Insert mode, because it uses a mapping.
--- 	When the `'paste'`  option is switched on (also when it was already on):
--- 		- mapping in Insert mode and Command-line mode is disabled
--- 		- abbreviations are disabled
--- 		- `'autoindent'`  is reset
--- 		- `'expandtab'`  is reset
--- 		- `'hkmap'`  is reset
--- 		- `'revins'`  is reset
--- 		- `'ruler'`  is reset
--- 		- `'showmatch'`  is reset
--- 		- `'smarttab'`  is reset
--- 		- `'softtabstop'`  is set to 0
--- 		- `'textwidth'`  is set to 0
--- 		- `'wrapmargin'`  is set to 0
--- 		- `'varsofttabstop'`  is made empty
--- 	These options keep their value, but their effect is disabled:
--- 		- `'cindent'` 
--- 		- `'formatoptions'`  is used like it is empty
--- 		- `'indentexpr'` 
--- 		- `'lisp'` 
--- 		- `'smartindent'` 
--- 	NOTE: When you start editing another file while the `'paste'`  option is
--- 	on, settings from the modelines or autocommands may change the
--- 	settings again, causing trouble when pasting text.  You might want to
--- 	set the `'paste'`  option again.
--- 	When the `'paste'`  option is reset the mentioned options are restored to
--- 	the value before the moment `'paste'`  was switched from off to on.
--- 	Resetting `'paste'`  before ever setting it does not have any effect.
--- 	Since mapping doesn't work while `'paste'`  is active, you need to use
--- 	the `'pastetoggle'`  option to toggle the `'paste'`  option with some key.
 --- @class vim.opt.paste: vim.Option,boolean
 --- @operator add: vim.opt.paste
 --- @operator sub: vim.opt.paste
@@ -3423,28 +3301,6 @@ vim.opt.paste = false
 --- @return boolean
 function vim.opt.paste:get()end
 
--- `'pastetoggle'`  `'pt'` 	string	(default "")
--- 			global
--- 	When non-empty, specifies the key sequence that toggles the `'paste'` 
--- 	option.  This is like specifying a mapping: >
--- 	    :map {keys} :set invpaste<CR>
--- <	Where {keys} is the value of `'pastetoggle'` .
--- 	The difference is that it will work even when `'paste'`  is set.
--- 	`'pastetoggle'`  works in Insert mode and Normal mode, but not in
--- 	Command-line mode.
--- 	Mappings are checked first, thus overrule `'pastetoggle'` .  However,
--- 	when `'paste'`  is on mappings are ignored in Insert mode, thus you can do
--- 	this: >
--- 	    :map <F10> :set paste<CR>
--- 	    :map <F11> :set nopaste<CR>
--- 	    :imap <F10> <C-O>:set paste<CR>
--- 	    :imap <F11> <nop>
--- 	    :set pastetoggle=<F11>
--- <	This will make <F10> start paste mode and <F11> stop paste mode.
--- 	Note that typing <F10> in paste mode inserts "<F10>", since in paste
--- 	mode everything is inserted literally, except the `'pastetoggle'`  key
--- 	sequence.
--- 	When the value has several bytes `'ttimeoutlen'`  applies.
 --- @class vim.opt.pastetoggle: vim.Option,string
 --- @operator add: vim.opt.pastetoggle
 --- @operator sub: vim.opt.pastetoggle
@@ -3875,8 +3731,6 @@ function vim.opt.report:get()end
 -- 	Inserting characters in Insert mode will work backwards.  See "typing
 -- 	backwards" |ins-reverse|.  This option can be toggled with the CTRL-_
 -- 	command in Insert mode, when `'allowrevins'`  is set.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 --- @class vim.opt.revins: vim.Option,boolean
 --- @operator add: vim.opt.revins
 --- @operator sub: vim.opt.revins
@@ -3946,8 +3800,6 @@ function vim.opt.rightleftcmd:get()end
 -- 	separated with a dash.
 -- 	For an empty line "0-1" is shown.
 -- 	For an empty buffer the line number will also be zero: "0,0-1".
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 -- 	If you don't want to see the ruler all the time but want to know where
 -- 	you are, use "g CTRL-G" |g_CTRL-G|.
 --- @class vim.opt.ruler: vim.Option,boolean
@@ -4634,4 +4486,178 @@ vim.opt.shellredir = ">"
 vim.opt.srr = vim.opt.shellredir
 --- @return string
 function vim.opt.shellredir:get()end
+
+-- `'shellslash'`  `'ssl'` 	boolean	(default off)
+-- 			global
+-- 			{only for MS-Windows}
+-- 	When set, a forward slash is used when expanding file names.  This is
+-- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
+-- 	slashes can still be typed, but they are changed to forward slashes by
+-- 	Vim.
+-- 	Note that setting or resetting this option has no effect for some
+-- 	existing file names, thus this option needs to be set before opening
+-- 	any file for best results.  This might change in the future.
+-- 	`'shellslash'`  only works when a backslash can be used as a path
+-- 	separator.  To test if this is so use: >
+-- 		if exists(`'+shellslash'` )
+-- <	Also see `'completeslash'` .
+--- @class vim.opt.shellslash: vim.Option,boolean
+--- @operator add: vim.opt.shellslash
+--- @operator sub: vim.opt.shellslash
+--- @operator pow: vim.opt.shellslash
+vim.opt.shellslash = false
+vim.opt.ssl = vim.opt.shellslash
+--- @return boolean
+function vim.opt.shellslash:get()end
+
+-- `'shelltemp'`  `'stmp'` 	boolean	(default on)
+-- 			global
+-- 	When on, use temp files for shell commands.  When off use a pipe.
+-- 	When using a pipe is not possible temp files are used anyway.
+-- 	The advantage of using a pipe is that nobody can read the temp file
+-- 	and the `'shell'`  command does not need to support redirection.
+-- 	The advantage of using a temp file is that the file type and encoding
+-- 	can be detected.
+-- 	The |FilterReadPre|, |FilterReadPost| and |FilterWritePre|,
+-- 	|FilterWritePost| autocommands event are not triggered when
+-- 	`'shelltemp'`  is off.
+-- 	|system()| does not respect this option, it always uses pipes.
+--- @class vim.opt.shelltemp: vim.Option,boolean
+--- @operator add: vim.opt.shelltemp
+--- @operator sub: vim.opt.shelltemp
+--- @operator pow: vim.opt.shelltemp
+vim.opt.shelltemp = true
+vim.opt.stmp = vim.opt.shelltemp
+--- @return boolean
+function vim.opt.shelltemp:get()end
+
+-- `'shellxescape'`  `'sxe'` 	string	(default: "")
+-- 			global
+-- 	When `'shellxquote'`  is set to "(" then the characters listed in this
+-- 	option will be escaped with a `'^'`  character.  This makes it possible
+-- 	to execute most external commands with cmd.exe.
+--- @class vim.opt.shellxescape: vim.Option,string
+--- @operator add: vim.opt.shellxescape
+--- @operator sub: vim.opt.shellxescape
+--- @operator pow: vim.opt.shellxescape
+vim.opt.shellxescape = ""
+vim.opt.sxe = vim.opt.shellxescape
+--- @return string
+function vim.opt.shellxescape:get()end
+
+-- `'shellxquote'`  `'sxq'` 	string	(default: "", Windows: "\"")
+-- 			global
+-- 	Quoting character(s), put around the command passed to the shell, for
+-- 	the "!" and ":!" commands.  Includes the redirection.  See
+-- 	`'shellquote'`  to exclude the redirection.  It's probably not useful
+-- 	to set both options.
+-- 	When the value is `'('`  then `')'`  is appended. When the value is `'"('` 
+-- 	then `')"'`  is appended.
+-- 	When the value is `'('`  then also see `'shellxescape'` .
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.shellxquote: vim.Option,string
+--- @operator add: vim.opt.shellxquote
+--- @operator sub: vim.opt.shellxquote
+--- @operator pow: vim.opt.shellxquote
+vim.opt.shellxquote = ""
+vim.opt.sxq = vim.opt.shellxquote
+--- @return string
+function vim.opt.shellxquote:get()end
+
+-- `'shiftround'`  `'sr'` 	boolean	(default off)
+-- 			global
+-- 	Round indent to multiple of `'shiftwidth'` .  Applies to > and <
+-- 	commands.  CTRL-T and CTRL-D in Insert mode always round the indent to
+-- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
+--- @class vim.opt.shiftround: vim.Option,boolean
+--- @operator add: vim.opt.shiftround
+--- @operator sub: vim.opt.shiftround
+--- @operator pow: vim.opt.shiftround
+vim.opt.shiftround = false
+vim.opt.sr = vim.opt.shiftround
+--- @return boolean
+function vim.opt.shiftround:get()end
+
+-- `'shiftwidth'`  `'sw'` 	number	(default 8)
+-- 			local to buffer
+-- 	Number of spaces to use for each step of (auto)indent.  Used for
+-- 	|`'cindent'` |, |>>|, |<<|, etc.
+-- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
+-- 	function to get the effective shiftwidth value.
+--- @class vim.opt.shiftwidth: vim.Option,number
+--- @operator add: vim.opt.shiftwidth
+--- @operator sub: vim.opt.shiftwidth
+--- @operator pow: vim.opt.shiftwidth
+vim.opt.shiftwidth = 8
+vim.opt.sw = vim.opt.shiftwidth
+--- @return number
+function vim.opt.shiftwidth:get()end
+
+-- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
+-- 			global
+-- 	This option helps to avoid all the |hit-enter| prompts caused by file
+-- 	messages, for example  with CTRL-G, and to avoid some other messages.
+-- 	It is a list of flags:
+-- 	 flag	meaning when present	~
+-- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
+-- 	  i	use "[noeol]" instead of "[Incomplete last line]"
+-- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
+-- 	  m	use "[+]" instead of "[Modified]"
+-- 	  n	use "[New]" instead of "[New File]"
+-- 	  r	use "[RO]" instead of "[readonly]"
+-- 	  w	use "[w]" instead of "written" for file write message
+-- 		and "[a]" instead of "appended" for ':w >> file' command
+-- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
+-- 		instead of "[unix format]" and "[mac]" instead of "[mac
+-- 		format]"
+-- 	  a	all of the above abbreviations
+-- 
+-- 	  o	overwrite message for writing a file with subsequent
+-- 		message for reading a file (useful for ":wn" or when
+-- 		`'autowrite'`  on)
+-- 	  O	message for reading a file overwrites any previous
+-- 		message;  also for quickfix message (e.g., ":cn")
+-- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
+-- 		"search hit TOP, continuing at BOTTOM" messages; when using
+-- 		the search count do not show "W" after the count message (see
+-- 		S below)
+-- 	  t	truncate file message at the start if it is too long
+-- 		to fit on the command-line, "<" will appear in the left most
+-- 		column; ignored in Ex mode
+-- 	  T	truncate other messages in the middle if they are too
+-- 		long to fit on the command line; "..." will appear in the
+-- 		middle; ignored in Ex mode
+-- 	  W	don't give "written" or "[w]" when writing a file
+-- 	  A	don't give the "ATTENTION" message when an existing
+-- 		swap file is found
+-- 	  I	don't give the intro message when starting Vim,
+-- 		see |:intro|
+-- 	  c	don't give |ins-completion-menu| messages; for
+-- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
+-- 		match", "Pattern not found", "Back at original", etc.
+-- 	  C	don't give messages while scanning for ins-completion
+-- 		items, for instance "scanning tags"
+-- 	  q	use "recording" instead of "recording @a"
+-- 	  F	don't give the file info when editing a file, like
+-- 		`:silent` was used for the command
+-- 	  S	do not show search count message when searching, e.g.
+-- 		"[1/5]"
+-- 
+-- 	This gives you the opportunity to avoid that a change between buffers
+-- 	requires you to hit <Enter>, but still gives as useful a message as
+-- 	possible for the space available.  To get the whole message that you
+-- 	would have got with `'shm'`  empty, use ":file!"
+-- 	Useful values:
+-- 	    shm=	No abbreviation of message.
+-- 	    shm=a	Abbreviation, but no loss of information.
+-- 	    shm=at	Abbreviation, and truncate message when necessary.
+--- @class vim.opt.shortmess: vim.Option,string[]
+--- @operator add: vim.opt.shortmess
+--- @operator sub: vim.opt.shortmess
+--- @operator pow: vim.opt.shortmess
+vim.opt.shortmess = "filnxtToOF"
+vim.opt.shm = vim.opt.shortmess
+--- @return string[]
+function vim.opt.shortmess:get()end
 

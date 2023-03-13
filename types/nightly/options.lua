@@ -2399,74 +2399,7 @@ vim.go.pp = vim.go.packpath
 -- 	of two letters (see |object-motions|).
 vim.go.paragraphs = "IPLPPPQPP TPHPLIPpLpItpplpipbp"
 vim.go.para = vim.go.paragraphs
--- `'paste'` 			boolean	(default off)
--- 			global
--- 	This option is obsolete; |bracketed-paste-mode| is built-in.
--- 
--- 	Put Vim in Paste mode.  This is useful if you want to cut or copy
--- 	some text from one window and paste it in Vim.  This will avoid
--- 	unexpected effects.
--- 	Setting this option is useful when using Vim in a terminal, where Vim
--- 	cannot distinguish between typed text and pasted text.  In the GUI, Vim
--- 	knows about pasting and will mostly do the right thing without `'paste'` 
--- 	being set.  The same is true for a terminal where Vim handles the
--- 	mouse clicks itself.
--- 	This option is reset when starting the GUI.  Thus if you set it in
--- 	your vimrc it will work in a terminal, but not in the GUI.  Setting
--- 	`'paste'`  in the GUI has side effects: e.g., the Paste toolbar button
--- 	will no longer work in Insert mode, because it uses a mapping.
--- 	When the `'paste'`  option is switched on (also when it was already on):
--- 		- mapping in Insert mode and Command-line mode is disabled
--- 		- abbreviations are disabled
--- 		- `'autoindent'`  is reset
--- 		- `'expandtab'`  is reset
--- 		- `'hkmap'`  is reset
--- 		- `'revins'`  is reset
--- 		- `'ruler'`  is reset
--- 		- `'showmatch'`  is reset
--- 		- `'smarttab'`  is reset
--- 		- `'softtabstop'`  is set to 0
--- 		- `'textwidth'`  is set to 0
--- 		- `'wrapmargin'`  is set to 0
--- 		- `'varsofttabstop'`  is made empty
--- 	These options keep their value, but their effect is disabled:
--- 		- `'cindent'` 
--- 		- `'formatoptions'`  is used like it is empty
--- 		- `'indentexpr'` 
--- 		- `'lisp'` 
--- 		- `'smartindent'` 
--- 	NOTE: When you start editing another file while the `'paste'`  option is
--- 	on, settings from the modelines or autocommands may change the
--- 	settings again, causing trouble when pasting text.  You might want to
--- 	set the `'paste'`  option again.
--- 	When the `'paste'`  option is reset the mentioned options are restored to
--- 	the value before the moment `'paste'`  was switched from off to on.
--- 	Resetting `'paste'`  before ever setting it does not have any effect.
--- 	Since mapping doesn't work while `'paste'`  is active, you need to use
--- 	the `'pastetoggle'`  option to toggle the `'paste'`  option with some key.
 vim.go.paste = false
--- `'pastetoggle'`  `'pt'` 	string	(default "")
--- 			global
--- 	When non-empty, specifies the key sequence that toggles the `'paste'` 
--- 	option.  This is like specifying a mapping: >
--- 	    :map {keys} :set invpaste<CR>
--- <	Where {keys} is the value of `'pastetoggle'` .
--- 	The difference is that it will work even when `'paste'`  is set.
--- 	`'pastetoggle'`  works in Insert mode and Normal mode, but not in
--- 	Command-line mode.
--- 	Mappings are checked first, thus overrule `'pastetoggle'` .  However,
--- 	when `'paste'`  is on mappings are ignored in Insert mode, thus you can do
--- 	this: >
--- 	    :map <F10> :set paste<CR>
--- 	    :map <F11> :set nopaste<CR>
--- 	    :imap <F10> <C-O>:set paste<CR>
--- 	    :imap <F11> <nop>
--- 	    :set pastetoggle=<F11>
--- <	This will make <F10> start paste mode and <F11> stop paste mode.
--- 	Note that typing <F10> in paste mode inserts "<F10>", since in paste
--- 	mode everything is inserted literally, except the `'pastetoggle'`  key
--- 	sequence.
--- 	When the value has several bytes `'ttimeoutlen'`  applies.
 vim.go.pastetoggle = ""
 vim.go.pt = vim.go.pastetoggle
 -- `'patchexpr'`  `'pex'` 	string	(default "")
@@ -2633,8 +2566,6 @@ vim.go.report = 2
 -- 	Inserting characters in Insert mode will work backwards.  See "typing
 -- 	backwards" |ins-reverse|.  This option can be toggled with the CTRL-_
 -- 	command in Insert mode, when `'allowrevins'`  is set.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 vim.go.revins = false
 vim.go.ri = vim.go.revins
 -- `'ruler'`  `'ru'` 		boolean	(default on)
@@ -2659,8 +2590,6 @@ vim.go.ri = vim.go.revins
 -- 	separated with a dash.
 -- 	For an empty line "0-1" is shown.
 -- 	For an empty buffer the line number will also be zero: "0,0-1".
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 -- 	If you don't want to see the ruler all the time but want to know where
 -- 	you are, use "g CTRL-G" |g_CTRL-G|.
 vim.go.ruler = true
@@ -3321,8 +3250,6 @@ vim.go.sft = vim.go.showfulltag
 -- 	show the match can be set with `'matchtime'` .
 -- 	A Beep is given if there is no match (no matter if the match can be
 -- 	seen or not).
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 -- 	When the `'m'`  flag is not included in `'cpoptions'` , typing a character
 -- 	will immediately move the cursor back to where it belongs.
 -- 	See the "sm" field in `'guicursor'`  for setting the cursor shape and
@@ -3385,8 +3312,6 @@ vim.go.scs = vim.go.smartcase
 -- 	What gets inserted (a <Tab> or spaces) depends on the `'expandtab'` 
 -- 	option.  Also see |ins-expandtab|.  When `'expandtab'`  is not set, the
 -- 	number of spaces is minimized by using <Tab>s.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 vim.go.smarttab = true
 vim.go.sta = vim.go.smarttab
 -- `'spellsuggest'`  `'sps'` 	string	(default "best")
@@ -4294,3 +4219,91 @@ vim.wo.bri = vim.wo.breakindent
 -- 			    (default: off)
 vim.wo.breakindentopt = ""
 vim.wo.briopt = vim.wo.breakindentopt
+-- `'colorcolumn'`  `'cc'` 	string	(default "")
+-- 			local to window
+-- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
+-- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
+-- 	text.  Will make screen redrawing slower.
+-- 	The screen column can be an absolute number, or a number preceded with
+-- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
+-- 
+-- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
+-- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+-- <
+-- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
+-- 	A maximum of 256 columns are highlighted.
+vim.wo.colorcolumn = ""
+vim.wo.cc = vim.wo.colorcolumn
+-- `'concealcursor'`  `'cocu'` 	string (default: "")
+-- 			local to window
+-- 	Sets the modes in which text in the cursor line can also be concealed.
+-- 	When the current mode is listed then concealing happens just like in
+-- 	other lines.
+-- 	  n		Normal mode
+-- 	  v		Visual mode
+-- 	  i		Insert mode
+-- 	  c		Command line editing, for `'incsearch'` 
+-- 
+-- 	`'v'`  applies to all lines in the Visual area, not only the cursor.
+-- 	A useful value is "nc".  This is used in help files.  So long as you
+-- 	are moving around text is concealed, but when starting to insert text
+-- 	or selecting a Visual area the concealed text is displayed, so that
+-- 	you can see what you are doing.
+-- 	Keep in mind that the cursor position is not always where it's
+-- 	displayed.  E.g., when moving vertically it may change column.
+vim.wo.concealcursor = ""
+vim.wo.cocu = vim.wo.concealcursor
+-- `'conceallevel'`  `'cole'` 	number (default 0)
+-- 			local to window
+-- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
+-- 	is shown:
+-- 
+-- 	Value		Effect ~
+-- 	0		Text is shown normally
+-- 	1		Each block of concealed text is replaced with one
+-- 			character.  If the syntax item does not have a custom
+-- 			replacement character defined (see |:syn-cchar|) the
+-- 			character defined in `'listchars'`  is used.
+-- 			It is highlighted with the "Conceal" highlight group.
+-- 	2		Concealed text is completely hidden unless it has a
+-- 			custom replacement character defined (see
+-- 			|:syn-cchar|).
+-- 	3		Concealed text is completely hidden.
+-- 
+-- 	Note: in the cursor line concealed text is not hidden, so that you can
+-- 	edit and copy the text.  This can be changed with the `'concealcursor'` 
+-- 	option.
+vim.wo.conceallevel = 0
+vim.wo.cole = vim.wo.conceallevel
+-- `'cursorbind'`  `'crb'` 	boolean  (default off)
+-- 			local to window
+-- 	When this option is set, as the cursor in the current
+-- 	window moves other cursorbound windows (windows that also have
+-- 	this option set) move their cursors to the corresponding line and
+-- 	column.  This option is useful for viewing the
+-- 	differences between two versions of a file (see `'diff'` ); in diff mode,
+-- 	inserted and deleted lines (though not characters within a line) are
+-- 	taken into account.
+vim.wo.cursorbind = false
+vim.wo.crb = vim.wo.cursorbind
+-- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the screen column of the cursor with CursorColumn
+-- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
+-- 	slower.
+-- 	If you only want the highlighting in the current window you can use
+-- 	these autocommands: >
+-- 		au WinLeave * set nocursorline nocursorcolumn
+-- 		au WinEnter * set cursorline cursorcolumn
+-- <
+vim.wo.cursorcolumn = false
+vim.wo.cuc = vim.wo.cursorcolumn
+-- `'cursorline'`  `'cul'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
+-- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
+-- 	When Visual mode is active the highlighting isn't used to make it
+-- 	easier to see the selected text.
+vim.wo.cursorline = false
+vim.wo.cul = vim.wo.cursorline
