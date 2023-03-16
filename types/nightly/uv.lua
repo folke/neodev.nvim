@@ -3702,26 +3702,9 @@ function uv.metrics_idle_time() end
 
 -- [[ constants ]]
 
--- TODO: should constants have their values removed and replaced
--- with an integer type?  Those constants change from system to another
+---@alias uv.constants {O_RDONLY: integer, O_WRONLY: integer, O_RDWR: integer, O_APPEND: integer, O_CREAT: integer, O_DSYNC: integer, O_EXCL: integer, O_NOCTTY: integer, O_NONBLOCK: integer, O_RSYNC: integer, O_SYNC: integer, O_TRUNC: integer, SOCK_STREAM: integer, SOCK_DGRAM: integer, SOCK_SEQPACKET: integer, SOCK_RAW: integer, SOCK_RDM: integer, AF_UNIX: integer, AF_INET: integer, AF_INET6: integer, AF_IPX: integer, AF_NETLINK: integer, AF_X25: integer, AF_AX25: integer, AF_ATMPVC: integer, AF_APPLETALK: integer, AF_PACKET: integer, AI_ADDRCONFIG: integer, AI_V4MAPPED: integer, AI_ALL: integer, AI_NUMERICHOST: integer, AI_PASSIVE: integer, AI_NUMERICSERV: integer, SIGHUP: integer, SIGINT: integer, SIGQUIT: integer, SIGILL: integer, SIGTRAP: integer, SIGABRT: integer, SIGIOT: integer, SIGBUS: integer, SIGFPE: integer, SIGKILL: integer, SIGUSR1: integer, SIGSEGV: integer, SIGUSR2: integer, SIGPIPE: integer, SIGALRM: integer, SIGTERM: integer, SIGCHLD: integer, SIGSTKFLT: integer, SIGCONT: integer, SIGSTOP: integer, SIGTSTP: integer, SIGTTIN: integer, SIGWINCH: integer, SIGIO: integer, SIGPOLL: integer, SIGXFSZ: integer, SIGVTALRM: integer, SIGPROF: integer, UDP_RECVMMSG: integer, UDP_MMSG_CHUNK: integer, UDP_REUSEADDR: integer, UDP_PARTIAL: integer, UDP_IPV6ONLY: integer, TCP_IPV6ONLY: integer, UDP_MMSG_FREE: integer, SIGSYS: integer, SIGPWR: integer, SIGTTOU: integer, SIGURG: integer, SIGXCPU: integer}
 
-uv.constants = {
-  O_RDONLY = 0, O_WRONLY = 1, O_RDWR = 2, O_APPEND = 1024, O_CREAT = 64,
-  O_DSYNC = 4096, O_EXCL = 128, O_NOCTTY = 256, O_NONBLOCK = 2048,
-  O_RSYNC = 1052672, O_SYNC = 1052672, O_TRUNC = 512, SOCK_STREAM = 1,
-  SOCK_DGRAM = 2, SOCK_SEQPACKET = 5, SOCK_RAW = 3, SOCK_RDM = 4, AF_UNIX = 1,
-  AF_INET = 2, AF_INET6 = 10, AF_IPX = 4, AF_NETLINK = 16, AF_X25 = 9,
-  AF_AX25 = 3, AF_ATMPVC = 8, AF_APPLETALK = 5, AF_PACKET = 17,
-  AI_ADDRCONFIG = 32, AI_V4MAPPED = 8, AI_ALL = 16, AI_NUMERICHOST = 4,
-  AI_PASSIVE = 1, AI_NUMERICSERV = 1024, SIGHUP = 1, SIGINT = 2, SIGQUIT = 3,
-  SIGILL = 4, SIGTRAP = 5, SIGABRT = 6, SIGIOT = 6, SIGBUS = 7, SIGFPE = 8,
-  SIGKILL = 9, SIGUSR1 = 10, SIGSEGV = 11, SIGUSR2 = 12, SIGPIPE = 13,
-  SIGALRM = 14, SIGTERM = 15, SIGCHLD = 17, SIGSTKFLT = 16, SIGCONT = 18,
-  SIGSTOP = 19, SIGTSTP = 20, SIGTTIN = 21, SIGWINCH = 28, SIGIO = 29,
-  SIGPOLL = 29, SIGXFSZ = 25, SIGVTALRM = 26, SIGPROF = 27, UDP_RECVMMSG = 256,
-  UDP_MMSG_CHUNK = 8, UDP_REUSEADDR = 4, UDP_PARTIAL = 2, UDP_IPV6ONLY = 1,
-  TCP_IPV6ONLY = 1, UDP_MMSG_FREE = 16, SIGSYS = 31, SIGPWR = 30, SIGTTOU = 22,
-  SIGURG = 23, SIGXCPU = 24
-}
+---@type uv.constants
+uv.constants = {}
 
 return uv
