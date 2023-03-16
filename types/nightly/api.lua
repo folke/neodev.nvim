@@ -210,8 +210,8 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --     otherwise True. TODO: LUA_API_NO_EVAL
 -- 
 -- See also: ~
---     |nvim_buf_detach()|
---     |api-buffer-updates-lua|
+--   • |nvim_buf_detach()|
+--   • |api-buffer-updates-lua|
 --- @param buffer buffer
 --- @param send_buffer boolean
 --- @param opts table<string, any>
@@ -270,7 +270,7 @@ function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) e
 --   • {buffer}  Buffer handle, or 0 for current buffer.
 -- 
 -- See also: ~
---     nvim_create_user_command
+--   • nvim_create_user_command
 --- @param buffer buffer
 --- @param name string
 --- @param command object
@@ -298,7 +298,7 @@ function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
 --   • {buffer}  Buffer handle, or 0 for current buffer
 -- 
 -- See also: ~
---     |nvim_del_keymap()|
+--   • |nvim_del_keymap()|
 --- @param buffer buffer
 --- @param mode string
 --- @param lhs string
@@ -318,8 +318,8 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 --     true if the mark was deleted, else false.
 -- 
 -- See also: ~
---     |nvim_buf_set_mark()|
---     |nvim_del_mark()|
+--   • |nvim_buf_set_mark()|
+--   • |nvim_del_mark()|
 --- @param buffer buffer
 --- @param name string
 --- @return boolean
@@ -506,8 +506,8 @@ function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 --     uppercase/file mark set in another buffer.
 -- 
 -- See also: ~
---     |nvim_buf_set_mark()|
---     |nvim_buf_del_mark()|
+--   • |nvim_buf_set_mark()|
+--   • |nvim_buf_del_mark()|
 --- @param buffer buffer
 --- @param name string
 --- @return number[]
@@ -763,7 +763,7 @@ function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 --   • {buffer}  Buffer handle, or 0 for current buffer
 -- 
 -- See also: ~
---     |nvim_set_keymap()|
+--   • |nvim_set_keymap()|
 --- @param buffer buffer
 --- @param mode string
 --- @param lhs string
@@ -794,7 +794,7 @@ function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 --   • {replacement}      Array of lines to use as replacement
 -- 
 -- See also: ~
---     |nvim_buf_set_text()|
+--   • |nvim_buf_set_text()|
 --- @param buffer buffer
 --- @param start number
 --- @param end_ number
@@ -821,8 +821,8 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 --     true if the mark was set, else false.
 -- 
 -- See also: ~
---     |nvim_buf_del_mark()|
---     |nvim_buf_get_mark()|
+--   • |nvim_buf_del_mark()|
+--   • |nvim_buf_get_mark()|
 --- @param buffer buffer
 --- @param name string
 --- @param line number
@@ -877,7 +877,7 @@ function vim.api.nvim_buf_set_option(buffer, name, value) end
 --   • {replacement}  Array of lines to use as replacement
 -- 
 -- See also: ~
---     |nvim_buf_set_lines()|
+--   • |nvim_buf_set_lines()|
 --- @param buffer buffer
 --- @param start_row number
 --- @param start_col number
@@ -1007,8 +1007,8 @@ function vim.api.nvim_clear_autocmds(opts) end
 --     empty string.
 -- 
 -- See also: ~
---     |nvim_exec()|
---     |nvim_command()|
+--   • |nvim_exec()|
+--   • |nvim_command()|
 --- @param cmd? table<string, any>
 --- @param opts? table<string, any>
 --- @return string
@@ -1048,7 +1048,7 @@ function vim.api.nvim_command(command) end
 --     Integer id of the created group.
 -- 
 -- See also: ~
---     |autocmd-groups|
+--   • |autocmd-groups|
 --- @param name string
 --- @param opts? table<string, any>
 --- @return number
@@ -1119,8 +1119,8 @@ function vim.api.nvim_create_augroup(name, opts) end
 --     Autocommand id (number)
 -- 
 -- See also: ~
---     |autocommand|
---     |nvim_del_autocmd()|
+--   • |autocommand|
+--   • |nvim_del_autocmd()|
 --- @param event object
 --- @param opts? table<string, any>
 --- @return number
@@ -1138,7 +1138,7 @@ function vim.api.nvim_create_autocmd(event, opts) end
 --     Buffer handle, or 0 on error
 -- 
 -- See also: ~
---     buf_open_scratch
+--   • buf_open_scratch
 --- @param listed boolean
 --- @param scratch boolean
 --- @return buffer
@@ -1231,8 +1231,8 @@ function vim.api.nvim_create_user_command(name, command, opts) end
 --   • {id}  Integer The id of the group.
 -- 
 -- See also: ~
---     |nvim_del_augroup_by_name()|
---     |nvim_create_augroup()|
+--   • |nvim_del_augroup_by_name()|
+--   • |nvim_create_augroup()|
 --- @param id number
 function vim.api.nvim_del_augroup_by_id(id) end
 
@@ -1246,7 +1246,7 @@ function vim.api.nvim_del_augroup_by_id(id) end
 --   • {name}  String The name of the group.
 -- 
 -- See also: ~
---     |autocmd-groups|
+--   • |autocmd-groups|
 --- @param name string
 function vim.api.nvim_del_augroup_by_name(name) end
 
@@ -1258,7 +1258,7 @@ function vim.api.nvim_del_augroup_by_name(name) end
 --   • {id}  Integer The id returned by nvim_create_autocmd
 -- 
 -- See also: ~
---     |nvim_create_autocmd()|
+--   • |nvim_create_autocmd()|
 --- @param id number
 function vim.api.nvim_del_autocmd(id) end
 
@@ -1273,7 +1273,7 @@ function vim.api.nvim_del_current_line() end
 -- To unmap a buffer-local mapping, use |nvim_buf_del_keymap()|.
 -- 
 -- See also: ~
---     |nvim_set_keymap()|
+--   • |nvim_set_keymap()|
 --- @param mode string
 --- @param lhs string
 function vim.api.nvim_del_keymap(mode, lhs) end
@@ -1290,8 +1290,8 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 --     true if the mark was deleted, else false.
 -- 
 -- See also: ~
---     |nvim_buf_del_mark()|
---     |nvim_get_mark()|
+--   • |nvim_buf_del_mark()|
+--   • |nvim_get_mark()|
 --- @param name string
 --- @return boolean
 function vim.api.nvim_del_mark(name) end
@@ -1342,7 +1342,7 @@ function vim.api.nvim_err_write(str) end
 --   • {str}  Message
 -- 
 -- See also: ~
---     nvim_err_write()
+--   • nvim_err_write()
 --- @param str string
 function vim.api.nvim_err_writeln(str) end
 
@@ -1412,9 +1412,9 @@ function vim.api.nvim_eval_statusline(str, opts) end
 --     string.
 -- 
 -- See also: ~
---     |execute()|
---     |nvim_command()|
---     |nvim_cmd()|
+--   • |execute()|
+--   • |nvim_command()|
+--   • |nvim_cmd()|
 --- @param src string
 --- @param output boolean
 --- @return string
@@ -1438,7 +1438,7 @@ function vim.api.nvim_exec(src, output) end
 --                callback. See |nvim_create_autocmd()| for details.
 -- 
 -- See also: ~
---     |:doautocmd|
+--   • |:doautocmd|
 --- @param event object
 --- @param opts? table<string, any>
 function vim.api.nvim_exec_autocmds(event, opts) end
@@ -1466,8 +1466,8 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 --                  true otherwise.
 -- 
 -- See also: ~
---     feedkeys()
---     vim_strsave_escape_ks
+--   • feedkeys()
+--   • vim_strsave_escape_ks
 --- @param keys string
 --- @param mode string
 --- @param escape_ks boolean
@@ -1655,7 +1655,7 @@ function vim.api.nvim_get_current_win() end
 --     Highlight definition map
 -- 
 -- See also: ~
---     nvim_get_hl_by_name
+--   • nvim_get_hl_by_name
 --- @param hl_id number
 --- @param rgb boolean
 --- @return table<string, any>
@@ -1671,7 +1671,7 @@ function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
 --     Highlight definition map
 -- 
 -- See also: ~
---     nvim_get_hl_by_id
+--   • nvim_get_hl_by_id
 --- @param name string
 --- @param rgb boolean
 --- @return table<string, any>
@@ -1713,8 +1713,8 @@ function vim.api.nvim_get_keymap(mode) end
 --     not set.
 -- 
 -- See also: ~
---     |nvim_buf_set_mark()|
---     |nvim_del_mark()|
+--   • |nvim_buf_set_mark()|
+--   • |nvim_del_mark()|
 --- @param name string
 --- @param opts table<string, any>
 --- @return any[]
@@ -2400,8 +2400,8 @@ function vim.api.nvim_put(lines, type, after, follow) end
 --   • {special}    Replace |keycodes|, e.g. <CR> becomes a "\r" char.
 -- 
 -- See also: ~
---     replace_termcodes
---     cpoptions
+--   • replace_termcodes
+--   • cpoptions
 --- @param str string
 --- @param from_part boolean
 --- @param do_lt boolean
@@ -2780,8 +2780,8 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 --     upvalues to send lua references in and out.
 -- 
 -- See also: ~
---     |win_execute()|
---     |nvim_buf_call()|
+--   • |win_execute()|
+--   • |nvim_buf_call()|
 --- @param window window
 --- @param fun fun()
 --- @return object
@@ -2979,7 +2979,7 @@ function vim.api.nvim_win_set_buf(window, buffer) end
 --   • {config}  Map defining the window configuration, see |nvim_open_win()|
 -- 
 -- See also: ~
---     |nvim_open_win()|
+--   • |nvim_open_win()|
 --- @param window window
 --- @param config? table<string, any>
 function vim.api.nvim_win_set_config(window, config) end
