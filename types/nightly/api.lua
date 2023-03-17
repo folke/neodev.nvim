@@ -2541,6 +2541,9 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 -- Parameters: ~
 --   • {ns_id}  Namespace id for this highlight |nvim_create_namespace()|.
 --              Use 0 to set a highlight group globally |:highlight|.
+--              Highlights from non-global namespaces are not active by
+--              default, use |nvim_set_hl_ns()| or |nvim_win_set_hl_ns()| to
+--              activate them.
 --   • {name}   Highlight group name, e.g. "ErrorMsg"
 --   • {val}    Highlight definition map, accepts the following keys:
 --              • fg (or foreground): color name or "#RRGGBB", see note.
@@ -2571,15 +2574,16 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --- @param val? table<string, any>
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
--- Set active namespace for highlights. This can be set for a single window,
--- see |nvim_win_set_hl_ns()|.
+-- Set active namespace for highlights defined with |nvim_set_hl()|. This can
+-- be set for a single window, see |nvim_win_set_hl_ns()|.
 -- 
 -- Parameters: ~
 --   • {ns_id}  the namespace to use
 --- @param ns_id number
 function vim.api.nvim_set_hl_ns(ns_id) end
 
--- Set active namespace for highlights while redrawing.
+-- Set active namespace for highlights defined with |nvim_set_hl()| while
+-- redrawing.
 -- 
 -- This function meant to be called while redrawing, primarily from
 -- |nvim_set_decoration_provider()| on_win and on_line callbacks, which are
@@ -3003,8 +3007,9 @@ function vim.api.nvim_win_set_cursor(window, pos) end
 --- @param height number
 function vim.api.nvim_win_set_height(window, height) end
 
--- Set highlight namespace for a window. This will use highlights defined in
--- this namespace, but fall back to global highlights (ns=0) when missing.
+-- Set highlight namespace for a window. This will use highlights defined
+-- with |nvim_set_hl()| for this namespace, but fall back to global
+-- highlights (ns=0) when missing.
 -- 
 -- This takes precedence over the 'winhighlight' option.
 -- 
