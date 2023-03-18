@@ -2242,12 +2242,12 @@ function uv.new_fs_poll() end
 ---**Note:** For maximum portability, use multi-second intervals. Sub-second
 ---intervals will not detect all changes on many file systems.
 ---
----@param fs_event uv_fs_event_t
+---@param fs_poll uv_fs_poll_t
 ---@param path string
 ---@param interval integer
 ---@param callback fun(err?: string, prev: uv.aliases.fs_stat_table, curr: uv.aliases.fs_stat_table)
 ---@return 0|nil success, string? err_name, string? err_msg
-function uv.fs_poll_start(fs_event, path, interval, callback) end
+function uv.fs_poll_start(fs_poll, path, interval, callback) end
 uv_fs_poll_t.start = uv.fs_poll_start
 
 ---
@@ -3709,8 +3709,9 @@ uv.constants = {}
 
 -- [[ errorno ]]
 
----@alias uv.errno {E2BIG : integer, EACCES : integer, EADDRINUSE : integer, EADDRNOTAVAIL : integer, EAFNOSUPPORT : integer, EAGAIN : integer, EAI_ADDRFAMILY : integer, EAI_AGAIN : integer, EAI_BADFLAGS : integer, EAI_BADHINTS : integer, EAI_CANCELED : integer, EAI_FAIL : integer, EAI_FAMILY : integer, EAI_MEMORY : integer, EAI_NODATA : integer, EAI_NONAME : integer, EAI_OVERFLOW : integer, EAI_PROTOCOL : integer, EAI_SERVICE : integer, EAI_SOCKTYPE : integer, EALREADY : integer, EBADF : integer, EBUSY : integer, ECANCELED : integer, ECHARSET : integer, ECONNABORTED : integer, ECONNREFUSED : integer, ECONNRESET : integer, EDESTADDRREQ : integer, EEXIST : integer, EFAULT : integer, EFBIG : integer, EFTYPE : integer, EHOSTDOWN : integer, EHOSTUNREACH : integer, EILSEQ : integer, EINTR : integer, EINVAL : integer, EIO : integer, EISCONN : integer, EISDIR : integer, ELOOP : integer, EMFILE : integer, EMLINK : integer, EMSGSIZE : integer, ENAMETOOLONG : integer, ENETDOWN : integer, ENETUNREACH : integer, ENFILE : integer, ENOBUFS : integer, ENODATA : integer, ENODEV : integer, ENOENT : integer, ENOMEM : integer, ENONET : integer, ENOPROTOOPT : integer, ENOSPC : integer, ENOSYS : integer, ENOTCONN : integer, ENOTDIR : integer, ENOTEMPTY : integer, ENOTSOCK : integer, ENOTSUP : integer, ENOTTY : integer, ENXIO : integer, EOF : integer, EOVERFLOW : integer, EPERM : integer, EPIPE : integer, EPROTO : integer, EPROTONOSUPPORT : integer, EPROTOTYPE : integer, ERANGE : integer, EREMOTEIO : integer, EROFS : integer, ESHUTDOWN : integer, ESOCKTNOSUPPORT : integer, ESPIPE : integer, ESRCH : integer, ETIMEDOUT : integer, ETXTBSY : integer, EXDEV : integer, UNKNOWN : integer}
+---@alias uv.errno {E2BIG: integer, EACCES: integer, EADDRINUSE: integer, EADDRNOTAVAIL: integer, EAFNOSUPPORT: integer, EAGAIN: integer, EAI_ADDRFAMILY: integer, EAI_AGAIN: integer, EAI_BADFLAGS: integer, EAI_BADHINTS: integer, EAI_CANCELED: integer, EAI_FAIL: integer, EAI_FAMILY: integer, EAI_MEMORY: integer, EAI_NODATA: integer, EAI_NONAME: integer, EAI_OVERFLOW: integer, EAI_PROTOCOL: integer, EAI_SERVICE: integer, EAI_SOCKTYPE: integer, EALREADY: integer, EBADF: integer, EBUSY: integer, ECANCELED: integer, ECHARSET: integer, ECONNABORTED: integer, ECONNREFUSED: integer, ECONNRESET: integer, EDESTADDRREQ: integer, EEXIST: integer, EFAULT: integer, EFBIG: integer, EFTYPE: integer, EHOSTDOWN: integer, EHOSTUNREACH: integer, EILSEQ: integer, EINTR: integer, EINVAL: integer, EIO: integer, EISCONN: integer, EISDIR: integer, ELOOP: integer, EMFILE: integer, EMLINK: integer, EMSGSIZE: integer, ENAMETOOLONG: integer, ENETDOWN: integer, ENETUNREACH: integer, ENFILE: integer, ENOBUFS: integer, ENODATA: integer, ENODEV: integer, ENOENT: integer, ENOMEM: integer, ENONET: integer, ENOPROTOOPT: integer, ENOSPC: integer, ENOSYS: integer, ENOTCONN: integer, ENOTDIR: integer, ENOTEMPTY: integer, ENOTSOCK: integer, ENOTSUP: integer, ENOTTY: integer, ENXIO: integer, EOF: integer, EOVERFLOW: integer, EPERM: integer, EPIPE: integer, EPROTO: integer, EPROTONOSUPPORT: integer, EPROTOTYPE: integer, ERANGE: integer, EREMOTEIO: integer, EROFS: integer, ESHUTDOWN: integer, ESOCKTNOSUPPORT: integer, ESPIPE: integer, ESRCH: integer, ETIMEDOUT: integer, ETXTBSY: integer, EXDEV: integer, UNKNOWN: integer}
 
+---
 ---A table value which exposes error constants as a map, where the key is the
 ---error name (without the `UV_` prefix) and its value is a negative number.
 ---See Libuv's "Error constants" page for further details.
@@ -3718,6 +3719,7 @@ uv.constants = {}
 ---
 ---Note: Implementation detail: on Unix error codes are the negated errno (or -errno),
 ---while on Windows they are defined by libuv to arbitrary negative numbers.
+---
 ---@type uv.errno
 uv.errno = {}
 
