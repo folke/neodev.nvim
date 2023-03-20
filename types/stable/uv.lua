@@ -3,6 +3,8 @@
 ---@meta
 ---@diagnostic disable: duplicate-set-field
 
+-- TODO: define @source for all sections and methods
+
 ---
 ---The [luv](https://github.com/luvit/luv/) project provides access to the multi-platform support library
 ---[libuv](http://libuv.org/) in Lua code. It was primarily developed for the [luvit](https://github.com/luvit/luvit/) project as
@@ -11,12 +13,162 @@
 ---More information about the core libuv library can be found at the original
 ---[libuv documentation page](http://docs.libuv.org/en/v1.x/).
 ---
+---### TCP Echo Server Example
+---
+---Here is a small example showing a TCP echo server:
+---
+---```lua
+---local uv = require("luv") -- "luv" when stand-alone, "uv" in luvi apps
+---
+---local server = uv.new_tcp()
+---server:bind("127.0.0.1", 1337)
+---server:listen(128, function (err)
+---  assert(not err, err)
+---  local client = uv.new_tcp()
+---  server:accept(client)
+---  client:read_start(function (err, chunk)
+---    assert(not err, err)
+---    if chunk then
+---      client:write(chunk)
+---    else
+---      client:shutdown()
+---      client:close()
+---    end
+---  end)
+---end)
+---print("TCP server listening at 127.0.0.1 port 1337")
+---uv.run() -- an explicit run call is necessary outside of luvit
+---```
+---
+---### Module Layout
+---
+---The luv library contains a single Lua module referred to hereafter as `uv` for
+---simplicity. This module consists mostly of functions with names corresponding to
+---their original libuv versions. For example, the libuv function `uv_tcp_bind` has
+---a luv version at `uv.tcp_bind`. Currently, only two non-function fields exists:
+---`uv.constants` and `uv.errno`, which are tables.
+---
+---### Functions vs Methods
+---
+---In addition to having simple functions, luv provides an optional method-style
+---API. For example, `uv.tcp_bind(server, host, port)` can alternatively be called
+---as `server:bind(host, port)`. Note that the first argument `server` becomes the
+---object and `tcp_` is removed from the function name. Method forms are
+---documented below where they exist.
+---
+---### Synchronous vs Asynchronous Functions
+---
+---Functions that accept a callback are asynchronous. These functions may
+---immediately return results to the caller to indicate their initial status, but
+---their final execution is deferred until at least the next libuv loop iteration.
+---After completion, their callbacks are executed with any results passed to it.
+---
+---Functions that do not accept a callback are synchronous. These functions
+---immediately return their results to the caller.
+---
+---Some (generally FS and DNS) functions can behave either synchronously or
+---asynchronously. If a callback is provided to these functions, they behave
+---asynchronously; if no callback is provided, they behave synchronously.
+---
+---### Pseudo-Types
+---
+---Some unique types are defined. These are not actual types in Lua, but they are
+---used here to facilitate documenting consistent behavior:
+---- `fail`: an assertable `nil, string, string` tuple (see [Error handling][])
+---- `callable`: a `function`; or a `table` or `userdata` with a `__call`
+---  metamethod
+---- `buffer`: a `string` or a sequential `table` of `string`s
+---- `threadargs`: variable arguments (`...`) of type `nil`, `boolean`, `number`,
+---  `string`, or `userdata`
+---
+---@namespace
 ---@class uv
+---@section Libuv in Lua
 local uv = {}
 
 ---@alias uv.aliases.buffer string|string[]
 
 ---@alias uv.aliases.threadargs userdata|string|number|boolean|nil
+
+
+
+---
+---@section Contents
+---
+---This documentation is mostly a retelling of the [libuv API documentation][]
+---within the context of luv's Lua API. Low-level implementation details and
+---unexposed C functions and types are not documented here except for when they
+---are relevant to behavior seen in the Lua module.
+---
+--- - [Error handling][]
+--- - [Version checking][]
+--- - [`uv_loop_t`][] — Event loop
+--- - [`uv_req_t`][] — Base request
+--- - [`uv_handle_t`][] — Base handle
+---   - [`uv_timer_t`][] — Timer handle
+---   - [`uv_prepare_t`][] — Prepare handle
+---   - [`uv_check_t`][] — Check handle
+---   - [`uv_idle_t`][] — Idle handle
+---   - [`uv_async_t`][] — Async handle
+---   - [`uv_poll_t`][] — Poll handle
+---   - [`uv_signal_t`][] — Signal handle
+---   - [`uv_process_t`][] — Process handle
+---   - [`uv_stream_t`][] — Stream handle
+---     - [`uv_tcp_t`][] — TCP handle
+---     - [`uv_pipe_t`][] — Pipe handle
+---     - [`uv_tty_t`][] — TTY handle
+---   - [`uv_udp_t`][] — UDP handle
+---   - [`uv_fs_event_t`][] — FS Event handle
+---   - [`uv_fs_poll_t`][] — FS Poll handle
+--- - [File system operations][]
+--- - [Thread pool work scheduling][]
+--- - [DNS utility functions][]
+--- - [Threading and synchronization utilities][]
+--- - [Miscellaneous utilities][]
+--- - [Metrics operations][]
+---
+
+-- TODO: above section should probably not be hardcoded
+
+
+
+---
+---In libuv, errors are negative numbered constants; however, while those errors are exposed through `uv.errno`,
+---the functions used to handle them are not exposed to luv users. Instead, if an
+---internal error is encountered, the luv function will return to the caller an
+---assertable `nil, err, name` tuple.
+---
+---- `nil` idiomatically indicates failure
+---- `err` is a string with the format `{name}: {message}`
+---  - `{name}` is the error name provided internally by `uv_err_name`
+---  - `{message}` is a human-readable message provided internally by `uv_strerror`
+---- `name` is the same string used to construct `err`
+---
+---This tuple is referred to below as the `fail` pseudo-type.
+---
+---When a function is called successfully, it will return either a value that is
+---relevant to the operation of the function, or the integer `0` to indicate
+---success, or sometimes nothing at all. These cases are documented below.
+---
+---@alias uv.errno {E2BIG: integer, EACCES: integer, EADDRINUSE: integer, EADDRNOTAVAIL: integer, EAFNOSUPPORT: integer, EAGAIN: integer, EAI_ADDRFAMILY: integer, EAI_AGAIN: integer, EAI_BADFLAGS: integer, EAI_BADHINTS: integer, EAI_CANCELED: integer, EAI_FAIL: integer, EAI_FAMILY: integer, EAI_MEMORY: integer, EAI_NODATA: integer, EAI_NONAME: integer, EAI_OVERFLOW: integer, EAI_PROTOCOL: integer, EAI_SERVICE: integer, EAI_SOCKTYPE: integer, EALREADY: integer, EBADF: integer, EBUSY: integer, ECANCELED: integer, ECHARSET: integer, ECONNABORTED: integer, ECONNREFUSED: integer, ECONNRESET: integer, EDESTADDRREQ: integer, EEXIST: integer, EFAULT: integer, EFBIG: integer, EFTYPE: integer, EHOSTDOWN: integer, EHOSTUNREACH: integer, EILSEQ: integer, EINTR: integer, EINVAL: integer, EIO: integer, EISCONN: integer, EISDIR: integer, ELOOP: integer, EMFILE: integer, EMLINK: integer, EMSGSIZE: integer, ENAMETOOLONG: integer, ENETDOWN: integer, ENETUNREACH: integer, ENFILE: integer, ENOBUFS: integer, ENODATA: integer, ENODEV: integer, ENOENT: integer, ENOMEM: integer, ENONET: integer, ENOPROTOOPT: integer, ENOSPC: integer, ENOSYS: integer, ENOTCONN: integer, ENOTDIR: integer, ENOTEMPTY: integer, ENOTSOCK: integer, ENOTSUP: integer, ENOTTY: integer, ENXIO: integer, EOF: integer, EOVERFLOW: integer, EPERM: integer, EPIPE: integer, EPROTO: integer, EPROTONOSUPPORT: integer, EPROTOTYPE: integer, ERANGE: integer, EREMOTEIO: integer, EROFS: integer, ESHUTDOWN: integer, ESOCKTNOSUPPORT: integer, ESPIPE: integer, ESRCH: integer, ETIMEDOUT: integer, ETXTBSY: integer, EXDEV: integer, UNKNOWN: integer}
+---@section Error Handling
+
+-- TODO: errno fields should have descriptions!
+
+---
+---A table value which exposes error constants as a map, where the key is the
+---error name (without the `UV_` prefix) and its value is a negative number.
+---See Libuv's "Error constants" page for further details.
+---(https://docs.libuv.org/en/v1.x/errors.html#error-constants)
+---
+---@type uv.errno
+uv.errno = {}
+
+
+
+---
+---@section Version Checking
+---
 
 ---
 ---Returns the libuv version packed into a single integer. 8 bits are used for each
@@ -47,6 +199,7 @@ function uv.version_string() end
 ---directly exposed to users in the Lua module.
 ---
 ---@class uv_loop_t: userdata
+---@section Event loop
 local uv_loop_t = {}
 
 ---@alias uv.aliases.run_mode
@@ -217,6 +370,7 @@ function uv.walk(callback) end
 ---`uv_req_t` is the base type for all libuv request types.
 ---
 ---@class uv_req_t: userdata
+---@section Base request
 local uv_req_t = {}
 
 ---@alias uv.aliases.req_struct_name
@@ -272,6 +426,7 @@ uv_req_t.get_type = uv.req_get_type
 ---defined here work with any handle type.
 ---
 ---@class uv_handle_t: userdata
+---@section Base handle
 local uv_handle_t = {}
 
 ---@alias uv.aliases.handle_instances
@@ -471,9 +626,27 @@ uv_handle_t.get_type = uv.handle_get_type
 
 
 ---
+---@section Reference counting
+---
+---The libuv event loop (if run in the default mode) will run until there are no
+---active and referenced handles left. The user can force the loop to exit early by
+---unreferencing handles which are active, for example by calling `uv.unref()`
+---after calling `uv.timer_start()`.
+---
+---A handle can be referenced or unreferenced, the refcounting scheme doesn't use a
+---counter, so both operations are idempotent.
+---
+---All handles are referenced when active by default, see `uv.is_active()` for a
+---more detailed explanation on what being active involves.
+---
+
+
+
+---
 ---Timer handles are used to schedule callbacks to be called in the future.
 ---
 ---@class uv_timer_t: uv_handle_t
+---@section Timer handle
 local uv_timer_t = {}
 
 ---
@@ -593,6 +766,7 @@ uv_timer_t.get_due_in = uv.timer_get_due_in
 ---```
 ---
 ---@class uv_prepare_t: uv_handle_t
+---@section Prepare handle
 local uv_prepare_t = {}
 
 ---
@@ -633,6 +807,7 @@ uv_prepare_t.stop = uv.prepare_stop
 ---```
 ---
 ---@class uv_check_t: uv_handle_t
+---@section Check handle
 local uv_check_t = {}
 
 ---
@@ -680,6 +855,7 @@ uv_check_t.stop = uv.check_stop
 ---```
 ---
 ---@class uv_idle_t: uv_handle_t
+---@section Idle handle
 local uv_idle_t = {}
 
 ---
@@ -723,6 +899,7 @@ uv_idle_t.stop = uv.idle_stop
 ---```
 ---
 ---@class uv_async_t: uv_handle_t
+---@section Async handle
 local uv_async_t = {}
 
 ---
@@ -784,6 +961,7 @@ uv_async_t.send = uv.async_send
 ---file descriptor that would be accepted by poll(2) can be used.
 ---
 ---@class uv_poll_t: uv_handle_t
+---@section Poll handle
 local uv_poll_t = {}
 
 ---@alias uv.aliases.poll_events
@@ -901,6 +1079,7 @@ uv_poll_t.stop = uv.poll_stop
 ---```
 ---
 ---@class uv_signal_t: uv_handle_t
+---@section Signal handle
 local uv_signal_t = {}
 
 ---@alias uv.aliases.signals
@@ -983,6 +1162,7 @@ uv_signal_t.stop = uv.signal_stop
 ---establish communication channels with it using streams.
 ---
 ---@class uv_process_t: uv_handle_t
+---@section Process handle
 local uv_process_t = {}
 
 ---@alias uv.aliases.spawn_options {args?: string[], stdio?: table<integer, integer|uv_stream_t|nil>, env?: table<string, any>, cwd?: string, uid?: integer, gid?: integer, verbatim?: boolean, detached?: boolean, hide?: boolean}
@@ -1143,6 +1323,7 @@ uv_process_t.get_pid = uv.process_get_pid
 ---in the form of `uv_tcp_t`, `uv_pipe_t` and `uv_tty_t`.
 ---
 ---@class uv_stream_t: uv_handle_t
+---@section Stream handle
 local uv_stream_t = {}
 
 ---@class uv_shutdown_t: uv_req_t
@@ -1328,6 +1509,7 @@ uv_stream_t.get_write_queue_size = uv.stream_get_write_queue_size
 ---TCP handles are used to represent both TCP streams and servers.
 ---
 ---@class uv_tcp_t: uv_stream_t
+---@section TCP handle
 local uv_tcp_t = {}
 
 ---@class uv_connect_t: uv_req_t
@@ -1685,6 +1867,7 @@ function uv.socketpair(socktype, protocol, flags1, flags2) end
 ---```
 ---
 ---@class uv_pipe_t: uv_stream_t
+---@section Pipe handle
 local uv_pipe_t = {}
 
 ---@alias uv.aliases.pipe_flags
@@ -1859,6 +2042,7 @@ function uv.pipe(read_flags, write_flags) end
 ---```
 ---
 ---@class uv_tty_t: uv_stream_t
+---@section TTY handle
 local uv_tty_t = {}
 
 ---
@@ -1950,6 +2134,7 @@ function uv.tty_get_vterm_state() end
 ---UDP handles encapsulate UDP communication for both clients and servers.
 ---
 ---@class uv_udp_t: uv_handle_t
+---@section UDP handle
 local uv_udp_t = {}
 
 ---
@@ -2183,6 +2368,7 @@ uv_udp_t.connect = uv.udp_connect
 ---handle uses the best backend for the job on each platform.
 ---
 ---@class uv_fs_event_t: uv_handle_t
+---@section FS Event handle
 local uv_fs_event_t = {}
 
 ---
@@ -2227,6 +2413,7 @@ uv_fs_event_t.getpath = uv.fs_event_getpath
 ---they can work on file systems where fs event handles can't.
 ---
 ---@class uv_fs_poll_t: uv_handle_t
+---@section FS Poll handle
 local uv_fs_poll_t = {}
 
 ---
@@ -2267,6 +2454,8 @@ uv_fs_poll_t.getpath = uv.fs_poll_getpath
 
 
 
+---
+---@section File system operations
 ---
 ---Most file system functions can operate synchronously or asynchronously. When a synchronous version is called (by omitting a callback), the function will
 ---immediately return the results of the FS call. When an asynchronous version is
@@ -2311,8 +2500,11 @@ uv_fs_poll_t.getpath = uv.fs_poll_getpath
 ---end)
 ---```
 ---
+
 ---@class uv_fs_t: uv_req_t
-local uv_fs_t = {}
+
+---@class luv_dir_t: userdata
+local luv_dir_t = {}
 
 ---@alias uv.aliases.fs_access_flags
 ---Open file for reading.
@@ -3105,9 +3297,6 @@ function uv.fs_copyfile(path, new_path, callback) end
 ---@return boolean|nil success, string? err_name, string? err_msg
 function uv.fs_copyfile(path, new_path, flags) end
 
----@class luv_dir_t: userdata
-local luv_dir_t = {}
-
 ---
 ---Opens path as a directory stream. Returns a handle that the user can pass to
 ---`uv.fs_readdir()`. The `entries` parameter defines the maximum number of entries
@@ -3188,6 +3377,7 @@ function uv.fs_statfs(path) end
 ---```
 ---
 ---@class luv_work_ctx_t: userdata
+---@section Thread pool work scheduling
 local luv_work_ctx_t = {}
 
 ---
@@ -3216,8 +3406,19 @@ luv_work_ctx_t.queue = uv.queue_work
 
 
 
+---
+---@section DNS utility functions
+---
+
 ---@class uv_getaddrinfo_t: uv_req_t
-local uv_getaddrinfo_t = {}
+
+---@alias uv.aliases.getaddrinfo_hint {family: uv.aliases.network_family|integer|nil, socktype: uv.aliases.tcp_socket_type|nil, protocol: uv.aliases.network_protocols|nil, addrconfig: boolean|nil, v4mapped: boolean|nil, all: boolean|nil, numberichost: boolean|nil, passive: boolean|nil, numericserv: boolean|nil, canonname: boolean|nil}
+
+---@alias uv.aliases.getaddrinfo_rtn {[integer]: {addr: string, family: uv.aliases.network_family, port: integer|nil, socktype: uv.aliases.tcp_socket_type, protocol: uv.aliases.network_protocols, canonname: string|nil}}
+
+---@class uv_getnameinfo_t: uv_req_t
+
+---@alias uv_getnameinfo_address {ip: string|nil, port: integer|nil, family: uv.aliases.network_family|integer|nil}
 
 ---
 ---Equivalent to `getaddrinfo(3)`. Either `host` or `service` may be `nil` but not both.
@@ -3234,20 +3435,14 @@ function uv.getaddrinfo(host, service, hints, callback) end
 ---@return uv.aliases.getaddrinfo_rtn|nil addresses, string? err_name, string? err_msg
 function uv.getaddrinfo(host, service, hints) end
 
----@alias uv.aliases.getaddrinfo_hint {family: uv.aliases.network_family|integer|nil, socktype: uv.aliases.tcp_socket_type|nil, protocol: uv.aliases.network_protocols|nil, addrconfig: boolean|nil, v4mapped: boolean|nil, all: boolean|nil, numberichost: boolean|nil, passive: boolean|nil, numericserv: boolean|nil, canonname: boolean|nil}
----@alias uv.aliases.getaddrinfo_rtn {[integer]: {addr: string, family: uv.aliases.network_family, port: integer|nil, socktype: uv.aliases.tcp_socket_type, protocol: uv.aliases.network_protocols, canonname: string|nil}}
-
----@class uv_getnameinfo_t: uv_req_t
-local uv_getnameinfo_t = {}
-
 ---
 ---Equivalent to `getnameinfo(3)`.
 ---
----@param address {ip: string|nil, port: integer|nil, family: uv.aliases.network_family|integer|nil}
+---@param address uv_getnameinfo_address
 ---@param callback fun(err?: string, host?: string, service?: string)
 ---@return uv_getnameinfo_t
 function uv.getnameinfo(address, callback) end
----@param address {ip: string|nil, port: integer|nil, family: uv.aliases.network_family|integer|nil}
+---@param address uv_getnameinfo_address
 ---@return string|nil host, string service_or_errname, string? err_msg
 function uv.getnameinfo(address) end
 
@@ -3258,6 +3453,7 @@ function uv.getnameinfo(address) end
 --- synchronization primitives. The API largely follows the pthreads API.
 ---
 ---@class luv_thread_t: userdata
+---@section Threading and synchronization utilities
 local luv_thread_t = {}
 
 ---
@@ -3311,7 +3507,10 @@ function uv.sleep(msec) end
 
 
 
--- [[ misc.c definitions ]]
+---
+---@section Miscellaneous utilities
+---@source misc.c
+---
 
 ---@alias uv.aliases.os_passwd {username: string, uid: integer, gid: integer, shell: string, homedir: string}
 
@@ -3668,21 +3867,21 @@ function uv.random(len, flags, callback) end
 ---@nodiscard
 function uv.random(len, flags) end
 
-
-
--- [[ util.c definitions ]]
-
 ---
 ---Returns the libuv error message and error name (both in string form, see `err` and `name` in Error Handling) equivalent to the given platform dependent error code: POSIX error codes on Unix (the ones stored in errno), and Win32 error codes on Windows (those returned by GetLastError() or WSAGetLastError()).
 ---
 ---@param errcode integer
 ---@return string|nil, string|nil
+---@source util.c
 ---@nodiscard
 function uv.translate_sys_error(errcode) end
 
 
 
--- [[ metrics.c definitions ]]
+---
+---@section Metrics operations
+---@source metrics.c
+---
 
 ---
 ---Retrieve the amount of time the event loop has been idle in the kernel’s event
@@ -3702,25 +3901,12 @@ function uv.metrics_idle_time() end
 
 -- [[ constants ]]
 
+-- TODO: make this its own section
+-- TODO: how should this be reflected on docs? field descriptions?
+
 ---@alias uv.constants {O_RDONLY: integer, O_WRONLY: integer, O_RDWR: integer, O_APPEND: integer, O_CREAT: integer, O_DSYNC: integer, O_EXCL: integer, O_NOCTTY: integer, O_NONBLOCK: integer, O_RSYNC: integer, O_SYNC: integer, O_TRUNC: integer, SOCK_STREAM: integer, SOCK_DGRAM: integer, SOCK_SEQPACKET: integer, SOCK_RAW: integer, SOCK_RDM: integer, AF_UNIX: integer, AF_INET: integer, AF_INET6: integer, AF_IPX: integer, AF_NETLINK: integer, AF_X25: integer, AF_AX25: integer, AF_ATMPVC: integer, AF_APPLETALK: integer, AF_PACKET: integer, AI_ADDRCONFIG: integer, AI_V4MAPPED: integer, AI_ALL: integer, AI_NUMERICHOST: integer, AI_PASSIVE: integer, AI_NUMERICSERV: integer, SIGHUP: integer, SIGINT: integer, SIGQUIT: integer, SIGILL: integer, SIGTRAP: integer, SIGABRT: integer, SIGIOT: integer, SIGBUS: integer, SIGFPE: integer, SIGKILL: integer, SIGUSR1: integer, SIGSEGV: integer, SIGUSR2: integer, SIGPIPE: integer, SIGALRM: integer, SIGTERM: integer, SIGCHLD: integer, SIGSTKFLT: integer, SIGCONT: integer, SIGSTOP: integer, SIGTSTP: integer, SIGTTIN: integer, SIGWINCH: integer, SIGIO: integer, SIGPOLL: integer, SIGXFSZ: integer, SIGVTALRM: integer, SIGPROF: integer, UDP_RECVMMSG: integer, UDP_MMSG_CHUNK: integer, UDP_REUSEADDR: integer, UDP_PARTIAL: integer, UDP_IPV6ONLY: integer, TCP_IPV6ONLY: integer, UDP_MMSG_FREE: integer, SIGSYS: integer, SIGPWR: integer, SIGTTOU: integer, SIGURG: integer, SIGXCPU: integer}
 
 ---@type uv.constants
 uv.constants = {}
-
--- [[ errorno ]]
-
----@alias uv.errno {E2BIG: integer, EACCES: integer, EADDRINUSE: integer, EADDRNOTAVAIL: integer, EAFNOSUPPORT: integer, EAGAIN: integer, EAI_ADDRFAMILY: integer, EAI_AGAIN: integer, EAI_BADFLAGS: integer, EAI_BADHINTS: integer, EAI_CANCELED: integer, EAI_FAIL: integer, EAI_FAMILY: integer, EAI_MEMORY: integer, EAI_NODATA: integer, EAI_NONAME: integer, EAI_OVERFLOW: integer, EAI_PROTOCOL: integer, EAI_SERVICE: integer, EAI_SOCKTYPE: integer, EALREADY: integer, EBADF: integer, EBUSY: integer, ECANCELED: integer, ECHARSET: integer, ECONNABORTED: integer, ECONNREFUSED: integer, ECONNRESET: integer, EDESTADDRREQ: integer, EEXIST: integer, EFAULT: integer, EFBIG: integer, EFTYPE: integer, EHOSTDOWN: integer, EHOSTUNREACH: integer, EILSEQ: integer, EINTR: integer, EINVAL: integer, EIO: integer, EISCONN: integer, EISDIR: integer, ELOOP: integer, EMFILE: integer, EMLINK: integer, EMSGSIZE: integer, ENAMETOOLONG: integer, ENETDOWN: integer, ENETUNREACH: integer, ENFILE: integer, ENOBUFS: integer, ENODATA: integer, ENODEV: integer, ENOENT: integer, ENOMEM: integer, ENONET: integer, ENOPROTOOPT: integer, ENOSPC: integer, ENOSYS: integer, ENOTCONN: integer, ENOTDIR: integer, ENOTEMPTY: integer, ENOTSOCK: integer, ENOTSUP: integer, ENOTTY: integer, ENXIO: integer, EOF: integer, EOVERFLOW: integer, EPERM: integer, EPIPE: integer, EPROTO: integer, EPROTONOSUPPORT: integer, EPROTOTYPE: integer, ERANGE: integer, EREMOTEIO: integer, EROFS: integer, ESHUTDOWN: integer, ESOCKTNOSUPPORT: integer, ESPIPE: integer, ESRCH: integer, ETIMEDOUT: integer, ETXTBSY: integer, EXDEV: integer, UNKNOWN: integer}
-
----
----A table value which exposes error constants as a map, where the key is the
----error name (without the `UV_` prefix) and its value is a negative number.
----See Libuv's "Error constants" page for further details.
----(https://docs.libuv.org/en/v1.x/errors.html#error-constants)
----
----Note: Implementation detail: on Unix error codes are the negated errno (or -errno),
----while on Windows they are defined by libuv to arbitrary negative numbers.
----
----@type uv.errno
-uv.errno = {}
 
 return uv
