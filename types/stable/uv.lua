@@ -1870,11 +1870,15 @@ function uv.socketpair(socktype, protocol, flags1, flags2) end
 ---@section Pipe handle
 local uv_pipe_t = {}
 
----@alias uv.aliases.pipe_flags
+---@alias uv.aliases.pipe_chmod_flags
 ---|'"r"'
 ---|'"w"'
 ---|'"rw"'
 ---|'"wr"'
+
+---@alias uv.aliases.pipe_flags {nonblock: boolean} # (nonblock default: `false`)
+
+---@alias uv.aliases.pipe_rtn {read: integer, write: integer}
 
 ---
 ---Creates and initializes a new `uv_pipe_t`. Returns the Lua userdata wrapping
@@ -1981,7 +1985,7 @@ uv_pipe_t.pending_type = uv.pipe_pending_type
 ---This function is blocking.
 ---
 ---@param pipe uv_pipe_t
----@param flags uv.aliases.pipe_flags
+---@param flags uv.aliases.pipe_chmod_flags
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.pipe_chmod(pipe, flags) end
 uv_pipe_t.chmod = uv.pipe_chmod
@@ -2013,13 +2017,12 @@ uv_pipe_t.chmod = uv.pipe_chmod
 ---end)
 ---```
 ---
----@param read_flags {nonblock: boolean}|nil  # (nonblock default: `false`)
----@param write_flags {nonblock: boolean}|nil # (nonblock default: `false`)
----@return {read: integer, write: integer}|nil, string? err_name, string? err_msg
+---@param read_flags uv.aliases.pipe_flags|nil  # (nonblock default: `false`)
+---@param write_flags uv.aliases.pipe_flags|nil # (nonblock default: `false`)
+---@return uv.aliases.pipe_rtn|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.pipe(read_flags, write_flags) end
 
--- TODO: continue consistency checks from above
 
 
 ---
@@ -3594,6 +3597,19 @@ function uv.resident_set_memory() end
 ---@return uv.aliases.rusage|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.getrusage() end
+
+---
+---Returns an estimate of the default amount of parallelism a program should use. Always returns a non-zero value.
+---
+---On Linux, inspects the calling thread’s CPU affinity mask to determine if it has been pinned to specific CPUs.
+---
+---On Windows, the available parallelism may be underreported on systems with more than 64 logical CPUs.
+---
+---On other platforms, reports the number of CPUs that the operating system considers to be online.
+---
+---@return integer
+---@nodiscard
+function uv.available_parallelism() end
 
 ---
 ---Returns information about the CPU(s) on the system as a table of tables for each
