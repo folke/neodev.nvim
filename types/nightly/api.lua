@@ -1787,6 +1787,10 @@ function vim.api.nvim_get_option_info(name) end
 --             • win: |window-ID|. Used for getting window local options.
 --             • buf: Buffer number. Used for getting buffer local options.
 --               Implies {scope} is "local".
+--             • filetype: |filetype|. Used to get the default option for a
+--               specific filetype. Cannot be used with any other option.
+--               Note: this will trigger |ftplugin| and all |FileType|
+--               autocommands for the corresponding filetype.
 -- 
 -- Return: ~
 --     Option value
