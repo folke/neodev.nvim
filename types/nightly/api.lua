@@ -12,9 +12,6 @@ function vim.api.nvim__buf_redraw_range(buffer, first, last) end
 --- @param buffer buffer
 function vim.api.nvim__buf_stats(buffer) end
 
---- @param ns_id number
-function vim.api.nvim__get_hl_defs(ns_id) end
-
 function vim.api.nvim__get_lib_dir() end
 
 -- Find files in runtime directories
