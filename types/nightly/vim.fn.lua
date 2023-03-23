@@ -3281,7 +3281,7 @@ function vim.fn.getjumplist(winnr, tabnr) end
 -- 
 -- <    To get lines from another buffer see |getbufline()| and
 -- |getbufoneline()|
---- @param lnum number
+--- @param lnum number | string
 --- @param end_? number
 --- @return any[]
 function vim.fn.getline(lnum, end_) end
