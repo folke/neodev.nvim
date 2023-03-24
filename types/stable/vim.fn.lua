@@ -3252,10 +3252,10 @@ function vim.fn.getjumplist(winnr, tabnr) end
 --   ComputeLnum()->getline()
 -- 
 -- <    To get lines from another buffer see |getbufline()|
---- @param lnum number
---- @param end_? number
---- @return any[]
-function vim.fn.getline(lnum, end_) end
+--- @param lnum number|string
+--- @return string
+--- @overload fun(lnum:number|string, end:number|string):string[]|nil[]
+function vim.fn.getline(lnum) end
 
 -- Returns a |List| with all the entries in the location list for
 -- window {nr}.  {nr} can be the window number or the |window-ID|.
