@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.2](https://github.com/folke/neodev.nvim/compare/v2.5.1...v2.5.2) (2023-03-24)
+
+
+### Bug Fixes
+
+* parameter type for vim.fn.getline() ([#144](https://github.com/folke/neodev.nvim/issues/144)) ([ab56354](https://github.com/folke/neodev.nvim/commit/ab56354e0e85c3c3f20f770c699fb0038ce7bf42))
+
 ## [2.5.1](https://github.com/folke/neodev.nvim/compare/v2.5.0...v2.5.1) (2023-03-12)
 
 
