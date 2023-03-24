@@ -1,4 +1,15 @@
 return {
+  ["vim.fn.getline"] = {
+    params = {
+      { name = "lnum", type = "number|string" },
+    },
+    overload = {
+      "fun(lnum:number|string, end:number|string):string[]|nil[]",
+    },
+    ["return"] = {
+      { type = "string" },
+    },
+  },
   ["vim.fn.expand"] = {
     params = {
       { name = "string", type = "string" },
