@@ -1642,37 +1642,26 @@ function vim.api.nvim_get_current_tabpage() end
 --- @return window
 function vim.api.nvim_get_current_win() end
 
--- Gets a highlight definition by id. |hlID()|
+-- Gets all or specific highlight groups in a namespace.
 -- 
 -- Parameters: ~
---   • {hl_id}  Highlight id as returned by |hlID()|
---   • {rgb}    Export RGB colors
+--   • {ns_id}  Get highlight groups for namespace ns_id
+--              |nvim_get_namespaces()|. Use 0 to get global highlight groups
+--              |:highlight|.
+--   • {opts}   Options dict:
+--              • name: (string) Get a highlight definition by name.
+--              • id: (integer) Get a highlight definition by id.
+--              • link: (boolean, default true) Show linked group name
+--                instead of effective definition |:hi-link|.
 -- 
 -- Return: ~
---     Highlight definition map
--- 
--- See also: ~
---   • nvim_get_hl_by_name
---- @param hl_id number
---- @param rgb boolean
+--     Highlight groups as a map from group name to a highlight definition
+--     map as in |nvim_set_hl()|, or only a single highlight definition map
+--     if requested by name or id.
+--- @param ns_id number
+--- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
-
--- Gets a highlight definition by name.
--- 
--- Parameters: ~
---   • {name}  Highlight group name
---   • {rgb}   Export RGB colors
--- 
--- Return: ~
---     Highlight definition map
--- 
--- See also: ~
---   • nvim_get_hl_by_id
---- @param name string
---- @param rgb boolean
---- @return table<string, any>
-function vim.api.nvim_get_hl_by_name(name, rgb) end
+function vim.api.nvim_get_hl(ns_id, opts) end
 
 -- Gets a highlight group by name
 -- 
