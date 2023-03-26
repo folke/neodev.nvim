@@ -1004,7 +1004,7 @@ function vim.api.nvim_clear_autocmds(opts) end
 --     empty string.
 -- 
 -- See also: ~
---   • |nvim_exec()|
+--   • |nvim_exec2()|
 --   • |nvim_command()|
 --- @param cmd? table<string, any>
 --- @param opts? table<string, any>
@@ -1015,11 +1015,11 @@ function vim.api.nvim_cmd(cmd, opts) end
 -- 
 -- On execution error: fails with VimL error, updates v:errmsg.
 -- 
--- Prefer using |nvim_cmd()| or |nvim_exec()| over this. To evaluate multiple
--- lines of Vim script or an Ex command directly, use |nvim_exec()|. To
--- construct an Ex command using a structured format and then execute it, use
--- |nvim_cmd()|. To modify an Ex command before evaluating it, use
--- |nvim_parse_cmd()| in conjunction with |nvim_cmd()|.
+-- Prefer using |nvim_cmd()| or |nvim_exec2()| over this. To evaluate
+-- multiple lines of Vim script or an Ex command directly, use
+-- |nvim_exec2()|. To construct an Ex command using a structured format and
+-- then execute it, use |nvim_cmd()|. To modify an Ex command before
+-- evaluating it, use |nvim_parse_cmd()| in conjunction with |nvim_cmd()|.
 -- 
 -- Parameters: ~
 --   • {command}  Ex command string
@@ -1401,21 +1401,23 @@ function vim.api.nvim_eval_statusline(str, opts) end
 -- On execution error: fails with VimL error, updates v:errmsg.
 -- 
 -- Parameters: ~
---   • {src}     Vimscript code
---   • {output}  Capture and return all (non-error, non-shell |:!|) output
+--   • {src}   Vimscript code
+--   • {opts}  Optional parameters.
+--             • output: (boolean, default false) Whether to capture and
+--               return all (non-error, non-shell |:!|) output.
 -- 
 -- Return: ~
---     Output (non-error, non-shell |:!|) if `output` is true, else empty
---     string.
+--     Dictionary containing information about execution, with these keys:
+--     • output: (string|nil) Output if `opts.output` is true.
 -- 
 -- See also: ~
 --   • |execute()|
 --   • |nvim_command()|
 --   • |nvim_cmd()|
 --- @param src string
---- @param output boolean
---- @return string
-function vim.api.nvim_exec(src, output) end
+--- @param opts? table<string, any>
+--- @return table<string, any>
+function vim.api.nvim_exec2(src, opts) end
 
 -- Execute all autocommands for {event} that match the corresponding {opts}
 -- |autocmd-execute|.
