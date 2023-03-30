@@ -58,7 +58,9 @@ function M.get()
   for _, fun in pairs(functions) do
     if fun.info then
       for _, param in ipairs(fun.info.parameters) do
-        fun.params_index[param[2]].type = param[1]:lower()
+        if fun.params_index then
+          fun.params_index[param[2]].type = param[1]:lower()
+        end
       end
       local return_type = fun.info.return_type:lower()
       fun["return"] = { { type = return_type == "nil" and nil or return_type } }
