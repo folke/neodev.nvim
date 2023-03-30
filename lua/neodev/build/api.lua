@@ -61,8 +61,10 @@ function M.get()
   for _, fun in pairs(functions) do
     if fun.info then
       for _, param in ipairs(fun.info.parameters) do
-        if fun.params_index then
+        if fun.params_index[param[2]] then
           fun.params_index[param[2]].type = param[1]:lower()
+        else
+          fun.params_index[param[2]] = { name = param[2], type = param[1]:lower() }
         end
       end
       local return_type = fun.info.return_type:lower()
