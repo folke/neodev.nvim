@@ -46,7 +46,10 @@ function M.get()
       if name then
         if not functions[name] then
           functions[name] = {
+            doc = "",
             name = name,
+            params = {},
+            params_index = {},
           }
         end
         functions[name].info = fun
