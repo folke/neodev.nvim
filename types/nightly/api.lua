@@ -1475,7 +1475,7 @@ function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
 -- Gets the option information for all options.
 -- 
 -- The dictionary has the full option names as keys and option metadata
--- dictionaries as detailed at |nvim_get_option_info()|.
+-- dictionaries as detailed at |nvim_get_option_info2()|.
 -- 
 -- Return: ~
 --     dictionary of all options
@@ -1737,7 +1737,10 @@ function vim.api.nvim_get_namespaces() end
 --- @return object
 function vim.api.nvim_get_option(name) end
 
--- Gets the option information for one option
+--- @return table<string, any>
+function vim.api.nvim_get_option_info() end
+
+-- Gets the option information for one option from arbitrary buffer or window
 -- 
 -- Resulting dictionary has keys:
 -- • name: Name of the option (like 'filetype')
@@ -1753,14 +1756,26 @@ function vim.api.nvim_get_option(name) end
 -- • commalist: List of comma separated values
 -- • flaglist: List of single char flags
 -- 
+-- When {scope} is not provided, the last set information applies to the
+-- local value in the current buffer or window if it is available, otherwise
+-- the global value information is returned. This behavior can be disabled by
+-- explicitly specifying {scope} in the {opts} table.
+-- 
 -- Parameters: ~
 --   • {name}  Option name
+--   • {opts}  Optional parameters
+--             • scope: One of "global" or "local". Analogous to |:setglobal|
+--               and |:setlocal|, respectively.
+--             • win: |window-ID|. Used for getting window local options.
+--             • buf: Buffer number. Used for getting buffer local options.
+--               Implies {scope} is "local".
 -- 
 -- Return: ~
 --     Option Information
 --- @param name string
+--- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_get_option_info(name) end
+function vim.api.nvim_get_option_info2(name, opts) end
 
 -- Gets the value of an option. The behavior of this function matches that of
 -- |:set|: the local value of an option is returned if it exists; otherwise,
