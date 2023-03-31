@@ -1,4 +1,4 @@
-*neodev.nvim.txt*        For Neovim >= 0.8.0        Last change: 2023 March 30
+*neodev.nvim.txt*        For Neovim >= 0.8.0        Last change: 2023 March 31
 
 ==============================================================================
 Table of Contents                              *neodev.nvim-table-of-contents*
@@ -149,7 +149,7 @@ It’s possible to setup Neodev without lspconfig, by configuring the
 Example without lspconfig ~
 
 >lua
-    require("neodev").setup()
+    -- dont run neodev.setup
     vim.lsp.start({
       name = "lua-language-server",
       cmd = { "lua-language-server" },
