@@ -130,7 +130,7 @@ of the options passed to `vim.lsp.start`.
 <summary>Example without lspconfig</summary>
 
 ```lua
-require("neodev").setup()
+-- dont run neodev.setup
 vim.lsp.start({
   name = "lua-language-server",
   cmd = { "lua-language-server" },
