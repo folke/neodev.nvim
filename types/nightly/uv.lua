@@ -5,6 +5,10 @@
 
 -- TODO: define @source for all sections and methods
 
+-- TODO: things like uv.tty_set_mode has in the description-
+-- "look below for possible values" and then we rely on lls to list the alias
+-- we need a way to list those off when generating the docs
+
 ---
 ---The [luv](https://github.com/luvit/luv/) project provides access to the multi-platform support library
 ---[libuv](http://libuv.org/) in Lua code. It was primarily developed for the [luvit](https://github.com/luvit/luvit/) project as
@@ -685,6 +689,8 @@ local uv_timer_t = {}
 ---@nodiscard
 function uv.new_timer() end
 
+-- TODO: make sure that the above method can indeed return nil + error.
+
 ---
 ---Start the timer. `timeout` and `repeat_n` are in milliseconds.
 ---
@@ -770,12 +776,14 @@ uv_timer_t.get_due_in = uv.timer_get_due_in
 local uv_prepare_t = {}
 
 ---
----Creates and initializes a new `uv_prepare_t`. Returns the Lua userdata wrapping
----it.
+---Creates and initializes a new `uv_prepare_t`.
+---Returns the Lua userdata wrapping it.
 ---
 ---@return uv_prepare_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_prepare() end
+
+-- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Start the handle with the given callback.
@@ -816,6 +824,8 @@ local uv_check_t = {}
 ---@return uv_check_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_check() end
+
+-- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Start the handle with the given callback.
@@ -865,6 +875,8 @@ local uv_idle_t = {}
 ---@nodiscard
 function uv.new_idle() end
 
+-- TODO: make sure that the above method can indeed return nil + error.
+
 ---
 ---Start the handle with the given callback.
 ---
@@ -913,6 +925,8 @@ local uv_async_t = {}
 ---@return uv_async_t|nil handle, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_async(callback) end
+
+-- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Wakeup the event loop and call the async handle's callback.
@@ -1126,6 +1140,8 @@ local uv_signal_t = {}
 ---@return uv_signal_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_signal() end
+
+-- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Start the handle with the given callback, watching for the given signal.
@@ -1677,17 +1693,23 @@ local uv_tcp_t = {}
 
 ---@alias uv.aliases.tcp_bind_flags {ipv6only?: boolean}
 
----@alias uv.aliases.getname_sockname_rtn {ip: string, family: uv.aliases.network_family, port: integer}
+---@alias uv.aliases.getpeername_rtn {ip: string, family: uv.aliases.network_family, port: integer}
+
+---@alias uv.aliases.getsockname_rtn uv.aliases.getpeername_rtn
 
 ---@alias uv.aliases.socketpair_flags {nonblock: boolean}
 
 ---
----Creates and initializes a new `uv_tcp_t`. Returns the Lua userdata wrapping it.
+---Creates and initializes a new `uv_tcp_t`.
+---Returns the Lua userdata wrapping it.
 ---
----@param flags uv.aliases.network_family|integer|nil
+---@param flags uv.aliases.network_family|integer
 ---@return uv_tcp_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_tcp(flags) end
+---@return uv_tcp_t
+---@nodiscard
+function uv.new_tcp() end
 
 ---
 ---Open an existing file descriptor or SOCKET as a TCP handle.
@@ -1760,7 +1782,7 @@ uv_tcp_t.bind = uv.tcp_bind
 ---Get the address of the peer connected to the handle.
 ---
 ---@param tcp uv_tcp_t
----@return uv.aliases.getname_sockname_rtn|nil, string? err_name, string? err_msg
+---@return uv.aliases.getpeername_rtn|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.tcp_getpeername(tcp) end
 uv_tcp_t.getpeername = uv.tcp_getpeername
@@ -1769,7 +1791,7 @@ uv_tcp_t.getpeername = uv.tcp_getpeername
 ---Get the current address to which the handle is bound.
 ---
 ---@param tcp uv_tcp_t
----@return uv.aliases.getname_sockname_rtn|nil, string? err_name, string? err_msg
+---@return uv.aliases.getsockname_rtn|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.tcp_getsockname(tcp) end
 uv_tcp_t.getsockname = uv.tcp_getsockname
@@ -1889,6 +1911,8 @@ local uv_pipe_t = {}
 ---@return uv_pipe_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_pipe(ipc) end
+
+-- TODO: make sure the above method can indeed return nil + error message.
 
 ---
 ---Open an existing file descriptor or `uv_handle_t` as a pipe.
@@ -2048,6 +2072,20 @@ function uv.pipe(read_flags, write_flags) end
 ---@section TTY handle
 local uv_tty_t = {}
 
+---@alias uv.aliases.tty_fd
+---|0 # stdin
+---|1 # stdout
+---|2 # stderr
+
+---@alias uv.aliases.tty_mode
+---|0 # UV_TTY_MODE_NORMAL: Initial/normal terminal mode
+---|1 # UV_TTY_MODE_RAW: Raw input mode (On Windows, ENABLE_WINDOW_INPUT is also enabled)
+---|2 # UV_TTY_MODE_IO: Binary-safe I/O mode for IPC (Unix-only)
+
+---@alias uv.aliases.tty_vsterm_state
+---|'supported'
+---|'unsupported'
+
 ---
 ---Initialize a new TTY stream with the given file descriptor.
 ---See below for possible file descriptors.
@@ -2068,11 +2106,6 @@ local uv_tty_t = {}
 ---@nodiscard
 function uv.new_tty(fd, readable) end
 
----@alias uv.aliases.tty_fd
----|0 # stdin
----|1 # stdout
----|2 # stderr
-
 ---
 ---Set the TTY using the specified terminal mode.
 ---
@@ -2083,11 +2116,6 @@ function uv.new_tty(fd, readable) end
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.tty_set_mode(tty, mode) end
 uv_tty_t.set_mode = uv.tty_set_mode
-
----@alias uv.aliases.tty_mode
----|0 # UV_TTY_MODE_NORMAL: Initial/normal terminal mode
----|1 # UV_TTY_MODE_RAW: Raw input mode (On Windows, ENABLE_WINDOW_INPUT is also enabled)
----|2 # UV_TTY_MODE_IO: Binary-safe I/O mode for IPC (Unix-only)
 
 ---
 ---To be called when the program exits. Resets TTY settings to default values for
@@ -2102,7 +2130,7 @@ function uv.tty_reset_mode() end
 ---Gets the current Window width and height.
 ---
 ---@param tty uv_tty_t
----@return integer, integer|nil, string? err_name, string? err_msg
+---@return integer|nil width, integer|string height_or_errname, string? err_msg
 ---@nodiscard
 function uv.tty_get_winsize(tty) end
 uv_tty_t.get_winsize = uv.tty_get_winsize
@@ -2119,16 +2147,13 @@ uv_tty_t.get_winsize = uv.tty_get_winsize
 ---@param state uv.aliases.tty_vsterm_state
 function uv.tty_set_vterm_state(state) end
 
----@alias uv.aliases.tty_vsterm_state
----|'"supported"'
----|'"unsupported"'
-
 ---
 ---Get the current state of whether console virtual terminal sequences are handled
 ---by libuv or the console. The return value is `"supported"` or `"unsupported"`.
 ---This function is not implemented on Unix, where it returns `ENOTSUP`.
 ---
 ---@return uv.aliases.tty_vsterm_state|nil, string? err_name, string? err_msg
+---@nodiscard
 function uv.tty_get_vterm_state() end
 
 
@@ -2139,6 +2164,20 @@ function uv.tty_get_vterm_state() end
 ---@class uv_udp_t: uv_handle_t
 ---@section UDP handle
 local uv_udp_t = {}
+
+---@class uv_udp_send_t: userdata
+
+---@alias uv.aliases.new_udp_flags {family: uv.aliases.network_family, mmsgs: integer}
+
+---@alias uv.aliases.udp_bind_flags {ipv6only: boolean, reuseaddr: boolean}
+
+---@alias uv.aliases.udp_getsockname_rtn uv.aliases.getsockname_rtn
+
+---@alias uv.aliases.udp_getpeername_rtn uv.aliases.getpeername_rtn
+
+---@alias uv.aliases.udp_membership '"join"'|'"leave"'
+
+---@alias uv.aliases.udp_recv_start_callback_flags {partial: boolean|nil, mmsg_chunk: boolean|nil}
 
 ---
 ---Creates and initializes a new `uv_udp_t`. Returns the Lua userdata wrapping
@@ -2156,10 +2195,13 @@ local uv_udp_t = {}
 ---When it is an integer, it will be used directly as the `flags` parameter when
 ---calling `uv_udp_init_ex`.
 ---
----@param flags {family: uv.aliases.network_family, mmsgs: integer}|uv.aliases.network_family|integer|nil # (mmsgs default: `1`)
+---@param flags uv.aliases.new_udp_flags|uv.aliases.network_family|integer # (mmsgs default: `1`)
 ---@return uv_udp_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_udp(flags) end
+---@return uv_udp_t
+---@nodiscard
+function uv.new_udp() end
 
 ---
 ---Returns the handle's send queue size.
@@ -2203,7 +2245,7 @@ uv_udp_t.open = uv.udp_open
 ---@param udp uv_udp_t
 ---@param host string
 ---@param port integer
----@param flags {ipv6only: boolean, reuseaddr: boolean}|nil
+---@param flags uv.aliases.udp_bind_flags|nil
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.udp_bind(udp, host, port, flags) end
 uv_udp_t.bind = uv.udp_bind
@@ -2212,7 +2254,7 @@ uv_udp_t.bind = uv.udp_bind
 ---Get the local IP and port of the UDP handle.
 ---
 ---@param udp uv_udp_t
----@return {ip: string, family: uv.aliases.network_family, port: integer}|nil, string? err_name, string? err_msg
+---@return uv.aliases.udp_getsockname_rtn|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.udp_getsockname(udp) end
 uv_udp_t.getsockname = uv.udp_getsockname
@@ -2221,7 +2263,7 @@ uv_udp_t.getsockname = uv.udp_getsockname
 ---Get the remote IP and port of the UDP handle on connected UDP handles.
 ---
 ---@param udp uv_udp_t
----@return {ip: string, family: uv.aliases.network_family, port: integer}|nil, string? err_name, string? err_msg
+---@return uv.aliases.udp_getpeername_rtn|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.udp_getpeername(udp) end
 uv_udp_t.getpeername = uv.udp_getpeername
@@ -2234,7 +2276,7 @@ uv_udp_t.getpeername = uv.udp_getpeername
 ---@param udp uv_udp_t
 ---@param multicast_addr string
 ---@param interface_addr string|nil
----@param membership "leave"|"join"
+---@param membership uv.aliases.udp_membership
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.udp_set_membership(udp, multicast_addr, interface_addr, membership) end
 uv_udp_t.set_membership = uv.udp_set_membership
@@ -2248,7 +2290,7 @@ uv_udp_t.set_membership = uv.udp_set_membership
 ---@param multicast_addr string
 ---@param interface_addr string|nil
 ---@param source_addr string
----@param membership "leave"|"join"
+---@param membership uv.aliases.udp_membership
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.udp_set_source_membership(udp, multicast_addr, interface_addr, source_addr, membership) end
 uv_udp_t.set_source_membership = uv.udp_set_source_membership
@@ -2301,9 +2343,6 @@ uv_udp_t.set_broadcast = uv.udp_set_broadcast
 function uv.udp_set_ttl(udp, ttl) end
 uv_udp_t.set_ttl = uv.udp_set_ttl
 
----@class uv_udp_send_t: userdata
-local uv_udp_send_t = {}
-
 ---
 ---Send data over the UDP socket. If the socket has not previously been bound
 ---with `uv.udp_bind()` it will be bound to `0.0.0.0` (the "all interfaces" IPv4
@@ -2336,7 +2375,7 @@ uv_udp_t.try_send = uv.udp_try_send
 ---and a random port number.
 ---
 ---@param udp uv_udp_t
----@param callback fun(err?: string, data?: string, add?: {ip: string, port: integer, family: uv.aliases.network_family}, flags: {partial: boolean|nil, mmsg_chunk: boolean|nil})
+---@param callback fun(err?: string, data?: string, add?: uv.aliases.udp_getpeername_rtn, flags: uv.aliases.udp_recv_start_callback_flags)
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.udp_recv_start(udp, callback) end
 uv_udp_t.recv_start = uv.udp_recv_start
@@ -2374,12 +2413,19 @@ uv_udp_t.connect = uv.udp_connect
 ---@section FS Event handle
 local uv_fs_event_t = {}
 
+---@alias uv.aliases.fs_event_start_flags {watch_entry?: boolean, stat?: boolean, recursive?: boolean}
+
+---@alias uv.aliases.fs_event_start_callback_events {change?: boolean, rename?: boolean}
+
 ---
----Creates and initializes a new `uv_fs_event_t`. Returns the Lua userdata wrapping it.
+---Creates and initializes a new `uv_fs_event_t`.
+---Returns the Lua userdata wrapping it.
 ---
 ---@return uv_fs_event_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_fs_event() end
+
+-- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Start the handle with the given callback, which will watch the specified path
@@ -2387,8 +2433,8 @@ function uv.new_fs_event() end
 ---
 ---@param fs_event uv_fs_event_t
 ---@param path string
----@param flags {watch_entry: boolean|nil, stat: boolean|nil, recursive: boolean|nil} # (all flags have default of `false`)
----@param callback fun(err?: string, filename: string, events: {change: boolean|nil, rename: boolean|nil})
+---@param flags uv.aliases.fs_event_start_flags # (all flags have default of `false`)
+---@param callback fun(err?: string, filename: string, events: uv.aliases.fs_event_start_callback_events)
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.fs_event_start(fs_event, path, flags, callback) end
 uv_fs_event_t.start = uv.fs_event_start
@@ -2420,11 +2466,14 @@ uv_fs_event_t.getpath = uv.fs_event_getpath
 local uv_fs_poll_t = {}
 
 ---
----Creates and initializes a new `uv_fs_poll_t`. Returns the Lua userdata wrapping it.
+---Creates and initializes a new `uv_fs_poll_t`.
+---Returns the Lua userdata wrapping it.
 ---
 ---@return uv_fs_poll_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_fs_poll() end
+
+-- TODO: make sure that the above methof can indeed return nil + error.
 
 ---
 ---Check the file at `path` for changes every `interval` milliseconds.
@@ -3395,6 +3444,8 @@ local luv_work_ctx_t = {}
 ---@nodiscard
 function uv.new_work(work_callback, after_work_callback) end
 
+-- TODO: make sure that the above method can indeed return nil + error.
+
 ---
 ---Queues a work request which will run `work_callback` in a new Lua state in a
 ---thread from the threadpool with any additional arguments from `...`. Values
@@ -3417,23 +3468,24 @@ luv_work_ctx_t.queue = uv.queue_work
 
 ---@alias uv.aliases.getaddrinfo_hint {family: uv.aliases.network_family|integer|nil, socktype: uv.aliases.tcp_socket_type|nil, protocol: uv.aliases.network_protocols|nil, addrconfig: boolean|nil, v4mapped: boolean|nil, all: boolean|nil, numberichost: boolean|nil, passive: boolean|nil, numericserv: boolean|nil, canonname: boolean|nil}
 
----@alias uv.aliases.getaddrinfo_rtn {[integer]: {addr: string, family: uv.aliases.network_family, port: integer|nil, socktype: uv.aliases.tcp_socket_type, protocol: uv.aliases.network_protocols, canonname: string|nil}}
+---@alias uv.aliases.getaddrinfo_rtn {addr: string, family: uv.aliases.network_family, port: integer|nil, socktype: uv.aliases.tcp_socket_type, protocol: uv.aliases.network_protocols, canonname: string|nil}[]
 
 ---@class uv_getnameinfo_t: uv_req_t
 
 ---@alias uv_getnameinfo_address {ip: string|nil, port: integer|nil, family: uv.aliases.network_family|integer|nil}
 
 ---
----Equivalent to `getaddrinfo(3)`. Either `host` or `service` may be `nil` but not both.
+---Equivalent to `getaddrinfo(3)`.
+---Either `host` or `service` may be `nil` but not both.
 ---
----@param host string
----@param service string
+---@param host string|nil
+---@param service string|nil
 ---@param hints uv.aliases.getaddrinfo_hint?
 ---@param callback fun(err?: string, addresses?: uv.aliases.getaddrinfo_rtn)
 ---@return uv_getaddrinfo_t
 function uv.getaddrinfo(host, service, hints, callback) end
----@param host string
----@param service string
+---@param host string|nil
+---@param service string|nil
 ---@param hints uv.aliases.getaddrinfo_hint?
 ---@return uv.aliases.getaddrinfo_rtn|nil addresses, string? err_name, string? err_msg
 function uv.getaddrinfo(host, service, hints) end
@@ -3477,6 +3529,8 @@ function uv.new_thread(options, entry, ...) end
 ---@vararg T # varargs passed to `entry`
 ---@return luv_thread_t?, string? err_name, string? err_msg
 function uv.new_thread(entry, ...) end
+
+-- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Returns a boolean indicating whether two threads are the same. This function is
@@ -3918,7 +3972,7 @@ function uv.metrics_idle_time() end
 -- [[ constants ]]
 
 -- TODO: make this its own section
--- TODO: how should this be reflected on docs? field descriptions?
+-- TODO: how should this be reflected onto docs? field descriptions?
 
 ---@alias uv.constants {O_RDONLY: integer, O_WRONLY: integer, O_RDWR: integer, O_APPEND: integer, O_CREAT: integer, O_DSYNC: integer, O_EXCL: integer, O_NOCTTY: integer, O_NONBLOCK: integer, O_RSYNC: integer, O_SYNC: integer, O_TRUNC: integer, SOCK_STREAM: integer, SOCK_DGRAM: integer, SOCK_SEQPACKET: integer, SOCK_RAW: integer, SOCK_RDM: integer, AF_UNIX: integer, AF_INET: integer, AF_INET6: integer, AF_IPX: integer, AF_NETLINK: integer, AF_X25: integer, AF_AX25: integer, AF_ATMPVC: integer, AF_APPLETALK: integer, AF_PACKET: integer, AI_ADDRCONFIG: integer, AI_V4MAPPED: integer, AI_ALL: integer, AI_NUMERICHOST: integer, AI_PASSIVE: integer, AI_NUMERICSERV: integer, SIGHUP: integer, SIGINT: integer, SIGQUIT: integer, SIGILL: integer, SIGTRAP: integer, SIGABRT: integer, SIGIOT: integer, SIGBUS: integer, SIGFPE: integer, SIGKILL: integer, SIGUSR1: integer, SIGSEGV: integer, SIGUSR2: integer, SIGPIPE: integer, SIGALRM: integer, SIGTERM: integer, SIGCHLD: integer, SIGSTKFLT: integer, SIGCONT: integer, SIGSTOP: integer, SIGTSTP: integer, SIGTTIN: integer, SIGWINCH: integer, SIGIO: integer, SIGPOLL: integer, SIGXFSZ: integer, SIGVTALRM: integer, SIGPROF: integer, UDP_RECVMMSG: integer, UDP_MMSG_CHUNK: integer, UDP_REUSEADDR: integer, UDP_PARTIAL: integer, UDP_IPV6ONLY: integer, TCP_IPV6ONLY: integer, UDP_MMSG_FREE: integer, SIGSYS: integer, SIGPWR: integer, SIGTTOU: integer, SIGURG: integer, SIGXCPU: integer}
 
