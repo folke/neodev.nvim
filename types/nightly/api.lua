@@ -1660,6 +1660,10 @@ function vim.api.nvim_get_current_win() end
 --     Highlight groups as a map from group name to a highlight definition
 --     map as in |nvim_set_hl()|, or only a single highlight definition map
 --     if requested by name or id.
+-- 
+-- Note:
+--     When the `link` attribute is defined in the highlight definition map,
+--     other attributes will not be taking effect (see |:hi-link|).
 --- @param ns_id number
 --- @param opts? table<string, any>
 --- @return table<string, any>
@@ -2544,6 +2548,10 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --     which act as aliases to the corresponding foreground and background
 --     values of the Normal group. If the Normal group has not been defined,
 --     using these values results in an error.
+-- 
+-- Note:
+--     If `link` is used in combination with other attributes; only the
+--     `link` will take effect (see |:hi-link|).
 -- 
 -- Parameters: ~
 --   • {ns_id}  Namespace id for this highlight |nvim_create_namespace()|.
