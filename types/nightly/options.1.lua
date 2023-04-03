@@ -1196,12 +1196,12 @@ vim.bo.cinw = vim.bo.cinwords
 -- 	insert a space.
 vim.bo.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-"
 vim.bo.com = vim.bo.comments
--- `'commentstring'`  `'cms'` 	string	(default "//")
+-- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
 -- 	A template for a comment.  The "%s" in the value is replaced with the
 -- 	comment text.  Currently only used to add markers for folding, see
 -- 	|fold-marker|.
-vim.bo.commentstring = "/*%s*/"
+vim.bo.commentstring = ""
 vim.bo.cms = vim.bo.commentstring
 -- `'complete'`  `'cpt'` 	string	(default: ".,w,b,u,t")
 -- 			local to buffer
@@ -3514,7 +3514,7 @@ vim.opt.com = vim.opt.comments
 --- @return string[]
 function vim.opt.comments:get()end
 
--- `'commentstring'`  `'cms'` 	string	(default "//")
+-- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
 -- 	A template for a comment.  The "%s" in the value is replaced with the
 -- 	comment text.  Currently only used to add markers for folding, see
@@ -3523,7 +3523,7 @@ function vim.opt.comments:get()end
 --- @operator add: vim.opt.commentstring
 --- @operator sub: vim.opt.commentstring
 --- @operator pow: vim.opt.commentstring
-vim.opt.commentstring = "/*%s*/"
+vim.opt.commentstring = ""
 vim.opt.cms = vim.opt.commentstring
 --- @return string
 function vim.opt.commentstring:get()end
