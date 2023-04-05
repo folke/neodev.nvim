@@ -3865,7 +3865,7 @@ function vim.opt.rulerformat:get()end
 -- 	  pack/		packages |:packadd|
 -- 	  parser/	|treesitter| syntax parsers
 -- 	  plugin/	plugin scripts |write-plugin|
--- 	  query/	|treesitter| queries
+-- 	  queries/	|treesitter| queries
 -- 	  rplugin/	|remote-plugin| scripts
 -- 	  spell/	spell checking files |spell|
 -- 	  syntax/	syntax files |mysyntaxfile|
