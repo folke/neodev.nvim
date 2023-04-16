@@ -16,9 +16,14 @@ jobs:
         run: |
           sudo apt-get -y install doxygen luajit python3-msgpack
       - name: Install Neovim
+        shell: bash
         run: |
-          wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb -O /tmp/nvim.deb
-          sudo dpkg -i /tmp/nvim.deb
+          mkdir -p /tmp/nvim
+          wget -q https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim/nvim.appimage
+          cd /tmp/nvim
+          chmod a+x ./nvim.appimage
+          ./nvim.appimage --appimage-extract
+          echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
       - name: Clone Neovim's repo and run gen_vimdoc.py
         run: |
           git clone --depth=1 https://github.com/neovim/neovim.git ./data/neovim
@@ -44,9 +49,14 @@ jobs:
       - name: Pull Updates
         run: git pull
       - name: Install Neovim
+        shell: bash
         run: |
-          wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb -O /tmp/nvim.deb
-          sudo dpkg -i /tmp/nvim.deb
+          mkdir -p /tmp/nvim
+          wget -q https://github.com/neovim/neovim/releases/download/stable/nvim.appimage -O /tmp/nvim/nvim.appimage
+          cd /tmp/nvim
+          chmod a+x ./nvim.appimage
+          ./nvim.appimage --appimage-extract
+          echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
       - name: Generate new docs
         run: |
           nvim --version
