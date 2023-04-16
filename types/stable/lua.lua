@@ -16,19 +16,18 @@ function vim.call(func, ...) end
 -- 
 -- Examples: 
 -- ```lua
--- 
 --     vim.diff('a\n', 'b\nc\n')
---     =>
---     @@ -1 +1,2 @@
---     -a
---     +b
---     +c
+--     -- =>
+--     -- @@ -1 +1,2 @@
+--     -- -a
+--     -- +b
+--     -- +c
 -- 
 --     vim.diff('a\n', 'b\nc\n', {result_type = 'indices'})
---     =>
---     {
---         {1, 1, 1, 2}
---     }
+--     -- =>
+--     -- {
+--     --   {1, 1, 1, 2}
+--     -- }
 -- ```
 -- Parameters: ~
 --   • {a}      First string to compare
@@ -46,6 +45,10 @@ function vim.call(func, ...) end
 --                • "unified": (default) String in unified format.
 --                • "indices": Array of hunk locations.
 --                Note: This option is ignored if `on_hunk` is used.
+--              • `linematch` (boolean|integer): Run linematch on the resulting hunks
+--                from xdiff. When integer, only hunks upto this size in
+--                lines are run through linematch. Requires `result_type = indices`,
+--                ignored otherwise.
 --              • `algorithm` (string):
 --                Diff algorithm to use. Values:
 --                • "myers"      the default algorithm
@@ -102,6 +105,18 @@ function vim.iconv(str, from, to, opts) end
 -- to other restrictions such as |textlock|).
 function vim.in_fast_event() end
 
+-- Decodes (or "unpacks") the JSON-encoded {str} to a Lua object.
+-- 
+-- {opts} is a table with the key `luanil = { object: bool, array: bool }`
+-- that controls whether `null` in JSON objects or arrays should be converted
+-- to Lua `nil` instead of `vim.NIL`.
+--- @param str string
+--- @param opts? table<string, any>
+function vim.json.decode(str, opts) end
+
+-- Encodes (or "packs") Lua object {obj} as JSON in a Lua string.
+function vim.json.encode(obj) end
+
 -- Decodes (or "unpacks") the msgpack-encoded {str} to a Lua object.
 --- @param str string
 function vim.mpack.decode(str) end
@@ -145,12 +160,11 @@ function vim.schedule(callback) end
 -- 
 -- Example: 
 -- ```lua
--- 
 --     vim.spell.check("the quik brown fox")
---     =>
---     {
---         {'quik', 'bad', 4}
---     }
+--     -- =>
+--     -- {
+--     --     {'quik', 'bad', 5}
+--     -- }
 -- ```
 -- Parameters: ~
 --   • {str}    String to spell check.
@@ -236,9 +250,6 @@ function vim.ui_attach(ns, options, callback) end
 -- given namespace {ns}.
 --- @param ns number
 function vim.ui_detach(ns) end
-
--- Gets the version of the current Nvim build.
-function vim.version() end
 
 -- Wait for {time} in milliseconds until {callback} returns `true`.
 -- 

@@ -1,5 +1,119 @@
 ---@meta
 
+-- Return the minimum value of all items in {expr}. Example:  
+-- ```vim
+--     echo min([apples, pears, oranges])
+-- 
+-- ```
+--   {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
+--   it returns the minimum of all values in the Dictionary.
+--   If {expr} is neither a List nor a Dictionary, or one of the
+--   items in {expr} cannot be used as a Number this results in
+--   an error.  An empty |List| or |Dictionary| results in zero.
+-- 
+--   Can also be used as a |method|: 
+-- ```vim
+--     mylist->min()
+-- 
+-- ```
+--- @return number
+function vim.fn.min(expr) end
+
+-- Create directory {name}.
+-- 
+-- When {flags} is present it must be a string.  An empty string
+-- has no effect.
+-- 
+-- If {flags} is "p" then intermediate directories are created as
+-- necessary.
+-- 
+-- If {prot} is given it is used to set the protection bits of
+-- the new directory.  The default is 0o755 (rwxr-xr-x: r/w for
+-- the user, readable for others).  Use 0o700 to make it
+-- unreadable for others.
+-- 
+-- {prot} is applied for all parts of {name}.  Thus if you create
+-- /tmp/foo/bar then /tmp/foo will be created with 0o700. Example: 
+-- ```vim
+--   :call mkdir($HOME .. "/tmp/foo/bar", "p", 0o700)
+-- 
+-- ```
+-- This function is not available in the |sandbox|.
+-- 
+-- If you try to create an existing directory with {flags} set to
+-- "p" mkdir() will silently exit.
+-- 
+-- The function result is a Number, which is TRUE if the call was
+-- successful or FALSE if the directory creation failed or partly
+-- failed.
+-- 
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetName()->mkdir()
+-- ```
+--- @param flags? any
+--- @param prot? any
+--- @return number
+function vim.fn.mkdir(name, flags, prot) end
+
+-- Return a string that indicates the current mode.
+--   If [expr] is supplied and it evaluates to a non-zero Number or
+--   a non-empty String (|non-zero-arg|), then the full mode is
+--   returned, otherwise only the first letter is returned.
+-- 
+--      n      Normal
+--      no      Operator-pending
+--      nov      Operator-pending (forced charwise |o_v|)
+--      noV      Operator-pending (forced linewise |o_V|)
+--      noCTRL-V Operator-pending (forced blockwise |o_CTRL-V|)
+--       CTRL-V is one character
+--      niI      Normal using |i_CTRL-O| in |Insert-mode|
+--      niR      Normal using |i_CTRL-O| in |Replace-mode|
+--      niV      Normal using |i_CTRL-O| in |Virtual-Replace-mode|
+--      nt      Normal in |terminal-emulator| (insert goes to
+--       Terminal mode)
+--      ntT      Normal using |t_CTRL-\_CTRL-O| in |Terminal-mode|
+--      v      Visual by character
+--      vs      Visual by character using |v_CTRL-O| in Select mode
+--      V      Visual by line
+--      Vs      Visual by line using |v_CTRL-O| in Select mode
+--      CTRL-V   Visual blockwise
+--      CTRL-Vs  Visual blockwise using |v_CTRL-O| in Select mode
+--      s      Select by character
+--      S      Select by line
+--      CTRL-S   Select blockwise
+--      i      Insert
+--      ic      Insert mode completion |compl-generic|
+--      ix      Insert mode |i_CTRL-X| completion
+--      R      Replace |R|
+--      Rc      Replace mode completion |compl-generic|
+--      Rx      Replace mode |i_CTRL-X| completion
+--      Rv      Virtual Replace |gR|
+--      Rvc      Virtual Replace mode completion |compl-generic|
+--      Rvx      Virtual Replace mode |i_CTRL-X| completion
+--      c      Command-line editing
+--      cv      Vim Ex mode |gQ|
+--      r      Hit-enter prompt
+--      rm      The -- more -- prompt
+--      r?      A |:confirm| query of some sort
+--      !      Shell or external command is executing
+--      t      Terminal mode: keys go to the job
+-- 
+--   This is useful in the 'statusline' option or RPC calls. In
+--   most other places it always returns "c" or "n".
+--   Note that in the future more modes and more specific modes may
+--   be added. It's better not to compare the whole string but only
+--   the leading character(s).
+--   Also see |visualmode()|.
+-- 
+--   Can also be used as a |method|: 
+-- ```vim
+--     DoFull()->mode()
+-- ```
+--- @param expr? any
+--- @return string
+function vim.fn.mode(expr) end
+
 -- Convert a list of VimL objects to msgpack. Returned value is a
 -- |readfile()|-style list. When {type} contains "B", a |Blob| is
 -- returned instead. Example: 
@@ -645,6 +759,38 @@ function vim.fn.rand(expr) end
 --- @return any[]
 function vim.fn.range(expr, max, stride) end
 
+-- Read file {fname} in binary mode and return a |Blob|.
+-- If {offset} is specified, read the file from the specified
+-- offset.  If it is a negative value, it is used as an offset
+-- from the end of the file.  E.g., to read the last 12 bytes: 
+-- ```vim
+--   readblob('file.bin', -12)
+-- ```
+-- If {size} is specified, only the specified size will be read.
+-- E.g. to read the first 100 bytes of a file: 
+-- ```vim
+--   readblob('file.bin', 0, 100)
+-- ```
+-- If {size} is -1 or omitted, the whole data starting from
+-- {offset} will be read.
+-- This can be also used to read the data from a character device
+-- on Unix when {size} is explicitly set.  Only if the device
+-- supports seeking {offset} can be used.  Otherwise it should be
+-- zero.  E.g. to read 10 bytes from a serial console: 
+-- ```vim
+--   readblob('/dev/ttyS0', 0, 10)
+-- ```
+-- When the file can't be opened an error message is given and
+-- the result is an empty |Blob|.
+-- When the offset is beyond the end of the file the result is an
+-- empty blob.
+-- When trying to read more bytes than are available the result
+-- is truncated.
+-- Also see |readfile()| and |writefile()|.
+--- @param offset? any
+--- @param size? any
+function vim.fn.readblob(fname, offset, size) end
+
 -- Return a list with file and directory names in {directory}.
 -- You can also use |glob()| if you don't need to do complicated
 -- things, such as limiting the number of matches.
@@ -694,8 +840,6 @@ function vim.fn.readdir(directory, expr) end
 -- - When the last line ends in a NL an extra empty list item is
 --   added.
 -- - No CR characters are removed.
--- When {type} contains "B" a |Blob| is returned with the binary
--- data of the file unmodified.
 -- Otherwise:
 -- - CR characters that appear before a NL are removed.
 -- - Whether the last line ends in a NL or not does not matter.
@@ -714,6 +858,9 @@ function vim.fn.readdir(directory, expr) end
 -- Note that without {max} the whole file is read into memory.
 -- Also note that there is no recognition of encoding.  Read a
 -- file into a buffer if you need to.
+-- Deprecated (use |readblob()| instead): When {type} contains
+-- "B" a |Blob| is returned with the binary data of the file
+-- unmodified.
 -- When the file can't be opened an error message is given and
 -- the result is an empty list.
 -- Also see |writefile()|.
@@ -790,8 +937,8 @@ function vim.fn.reg_recording() end
 --   GetStart()->reltime()
 -- ```
 -- Note: |localtime()| returns the current (non-relative) time.
---- @param start? number
---- @param end_? number
+--- @param start number
+--- @param end_ number
 --- @return any[]
 function vim.fn.reltime(start, end_) end
 
@@ -868,8 +1015,8 @@ function vim.fn.rename(from, to) end
 --   :let separator = repeat('-', 80)
 -- ```
 -- When {count} is zero or negative the result is empty.
--- When {expr} is a |List| the result is {expr} concatenated
--- {count} times.  Example: 
+-- When {expr} is a |List| or a |Blob| the result is {expr}
+-- concatenated {count} times.  Example: 
 -- ```vim
 --   :let longlist = repeat(['a', 'b'], 3)
 -- ```
@@ -879,7 +1026,7 @@ function vim.fn.rename(from, to) end
 -- ```vim
 --   mylist->repeat(count)
 -- ```
---- @return string
+--- @return any[]
 vim.fn["repeat"] = function(expr, count) end
 
 -- On MS-Windows, when {filename} is a shortcut (a .lnk file),
@@ -1062,6 +1209,8 @@ function vim.fn.screencol() end
 -- as if 'conceallevel' is zero.  You can set the cursor to the
 -- right position and use |screencol()| to get the value with
 -- |conceal| taken into account.
+-- If the position is in a closed fold the screen position of the
+-- first character is returned, {col} is not used.
 -- Returns an empty Dict if {winid} is invalid.
 -- 
 -- Can also be used as a |method|: 
@@ -1337,7 +1486,7 @@ function vim.fn.search(pattern, flags, stopline, timeout, skip) end
 --   pos    |List|    `[lnum, col, off]` value
 --         when recomputing the result.
 --         this changes "current" result
---         value. see |cursor()|, |getpos()
+--         value. see |cursor()|, |getpos()|
 --         (default: cursor's position)
 -- 
 -- Can also be used as a |method|: 
@@ -1639,32 +1788,41 @@ function vim.fn.setbufline(buf, lnum, text) end
 function vim.fn.setbufvar(buf, varname, val) end
 
 -- Specify overrides for cell widths of character ranges.  This
--- tells Vim how wide characters are, counted in screen cells.
--- This overrides 'ambiwidth'.  Example: 
+-- tells Vim how wide characters are when displayed in the
+-- terminal, counted in screen cells.  The values override
+-- 'ambiwidth'.  Example: 
 -- ```vim
---    setcellwidths([[0xad, 0xad, 1],
---     \ [0x2194, 0x2199, 2]])
+--    call setcellwidths([
+--     \ [0x111, 0x111, 1],
+--     \ [0x2194, 0x2199, 2],
+--     \ ])
 -- 
 -- ```
--- The {list} argument is a list of lists with each three
--- numbers. These three numbers are [low, high, width].  "low"
--- and "high" can be the same, in which case this refers to one
--- character. Otherwise it is the range of characters from "low"
--- to "high" (inclusive).  "width" is either 1 or 2, indicating
--- the character width in screen cells.
+-- The {list} argument is a List of Lists with each three
+-- numbers: [{low}, {high}, {width}].
+-- {low} and {high} can be the same, in which case this refers to
+-- one character.  Otherwise it is the range of characters from
+-- {low} to {high} (inclusive).
+-- Only characters with value 0x80 and higher can be used.
+-- 
+-- {width} must be either 1 or 2, indicating the character width
+-- in screen cells.
 -- An error is given if the argument is invalid, also when a
 -- range overlaps with another.
--- Only characters with value 0x100 and higher can be used.
 -- 
 -- If the new value causes 'fillchars' or 'listchars' to become
 -- invalid it is rejected and an error is given.
 -- 
--- To clear the overrides pass an empty list: 
+-- To clear the overrides pass an empty {list}: 
 -- ```vim
---    setcellwidths([]);
+--    call setcellwidths([])
+-- 
 -- ```
 -- You can use the script $VIMRUNTIME/tools/emoji_list.vim to see
--- the effect for known emoji characters.
+-- the effect for known emoji characters.  Move the cursor
+-- through the text to check if the cell widths of your terminal
+-- match with what Vim knows about each emoji.  If it doesn't
+-- look right you need to adjust the {list} argument.
 --- @param list any[]
 function vim.fn.setcellwidths(list) end
 
@@ -1817,6 +1975,8 @@ function vim.fn.setfperm(fname, mode) end
 -- {lnum} is used like with |getline()|.
 -- When {lnum} is just below the last line the {text} will be
 -- added below the last line.
+-- {text} can be any type or a List of any type, each item is
+-- converted to a String.
 -- 
 -- If this succeeds, FALSE is returned.  If this fails (most likely
 -- because {lnum} is invalid) TRUE is returned.
@@ -1875,8 +2035,8 @@ function vim.fn.setline(lnum, text) end
 --- @return number
 function vim.fn.setloclist(nr, list, action, what) end
 
--- Restores a list of matches saved by |getmatches() for the
--- current window|.  Returns 0 if successful, otherwise -1.  All
+-- Restores a list of matches saved by |getmatches()| for the
+-- current window.  Returns 0 if successful, otherwise -1.  All
 -- current matches are cleared before the list is restored.  See
 -- example for |getmatches()|.
 -- If {win} is specified, use the window with this number or
@@ -2071,6 +2231,7 @@ function vim.fn.setpos(expr, list) end
 function vim.fn.setqflist(list, action, what) end
 
 -- Set the register {regname} to {value}.
+-- If {regname} is "" or "@", the unnamed register '"' is used.
 -- The {regname} argument is a string.
 -- 
 -- {value} may be any value returned by |getreg()| or
@@ -2438,10 +2599,14 @@ function vim.fn.sin(expr) end
 function vim.fn.sinh(expr) end
 
 -- Connect a socket to an address. If {mode} is "pipe" then
--- {address} should be the path of a named pipe. If {mode} is
--- "tcp" then {address} should be of the form "host:port" where
--- the host should be an ip adderess or host name, and port the
--- port number.
+-- {address} should be the path of a local domain socket (on
+-- unix) or named pipe (on Windows). If {mode} is "tcp" then
+-- {address} should be of the form "host:port" where the host
+-- should be an ip adderess or host name, and port the port
+-- number.
+-- 
+-- For "pipe" mode, see |luv-pipe-handle|. For "tcp" mode, see
+-- |luv-tcp-handle|.
 -- 
 -- Returns a |channel| ID. Close the socket with |chanclose()|.
 -- Use |chansend()| to send data over a bytes socket, and
@@ -2833,6 +2998,23 @@ function vim.fn.str2list(string, utf8) end
 --- @return number
 function vim.fn.str2nr(string, base) end
 
+-- The result is a Number, which is the number of characters
+-- in String {string}.  Composing characters are ignored.
+-- |strchars()| can count the number of characters, counting
+-- composing characters separately.
+-- 
+-- Returns 0 if {string} is empty or on error.
+-- 
+-- Also see |strlen()|, |strdisplaywidth()| and |strwidth()|.
+-- 
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetText()->strcharlen()
+-- ```
+--- @param string string
+--- @return number
+function vim.fn.strcharlen(string) end
+
 -- Like |strpart()| but using character index and length instead
 -- of byte index and length.  Composing characters are counted
 -- separately.
@@ -2859,6 +3041,7 @@ function vim.fn.strcharpart(src, start, len) end
 -- When {skipcc} is omitted or zero, composing characters are
 -- counted separately.
 -- When {skipcc} set to 1, Composing characters are ignored.
+-- |strcharlen()| always does this.
 -- 
 -- Returns zero on error.
 -- 
@@ -3164,7 +3347,7 @@ function vim.fn.strwidth(string) end
 
 -- Only for an expression in a |:substitute| command or
 -- substitute() function.
--- Returns the {nr}'th submatch of the matched text.  When {nr}
+-- Returns the {nr}th submatch of the matched text.  When {nr}
 -- is 0 the whole matched text is returned.
 -- Note that a NL in the string can stand for a line break of a
 -- multi-line match or a NUL character in the text.
@@ -3358,6 +3541,7 @@ function vim.fn.synID(lnum, col, trans) end
 --   "underdotted"  "1" if dotted underlined
 --   "underdashed"  "1" if dashed underlined
 --   "strikethrough"  "1" if struckthrough
+--   "altfont"  "1" if alternative font
 --   "nocombine"  "1" if nocombine
 -- 
 --   Returns an empty string on error.
@@ -3679,15 +3863,13 @@ function vim.fn.tan(expr) end
 --- @return float
 function vim.fn.tanh(expr) end
 
--- The result is a String, which is the name of a file that
--- doesn't exist.  It can be used for a temporary file.  Example: 
+-- Generates a (non-existent) filename located in the Nvim root
+-- |tempdir|. Scripts can use the filename as a temporary file.
+-- Example: 
 -- ```vim
 --   :let tmpfile = tempname()
 --   :exe "redir > " .. tmpfile
 -- ```
--- For Unix, the file will be in a private directory |tempfile|.
--- For MS-Windows forward slashes are used when the 'shellslash'
--- option is set or when 'shellcmdflag' starts with '-'.
 --- @return string
 function vim.fn.tempname() end
 
@@ -3752,6 +3934,8 @@ function vim.fn.timer_pause(timer, paused) end
 -- {time} is the waiting time in milliseconds. This is the
 -- minimum time before invoking the callback.  When the system is
 -- busy or Vim is not waiting for input the time will be longer.
+-- Zero can be used to execute the callback when Vim is back in
+-- the main loop.
 -- 
 -- {callback} is the function to call.  It can be the name of a
 -- function or a |Funcref|.  It is called with one argument, which
@@ -4173,6 +4357,12 @@ function vim.fn.wildmenumode() end
 -- ```vim
 --   call win_execute(winid, 'syntax enable')
 -- ```
+-- Doing the same with `setwinvar()` would not trigger
+-- autocommands and not actually show syntax highlighting.
+-- 
+-- When window {id} does not exist then no error is given and
+-- an empty string is returned.
+-- 
 -- Can also be used as a |method|, the base is passed as the
 -- second argument: 
 -- ```vim
@@ -4279,6 +4469,7 @@ function vim.fn.win_id2win(expr) end
 -- FALSE otherwise.
 -- This will fail for the rightmost window and a full-width
 -- window, since it has no separator on the right.
+-- Only works for the current tab page.
 -- 
 -- Can also be used as a |method|: 
 -- ```vim
@@ -4297,6 +4488,7 @@ function vim.fn.win_move_separator(nr, offset) end
 -- movement may be smaller than specified (e.g., as a consequence
 -- of maintaining 'winminheight'). Returns TRUE if the window can
 -- be found and FALSE otherwise.
+-- Only works for the current tab page.
 -- 
 -- Can also be used as a |method|: 
 -- ```vim
@@ -4529,10 +4721,14 @@ function vim.fn.winrestview(dict) end
 --   The return value includes:
 --     lnum    cursor line number
 --     col    cursor column (Note: the first column
---         zero, as opposed to what getpos()
+--         zero, as opposed to what |getcurpos()|
 --         returns)
 --     coladd    cursor column offset for 'virtualedit'
---     curswant  column for vertical movement
+--     curswant  column for vertical movement (Note:
+--         the first column is zero, as opposed
+--         to what |getcurpos()| returns).  After
+--         |$| command it will be a very large
+--         number equal to |v:maxcol|.
 --     topline    first line in the window
 --     topfill    filler lines, only in diff mode
 --     leftcol    first column displayed; only used when

@@ -189,8 +189,8 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --     otherwise True. TODO: LUA_API_NO_EVAL
 -- 
 -- See also: ~
---     |nvim_buf_detach()|
---     |api-buffer-updates-lua|
+--   • |nvim_buf_detach()|
+--   • |api-buffer-updates-lua|
 --- @param buffer buffer
 --- @param send_buffer boolean
 --- @param opts table<string, any>
@@ -225,7 +225,7 @@ function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 --- @return object
 function vim.api.nvim_buf_call(buffer, fun) end
 
--- Clears namespaced objects (highlights, extmarks, virtual text) from a
+-- Clears |namespace|d objects (highlights, |extmarks|, virtual text) from a
 -- region.
 -- 
 -- Lines are 0-indexed. |api-indexing| To clear the namespace in the entire
@@ -243,20 +243,20 @@ function vim.api.nvim_buf_call(buffer, fun) end
 --- @param line_end number
 function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) end
 
--- Create a new user command |user-commands| in the given buffer.
+-- Creates a buffer-local command |user-commands|.
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer.
 -- 
 -- See also: ~
---     nvim_create_user_command
+--   • nvim_create_user_command
 --- @param buffer buffer
 --- @param name string
 --- @param command object
 --- @param opts? table<string, any>
 function vim.api.nvim_buf_create_user_command(buffer, name, command, opts) end
 
--- Removes an extmark.
+-- Removes an |extmark|.
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -277,7 +277,7 @@ function vim.api.nvim_buf_del_extmark(buffer, ns_id, id) end
 --   • {buffer}  Buffer handle, or 0 for current buffer
 -- 
 -- See also: ~
---     |nvim_del_keymap()|
+--   • |nvim_del_keymap()|
 --- @param buffer buffer
 --- @param mode string
 --- @param lhs string
@@ -297,8 +297,8 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 --     true if the mark was deleted, else false.
 -- 
 -- See also: ~
---     |nvim_buf_set_mark()|
---     |nvim_del_mark()|
+--   • |nvim_buf_set_mark()|
+--   • |nvim_del_mark()|
 --- @param buffer buffer
 --- @param name string
 --- @return boolean
@@ -363,7 +363,7 @@ function vim.api.nvim_buf_get_changedtick(buffer) end
 --- @return table<string, any>
 function vim.api.nvim_buf_get_commands(buffer, opts) end
 
--- Gets the position (0-indexed) of an extmark.
+-- Gets the position (0-indexed) of an |extmark|.
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -371,6 +371,8 @@ function vim.api.nvim_buf_get_commands(buffer, opts) end
 --   • {id}      Extmark id
 --   • {opts}    Optional parameters. Keys:
 --               • details: Whether to include the details dict
+--               • hl_name: Whether to include highlight group name instead
+--                 of id, true if omitted
 -- 
 -- Return: ~
 --     0-indexed (row, col) tuple or empty list () if extmark id was absent
@@ -381,39 +383,40 @@ function vim.api.nvim_buf_get_commands(buffer, opts) end
 --- @return any[]
 function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 
--- Gets extmarks in "traversal order" from a |charwise| region defined by
+-- Gets |extmarks| in "traversal order" from a |charwise| region defined by
 -- buffer positions (inclusive, 0-indexed |api-indexing|).
 -- 
 -- Region can be given as (row,col) tuples, or valid extmark ids (whose
 -- positions define the bounds). 0 and -1 are understood as (0,0) and (-1,-1)
--- respectively, thus the following are equivalent:
+-- respectively, thus the following are equivalent: 
 -- ```lua
--- nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
--- nvim_buf_get_extmarks(0, my_ns, [0,0], [-1,-1], {})
+--   vim.api.nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
+--   vim.api.nvim_buf_get_extmarks(0, my_ns, {0,0}, {-1,-1}, {})
 -- ```
 -- 
 -- If `end` is less than `start`, traversal works backwards. (Useful with
 -- `limit`, to get the first marks prior to a given position.)
 -- 
--- Example:
+-- Example: 
 -- ```lua
--- local a   = vim.api
--- local pos = a.nvim_win_get_cursor(0)
--- local ns  = a.nvim_create_namespace('my-plugin')
--- -- Create new extmark at line 1, column 1.
--- local m1  = a.nvim_buf_set_extmark(0, ns, 0, 0, {})
--- -- Create new extmark at line 3, column 1.
--- local m2  = a.nvim_buf_set_extmark(0, ns, 0, 2, {})
--- -- Get extmarks only from line 3.
--- local ms  = a.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
--- -- Get all marks in this buffer + namespace.
--- local all = a.nvim_buf_get_extmarks(0, ns, 0, -1, {})
--- print(vim.inspect(ms))
+--   local api = vim.api
+--   local pos = api.nvim_win_get_cursor(0)
+--   local ns  = api.nvim_create_namespace('my-plugin')
+--   -- Create new extmark at line 1, column 1.
+--   local m1  = api.nvim_buf_set_extmark(0, ns, 0, 0, {})
+--   -- Create new extmark at line 3, column 1.
+--   local m2  = api.nvim_buf_set_extmark(0, ns, 2, 0, {})
+--   -- Get extmarks only from line 3.
+--   local ms  = api.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
+--   -- Get all marks in this buffer + namespace.
+--   local all = api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
+--   print(vim.inspect(ms))
 -- ```
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
---   • {ns_id}   Namespace id from |nvim_create_namespace()|
+--   • {ns_id}   Namespace id from |nvim_create_namespace()| or -1 for all
+--               namespaces
 --   • {start}   Start of range: a 0-indexed (row, col) or valid extmark id
 --               (whose position defines the bound). |api-indexing|
 --   • {end}     End of range (inclusive): a 0-indexed (row, col) or valid
@@ -421,7 +424,11 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --               |api-indexing|
 --   • {opts}    Optional parameters. Keys:
 --               • limit: Maximum number of marks to return
---               • details Whether to include the details dict
+--               • details: Whether to include the details dict
+--               • hl_name: Whether to include highlight group name instead
+--                 of id, true if omitted
+--               • type: Filter marks by type: "highlight", "sign",
+--                 "virt_text" and "virt_lines"
 -- 
 -- Return: ~
 --     List of [extmark_id, row, col] tuples in "traversal order".
@@ -485,8 +492,8 @@ function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 --     uppercase/file mark set in another buffer.
 -- 
 -- See also: ~
---     |nvim_buf_set_mark()|
---     |nvim_buf_del_mark()|
+--   • |nvim_buf_set_mark()|
+--   • |nvim_buf_del_mark()|
 --- @param buffer buffer
 --- @param name string
 --- @return number[]
@@ -617,7 +624,7 @@ function vim.api.nvim_buf_is_valid(buffer) end
 --- @return number
 function vim.api.nvim_buf_line_count(buffer) end
 
--- Creates or updates an extmark.
+-- Creates or updates an |extmark|.
 -- 
 -- By default a new extmark is created when no id is passed in, but it is
 -- also possible to create a new mark by passing in a previously unused id or
@@ -687,7 +694,7 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 buffer.
 --               • right_gravity : boolean that indicates the direction the
 --                 extmark will be shifted in when new text is inserted (true
---                 for right, false for left). defaults to true.
+--                 for right, false for left). Defaults to true.
 --               • end_right_gravity : boolean that indicates the direction
 --                 the extmark end position (if it exists) will be shifted in
 --                 when new text is inserted (true for right, false for
@@ -742,7 +749,7 @@ function vim.api.nvim_buf_set_extmark(buffer, ns_id, line, col, opts) end
 --   • {buffer}  Buffer handle, or 0 for current buffer
 -- 
 -- See also: ~
---     |nvim_set_keymap()|
+--   • |nvim_set_keymap()|
 --- @param buffer buffer
 --- @param mode string
 --- @param lhs string
@@ -773,7 +780,7 @@ function vim.api.nvim_buf_set_keymap(buffer, mode, lhs, rhs, opts) end
 --   • {replacement}      Array of lines to use as replacement
 -- 
 -- See also: ~
---     |nvim_buf_set_text()|
+--   • |nvim_buf_set_text()|
 --- @param buffer buffer
 --- @param start number
 --- @param end_ number
@@ -800,8 +807,8 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 --     true if the mark was set, else false.
 -- 
 -- See also: ~
---     |nvim_buf_del_mark()|
---     |nvim_buf_get_mark()|
+--   • |nvim_buf_del_mark()|
+--   • |nvim_buf_get_mark()|
 --- @param buffer buffer
 --- @param name string
 --- @param line number
@@ -856,7 +863,7 @@ function vim.api.nvim_buf_set_option(buffer, name, value) end
 --   • {replacement}  Array of lines to use as replacement
 -- 
 -- See also: ~
---     |nvim_buf_set_lines()|
+--   • |nvim_buf_set_lines()|
 --- @param buffer buffer
 --- @param start_row number
 --- @param start_col number
@@ -986,8 +993,8 @@ function vim.api.nvim_clear_autocmds(opts) end
 --     empty string.
 -- 
 -- See also: ~
---     |nvim_exec()|
---     |nvim_command()|
+--   • |nvim_exec2()|
+--   • |nvim_command()|
 --- @param cmd? table<string, any>
 --- @param opts? table<string, any>
 --- @return string
@@ -997,11 +1004,11 @@ function vim.api.nvim_cmd(cmd, opts) end
 -- 
 -- On execution error: fails with VimL error, updates v:errmsg.
 -- 
--- Prefer using |nvim_cmd()| or |nvim_exec()| over this. To evaluate multiple
--- lines of Vim script or an Ex command directly, use |nvim_exec()|. To
--- construct an Ex command using a structured format and then execute it, use
--- |nvim_cmd()|. To modify an Ex command before evaluating it, use
--- |nvim_parse_cmd()| in conjunction with |nvim_cmd()|.
+-- Prefer using |nvim_cmd()| or |nvim_exec2()| over this. To evaluate
+-- multiple lines of Vim script or an Ex command directly, use
+-- |nvim_exec2()|. To construct an Ex command using a structured format and
+-- then execute it, use |nvim_cmd()|. To modify an Ex command before
+-- evaluating it, use |nvim_parse_cmd()| in conjunction with |nvim_cmd()|.
 -- 
 -- Parameters: ~
 --   • {command}  Ex command string
@@ -1027,48 +1034,25 @@ function vim.api.nvim_command(command) end
 --     Integer id of the created group.
 -- 
 -- See also: ~
---     |autocmd-groups|
+--   • |autocmd-groups|
 --- @param name string
 --- @param opts? table<string, any>
 --- @return number
 function vim.api.nvim_create_augroup(name, opts) end
 
--- Create an |autocommand|
+-- Creates an |autocommand| event handler, defined by `callback` (Lua function or Vimscript function name string) or `command` (Ex command string).
 -- 
--- The API allows for two (mutually exclusive) types of actions to be
--- executed when the autocommand triggers: a callback function (Lua or
--- Vimscript), or a command (like regular autocommands).
--- 
--- Example using callback: 
+-- Example using Lua callback: 
 -- ```lua
---     -- Lua function
---     local myluafun = function() print("This buffer enters") end
--- 
---     -- Vimscript function name (as a string)
---     local myvimfun = "g:MyVimFunction"
--- 
 --     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 --       pattern = {"*.c", "*.h"},
---       callback = myluafun,  -- Or myvimfun
+--       callback = function(ev)
+--         print(string.format('event fired: s', vim.inspect(ev)))
+--       end
 --     })
 -- ```
 -- 
--- Lua functions receive a table with information about the autocmd event as
--- an argument. To use a function which itself accepts another (optional)
--- parameter, wrap the function in a lambda:
--- ```lua
--- -- Lua function with an optional parameter.
--- -- The autocmd callback would pass a table as argument but this
--- -- function expects number|nil
--- local myluafun = function(bufnr) bufnr = bufnr or vim.api.nvim_get_current_buf() end
--- 
--- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
---   pattern = {"*.c", "*.h"},
---   callback = function() myluafun() end,
--- })
--- ```
--- 
--- Example using command: 
+-- Example using an Ex command as the handler: 
 -- ```lua
 --     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 --       pattern = {"*.c", "*.h"},
@@ -1076,53 +1060,38 @@ function vim.api.nvim_create_augroup(name, opts) end
 --     })
 -- ```
 -- 
--- Example values for pattern: 
--- ```lua
---   pattern = "*.py"
---   pattern = { "*.py", "*.pyi" }
--- ```
--- 
--- Note: The `pattern` is passed to callbacks and commands as a literal string; environment
--- variables like `$HOME` and `~` are not automatically expanded as they are by |:autocmd|. Instead,
--- |expand()| such variables explicitly: 
+-- Note: `pattern` is NOT automatically expanded (unlike with |:autocmd|), thus names like
+-- "$HOME" and "~" must be expanded explicitly: 
 -- ```lua
 --   pattern = vim.fn.expand("~") .. "/some/path/*.py"
 -- ```
 -- 
--- Example values for event: 
--- ```lua
---   "BufWritePre"
---   {"CursorHold", "BufWritePre", "BufWritePost"}
--- ```
--- 
 -- Parameters: ~
---   • {event}  (string|array) The event or events to register this
---              autocommand
---   • {opts}   Dictionary of autocommand options:
---              • group (string|integer) optional: the autocommand group name
---                or id to match against.
---              • pattern (string|array) optional: pattern or patterns to
---                match literally against |autocmd-pattern|.
---              • buffer (integer) optional: buffer number for buffer local
+--   • {event}  (string|array) Event(s) that will trigger the handler
+--              (`callback` or `command`).
+--   • {opts}   Options dict:
+--              • group (string|integer) optional: autocommand group name or
+--                id to match against.
+--              • pattern (string|array) optional: pattern(s) to match
+--                literally |autocmd-pattern|.
+--              • buffer (integer) optional: buffer number for buffer-local
 --                autocommands |autocmd-buflocal|. Cannot be used with
 --                {pattern}.
---              • desc (string) optional: description of the autocommand.
---              • callback (function|string) optional: if a string, the name
---                of a Vimscript function to call when this autocommand is
---                triggered. Otherwise, a Lua function which is called when
---                this autocommand is triggered. Cannot be used with
---                {command}. Lua callbacks can return true to delete the
---                autocommand; in addition, they accept a single table
---                argument with the following keys:
---                • id: (number) the autocommand id
---                • event: (string) the name of the event that triggered the
---                  autocommand |autocmd-events|
---                • group: (number|nil) the autocommand group id, if it
---                  exists
---                • match: (string) the expanded value of |<amatch>|
---                • buf: (number) the expanded value of |<abuf>|
---                • file: (string) the expanded value of |<afile>|
---                • data: (any) arbitrary data passed to
+--              • desc (string) optional: description (for documentation and
+--                troubleshooting).
+--              • callback (function|string) optional: Lua function (or
+--                Vimscript function name, if string) called when the
+--                event(s) is triggered. Lua callback can return true to
+--                delete the autocommand, and receives a table argument with
+--                these keys:
+--                • id: (number) autocommand id
+--                • event: (string) name of the triggered event
+--                  |autocmd-events|
+--                • group: (number|nil) autocommand group id, if any
+--                • match: (string) expanded value of |<amatch>|
+--                • buf: (number) expanded value of |<abuf>|
+--                • file: (string) expanded value of |<afile>|
+--                • data: (any) arbitrary data passed from
 --                  |nvim_exec_autocmds()|
 -- 
 --              • command (string) optional: Vim command to execute on event.
@@ -1133,11 +1102,11 @@ function vim.api.nvim_create_augroup(name, opts) end
 --                autocommands |autocmd-nested|.
 -- 
 -- Return: ~
---     Integer id of the created autocommand.
+--     Autocommand id (number)
 -- 
 -- See also: ~
---     |autocommand|
---     |nvim_del_autocmd()|
+--   • |autocommand|
+--   • |nvim_del_autocmd()|
 --- @param event object
 --- @param opts? table<string, any>
 --- @return number
@@ -1155,13 +1124,13 @@ function vim.api.nvim_create_autocmd(event, opts) end
 --     Buffer handle, or 0 on error
 -- 
 -- See also: ~
---     buf_open_scratch
+--   • buf_open_scratch
 --- @param listed boolean
 --- @param scratch boolean
 --- @return buffer
 function vim.api.nvim_create_buf(listed, scratch) end
 
--- Creates a new  or gets an existing one.
+-- Creates a new namespace or gets an existing one.
 -- 
 -- Namespaces are used for buffer highlights and virtual text, see
 -- |nvim_buf_add_highlight()| and |nvim_buf_set_extmark()|.
@@ -1179,16 +1148,13 @@ function vim.api.nvim_create_buf(listed, scratch) end
 --- @return number
 function vim.api.nvim_create_namespace(name) end
 
--- Create a new user command |user-commands|
+-- Creates a global |user-commands| command.
 -- 
--- {name} is the name of the new command. The name must begin with an
--- uppercase letter.
--- 
--- {command} is the replacement text or Lua function to execute.
+-- For Lua usage see |lua-guide-commands-create|.
 -- 
 -- Example: 
--- ```lua
---    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {})
+-- ```vim
+--    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
 --    :SayHello
 --    Hello world!
 -- ```
@@ -1200,6 +1166,7 @@ function vim.api.nvim_create_namespace(name) end
 --                executed. When called from Lua, the command can also be a
 --                Lua function. The function is called with a single table
 --                argument that contains the following keys:
+--                • name: (string) Command name
 --                • args: (string) The args passed to the command, if any
 --                  |<args>|
 --                • fargs: (table) The args split by unescaped whitespace
@@ -1219,19 +1186,20 @@ function vim.api.nvim_create_namespace(name) end
 --                • smods: (table) Command modifiers in a structured format.
 --                  Has the same structure as the "mods" key of
 --                  |nvim_parse_cmd()|.
---   • {opts}     Optional command attributes. See |command-attributes| for
---                more details. To use boolean attributes (such as
---                |:command-bang| or |:command-bar|) set the value to "true".
---                In addition to the string options listed in
---                |:command-complete|, the "complete" key also accepts a Lua
---                function which works like the "customlist" completion mode
---                |:command-completion-customlist|. Additional parameters:
---                • desc: (string) Used for listing the command when a Lua
---                  function is used for {command}.
---                • force: (boolean, default true) Override any previous
---                  definition.
---                • preview: (function) Preview callback for 'inccommand'
---                  |:command-preview|
+--   • {opts}     Optional |command-attributes|.
+--                • Set boolean attributes such as |:command-bang| or
+--                  |:command-bar| to true (but not |:command-buffer|, use
+--                  |nvim_buf_create_user_command()| instead).
+--                • "complete" |:command-complete| also accepts a Lua
+--                  function which works like
+--                  |:command-completion-customlist|.
+--                • Other parameters:
+--                  • desc: (string) Used for listing the command when a Lua
+--                    function is used for {command}.
+--                  • force: (boolean, default true) Override any previous
+--                    definition.
+--                  • preview: (function) Preview callback for 'inccommand'
+--                    |:command-preview|
 --- @param name string
 --- @param command object
 --- @param opts? table<string, any>
@@ -1249,8 +1217,8 @@ function vim.api.nvim_create_user_command(name, command, opts) end
 --   • {id}  Integer The id of the group.
 -- 
 -- See also: ~
---     |nvim_del_augroup_by_name()|
---     |nvim_create_augroup()|
+--   • |nvim_del_augroup_by_name()|
+--   • |nvim_create_augroup()|
 --- @param id number
 function vim.api.nvim_del_augroup_by_id(id) end
 
@@ -1264,7 +1232,7 @@ function vim.api.nvim_del_augroup_by_id(id) end
 --   • {name}  String The name of the group.
 -- 
 -- See also: ~
---     |autocmd-groups|
+--   • |autocmd-groups|
 --- @param name string
 function vim.api.nvim_del_augroup_by_name(name) end
 
@@ -1276,7 +1244,7 @@ function vim.api.nvim_del_augroup_by_name(name) end
 --   • {id}  Integer The id returned by nvim_create_autocmd
 -- 
 -- See also: ~
---     |nvim_create_autocmd()|
+--   • |nvim_create_autocmd()|
 --- @param id number
 function vim.api.nvim_del_autocmd(id) end
 
@@ -1291,7 +1259,7 @@ function vim.api.nvim_del_current_line() end
 -- To unmap a buffer-local mapping, use |nvim_buf_del_keymap()|.
 -- 
 -- See also: ~
---     |nvim_set_keymap()|
+--   • |nvim_set_keymap()|
 --- @param mode string
 --- @param lhs string
 function vim.api.nvim_del_keymap(mode, lhs) end
@@ -1308,8 +1276,8 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 --     true if the mark was deleted, else false.
 -- 
 -- See also: ~
---     |nvim_buf_del_mark()|
---     |nvim_get_mark()|
+--   • |nvim_buf_del_mark()|
+--   • |nvim_get_mark()|
 --- @param name string
 --- @return boolean
 function vim.api.nvim_del_mark(name) end
@@ -1335,10 +1303,14 @@ function vim.api.nvim_del_var(name) end
 --                chunk with specified highlight. `hl_group` element can be
 --                omitted for no highlight.
 --   • {history}  if true, add to |message-history|.
---   • {opts}     Optional parameters. Reserved for future use.
+--   • {opts}     Optional parameters.
+--                • verbose: Message was printed as a result of 'verbose'
+--                  option if Nvim was invoked with -V3log_file, the message
+--                  will be redirected to the log_file and suppressed from
+--                  direct output.
 --- @param chunks any[]
 --- @param history boolean
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 function vim.api.nvim_echo(chunks, history, opts) end
 
 -- Writes a message to the Vim error buffer. Does not append "\n", the
@@ -1356,7 +1328,7 @@ function vim.api.nvim_err_write(str) end
 --   • {str}  Message
 -- 
 -- See also: ~
---     nvim_err_write()
+--   • nvim_err_write()
 --- @param str string
 function vim.api.nvim_err_writeln(str) end
 
@@ -1393,6 +1365,8 @@ function vim.api.nvim_eval(expr) end
 --             • use_tabline: (boolean) Evaluate tabline instead of
 --               statusline. When true, {winid} is ignored. Mutually
 --               exclusive with {use_winbar}.
+--             • use_statuscol_lnum: (number) Evaluate statuscolumn for this
+--               line number instead of statusline.
 -- 
 -- Return: ~
 --     Dictionary containing statusline information, with these keys:
@@ -1418,21 +1392,23 @@ function vim.api.nvim_eval_statusline(str, opts) end
 -- On execution error: fails with VimL error, updates v:errmsg.
 -- 
 -- Parameters: ~
---   • {src}     Vimscript code
---   • {output}  Capture and return all (non-error, non-shell |:!|) output
+--   • {src}   Vimscript code
+--   • {opts}  Optional parameters.
+--             • output: (boolean, default false) Whether to capture and
+--               return all (non-error, non-shell |:!|) output.
 -- 
 -- Return: ~
---     Output (non-error, non-shell |:!|) if `output` is true, else empty
---     string.
+--     Dictionary containing information about execution, with these keys:
+--     • output: (string|nil) Output if `opts.output` is true.
 -- 
 -- See also: ~
---     |execute()|
---     |nvim_command()|
---     |nvim_cmd()|
+--   • |execute()|
+--   • |nvim_command()|
+--   • |nvim_cmd()|
 --- @param src string
---- @param output boolean
---- @return string
-function vim.api.nvim_exec(src, output) end
+--- @param opts? table<string, any>
+--- @return table<string, any>
+function vim.api.nvim_exec2(src, opts) end
 
 -- Execute all autocommands for {event} that match the corresponding {opts}
 -- |autocmd-execute|.
@@ -1452,7 +1428,7 @@ function vim.api.nvim_exec(src, output) end
 --                callback. See |nvim_create_autocmd()| for details.
 -- 
 -- See also: ~
---     |:doautocmd|
+--   • |:doautocmd|
 --- @param event object
 --- @param opts? table<string, any>
 function vim.api.nvim_exec_autocmds(event, opts) end
@@ -1467,7 +1443,7 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 -- nvim_feedkeys().
 -- 
 -- Example: 
--- ```lua
+-- ```vim
 --     :let key = nvim_replace_termcodes("<C-o>", v:true, v:false, v:true)
 --     :call nvim_feedkeys(key, 'n', v:false)
 -- ```
@@ -1475,13 +1451,13 @@ function vim.api.nvim_exec_autocmds(event, opts) end
 -- Parameters: ~
 --   • {keys}       to be typed
 --   • {mode}       behavior flags, see |feedkeys()|
---   • {escape_ks}  If true, escape K_SPECIAL bytes in `keys` This should be
+--   • {escape_ks}  If true, escape K_SPECIAL bytes in `keys`. This should be
 --                  false if you already used |nvim_replace_termcodes()|, and
 --                  true otherwise.
 -- 
 -- See also: ~
---     feedkeys()
---     vim_strsave_escape_ks
+--   • feedkeys()
+--   • vim_strsave_escape_ks
 --- @param keys string
 --- @param mode string
 --- @param escape_ks boolean
@@ -1490,7 +1466,7 @@ function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
 -- Gets the option information for all options.
 -- 
 -- The dictionary has the full option names as keys and option metadata
--- dictionaries as detailed at |nvim_get_option_info()|.
+-- dictionaries as detailed at |nvim_get_option_info2()|.
 -- 
 -- Return: ~
 --     dictionary of all options
@@ -1581,7 +1557,7 @@ function vim.api.nvim_get_chan_info(chan) end
 -- "#rrggbb" hexadecimal string.
 -- 
 -- Example: 
--- ```lua
+-- ```vim
 --     :echo nvim_get_color_by_name("Pink")
 --     :echo nvim_get_color_by_name("#cbcbcb")
 -- ```
@@ -1659,37 +1635,30 @@ function vim.api.nvim_get_current_tabpage() end
 --- @return window
 function vim.api.nvim_get_current_win() end
 
--- Gets a highlight definition by id. |hlID()|
+-- Gets all or specific highlight groups in a namespace.
 -- 
 -- Parameters: ~
---   • {hl_id}  Highlight id as returned by |hlID()|
---   • {rgb}    Export RGB colors
+--   • {ns_id}  Get highlight groups for namespace ns_id
+--              |nvim_get_namespaces()|. Use 0 to get global highlight groups
+--              |:highlight|.
+--   • {opts}   Options dict:
+--              • name: (string) Get a highlight definition by name.
+--              • id: (integer) Get a highlight definition by id.
+--              • link: (boolean, default true) Show linked group name
+--                instead of effective definition |:hi-link|.
 -- 
 -- Return: ~
---     Highlight definition map
+--     Highlight groups as a map from group name to a highlight definition
+--     map as in |nvim_set_hl()|, or only a single highlight definition map
+--     if requested by name or id.
 -- 
--- See also: ~
---     nvim_get_hl_by_name
---- @param hl_id number
---- @param rgb boolean
+-- Note:
+--     When the `link` attribute is defined in the highlight definition map,
+--     other attributes will not be taking effect (see |:hi-link|).
+--- @param ns_id number
+--- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_get_hl_by_id(hl_id, rgb) end
-
--- Gets a highlight definition by name.
--- 
--- Parameters: ~
---   • {name}  Highlight group name
---   • {rgb}   Export RGB colors
--- 
--- Return: ~
---     Highlight definition map
--- 
--- See also: ~
---     nvim_get_hl_by_id
---- @param name string
---- @param rgb boolean
---- @return table<string, any>
-function vim.api.nvim_get_hl_by_name(name, rgb) end
+function vim.api.nvim_get_hl(ns_id, opts) end
 
 -- Gets a highlight group by name
 -- 
@@ -1727,8 +1696,8 @@ function vim.api.nvim_get_keymap(mode) end
 --     not set.
 -- 
 -- See also: ~
---     |nvim_buf_set_mark()|
---     |nvim_del_mark()|
+--   • |nvim_buf_set_mark()|
+--   • |nvim_del_mark()|
 --- @param name string
 --- @param opts table<string, any>
 --- @return any[]
@@ -1745,7 +1714,7 @@ function vim.api.nvim_get_mark(name, opts) end
 --- @return table<string, any>
 function vim.api.nvim_get_mode() end
 
--- Gets existing, non-anonymous namespaces.
+-- Gets existing, non-anonymous |namespace|s.
 -- 
 -- Return: ~
 --     dict that maps from names to namespace ids.
@@ -1763,7 +1732,10 @@ function vim.api.nvim_get_namespaces() end
 --- @return object
 function vim.api.nvim_get_option(name) end
 
--- Gets the option information for one option
+--- @return table<string, any>
+function vim.api.nvim_get_option_info() end
+
+-- Gets the option information for one option from arbitrary buffer or window
 -- 
 -- Resulting dictionary has keys:
 -- • name: Name of the option (like 'filetype')
@@ -1779,14 +1751,26 @@ function vim.api.nvim_get_option(name) end
 -- • commalist: List of comma separated values
 -- • flaglist: List of single char flags
 -- 
+-- When {scope} is not provided, the last set information applies to the
+-- local value in the current buffer or window if it is available, otherwise
+-- the global value information is returned. This behavior can be disabled by
+-- explicitly specifying {scope} in the {opts} table.
+-- 
 -- Parameters: ~
 --   • {name}  Option name
+--   • {opts}  Optional parameters
+--             • scope: One of "global" or "local". Analogous to |:setglobal|
+--               and |:setlocal|, respectively.
+--             • win: |window-ID|. Used for getting window local options.
+--             • buf: Buffer number. Used for getting buffer local options.
+--               Implies {scope} is "local".
 -- 
 -- Return: ~
 --     Option Information
 --- @param name string
+--- @param opts? table<string, any>
 --- @return table<string, any>
-function vim.api.nvim_get_option_info(name) end
+function vim.api.nvim_get_option_info2(name, opts) end
 
 -- Gets the value of an option. The behavior of this function matches that of
 -- |:set|: the local value of an option is returned if it exists; otherwise,
@@ -1801,6 +1785,10 @@ function vim.api.nvim_get_option_info(name) end
 --             • win: |window-ID|. Used for getting window local options.
 --             • buf: Buffer number. Used for getting buffer local options.
 --               Implies {scope} is "local".
+--             • filetype: |filetype|. Used to get the default option for a
+--               specific filetype. Cannot be used with any other option.
+--               Note: this will trigger |ftplugin| and all |FileType|
+--               autocommands for the corresponding filetype.
 -- 
 -- Return: ~
 --     Option value
@@ -1973,7 +1961,7 @@ function vim.api.nvim_list_tabpages() end
 --     • "width" Requested width of the UI
 --     • "rgb" true if the UI uses RGB colors (false implies |cterm-colors|)
 --     • "ext_..." Requested UI extensions, see |ui-option|
---     • "chan" Channel id of remote UI (not present for TUI)
+--     • "chan" |channel-id| of remote UI
 --- @return any[]
 function vim.api.nvim_list_uis() end
 
@@ -2087,6 +2075,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                 • "win" Window given by the `win` field, or current
 --                   window.
 --                 • "cursor" Cursor position in current window.
+--                 • "mouse" Mouse position
 -- 
 --               • win: |window-ID| for relative="win".
 --               • anchor: Decides which corner of the float to place at
@@ -2134,10 +2123,10 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                   Disables 'number', 'relativenumber', 'cursorline',
 --                   'cursorcolumn', 'foldcolumn', 'spell' and 'list'
 --                   options. 'signcolumn' is changed to `auto` and
---                   'colorcolumn' is cleared. The end-of-buffer region is
---                   hidden by setting `eob` flag of 'fillchars' to a space
---                   char, and clearing the |hl-EndOfBuffer| region in
---                   'winhighlight'.
+--                   'colorcolumn' is cleared. 'statuscolumn' is changed to
+--                   empty. The end-of-buffer region is hidden by setting
+--                   `eob` flag of 'fillchars' to a space char, and clearing
+--                   the |hl-EndOfBuffer| region in 'winhighlight'.
 -- 
 --               • border: Style of (optional) window border. This can either
 --                 be a string or an array. The string values are
@@ -2163,9 +2152,14 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                   borders but not horizontal ones. By default,
 --                   `FloatBorder` highlight is used, which links to
 --                   `WinSeparator` when not defined. It could also be
---                   specified by character: [ {"+", "MyCorner"}, {"x",
---                   "MyBorder"} ].
+--                   specified by character: [ ["+", "MyCorner"], ["x",
+--                   "MyBorder"] ].
 -- 
+--               • title: Title (optional) in window border, String or list.
+--                 List is [text, highlight] tuples. if is string the default
+--                 highlight group is `FloatTitle`.
+--               • title_pos: Title position must set with title option.
+--                 value can be of `left` `center` `right` default is left.
 --               • noautocmd: If true then no buffer-related autocommand
 --                 events such as |BufEnter|, |BufLeave| or |BufWinEnter| may
 --                 fire from calling this function.
@@ -2211,7 +2205,8 @@ function vim.api.nvim_out_write(str) end
 --       cannot take a register.
 --     • bang: (boolean) Whether command contains a |<bang>| (!) modifier.
 --     • args: (array) Command arguments.
---     • addr: (string) Value of |:command-addr|. Uses short name.
+--     • addr: (string) Value of |:command-addr|. Uses short name or "line"
+--       for -addr=lines.
 --     • nargs: (string) Value of |:command-nargs|.
 --     • nextcmd: (string) Next command if there are multiple commands
 --       separated by a |:bar|. Empty if there isn't a next command.
@@ -2407,8 +2402,8 @@ function vim.api.nvim_put(lines, type, after, follow) end
 --   • {special}    Replace |keycodes|, e.g. <CR> becomes a "\r" char.
 -- 
 -- See also: ~
---     replace_termcodes
---     cpoptions
+--   • replace_termcodes
+--   • cpoptions
 --- @param str string
 --- @param from_part boolean
 --- @param do_lt boolean
@@ -2416,19 +2411,21 @@ function vim.api.nvim_put(lines, type, after, follow) end
 --- @return string
 function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 
--- Selects an item in the completion popupmenu.
+-- Selects an item in the completion popup menu.
 -- 
--- If |ins-completion| is not active this API call is silently ignored.
--- Useful for an external UI using |ui-popupmenu| to control the popupmenu
--- with the mouse. Can also be used in a mapping; use <cmd> |:map-cmd| to
--- ensure the mapping doesn't end completion mode.
+-- If neither |ins-completion| nor |cmdline-completion| popup menu is active
+-- this API call is silently ignored. Useful for an external UI using
+-- |ui-popupmenu| to control the popup menu with the mouse. Can also be used
+-- in a mapping; use <Cmd> |:map-cmd| or a Lua mapping to ensure the mapping
+-- doesn't end completion mode.
 -- 
 -- Parameters: ~
 --   • {item}    Index (zero-based) of the item to select. Value of -1
 --               selects nothing and restores the original text.
---   • {insert}  Whether the selection should be inserted in the buffer.
---   • {finish}  Finish the completion and dismiss the popupmenu. Implies
---               `insert`.
+--   • {insert}  For |ins-completion|, whether the selection should be
+--               inserted in the buffer. Ignored for |cmdline-completion|.
+--   • {finish}  Finish the completion and dismiss the popup menu. Implies
+--               {insert}.
 --   • {opts}    Optional parameters. Reserved for future use.
 --- @param item number
 --- @param insert boolean
@@ -2483,12 +2480,12 @@ function vim.api.nvim_set_current_tabpage(tabpage) end
 --- @param window window
 function vim.api.nvim_set_current_win(window) end
 
--- Set or change decoration provider for a namespace
+-- Set or change decoration provider for a |namespace|
 -- 
 -- This is a very general purpose interface for having lua callbacks being
 -- triggered during the redraw code.
 -- 
--- The expected usage is to set extmarks for the currently redrawn buffer.
+-- The expected usage is to set |extmarks| for the currently redrawn buffer.
 -- |nvim_buf_set_extmark()| can be called to add marks on a per-window or
 -- per-lines basis. Use the `ephemeral` key to only use the mark for the
 -- current screen redraw (the callback will be called again for the next
@@ -2543,9 +2540,16 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --     values of the Normal group. If the Normal group has not been defined,
 --     using these values results in an error.
 -- 
+-- Note:
+--     If `link` is used in combination with other attributes; only the
+--     `link` will take effect (see |:hi-link|).
+-- 
 -- Parameters: ~
 --   • {ns_id}  Namespace id for this highlight |nvim_create_namespace()|.
 --              Use 0 to set a highlight group globally |:highlight|.
+--              Highlights from non-global namespaces are not active by
+--              default, use |nvim_set_hl_ns()| or |nvim_win_set_hl_ns()| to
+--              activate them.
 --   • {name}   Highlight group name, e.g. "ErrorMsg"
 --   • {val}    Highlight definition map, accepts the following keys:
 --              • fg (or foreground): color name or "#RRGGBB", see note.
@@ -2576,15 +2580,16 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --- @param val? table<string, any>
 function vim.api.nvim_set_hl(ns_id, name, val) end
 
--- Set active namespace for highlights. This can be set for a single window,
--- see |nvim_win_set_hl_ns()|.
+-- Set active namespace for highlights defined with |nvim_set_hl()|. This can
+-- be set for a single window, see |nvim_win_set_hl_ns()|.
 -- 
 -- Parameters: ~
 --   • {ns_id}  the namespace to use
 --- @param ns_id number
 function vim.api.nvim_set_hl_ns(ns_id) end
 
--- Set active namespace for highlights while redrawing.
+-- Set active namespace for highlights defined with |nvim_set_hl()| while
+-- redrawing.
 -- 
 -- This function meant to be called while redrawing, primarily from
 -- |nvim_set_decoration_provider()| on_win and on_line callbacks, which are
@@ -2606,12 +2611,12 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 -- {lhs} or {rhs}. Empty {rhs} is |<Nop>|. |keycodes| are replaced as usual.
 -- 
 -- Example: 
--- ```lua
+-- ```vim
 --     call nvim_set_keymap('n', ' <NL>', '', {'nowait': v:true})
 -- ```
 -- 
 -- is equivalent to: 
--- ```lua
+-- ```vim
 --     nmap <nowait> <Space><NL> <Nop>
 -- ```
 -- 
@@ -2620,16 +2625,15 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --             "!" for |:map!|, or empty string for |:map|.
 --   • {lhs}   Left-hand-side |{lhs}| of the mapping.
 --   • {rhs}   Right-hand-side |{rhs}| of the mapping.
---   • {opts}  Optional parameters map: keys are |:map-arguments|, values are
---             booleans (default false). Accepts all |:map-arguments| as keys
---             excluding |<buffer>| but including |:noremap| and "desc".
---             Unknown key is an error. "desc" can be used to give a
---             description to the mapping. When called from Lua, also accepts
---             a "callback" key that takes a Lua function to call when the
---             mapping is executed. When "expr" is true, "replace_keycodes"
---             (boolean) can be used to replace keycodes in the resulting
---             string (see |nvim_replace_termcodes()|), and a Lua callback
---             returning `nil` is equivalent to returning an empty string.
+--   • {opts}  Optional parameters map: Accepts all |:map-arguments| as keys
+--             except |<buffer>|, values are booleans (default false). Also:
+--             • "noremap" non-recursive mapping |:noremap|
+--             • "desc" human-readable description.
+--             • "callback" Lua function called when the mapping is executed.
+--             • "replace_keycodes" (boolean) When "expr" is true, replace
+--               keycodes in the resulting string (see
+--               |nvim_replace_termcodes()|). Returning nil from the Lua
+--               "callback" is equivalent to returning an empty string.
 --- @param mode string
 --- @param lhs string
 --- @param rhs string
@@ -2786,8 +2790,8 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 --     upvalues to send lua references in and out.
 -- 
 -- See also: ~
---     |win_execute()|
---     |nvim_buf_call()|
+--   • |win_execute()|
+--   • |nvim_buf_call()|
 --- @param window window
 --- @param fun fun()
 --- @return object
@@ -2985,7 +2989,7 @@ function vim.api.nvim_win_set_buf(window, buffer) end
 --   • {config}  Map defining the window configuration, see |nvim_open_win()|
 -- 
 -- See also: ~
---     |nvim_open_win()|
+--   • |nvim_open_win()|
 --- @param window window
 --- @param config? table<string, any>
 function vim.api.nvim_win_set_config(window, config) end
@@ -3009,8 +3013,9 @@ function vim.api.nvim_win_set_cursor(window, pos) end
 --- @param height number
 function vim.api.nvim_win_set_height(window, height) end
 
--- Set highlight namespace for a window. This will use highlights defined in
--- this namespace, but fall back to global highlights (ns=0) when missing.
+-- Set highlight namespace for a window. This will use highlights defined
+-- with |nvim_set_hl()| for this namespace, but fall back to global
+-- highlights (ns=0) when missing.
 -- 
 -- This takes precedence over the 'winhighlight' option.
 -- 

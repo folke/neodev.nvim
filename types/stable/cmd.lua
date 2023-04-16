@@ -420,14 +420,14 @@ function vim.cmd.chd(...)end
 -- change directory
 function vim.cmd.chdir(...)end
 
--- list included files
+-- run healthchecks
 function vim.cmd.che(...)end
 
 -- run healthchecks
-function vim.cmd.checkh(...)end
-
--- run healthchecks
 function vim.cmd.checkhealth(...)end
+
+-- list included files
+function vim.cmd.checkp(...)end
 
 -- list included files
 function vim.cmd.checkpath(...)end
@@ -605,18 +605,6 @@ function vim.cmd.cr(...)end
 
 -- go to the specified error, default first one
 function vim.cmd.crewind(...)end
-
--- execute cscope command
-function vim.cmd.cs(...)end
-
--- execute cscope command
-function vim.cmd.cscope(...)end
-
--- use cscope to jump to a tag
-function vim.cmd.cst(...)end
-
--- use cscope to jump to a tag
-function vim.cmd.cstag(...)end
 
 -- like ":unmap" but for Command-line mode
 function vim.cmd.cu(...)end
@@ -1020,12 +1008,6 @@ function vim.cmd.gvim(...)end
 -- open a help window
 function vim.cmd.h(...)end
 
--- send text to the printer
-function vim.cmd.ha(...)end
-
--- send text to the printer
-function vim.cmd.hardcopy(...)end
-
 -- open a help window
 function vim.cmd.help(...)end
 
@@ -1064,6 +1046,12 @@ function vim.cmd.his(...)end
 
 -- print a history list
 function vim.cmd.history(...)end
+
+-- following window command work horizontally
+function vim.cmd.hor(...)end
+
+-- following window command work horizontally
+function vim.cmd.horizontal(...)end
 
 -- insert text
 function vim.cmd.i(...)end
@@ -1313,12 +1301,6 @@ function vim.cmd.lcl(...)end
 
 -- close location window
 function vim.cmd.lclose(...)end
-
--- like ":cscope" but uses location list
-function vim.cmd.lcs(...)end
-
--- like ":cscope" but uses location list
-function vim.cmd.lcscope(...)end
 
 -- execute command in valid location list entries
 function vim.cmd.ld(...)end
@@ -2277,12 +2259,6 @@ function vim.cmd.scriptencoding(...)end
 -- list names of all sourced Vim scripts
 function vim.cmd.scriptnames(...)end
 
--- split window and execute cscope command
-function vim.cmd.scs(...)end
-
--- split window and execute cscope command
-function vim.cmd.scscope(...)end
-
 -- show or set options
 function vim.cmd.se(...)end
 
@@ -2768,6 +2744,9 @@ function vim.cmd.tr(...)end
 
 -- jump to first matching tag
 function vim.cmd.trewind(...)end
+
+-- add or remove file from trust database
+function vim.cmd.trust(...)end
 
 -- execute commands, abort on error or exception
 function vim.cmd.try(...)end

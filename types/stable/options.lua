@@ -3,14 +3,6 @@
 ---@class vim.go
 vim.go = {}
 
--- `'aleph'`  `'al'` 		number	(default 224)
--- 			global
--- 	The ASCII code for the first letter of the Hebrew alphabet.  The
--- 	routine that maps the keyboard in Hebrew mode, both in Insert mode
--- 	(when hkmap is set) and on the command-line (when hitting CTRL-_)
--- 	outputs the Hebrew characters in the range [aleph..aleph+26].
--- 	aleph=128 applies to PC code, and aleph=224 applies to ISO 8859-8.
--- 	See |rileft.txt|.
 vim.go.aleph = 224
 vim.go.al = vim.go.aleph
 -- `'allowrevins'`  `'ari'` 	boolean	(default off)
@@ -406,7 +398,7 @@ vim.go.ccv = vim.go.charconvert
 -- 	These names are recognized:
 -- 
 -- 
--- 	unnamed		When included, Vim will use the clipboard register `'*'` 
+-- 	unnamed		When included, Vim will use the clipboard register "*"
 -- 			for all yank, delete, change and put operations which
 -- 			would normally go to the unnamed register.  When a
 -- 			register is explicitly specified, it will always be
@@ -417,8 +409,8 @@ vim.go.ccv = vim.go.charconvert
 -- 
 -- 
 -- 	unnamedplus	A variant of the "unnamed" flag which uses the
--- 			clipboard register `'+'`  (|quoteplus|) instead of
--- 			register `'*'`  for all yank, delete, change and put
+-- 			clipboard register "+" (|quoteplus|) instead of
+-- 			register "*" for all yank, delete, change and put
 -- 			operations which would normally go to the unnamed
 -- 			register.  When "unnamed" is also included to the
 -- 			option, yank and delete operations (but not put)
@@ -760,45 +752,6 @@ vim.go.cf = vim.go.confirm
 -- 			whitespace following the word in the motion.
 vim.go.cpoptions = "aABceFs_"
 vim.go.cpo = vim.go.cpoptions
--- `'cscopepathcomp'`  `'cspc'` 	number	(default 0)
--- 			global
--- 	Determines how many components of the path to show in a list of tags.
--- 	See |cscopepathcomp|.
-vim.go.cscopepathcomp = 0
-vim.go.cspc = vim.go.cscopepathcomp
--- `'cscopeprg'`  `'csprg'` 	string	(default "cscope")
--- 			global
--- 	Specifies the command to execute cscope.  See |cscopeprg|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.go.cscopeprg = "cscope"
-vim.go.csprg = vim.go.cscopeprg
--- `'cscopequickfix'`  `'csqf'`  string	(default "")
--- 			global
--- 	Specifies whether to use quickfix window to show cscope results.
--- 	See |cscopequickfix|.
-vim.go.cscopequickfix = ""
-vim.go.csqf = vim.go.cscopequickfix
--- `'cscoperelative'`  `'csre'`  boolean (default off)
--- 			global
--- 	In the absence of a prefix (-P) for cscope. setting this option enables
--- 	to use the basename of cscope.out path as the prefix.
--- 	See |cscoperelative|.
-vim.go.cscoperelative = false
-vim.go.csre = vim.go.cscoperelative
--- `'cscopetag'`  `'cst'` 	boolean (default off)
--- 			global
--- 	Use cscope for tag commands.  See |cscope-options|.
-vim.go.cscopetag = false
-vim.go.cst = vim.go.cscopetag
--- `'cscopetagorder'`  `'csto'` 	number	(default 0)
--- 			global
--- 	Determines the order in which ":cstag" performs a search.  See
--- 	|cscopetagorder|.
-vim.go.cscopetagorder = 0
-vim.go.csto = vim.go.cscopetagorder
-vim.go.cscopeverbose = true
-vim.go.csverb = vim.go.cscopeverbose
 -- `'debug'` 			string	(default "")
 -- 			global
 -- 	These values can be used:
@@ -915,6 +868,16 @@ vim.go.dex = vim.go.diffexpr
 -- 				Use the indent heuristic for the internal
 -- 				diff library.
 -- 
+-- 		linematch:{n}   Enable a second stage diff on each generated
+-- 				hunk in order to align lines. When the total
+-- 				number of lines in a hunk exceeds {n}, the
+-- 				second stage diff will not be performed as
+-- 				very large hunks can cause noticeable lag. A
+-- 				recommended setting is "linematch:60", as this
+-- 				will enable alignment for a 2 buffer diff with
+-- 				hunks of up to 30 lines each, or a 3 buffer
+-- 				diff with hunks of up to 20 lines each.
+-- 
 --                 algorithm:{text} Use the specified diff algorithm with the
 -- 				internal diff engine. Currently supported
 -- 				algorithms are:
@@ -990,9 +953,9 @@ vim.go.dg = vim.go.digraph
 -- 	security reasons.
 vim.go.directory = "/home/runner/.local/state/nvim/swap//"
 vim.go.dir = vim.go.directory
--- `'display'`  `'dy'` 		string	(default "lastline,msgsep")
+-- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
--- 	Change the way text is displayed.  This is comma-separated list of
+-- 	Change the way text is displayed.  This is a comma-separated list of
 -- 	flags:
 -- 	lastline	When included, as much as possible of the last line
 -- 			in a window will be displayed.  "@@@" is put in the
@@ -1002,14 +965,14 @@ vim.go.dir = vim.go.directory
 -- 			column of the last screen line.  Overrules "lastline".
 -- 	uhex		Show unprintable characters hexadecimal as <xx>
 -- 			instead of using ^C and ~C.
--- 	msgsep		When showing messages longer than `'cmdheight'` , only
--- 			scroll the message lines, not the entire screen. The
--- 			separator line is decorated by |hl-MsgSeparator| and
--- 			the "msgsep" flag of `'fillchars'` .
+-- 	msgsep		Obsolete flag. Allowed but takes no effect. |msgsep|
 -- 
 -- 	When neither "lastline" nor "truncate" is included, a last line that
 -- 	doesn't fit is replaced with "@" lines.
-vim.go.display = "lastline,msgsep"
+-- 
+-- 	The "@" character can be changed by setting the "lastline" item in
+-- 	`'fillchars'` .  The character is highlighted with |hl-NonText|.
+vim.go.display = "lastline"
 vim.go.dy = vim.go.display
 -- `'eadirection'`  `'ead'` 	string	(default "both")
 -- 			global
@@ -1086,6 +1049,18 @@ vim.go.ef = vim.go.errorfile
 -- <
 vim.go.eventignore = ""
 vim.go.ei = vim.go.eventignore
+-- `'exrc'`  `'ex'` 		boolean (default off)
+-- 			global
+-- 	Automatically execute .nvim.lua, .nvimrc, and .exrc files in the
+-- 	current directory, if the file is in the |trust| list. Use |:trust| to
+-- 	manage trusted files. See also |vim.secure.read()|.
+-- 
+-- 	Compare `'exrc'`  to |editorconfig|:
+-- 	- `'exrc'`  can execute any code; editorconfig only specifies settings.
+-- 	- `'exrc'`  is Nvim-specific; editorconfig works in other editors.
+-- 
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.exrc = false
 vim.go.ex = vim.go.exrc
 -- `'fileencodings'`  `'fencs'` 	string (default: "ucs-bom,utf-8,default,latin1")
@@ -1594,7 +1569,7 @@ vim.go.gtt = vim.go.guitabtooltip
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
+vim.go.helpfile = "/tmp/nvim/squashfs-root/usr/share/nvim/runtime/doc/help.txt"
 vim.go.hf = vim.go.helpfile
 -- `'helpheight'`  `'hh'` 	number	(default 20)
 -- 			global
@@ -1639,7 +1614,7 @@ vim.go.hlg = vim.go.helplang
 -- 	`'hidden'`  is set for one command with ":hide {command}" |:hide|.
 vim.go.hidden = true
 vim.go.hid = vim.go.hidden
-vim.go.highlight = "8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:NonText,d:Directory,e:ErrorMsg,i:IncSearch,l:Search,y:CurSearch,m:MoreMsg,M:ModeMsg,n:LineNr,a:LineNrAbove,b:LineNrBelow,N:CursorLineNr,G:CursorLineSign,O:CursorLineFoldr:Question,s:StatusLine,S:StatusLineNC,c:VertSplit,t:Title,v:Visual,V:VisualNOS,w:WarningMsg,W:WildMenu,f:Folded,F:FoldColumn,A:DiffAdd,C:DiffChange,D:DiffDelete,T:DiffText,>:SignColumn,-:Conceal,B:SpellBad,P:SpellCap,R:SpellRare,L:SpellLocal,+:Pmenu,=:PmenuSel,x:PmenuSbar,X:PmenuThumb,*:TabLine,#:TabLineSel,_:TabLineFill,!:CursorColumn,.:CursorLine,o:ColorColumn,q:QuickFixLine,0:Whitespace,I:NormalNC"
+vim.go.highlight = "8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:NonText,d:Directory,e:ErrorMsg,i:IncSearch,l:Search,y:CurSearch,m:MoreMsg,M:ModeMsg,n:LineNr,a:LineNrAbove,b:LineNrBelow,N:CursorLineNr,G:CursorLineSign,O:CursorLineFoldr:Question,s:StatusLine,S:StatusLineNC,c:VertSplit,t:Title,v:Visual,V:VisualNOS,w:WarningMsg,W:WildMenu,f:Folded,F:FoldColumn,A:DiffAdd,C:DiffChange,D:DiffDelete,T:DiffText,>:SignColumn,-:Conceal,B:SpellBad,P:SpellCap,R:SpellRare,L:SpellLocal,+:Pmenu,=:PmenuSel,[:PmenuKind,]:PmenuKindSel,{:PmenuExtra,}:PmenuExtraSel,x:PmenuSbar,X:PmenuThumb,*:TabLine,#:TabLineSel,_:TabLineFill,!:CursorColumn,.:CursorLine,o:ColorColumn,q:QuickFixLine,0:Whitespace,I:NormalNC"
 vim.go.hl = vim.go.highlight
 -- `'history'`  `'hi'` 		number	(default: 10000)
 -- 			global
@@ -1649,18 +1624,8 @@ vim.go.hl = vim.go.highlight
 -- 	The maximum value is 10000.
 vim.go.history = 10000
 vim.go.hi = vim.go.history
--- `'hkmap'`  `'hk'` 		boolean (default off)
--- 			global
--- 	When on, the keyboard is mapped for the Hebrew character set.
--- 	Normally you would set `'allowrevins'`  and use CTRL-_ in insert mode to
--- 	toggle this option.  See |rileft.txt|.
 vim.go.hkmap = false
 vim.go.hk = vim.go.hkmap
--- `'hkmapp'`  `'hkp'` 		boolean (default off)
--- 			global
--- 	When on, phonetic keyboard mapping is used.  `'hkmap'`  must also be on.
--- 	This is useful if you have a non-Hebrew keyboard.
--- 	See |rileft.txt|.
 vim.go.hkmapp = false
 vim.go.hkp = vim.go.hkmapp
 -- `'hlsearch'`  `'hls'` 	boolean	(default on)
@@ -2373,7 +2338,7 @@ vim.go.mousescroll = "ver:3,hor:6"
 -- 	w x	updown		up-down sizing arrows
 -- 	w x	leftright	left-right sizing arrows
 -- 	w x	busy		The system's usual busy pointer
--- 	w x	no		The system's usual 'no input' pointer
+-- 	w x	no		The system's usual "no input" pointer
 -- 	  x	udsizing	indicates up-down resizing
 -- 	  x	lrsizing	indicates left-right resizing
 -- 	  x	crosshair	like a big thin +
@@ -2426,7 +2391,7 @@ vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
@@ -2434,74 +2399,7 @@ vim.go.pp = vim.go.packpath
 -- 	of two letters (see |object-motions|).
 vim.go.paragraphs = "IPLPPPQPP TPHPLIPpLpItpplpipbp"
 vim.go.para = vim.go.paragraphs
--- `'paste'` 			boolean	(default off)
--- 			global
--- 	This option is obsolete; |bracketed-paste-mode| is built-in.
--- 
--- 	Put Vim in Paste mode.  This is useful if you want to cut or copy
--- 	some text from one window and paste it in Vim.  This will avoid
--- 	unexpected effects.
--- 	Setting this option is useful when using Vim in a terminal, where Vim
--- 	cannot distinguish between typed text and pasted text.  In the GUI, Vim
--- 	knows about pasting and will mostly do the right thing without `'paste'` 
--- 	being set.  The same is true for a terminal where Vim handles the
--- 	mouse clicks itself.
--- 	This option is reset when starting the GUI.  Thus if you set it in
--- 	your vimrc it will work in a terminal, but not in the GUI.  Setting
--- 	`'paste'`  in the GUI has side effects: e.g., the Paste toolbar button
--- 	will no longer work in Insert mode, because it uses a mapping.
--- 	When the `'paste'`  option is switched on (also when it was already on):
--- 		- mapping in Insert mode and Command-line mode is disabled
--- 		- abbreviations are disabled
--- 		- `'autoindent'`  is reset
--- 		- `'expandtab'`  is reset
--- 		- `'hkmap'`  is reset
--- 		- `'revins'`  is reset
--- 		- `'ruler'`  is reset
--- 		- `'showmatch'`  is reset
--- 		- `'smarttab'`  is reset
--- 		- `'softtabstop'`  is set to 0
--- 		- `'textwidth'`  is set to 0
--- 		- `'wrapmargin'`  is set to 0
--- 		- `'varsofttabstop'`  is made empty
--- 	These options keep their value, but their effect is disabled:
--- 		- `'cindent'` 
--- 		- `'formatoptions'`  is used like it is empty
--- 		- `'indentexpr'` 
--- 		- `'lisp'` 
--- 		- `'smartindent'` 
--- 	NOTE: When you start editing another file while the `'paste'`  option is
--- 	on, settings from the modelines or autocommands may change the
--- 	settings again, causing trouble when pasting text.  You might want to
--- 	set the `'paste'`  option again.
--- 	When the `'paste'`  option is reset the mentioned options are restored to
--- 	the value before the moment `'paste'`  was switched from off to on.
--- 	Resetting `'paste'`  before ever setting it does not have any effect.
--- 	Since mapping doesn't work while `'paste'`  is active, you need to use
--- 	the `'pastetoggle'`  option to toggle the `'paste'`  option with some key.
 vim.go.paste = false
--- `'pastetoggle'`  `'pt'` 	string	(default "")
--- 			global
--- 	When non-empty, specifies the key sequence that toggles the `'paste'` 
--- 	option.  This is like specifying a mapping: >
--- 	    :map {keys} :set invpaste<CR>
--- <	Where {keys} is the value of `'pastetoggle'` .
--- 	The difference is that it will work even when `'paste'`  is set.
--- 	`'pastetoggle'`  works in Insert mode and Normal mode, but not in
--- 	Command-line mode.
--- 	Mappings are checked first, thus overrule `'pastetoggle'` .  However,
--- 	when `'paste'`  is on mappings are ignored in Insert mode, thus you can do
--- 	this: >
--- 	    :map <F10> :set paste<CR>
--- 	    :map <F11> :set nopaste<CR>
--- 	    :imap <F10> <C-O>:set paste<CR>
--- 	    :imap <F11> <nop>
--- 	    :set pastetoggle=<F11>
--- <	This will make <F10> start paste mode and <F11> stop paste mode.
--- 	Note that typing <F10> in paste mode inserts "<F10>", since in paste
--- 	mode everything is inserted literally, except the `'pastetoggle'`  key
--- 	sequence.
--- 	When the value has several bytes `'ttimeoutlen'`  applies.
 vim.go.pastetoggle = ""
 vim.go.pt = vim.go.pastetoggle
 -- `'patchexpr'`  `'pex'` 	string	(default "")
@@ -2536,58 +2434,6 @@ vim.go.pm = vim.go.patchmode
 -- 	commands.  Used for |CTRL-W_}| when no count is given.
 vim.go.previewheight = 12
 vim.go.pvh = vim.go.previewheight
--- `'printdevice'`  `'pdev'` 	string	(default empty)
--- 			global
--- 	The name of the printer to be used for |:hardcopy|.
--- 	See |pdev-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.go.printdevice = ""
-vim.go.pdev = vim.go.printdevice
--- `'printencoding'`  `'penc'` 	string	(default empty, except for some systems)
--- 			global
--- 	Sets the character encoding used when printing.
--- 	See |penc-option|.
-vim.go.printencoding = ""
-vim.go.penc = vim.go.printencoding
--- `'printexpr'`  `'pexpr'` 	string	(default: see below)
--- 			global
--- 	Expression used to print the PostScript produced with |:hardcopy|.
--- 	See |pexpr-option|.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
-vim.go.printexpr = "system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error"
-vim.go.pexpr = vim.go.printexpr
--- `'printfont'`  `'pfn'` 	string	(default "courier")
--- 			global
--- 	The name of the font that will be used for |:hardcopy|.
--- 	See |pfn-option|.
-vim.go.printfont = "courier"
-vim.go.pfn = vim.go.printfont
--- `'printheader'`  `'pheader'`   string  (default "%<%f%h%m%=Page %N")
--- 			global
--- 	The format of the header produced in |:hardcopy| output.
--- 	See |pheader-option|.
-vim.go.printheader = "%<%f%h%m%=Page %N"
-vim.go.pheader = vim.go.printheader
--- `'printmbcharset'`  `'pmbcs'`   string (default "")
--- 			global
--- 	The CJK character set to be used for CJK output from |:hardcopy|.
--- 	See |pmbcs-option|.
-vim.go.printmbcharset = ""
-vim.go.pmbcs = vim.go.printmbcharset
--- `'printmbfont'`  `'pmbfn'` 	string (default "")
--- 			global
--- 	List of font names to be used for CJK output from |:hardcopy|.
--- 	See |pmbfn-option|.
-vim.go.printmbfont = ""
-vim.go.pmbfn = vim.go.printmbfont
--- `'printoptions'`  `'popt'`  string (default "")
--- 			global
--- 	List of items that control the format of the output of |:hardcopy|.
--- 	See |popt-option|.
-vim.go.printoptions = ""
-vim.go.popt = vim.go.printoptions
 vim.go.prompt = true
 -- `'pumblend'`  `'pb'` 		number	(default 0)
 -- 			global
@@ -2648,7 +2494,7 @@ vim.go.qftf = vim.go.quickfixtextfunc
 -- 	Flags to change the way redrawing works, for debugging purposes.
 -- 	Most useful with `'writedelay'`  set to some reasonable value.
 -- 	Supports the following flags:
--- 	    compositor	Indicate what redraws come from the compositor
+-- 	    compositor	Indicate each redraw event handled by the compositor
 -- 			by briefly flashing the redrawn regions in colors
 -- 			indicating the redraw type. These are the highlight
 -- 			groups used (and their default colors):
@@ -2660,6 +2506,11 @@ vim.go.qftf = vim.go.quickfixtextfunc
 -- 		RedrawDebugRecompose guibg=Red    redraw generated by the
 -- 						  compositor itself, due to a
 -- 						  grid being moved or deleted.
+-- 	    line	introduce a delay after each line drawn on the screen.
+-- 			When using the TUI or another single-grid UI, "compositor"
+-- 			gives more information and should be preferred (every
+-- 			line is processed as a separate event by the compositor)
+-- 	    flush	introduce a delay after each "flush" event.
 -- 	    nothrottle	Turn off throttling of the message grid. This is an
 -- 			optimization that joins many small scrolls to one
 -- 			larger scroll when drawing the message area (with
@@ -2669,7 +2520,7 @@ vim.go.qftf = vim.go.quickfixtextfunc
 -- 			useful when running nvim inside a debugger (and
 -- 			the test suite).
 -- 	    nodelta	Send all internally redrawn cells to the UI, even if
--- 	                they are unchanged from the already displayed state.
+-- 			they are unchanged from the already displayed state.
 vim.go.redrawdebug = ""
 vim.go.rdb = vim.go.redrawdebug
 -- `'redrawtime'`  `'rdt'` 	number	(default 2000)
@@ -2715,8 +2566,6 @@ vim.go.report = 2
 -- 	Inserting characters in Insert mode will work backwards.  See "typing
 -- 	backwards" |ins-reverse|.  This option can be toggled with the CTRL-_
 -- 	command in Insert mode, when `'allowrevins'`  is set.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 vim.go.revins = false
 vim.go.ri = vim.go.revins
 -- `'ruler'`  `'ru'` 		boolean	(default on)
@@ -2741,8 +2590,6 @@ vim.go.ri = vim.go.revins
 -- 	separated with a dash.
 -- 	For an empty line "0-1" is shown.
 -- 	For an empty buffer the line number will also be zero: "0,0-1".
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 -- 	If you don't want to see the ruler all the time but want to know where
 -- 	you are, use "g CTRL-G" |g_CTRL-G|.
 vim.go.ruler = true
@@ -2780,8 +2627,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 					       $XDG_CONFIG_HOME/nvim/after")
 -- 			global
 -- 	List of directories to be searched for these runtime files:
--- 	  filetype.vim	filetypes by file name |new-filetype|
--- 	  scripts.vim	filetypes by file contents |new-filetype-scripts|
+-- 	  filetype.lua	filetypes |new-filetype|
 -- 	  autoload/	automatically loaded scripts |autoload-functions|
 -- 	  colors/	color scheme files |:colorscheme|
 -- 	  compiler/	compiler files |:compiler|
@@ -2795,8 +2641,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 	  pack/		packages |:packadd|
 -- 	  parser/	|treesitter| syntax parsers
 -- 	  plugin/	plugin scripts |write-plugin|
--- 	  print/	files for printing |postscript-print-encoding|
--- 	  query/	|treesitter| queries
+-- 	  queries/	|treesitter| queries
 -- 	  rplugin/	|remote-plugin| scripts
 -- 	  spell/	spell checking files |spell|
 -- 	  syntax/	syntax files |mysyntaxfile|
@@ -2847,7 +2692,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
@@ -2897,17 +2742,6 @@ vim.go.sbo = vim.go.scrollopt
 -- 	at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
 vim.go.sections = "SHNHH HUnhsh"
 vim.go.sect = vim.go.sections
--- `'secure'` 		boolean	(default off)
--- 			global
--- 	When on, ":autocmd", shell and write commands are not allowed in
--- 	".nvimrc" and ".exrc" in the current directory and map commands are
--- 	displayed.  Switch it off only if you know that you will not run into
--- 	problems, or when the `'exrc'`  option is off.  On Unix this option is
--- 	only used if the ".nvimrc" or ".exrc" is not owned by you.  This can be
--- 	dangerous if the systems allows users to do a "chown".  You better set
--- 	`'secure'`  at the end of your |init.vim| then.
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
 vim.go.secure = false
 -- `'selection'`  `'sel'` 	string	(default "inclusive")
 -- 			global
@@ -3152,9 +2986,9 @@ vim.go.sdf = vim.go.shadafile
 -- 
 -- 	To use PowerShell: >
 -- 		let &shell = executable(`'pwsh'` ) ? `'pwsh'`  : `'powershell'` 
--- 		let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
--- 		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
--- 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+-- 		let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[`''` Out-File:Encoding`''` ]=`''` utf8`''` ;'
+-- 		let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+-- 		let &shellpipe  = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
 -- 		set shellquote= shellxquote=
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
@@ -3176,8 +3010,7 @@ vim.go.sh = vim.go.shell
 -- 	security reasons.
 vim.go.shellcmdflag = "-c"
 vim.go.shcf = vim.go.shellcmdflag
--- `'shellpipe'`  `'sp'` 	string	(default ">", ">%s 2>&1", "| tee", "|& tee" or
--- 				 "2>&1| tee")
+-- `'shellpipe'`  `'sp'` 	string	(default ">", "| tee", "|& tee" or "2>&1| tee")
 -- 			global
 -- 	String to be used to put the output of the ":make" command in the
 -- 	error file.  See also |:make_makeprg|.  See |option-backslash| about
@@ -3185,8 +3018,8 @@ vim.go.shcf = vim.go.shellcmdflag
 -- 	The name of the temporary file can be represented by "%s" if necessary
 -- 	(the file name is appended automatically if no %s appears in the value
 -- 	of this option).
--- 	For MS-Windows the default is ">%s 2>&1".  The output is directly
--- 	saved in a file and not echoed to the screen.
+-- 	For MS-Windows the default is "2>&1| tee".  The stdout and stderr are
+-- 	saved in a file and echoed to the screen.
 -- 	For Unix the default is "| tee".  The stdout of the compiler is saved
 -- 	in a file and echoed to the screen.  If the `'shell'`  option is "csh" or
 -- 	"tcsh" after initializations, the default becomes "|& tee".  If the
@@ -3321,35 +3154,41 @@ vim.go.sr = vim.go.shiftround
 -- 	  r	use "[RO]" instead of "[readonly]"
 -- 	  w	use "[w]" instead of "written" for file write message
 -- 		and "[a]" instead of "appended" for ':w >> file' command
--- 	  x	use "[dos]" instead of "[dos format]", "[unix]" instead of
--- 		"[unix format]" and "[mac]" instead of "[mac format]".
+-- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
+-- 		instead of "[unix format]" and "[mac]" instead of "[mac
+-- 		format]"
 -- 	  a	all of the above abbreviations
 -- 
--- 	  o	overwrite message for writing a file with subsequent message
--- 		for reading a file (useful for ":wn" or when `'autowrite'`  on)
--- 	  O	message for reading a file overwrites any previous message.
--- 		Also for quickfix message (e.g., ":cn").
--- 	  s	don't give "search hit BOTTOM, continuing at TOP" or "search
--- 		hit TOP, continuing at BOTTOM" messages; when using the search
--- 		count do not show "W" after the count message (see S below)
--- 	  t	truncate file message at the start if it is too long to fit
--- 		on the command-line, "<" will appear in the left most column.
--- 		Ignored in Ex mode.
--- 	  T	truncate other messages in the middle if they are too long to
--- 		fit on the command line.  "..." will appear in the middle.
--- 		Ignored in Ex mode.
+-- 	  o	overwrite message for writing a file with subsequent
+-- 		message for reading a file (useful for ":wn" or when
+-- 		`'autowrite'`  on)
+-- 	  O	message for reading a file overwrites any previous
+-- 		message;  also for quickfix message (e.g., ":cn")
+-- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
+-- 		"search hit TOP, continuing at BOTTOM" messages; when using
+-- 		the search count do not show "W" after the count message (see
+-- 		S below)
+-- 	  t	truncate file message at the start if it is too long
+-- 		to fit on the command-line, "<" will appear in the left most
+-- 		column; ignored in Ex mode
+-- 	  T	truncate other messages in the middle if they are too
+-- 		long to fit on the command line; "..." will appear in the
+-- 		middle; ignored in Ex mode
 -- 	  W	don't give "written" or "[w]" when writing a file
--- 	  A	don't give the "ATTENTION" message when an existing swap file
--- 		is found.
--- 	  I	don't give the intro message when starting Vim |:intro|.
--- 	  c	don't give |ins-completion-menu| messages.  For example,
--- 		"-- XXX completion (YYY)", "match 1 of 2", "The only match",
--- 		"Pattern not found", "Back at original", etc.
+-- 	  A	don't give the "ATTENTION" message when an existing
+-- 		swap file is found
+-- 	  I	don't give the intro message when starting Vim,
+-- 		see |:intro|
+-- 	  c	don't give |ins-completion-menu| messages; for
+-- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
+-- 		match", "Pattern not found", "Back at original", etc.
+-- 	  C	don't give messages while scanning for ins-completion
+-- 		items, for instance "scanning tags"
 -- 	  q	use "recording" instead of "recording @a"
--- 	  F	don't give the file info when editing a file, like `:silent`
--- 		was used for the command
--- 	  S     do not show search count message when searching, e.g.
--- 	        "[1/5]"
+-- 	  F	don't give the file info when editing a file, like
+-- 		`:silent` was used for the command
+-- 	  S	do not show search count message when searching, e.g.
+-- 		"[1/5]"
 -- 
 -- 	This gives you the opportunity to avoid that a change between buffers
 -- 	requires you to hit <Enter>, but still gives as useful a message as
@@ -3365,7 +3204,6 @@ vim.go.shm = vim.go.shortmess
 -- 			global
 -- 	Show (partial) command in the last line of the screen.  Set this
 -- 	option off if your terminal is slow.
--- 	The option has no effect when `'cmdheight'`  is zero.
 -- 	In Visual mode the size of the selected area is shown:
 -- 	- When selecting characters within a line, the number of characters.
 -- 	  If the number of bytes is different it is also displayed: "2-6"
@@ -3373,8 +3211,25 @@ vim.go.shm = vim.go.shortmess
 -- 	- When selecting more than one line, the number of lines.
 -- 	- When selecting a block, the size in screen characters:
 -- 	  {lines}x{columns}.
+-- 	This information can be displayed in an alternative location using the
+-- 	`'showcmdloc'`  option, useful when `'cmdheight'`  is 0.
 vim.go.showcmd = true
 vim.go.sc = vim.go.showcmd
+-- `'showcmdloc'`  `'sloc'` 	string	(default "last")
+-- 			global
+-- 	This option can be used to display the (partially) entered command in
+-- 	another location.  Possible values are:
+-- 	  last		Last line of the screen (default).
+-- 	  statusline	Status line of the current window.
+-- 	  tabline	First line of the screen if `'showtabline'`  is enabled.
+-- 	Setting this option to "statusline" or "tabline" means that these will
+-- 	be redrawn whenever the command changes, which can be on every key
+-- 	pressed.
+-- 	The %S `'statusline'`  item can be used in `'statusline'`  or `'tabline'`  to
+-- 	place the text.  Without a custom `'statusline'`  or `'tabline'`  it will be
+-- 	displayed in a convenient location.
+vim.go.showcmdloc = "last"
+vim.go.sloc = vim.go.showcmdloc
 -- `'showfulltag'`  `'sft'` 	boolean (default off)
 -- 			global
 -- 	When completing a word in insert mode (see |ins-completion|) from the
@@ -3394,8 +3249,6 @@ vim.go.sft = vim.go.showfulltag
 -- 	show the match can be set with `'matchtime'` .
 -- 	A Beep is given if there is no match (no matter if the match can be
 -- 	seen or not).
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 -- 	When the `'m'`  flag is not included in `'cpoptions'` , typing a character
 -- 	will immediately move the cursor back to where it belongs.
 -- 	See the "sm" field in `'guicursor'`  for setting the cursor shape and
@@ -3458,8 +3311,6 @@ vim.go.scs = vim.go.smartcase
 -- 	What gets inserted (a <Tab> or spaces) depends on the `'expandtab'` 
 -- 	option.  Also see |ins-expandtab|.  When `'expandtab'`  is not set, the
 -- 	number of spaces is minimized by using <Tab>s.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 vim.go.smarttab = true
 vim.go.sta = vim.go.smarttab
 -- `'spellsuggest'`  `'sps'` 	string	(default "best")
@@ -3535,6 +3386,22 @@ vim.go.sps = vim.go.spellsuggest
 -- 	one. |:split|
 vim.go.splitbelow = false
 vim.go.sb = vim.go.splitbelow
+-- `'splitkeep'`  `'spk'` 	string	(default "cursor")
+-- 			global
+-- 	The value of this option determines the scroll behavior when opening,
+-- 	closing or resizing horizontal splits.
+-- 
+-- 	Possible values are:
+-- 	  cursor	Keep the same relative cursor position.
+-- 	  screen	Keep the text on the same screen line.
+-- 	  topline	Keep the topline the same.
+-- 
+-- 	For the "screen" and "topline" values, the cursor position will be
+-- 	changed when necessary. In this case, the jumplist will be populated
+-- 	with the previous cursor position. For "screen", the text cannot always
+-- 	be kept on the same screen line when `'wrap'`  is enabled.
+vim.go.splitkeep = "cursor"
+vim.go.spk = vim.go.splitkeep
 -- `'splitright'`  `'spr'` 	boolean	(default off)
 -- 			global
 -- 	When on, splitting a window will put the new window right of the
@@ -4144,6 +4011,14 @@ vim.go.wim = vim.go.wildmode
 -- 			global
 -- 	A list of words that change how |cmdline-completion| is done.
 -- 	The following values are supported:
+-- 	  fuzzy		Use |fuzzy-matching| to find completion matches. When
+-- 			this value is specified, wildcard expansion will not
+-- 			be used for completion.  The matches will be sorted by
+-- 			the "best match" rather than alphabetically sorted.
+-- 			This will find more matches than the wildcard
+-- 			expansion. Currently fuzzy matching based completion
+-- 			is not supported for file and directory names and
+-- 			instead wildcard expansion is used.
 -- 	  pum		Display the completion matches using the popup menu
 -- 			in the same style as the |ins-completion-menu|.
 -- 	  tagfile	When using CTRL-D to list matching tags, the kind of
@@ -4312,3 +4187,114 @@ vim.wo.arab = vim.wo.arabic
 -- 	of text.
 vim.wo.breakindent = false
 vim.wo.bri = vim.wo.breakindent
+-- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- 			local to window
+-- 	Settings for `'breakindent'` . It can consist of the following optional
+-- 	items and must be separated by a comma:
+-- 		min:{n}	    Minimum text width that will be kept after
+-- 			    applying `'breakindent'` , even if the resulting
+-- 			    text should normally be narrower. This prevents
+-- 			    text indented almost to the right window border
+-- 			    occupying lot of vertical space when broken.
+-- 			    (default: 20)
+-- 		shift:{n}   After applying `'breakindent'` , the wrapped line's
+-- 			    beginning will be shifted by the given number of
+-- 			    characters.  It permits dynamic French paragraph
+-- 			    indentation (negative) or emphasizing the line
+-- 			    continuation (positive).
+-- 			    (default: 0)
+-- 		sbr	    Display the `'showbreak'`  value before applying the
+-- 			    additional indent.
+-- 			    (default: off)
+-- 		list:{n}    Adds an additional indent for lines that match a
+-- 			    numbered or bulleted list (using the
+-- 			    `'formatlistpat'`  setting).
+-- 		list:-1	    Uses the length of a match with `'formatlistpat'` 
+-- 			    for indentation.
+-- 			    (default: 0)
+-- 		column:{n}  Indent at column {n}. Will overrule the other
+-- 			    sub-options. Note: an additional indent may be
+-- 			    added for the `'showbreak'`  setting.
+-- 			    (default: off)
+vim.wo.breakindentopt = ""
+vim.wo.briopt = vim.wo.breakindentopt
+-- `'colorcolumn'`  `'cc'` 	string	(default "")
+-- 			local to window
+-- 	`'colorcolumn'`  is a comma-separated list of screen columns that are
+-- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
+-- 	text.  Will make screen redrawing slower.
+-- 	The screen column can be an absolute number, or a number preceded with
+-- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
+-- 
+-- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
+-- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+-- <
+-- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
+-- 	A maximum of 256 columns are highlighted.
+vim.wo.colorcolumn = ""
+vim.wo.cc = vim.wo.colorcolumn
+-- `'concealcursor'`  `'cocu'` 	string (default: "")
+-- 			local to window
+-- 	Sets the modes in which text in the cursor line can also be concealed.
+-- 	When the current mode is listed then concealing happens just like in
+-- 	other lines.
+-- 	  n		Normal mode
+-- 	  v		Visual mode
+-- 	  i		Insert mode
+-- 	  c		Command line editing, for `'incsearch'` 
+-- 
+-- 	`'v'`  applies to all lines in the Visual area, not only the cursor.
+-- 	A useful value is "nc".  This is used in help files.  So long as you
+-- 	are moving around text is concealed, but when starting to insert text
+-- 	or selecting a Visual area the concealed text is displayed, so that
+-- 	you can see what you are doing.
+-- 	Keep in mind that the cursor position is not always where it's
+-- 	displayed.  E.g., when moving vertically it may change column.
+vim.wo.concealcursor = ""
+vim.wo.cocu = vim.wo.concealcursor
+-- `'conceallevel'`  `'cole'` 	number (default 0)
+-- 			local to window
+-- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
+-- 	is shown:
+-- 
+-- 	Value		Effect ~
+-- 	0		Text is shown normally
+-- 	1		Each block of concealed text is replaced with one
+-- 			character.  If the syntax item does not have a custom
+-- 			replacement character defined (see |:syn-cchar|) the
+-- 			character defined in `'listchars'`  is used.
+-- 			It is highlighted with the "Conceal" highlight group.
+-- 	2		Concealed text is completely hidden unless it has a
+-- 			custom replacement character defined (see
+-- 			|:syn-cchar|).
+-- 	3		Concealed text is completely hidden.
+-- 
+-- 	Note: in the cursor line concealed text is not hidden, so that you can
+-- 	edit and copy the text.  This can be changed with the `'concealcursor'` 
+-- 	option.
+vim.wo.conceallevel = 0
+vim.wo.cole = vim.wo.conceallevel
+-- `'cursorbind'`  `'crb'` 	boolean  (default off)
+-- 			local to window
+-- 	When this option is set, as the cursor in the current
+-- 	window moves other cursorbound windows (windows that also have
+-- 	this option set) move their cursors to the corresponding line and
+-- 	column.  This option is useful for viewing the
+-- 	differences between two versions of a file (see `'diff'` ); in diff mode,
+-- 	inserted and deleted lines (though not characters within a line) are
+-- 	taken into account.
+vim.wo.cursorbind = false
+vim.wo.crb = vim.wo.cursorbind
+-- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the screen column of the cursor with CursorColumn
+-- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
+-- 	slower.
+-- 	If you only want the highlighting in the current window you can use
+-- 	these autocommands: >
+-- 		au WinLeave * set nocursorline nocursorcolumn
+-- 		au WinEnter * set cursorline cursorcolumn
+-- <
+vim.wo.cursorcolumn = false
+vim.wo.cuc = vim.wo.cursorcolumn

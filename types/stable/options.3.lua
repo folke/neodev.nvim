@@ -1,173 +1,5 @@
 ---@meta
 
--- `'shellslash'`  `'ssl'` 	boolean	(default off)
--- 			global
--- 			{only for MS-Windows}
--- 	When set, a forward slash is used when expanding file names.  This is
--- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
--- 	slashes can still be typed, but they are changed to forward slashes by
--- 	Vim.
--- 	Note that setting or resetting this option has no effect for some
--- 	existing file names, thus this option needs to be set before opening
--- 	any file for best results.  This might change in the future.
--- 	`'shellslash'`  only works when a backslash can be used as a path
--- 	separator.  To test if this is so use: >
--- 		if exists(`'+shellslash'` )
--- <	Also see `'completeslash'` .
---- @class vim.opt.shellslash: vim.Option,boolean
---- @operator add: vim.opt.shellslash
---- @operator sub: vim.opt.shellslash
---- @operator pow: vim.opt.shellslash
-vim.opt.shellslash = false
-vim.opt.ssl = vim.opt.shellslash
---- @return boolean
-function vim.opt.shellslash:get()end
-
--- `'shelltemp'`  `'stmp'` 	boolean	(default on)
--- 			global
--- 	When on, use temp files for shell commands.  When off use a pipe.
--- 	When using a pipe is not possible temp files are used anyway.
--- 	The advantage of using a pipe is that nobody can read the temp file
--- 	and the `'shell'`  command does not need to support redirection.
--- 	The advantage of using a temp file is that the file type and encoding
--- 	can be detected.
--- 	The |FilterReadPre|, |FilterReadPost| and |FilterWritePre|,
--- 	|FilterWritePost| autocommands event are not triggered when
--- 	`'shelltemp'`  is off.
--- 	|system()| does not respect this option, it always uses pipes.
---- @class vim.opt.shelltemp: vim.Option,boolean
---- @operator add: vim.opt.shelltemp
---- @operator sub: vim.opt.shelltemp
---- @operator pow: vim.opt.shelltemp
-vim.opt.shelltemp = true
-vim.opt.stmp = vim.opt.shelltemp
---- @return boolean
-function vim.opt.shelltemp:get()end
-
--- `'shellxescape'`  `'sxe'` 	string	(default: "")
--- 			global
--- 	When `'shellxquote'`  is set to "(" then the characters listed in this
--- 	option will be escaped with a `'^'`  character.  This makes it possible
--- 	to execute most external commands with cmd.exe.
---- @class vim.opt.shellxescape: vim.Option,string
---- @operator add: vim.opt.shellxescape
---- @operator sub: vim.opt.shellxescape
---- @operator pow: vim.opt.shellxescape
-vim.opt.shellxescape = ""
-vim.opt.sxe = vim.opt.shellxescape
---- @return string
-function vim.opt.shellxescape:get()end
-
--- `'shellxquote'`  `'sxq'` 	string	(default: "", Windows: "\"")
--- 			global
--- 	Quoting character(s), put around the command passed to the shell, for
--- 	the "!" and ":!" commands.  Includes the redirection.  See
--- 	`'shellquote'`  to exclude the redirection.  It's probably not useful
--- 	to set both options.
--- 	When the value is `'('`  then `')'`  is appended. When the value is `'"('` 
--- 	then `')"'`  is appended.
--- 	When the value is `'('`  then also see `'shellxescape'` .
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.shellxquote: vim.Option,string
---- @operator add: vim.opt.shellxquote
---- @operator sub: vim.opt.shellxquote
---- @operator pow: vim.opt.shellxquote
-vim.opt.shellxquote = ""
-vim.opt.sxq = vim.opt.shellxquote
---- @return string
-function vim.opt.shellxquote:get()end
-
--- `'shiftround'`  `'sr'` 	boolean	(default off)
--- 			global
--- 	Round indent to multiple of `'shiftwidth'` .  Applies to > and <
--- 	commands.  CTRL-T and CTRL-D in Insert mode always round the indent to
--- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
---- @class vim.opt.shiftround: vim.Option,boolean
---- @operator add: vim.opt.shiftround
---- @operator sub: vim.opt.shiftround
---- @operator pow: vim.opt.shiftround
-vim.opt.shiftround = false
-vim.opt.sr = vim.opt.shiftround
---- @return boolean
-function vim.opt.shiftround:get()end
-
--- `'shiftwidth'`  `'sw'` 	number	(default 8)
--- 			local to buffer
--- 	Number of spaces to use for each step of (auto)indent.  Used for
--- 	|`'cindent'` |, |>>|, |<<|, etc.
--- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
--- 	function to get the effective shiftwidth value.
---- @class vim.opt.shiftwidth: vim.Option,number
---- @operator add: vim.opt.shiftwidth
---- @operator sub: vim.opt.shiftwidth
---- @operator pow: vim.opt.shiftwidth
-vim.opt.shiftwidth = 8
-vim.opt.sw = vim.opt.shiftwidth
---- @return number
-function vim.opt.shiftwidth:get()end
-
--- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
--- 			global
--- 	This option helps to avoid all the |hit-enter| prompts caused by file
--- 	messages, for example  with CTRL-G, and to avoid some other messages.
--- 	It is a list of flags:
--- 	 flag	meaning when present	~
--- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
--- 	  i	use "[noeol]" instead of "[Incomplete last line]"
--- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
--- 	  m	use "[+]" instead of "[Modified]"
--- 	  n	use "[New]" instead of "[New File]"
--- 	  r	use "[RO]" instead of "[readonly]"
--- 	  w	use "[w]" instead of "written" for file write message
--- 		and "[a]" instead of "appended" for ':w >> file' command
--- 	  x	use "[dos]" instead of "[dos format]", "[unix]" instead of
--- 		"[unix format]" and "[mac]" instead of "[mac format]".
--- 	  a	all of the above abbreviations
--- 
--- 	  o	overwrite message for writing a file with subsequent message
--- 		for reading a file (useful for ":wn" or when `'autowrite'`  on)
--- 	  O	message for reading a file overwrites any previous message.
--- 		Also for quickfix message (e.g., ":cn").
--- 	  s	don't give "search hit BOTTOM, continuing at TOP" or "search
--- 		hit TOP, continuing at BOTTOM" messages; when using the search
--- 		count do not show "W" after the count message (see S below)
--- 	  t	truncate file message at the start if it is too long to fit
--- 		on the command-line, "<" will appear in the left most column.
--- 		Ignored in Ex mode.
--- 	  T	truncate other messages in the middle if they are too long to
--- 		fit on the command line.  "..." will appear in the middle.
--- 		Ignored in Ex mode.
--- 	  W	don't give "written" or "[w]" when writing a file
--- 	  A	don't give the "ATTENTION" message when an existing swap file
--- 		is found.
--- 	  I	don't give the intro message when starting Vim |:intro|.
--- 	  c	don't give |ins-completion-menu| messages.  For example,
--- 		"-- XXX completion (YYY)", "match 1 of 2", "The only match",
--- 		"Pattern not found", "Back at original", etc.
--- 	  q	use "recording" instead of "recording @a"
--- 	  F	don't give the file info when editing a file, like `:silent`
--- 		was used for the command
--- 	  S     do not show search count message when searching, e.g.
--- 	        "[1/5]"
--- 
--- 	This gives you the opportunity to avoid that a change between buffers
--- 	requires you to hit <Enter>, but still gives as useful a message as
--- 	possible for the space available.  To get the whole message that you
--- 	would have got with `'shm'`  empty, use ":file!"
--- 	Useful values:
--- 	    shm=	No abbreviation of message.
--- 	    shm=a	Abbreviation, but no loss of information.
--- 	    shm=at	Abbreviation, and truncate message when necessary.
---- @class vim.opt.shortmess: vim.Option,string[]
---- @operator add: vim.opt.shortmess
---- @operator sub: vim.opt.shortmess
---- @operator pow: vim.opt.shortmess
-vim.opt.shortmess = "filnxtToOF"
-vim.opt.shm = vim.opt.shortmess
---- @return string[]
-function vim.opt.shortmess:get()end
-
 -- `'showbreak'`  `'sbr'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	String to put at the start of lines that have been wrapped.  Useful
@@ -200,7 +32,6 @@ function vim.opt.showbreak:get()end
 -- 			global
 -- 	Show (partial) command in the last line of the screen.  Set this
 -- 	option off if your terminal is slow.
--- 	The option has no effect when `'cmdheight'`  is zero.
 -- 	In Visual mode the size of the selected area is shown:
 -- 	- When selecting characters within a line, the number of characters.
 -- 	  If the number of bytes is different it is also displayed: "2-6"
@@ -208,6 +39,8 @@ function vim.opt.showbreak:get()end
 -- 	- When selecting more than one line, the number of lines.
 -- 	- When selecting a block, the size in screen characters:
 -- 	  {lines}x{columns}.
+-- 	This information can be displayed in an alternative location using the
+-- 	`'showcmdloc'`  option, useful when `'cmdheight'`  is 0.
 --- @class vim.opt.showcmd: vim.Option,boolean
 --- @operator add: vim.opt.showcmd
 --- @operator sub: vim.opt.showcmd
@@ -216,6 +49,28 @@ vim.opt.showcmd = true
 vim.opt.sc = vim.opt.showcmd
 --- @return boolean
 function vim.opt.showcmd:get()end
+
+-- `'showcmdloc'`  `'sloc'` 	string	(default "last")
+-- 			global
+-- 	This option can be used to display the (partially) entered command in
+-- 	another location.  Possible values are:
+-- 	  last		Last line of the screen (default).
+-- 	  statusline	Status line of the current window.
+-- 	  tabline	First line of the screen if `'showtabline'`  is enabled.
+-- 	Setting this option to "statusline" or "tabline" means that these will
+-- 	be redrawn whenever the command changes, which can be on every key
+-- 	pressed.
+-- 	The %S `'statusline'`  item can be used in `'statusline'`  or `'tabline'`  to
+-- 	place the text.  Without a custom `'statusline'`  or `'tabline'`  it will be
+-- 	displayed in a convenient location.
+--- @class vim.opt.showcmdloc: vim.Option,string
+--- @operator add: vim.opt.showcmdloc
+--- @operator sub: vim.opt.showcmdloc
+--- @operator pow: vim.opt.showcmdloc
+vim.opt.showcmdloc = "last"
+vim.opt.sloc = vim.opt.showcmdloc
+--- @return string
+function vim.opt.showcmdloc:get()end
 
 -- `'showfulltag'`  `'sft'` 	boolean (default off)
 -- 			global
@@ -243,8 +98,6 @@ function vim.opt.showfulltag:get()end
 -- 	show the match can be set with `'matchtime'` .
 -- 	A Beep is given if there is no match (no matter if the match can be
 -- 	seen or not).
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 -- 	When the `'m'`  flag is not included in `'cpoptions'` , typing a character
 -- 	will immediately move the cursor back to where it belongs.
 -- 	See the "sm" field in `'guicursor'`  for setting the cursor shape and
@@ -347,7 +200,7 @@ function vim.opt.sidescrolloff:get()end
 -- `'signcolumn'`  `'scl'` 	string	(default "auto")
 -- 			local to window
 -- 	When and how to draw the signcolumn. Valid values are:
--- 	   "auto"   	only when there is a sign to display
+-- 	   "auto"	only when there is a sign to display
 -- 	   "auto:[1-9]" resize to accommodate multiple signs up to the
 -- 	                given number (maximum 9), e.g. "auto:4"
 -- 	   "auto:[1-8]-[2-9]"
@@ -356,14 +209,14 @@ function vim.opt.sidescrolloff:get()end
 -- 			at least the given minimum (maximum 8) fixed
 -- 			space. The minimum number should always be less
 -- 			than the maximum number, e.g. "auto:2-5"
--- 	   "no"	    	never
--- 	   "yes"    	always
+-- 	   "no"		never
+-- 	   "yes"	always
 -- 	   "yes:[1-9]"  always, with fixed space for signs up to the given
 -- 	                number (maximum 9), e.g. "yes:3"
 -- 	   "number"	display signs in the `'number'`  column. If the number
 -- 			column is not present, then behaves like "auto".
 -- 
--- 	Note regarding 'orphaned signs': with signcolumn numbers higher than
+-- 	Note regarding "orphaned signs": with signcolumn numbers higher than
 -- 	1, deleting lines will also remove the associated signs automatically,
 -- 	in contrast to the default Vim behavior of keeping and grouping them.
 -- 	This is done in order for the signcolumn appearance not appear weird
@@ -404,19 +257,17 @@ function vim.opt.smartcase:get()end
 -- 	alternative.
 -- 	Normally `'autoindent'`  should also be on when using `'smartindent'` .
 -- 	An indent is automatically inserted:
--- 	- After a line ending in `'{'` .
+-- 	- After a line ending in "{".
 -- 	- After a line starting with a keyword from `'cinwords'` .
--- 	- Before a line starting with `'}'`  (only with the "O" command).
+-- 	- Before a line starting with "}" (only with the "O" command).
 -- 	When typing `'}'`  as the first character in a new line, that line is
--- 	given the same indent as the matching `'{'` .
+-- 	given the same indent as the matching "{".
 -- 	When typing `'#'`  as the first character in a new line, the indent for
 -- 	that line is removed, the `'#'`  is put in the first column.  The indent
 -- 	is restored for the next line.  If you don't want this, use this
 -- 	mapping: ":inoremap # X^H#", where ^H is entered with CTRL-V CTRL-H.
 -- 	When using the ">>" command, lines starting with `'#'`  are not shifted
 -- 	right.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 --- @class vim.opt.smartindent: vim.Option,boolean
 --- @operator add: vim.opt.smartindent
 --- @operator sub: vim.opt.smartindent
@@ -438,8 +289,6 @@ function vim.opt.smartindent:get()end
 -- 	What gets inserted (a <Tab> or spaces) depends on the `'expandtab'` 
 -- 	option.  Also see |ins-expandtab|.  When `'expandtab'`  is not set, the
 -- 	number of spaces is minimized by using <Tab>s.
--- 	This option is reset when `'paste'`  is set and restored when `'paste'`  is
--- 	reset.
 --- @class vim.opt.smarttab: vim.Option,boolean
 --- @operator add: vim.opt.smarttab
 --- @operator sub: vim.opt.smarttab
@@ -459,8 +308,6 @@ function vim.opt.smarttab:get()end
 -- 	commands like "x" still work on the actual characters.
 -- 	When `'sts'`  is zero, this feature is off.
 -- 	When `'sts'`  is negative, the value of `'shiftwidth'`  is used.
--- 	`'softtabstop'`  is set to 0 when the `'paste'`  option is set and restored
--- 	when `'paste'`  is reset.
 -- 	See also |ins-expandtab|.  When `'expandtab'`  is not set, the number of
 -- 	spaces is minimized by using <Tab>s.
 -- 	The `'L'`  flag in `'cpoptions'`  changes how tabs are used when `'list'`  is
@@ -694,6 +541,29 @@ vim.opt.sb = vim.opt.splitbelow
 --- @return boolean
 function vim.opt.splitbelow:get()end
 
+-- `'splitkeep'`  `'spk'` 	string	(default "cursor")
+-- 			global
+-- 	The value of this option determines the scroll behavior when opening,
+-- 	closing or resizing horizontal splits.
+-- 
+-- 	Possible values are:
+-- 	  cursor	Keep the same relative cursor position.
+-- 	  screen	Keep the text on the same screen line.
+-- 	  topline	Keep the topline the same.
+-- 
+-- 	For the "screen" and "topline" values, the cursor position will be
+-- 	changed when necessary. In this case, the jumplist will be populated
+-- 	with the previous cursor position. For "screen", the text cannot always
+-- 	be kept on the same screen line when `'wrap'`  is enabled.
+--- @class vim.opt.splitkeep: vim.Option,string
+--- @operator add: vim.opt.splitkeep
+--- @operator sub: vim.opt.splitkeep
+--- @operator pow: vim.opt.splitkeep
+vim.opt.splitkeep = "cursor"
+vim.opt.spk = vim.opt.splitkeep
+--- @return string
+function vim.opt.splitkeep:get()end
+
 -- `'splitright'`  `'spr'` 	boolean	(default off)
 -- 			global
 -- 	When on, splitting a window will put the new window right of the
@@ -727,6 +597,67 @@ vim.opt.sol = vim.opt.startofline
 --- @return boolean
 function vim.opt.startofline:get()end
 
+-- `'statuscolumn'`  `'stc'` 	string	(default: empty)
+-- 			local to window
+-- 	EXPERIMENTAL
+-- 	When non-empty, this option determines the content of the area to the
+-- 	side of a window, normally containing the fold, sign and number columns.
+-- 	The format of this option is like that of `'statusline'` .
+-- 
+-- 	Some of the items from the `'statusline'`  format are different for
+-- 	`'statuscolumn'` :
+-- 
+-- 	%l	line number of currently drawn line
+-- 	%r	relative line number of currently drawn line
+-- 	%s	sign column for currently drawn line
+-- 	%C	fold column for currently drawn line
+-- 
+-- 	NOTE: To draw the sign and fold columns, their items must be included in
+-- 	`'statuscolumn'` . Even when they are not included, the status column width
+-- 	will adapt to the `'signcolumn'`  and `'foldcolumn'`  width.
+-- 
+-- 	The |v:lnum|    variable holds the line number to be drawn.
+-- 	The |v:relnum|  variable holds the relative line number to be drawn.
+-- 	The |v:virtnum| variable is negative when drawing virtual lines, zero
+-- 		      when drawing the actual buffer line, and positive when
+-- 		      drawing the wrapped part of a buffer line.
+-- 
+-- 	NOTE: The %@ click execute function item is supported as well but the
+-- 	specified function will be the same for each row in the same column.
+-- 	It cannot be switched out through a dynamic `'statuscolumn'`  format, the
+-- 	handler should be written with this in mind.
+-- 
+-- 	Examples: >vim
+-- 		" Relative number with bar separator and click handlers:
+-- 		:set statuscolumn=%@SignCb@%s%=%T%@NumCb@%r│%T
+-- 
+-- 		" Right aligned relative cursor line number:
+-- 		:let &stc='%=%{v:relnum?v:relnum:v:lnum} '
+-- 
+-- 		" Line numbers in hexadecimal for non wrapped part of lines:
+-- 		:let &stc='%=%{v:virtnum>0?"":printf("%x",v:lnum)} '
+-- 
+-- 		" Human readable line numbers with thousands separator:
+-- 		:let &stc=`'%{substitute(v:lnum,"\\d\\zs\\ze\\'` 
+-- 			   . `'%(\\d\\d\\d\\)\\+$",",","g")}'` 
+-- 
+-- 		" Both relative and absolute line numbers with different
+-- 		" highlighting for odd and even relative numbers:
+-- 		:let &stc=`'%#NonText#%{&nu?v:lnum:""}'`  .
+-- 		 '%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}' .
+-- 		 '%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}'
+-- 
+-- <	WARNING: this expression is evaluated for each screen line so defining
+-- 	an expensive expression can negatively affect render performance.
+--- @class vim.opt.statuscolumn: vim.Option,string
+--- @operator add: vim.opt.statuscolumn
+--- @operator sub: vim.opt.statuscolumn
+--- @operator pow: vim.opt.statuscolumn
+vim.opt.statuscolumn = ""
+vim.opt.stc = vim.opt.statuscolumn
+--- @return string
+function vim.opt.statuscolumn:get()end
+
 -- `'statusline'`  `'stl'` 	string	(default empty)
 -- 			global or local to window |global-local|
 -- 	When non-empty, this option determines the content of the status line.
@@ -750,6 +681,8 @@ function vim.opt.startofline:get()end
 -- 
 -- 	When there is error while evaluating the option then it will be made
 -- 	empty to avoid further errors.  Otherwise screen updating would loop.
+-- 	When the result contains unprintable characters the result is
+-- 	unpredictable.
 -- 
 -- 	Note that the only effect of `'ruler'`  when this option is set (and
 -- 	`'laststatus'`  is 2 or 3) is controlling the output of |CTRL-G|.
@@ -757,12 +690,12 @@ function vim.opt.startofline:get()end
 -- 	field	    meaning ~
 -- 	-	    Left justify the item.  The default is right justified
 -- 		    when minwid is larger than the length of the item.
--- 	0	    Leading zeroes in numeric items.  Overridden by `'-'` .
--- 	minwid	    Minimum width of the item, padding as set by `'-'`  & `'0'` .
+-- 	0	    Leading zeroes in numeric items.  Overridden by "-".
+-- 	minwid	    Minimum width of the item, padding as set by "-" & "0".
 -- 		    Value must be 50 or less.
--- 	maxwid	    Maximum width of the item.  Truncation occurs with a `'<'` 
+-- 	maxwid	    Maximum width of the item.  Truncation occurs with a "<"
 -- 		    on the left for text items.  Numeric items will be
--- 		    shifted down to maxwid-2 digits followed by `'>'` number
+-- 		    shifted down to maxwid-2 digits followed by ">"number
 -- 		    where number is the amount of missing digits, much like
 -- 		    an exponential notation.
 -- 	item	    A one letter code as described below.
@@ -798,7 +731,6 @@ function vim.opt.startofline:get()end
 -- 	o N   Byte number in file of byte under cursor, first byte is 1.
 -- 	      Mnemonic: Offset from start of file (with one added)
 -- 	O N   As above, in hexadecimal.
--- 	N N   Printer page number.  (Only works in the `'printheader'`  option.)
 -- 	l N   Line number.
 -- 	L N   Number of lines in buffer.
 -- 	c N   Column number (byte index).
@@ -808,24 +740,25 @@ function vim.opt.startofline:get()end
 -- 	P S   Percentage through file of displayed window.  This is like the
 -- 	      percentage described for `'ruler'` .  Always 3 in length, unless
 -- 	      translated.
+-- 	S S   `'showcmd'`  content, see `'showcmdloc'` .
 -- 	a S   Argument list status as in default title.  ({current} of {max})
 -- 	      Empty if the argument file count is zero or one.
--- 	{ NF  Evaluate expression between `'%{'`  and `'}'`  and substitute result.
--- 	      Note that there is no `'%'`  before the closing `'}'` .  The
--- 	      expression cannot contain a `'}'`  character, call a function to
+-- 	{ NF  Evaluate expression between "%{" and "}" and substitute result.
+-- 	      Note that there is no "%" before the closing "}".  The
+-- 	      expression cannot contain a "}" character, call a function to
 -- 	      work around that.  See |stl-%{| below.
--- 	{% -  This is almost same as { except the result of the expression is
+-- 	`{%` -  This is almost same as "{" except the result of the expression is
 -- 	      re-evaluated as a statusline format string.  Thus if the
--- 	      return value of expr contains % items they will get expanded.
--- 	      The expression can contain the } character, the end of
--- 	      expression is denoted by %}.
+-- 	      return value of expr contains "%" items they will get expanded.
+-- 	      The expression can contain the "}" character, the end of
+-- 	      expression is denoted by "%}".
 -- 	      For example: >
 -- 		func! Stl_filename() abort
 -- 		    return "%t"
 -- 		endfunc
 -- <	        `stl=%{Stl_filename()}`   results in `"%t"`
 -- 	        `stl=%{%Stl_filename()%}` results in `"Name of current file"`
--- 	%} -  End of `{%` expression
+-- 	%} -  End of "{%" expression
 -- 	( -   Start of item group.  Can be used for setting the width and
 -- 	      alignment of a section.  Must be followed by %) somewhere.
 -- 	) -   End of item group.  No width fields allowed.
@@ -860,10 +793,14 @@ function vim.opt.startofline:get()end
 -- 	         is a bug that denotes that new mouse button recognition was
 -- 	         added without modifying code that reacts on mouse clicks on
 -- 	         this label.
+-- 	      Use |getmousepos()|.winid in the specified function to get the
+-- 	      corresponding window id of the clicked item.
 -- 	< -   Where to truncate line if too long.  Default is at the start.
 -- 	      No width fields allowed.
--- 	= -   Separation point between alignment sections. Each section will
--- 	      be separated by an equal number of spaces.
+-- 	= -   Separation point between alignment sections.  Each section will
+-- 	      be separated by an equal number of spaces.  With one %= what
+-- 	      comes after it will be right-aligned.  With two %= there is a
+-- 	      middle part, with white space left and right of it.
 -- 	      No width fields allowed.
 -- 	# -   Set highlight group.  The name must follow and then a # again.
 -- 	      Thus use %#HLname# for highlight group HLname.  The same
@@ -871,8 +808,8 @@ function vim.opt.startofline:get()end
 -- 	      windows.
 -- 	* -   Set highlight group to User{N}, where {N} is taken from the
 -- 	      minwid field, e.g. %1*.  Restore normal highlight with %* or %0*.
--- 	      The difference between User{N} and StatusLine  will be applied
--- 	      to StatusLineNC for the statusline of non-current windows.
+-- 	      The difference between User{N} and StatusLine will be applied to
+-- 	      StatusLineNC for the statusline of non-current windows.
 -- 	      The number N must be between 1 and 9.  See |hl-User1..9|
 -- 
 -- 	When displaying a flag, Vim removes the leading comma, if any, when
@@ -1064,12 +1001,12 @@ function vim.opt.synmaxcol:get()end
 -- 	Otherwise this option does not always reflect the current syntax (the
 -- 	b:current_syntax variable does).
 -- 	This option is most useful in a modeline, for a file which syntax is
--- 	not automatically recognized.  Example, in an IDL file:
--- 		/* vim: set syntax=idl : */ ~
--- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example:
--- 		/* vim: set syntax=c.doxygen : */ ~
--- 	This will use the "c" syntax first, then the "doxygen" syntax.
+-- 	not automatically recognized.  Example, in an IDL file: >
+-- 		/* vim: set syntax=idl : */
+-- <	When a dot appears in the value then this separates two filetype
+-- 	names.  Example: >
+-- 		/* vim: set syntax=c.doxygen : */
+-- <	This will use the "c" syntax first, then the "doxygen" syntax.
 -- 	Note that the second one must be prepared to be loaded as an addition,
 -- 	otherwise it will be skipped.  More than one dot may appear.
 -- 	To switch off syntax highlighting for the current file, use: >
@@ -1141,7 +1078,7 @@ function vim.opt.tabpagemax:get()end
 -- 	the |:retab| command, and the `'softtabstop'`  option.
 -- 
 -- 	Note: Setting `'tabstop'`  to any other value than 8 can make your file
--- 	appear wrong in many places, e.g., when printing it.
+-- 	appear wrong in many places.
 -- 	The value must be more than 0 and less than 10000.
 -- 
 -- 	There are four main ways to use tabs in Vim:
@@ -1255,7 +1192,9 @@ function vim.opt.tagcase:get()end
 -- 	This option specifies a function to be used to perform tag searches.
 -- 	The function gets the tag pattern and should return a List of matching
 -- 	tags.  See |tag-function| for an explanation of how to write the
--- 	function and an example.
+-- 	function and an example.  The value can be the name of a function, a
+-- 	|lambda| or a |Funcref|. See |option-value-function| for more
+-- 	information.
 --- @class vim.opt.tagfunc: vim.Option,string
 --- @operator add: vim.opt.tagfunc
 --- @operator sub: vim.opt.tagfunc
@@ -1420,8 +1359,6 @@ function vim.opt.terse:get()end
 -- 	Maximum width of text that is being inserted.  A longer line will be
 -- 	broken after white space to get this width.  A zero value disables
 -- 	this.
--- 	`'textwidth'`  is set to 0 when the `'paste'`  option is set and restored
--- 	when `'paste'`  is reset.
 -- 	When `'textwidth'`  is zero, `'wrapmargin'`  may be used.  See also
 -- 	`'formatoptions'`  and |ins-textwidth|.
 -- 	When `'formatexpr'`  is set it will be used to break the line.
@@ -1463,6 +1400,8 @@ function vim.opt.thesaurus:get()end
 -- 			global or local to buffer |global-local|
 -- 	This option specifies a function to be used for thesaurus completion
 -- 	with CTRL-X CTRL-T. |i_CTRL-X_CTRL-T| See |compl-thesaurusfunc|.
+-- 	The value can be the name of a function, a |lambda| or a |Funcref|.
+-- 	See |option-value-function| for more information.
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
@@ -2209,6 +2148,14 @@ function vim.opt.wildmode:get()end
 -- 			global
 -- 	A list of words that change how |cmdline-completion| is done.
 -- 	The following values are supported:
+-- 	  fuzzy		Use |fuzzy-matching| to find completion matches. When
+-- 			this value is specified, wildcard expansion will not
+-- 			be used for completion.  The matches will be sorted by
+-- 			the "best match" rather than alphabetically sorted.
+-- 			This will find more matches than the wildcard
+-- 			expansion. Currently fuzzy matching based completion
+-- 			is not supported for file and directory names and
+-- 			instead wildcard expansion is used.
 -- 	  pum		Display the completion matches using the popup menu
 -- 			in the same style as the |ins-completion-menu|.
 -- 	  tagfile	When using CTRL-D to list matching tags, the kind of
