@@ -417,17 +417,17 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- 
 -- Example: 
 -- ```lua
---   local a   = vim.api
---   local pos = a.nvim_win_get_cursor(0)
---   local ns  = a.nvim_create_namespace('my-plugin')
+--   local api = vim.api
+--   local pos = api.nvim_win_get_cursor(0)
+--   local ns  = api.nvim_create_namespace('my-plugin')
 --   -- Create new extmark at line 1, column 1.
---   local m1  = a.nvim_buf_set_extmark(0, ns, 0, 0, {})
+--   local m1  = api.nvim_buf_set_extmark(0, ns, 0, 0, {})
 --   -- Create new extmark at line 3, column 1.
---   local m2  = a.nvim_buf_set_extmark(0, ns, 2, 0, {})
+--   local m2  = api.nvim_buf_set_extmark(0, ns, 2, 0, {})
 --   -- Get extmarks only from line 3.
---   local ms  = a.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
+--   local ms  = api.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
 --   -- Get all marks in this buffer + namespace.
---   local all = a.nvim_buf_get_extmarks(0, ns, 0, -1, {})
+--   local all = api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
 --   print(vim.inspect(ms))
 -- ```
 -- 
@@ -1383,6 +1383,8 @@ function vim.api.nvim_eval(expr) end
 --             • use_tabline: (boolean) Evaluate tabline instead of
 --               statusline. When true, {winid} is ignored. Mutually
 --               exclusive with {use_winbar}.
+--             • use_statuscol_lnum: (number) Evaluate statuscolumn for this
+--               line number instead of statusline.
 -- 
 -- Return: ~
 --     Dictionary containing statusline information, with these keys:
@@ -2131,8 +2133,8 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                   In general, values below 100 are recommended, unless
 --                   there is a good reason to overshadow builtin elements.
 -- 
---               • style: Configure the appearance of the window. Currently
---                 only takes one non-empty value:
+--               • style: (optional) Configure the appearance of the window.
+--                 Currently only supports one value:
 --                 • "minimal" Nvim will display the window with many UI
 --                   options disabled. This is useful when displaying a
 --                   temporary float where the text should not be edited.

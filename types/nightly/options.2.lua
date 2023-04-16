@@ -1384,7 +1384,7 @@ function vim.opt.guitabtooltip:get()end
 --- @operator add: vim.opt.helpfile
 --- @operator sub: vim.opt.helpfile
 --- @operator pow: vim.opt.helpfile
-vim.opt.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
+vim.opt.helpfile = "/tmp/nvim/squashfs-root/usr/share/nvim/runtime/doc/help.txt"
 vim.opt.hf = vim.opt.helpfile
 --- @return string
 function vim.opt.helpfile:get()end
@@ -1715,8 +1715,8 @@ function vim.opt.include:get()end
 -- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
 -- 	the script ID (|local-function|). Example: >
--- 		set includeexpr=s:MyIncludeExpr(v:fname)
--- 		set includeexpr=<SID>SomeIncludeExpr(v:fname)
+-- 		setlocal includeexpr=s:MyIncludeExpr(v:fname)
+-- 		setlocal includeexpr=<SID>SomeIncludeExpr(v:fname)
 -- <
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.
@@ -2064,7 +2064,6 @@ function vim.opt.keymap:get()end
 -- 	   stopsel	Using a not-shifted special key stops selection.
 -- 	Special keys in this context are the cursor keys, <End>, <Home>,
 -- 	<PageUp> and <PageDown>.
--- 	The `'keymodel'`  option is set by the |:behave| command.
 --- @class vim.opt.keymodel: vim.Option,string[]
 --- @operator add: vim.opt.keymodel
 --- @operator sub: vim.opt.keymodel
@@ -2886,20 +2885,6 @@ function vim.opt.more:get()end
 -- 	`'mousemodel'` 	what mouse button does which action
 -- 	`'mousehide'` 	hide mouse pointer while typing text
 -- 	`'selectmode'` 	whether to start Select mode or Visual mode
--- 
--- 	The :behave command provides some "profiles" for mouse behavior.
--- 
--- 	:be[have] {model}	Set behavior for mouse and selection.  Valid
--- 				arguments are:
--- 				   mswin	MS-Windows behavior
--- 				   xterm	Xterm behavior
--- 
--- 				Using ":behave" changes these options:
--- 				option		mswin			xterm	~
--- 				`'selectmode'` 	"mouse,key"		""
--- 				`'mousemodel'` 	"popup"			"extend"
--- 				`'keymodel'` 	"startsel,stopsel"	""
--- 				`'selection'` 	"exclusive"		"inclusive"
 --- @class vim.opt.mouse: vim.Option,string[]
 --- @operator add: vim.opt.mouse
 --- @operator sub: vim.opt.mouse
@@ -2987,8 +2972,6 @@ function vim.opt.mousehide:get()end
 -- 	the "g" key before using the mouse:
 -- 	    "g<LeftMouse>"  is "<C-LeftMouse>	(jump to tag under mouse click)
 -- 	    "g<RightMouse>" is "<C-RightMouse>	("CTRL-T")
--- 
--- 	The `'mousemodel'`  option is set by the |:behave| command.
 --- @class vim.opt.mousemodel: vim.Option,string
 --- @operator add: vim.opt.mousemodel
 --- @operator sub: vim.opt.mousemodel
@@ -3275,7 +3258,7 @@ function vim.opt.operatorfunc:get()end
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath
 --- @operator pow: vim.opt.packpath
-vim.opt.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.opt.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.opt.pp = vim.opt.packpath
 --- @return string[]
 function vim.opt.packpath:get()end
@@ -3920,7 +3903,7 @@ function vim.opt.rulerformat:get()end
 --- @operator add: vim.opt.runtimepath
 --- @operator sub: vim.opt.runtimepath
 --- @operator pow: vim.opt.runtimepath
-vim.opt.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.opt.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.opt.rtp = vim.opt.runtimepath
 --- @return string[]
 function vim.opt.runtimepath:get()end
@@ -4095,8 +4078,6 @@ function vim.opt.secure:get()end
 -- 	Note that when "exclusive" is used and selecting from the end
 -- 	backwards, you cannot include the last character of a line, when
 -- 	starting in Normal mode and `'virtualedit'`  empty.
--- 
--- 	The `'selection'`  option is set by the |:behave| command.
 --- @class vim.opt.selection: vim.Option,string
 --- @operator add: vim.opt.selection
 --- @operator sub: vim.opt.selection
@@ -4115,7 +4096,6 @@ function vim.opt.selection:get()end
 -- 	   key		when using shifted special keys
 -- 	   cmd		when using "v", "V" or CTRL-V
 -- 	See |Select-mode|.
--- 	The `'selectmode'`  option is set by the |:behave| command.
 --- @class vim.opt.selectmode: vim.Option,string[]
 --- @operator add: vim.opt.selectmode
 --- @operator sub: vim.opt.selectmode
@@ -4659,4 +4639,32 @@ vim.opt.shortmess = "filnxtToOF"
 vim.opt.shm = vim.opt.shortmess
 --- @return string[]
 function vim.opt.shortmess:get()end
+
+-- `'showbreak'`  `'sbr'` 	string	(default "")
+-- 			global or local to window |global-local|
+-- 	String to put at the start of lines that have been wrapped.  Useful
+-- 	values are "> " or "+++ ": >
+-- 		:set showbreak=>\
+-- <	Note the backslash to escape the trailing space.  It's easier like
+-- 	this: >
+-- 		:let &showbreak = '+++ '
+-- <	Only printable single-cell characters are allowed, excluding <Tab> and
+-- 	comma (in a future version the comma might be used to separate the
+-- 	part that is shown at the end and at the start of a line).
+-- 	The |hl-NonText| highlight group determines the highlighting.
+-- 	Note that tabs after the showbreak will be displayed differently.
+-- 	If you want the `'showbreak'`  to appear in between line numbers, add the
+-- 	"n" flag to `'cpoptions'` .
+-- 	A window-local value overrules a global value.  If the global value is
+-- 	set and you want no value in the current window use NONE: >
+-- 		:setlocal showbreak=NONE
+-- <
+--- @class vim.opt.showbreak: vim.Option,string
+--- @operator add: vim.opt.showbreak
+--- @operator sub: vim.opt.showbreak
+--- @operator pow: vim.opt.showbreak
+vim.opt.showbreak = ""
+vim.opt.sbr = vim.opt.showbreak
+--- @return string
+function vim.opt.showbreak:get()end
 

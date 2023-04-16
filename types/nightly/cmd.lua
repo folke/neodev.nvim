@@ -147,12 +147,6 @@ function vim.cmd.bd(...)end
 -- remove a buffer from the buffer list
 function vim.cmd.bdelete(...)end
 
--- set mouse and selection behavior
-function vim.cmd.be(...)end
-
--- set mouse and selection behavior
-function vim.cmd.behave(...)end
-
 -- make split window appear right or below
 function vim.cmd.bel(...)end
 

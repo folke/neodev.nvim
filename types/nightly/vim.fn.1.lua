@@ -1,5 +1,85 @@
 ---@meta
 
+-- Return information about the specified menu {name} in
+-- mode {mode}. The menu name should be specified without the
+-- shortcut character ('&'). If {name} is "", then the top-level
+-- menu names are returned.
+-- 
+-- {mode} can be one of these strings:
+--   "n"  Normal
+--   "v"  Visual (including Select)
+--   "o"  Operator-pending
+--   "i"  Insert
+--   "c"  Cmd-line
+--   "s"  Select
+--   "x"  Visual
+--   "t"  Terminal-Job
+--   ""  Normal, Visual and Operator-pending
+--   "!"  Insert and Cmd-line
+-- When {mode} is omitted, the modes for "" are used.
+-- 
+-- Returns a |Dictionary| containing the following items:
+--   accel    menu item accelerator text |menu-text|
+--   display  display name (name without '&')
+--   enabled  v:true if this menu item is enabled
+--     Refer to |:menu-enable|
+--   icon    name of the icon file (for toolbar)
+--     |toolbar-icon|
+--   iconidx  index of a built-in icon
+--   modes    modes for which the menu is defined. In
+--     addition to the modes mentioned above, these
+--     characters will be used:
+--     " "  Normal, Visual and Operator-pending
+--   name    menu item name.
+--   noremenu  v:true if the {rhs} of the menu item is not
+--     remappable else v:false.
+--   priority  menu order priority |menu-priority|
+--   rhs    right-hand-side of the menu item. The returned
+--     string has special characters translated like
+--     in the output of the ":menu" command listing.
+--     When the {rhs} of a menu item is empty, then
+--     "<Nop>" is returned.
+--   script  v:true if script-local remapping of {rhs} is
+--     allowed else v:false.  See |:menu-script|.
+--   shortcut  shortcut key (character after '&' in
+--     the menu name) |menu-shortcut|
+--   silent  v:true if the menu item is created
+--     with <silent> argument |:menu-silent|
+--   submenus  |List| containing the names of
+--     all the submenus.  Present only if the menu
+--     item has submenus.
+-- 
+-- Returns an empty dictionary if the menu item is not found.
+-- 
+-- Examples: 
+-- ```vim
+--   :echo menu_info('Edit.Cut')
+--   :echo menu_info('File.Save', 'n')
+-- 
+--   " Display the entire menu hierarchy in a buffer
+--   func ShowMenu(name, pfx)
+--     let m = menu_info(a:name)
+--     call append(line('$'), a:pfx .. m.display)
+--     for child in m->get('submenus', [])
+--       call ShowMenu(a:name .. '.' .. escape(child, '.'),
+--           \ a:pfx .. '    ')
+--     endfor
+--   endfunc
+--   new
+--   for topmenu in menu_info('').submenus
+--     call ShowMenu(topmenu, '')
+--   endfor
+-- ```
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetMenuName()->menu_info('v')
+-- 
+-- 
+-- ```
+--- @param mode? any
+--- @return table<string, any>
+function vim.fn.menu_info(name, mode) end
+
 -- Return the minimum value of all items in {expr}. Example:  
 -- ```vim
 --     echo min([apples, pears, oranges])

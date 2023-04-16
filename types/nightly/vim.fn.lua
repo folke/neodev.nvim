@@ -2965,7 +2965,6 @@ function vim.fn.getcmdwintype() end
 -- arglist    file names in argument list
 -- augroup    autocmd groups
 -- buffer    buffer names
--- behave    |:behave| suboptions
 -- breakpoint  |:breakadd| and |:breakdel| suboptions
 -- cmdline    |cmdline-completion| result
 -- color    color schemes
@@ -3642,15 +3641,44 @@ function vim.fn.getreginfo(regname) end
 function vim.fn.getregtype(regname) end
 
 -- Returns a |List| with information about all the sourced Vim
--- scripts in the order they were sourced.
+-- scripts in the order they were sourced, like what
+-- `:scriptnames` shows.
+-- 
+-- The optional Dict argument {opts} supports the following
+-- optional items:
+--     name  Script name match pattern. If specified,
+--     and "sid" is not specified, information about
+--     scripts with name that match the pattern
+--     "name" are returned.
+--     sid    Script ID |<SID>|.  If specified, only
+--     information about the script with ID "sid" is
+--     returned and "name" is ignored.
 -- 
 -- Each item in the returned List is a |Dict| with the following
 -- items:
---     autoload  always set to FALSE.
---     name  vim script file name.
---     sid    script ID |<SID>|.
+--     autoload  Always set to FALSE.
+--     functions   List of script-local function names defined in
+--     the script.  Present only when a particular
+--     script is specified using the "sid" item in
+--     {opts}.
+--     name  Vim script file name.
+--     sid    Script ID |<SID>|.
+--     variables   A dictionary with the script-local variables.
+--     Present only when the a particular script is
+--     specified using the "sid" item in {opts}.
+--     Note that this is a copy, the value of
+--     script-local variables cannot be changed using
+--     this dictionary.
+--     version  Vimscript version, always 1
+-- 
+-- Examples: 
+-- ```vim
+--   :echo getscriptinfo({'name': 'myscript'})
+--   :echo getscriptinfo({'sid': 15}).variables
+-- ```
+--- @param opts? table<string, any>
 --- @return any[]
-function vim.fn.getscriptinfo() end
+function vim.fn.getscriptinfo(opts) end
 
 -- If {tabnr} is not specified, then information about all the
 -- tab pages is returned as a |List|. Each List item is a
@@ -5925,84 +5953,4 @@ function vim.fn.max(expr) end
 --- @param modes? any
 --- @return any[]
 function vim.fn.menu_get(path, modes) end
-
--- Return information about the specified menu {name} in
--- mode {mode}. The menu name should be specified without the
--- shortcut character ('&'). If {name} is "", then the top-level
--- menu names are returned.
--- 
--- {mode} can be one of these strings:
---   "n"  Normal
---   "v"  Visual (including Select)
---   "o"  Operator-pending
---   "i"  Insert
---   "c"  Cmd-line
---   "s"  Select
---   "x"  Visual
---   "t"  Terminal-Job
---   ""  Normal, Visual and Operator-pending
---   "!"  Insert and Cmd-line
--- When {mode} is omitted, the modes for "" are used.
--- 
--- Returns a |Dictionary| containing the following items:
---   accel    menu item accelerator text |menu-text|
---   display  display name (name without '&')
---   enabled  v:true if this menu item is enabled
---     Refer to |:menu-enable|
---   icon    name of the icon file (for toolbar)
---     |toolbar-icon|
---   iconidx  index of a built-in icon
---   modes    modes for which the menu is defined. In
---     addition to the modes mentioned above, these
---     characters will be used:
---     " "  Normal, Visual and Operator-pending
---   name    menu item name.
---   noremenu  v:true if the {rhs} of the menu item is not
---     remappable else v:false.
---   priority  menu order priority |menu-priority|
---   rhs    right-hand-side of the menu item. The returned
---     string has special characters translated like
---     in the output of the ":menu" command listing.
---     When the {rhs} of a menu item is empty, then
---     "<Nop>" is returned.
---   script  v:true if script-local remapping of {rhs} is
---     allowed else v:false.  See |:menu-script|.
---   shortcut  shortcut key (character after '&' in
---     the menu name) |menu-shortcut|
---   silent  v:true if the menu item is created
---     with <silent> argument |:menu-silent|
---   submenus  |List| containing the names of
---     all the submenus.  Present only if the menu
---     item has submenus.
--- 
--- Returns an empty dictionary if the menu item is not found.
--- 
--- Examples: 
--- ```vim
---   :echo menu_info('Edit.Cut')
---   :echo menu_info('File.Save', 'n')
--- 
---   " Display the entire menu hierarchy in a buffer
---   func ShowMenu(name, pfx)
---     let m = menu_info(a:name)
---     call append(line('$'), a:pfx .. m.display)
---     for child in m->get('submenus', [])
---       call ShowMenu(a:name .. '.' .. escape(child, '.'),
---           \ a:pfx .. '    ')
---     endfor
---   endfunc
---   new
---   for topmenu in menu_info('').submenus
---     call ShowMenu(topmenu, '')
---   endfor
--- ```
--- Can also be used as a |method|: 
--- ```vim
---   GetMenuName()->menu_info('v')
--- 
--- 
--- ```
---- @param mode? any
---- @return table<string, any>
-function vim.fn.menu_info(name, mode) end
 

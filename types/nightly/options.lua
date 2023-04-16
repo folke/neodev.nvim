@@ -1569,7 +1569,7 @@ vim.go.gtt = vim.go.guitabtooltip
 -- 	spaces and backslashes.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.helpfile = "/usr/share/nvim/runtime/doc/help.txt"
+vim.go.helpfile = "/tmp/nvim/squashfs-root/usr/share/nvim/runtime/doc/help.txt"
 vim.go.hf = vim.go.helpfile
 -- `'helpheight'`  `'hh'` 	number	(default 20)
 -- 			global
@@ -1877,7 +1877,6 @@ vim.go.jop = vim.go.jumpoptions
 -- 	   stopsel	Using a not-shifted special key stops selection.
 -- 	Special keys in this context are the cursor keys, <End>, <Home>,
 -- 	<PageUp> and <PageDown>.
--- 	The `'keymodel'`  option is set by the |:behave| command.
 vim.go.keymodel = ""
 vim.go.km = vim.go.keymodel
 -- `'langmap'`  `'lmap'` 	string	(default "")
@@ -2187,20 +2186,6 @@ vim.go.more = true
 -- 	`'mousemodel'` 	what mouse button does which action
 -- 	`'mousehide'` 	hide mouse pointer while typing text
 -- 	`'selectmode'` 	whether to start Select mode or Visual mode
--- 
--- 	The :behave command provides some "profiles" for mouse behavior.
--- 
--- 	:be[have] {model}	Set behavior for mouse and selection.  Valid
--- 				arguments are:
--- 				   mswin	MS-Windows behavior
--- 				   xterm	Xterm behavior
--- 
--- 				Using ":behave" changes these options:
--- 				option		mswin			xterm	~
--- 				`'selectmode'` 	"mouse,key"		""
--- 				`'mousemodel'` 	"popup"			"extend"
--- 				`'keymodel'` 	"startsel,stopsel"	""
--- 				`'selection'` 	"exclusive"		"inclusive"
 vim.go.mouse = "nvi"
 -- `'mousefocus'`  `'mousef'` 	boolean	(default off)
 -- 			global
@@ -2267,8 +2252,6 @@ vim.go.mh = vim.go.mousehide
 -- 	the "g" key before using the mouse:
 -- 	    "g<LeftMouse>"  is "<C-LeftMouse>	(jump to tag under mouse click)
 -- 	    "g<RightMouse>" is "<C-RightMouse>	("CTRL-T")
--- 
--- 	The `'mousemodel'`  option is set by the |:behave| command.
 vim.go.mousemodel = "popup_setpos"
 vim.go.mousem = vim.go.mousemodel
 -- `'mousemoveevent'`  `'mousemev'`   boolean	(default off)
@@ -2391,7 +2374,7 @@ vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
 -- 	Directories used to find packages.  See |packages| and |rtp-packages|.
-vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
 -- 			global
@@ -2692,7 +2675,7 @@ vim.go.ruf = vim.go.rulerformat
 -- 	to find files which add to distributed runtime files.
 -- 
 -- 	With |--clean| the home directory entries are not included.
-vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/usr/share/nvim/runtime,/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
+vim.go.runtimepath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.rtp = vim.go.runtimepath
 -- `'scrolljump'`  `'sj'` 	number	(default 1)
 -- 			global
@@ -2762,8 +2745,6 @@ vim.go.secure = false
 -- 	Note that when "exclusive" is used and selecting from the end
 -- 	backwards, you cannot include the last character of a line, when
 -- 	starting in Normal mode and `'virtualedit'`  empty.
--- 
--- 	The `'selection'`  option is set by the |:behave| command.
 vim.go.selection = "inclusive"
 vim.go.sel = vim.go.selection
 -- `'selectmode'`  `'slm'` 	string	(default "")
@@ -2775,7 +2756,6 @@ vim.go.sel = vim.go.selection
 -- 	   key		when using shifted special keys
 -- 	   cmd		when using "v", "V" or CTRL-V
 -- 	See |Select-mode|.
--- 	The `'selectmode'`  option is set by the |:behave| command.
 vim.go.selectmode = ""
 vim.go.slm = vim.go.selectmode
 -- `'sessionoptions'`  `'ssop'` 	string	(default: "blank,buffers,curdir,folds,
@@ -4306,3 +4286,20 @@ vim.wo.cuc = vim.wo.cursorcolumn
 -- 	easier to see the selected text.
 vim.wo.cursorline = false
 vim.wo.cul = vim.wo.cursorline
+-- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+vim.wo.cursorlineopt = "both"
+vim.wo.culopt = vim.wo.cursorlineopt
