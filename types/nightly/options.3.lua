@@ -1,5 +1,33 @@
 ---@meta
 
+-- `'showbreak'`  `'sbr'` 	string	(default "")
+-- 			global or local to window |global-local|
+-- 	String to put at the start of lines that have been wrapped.  Useful
+-- 	values are "> " or "+++ ": >
+-- 		:set showbreak=>\
+-- <	Note the backslash to escape the trailing space.  It's easier like
+-- 	this: >
+-- 		:let &showbreak = '+++ '
+-- <	Only printable single-cell characters are allowed, excluding <Tab> and
+-- 	comma (in a future version the comma might be used to separate the
+-- 	part that is shown at the end and at the start of a line).
+-- 	The |hl-NonText| highlight group determines the highlighting.
+-- 	Note that tabs after the showbreak will be displayed differently.
+-- 	If you want the `'showbreak'`  to appear in between line numbers, add the
+-- 	"n" flag to `'cpoptions'` .
+-- 	A window-local value overrules a global value.  If the global value is
+-- 	set and you want no value in the current window use NONE: >
+-- 		:setlocal showbreak=NONE
+-- <
+--- @class vim.opt.showbreak: vim.Option,string
+--- @operator add: vim.opt.showbreak
+--- @operator sub: vim.opt.showbreak
+--- @operator pow: vim.opt.showbreak
+vim.opt.showbreak = ""
+vim.opt.sbr = vim.opt.showbreak
+--- @return string
+function vim.opt.showbreak:get()end
+
 -- `'showcmd'`  `'sc'` 		boolean	(default: on)
 -- 			global
 -- 	Show (partial) command in the last line of the screen.  Set this

@@ -647,7 +647,9 @@ function vim.opt.foldenable:get()end
 -- `'foldexpr'`  `'fde'` 	string (default: "0")
 -- 			local to window
 -- 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
--- 	for each line to obtain its fold level.  See |fold-expr|.
+-- 	for each line to obtain its fold level.  The context is set to the
+-- 	script where `'foldexpr'`  was set, script-local items can be accessed.
+-- 	See |fold-expr| for the usage.
 -- 
 -- 	The expression will be evaluated in the |sandbox| if set from a
 -- 	modeline, see |sandbox-option|.
@@ -826,7 +828,9 @@ function vim.opt.foldopen:get()end
 -- `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
 -- 			local to window
 -- 	An expression which is used to specify the text displayed for a closed
--- 	fold.  See |fold-foldtext|.
+-- 	fold.  The context is set to the script where `'foldexpr'`  was set,
+-- 	script-local items can be accessed.  See |fold-foldtext| for the
+-- 	usage.
 -- 
 -- 	The expression will be evaluated in the |sandbox| if set from a
 -- 	modeline, see |sandbox-option|.
@@ -874,7 +878,9 @@ function vim.opt.foldtext:get()end
 -- 	the script ID (|local-function|). Example: >
 -- 		set formatexpr=s:MyFormatExpr()
 -- 		set formatexpr=<SID>SomeFormatExpr()
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.  That stops the option from working,
 -- 	since changing the buffer text is not allowed.
@@ -1717,7 +1723,9 @@ function vim.opt.include:get()end
 -- 	the script ID (|local-function|). Example: >
 -- 		setlocal includeexpr=s:MyIncludeExpr(v:fname)
 -- 		setlocal includeexpr=<SID>SomeIncludeExpr(v:fname)
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
@@ -1786,11 +1794,14 @@ function vim.opt.incsearch:get()end
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
+-- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
 -- 	the script ID (|local-function|). Example: >
 -- 		set indentexpr=s:MyIndentExpr()
 -- 		set indentexpr=<SID>SomeIndentExpr()
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression must return the number of spaces worth of indent.  It
 -- 	can return "-1" to keep the current indent (this means `'autoindent'`  is
 -- 	used for the indent).
@@ -4639,32 +4650,4 @@ vim.opt.shortmess = "filnxtToOF"
 vim.opt.shm = vim.opt.shortmess
 --- @return string[]
 function vim.opt.shortmess:get()end
-
--- `'showbreak'`  `'sbr'` 	string	(default "")
--- 			global or local to window |global-local|
--- 	String to put at the start of lines that have been wrapped.  Useful
--- 	values are "> " or "+++ ": >
--- 		:set showbreak=>\
--- <	Note the backslash to escape the trailing space.  It's easier like
--- 	this: >
--- 		:let &showbreak = '+++ '
--- <	Only printable single-cell characters are allowed, excluding <Tab> and
--- 	comma (in a future version the comma might be used to separate the
--- 	part that is shown at the end and at the start of a line).
--- 	The |hl-NonText| highlight group determines the highlighting.
--- 	Note that tabs after the showbreak will be displayed differently.
--- 	If you want the `'showbreak'`  to appear in between line numbers, add the
--- 	"n" flag to `'cpoptions'` .
--- 	A window-local value overrules a global value.  If the global value is
--- 	set and you want no value in the current window use NONE: >
--- 		:setlocal showbreak=NONE
--- <
---- @class vim.opt.showbreak: vim.Option,string
---- @operator add: vim.opt.showbreak
---- @operator sub: vim.opt.showbreak
---- @operator pow: vim.opt.showbreak
-vim.opt.showbreak = ""
-vim.opt.sbr = vim.opt.showbreak
---- @return string
-function vim.opt.showbreak:get()end
 
