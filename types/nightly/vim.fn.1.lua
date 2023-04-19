@@ -3542,6 +3542,20 @@ function vim.fn.submatch(nr, list) end
 --- @return string
 function vim.fn.substitute(string, pat, sub, flags) end
 
+-- Returns a list of swap file names, like what "vim -r" shows.
+-- See the |-r| command argument.  The 'directory' option is used
+-- for the directories to inspect.  If you only want to get a
+-- list of swap files in the current directory then temporarily
+-- set 'directory' to a dot: 
+-- ```vim
+--   let save_dir = &directory
+--   let &directory = '.'
+--   let swapfiles = swapfilelist()
+--   let &directory = save_dir
+-- ```
+--- @return any[]
+function vim.fn.swapfilelist() end
+
 -- The result is a dictionary, which holds information about the
 -- swapfile {fname}. The available fields are:
 --   version Vim version
