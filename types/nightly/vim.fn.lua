@@ -1604,6 +1604,7 @@ function vim.fn.executable(expr) end
 -- Execute {command} and capture its output.
 -- If {command} is a |String|, returns {command} output.
 -- If {command} is a |List|, returns concatenated outputs.
+-- Line continuations in {command} are not recognized.
 -- Examples: 
 -- ```vim
 --   echo execute('echon "foo"')
@@ -3648,7 +3649,7 @@ function vim.fn.getregtype(regname) end
 -- optional items:
 --     name  Script name match pattern. If specified,
 --     and "sid" is not specified, information about
---     scripts with name that match the pattern
+--     scripts with a name that match the pattern
 --     "name" are returned.
 --     sid    Script ID |<SID>|.  If specified, only
 --     information about the script with ID "sid" is
@@ -5348,7 +5349,7 @@ function vim.fn.map(expr1, expr2) end
 --        "!"     Insert and Commandline mode
 --          (|mapmode-ic|)
 --   "sid"       The script local ID, used for <sid> mappings
---        (|<SID>|).
+--        (|<SID>|).  Negative for special contexts.
 --   "lnum"     The line number in "sid", zero if unknown.
 --   "nowait"   Do not wait for other, longer mappings.
 --        (|:map-<nowait>|).

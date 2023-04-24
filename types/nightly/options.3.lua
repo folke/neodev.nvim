@@ -581,11 +581,12 @@ function vim.opt.splitright:get()end
 -- 			global
 -- 	When "on" the commands listed below move the cursor to the first
 -- 	non-blank of the line.  When off the cursor is kept in the same column
--- 	(if possible).  This applies to the commands: CTRL-D, CTRL-U, CTRL-B,
--- 	CTRL-F, "G", "H", "M", "L", gg, and to the commands "d", "<<" and ">>"
--- 	with a linewise operator, with "%" with a count and to buffer changing
--- 	commands (CTRL-^, :bnext, :bNext, etc.).  Also for an Ex command that
--- 	only has a line number, e.g., ":25" or ":+".
+-- 	(if possible).  This applies to the commands:
+-- 	- CTRL-D, CTRL-U, CTRL-B, CTRL-F, "G", "H", "M", "L", "gg"
+-- 	- "d", "<<" and ">>" with a linewise operator
+-- 	- "%" with a count
+-- 	- buffer changing commands (CTRL-^, :bnext, :bNext, etc.)
+-- 	- Ex commands that only have a line number, e.g., ":25" or ":+".
 -- 	In case of buffer changing commands the cursor is placed at the column
 -- 	where it was the last time the buffer was edited.
 --- @class vim.opt.startofline: vim.Option,boolean
