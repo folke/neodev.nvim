@@ -1,5 +1,74 @@
 ---@meta
 
+-- Return the maximum value of all items in {expr}. Example: 
+-- ```vim
+--     echo max([apples, pears, oranges])
+-- 
+-- ```
+--   {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
+--   it returns the maximum of all values in the Dictionary.
+--   If {expr} is neither a List nor a Dictionary, or one of the
+--   items in {expr} cannot be used as a Number this results in
+--               an error.  An empty |List| or |Dictionary| results in zero.
+-- 
+--   Can also be used as a |method|: 
+-- ```vim
+--     mylist->max()
+-- ```
+--- @return number
+function vim.fn.max(expr) end
+
+-- Returns a |List| of |Dictionaries| describing |menus| (defined
+-- by |:menu|, |:amenu|, …), including |hidden-menus|.
+-- 
+-- {path} matches a menu by name, or all menus if {path} is an
+-- empty string.  Example: 
+-- ```vim
+--   :echo menu_get('File','')
+--   :echo menu_get('')
+-- ```
+-- {modes} is a string of zero or more modes (see |maparg()| or
+-- |creating-menus| for the list of modes). "a" means "all".
+-- 
+-- Example: 
+-- ```vim
+--   nnoremenu &Test.Test inormal
+--   inoremenu Test.Test insert
+--   vnoremenu Test.Test x
+--   echo menu_get("")
+-- 
+-- ```
+-- returns something like this: >
+-- 
+--   [ {
+--     "hidden": 0,
+--     "name": "Test",
+--     "priority": 500,
+--     "shortcut": 84,
+--     "submenus": [ {
+--       "hidden": 0,
+--       "mappings": {
+--         i": {
+--     "enabled": 1,
+--     "noremap": 1,
+--     "rhs": "insert",
+--     "sid": 1,
+--     "silent": 0
+--         },
+--         n": { ... },
+--         s": { ... },
+--         v": { ... }
+--       },
+--       "name": "Test",
+--       "priority": 500,
+--       "shortcut": 0
+--     } ]
+--   } ]
+-- <
+--- @param modes? any
+--- @return any[]
+function vim.fn.menu_get(path, modes) end
+
 -- Return information about the specified menu {name} in
 -- mode {mode}. The menu name should be specified without the
 -- shortcut character ('&'). If {name} is "", then the top-level
@@ -3430,6 +3499,33 @@ function vim.fn.strridx(haystack, needle, start) end
 --- @return string
 function vim.fn.strtrans(string) end
 
+-- The result is a Number, which is the number of UTF-16 code
+-- units in String {string} (after converting it to UTF-16).
+-- 
+-- When {countcc} is TRUE, composing characters are counted
+-- separately.
+-- When {countcc} is omitted or FALSE, composing characters are
+-- ignored.
+-- 
+-- Returns zero on error.
+-- 
+-- Also see |strlen()| and |strcharlen()|.
+-- Examples: 
+-- ```vim
+--     echo strutf16len('a')    returns 1
+--     echo strutf16len('©')    returns 1
+--     echo strutf16len('😊')    returns 2
+--     echo strutf16len('ą́')    returns 1
+--     echo strutf16len('ą́', v:true)  returns 3
+-- 
+-- Can also be used as a |method|: >
+--   GetText()->strutf16len()
+-- ```
+--- @param string string
+--- @param countcc? any
+--- @return number
+function vim.fn.strutf16len(string, countcc) end
+
 -- The result is a Number, which is the number of display cells
 -- String {string} occupies.  A Tab character is counted as one
 -- cell, alternatively use |strdisplaywidth()|.
@@ -4327,6 +4423,39 @@ function vim.fn.undotree() end
 --- @return any[]
 function vim.fn.uniq(list, func, dict) end
 
+-- Same as |charidx()| but returns the UTF-16 index of the byte
+-- at {idx} in {string} (after converting it to UTF-16).
+-- 
+-- When {charidx} is present and TRUE, {idx} is used as the
+-- character index in the String {string} instead of as the byte
+-- index.
+-- An {idx} in the middle of a UTF-8 sequence is rounded upwards
+-- to the end of that sequence.
+-- 
+-- See |byteidx()| and |byteidxcomp()| for getting the byte index
+-- from the UTF-16 index and |charidx()| for getting the
+-- character index from the UTF-16 index.
+-- Refer to |string-offset-encoding| for more information.
+-- Examples: 
+-- ```vim
+--   echo utf16idx('a😊😊', 3)  returns 2
+--   echo utf16idx('a😊😊', 7)  returns 4
+--   echo utf16idx('a😊😊', 1, 0, 1)  returns 2
+--   echo utf16idx('a😊😊', 2, 0, 1)  returns 4
+--   echo utf16idx('aą́c', 6)    returns 2
+--   echo utf16idx('aą́c', 6, 1)  returns 4
+--   echo utf16idx('a😊😊', 9)  returns -1
+-- ```
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetName()->utf16idx(idx)
+-- ```
+--- @param string string
+--- @param countcc? any
+--- @param charidx? any
+--- @return number
+function vim.fn.utf16idx(string, idx, countcc, charidx) end
+
 -- Return a |List| with all the values of {dict}.  The |List| is
 -- in arbitrary order.  Also see |items()| and |keys()|.
 -- Returns zero if {dict} is not a |Dict|.
@@ -4339,50 +4468,66 @@ function vim.fn.uniq(list, func, dict) end
 --- @return any[]
 function vim.fn.values(dict) end
 
---   The result is a Number, which is the screen column of the file
---   position given with {expr}.  That is, the last screen position
---   occupied by the character at that position, when the screen
---   would be of unlimited width.  When there is a <Tab> at the
---   position, the returned Number will be the column at the end of
---   the <Tab>.  For example, for a <Tab> in column 1, with 'ts'
---   set to 8, it returns 8. |conceal| is ignored.
---   For the byte position use |col()|.
---   For the use of {expr} see |col()|.
---   When 'virtualedit' is used {expr} can be [lnum, col, off], where
---   "off" is the offset in screen columns from the start of the
---   character.  E.g., a position within a <Tab> or after the last
---   character.  When "off" is omitted zero is used.
---   When Virtual editing is active in the current mode, a position
---   beyond the end of the line can be returned. |'virtualedit'|
---   The accepted positions are:
---       .      the cursor position
---       $      the end of the cursor line (the result is the
---         number of displayed characters in the cursor line
---         plus one)
---       'x      position of mark x (if the mark is not set, 0 is
---         returned)
---       v       In Visual mode: the start of the Visual area (the
---         cursor is the end).  When not in Visual mode
---         returns the cursor position.  Differs from |'<| in
---         that it's updated right away.
---   Note that only marks in the current file can be used.
---   Examples: 
+-- The result is a Number, which is the screen column of the file
+-- position given with {expr}.  That is, the last screen position
+-- occupied by the character at that position, when the screen
+-- would be of unlimited width.  When there is a <Tab> at the
+-- position, the returned Number will be the column at the end of
+-- the <Tab>.  For example, for a <Tab> in column 1, with 'ts'
+-- set to 8, it returns 8. |conceal| is ignored.
+-- For the byte position use |col()|.
+-- 
+-- For the use of {expr} see |col()|.
+-- 
+-- When 'virtualedit' is used {expr} can be [lnum, col, off],
+-- where "off" is the offset in screen columns from the start of
+-- the character.  E.g., a position within a <Tab> or after the
+-- last character.  When "off" is omitted zero is used.  When
+-- Virtual editing is active in the current mode, a position
+-- beyond the end of the line can be returned.  Also see
+-- |'virtualedit'|
+-- 
+-- The accepted positions are:
+--     .      the cursor position
+--     $      the end of the cursor line (the result is the
+--       number of displayed characters in the cursor line
+--       plus one)
+--     'x      position of mark x (if the mark is not set, 0 is
+--       returned)
+--     v       In Visual mode: the start of the Visual area (the
+--       cursor is the end).  When not in Visual mode
+--       returns the cursor position.  Differs from |'<| in
+--       that it's updated right away.
+-- 
+-- If {list} is present and non-zero then virtcol() returns a List
+-- with the first and last screen position occupied by the
+-- character.
+-- 
+-- Note that only marks in the current file can be used.
+-- Examples: 
 -- ```vim
--- virtcol(".")     with text "foo^Lbar", with cursor on the "^L", returns 5
--- virtcol("$")     with text "foo^Lbar", returns 9
--- virtcol("'t")    with text "    there", with 't at 'h', returns 6
+--   " With text "foo^Lbar" and cursor on the "^L":
+-- 
+--   virtcol(".")  " returns 5
+--   virtcol(".", 1)  " returns [4, 5]
+--   virtcol("$")  " returns 9
+-- 
+--   " With text "    there", with 't at 'h':
+-- 
+--   virtcol("'t")  " returns 6
 -- ```
---   The first column is 1.  0 is returned for an error.
---   A more advanced example that echoes the maximum length of
---   all lines: 
+-- The first column is 1.  0 is returned for an error.
+-- A more advanced example that echoes the maximum length of
+-- all lines: 
 -- ```vim
---       echo max(map(range(1, line('$')), "virtcol([v:val, '$'])"))
+--     echo max(map(range(1, line('$')), "virtcol([v:val, '$'])"))
 -- 
 -- ```
---   Can also be used as a |method|: >
---     GetPos()->virtcol()
+-- Can also be used as a |method|: >
+--   GetPos()->virtcol()
+--- @param list? any[]
 --- @return number
-function vim.fn.virtcol(expr) end
+function vim.fn.virtcol(expr, list) end
 
 -- The result is a Number, which is the byte index of the
 -- character in window {winid} at buffer line {lnum} and virtual

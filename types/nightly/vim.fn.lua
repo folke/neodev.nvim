@@ -67,6 +67,7 @@ function vim.fn.add(object, expr) end
 
 -- Bitwise AND on the two arguments.  The arguments are converted
 -- to a number.  A List, Dict or Float argument causes an error.
+-- Also see `or()` and `xor()`.
 -- Example: 
 -- ```vim
 --   :let flag = and(bits, 0x80)
@@ -574,6 +575,13 @@ function vim.fn.byte2line(byte) end
 -- length is added to the preceding base character.  See
 -- |byteidxcomp()| below for counting composing characters
 -- separately.
+-- When {utf16} is present and TRUE, {nr} is used as the UTF-16
+-- index in the String {expr} instead of as the character index.
+-- The UTF-16 index is the index in the string when it is encoded
+-- with 16-bit words.  If the specified UTF-16 index is in the
+-- middle of a character (e.g. in a 4-byte character), then the
+-- byte index of the first byte in the character is returned.
+-- Refer to |string-offset-encoding| for more information.
 -- Example : 
 -- ```vim
 --   echo matchstr(str, ".", byteidx(str, 3))
@@ -589,14 +597,22 @@ function vim.fn.byte2line(byte) end
 -- If there are less than {nr} characters -1 is returned.
 -- If there are exactly {nr} characters the length of the string
 -- in bytes is returned.
--- 
+-- See |charidx()| and |utf16idx()| for getting the character and
+-- UTF-16 index respectively from the byte index.
+-- Examples: 
+-- ```vim
+--   echo byteidx('a😊😊', 2)  returns 5
+--   echo byteidx('a😊😊', 2, 1)  returns 1
+--   echo byteidx('a😊😊', 3, 1)  returns 5
+-- ```
 -- Can also be used as a |method|: 
 -- ```vim
 --   GetName()->byteidx(idx)
 -- ```
 --- @param nr number
+--- @param utf16? any
 --- @return number
-function vim.fn.byteidx(expr, nr) end
+function vim.fn.byteidx(expr, nr, utf16) end
 
 -- Like byteidx(), except that a composing character is counted
 -- as a separate character.  Example: 
@@ -615,8 +631,9 @@ function vim.fn.byteidx(expr, nr) end
 --   GetName()->byteidxcomp(idx)
 -- ```
 --- @param nr number
+--- @param utf16? any
 --- @return number
-function vim.fn.byteidxcomp(expr, nr) end
+function vim.fn.byteidxcomp(expr, nr, utf16) end
 
 -- Call function {func} with the items in |List| {arglist} as
 -- arguments.
@@ -760,23 +777,32 @@ function vim.fn.charcol(expr, winid) end
 -- The index of the first character is zero.
 -- If there are no multibyte characters the returned value is
 -- equal to {idx}.
+-- 
 -- When {countcc} is omitted or |FALSE|, then composing characters
--- are not counted separately, their byte length is
--- added to the preceding base character.
+-- are not counted separately, their byte length is added to the
+-- preceding base character.
 -- When {countcc} is |TRUE|, then composing characters are
 -- counted as separate characters.
+-- 
+-- When {utf16} is present and TRUE, {idx} is used as the UTF-16
+-- index in the String {expr} instead of as the byte index.
+-- 
 -- Returns -1 if the arguments are invalid or if {idx} is greater
 -- than the index of the last byte in {string}.  An error is
 -- given if the first argument is not a string, the second
 -- argument is not a number or when the third argument is present
 -- and is not zero or one.
+-- 
 -- See |byteidx()| and |byteidxcomp()| for getting the byte index
--- from the character index.
+-- from the character index and |utf16idx()| for getting the
+-- UTF-16 index from the character index.
+-- Refer to |string-offset-encoding| for more information.
 -- Examples: 
 -- ```vim
 --   echo charidx('áb́ć', 3)    returns 1
 --   echo charidx('áb́ć', 6, 1)  returns 4
 --   echo charidx('áb́ć', 16)    returns -1
+--   echo charidx('a😊😊', 4, 0, 1)  returns 2
 -- ```
 -- Can also be used as a |method|: 
 -- ```vim
@@ -784,8 +810,9 @@ function vim.fn.charcol(expr, winid) end
 -- ```
 --- @param string string
 --- @param countcc? any
+--- @param utf16? any
 --- @return number
-function vim.fn.charidx(string, idx, countcc) end
+function vim.fn.charidx(string, idx, countcc, utf16) end
 
 -- Change the current working directory to {dir}.  The scope of
 -- the directory change depends on the directory of the current
@@ -5885,73 +5912,4 @@ function vim.fn.matchstr(expr, pat, start, count) end
 --- @param count? any
 --- @return any[]
 function vim.fn.matchstrpos(expr, pat, start, count) end
-
--- Return the maximum value of all items in {expr}. Example: 
--- ```vim
---     echo max([apples, pears, oranges])
--- 
--- ```
---   {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
---   it returns the maximum of all values in the Dictionary.
---   If {expr} is neither a List nor a Dictionary, or one of the
---   items in {expr} cannot be used as a Number this results in
---               an error.  An empty |List| or |Dictionary| results in zero.
--- 
---   Can also be used as a |method|: 
--- ```vim
---     mylist->max()
--- ```
---- @return number
-function vim.fn.max(expr) end
-
--- Returns a |List| of |Dictionaries| describing |menus| (defined
--- by |:menu|, |:amenu|, …), including |hidden-menus|.
--- 
--- {path} matches a menu by name, or all menus if {path} is an
--- empty string.  Example: 
--- ```vim
---   :echo menu_get('File','')
---   :echo menu_get('')
--- ```
--- {modes} is a string of zero or more modes (see |maparg()| or
--- |creating-menus| for the list of modes). "a" means "all".
--- 
--- Example: 
--- ```vim
---   nnoremenu &Test.Test inormal
---   inoremenu Test.Test insert
---   vnoremenu Test.Test x
---   echo menu_get("")
--- 
--- ```
--- returns something like this: >
--- 
---   [ {
---     "hidden": 0,
---     "name": "Test",
---     "priority": 500,
---     "shortcut": 84,
---     "submenus": [ {
---       "hidden": 0,
---       "mappings": {
---         i": {
---     "enabled": 1,
---     "noremap": 1,
---     "rhs": "insert",
---     "sid": 1,
---     "silent": 0
---         },
---         n": { ... },
---         s": { ... },
---         v": { ... }
---       },
---       "name": "Test",
---       "priority": 500,
---       "shortcut": 0
---     } ]
---   } ]
--- <
---- @param modes? any
---- @return any[]
-function vim.fn.menu_get(path, modes) end
 
