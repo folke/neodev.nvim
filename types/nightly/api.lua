@@ -2519,10 +2519,13 @@ function vim.api.nvim_set_current_win(window) end
 -- for the extmarks set/modified inside the callback anyway.
 -- 
 -- Note: doing anything other than setting extmarks is considered
--- experimental. Doing things like changing options are not expliticly
+-- experimental. Doing things like changing options are not explicitly
 -- forbidden, but is likely to have unexpected consequences (such as 100% CPU
 -- consumption). doing `vim.rpcnotify` should be OK, but `vim.rpcrequest` is
 -- quite dubious for the moment.
+-- 
+-- Note: It is not allowed to remove or update extmarks in 'on_line'
+-- callbacks.
 -- 
 -- Attributes: ~
 --     Lua |vim.api| only
