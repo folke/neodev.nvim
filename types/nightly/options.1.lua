@@ -508,6 +508,16 @@ vim.wo.siso = vim.wo.sidescrolloff
 -- 	during line deletion.
 vim.wo.signcolumn = "auto"
 vim.wo.scl = vim.wo.signcolumn
+-- `'smoothscroll'`  `'sms'` 	boolean  (default off)
+-- 			local to window
+-- 	Scrolling works with screen lines.  When `'wrap'`  is set and the first
+-- 	line in the window wraps part of it may not be visible, as if it is
+-- 	above the window. "<<<" is displayed at the start of the first line,
+-- 	highlighted with |hl-NonText|.
+-- 	NOTE: only partly implemented, currently works with CTRL-E, CTRL-Y
+-- 	and scrolling with the mouse.
+vim.wo.smoothscroll = false
+vim.wo.sms = vim.wo.smoothscroll
 -- `'spell'` 			boolean	(default off)
 -- 			local to window
 -- 	When on spell checking will be done.  See |spell|.

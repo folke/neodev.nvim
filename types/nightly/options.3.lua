@@ -298,6 +298,23 @@ vim.opt.sta = vim.opt.smarttab
 --- @return boolean
 function vim.opt.smarttab:get()end
 
+-- `'smoothscroll'`  `'sms'` 	boolean  (default off)
+-- 			local to window
+-- 	Scrolling works with screen lines.  When `'wrap'`  is set and the first
+-- 	line in the window wraps part of it may not be visible, as if it is
+-- 	above the window. "<<<" is displayed at the start of the first line,
+-- 	highlighted with |hl-NonText|.
+-- 	NOTE: only partly implemented, currently works with CTRL-E, CTRL-Y
+-- 	and scrolling with the mouse.
+--- @class vim.opt.smoothscroll: vim.Option,boolean
+--- @operator add: vim.opt.smoothscroll
+--- @operator sub: vim.opt.smoothscroll
+--- @operator pow: vim.opt.smoothscroll
+vim.opt.smoothscroll = false
+vim.opt.sms = vim.opt.smoothscroll
+--- @return boolean
+function vim.opt.smoothscroll:get()end
+
 -- `'softtabstop'`  `'sts'` 	number	(default 0)
 -- 			local to buffer
 -- 	Number of spaces that a <Tab> counts for while performing editing
