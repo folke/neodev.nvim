@@ -2768,6 +2768,23 @@ function vim.fn.sin(expr) end
 --- @return float
 function vim.fn.sinh(expr) end
 
+-- Similar to using a |slice| "expr[start : end]", but "end" is
+-- used exclusive.  And for a string the indexes are used as
+-- character indexes instead of byte indexes.
+-- Also, composing characters are not counted.
+-- When {end} is omitted the slice continues to the last item.
+-- When {end} is -1 the last item is omitted.
+-- Returns an empty value if {start} or {end} are invalid.
+-- 
+-- Can also be used as a |method|: 
+-- ```vim
+--   GetList()->slice(offset)
+-- ```
+--- @param start number
+--- @param end_? number
+--- @return string
+function vim.fn.slice(expr, start, end_) end
+
 -- Connect a socket to an address. If {mode} is "pipe" then
 -- {address} should be the path of a local domain socket (on
 -- unix) or named pipe (on Windows). If {mode} is "tcp" then
@@ -3186,10 +3203,14 @@ function vim.fn.str2nr(string, base) end
 function vim.fn.strcharlen(string) end
 
 -- Like |strpart()| but using character index and length instead
--- of byte index and length.  Composing characters are counted
--- separately.
+-- of byte index and length.
+-- When {skipcc} is omitted or zero, composing characters are
+-- counted separately.
+-- When {skipcc} set to 1, Composing characters are ignored,
+-- similar to  |slice()|.
 -- When a character index is used where a character does not
--- exist it is assumed to be one character.  For example: 
+-- exist it is omitted and counted as one character.  For
+-- example: 
 -- ```vim
 --   strcharpart('abc', -1, 2)
 -- ```
@@ -3203,8 +3224,9 @@ function vim.fn.strcharlen(string) end
 -- ```
 --- @param start number
 --- @param len? any
+--- @param skipcc? any
 --- @return string
-function vim.fn.strcharpart(src, start, len) end
+function vim.fn.strcharpart(src, start, len, skipcc) end
 
 -- The result is a Number, which is the number of characters
 -- in String {string}.
