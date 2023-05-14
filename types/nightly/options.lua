@@ -415,7 +415,7 @@ vim.go.ccv = vim.go.charconvert
 -- 			register.  When "unnamed" is also included to the
 -- 			option, yank and delete operations (but not put)
 -- 			will additionally copy the text into register
--- 			`'*'` . See |clipboard|.
+-- 			"*". See |clipboard|.
 vim.go.clipboard = ""
 vim.go.cb = vim.go.clipboard
 -- `'cmdheight'`  `'ch'` 	number	(default 1)

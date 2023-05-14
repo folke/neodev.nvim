@@ -1704,7 +1704,7 @@ vim.bo.inf = vim.bo.infercase
 -- 	that is not white space or punctuation).
 -- 	For C programs you could use "a-z,A-Z,48-57,_,.,-,>".
 -- 	For a help file it is set to all non-blank printable characters except
--- 	`'*'` , `'"'`  and `'|'`  (so that CTRL-] on a command finds the help for that
+-- 	"*", `'"'`  and `'|'`  (so that CTRL-] on a command finds the help for that
 -- 	command).
 -- 	When the `'lisp'`  option is on the `'-'`  character is always included.
 -- 	This option also influences syntax highlighting, unless the syntax
@@ -3411,7 +3411,7 @@ function vim.opt.cinwords:get()end
 -- 			register.  When "unnamed" is also included to the
 -- 			option, yank and delete operations (but not put)
 -- 			will additionally copy the text into register
--- 			`'*'` . See |clipboard|.
+-- 			"*". See |clipboard|.
 --- @class vim.opt.clipboard: vim.Option,string[]
 --- @operator add: vim.opt.clipboard
 --- @operator sub: vim.opt.clipboard

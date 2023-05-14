@@ -637,7 +637,7 @@ function vim.fn.prevnonblank(lnum) end
 --   be applied, see below.
 -- 
 -- A field width or precision, or both, may be indicated by an
--- asterisk '*' instead of a digit string.  In this case, a
+-- asterisk "*" instead of a digit string.  In this case, a
 -- Number argument supplies the field width or precision.  A
 -- negative field width is treated as a left adjustment flag
 -- followed by a positive field width; a negative precision is
