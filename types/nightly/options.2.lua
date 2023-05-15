@@ -1,5 +1,64 @@
 ---@meta
 
+-- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
+-- 			global
+-- 	List of directory names for the swap file, separated with commas.
+-- 
+-- 	Possible items:
+-- 	- The swap file will be created in the first directory where this is
+-- 	  possible.  If it is not possible in any directory, but last
+-- 	  directory listed in the option does not exist, it is created.
+-- 	- Empty means that no swap file will be used (recovery is
+-- 	  impossible!) and no |E303| error will be given.
+-- 	- A directory "." means to put the swap file in the same directory as
+-- 	  the edited file.  On Unix, a dot is prepended to the file name, so
+-- 	  it doesn't show in a directory listing.  On MS-Windows the "hidden"
+-- 	  attribute is set and a dot prepended if possible.
+-- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
+-- 	  the swap file relative to where the edited file is.  The leading "."
+-- 	  is replaced with the path name of the edited file.
+-- 	- For Unix and Win32, if a directory ends in two path separators "//",
+-- 	  the swap file name will be built from the complete path to the file
+-- 	  with all path separators replaced by percent `'%'`  signs (including
+-- 	  the colon following the drive letter on Win32). This will ensure
+-- 	  file name uniqueness in the preserve directory.
+-- 	  On Win32, it is also possible to end with "\\".  However, When a
+-- 	  separating comma is following, you must use "//", since "\\" will
+-- 	  include the comma in the file name. Therefore it is recommended to
+-- 	  use `'//'` , instead of `'\\'` .
+-- 	- Spaces after the comma are ignored, other spaces are considered part
+-- 	  of the directory name.  To have a space at the start of a directory
+-- 	  name, precede it with a backslash.
+-- 	- To include a comma in a directory name precede it with a backslash.
+-- 	- A directory name may end in an `':'`  or `'/'` .
+-- 	- Environment variables are expanded |:set_env|.
+-- 	- Careful with `'\'`  characters, type one before a space, type two to
+-- 	  get one in the option (see |option-backslash|), for example: >
+-- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
+-- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
+-- 	  of the option is removed.
+-- 	Using "." first in the list is recommended.  This means that editing
+-- 	the same file twice will result in a warning.  Using "/tmp" on Unix is
+-- 	discouraged: When the system crashes you lose the swap file.
+-- 	"/var/tmp" is often not cleared when rebooting, thus is a better
+-- 	choice than "/tmp".  But others on the computer may be able to see the
+-- 	files, and it can contain a lot of files, your swap files get lost in
+-- 	the crowd.  That is why a "tmp" directory in your home directory is
+-- 	tried first.
+-- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
+-- 	directories from the list.  This avoids problems when a future version
+-- 	uses another default.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
+--- @class vim.opt.directory: vim.Option,string[]
+--- @operator add: vim.opt.directory
+--- @operator sub: vim.opt.directory
+--- @operator pow: vim.opt.directory
+vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
+vim.opt.dir = vim.opt.directory
+--- @return string[]
+function vim.opt.directory:get()end
+
 -- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
 -- 	Change the way text is displayed.  This is a comma-separated list of
@@ -4583,71 +4642,4 @@ vim.opt.shiftwidth = 8
 vim.opt.sw = vim.opt.shiftwidth
 --- @return number
 function vim.opt.shiftwidth:get()end
-
--- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
--- 			global
--- 	This option helps to avoid all the |hit-enter| prompts caused by file
--- 	messages, for example  with CTRL-G, and to avoid some other messages.
--- 	It is a list of flags:
--- 	 flag	meaning when present	~
--- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
--- 	  i	use "[noeol]" instead of "[Incomplete last line]"
--- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
--- 	  m	use "[+]" instead of "[Modified]"
--- 	  n	use "[New]" instead of "[New File]"
--- 	  r	use "[RO]" instead of "[readonly]"
--- 	  w	use "[w]" instead of "written" for file write message
--- 		and "[a]" instead of "appended" for ':w >> file' command
--- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
--- 		instead of "[unix format]" and "[mac]" instead of "[mac
--- 		format]"
--- 	  a	all of the above abbreviations
--- 
--- 	  o	overwrite message for writing a file with subsequent
--- 		message for reading a file (useful for ":wn" or when
--- 		`'autowrite'`  on)
--- 	  O	message for reading a file overwrites any previous
--- 		message;  also for quickfix message (e.g., ":cn")
--- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
--- 		"search hit TOP, continuing at BOTTOM" messages; when using
--- 		the search count do not show "W" after the count message (see
--- 		S below)
--- 	  t	truncate file message at the start if it is too long
--- 		to fit on the command-line, "<" will appear in the left most
--- 		column; ignored in Ex mode
--- 	  T	truncate other messages in the middle if they are too
--- 		long to fit on the command line; "..." will appear in the
--- 		middle; ignored in Ex mode
--- 	  W	don't give "written" or "[w]" when writing a file
--- 	  A	don't give the "ATTENTION" message when an existing
--- 		swap file is found
--- 	  I	don't give the intro message when starting Vim,
--- 		see |:intro|
--- 	  c	don't give |ins-completion-menu| messages; for
--- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
--- 		match", "Pattern not found", "Back at original", etc.
--- 	  C	don't give messages while scanning for ins-completion
--- 		items, for instance "scanning tags"
--- 	  q	use "recording" instead of "recording @a"
--- 	  F	don't give the file info when editing a file, like
--- 		`:silent` was used for the command
--- 	  S	do not show search count message when searching, e.g.
--- 		"[1/5]"
--- 
--- 	This gives you the opportunity to avoid that a change between buffers
--- 	requires you to hit <Enter>, but still gives as useful a message as
--- 	possible for the space available.  To get the whole message that you
--- 	would have got with `'shm'`  empty, use ":file!"
--- 	Useful values:
--- 	    shm=	No abbreviation of message.
--- 	    shm=a	Abbreviation, but no loss of information.
--- 	    shm=at	Abbreviation, and truncate message when necessary.
---- @class vim.opt.shortmess: vim.Option,string[]
---- @operator add: vim.opt.shortmess
---- @operator sub: vim.opt.shortmess
---- @operator pow: vim.opt.shortmess
-vim.opt.shortmess = "filnxtToOF"
-vim.opt.shm = vim.opt.shortmess
---- @return string[]
-function vim.opt.shortmess:get()end
 

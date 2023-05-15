@@ -86,6 +86,9 @@ vim.go.acd = vim.go.autochdir
 -- 	`'autowriteall'`  for that.
 -- 	Some buffers will not be written, specifically when `'buftype'`  is
 -- 	"nowrite", "nofile", "terminal" or "prompt".
+-- 	USE WITH CARE: If you make temporary changes to a buffer that you
+-- 	don't want to be saved this option may cause it to be saved anyway.
+-- 	Renaming the buffer with ":file {name}" may help avoid this.
 vim.go.autowrite = false
 vim.go.aw = vim.go.autowrite
 -- `'autowriteall'`  `'awa'` 	boolean	(default off)
@@ -4289,20 +4292,3 @@ vim.wo.cuc = vim.wo.cursorcolumn
 -- 	easier to see the selected text.
 vim.wo.cursorline = false
 vim.wo.cul = vim.wo.cursorline
--- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
--- 			local to window
--- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
--- 	Valid values:
--- 	"line"		Highlight the text line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"screenline"	Highlight only the screen line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"number"	Highlight the line number of the cursor with
--- 			CursorLineNr |hl-CursorLineNr|.
--- 
--- 	Special value:
--- 	"both"		Alias for the values "line,number".
--- 
--- 	"line" and "screenline" cannot be used together.
-vim.wo.cursorlineopt = "both"
-vim.wo.culopt = vim.wo.cursorlineopt

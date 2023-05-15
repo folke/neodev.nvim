@@ -770,17 +770,20 @@ function vim.fn.prompt_getprompt(buf) end
 -- if the user only typed Enter.
 -- Example: 
 -- ```vim
---    call prompt_setcallback(bufnr(''), function('s:TextEntered'))
 --    func s:TextEntered(text)
 --      if a:text == 'exit' || a:text == 'quit'
 --        stopinsert
+--        " Reset 'modified' to allow the buffer to be closed.
+--        " We assume there is nothing useful to be saved.
+--        set nomodified
 --        close
 --      else
+--        " Do something useful with "a:text".  In this example
+--        " we just repeat it.
 --        call append(line('$') - 1, 'Entered: "' .. a:text .. '"')
---        " Reset 'modified' to allow the buffer to be closed.
---        set nomodified
 --      endif
 --    endfunc
+--    call prompt_setcallback(bufnr(), function('s:TextEntered'))
 -- 
 -- ```
 -- Can also be used as a |method|: >
@@ -4634,7 +4637,7 @@ function vim.fn.wildmenumode() end
 -- The window will temporarily be made the current window,
 -- without triggering autocommands or changing directory.  When
 -- executing {command} autocommands will be triggered, this may
--- have unexpected side effects.  Use |:noautocmd| if needed.
+-- have unexpected side effects.  Use `:noautocmd` if needed.
 -- Example: 
 -- ```vim
 --   call win_execute(winid, 'syntax enable')

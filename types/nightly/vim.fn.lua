@@ -1647,7 +1647,7 @@ function vim.fn.executable(expr) end
 -- The default is "silent".  Note that with "silent!", unlike
 -- `:redir`, error messages are dropped.
 -- 
--- To get a list of lines use |split()| on the result: 
+-- To get a list of lines use `split()` on the result: 
 -- ```vim
 --   execute('args')->split("\n")
 -- 
