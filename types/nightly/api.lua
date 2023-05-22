@@ -549,18 +549,8 @@ function vim.api.nvim_buf_get_name(buffer) end
 --- @return number
 function vim.api.nvim_buf_get_offset(buffer, index) end
 
--- Gets a buffer option value
--- 
--- Parameters: ~
---   • {buffer}  Buffer handle, or 0 for current buffer
---   • {name}    Option name
--- 
--- Return: ~
---     Option value
---- @param buffer buffer
---- @param name string
 --- @return object
-function vim.api.nvim_buf_get_option(buffer, name) end
+function vim.api.nvim_buf_get_option() end
 
 -- Gets a range from the buffer.
 -- 
@@ -844,17 +834,7 @@ function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 --- @param name string
 function vim.api.nvim_buf_set_name(buffer, name) end
 
--- Sets a buffer option value. Passing `nil` as value deletes the option
--- (only works if there's a global fallback)
--- 
--- Parameters: ~
---   • {buffer}  Buffer handle, or 0 for current buffer
---   • {name}    Option name
---   • {value}   Option value
---- @param buffer buffer
---- @param name string
---- @param value object
-function vim.api.nvim_buf_set_option(buffer, name, value) end
+function vim.api.nvim_buf_set_option() end
 
 -- Sets (replaces) a range in the buffer
 -- 
@@ -1740,16 +1720,8 @@ function vim.api.nvim_get_mode() end
 --- @return table<string, any>
 function vim.api.nvim_get_namespaces() end
 
--- Gets the global value of an option.
--- 
--- Parameters: ~
---   • {name}  Option name
--- 
--- Return: ~
---     Option value (global)
---- @param name string
 --- @return object
-function vim.api.nvim_get_option(name) end
+function vim.api.nvim_get_option() end
 
 --- @return table<string, any>
 function vim.api.nvim_get_option_info() end
@@ -2662,14 +2634,7 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --- @param opts? table<string, any>
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
--- Sets the global value of an option.
--- 
--- Parameters: ~
---   • {name}   Option name
---   • {value}  New option value
---- @param name string
---- @param value object
-function vim.api.nvim_set_option(name, value) end
+function vim.api.nvim_set_option() end
 
 -- Sets the value of an option. The behavior of this function matches that of
 -- |:set|: for global-local options, both the global and local value are set
@@ -2903,18 +2868,8 @@ function vim.api.nvim_win_get_height(window) end
 --- @return number
 function vim.api.nvim_win_get_number(window) end
 
--- Gets a window option value
--- 
--- Parameters: ~
---   • {window}  Window handle, or 0 for current window
---   • {name}    Option name
--- 
--- Return: ~
---     Option value
---- @param window window
---- @param name string
 --- @return object
-function vim.api.nvim_win_get_option(window, name) end
+function vim.api.nvim_win_get_option() end
 
 -- Gets the window position in display cells. First position is zero.
 -- 
@@ -3047,17 +3002,7 @@ function vim.api.nvim_win_set_height(window, height) end
 --- @param ns_id number
 function vim.api.nvim_win_set_hl_ns(window, ns_id) end
 
--- Sets a window option value. Passing `nil` as value deletes the option
--- (only works if there's a global fallback)
--- 
--- Parameters: ~
---   • {window}  Window handle, or 0 for current window
---   • {name}    Option name
---   • {value}   Option value
---- @param window window
---- @param name string
---- @param value object
-function vim.api.nvim_win_set_option(window, name, value) end
+function vim.api.nvim_win_set_option() end
 
 -- Sets a window-scoped (w:) variable
 -- 
