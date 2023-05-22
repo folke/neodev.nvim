@@ -1,4 +1,4 @@
-*neodev.nvim.txt*        For Neovim >= 0.8.0        Last change: 2023 April 16
+*neodev.nvim.txt*         For Neovim >= 0.8.0         Last change: 2023 May 22
 
 ==============================================================================
 Table of Contents                              *neodev.nvim-table-of-contents*
@@ -19,7 +19,6 @@ and completion for the nvim lua API.
 
 FEATURES                                    *neodev.nvim-neodev.nvim-features*
 
-
 - Automatically configures **lua-language-server** for your **Neovim** config, **Neovim** runtime and plugin
     directories
 - Annotations <https://github.com/LuaLS/lua-language-server/wiki/Annotations> for completion, hover and signatures of:
@@ -35,7 +34,6 @@ FEATURES                                    *neodev.nvim-neodev.nvim-features*
 
 REQUIREMENTS                            *neodev.nvim-neodev.nvim-requirements*
 
-
 - Neovim >= 0.7.0
 - completion plugin like nvim-cmp <https://github.com/hrsh7th/nvim-cmp>
 
@@ -45,10 +43,10 @@ INSTALLATION                            *neodev.nvim-neodev.nvim-installation*
 Install the plugin with your preferred package manager:
 
 
-PACKER ~
+LAZY.NVIM ~
 
 >lua
-    use "folke/neodev.nvim"
+    { "folke/neodev.nvim", opts = {} }
 <
 
 
@@ -93,7 +91,6 @@ CONFIGURATION                          *neodev.nvim-neodev.nvim-configuration*
 SETUP                                          *neodev.nvim-neodev.nvim-setup*
 
 **neodev** will **ONLY** change the **lua_ls** settings for:
-
 
 - your Neovim config directory
 - your Neovim runtime directory
