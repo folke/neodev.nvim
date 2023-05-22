@@ -28,10 +28,10 @@ completion for the nvim lua API.
 
 Install the plugin with your preferred package manager:
 
-### [packer](https://github.com/wbthomason/packer.nvim)
+### [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
-use "folke/neodev.nvim"
+{ "folke/neodev.nvim", opts = {} }
 ```
 
 ### [vim-plug](https://github.com/junegunn/vim-plug)
