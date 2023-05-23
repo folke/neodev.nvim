@@ -670,6 +670,8 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 • "overlay": display over the specified column, without
 --                   shifting the underlying text.
 --                 • "right_align": display right aligned in the window.
+--                 • "inline": display at the specified column, and shift the
+--                   buffer text to the right as needed
 -- 
 --               • virt_text_win_col : position the virtual text at a fixed
 --                 window column (starting from the first text column)
