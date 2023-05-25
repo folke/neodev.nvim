@@ -4002,6 +4002,9 @@ function vim.opt.scroll:get()end
 -- 	top are deleted if new lines exceed this limit.
 -- 	Minimum is 1, maximum is 100000.
 -- 	Only in |terminal| buffers.
+-- 
+-- 	Note: Lines that are not visible and kept in scrollback are not
+-- 	reflown when the terminal buffer is resized horizontally.
 --- @class vim.opt.scrollback: vim.Option,number
 --- @operator add: vim.opt.scrollback
 --- @operator sub: vim.opt.scrollback
@@ -4627,19 +4630,4 @@ vim.opt.shiftround = false
 vim.opt.sr = vim.opt.shiftround
 --- @return boolean
 function vim.opt.shiftround:get()end
-
--- `'shiftwidth'`  `'sw'` 	number	(default 8)
--- 			local to buffer
--- 	Number of spaces to use for each step of (auto)indent.  Used for
--- 	|`'cindent'` |, |>>|, |<<|, etc.
--- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
--- 	function to get the effective shiftwidth value.
---- @class vim.opt.shiftwidth: vim.Option,number
---- @operator add: vim.opt.shiftwidth
---- @operator sub: vim.opt.shiftwidth
---- @operator pow: vim.opt.shiftwidth
-vim.opt.shiftwidth = 8
-vim.opt.sw = vim.opt.shiftwidth
---- @return number
-function vim.opt.shiftwidth:get()end
 

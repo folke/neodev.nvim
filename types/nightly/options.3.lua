@@ -1,5 +1,20 @@
 ---@meta
 
+-- `'shiftwidth'`  `'sw'` 	number	(default 8)
+-- 			local to buffer
+-- 	Number of spaces to use for each step of (auto)indent.  Used for
+-- 	|`'cindent'` |, |>>|, |<<|, etc.
+-- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
+-- 	function to get the effective shiftwidth value.
+--- @class vim.opt.shiftwidth: vim.Option,number
+--- @operator add: vim.opt.shiftwidth
+--- @operator sub: vim.opt.shiftwidth
+--- @operator pow: vim.opt.shiftwidth
+vim.opt.shiftwidth = 8
+vim.opt.sw = vim.opt.shiftwidth
+--- @return number
+function vim.opt.shiftwidth:get()end
+
 -- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
 -- 			global
 -- 	This option helps to avoid all the |hit-enter| prompts caused by file
