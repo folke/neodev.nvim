@@ -676,8 +676,9 @@ function vim.api.nvim_buf_line_count(buffer) end
 --               • virt_text_win_col : position the virtual text at a fixed
 --                 window column (starting from the first text column)
 --               • virt_text_hide : hide the virtual text when the background
---                 text is selected or hidden due to horizontal scroll
---                 'nowrap'
+--                 text is selected or hidden because of scrolling with
+--                 'nowrap' or 'smoothscroll'. Currently only affects
+--                 "overlay" virt_text.
 --               • hl_mode : control how highlights are combined with the
 --                 highlights of the text. Currently only affects virt_text
 --                 highlights, but might affect `hl_group` in later versions.
