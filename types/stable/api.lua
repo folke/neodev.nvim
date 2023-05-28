@@ -253,7 +253,7 @@ function vim.api.nvim_buf_clear_namespace(buffer, ns_id, line_start, line_end) e
 --- @param buffer buffer
 --- @param name string
 --- @param command object
---- @param opts? table<string, any>
+--- @param opts table<string, any>
 function vim.api.nvim_buf_create_user_command(buffer, name, command, opts) end
 
 -- Removes an |extmark|.
