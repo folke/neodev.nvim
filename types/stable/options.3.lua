@@ -361,6 +361,7 @@ function vim.opt.spellcapcheck:get()end
 -- 	Name of the word list file where words are added for the |zg| and |zw|
 -- 	commands.  It must end in ".{encoding}.add".  You need to include the
 -- 	path, otherwise the file is placed in the current directory.
+-- 	The path may include characters from `'isfname'` , space, comma and `'@'` .
 -- 
 -- 	It may also be a comma-separated list of names.  A count before the
 -- 	|zg| and |zw| commands can be used to access each.  This allows using
