@@ -26,6 +26,7 @@ vim.uri_from_fname = require("vim.uri").uri_from_fname
 vim.uri_to_bufnr = require("vim.uri").uri_to_bufnr
 vim.uri_to_fname = require("vim.uri").uri_to_fname
 vim.version = require("vim.version")
+vim.lpeg = require("lpeg")
 
 ---@type table<string,any>
 vim.g = {}

@@ -97,9 +97,15 @@ function M.uv()
   writer:write(Util.fetch("https://raw.githubusercontent.com/Bilal2453/luvit-meta/main/library/uv.lua"))
 end
 
+function M.lpeg()
+  local writer = Writer("lpeg")
+  writer:write(Util.fetch("https://raw.githubusercontent.com/LuaCATS/lpeg/main/library/lpeg.lua"))
+end
+
 function M.build()
   M.clean()
   M.uv()
+  M.lpeg()
 
   M.alias()
   M.commands()
