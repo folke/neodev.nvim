@@ -12,7 +12,11 @@ vim.fs = require("vim.fs")
 vim.health = require("vim.health")
 vim.highlight = require("vim.highlight")
 vim.inspect = require("vim.inspect").inspect
-vim.iter = require("vim.iter")
+
+---@type Iter
+local iter
+vim.iter = iter.new
+
 vim.keymap = require("vim.keymap")
 vim.lsp = require("vim.lsp")
 vim.secure = require("vim.secure")
