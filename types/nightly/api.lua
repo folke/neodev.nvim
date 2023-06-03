@@ -1048,7 +1048,7 @@ function vim.api.nvim_create_augroup(name, opts) end
 --     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 --       pattern = {"*.c", "*.h"},
 --       callback = function(ev)
---         print(string.format('event fired: s', vim.inspect(ev)))
+--         print(string.format('event fired: %s', vim.inspect(ev)))
 --       end
 --     })
 -- ```
