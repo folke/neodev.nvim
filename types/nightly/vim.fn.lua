@@ -4047,9 +4047,9 @@ function vim.fn.globpath(path, expr, nosuf, list, allinks) end
 --   {feature} argument is a feature name like "nvim-0.2.1" or
 --   "win32", see below.  See also |exists()|.
 -- 
---   To get the system name use |vim.loop|.os_uname() in Lua: 
--- ```vim
---     :lua print(vim.loop.os_uname().sysname)
+--   To get the system name use |vim.uv|.os_uname() in Lua: 
+-- ```lua
+--     print(vim.uv.os_uname().sysname)
 -- 
 -- ```
 --   If the code has a syntax error then Vimscript may skip the
