@@ -3123,7 +3123,7 @@ vim.go.sxq = vim.go.shellxquote
 -- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
 vim.go.shiftround = false
 vim.go.sr = vim.go.shiftround
--- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
+-- `'shortmess'`  `'shm'` 	string	(default "filnxtToOCF")
 -- 			global
 -- 	This option helps to avoid all the |hit-enter| prompts caused by file
 -- 	messages, for example  with CTRL-G, and to avoid some other messages.
@@ -3181,7 +3181,7 @@ vim.go.sr = vim.go.shiftround
 -- 	    shm=	No abbreviation of message.
 -- 	    shm=a	Abbreviation, but no loss of information.
 -- 	    shm=at	Abbreviation, and truncate message when necessary.
-vim.go.shortmess = "filnxtToOF"
+vim.go.shortmess = "filnxtToOCF"
 vim.go.shm = vim.go.shortmess
 -- `'showcmd'`  `'sc'` 		boolean	(default: on)
 -- 			global

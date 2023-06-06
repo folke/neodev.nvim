@@ -15,7 +15,7 @@ vim.opt.sw = vim.opt.shiftwidth
 --- @return number
 function vim.opt.shiftwidth:get()end
 
--- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
+-- `'shortmess'`  `'shm'` 	string	(default "filnxtToOCF")
 -- 			global
 -- 	This option helps to avoid all the |hit-enter| prompts caused by file
 -- 	messages, for example  with CTRL-G, and to avoid some other messages.
@@ -77,7 +77,7 @@ function vim.opt.shiftwidth:get()end
 --- @operator add: vim.opt.shortmess
 --- @operator sub: vim.opt.shortmess
 --- @operator pow: vim.opt.shortmess
-vim.opt.shortmess = "filnxtToOF"
+vim.opt.shortmess = "filnxtToOCF"
 vim.opt.shm = vim.opt.shortmess
 --- @return string[]
 function vim.opt.shortmess:get()end
