@@ -1741,12 +1741,11 @@ vim.opt.icm = vim.opt.inccommand
 --- @return string
 function vim.opt.inccommand:get()end
 
--- `'include'`  `'inc'` 		string	(default "^\sinclude")
+-- `'include'`  `'inc'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find an include command.  It is a search
--- 	pattern, just like for the "/" command (See |pattern|).  The default
--- 	value is for C programs.  This option is used for the commands "[i",
--- 	"]I", "[d", etc.
+-- 	pattern, just like for the "/" command (See |pattern|).  This option
+-- 	is used for the commands "[i", "]I", "[d", etc.
 -- 	Normally the `'isfname'`  option is used to recognize the file name that
 -- 	comes after the matched pattern.  But if "\zs" appears in the pattern
 -- 	then the text matched from "\zs" to the end, or until "\ze" if it
@@ -1758,7 +1757,7 @@ function vim.opt.inccommand:get()end
 --- @operator add: vim.opt.include
 --- @operator sub: vim.opt.include
 --- @operator pow: vim.opt.include
-vim.opt.include = "^\\s*#\\s*include"
+vim.opt.include = ""
 vim.opt.inc = vim.opt.include
 --- @return string
 function vim.opt.include:get()end
@@ -3403,8 +3402,7 @@ vim.opt.pm = vim.opt.patchmode
 --- @return string
 function vim.opt.patchmode:get()end
 
--- `'path'`  `'pa'` 		string	(default on Unix: ".,/usr/include,,"
--- 				   other systems: ".,,")
+-- `'path'`  `'pa'` 		string	(default: ".,,")
 -- 			global or local to buffer |global-local|
 -- 	This is a list of directories which will be searched when using the
 -- 	|gf|, [f, ]f, ^Wf, |:find|, |:sfind|, |:tabfind| and other commands,
@@ -3457,7 +3455,7 @@ function vim.opt.patchmode:get()end
 --- @operator add: vim.opt.path
 --- @operator sub: vim.opt.path
 --- @operator pow: vim.opt.path
-vim.opt.path = ".,/usr/include,,"
+vim.opt.path = ".,,"
 vim.opt.pa = vim.opt.path
 --- @return string[]
 function vim.opt.path:get()end

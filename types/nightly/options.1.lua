@@ -1213,8 +1213,8 @@ vim.bo.com = vim.bo.comments
 -- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
 -- 	A template for a comment.  The "%s" in the value is replaced with the
--- 	comment text.  Currently only used to add markers for folding, see
--- 	|fold-marker|.
+-- 	comment text.  For example, C uses "//". Currently only used to
+-- 	add markers for folding, see |fold-marker|.
 vim.bo.commentstring = ""
 vim.bo.cms = vim.bo.commentstring
 -- `'complete'`  `'cpt'` 	string	(default: ".,w,b,u,t")
@@ -1277,7 +1277,7 @@ vim.bo.cfu = vim.bo.completefunc
 -- 	See `'preserveindent'` .
 vim.bo.copyindent = false
 vim.bo.ci = vim.bo.copyindent
--- `'define'`  `'def'` 		string	(default "^\sdefine")
+-- `'define'`  `'def'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find a macro definition.  It is a search
 -- 	pattern, just like for the "/" command.  This option is used for the
@@ -1286,8 +1286,7 @@ vim.bo.ci = vim.bo.copyindent
 -- 		{match with `'define'` }{non-ID chars}{defined name}{non-ID char}
 -- 	See |option-backslash| about inserting backslashes to include a space
 -- 	or backslash.
--- 	The default value is for C programs.  For C++ this value would be
--- 	useful, to include const type declarations: >
+-- 	For C++ this value would be useful, to include const type declarations: >
 -- 		^\(#\s\s[a-z]*\)
 -- <	You can also use "\ze" just before the name and continue the pattern
 -- 	to check what is following.  E.g. for Javascript, if a function is
@@ -1299,7 +1298,7 @@ vim.bo.ci = vim.bo.copyindent
 -- 	To avoid that use `:let` with a single quote string: >
 -- 		let &l:define = `'^\s=\s*function('` 
 -- <
-vim.bo.define = "^\\s*#\\s*define"
+vim.bo.define = ""
 vim.bo.def = vim.bo.define
 -- `'dictionary'`  `'dict'` 	string	(default "")
 -- 			global or local to buffer |global-local|
@@ -1606,12 +1605,11 @@ vim.bo.imi = vim.bo.iminsert
 -- 	option to a valid keymap name.
 vim.bo.imsearch = -1
 vim.bo.ims = vim.bo.imsearch
--- `'include'`  `'inc'` 		string	(default "^\sinclude")
+-- `'include'`  `'inc'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find an include command.  It is a search
--- 	pattern, just like for the "/" command (See |pattern|).  The default
--- 	value is for C programs.  This option is used for the commands "[i",
--- 	"]I", "[d", etc.
+-- 	pattern, just like for the "/" command (See |pattern|).  This option
+-- 	is used for the commands "[i", "]I", "[d", etc.
 -- 	Normally the `'isfname'`  option is used to recognize the file name that
 -- 	comes after the matched pattern.  But if "\zs" appears in the pattern
 -- 	then the text matched from "\zs" to the end, or until "\ze" if it
@@ -1619,7 +1617,7 @@ vim.bo.ims = vim.bo.imsearch
 -- 	that are not in `'isfname'` , such as a space.  You can then use
 -- 	`'includeexpr'`  to process the matched text.
 -- 	See |option-backslash| about including spaces and backslashes.
-vim.bo.include = "^\\s*#\\s*include"
+vim.bo.include = ""
 vim.bo.inc = vim.bo.include
 -- `'includeexpr'`  `'inex'` 	string	(default "")
 -- 			local to buffer
@@ -1919,8 +1917,7 @@ vim.bo.nf = vim.bo.nrformats
 -- 	security reasons.
 vim.bo.omnifunc = ""
 vim.bo.ofu = vim.bo.omnifunc
--- `'path'`  `'pa'` 		string	(default on Unix: ".,/usr/include,,"
--- 				   other systems: ".,,")
+-- `'path'`  `'pa'` 		string	(default: ".,,")
 -- 			global or local to buffer |global-local|
 -- 	This is a list of directories which will be searched when using the
 -- 	|gf|, [f, ]f, ^Wf, |:find|, |:sfind|, |:tabfind| and other commands,
@@ -1969,7 +1966,7 @@ vim.bo.ofu = vim.bo.omnifunc
 -- 		:let &path = &path .. "," .. substitute($INCL, `';'` , `','` , `'g'` )
 -- <	Replace the `';'`  with a `':'`  or whatever separator is used.  Note that
 -- 	this doesn't work when $INCL contains a comma or white space.
-vim.bo.path = ".,/usr/include,,"
+vim.bo.path = ".,,"
 vim.bo.pa = vim.bo.path
 -- `'preserveindent'`  `'pi'` 	boolean	(default off)
 -- 			local to buffer
@@ -3545,8 +3542,8 @@ function vim.opt.comments:get()end
 -- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
 -- 	A template for a comment.  The "%s" in the value is replaced with the
--- 	comment text.  Currently only used to add markers for folding, see
--- 	|fold-marker|.
+-- 	comment text.  For example, C uses "//". Currently only used to
+-- 	add markers for folding, see |fold-marker|.
 --- @class vim.opt.commentstring: vim.Option,string
 --- @operator add: vim.opt.commentstring
 --- @operator sub: vim.opt.commentstring
@@ -4118,7 +4115,7 @@ vim.opt.debug = ""
 --- @return string
 function vim.opt.debug:get()end
 
--- `'define'`  `'def'` 		string	(default "^\sdefine")
+-- `'define'`  `'def'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find a macro definition.  It is a search
 -- 	pattern, just like for the "/" command.  This option is used for the
@@ -4127,8 +4124,7 @@ function vim.opt.debug:get()end
 -- 		{match with `'define'` }{non-ID chars}{defined name}{non-ID char}
 -- 	See |option-backslash| about inserting backslashes to include a space
 -- 	or backslash.
--- 	The default value is for C programs.  For C++ this value would be
--- 	useful, to include const type declarations: >
+-- 	For C++ this value would be useful, to include const type declarations: >
 -- 		^\(#\s\s[a-z]*\)
 -- <	You can also use "\ze" just before the name and continue the pattern
 -- 	to check what is following.  E.g. for Javascript, if a function is
@@ -4144,7 +4140,7 @@ function vim.opt.debug:get()end
 --- @operator add: vim.opt.define
 --- @operator sub: vim.opt.define
 --- @operator pow: vim.opt.define
-vim.opt.define = "^\\s*#\\s*define"
+vim.opt.define = ""
 vim.opt.def = vim.opt.define
 --- @return string
 function vim.opt.define:get()end
