@@ -3,7 +3,7 @@
 vim = {}
 
 ---@type uv
-vim.loop = {}
+vim.uv = {}
 
 vim.F = require("vim.F")
 vim.diagnostic = require("vim.diagnostic")

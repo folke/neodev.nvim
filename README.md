@@ -13,7 +13,7 @@ completion for the nvim lua API.
   - Vim functions
   - Neovim api functions
   - `vim.opt`
-  - [vim.loop](https://github.com/luvit/luv)
+  - [vim.uv](https://github.com/luvit/luv)
 - properly configures the `require` path.
 - adds all plugins in `opt` and `start` to the workspace so you get completion
   for all installed plugins

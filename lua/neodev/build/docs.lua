@@ -236,7 +236,7 @@ function M.luv()
       return not Annotations.is_lua(name)
     end,
     name = function(name)
-      local ret = name:gsub("^uv%.", "vim.loop.")
+      local ret = name:gsub("^uv%.", "vim.uv.")
       return ret
     end,
   })
