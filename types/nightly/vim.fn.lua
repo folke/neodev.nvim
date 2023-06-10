@@ -787,11 +787,13 @@ function vim.fn.charcol(expr, winid) end
 -- When {utf16} is present and TRUE, {idx} is used as the UTF-16
 -- index in the String {expr} instead of as the byte index.
 -- 
--- Returns -1 if the arguments are invalid or if {idx} is greater
--- than the index of the last byte in {string}.  An error is
--- given if the first argument is not a string, the second
--- argument is not a number or when the third argument is present
--- and is not zero or one.
+-- Returns -1 if the arguments are invalid or if there are less
+-- than {idx} bytes. If there are exactly {idx} bytes the length
+-- of the string in characters is returned.
+-- 
+-- An error is given and -1 is returned if the first argument is
+-- not a string, the second argument is not a number or when the
+-- third argument is present and is not zero or one.
 -- 
 -- See |byteidx()| and |byteidxcomp()| for getting the byte index
 -- from the character index and |utf16idx()| for getting the

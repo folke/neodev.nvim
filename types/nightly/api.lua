@@ -2619,7 +2619,9 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 -- 
 -- Parameters: ~
 --   • {mode}  Mode short-name (map command prefix: "n", "i", "v", "x", …) or
---             "!" for |:map!|, or empty string for |:map|.
+--             "!" for |:map!|, or empty string for |:map|. "ia", "ca" or
+--             "!a" for abbreviation in Insert mode, Cmdline mode, or both,
+--             respectively
 --   • {lhs}   Left-hand-side |{lhs}| of the mapping.
 --   • {rhs}   Right-hand-side |{rhs}| of the mapping.
 --   • {opts}  Optional parameters map: Accepts all |:map-arguments| as keys

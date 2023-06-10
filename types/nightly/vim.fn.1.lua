@@ -4448,14 +4448,18 @@ function vim.fn.undotree() end
 --- @return any[]
 function vim.fn.uniq(list, func, dict) end
 
--- Same as |charidx()| but returns the UTF-16 index of the byte
--- at {idx} in {string} (after converting it to UTF-16).
+-- Same as |charidx()| but returns the UTF-16 code unit index of
+-- the byte at {idx} in {string} (after converting it to UTF-16).
 -- 
 -- When {charidx} is present and TRUE, {idx} is used as the
 -- character index in the String {string} instead of as the byte
 -- index.
 -- An {idx} in the middle of a UTF-8 sequence is rounded upwards
 -- to the end of that sequence.
+-- 
+-- Returns -1 if the arguments are invalid or if there are less
+-- than {idx} bytes in {string}. If there are exactly {idx} bytes
+-- the length of the string in UTF-16 code units is returned.
 -- 
 -- See |byteidx()| and |byteidxcomp()| for getting the byte index
 -- from the UTF-16 index and |charidx()| for getting the
