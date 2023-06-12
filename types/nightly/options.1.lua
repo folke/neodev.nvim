@@ -531,6 +531,8 @@ vim.wo.scl = vim.wo.signcolumn
 -- 	line in the window wraps part of it may not be visible, as if it is
 -- 	above the window. "<<<" is displayed at the start of the first line,
 -- 	highlighted with |hl-NonText|.
+-- 	You may also want to add "lastline" to the `'display'`  option to show as
+-- 	much of the last line as possible.
 -- 	NOTE: only partly implemented, currently works with CTRL-E, CTRL-Y
 -- 	and scrolling with the mouse.
 vim.wo.smoothscroll = false
@@ -2020,7 +2022,7 @@ vim.bo.scbk = vim.bo.scrollback
 -- 			local to buffer
 -- 	Number of spaces to use for each step of (auto)indent.  Used for
 -- 	|`'cindent'` |, |>>|, |<<|, etc.
--- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
+-- 	When zero the `'tabstop'`  value will be used.  Use the |shiftwidth()|
 -- 	function to get the effective shiftwidth value.
 vim.bo.shiftwidth = 8
 vim.bo.sw = vim.bo.shiftwidth
@@ -2238,13 +2240,25 @@ vim.bo.syn = vim.bo.syntax
 -- 	   (or 3 or whatever you prefer) and use `'noexpandtab'` .  Then Vim
 -- 	   will use a mix of tabs and spaces, but typing <Tab> and <BS> will
 -- 	   behave like a tab appears every 4 (or 3) characters.
--- 	2. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use
+-- 	   This is the recommended way, the file will look the same with other
+-- 	   tools and when listing it in a terminal.
+-- 	2. Set `'softtabstop'`  and `'shiftwidth'`  to whatever you prefer and use
+-- 	   `'expandtab'` .  This way you will always insert spaces.  The
+-- 	   formatting will never be messed up when `'tabstop'`  is changed (leave
+-- 	   it at 8 just in case).  The file will be a bit larger.
+-- 	   You do need to check if no Tabs exist in the file.  You can get rid
+-- 	   of them by first setting `'expandtab'`  and using `%retab!`, making
+-- 	   sure the value of `'tabstop'`  is set correctly.
+-- 	3. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use
 -- 	   `'expandtab'` .  This way you will always insert spaces.  The
 -- 	   formatting will never be messed up when `'tabstop'`  is changed.
--- 	3. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use a
+-- 	   You do need to check if no Tabs exist in the file, just like in the
+-- 	   item just above.
+-- 	4. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use a
 -- 	   |modeline| to set these values when editing the file again.  Only
--- 	   works when using Vim to edit the file.
--- 	4. Always set `'tabstop'`  and `'shiftwidth'`  to the same value, and
+-- 	   works when using Vim to edit the file, other tools assume a tabstop
+-- 	   is worth 8 spaces.
+-- 	5. Always set `'tabstop'`  and `'shiftwidth'`  to the same value, and
 -- 	   `'noexpandtab'` .  This should then work (for initial indents only)
 -- 	   for any tabstop setting that people use.  It might be nice to have
 -- 	   tabs after the first non-blank inserted as spaces if you do this
@@ -3486,7 +3500,7 @@ function vim.opt.cmdwinheight:get()end
 -- 	The screen column can be an absolute number, or a number preceded with
 -- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
 -- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1	  " highlight column after `'textwidth'` 
 -- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
 -- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
 -- <
@@ -4340,17 +4354,4 @@ vim.opt.diffopt = "internal,filler,closeoff"
 vim.opt.dip = vim.opt.diffopt
 --- @return string[]
 function vim.opt.diffopt:get()end
-
--- `'digraph'`  `'dg'` 		boolean	(default off)
--- 			global
--- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
--- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option,boolean
---- @operator add: vim.opt.digraph
---- @operator sub: vim.opt.digraph
---- @operator pow: vim.opt.digraph
-vim.opt.digraph = false
-vim.opt.dg = vim.opt.digraph
---- @return boolean
-function vim.opt.digraph:get()end
 

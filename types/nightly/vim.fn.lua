@@ -941,7 +941,7 @@ function vim.fn.col(expr, winid) end
 -- ```vim
 -- inoremap <F5> <C-R>=ListMonths()<CR>
 -- 
--- func! ListMonths()
+-- func ListMonths()
 --   call complete(col('.'), ['January', 'February', 'March',
 --   \ 'April', 'May', 'June', 'July', 'August', 'September',
 --   \ 'October', 'November', 'December'])
@@ -1228,7 +1228,7 @@ function vim.fn.ctxsize() end
 -- This is like the return value of |getpos()| or |getcurpos()|,
 -- but without the first item.
 -- 
--- To position the cursor using the character count, use
+-- To position the cursor using {col} as the character count, use
 -- |setcursorcharpos()|.
 -- 
 -- Does not change the jumplist.
@@ -3694,7 +3694,7 @@ function vim.fn.getregtype(regname) end
 --     name  Vim script file name.
 --     sid    Script ID |<SID>|.
 --     variables   A dictionary with the script-local variables.
---     Present only when the a particular script is
+--     Present only when a particular script is
 --     specified using the "sid" item in {opts}.
 --     Note that this is a copy, the value of
 --     script-local variables cannot be changed using

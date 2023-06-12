@@ -4212,7 +4212,7 @@ vim.wo.briopt = vim.wo.breakindentopt
 -- 	The screen column can be an absolute number, or a number preceded with
 -- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
 -- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1	  " highlight column after `'textwidth'` 
 -- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
 -- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
 -- <

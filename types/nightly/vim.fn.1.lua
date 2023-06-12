@@ -197,14 +197,15 @@ function vim.fn.min(expr) end
 -- scheduled for deletion, like with: 
 -- ```vim
 --   defer delete('subdir/tmp', 'rf')
--- 
+-- ```
 -- If {prot} is given it is used to set the protection bits of
 -- the new directory.  The default is 0o755 (rwxr-xr-x: r/w for
 -- the user, readable for others).  Use 0o700 to make it
 -- unreadable for others.
 -- 
 -- {prot} is applied for all parts of {name}.  Thus if you create
--- /tmp/foo/bar then /tmp/foo will be created with 0o700. Example: >
+-- /tmp/foo/bar then /tmp/foo will be created with 0o700. Example: 
+-- ```vim
 --   :call mkdir($HOME .. "/tmp/foo/bar", "p", 0o700)
 -- 
 -- ```
