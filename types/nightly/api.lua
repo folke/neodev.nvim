@@ -2628,7 +2628,7 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --             except |<buffer>|, values are booleans (default false). Also:
 --             • "noremap" non-recursive mapping |:noremap|
 --             • "desc" human-readable description.
---             • "callback" Lua function called when the mapping is executed.
+--             • "callback" Lua function called in place of {rhs}.
 --             • "replace_keycodes" (boolean) When "expr" is true, replace
 --               keycodes in the resulting string (see
 --               |nvim_replace_termcodes()|). Returning nil from the Lua
