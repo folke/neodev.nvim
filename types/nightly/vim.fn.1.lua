@@ -4455,8 +4455,8 @@ function vim.fn.uniq(list, func, dict) end
 -- When {charidx} is present and TRUE, {idx} is used as the
 -- character index in the String {string} instead of as the byte
 -- index.
--- An {idx} in the middle of a UTF-8 sequence is rounded upwards
--- to the end of that sequence.
+-- An {idx} in the middle of a UTF-8 sequence is rounded
+-- downwards to the beginning of that sequence.
 -- 
 -- Returns -1 if the arguments are invalid or if there are less
 -- than {idx} bytes in {string}. If there are exactly {idx} bytes
