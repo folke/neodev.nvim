@@ -3862,6 +3862,8 @@ function vim.fn.synconcealed(lnum, col) end
 --- @return any[]
 function vim.fn.synstack(lnum, col) end
 
+-- Note: Prefer |vim.system()| in Lua.
+-- 
 -- Gets the output of {cmd} as a |string| (|systemlist()| returns
 -- a |List|) and sets |v:shell_error| to the error code.
 -- {cmd} is treated as in |jobstart()|:
@@ -4114,10 +4116,13 @@ function vim.fn.tempname() end
 -- to the current (unmodified) buffer. Parameters and behavior
 -- are the same as |jobstart()| except "pty", "width", "height",
 -- and "TERM" are ignored: "height" and "width" are taken from
--- the current window.
--- Returns the same values as |jobstart()|.
+-- the current window. Note that termopen() implies a "pty" arg
+-- to jobstart(), and thus has the implications documented at
+-- |jobstart()|.
 -- 
--- Terminal environment is initialized as in ||jobstart-env|,
+-- Returns the same values as jobstart().
+-- 
+-- Terminal environment is initialized as in |jobstart-env|,
 -- except $TERM is set to "xterm-256color". Full behavior is
 -- described in |terminal|.
 --- @param opts? table<string, any>

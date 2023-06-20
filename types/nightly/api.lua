@@ -1933,7 +1933,7 @@ function vim.api.nvim_list_bufs() end
 --- @return any[]
 function vim.api.nvim_list_chans() end
 
--- Gets the paths contained in 'runtimepath'.
+-- Gets the paths contained in |runtime-search-path|.
 -- 
 -- Return: ~
 --     List of paths
@@ -2847,6 +2847,9 @@ function vim.api.nvim_win_get_config(window) end
 -- 
 -- Return: ~
 --     (row, col) tuple
+-- 
+-- See also: ~
+--   • |getcurpos()|
 --- @param window window
 --- @return number[]
 function vim.api.nvim_win_get_cursor(window) end

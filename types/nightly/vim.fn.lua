@@ -4794,6 +4794,8 @@ function vim.fn.jobpid(job) end
 --- @return number
 function vim.fn.jobresize(job, width, height) end
 
+-- Note: Prefer |vim.system()| in Lua.
+-- 
 -- Spawns {cmd} as a job.
 -- If {cmd} is a List it runs directly (no 'shell').
 -- If {cmd} is a String it runs in the 'shell', like this: 
@@ -4854,11 +4856,9 @@ function vim.fn.jobresize(job, width, height) end
 --         stdout data.
 --   |on_stderr|:  (function) Callback invoked when the job emits
 --         stderr data.
---   overlapped: (boolean) Set FILE_FLAG_OVERLAPPED for the
---         standard input/output passed to the child process.
---         Normally you do not need to set this.
---         (Only available on MS-Windows, On other
---         platforms, this option is silently ignored.)
+--   overlapped: (boolean) Sets FILE_FLAG_OVERLAPPED for the
+--         stdio passed to the child process. Only on
+--         MS-Windows; ignored on other platforms.
 --   pty:        (boolean) Connect the job to a new pseudo
 --         terminal, and its streams to the master file
 --         descriptor. `on_stdout` receives all output,

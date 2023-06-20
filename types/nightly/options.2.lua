@@ -1,18 +1,5 @@
 ---@meta
 
--- `'digraph'`  `'dg'` 		boolean	(default off)
--- 			global
--- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
--- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option,boolean
---- @operator add: vim.opt.digraph
---- @operator sub: vim.opt.digraph
---- @operator pow: vim.opt.digraph
-vim.opt.digraph = false
-vim.opt.dg = vim.opt.digraph
---- @return boolean
-function vim.opt.digraph:get()end
-
 -- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
 -- 			global
 -- 	List of directory names for the swap file, separated with commas.
@@ -50,17 +37,13 @@ function vim.opt.digraph:get()end
 -- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
 -- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
 -- 	  of the option is removed.
--- 	Using "." first in the list is recommended.  This means that editing
--- 	the same file twice will result in a warning.  Using "/tmp" on Unix is
--- 	discouraged: When the system crashes you lose the swap file.
--- 	"/var/tmp" is often not cleared when rebooting, thus is a better
--- 	choice than "/tmp".  But others on the computer may be able to see the
--- 	files, and it can contain a lot of files, your swap files get lost in
--- 	the crowd.  That is why a "tmp" directory in your home directory is
--- 	tried first.
--- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
--- 	directories from the list.  This avoids problems when a future version
--- 	uses another default.
+-- 
+-- 	Editing the same file twice will result in a warning.  Using "/tmp" on
+-- 	is discouraged: if the system crashes you lose the swap file. And
+-- 	others on the computer may be able to see the files.
+-- 	Use |:set+=| and |:set-=| when adding or removing directories from the
+-- 	list, this avoids problems if the Nvim default is changed.
+-- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 --- @class vim.opt.directory: vim.Option,string[]
@@ -4641,4 +4624,19 @@ vim.opt.shiftround = false
 vim.opt.sr = vim.opt.shiftround
 --- @return boolean
 function vim.opt.shiftround:get()end
+
+-- `'shiftwidth'`  `'sw'` 	number	(default 8)
+-- 			local to buffer
+-- 	Number of spaces to use for each step of (auto)indent.  Used for
+-- 	|`'cindent'` |, |>>|, |<<|, etc.
+-- 	When zero the `'tabstop'`  value will be used.  Use the |shiftwidth()|
+-- 	function to get the effective shiftwidth value.
+--- @class vim.opt.shiftwidth: vim.Option,number
+--- @operator add: vim.opt.shiftwidth
+--- @operator sub: vim.opt.shiftwidth
+--- @operator pow: vim.opt.shiftwidth
+vim.opt.shiftwidth = 8
+vim.opt.sw = vim.opt.shiftwidth
+--- @return number
+function vim.opt.shiftwidth:get()end
 
