@@ -107,9 +107,23 @@ function vim.in_fast_event() end
 
 -- Decodes (or "unpacks") the JSON-encoded {str} to a Lua object.
 -- 
--- {opts} is a table with the key `luanil = { object: bool, array: bool }`
--- that controls whether `null` in JSON objects or arrays should be converted
--- to Lua `nil` instead of `vim.NIL`.
+-- - Decodes JSON "null" as |vim.NIL| (controllable by {opts}, see below).
+-- - Decodes empty object as |vim.empty_dict()|.
+-- - Decodes empty array as `{}` (empty Lua table).
+-- 
+-- Example: 
+-- ```lua
+-- :lua vim.print(vim.json.decode('{"bar":[],"foo":{},"zub":null}'))
+-- --> { bar = {}, foo = vim.empty_dict(), zub = vim.NIL }
+-- ```
+-- Parameters: ~
+--   • {str}    Stringified JSON data.
+--   • {opts}   Options map keys:
+--              • luanil: { object: bool, array: bool }
+--                • `luanil.object=true` converts `null` in JSON objects to
+--                  Lua `nil` instead of `vim.NIL`.
+--                • `luanil.array=true` converts `null` in JSON arrays to Lua
+--                  `nil` instead of `vim.NIL`.
 --- @param str string
 --- @param opts? table<string, any>
 function vim.json.decode(str, opts) end
