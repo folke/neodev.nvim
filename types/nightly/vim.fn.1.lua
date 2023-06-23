@@ -285,7 +285,7 @@ function vim.fn.mkdir(name, flags, prot) end
 --- @return string
 function vim.fn.mode(expr) end
 
--- Convert a list of VimL objects to msgpack. Returned value is a
+-- Convert a list of Vimscript objects to msgpack. Returned value is a
 -- |readfile()|-style list. When {type} contains "B", a |Blob| is
 -- returned instead. Example: 
 -- ```vim
@@ -310,7 +310,7 @@ function vim.fn.mode(expr) end
 function vim.fn.msgpackdump(list, type) end
 
 -- Convert a |readfile()|-style list or a |Blob| to a list of
--- VimL objects.
+-- Vimscript objects.
 -- Example: 
 -- ```vim
 --   let fname = expand('~/.config/nvim/shada/main.shada')

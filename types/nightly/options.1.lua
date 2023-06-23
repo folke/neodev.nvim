@@ -3661,7 +3661,7 @@ function vim.opt.completeopt:get()end
 
 -- `'completeslash'`  `'csl'` 	string	(default: "")
 -- 			local to buffer
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When this option is set it overrules `'shellslash'`  for completion:
 -- 	- When this option is set to "slash", a forward slash is used for path
 -- 	  completion in insert mode. This is useful when editing HTML tag, or

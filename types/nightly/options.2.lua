@@ -2344,7 +2344,7 @@ function vim.opt.lines:get()end
 
 -- `'linespace'`  `'lsp'` 	number	(default 0)
 -- 			global
--- 			{only in the GUI}
+-- 			only in the GUI
 -- 	Number of pixel lines inserted between characters.  Useful if the font
 -- 	uses the full character cell height, making lines touch each other.
 -- 	When non-zero there is room for underlining.
@@ -2976,7 +2976,7 @@ function vim.opt.mousefocus:get()end
 
 -- `'mousehide'`  `'mh'` 	boolean	(default on)
 -- 			global
--- 			{only works in the GUI}
+-- 			only in the GUI
 -- 	When on, the mouse pointer is hidden when characters are typed.
 -- 	The mouse pointer is restored when the mouse is moved.
 --- @class vim.opt.mousehide: vim.Option,boolean
@@ -3284,7 +3284,7 @@ function vim.opt.omnifunc:get()end
 
 -- `'opendevice'`  `'odev'` 	boolean	(default off)
 -- 			global
--- 			{only for Windows}
+-- 			only for Windows
 -- 	Enable reading and writing from devices.  This may get Vim stuck on a
 -- 	device that can be opened but doesn't actually do the I/O.  Therefore
 -- 	it is off by default.
@@ -4535,7 +4535,7 @@ function vim.opt.shellredir:get()end
 
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When set, a forward slash is used when expanding file names.  This is
 -- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
 -- 	slashes can still be typed, but they are changed to forward slashes by

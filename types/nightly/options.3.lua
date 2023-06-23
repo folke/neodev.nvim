@@ -2276,7 +2276,7 @@ function vim.opt.wildoptions:get()end
 
 -- `'winaltkeys'`  `'wak'` 	string	(default "menu")
 -- 			global
--- 			{only used in Win32}
+-- 			only used in Win32
 -- 	Some GUI versions allow the access to menu entries by using the ALT
 -- 	key in combination with a character that appears underlined in the
 -- 	menu.  This conflicts with the use of the ALT key for mappings and

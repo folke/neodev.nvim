@@ -496,7 +496,7 @@ vim.go.completeopt = "menu,preview"
 vim.go.cot = vim.go.completeopt
 -- `'completeslash'`  `'csl'` 	string	(default: "")
 -- 			local to buffer
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When this option is set it overrules `'shellslash'`  for completion:
 -- 	- When this option is set to "slash", a forward slash is used for path
 -- 	  completion in insert mode. This is useful when editing HTML tag, or
@@ -1990,7 +1990,7 @@ vim.go.lz = vim.go.lazyredraw
 vim.go.lines = 24
 -- `'linespace'`  `'lsp'` 	number	(default 0)
 -- 			global
--- 			{only in the GUI}
+-- 			only in the GUI
 -- 	Number of pixel lines inserted between characters.  Useful if the font
 -- 	uses the full character cell height, making lines touch each other.
 -- 	When non-zero there is room for underlining.
@@ -2197,7 +2197,7 @@ vim.go.mousefocus = false
 vim.go.mousef = vim.go.mousefocus
 -- `'mousehide'`  `'mh'` 	boolean	(default on)
 -- 			global
--- 			{only works in the GUI}
+-- 			only in the GUI
 -- 	When on, the mouse pointer is hidden when characters are typed.
 -- 	The mouse pointer is restored when the mouse is moved.
 vim.go.mousehide = true
@@ -2352,7 +2352,7 @@ vim.go.mousetime = 500
 vim.go.mouset = vim.go.mousetime
 -- `'opendevice'`  `'odev'` 	boolean	(default off)
 -- 			global
--- 			{only for Windows}
+-- 			only for Windows
 -- 	Enable reading and writing from devices.  This may get Vim stuck on a
 -- 	device that can be opened but doesn't actually do the I/O.  Therefore
 -- 	it is off by default.
@@ -3064,7 +3064,7 @@ vim.go.shellredir = ">"
 vim.go.srr = vim.go.shellredir
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When set, a forward slash is used when expanding file names.  This is
 -- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
 -- 	slashes can still be typed, but they are changed to forward slashes by
@@ -4012,7 +4012,7 @@ vim.go.wildoptions = "pum,tagfile"
 vim.go.wop = vim.go.wildoptions
 -- `'winaltkeys'`  `'wak'` 	string	(default "menu")
 -- 			global
--- 			{only used in Win32}
+-- 			only used in Win32
 -- 	Some GUI versions allow the access to menu entries by using the ALT
 -- 	key in combination with a character that appears underlined in the
 -- 	menu.  This conflicts with the use of the ALT key for mappings and

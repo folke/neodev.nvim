@@ -22,7 +22,7 @@ function vim.api.nvim__get_lib_dir() end
 -- Parameters: ~
 --   • {pat}   pattern of files to search for
 --   • {all}   whether to return all matches or only the first
---   • {opts}  is_lua: only search lua subdirs
+--   • {opts}  is_lua: only search Lua subdirs
 -- 
 -- Return: ~
 --     list of absolute paths to the found files
@@ -165,7 +165,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --                      • deleted_codepoints (if `utf_sizes` is true)
 --                      • deleted_codeunits (if `utf_sizes` is true)
 -- 
---                    • on_bytes: lua callback invoked on change. This
+--                    • on_bytes: Lua callback invoked on change. This
 --                      callback receives more granular information about the
 --                      change compared to on_lines. Return `true` to detach. Args:
 --                      • the string "bytes"
@@ -232,12 +232,12 @@ function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
---   • {fun}     Function to call inside the buffer (currently lua callable
+--   • {fun}     Function to call inside the buffer (currently Lua callable
 --               only)
 -- 
 -- Return: ~
---     Return value of function. NB: will deepcopy lua values currently, use
---     upvalues to send lua references in and out.
+--     Return value of function. NB: will deepcopy Lua values currently, use
+--     upvalues to send Lua references in and out.
 --- @param buffer buffer
 --- @param fun fun()
 --- @return object
@@ -683,9 +683,10 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 highlights of the text. Currently only affects virt_text
 --                 highlights, but might affect `hl_group` in later versions.
 --                 • "replace": only show the virt_text color. This is the
---                   default
---                 • "combine": combine with background text color
---                 • "blend": blend with background text color.
+--                   default.
+--                 • "combine": combine with background text color.
+--                 • "blend": blend with background text color. Not supported
+--                   for "inline" virt_text.
 -- 
 --               • virt_lines : virtual lines to add next to this mark This
 --                 should be an array over lines, where each line in turn is
@@ -884,13 +885,13 @@ function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_co
 --- @param value object
 function vim.api.nvim_buf_set_var(buffer, name, value) end
 
--- Calls a VimL |Dictionary-function| with the given arguments.
+-- Calls a Vimscript |Dictionary-function| with the given arguments.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
---   • {dict}  Dictionary, or String evaluating to a VimL |self| dict
---   • {fn}    Name of the function defined on the VimL dict
+--   • {dict}  Dictionary, or String evaluating to a Vimscript |self| dict
+--   • {fn}    Name of the function defined on the Vimscript dict
 --   • {args}  Function arguments packed in an Array
 -- 
 -- Return: ~
@@ -901,9 +902,9 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 --- @return object
 function vim.api.nvim_call_dict_function(dict, fn, args) end
 
--- Calls a VimL function with the given arguments.
+-- Calls a Vimscript function with the given arguments.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
 --   • {fn}    Function to call
@@ -978,7 +979,7 @@ function vim.api.nvim_clear_autocmds(opts) end
 -- example, instead of `vim.cmd.bdelete{ count = 2 }`, you may do
 -- `vim.cmd.bdelete(2)`.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
 --   • {cmd}   Command to execute. Must be a Dictionary that can contain the
@@ -1003,7 +1004,7 @@ function vim.api.nvim_cmd(cmd, opts) end
 
 -- Executes an Ex command.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Prefer using |nvim_cmd()| or |nvim_exec2()| over this. To evaluate
 -- multiple lines of Vim script or an Ex command directly, use
@@ -1334,13 +1335,13 @@ function vim.api.nvim_err_write(str) end
 --- @param str string
 function vim.api.nvim_err_writeln(str) end
 
--- Evaluates a VimL |expression|. Dictionaries and Lists are recursively
+-- Evaluates a Vimscript |expression|. Dictionaries and Lists are recursively
 -- expanded.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
---   • {expr}  VimL expression string
+--   • {expr}  Vimscript expression string
 -- 
 -- Return: ~
 --     Evaluation result or expanded object
@@ -1391,7 +1392,7 @@ function vim.api.nvim_eval_statusline(str, opts) end
 -- Unlike |nvim_command()| this function supports heredocs, script-scope
 -- (s:), etc.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
 --   • {src}   Vimscript code
@@ -2006,7 +2007,7 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 -- Parameters: ~
 --   • {buffer}  the buffer to use (expected to be empty)
 --   • {opts}    Optional parameters.
---               • on_input: lua callback for input sent, i e keypresses in
+--               • on_input: Lua callback for input sent, i e keypresses in
 --                 terminal mode. Note: keypresses are sent raw as they would
 --                 be to the pty master end. For instance, a carriage return
 --                 is sent as a "\r", not as a "\n". |textlock| applies. It
@@ -2248,7 +2249,7 @@ function vim.api.nvim_out_write(str) end
 --- @return table<string, any>
 function vim.api.nvim_parse_cmd(str, opts) end
 
--- Parse a VimL expression.
+-- Parse a Vimscript expression.
 -- 
 -- Attributes: ~
 --     |api-fast|
@@ -2476,7 +2477,7 @@ function vim.api.nvim_set_current_win(window) end
 
 -- Set or change decoration provider for a |namespace|
 -- 
--- This is a very general purpose interface for having lua callbacks being
+-- This is a very general purpose interface for having Lua callbacks being
 -- triggered during the redraw code.
 -- 
 -- The expected usage is to set |extmarks| for the currently redrawn buffer.
@@ -2774,12 +2775,12 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 -- 
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
---   • {fun}     Function to call inside the window (currently lua callable
+--   • {fun}     Function to call inside the window (currently Lua callable
 --               only)
 -- 
 -- Return: ~
---     Return value of function. NB: will deepcopy lua values currently, use
---     upvalues to send lua references in and out.
+--     Return value of function. NB: will deepcopy Lua values currently, use
+--     upvalues to send Lua references in and out.
 -- 
 -- See also: ~
 --   • |win_execute()|

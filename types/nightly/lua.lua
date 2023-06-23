@@ -223,8 +223,8 @@ function vim.str_utfindex(str, index) end
 function vim.stricmp(a, b) end
 
 -- Attach to ui events, similar to |nvim_ui_attach()| but receive events
--- as lua callback. Can be used to implement screen elements like
--- popupmenu or message handling in lua.
+-- as Lua callback. Can be used to implement screen elements like
+-- popupmenu or message handling in Lua.
 -- 
 -- {options} should be a dictionary-like table, where `ext_...` options should
 -- be set to true to receive events for the respective external element.
