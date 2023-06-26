@@ -139,7 +139,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 
 -- Activates buffer-update events on a channel, or as Lua callbacks.
 -- 
--- Example (Lua): capture buffer updates in a global `events` variable (use "print(vim.inspect(events))" to see its contents): 
+-- Example (Lua): capture buffer updates in a global `events` variable (use "vim.print(events)" to see its contents): 
 -- ```lua
 --   events = {}
 --   vim.api.nvim_buf_attach(0, false, {
@@ -428,7 +428,7 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --   local ms  = api.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
 --   -- Get all marks in this buffer + namespace.
 --   local all = api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
---   print(vim.inspect(ms))
+--   vim.print(ms)
 -- ```
 -- 
 -- Parameters: ~

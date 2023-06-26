@@ -81,7 +81,7 @@ vim.fn["and"] = function(expr, expr1) end
 -- 
 -- View it in a nice human-readable format: 
 -- ```vim
---        :lua print(vim.inspect(vim.fn.api_info()))
+--        :lua vim.print(vim.fn.api_info())
 -- ```
 --- @return table<string, any>
 function vim.fn.api_info() end
@@ -1709,7 +1709,7 @@ function vim.fn.exepath(expr) end
 --     $ENVNAME  environment variable (could also be
 --         done by comparing with an empty
 --         string)
---     *funcname  built-in function (see |functions|)
+--     `*funcname`  built-in function (see |functions|)
 --         or user defined function (see
 --         |user-function|). Also works for a
 --         variable that is a Funcref.
@@ -2973,7 +2973,7 @@ function vim.fn.getcmdscreenpos() end
 --     /  forward search command
 --     ?  backward search command
 --     @  |input()| command
---     -  |:insert| or |:append| command
+--     `-`  |:insert| or |:append| command
 --     =  |i_CTRL-R_=|
 -- Only works when editing the command line, thus requires use of
 -- |c_CTRL-\_e| or |c_CTRL-R_=| or an expression mapping.
@@ -3388,21 +3388,26 @@ function vim.fn.getmarklist(buf) end
 -- Example: 
 -- ```vim
 --   :echo getmatches()
+-- >
 -- ```
---   [{"group": "MyGroup1", "pattern": "TODO",
+--        [{"group": "MyGroup1", "pattern": "TODO",
 --   "priority": 10, "id": 1}, {"group": "MyGroup2",
---   "pattern": "FIXME", "priority": 10, "id": 2}] 
+--   "pattern": "FIXME", "priority": 10, "id": 2}]
 -- ```vim
 --   :let m = getmatches()
 --   :call clearmatches()
 --   :echo getmatches()
+-- >
 -- ```
---   [] >
+--   []
+-- ```vim
 --   :call setmatches(m)
 --   :echo getmatches()
--- <      [{"group": "MyGroup1", "pattern": "TODO",
+-- >
+-- ```
+--   [{"group": "MyGroup1", "pattern": "TODO",
 --   "priority": 10, "id": 1}, {"group": "MyGroup2",
---   "pattern": "FIXME", "priority": 10, "id": 2}] 
+--   "pattern": "FIXME", "priority": 10, "id": 2}]
 -- ```vim
 --   :unlet m
 -- ```

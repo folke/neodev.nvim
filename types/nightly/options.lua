@@ -2094,9 +2094,9 @@ vim.go.mis = vim.go.menuitems
 -- 	per word depends very much on how similar the words are, that's why
 -- 	this tuning is complicated.
 -- 
--- 	There are three numbers, separated by commas:
+-- 	There are three numbers, separated by commas: >
 -- 		{start},{inc},{added}
--- 
+-- <
 -- 	For most languages the uncompressed word tree fits in memory.  {start}
 -- 	gives the amount of memory in Kbyte that can be used before any
 -- 	compression is done.  It should be a bit smaller than the amount of

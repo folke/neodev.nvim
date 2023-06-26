@@ -3372,7 +3372,7 @@ function vim.fn.stridx(haystack, needle, start) end
 --     Funcref    `function('name')`
 --     Blob    0z00112233.44556677.8899
 --     List    [item, item]
---     Dictionary  {key: value, key: value}
+--     Dictionary  `{key: value, key: value}`
 --   Note that in String values the ' character is doubled.
 --   Also see |strtrans()|.
 --   Note 2: Output format is mostly compatible with YAML, except
