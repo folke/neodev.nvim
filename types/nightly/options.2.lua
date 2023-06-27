@@ -492,7 +492,7 @@ function vim.opt.fileignorecase:get()end
 -- 	one dot may appear.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.filetype: vim.Option,string
 --- @operator add: vim.opt.filetype
 --- @operator sub: vim.opt.filetype
@@ -795,7 +795,7 @@ function vim.opt.foldnestmax:get()end
 -- 
 -- 		item		commands ~
 -- 		all		any
--- 		block		"(", "{", "[[", "[{", etc.
+-- 		block		(, {, [[, [{, etc.
 -- 		hor		horizontal movements: "l", "w", "fx", etc.
 -- 		insert		any command in Insert mode
 -- 		jump		far jumps: "G", "gg", etc.
@@ -2054,7 +2054,7 @@ function vim.opt.jumpoptions:get()end
 -- 	Setting this option to a valid keymap name has the side effect of
 -- 	setting `'iminsert'`  to one, so that the keymap becomes effective.
 -- 	`'imsearch'`  is also set to one, unless it was -1
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.keymap: vim.Option,string
 --- @operator add: vim.opt.keymap
 --- @operator sub: vim.opt.keymap
@@ -2167,7 +2167,7 @@ function vim.opt.langmap:get()end
 -- 	matter what $LANG is set to: >
 -- 		:set langmenu=nl_NL.ISO_8859-1
 -- <	When `'langmenu'`  is empty, |v:lang| is used.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 -- 	If your $LANG is set to a non-English language but you do want to use
 -- 	the English menus: >
 -- 		:set langmenu=none
@@ -3333,7 +3333,7 @@ function vim.opt.patchexpr:get()end
 -- 	Using `'patchmode'`  for compressed files appends the extension at the
 -- 	end (e.g., "file.gz.orig"), thus the resulting name isn't always
 -- 	recognized as a compressed file.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.patchmode: vim.Option,string
 --- @operator add: vim.opt.patchmode
 --- @operator sub: vim.opt.patchmode

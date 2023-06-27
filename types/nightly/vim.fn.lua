@@ -5804,7 +5804,7 @@ function vim.fn.matchend(expr, pat, start, count) end
 -- results in `['two one', 'one two']` . >
 --    :echo ['one two', 'two one']->matchfuzzy('two one',
 --         \ {'matchseq': 1})
--- <    results in ['two one'].
+-- <    results in `['two one']`.
 --- @param list any[]
 --- @param str string
 --- @param dict? table<string, any>
@@ -5834,7 +5834,7 @@ function vim.fn.matchfuzzy(list, str, dict) end
 --   :echo [{'text': 'hello', 'id' : 10}]
 --     \ ->matchfuzzypos('ll', {'key' : 'text'})
 -- ```
--- results in [[{"id": 10, "text": "hello"}], [[2, 3]], [127]]
+-- results in `[[{"id": 10, "text": "hello"}], [[2, 3]], [127]]`
 --- @param list any[]
 --- @param str string
 --- @param dict? table<string, any>

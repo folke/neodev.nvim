@@ -4896,11 +4896,13 @@ function vim.fn.winheight(nr) end
 -- For a leaf window, it returns:
 --   ["leaf", {winid}]
 -- For horizontally split windows, which form a column, it
--- returns:
+-- returns: 
+-- ```vim
 --   ["col", [{nested list of windows}]]
--- For vertically split windows, which form a row, it returns:
+-- ```
+-- For vertically split windows, which form a row, it returns: >
 --   ["row", [{nested list of windows}]]
--- 
+-- <
 -- Example: 
 -- ```vim
 --   " Only one window in the tab page

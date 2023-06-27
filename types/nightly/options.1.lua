@@ -1442,7 +1442,7 @@ vim.bo.ff = vim.bo.fileformat
 -- 	one dot may appear.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.bo.filetype = ""
 vim.bo.ft = vim.bo.filetype
 -- `'fixendofline'`  `'fixeol'` 	boolean	(default on)
@@ -1714,7 +1714,7 @@ vim.bo.isk = vim.bo.iskeyword
 -- 	Setting this option to a valid keymap name has the side effect of
 -- 	setting `'iminsert'`  to one, so that the keymap becomes effective.
 -- 	`'imsearch'`  is also set to one, unless it was -1
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.bo.keymap = ""
 vim.bo.kmp = vim.bo.keymap
 -- `'keywordprg'`  `'kp'` 	string	(default ":Man", Windows: ":help")
@@ -2203,7 +2203,7 @@ vim.bo.smc = vim.bo.synmaxcol
 -- 	Syntax autocommand event is triggered with the value as argument.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.bo.syntax = ""
 vim.bo.syn = vim.bo.syntax
 -- `'tabstop'`  `'ts'` 		number	(default 8)
@@ -2840,7 +2840,7 @@ function vim.opt.backupdir:get()end
 -- 	accidentally overwriting existing files with a backup file.  You might
 -- 	prefer using ".bak", but make sure that you don't have files with
 -- 	".bak" that you want to keep.
--- 	Only normal file name characters can be used; "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used; `/\*?[|<>` are illegal.
 -- 
 -- 	If you like to keep a lot of backups, you could use a BufWritePre
 -- 	autocommand to change `'backupext'`  just before writing the file to

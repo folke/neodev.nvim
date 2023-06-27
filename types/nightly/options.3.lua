@@ -1041,7 +1041,7 @@ function vim.opt.synmaxcol:get()end
 -- 	Syntax autocommand event is triggered with the value as argument.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.syntax: vim.Option,string
 --- @operator add: vim.opt.syntax
 --- @operator sub: vim.opt.syntax
