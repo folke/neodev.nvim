@@ -3263,7 +3263,8 @@ vim.opt.opfunc = vim.opt.operatorfunc
 function vim.opt.operatorfunc:get()end
 
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
--- 	Directories used to find packages.  See |packages| and |rtp-packages|.
+-- 	Directories used to find packages.
+-- 	See |packages| and |packages-runtimepath|.
 --- @class vim.opt.packpath: vim.Option,string[]
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath

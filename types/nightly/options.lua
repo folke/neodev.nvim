@@ -2372,7 +2372,8 @@ vim.go.odev = vim.go.opendevice
 vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
--- 	Directories used to find packages.  See |packages| and |rtp-packages|.
+-- 	Directories used to find packages.
+-- 	See |packages| and |packages-runtimepath|.
 vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
