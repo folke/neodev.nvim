@@ -346,7 +346,7 @@ function vim.api.nvim_buf_del_var(buffer, name) end
 -- Deletes the buffer. See |:bwipeout|
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -855,6 +855,9 @@ function vim.api.nvim_buf_set_option() end
 -- 
 -- Prefer |nvim_buf_set_lines()| if you are only adding or deleting entire
 -- lines.
+-- 
+-- Attributes: ~
+--     not allowed when |textlock| is active
 -- 
 -- Parameters: ~
 --   • {buffer}       Buffer handle, or 0 for current buffer
@@ -2004,6 +2007,9 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 -- |nvim_chan_send()| can be called immediately to process sequences in a
 -- virtual terminal having the intended size.
 -- 
+-- Attributes: ~
+--     not allowed when |textlock| is active
+-- 
 -- Parameters: ~
 --   • {buffer}  the buffer to use (expected to be empty)
 --   • {opts}    Optional parameters.
@@ -2058,7 +2064,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 -- ```
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer to display, or 0 for current buffer
@@ -2431,7 +2437,7 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 -- Sets the current buffer.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle
@@ -2458,7 +2464,7 @@ function vim.api.nvim_set_current_line(line) end
 -- Sets the current tabpage.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {tabpage}  Tabpage handle
@@ -2468,7 +2474,7 @@ function vim.api.nvim_set_current_tabpage(tabpage) end
 -- Sets the current window.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {window}  Window handle
@@ -2934,7 +2940,7 @@ function vim.api.nvim_win_get_width(window) end
 -- or |nvim_win_close()|, which will close the buffer.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
@@ -2955,7 +2961,7 @@ function vim.api.nvim_win_is_valid(window) end
 -- Sets the current buffer in a window, without side effects
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
