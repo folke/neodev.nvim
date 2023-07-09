@@ -303,8 +303,8 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 
 -- Deletes a named mark in the buffer. See |mark-motions|.
 -- 
--- Note:
---     only deletes marks set in the buffer, if the mark is not set in the
+-- Note: ~
+--   • only deletes marks set in the buffer, if the mark is not set in the
 --     buffer it will return false.
 -- 
 -- Parameters: ~
@@ -496,7 +496,8 @@ function vim.api.nvim_buf_get_keymap(buffer, mode) end
 --- @return string[]
 function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 
--- Returns a tuple (row,col) representing the position of the named mark. See
+-- Returns a `(row,col)` tuple representing the position of the named mark.
+-- "End of line" column position is returned as |v:maxcol| (big number). See
 -- |mark-motions|.
 -- 
 -- Marks are (1,0)-indexed. |api-indexing|
@@ -608,8 +609,8 @@ function vim.api.nvim_buf_is_loaded(buffer) end
 
 -- Checks if a buffer is valid.
 -- 
--- Note:
---     Even if a buffer is valid it may have been unloaded. See |api-buffer|
+-- Note: ~
+--   • Even if a buffer is valid it may have been unloaded. See |api-buffer|
 --     for more info about unloaded buffers.
 -- 
 -- Parameters: ~
@@ -805,8 +806,8 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 -- 
 -- Marks are (1,0)-indexed. |api-indexing|
 -- 
--- Note:
---     Passing 0 as line deletes the mark
+-- Note: ~
+--   • Passing 0 as line deletes the mark
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer to set the mark on
@@ -1272,8 +1273,8 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 
 -- Deletes an uppercase/file named mark. See |mark-motions|.
 -- 
--- Note:
---     fails with error if a lowercase or buffer local named mark is used.
+-- Note: ~
+--   • Lowercase name (or other buffer-local mark) is an error.
 -- 
 -- Parameters: ~
 --   • {name}  Mark name
@@ -1643,6 +1644,10 @@ function vim.api.nvim_get_current_win() end
 
 -- Gets all or specific highlight groups in a namespace.
 -- 
+-- Note: ~
+--   • When the `link` attribute is defined in the highlight definition map,
+--     other attributes will not be taking effect (see |:hi-link|).
+-- 
 -- Parameters: ~
 --   • {ns_id}  Get highlight groups for namespace ns_id
 --              |nvim_get_namespaces()|. Use 0 to get global highlight groups
@@ -1657,10 +1662,6 @@ function vim.api.nvim_get_current_win() end
 --     Highlight groups as a map from group name to a highlight definition
 --     map as in |nvim_set_hl()|, or only a single highlight definition map
 --     if requested by name or id.
--- 
--- Note:
---     When the `link` attribute is defined in the highlight definition map,
---     other attributes will not be taking effect (see |:hi-link|).
 --- @param ns_id number
 --- @param opts? table<string, any>
 --- @return table<string, any>
@@ -1685,13 +1686,14 @@ function vim.api.nvim_get_hl_id_by_name(name) end
 --- @return any[]
 function vim.api.nvim_get_keymap(mode) end
 
--- Return a tuple (row, col, buffer, buffername) representing the position of
--- the uppercase/file named mark. See |mark-motions|.
+-- Returns a `(row, col, buffer, buffername)` tuple representing the position
+-- of the uppercase/file named mark. "End of line" column position is
+-- returned as |v:maxcol| (big number). See |mark-motions|.
 -- 
 -- Marks are (1,0)-indexed. |api-indexing|
 -- 
--- Note:
---     fails with error if a lowercase or buffer local named mark is used.
+-- Note: ~
+--   • Lowercase name (or other buffer-local mark) is an error.
 -- 
 -- Parameters: ~
 --   • {name}  Mark name
@@ -1862,12 +1864,10 @@ function vim.api.nvim_get_vvar(name) end
 -- 
 -- On execution error: does not fail, but updates v:errmsg.
 -- 
--- Note:
---     |keycodes| like <CR> are translated, so "<" is special. To input a
+-- Note: ~
+--   • |keycodes| like <CR> are translated, so "<" is special. To input a
 --     literal "<", send <LT>.
--- 
--- Note:
---     For mouse events use |nvim_input_mouse()|. The pseudokey form
+--   • For mouse events use |nvim_input_mouse()|. The pseudokey form
 --     "<LeftMouse><col,row>" is deprecated since |api-level| 6.
 -- 
 -- Attributes: ~
@@ -1888,8 +1888,8 @@ function vim.api.nvim_input(keys) end
 -- Non-blocking: does not wait on any result, but queues the event to be
 -- processed soon by the event loop.
 -- 
--- Note:
---     Currently this doesn't support "scripting" multiple mouse events by
+-- Note: ~
+--   • Currently this doesn't support "scripting" multiple mouse events by
 --     calling it multiple times in a loop: the intermediate mouse positions
 --     will be ignored. It should be used to implement real-time mouse input
 --     in a GUI. The deprecated pseudokey form ("<LeftMouse><col,row>") of
@@ -2532,21 +2532,17 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 
 -- Sets a highlight group.
 -- 
--- Note:
---     Unlike the `:highlight` command which can update a highlight group,
---     this function completely replaces the definition. For example:
+-- Note: ~
+--   • Unlike the `:highlight` command which can update a highlight group, this
+--     function completely replaces the definition. For example:
 --     `nvim_set_hl(0, 'Visual', {})` will clear the highlight group
 --     'Visual'.
--- 
--- Note:
---     The fg and bg keys also accept the string values `"fg"` or `"bg"`
---     which act as aliases to the corresponding foreground and background
---     values of the Normal group. If the Normal group has not been defined,
---     using these values results in an error.
--- 
--- Note:
---     If `link` is used in combination with other attributes; only the
---     `link` will take effect (see |:hi-link|).
+--   • The fg and bg keys also accept the string values `"fg"` or `"bg"` which
+--     act as aliases to the corresponding foreground and background values
+--     of the Normal group. If the Normal group has not been defined, using
+--     these values results in an error.
+--   • If `link` is used in combination with other attributes; only the `link`
+--     will take effect (see |:hi-link|).
 -- 
 -- Parameters: ~
 --   • {ns_id}  Namespace id for this highlight |nvim_create_namespace()|.
