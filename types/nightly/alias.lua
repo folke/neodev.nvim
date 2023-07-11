@@ -1,7 +1,7 @@
 ---@meta
 
 ---@alias blob number
----@alias buffer integer
+---@alias buffer integer|string
 ---@alias channel integer
 ---@alias float number
 ---@alias job number
