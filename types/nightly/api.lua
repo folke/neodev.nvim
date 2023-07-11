@@ -3036,3 +3036,38 @@ function vim.api.nvim_win_set_var(window, name, value) end
 --- @param width number
 function vim.api.nvim_win_set_width(window, width) end
 
+-- Computes the number of screen lines occupied by a range of text in a given
+-- window. Works for off-screen text and takes folds into account.
+-- 
+-- Diff filler or virtual lines above a line are counted as a part of that
+-- line, unless the line is on "start_row" and "start_vcol" is specified.
+-- 
+-- Diff filler or virtual lines below the last buffer line are counted in the
+-- result when "end_row" is omitted.
+-- 
+-- Line indexing is similar to |nvim_buf_get_text()|.
+-- 
+-- Parameters: ~
+--   • {window}  Window handle, or 0 for current window.
+--   • {opts}    Optional parameters:
+--               • start_row: Starting line index, 0-based inclusive. When
+--                 omitted start at the very top.
+--               • end_row: Ending line index, 0-based inclusive. When
+--                 omitted end at the very bottom.
+--               • start_vcol: Starting virtual column index on "start_row",
+--                 0-based inclusive, rounded down to full screen lines. When
+--                 omitted include the whole line.
+--               • end_vcol: Ending virtual column index on "end_row",
+--                 0-based exclusive, rounded up to full screen lines. When
+--                 omitted include the whole line.
+-- 
+-- Return: ~
+--     The number of screen lines that the range of text occupy.
+-- 
+-- See also: ~
+--   • |virtcol()| for text width.
+--- @param window window
+--- @param opts? table<string, any>
+--- @return object
+function vim.api.nvim_win_text_height(window, opts) end
+
