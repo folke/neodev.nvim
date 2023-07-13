@@ -3063,14 +3063,14 @@ function uv.fs_fstat(fd) end
 ---
 ---Equivalent to `lstat(2)`.
 ---
----@param fd integer
+---@param path string
 ---@param callback fun(err: nil|string, stat: uv.aliases.fs_stat_table|nil)
 ---@return uv_fs_t
-function uv.fs_lstat(fd, callback) end
----@param fd integer
+function uv.fs_lstat(path, callback) end
+---@param path string
 ---@return uv.aliases.fs_stat_table|nil stat, string? err_name, string? err_msg
 ---@nodiscard
-function uv.fs_lstat(fd) end
+function uv.fs_lstat(path) end
 
 ---
 ---Equivalent to `rename(2)`.
