@@ -3063,12 +3063,14 @@ function vim.api.nvim_win_set_width(window, width) end
 --                 omitted include the whole line.
 -- 
 -- Return: ~
---     The number of screen lines that the range of text occupy.
+--     Dictionary containing text height information, with these keys:
+--     • all: The total number of screen lines occupied by the range.
+--     • fill: The number of diff filler or virtual lines among them.
 -- 
 -- See also: ~
 --   • |virtcol()| for text width.
 --- @param window window
 --- @param opts? table<string, any>
---- @return object
+--- @return table<string, any>
 function vim.api.nvim_win_text_height(window, opts) end
 
