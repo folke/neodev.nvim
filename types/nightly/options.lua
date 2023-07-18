@@ -144,13 +144,6 @@ vim.go.bg = vim.go.background
 -- 
 -- 	When the value is empty, Vi compatible backspacing is used, none of
 -- 	the ways mentioned for the items above are possible.
--- 
--- 	For backwards compatibility with version 5.4 and earlier:
--- 	value	effect	~
--- 	  0	same as ":set backspace=" (Vi compatible)
--- 	  1	same as ":set backspace=indent,eol"
--- 	  2	same as ":set backspace=indent,eol,start"
--- 	  3	same as ":set backspace=indent,eol,nostop"
 vim.go.backspace = "indent,eol,start"
 vim.go.bs = vim.go.backspace
 -- `'backup'`  `'bk'` 		boolean	(default off)
@@ -198,8 +191,7 @@ vim.go.bk = vim.go.backup
 -- 	- Careful with `'\'`  characters, type one before a space, type two to
 -- 	  get one in the option (see |option-backslash|), for example: >
 -- 	    :set bdir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
--- 	  of the option is removed.
+-- <
 -- 	See also `'backup'`  and `'writebackup'`  options.
 -- 	If you want to hide your backup files on Unix, consider this value: >
 -- 		:set backupdir=./.backup,~/.backup,.,/tmp
@@ -939,9 +931,7 @@ vim.go.dg = vim.go.digraph
 -- 	- Careful with `'\'`  characters, type one before a space, type two to
 -- 	  get one in the option (see |option-backslash|), for example: >
 -- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
--- 	  of the option is removed.
--- 
+-- <
 -- 	Editing the same file twice will result in a warning.  Using "/tmp" on
 -- 	is discouraged: if the system crashes you lose the swap file. And
 -- 	others on the computer may be able to see the files.
@@ -4306,3 +4296,8 @@ vim.wo.cul = vim.wo.cursorline
 -- 	"line" and "screenline" cannot be used together.
 vim.wo.cursorlineopt = "both"
 vim.wo.culopt = vim.wo.cursorlineopt
+-- `'diff'` 			boolean	(default off)
+-- 			local to window
+-- 	Join the current window in the group of windows that shows differences
+-- 	between files.  See |diff-mode|.
+vim.wo.diff = false

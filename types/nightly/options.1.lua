@@ -1,10 +1,5 @@
 ---@meta
 
--- `'diff'` 			boolean	(default off)
--- 			local to window
--- 	Join the current window in the group of windows that shows differences
--- 	between files.  See |diff-mode|.
-vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special
@@ -1908,10 +1903,6 @@ vim.bo.ofu = vim.bo.omnifunc
 -- 	option may be relative or absolute.
 -- 	- Use commas to separate directory names: >
 -- 		:set path=.,/usr/local/include,/usr/include
--- <	- Spaces can also be used to separate directory names (for backwards
--- 	  compatibility with version 3.0).  To have a space in a directory
--- 	  name, precede it with an extra backslash, and escape the space: >
--- 		:set path=.,/dir/with\\\ space
 -- <	- To include a comma in a directory name precede it with an extra
 -- 	  backslash: >
 -- 		:set path=.,/dir/with\\,comma
@@ -2672,13 +2663,6 @@ function vim.opt.background:get()end
 -- 
 -- 	When the value is empty, Vi compatible backspacing is used, none of
 -- 	the ways mentioned for the items above are possible.
--- 
--- 	For backwards compatibility with version 5.4 and earlier:
--- 	value	effect	~
--- 	  0	same as ":set backspace=" (Vi compatible)
--- 	  1	same as ":set backspace=indent,eol"
--- 	  2	same as ":set backspace=indent,eol,start"
--- 	  3	same as ":set backspace=indent,eol,nostop"
 --- @class vim.opt.backspace: vim.Option,string[]
 --- @operator add: vim.opt.backspace
 --- @operator sub: vim.opt.backspace
@@ -2812,8 +2796,7 @@ function vim.opt.backupcopy:get()end
 -- 	- Careful with `'\'`  characters, type one before a space, type two to
 -- 	  get one in the option (see |option-backslash|), for example: >
 -- 	    :set bdir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
--- 	  of the option is removed.
+-- <
 -- 	See also `'backup'`  and `'writebackup'`  options.
 -- 	If you want to hide your backup files on Unix, consider this value: >
 -- 		:set backupdir=./.backup,~/.backup,.,/tmp
@@ -4380,9 +4363,7 @@ function vim.opt.digraph:get()end
 -- 	- Careful with `'\'`  characters, type one before a space, type two to
 -- 	  get one in the option (see |option-backslash|), for example: >
 -- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
--- 	  of the option is removed.
--- 
+-- <
 -- 	Editing the same file twice will result in a warning.  Using "/tmp" on
 -- 	is discouraged: if the system crashes you lose the swap file. And
 -- 	others on the computer may be able to see the files.
