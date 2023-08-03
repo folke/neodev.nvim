@@ -479,9 +479,9 @@ function vim.fn.bufloaded(buf) end
 -- <    If the buffer doesn't exist, or doesn't have a name, an empty
 -- string is returned. 
 -- ```vim
---   echo bufname("#")    " alternate buffer name
+--   echo bufname("#")  " alternate buffer name
 --   echo bufname(3)    " name of buffer 3
---   echo bufname("%")    " name of current buffer
+--   echo bufname("%")  " name of current buffer
 --   echo bufname("file2")  " name of buffer where "file2" matches.
 -- ```
 --- @param buf? buffer
@@ -672,10 +672,10 @@ function vim.fn.chansend(id, data) end
 -- Return Number value of the first char in {string}.
 -- Examples: 
 -- ```vim
---   echo char2nr(" ")    " returns 32
---   echo char2nr("ABC")    " returns 65
---   echo char2nr("á")    " returns 225
---   echo char2nr("á"[0])    " returns 195
+--   echo char2nr(" ")  " returns 32
+--   echo char2nr("ABC")  " returns 65
+--   echo char2nr("á")  " returns 225
+--   echo char2nr("á"[0])  " returns 195
 --   echo char2nr("\<M-x>")  " returns 128
 -- ```
 -- Non-ASCII characters are always treated as UTF-8 characters.
@@ -706,7 +706,7 @@ function vim.fn.charclass(string) end
 -- Example:
 -- With the cursor on '세' in line 5 with text "여보세요": 
 -- ```vim
---   echo charcol('.')    " returns 3
+--   echo charcol('.')  " returns 3
 --   echo col('.')    " returns 7
 -- ```
 --- @param winid? window
@@ -814,9 +814,9 @@ function vim.fn.clearmatches(win) end
 -- Note that only marks in the current file can be used.
 -- Examples: 
 -- ```vim
---   echo col(".")    " column of cursor
---   echo col("$")    " length of cursor line plus one
---   echo col("'t")    " column of mark t
+--   echo col(".")      " column of cursor
+--   echo col("$")      " length of cursor line plus one
+--   echo col("'t")      " column of mark t
 --   echo col("'" .. markname)  " column of mark markname
 -- ```
 -- The first column is 1.  Returns 0 if {expr} is invalid or when
@@ -4408,9 +4408,9 @@ function vim.fn.libcallnr(libname, funcname, argument) end
 -- Returns 0 for invalid values of {expr} and {winid}.
 -- Examples: 
 -- ```vim
---   echo line(".")    " line number of the cursor
---   echo line(".", winid)  " idem, in window "winid"
---   echo line("'t")    " line number of mark t
+--   echo line(".")      " line number of the cursor
+--   echo line(".", winid)    " idem, in window "winid"
+--   echo line("'t")      " line number of mark t
 --   echo line("'" .. marker)  " line number of mark marker
 -- ```
 -- To jump to the last known position when opening a file see

@@ -422,11 +422,11 @@ function vim.fn.rand(expr) end
 -- Examples: 
 -- ```vim
 --   echo range(4)    " [0, 1, 2, 3]
---   echo range(2, 4)    " [2, 3, 4]
---   echo range(2, 9, 3)    " [2, 5, 8]
+--   echo range(2, 4)  " [2, 3, 4]
+--   echo range(2, 9, 3)  " [2, 5, 8]
 --   echo range(2, -2, -1)  " [2, 1, 0, -1, -2]
 --   echo range(0)    " []
---   echo range(2, 0)    " error!
+--   echo range(2, 0)  " error!
 -- ```
 --- @param max? any
 --- @param stride? any
@@ -2766,7 +2766,7 @@ function vim.fn.strdisplaywidth(string, col) end
 --   echo strftime("%c")       " Sun Apr 27 11:49:23 1997
 --   echo strftime("%Y %b %d %X")     " 1997 Apr 27 11:53:25
 --   echo strftime("%y%m%d %T")     " 970427 11:53:55
---   echo strftime("%H:%M")             " 11:55
+--   echo strftime("%H:%M")       " 11:55
 --   echo strftime("%c", getftime("file.c"))
 --            " Show mod time of file.c.
 -- ```
@@ -2798,8 +2798,8 @@ function vim.fn.strgetchar(str, index) end
 -- See also |strridx()|.
 -- Examples: 
 -- ```vim
---   echo stridx("An Example", "Example")       " 3
---   echo stridx("Starting point", "Start")    " 0
+--   echo stridx("An Example", "Example")     " 3
+--   echo stridx("Starting point", "Start")   " 0
 --   echo stridx("Starting point", "start")   " -1
 -- ```
 -- stridx() works similar to the C function strstr().  When used
