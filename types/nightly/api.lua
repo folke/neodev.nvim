@@ -942,8 +942,8 @@ function vim.api.nvim_call_function(fn, args) end
 --- @param data string
 function vim.api.nvim_chan_send(chan, data) end
 
--- Clear all autocommands that match the corresponding {opts}. To delete a
--- particular autocmd, see |nvim_del_autocmd()|.
+-- Clears all autocommands selected by {opts}. To delete autocmds see
+-- |nvim_del_autocmd()|.
 -- 
 -- Parameters: ~
 --   • {opts}  Parameters
@@ -1244,15 +1244,10 @@ function vim.api.nvim_del_augroup_by_id(id) end
 --- @param name string
 function vim.api.nvim_del_augroup_by_name(name) end
 
--- Delete an autocommand by id.
--- 
--- NOTE: Only autocommands created via the API have an id.
+-- Deletes an autocommand by id.
 -- 
 -- Parameters: ~
---   • {id}  Integer The id returned by nvim_create_autocmd
--- 
--- See also: ~
---   • |nvim_create_autocmd()|
+--   • {id}  Integer Autocommand id returned by |nvim_create_autocmd()|
 --- @param id number
 function vim.api.nvim_del_autocmd(id) end
 
@@ -1478,6 +1473,9 @@ function vim.api.nvim_feedkeys(keys, mode, escape_ks) end
 -- 
 -- Return: ~
 --     dictionary of all options
+-- 
+-- See also: ~
+--   • |nvim_get_commands()|
 --- @return table<string, any>
 function vim.api.nvim_get_all_options_info() end
 
@@ -1598,6 +1596,9 @@ function vim.api.nvim_get_color_map() end
 -- 
 -- Return: ~
 --     Map of maps describing commands.
+-- 
+-- See also: ~
+--   • |nvim_get_all_options_info()|
 --- @param opts? table<string, any>
 --- @return table<string, any>
 function vim.api.nvim_get_commands(opts) end
