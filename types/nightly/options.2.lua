@@ -52,7 +52,7 @@ vim.opt.ed = vim.opt.edcompatible
 --- @return boolean
 function vim.opt.edcompatible:get()end
 
--- `'emoji'`  `'emo'` 	boolean (default: on)
+-- `'emoji'`  `'emo'` 		boolean	(default on)
 -- 			global
 -- 	When on all Unicode emoji characters are considered to be full width.
 -- 	This excludes "text emoji" characters, which are normally displayed as
@@ -68,7 +68,8 @@ vim.opt.emo = vim.opt.emoji
 --- @return boolean
 function vim.opt.emoji:get()end
 
--- `'encoding'`  `'enc'` 
+-- `'encoding'`  `'enc'` 	string	(default "utf-8")
+-- 			global
 -- 	String-encoding used internally and for |RPC| communication.
 -- 	Always UTF-8.
 -- 
@@ -181,7 +182,7 @@ vim.opt.eb = vim.opt.errorbells
 --- @return boolean
 function vim.opt.errorbells:get()end
 
--- `'errorfile'`  `'ef'` 	string	(default: "errors.err")
+-- `'errorfile'`  `'ef'` 	string	(default "errors.err")
 -- 			global
 -- 	Name of the errorfile for the QuickFix mode (see |:cf|).
 -- 	When the "-q" command-line argument is used, `'errorfile'`  is set to the
@@ -245,7 +246,7 @@ vim.opt.et = vim.opt.expandtab
 --- @return boolean
 function vim.opt.expandtab:get()end
 
--- `'exrc'`  `'ex'` 		boolean (default off)
+-- `'exrc'`  `'ex'` 		boolean	(default off)
 -- 			global
 -- 	Automatically execute .nvim.lua, .nvimrc, and .exrc files in the
 -- 	current directory, if the file is in the |trust| list. Use |:trust| to
@@ -266,7 +267,7 @@ vim.opt.ex = vim.opt.exrc
 --- @return boolean
 function vim.opt.exrc:get()end
 
--- `'fileencoding'`  `'fenc'` 	string (default: "")
+-- `'fileencoding'`  `'fenc'` 	string	(default "")
 -- 			local to buffer
 -- 	File-content encoding for the current buffer. Conversion is done with
 -- 	iconv() or as specified with `'charconvert'` .
@@ -314,7 +315,7 @@ vim.opt.fenc = vim.opt.fileencoding
 --- @return string
 function vim.opt.fileencoding:get()end
 
--- `'fileencodings'`  `'fencs'` 	string (default: "ucs-bom,utf-8,default,latin1")
+-- `'fileencodings'`  `'fencs'` 	string	(default "ucs-bom,utf-8,default,latin1")
 -- 			global
 -- 	This is a list of character encodings considered when starting to edit
 -- 	an existing file.  When a file is read, Vim tries to use the first
@@ -371,8 +372,7 @@ vim.opt.fencs = vim.opt.fileencodings
 --- @return string[]
 function vim.opt.fileencodings:get()end
 
--- `'fileformat'`  `'ff'` 	string (Windows default: "dos",
--- 				Unix default: "unix")
+-- `'fileformat'`  `'ff'` 	string	(default Windows: "dos", Unix: "unix")
 -- 			local to buffer
 -- 	This gives the <EOL> of the current buffer, which is used for
 -- 	reading/writing the buffer from/to a file:
@@ -398,9 +398,7 @@ vim.opt.ff = vim.opt.fileformat
 --- @return string
 function vim.opt.fileformat:get()end
 
--- `'fileformats'`  `'ffs'` 	string (default:
--- 				Win32: "dos,unix",
--- 				Unix: "unix,dos")
+-- `'fileformats'`  `'ffs'` 	string	(default Windows: "dos,unix", Unix: "unix,dos")
 -- 			global
 -- 	This gives the end-of-line (<EOL>) formats that will be tried when
 -- 	starting to edit a new buffer and when reading a file into an existing
@@ -457,7 +455,7 @@ vim.opt.ffs = vim.opt.fileformats
 function vim.opt.fileformats:get()end
 
 -- `'fileignorecase'`  `'fic'` 	boolean	(default on for systems where case in file
--- 				 names is normally ignored)
+--                                  names is normally ignored)
 -- 			global
 -- 	When set case is ignored when using file names and directories.
 -- 	See `'wildignorecase'`  for only ignoring case when doing completion.
@@ -470,7 +468,7 @@ vim.opt.fic = vim.opt.fileignorecase
 --- @return boolean
 function vim.opt.fileignorecase:get()end
 
--- `'filetype'`  `'ft'` 		string (default: "")
+-- `'filetype'`  `'ft'` 		string	(default "")
 -- 			local to buffer
 -- 	When this option is set, the FileType autocommand event is triggered.
 -- 	All autocommands that match with the value of this option will be
@@ -594,7 +592,7 @@ vim.opt.fixeol = vim.opt.fixendofline
 --- @return boolean
 function vim.opt.fixendofline:get()end
 
--- `'foldclose'`  `'fcl'` 	string (default "")
+-- `'foldclose'`  `'fcl'` 	string	(default "")
 -- 			global
 -- 	When set to "all", a fold is closed when the cursor isn't in it and
 -- 	its level is higher than `'foldlevel'` .  Useful if you want folds to
@@ -608,13 +606,13 @@ vim.opt.fcl = vim.opt.foldclose
 --- @return string[]
 function vim.opt.foldclose:get()end
 
--- `'foldcolumn'`  `'fdc'` 	string (default "0")
+-- `'foldcolumn'`  `'fdc'` 	string	(default "0")
 -- 			local to window
 -- 	When and how to draw the foldcolumn. Valid values are:
 -- 	    "auto":       resize to the minimum amount of folds to display.
 -- 	    "auto:[1-9]": resize to accommodate multiple folds up to the
 -- 			  selected level
---             0:            to disable foldcolumn
+-- 	    0:            to disable foldcolumn
 -- 	    "[1-9]":      to display a fixed number of columns
 -- 	See |folding|.
 --- @class vim.opt.foldcolumn: vim.Option,string
@@ -626,7 +624,7 @@ vim.opt.fdc = vim.opt.foldcolumn
 --- @return string
 function vim.opt.foldcolumn:get()end
 
--- `'foldenable'`  `'fen'` 	boolean (default on)
+-- `'foldenable'`  `'fen'` 	boolean	(default on)
 -- 			local to window
 -- 	When off, all folds are open.  This option can be used to quickly
 -- 	switch between showing all text unfolded and viewing the text with
@@ -644,7 +642,7 @@ vim.opt.fen = vim.opt.foldenable
 --- @return boolean
 function vim.opt.foldenable:get()end
 
--- `'foldexpr'`  `'fde'` 	string (default: "0")
+-- `'foldexpr'`  `'fde'` 	string	(default "0")
 -- 			local to window
 -- 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
 -- 	for each line to obtain its fold level.  The context is set to the
@@ -667,7 +665,7 @@ vim.opt.fde = vim.opt.foldexpr
 --- @return string
 function vim.opt.foldexpr:get()end
 
--- `'foldignore'`  `'fdi'` 	string (default: "#")
+-- `'foldignore'`  `'fdi'` 	string	(default "#")
 -- 			local to window
 -- 	Used only when `'foldmethod'`  is "indent".  Lines starting with
 -- 	characters in `'foldignore'`  will get their fold level from surrounding
@@ -682,7 +680,7 @@ vim.opt.fdi = vim.opt.foldignore
 --- @return string
 function vim.opt.foldignore:get()end
 
--- `'foldlevel'`  `'fdl'` 	number (default: 0)
+-- `'foldlevel'`  `'fdl'` 	number	(default 0)
 -- 			local to window
 -- 	Sets the fold level: Folds with a higher level will be closed.
 -- 	Setting this option to zero will close all folds.  Higher numbers will
@@ -698,7 +696,7 @@ vim.opt.fdl = vim.opt.foldlevel
 --- @return number
 function vim.opt.foldlevel:get()end
 
--- `'foldlevelstart'`  `'fdls'` 	number (default: -1)
+-- `'foldlevelstart'`  `'fdls'` 	number	(default -1)
 -- 			global
 -- 	Sets `'foldlevel'`  when starting to edit another buffer in a window.
 -- 	Useful to always start editing with all folds closed (value zero),
@@ -718,7 +716,7 @@ vim.opt.fdls = vim.opt.foldlevelstart
 --- @return number
 function vim.opt.foldlevelstart:get()end
 
--- `'foldmarker'`  `'fmr'` 	string (default: "{{{,}}}")
+-- `'foldmarker'`  `'fmr'` 	string	(default "{{{,}}}")
 -- 			local to window
 -- 	The start and end marker used when `'foldmethod'`  is "marker".  There
 -- 	must be one comma, which separates the start and end marker.  The
@@ -733,7 +731,7 @@ vim.opt.fmr = vim.opt.foldmarker
 --- @return string[]
 function vim.opt.foldmarker:get()end
 
--- `'foldmethod'`  `'fdm'` 	string (default: "manual")
+-- `'foldmethod'`  `'fdm'` 	string	(default "manual")
 -- 			local to window
 -- 	The kind of folding used for the current window.  Possible values:
 -- 	|fold-manual|	manual	    Folds are created manually.
@@ -751,7 +749,7 @@ vim.opt.fdm = vim.opt.foldmethod
 --- @return string
 function vim.opt.foldmethod:get()end
 
--- `'foldminlines'`  `'fml'` 	number (default: 1)
+-- `'foldminlines'`  `'fml'` 	number	(default 1)
 -- 			local to window
 -- 	Sets the number of screen lines above which a fold can be displayed
 -- 	closed.  Also for manually closed folds.  With the default value of
@@ -769,7 +767,7 @@ vim.opt.fml = vim.opt.foldminlines
 --- @return number
 function vim.opt.foldminlines:get()end
 
--- `'foldnestmax'`  `'fdn'` 	number (default: 20)
+-- `'foldnestmax'`  `'fdn'` 	number	(default 20)
 -- 			local to window
 -- 	Sets the maximum nesting of folds for the "indent" and "syntax"
 -- 	methods.  This avoids that too many folds will be created.  Using more
@@ -783,8 +781,7 @@ vim.opt.fdn = vim.opt.foldnestmax
 --- @return number
 function vim.opt.foldnestmax:get()end
 
--- `'foldopen'`  `'fdo'` 	string (default: "block,hor,mark,percent,quickfix,
--- 							     search,tag,undo")
+-- `'foldopen'`  `'fdo'` 	string	(default "block,hor,mark,percent,quickfix,search,tag,undo")
 -- 			global
 -- 	Specifies for which type of commands folds will be opened, if the
 -- 	command moves the cursor into a closed fold.  It is a comma-separated
@@ -825,7 +822,7 @@ vim.opt.fdo = vim.opt.foldopen
 --- @return string[]
 function vim.opt.foldopen:get()end
 
--- `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
+-- `'foldtext'`  `'fdt'` 	string	(default "foldtext()")
 -- 			local to window
 -- 	An expression which is used to specify the text displayed for a closed
 -- 	fold.  The context is set to the script where `'foldexpr'`  was set,
@@ -847,7 +844,7 @@ vim.opt.fdt = vim.opt.foldtext
 --- @return string
 function vim.opt.foldtext:get()end
 
--- `'formatexpr'`  `'fex'` 	string (default "")
+-- `'formatexpr'`  `'fex'` 	string	(default "")
 -- 			local to buffer
 -- 	Expression which is evaluated to format a range of lines for the |gq|
 -- 	operator or automatic formatting (see `'formatoptions'` ).  When this
@@ -895,7 +892,7 @@ vim.opt.fex = vim.opt.formatexpr
 --- @return string
 function vim.opt.formatexpr:get()end
 
--- `'formatlistpat'`  `'flp'` 	string (default: "^\s*\d\+[\]:.)}\t ]\s*")
+-- `'formatlistpat'`  `'flp'` 	string	(default "^\s*\d\+[\]:.)}\t ]\s*")
 -- 			local to buffer
 -- 	A pattern that is used to recognize a list header.  This is used for
 -- 	the "n" flag in `'formatoptions'` .
@@ -915,7 +912,7 @@ vim.opt.flp = vim.opt.formatlistpat
 --- @return string
 function vim.opt.formatlistpat:get()end
 
--- `'formatoptions'`  `'fo'` 	string (default: "tcqj")
+-- `'formatoptions'`  `'fo'` 	string	(default "tcqj")
 -- 			local to buffer
 -- 	This is a sequence of letters which describes how automatic
 -- 	formatting is to be done.  See |fo-table|.  Commas can be inserted for
@@ -931,7 +928,7 @@ vim.opt.fo = vim.opt.formatoptions
 --- @return string[]
 function vim.opt.formatoptions:get()end
 
--- `'formatprg'`  `'fp'` 	string (default "")
+-- `'formatprg'`  `'fp'` 	string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	The name of an external program that will be used to format the lines
 -- 	selected with the |gq| operator.  The program must take the input on
@@ -1017,7 +1014,7 @@ vim.opt.gfm = vim.opt.grepformat
 function vim.opt.grepformat:get()end
 
 -- `'grepprg'`  `'gp'` 		string	(default "grep -n ",
--- 				 Unix: "grep -n $* /dev/null")
+--                                  Unix: "grep -n $* /dev/null")
 -- 			global or local to buffer |global-local|
 -- 	Program to use for the |:grep| command.  This option may contain `'%'` 
 -- 	and `'#'`  characters, which are expanded like when used in a command-
@@ -1333,7 +1330,7 @@ vim.opt.go = vim.opt.guioptions
 --- @return string
 function vim.opt.guioptions:get()end
 
--- `'guitablabel'`  `'gtl'` 	string	(default empty)
+-- `'guitablabel'`  `'gtl'` 	string	(default "")
 -- 			global
 -- 	When non-empty describes the text to use in a label of the GUI tab
 -- 	pages line.  When empty and when the result is empty Vim will use a
@@ -1357,7 +1354,7 @@ vim.opt.gtl = vim.opt.guitablabel
 --- @return string
 function vim.opt.guitablabel:get()end
 
--- `'guitabtooltip'`  `'gtt'` 	string	(default empty)
+-- `'guitabtooltip'`  `'gtt'` 	string	(default "")
 -- 			global
 -- 	When non-empty describes the text to use in a tooltip for the GUI tab
 -- 	pages line.  When empty Vim will use a default tooltip.
@@ -1375,7 +1372,7 @@ vim.opt.gtt = vim.opt.guitabtooltip
 function vim.opt.guitabtooltip:get()end
 
 -- `'helpfile'`  `'hf'` 		string	(default (MS-Windows) "$VIMRUNTIME\doc\help.txt"
--- 					 (others) "$VIMRUNTIME/doc/help.txt")
+--                                          (others) "$VIMRUNTIME/doc/help.txt")
 -- 			global
 -- 	Name of the main help file.  All distributed help files should be
 -- 	placed together in one directory.  Additionally, all "doc" directories
@@ -1411,7 +1408,7 @@ vim.opt.hh = vim.opt.helpheight
 --- @return number
 function vim.opt.helpheight:get()end
 
--- `'helplang'`  `'hlg'` 	string	(default: messages language or empty)
+-- `'helplang'`  `'hlg'` 	string	(default messages language or empty)
 -- 			global
 -- 	Comma-separated list of languages.  Vim will use the first language
 -- 	for which the desired help can be found.  The English help will always
@@ -1468,7 +1465,7 @@ vim.opt.hl = vim.opt.highlight
 --- @return string[]
 function vim.opt.highlight:get()end
 
--- `'history'`  `'hi'` 		number	(default: 10000)
+-- `'history'`  `'hi'` 		number	(default 10000)
 -- 			global
 -- 	A history of ":" commands, and a history of previous search patterns
 -- 	is remembered.  This option decides how many entries may be stored in
@@ -1579,7 +1576,7 @@ vim.opt.ic = vim.opt.ignorecase
 --- @return boolean
 function vim.opt.ignorecase:get()end
 
--- `'imcmdline'`  `'imc'` 	boolean (default off)
+-- `'imcmdline'`  `'imc'` 	boolean	(default off)
 -- 			global
 -- 	When set the Input Method is always on when starting to edit a command
 -- 	line, unless entering a search pattern (see `'imsearch'`  for that).
@@ -1595,7 +1592,7 @@ vim.opt.imc = vim.opt.imcmdline
 --- @return boolean
 function vim.opt.imcmdline:get()end
 
--- `'imdisable'`  `'imd'` 	boolean (default off, on for some systems (SGI))
+-- `'imdisable'`  `'imd'` 	boolean	(default off, on for some systems (SGI))
 -- 			global
 -- 	When set the Input Method is never used.  This is useful to disable
 -- 	the IM when it doesn't work properly.
@@ -1610,7 +1607,7 @@ vim.opt.imd = vim.opt.imdisable
 --- @return boolean
 function vim.opt.imdisable:get()end
 
--- `'iminsert'`  `'imi'` 	number (default 0)
+-- `'iminsert'`  `'imi'` 	number	(default 0)
 -- 			local to buffer
 -- 	Specifies whether :lmap or an Input Method (IM) is to be used in
 -- 	Insert mode.  Valid values:
@@ -1635,7 +1632,7 @@ vim.opt.imi = vim.opt.iminsert
 --- @return number
 function vim.opt.iminsert:get()end
 
--- `'imsearch'`  `'ims'` 	number (default -1)
+-- `'imsearch'`  `'ims'` 	number	(default -1)
 -- 			local to buffer
 -- 	Specifies whether :lmap or an Input Method (IM) is to be used when
 -- 	entering a search pattern.  Valid values:
@@ -1659,7 +1656,6 @@ function vim.opt.imsearch:get()end
 
 -- `'inccommand'`  `'icm'` 	string	(default "nosplit")
 -- 			global
--- 
 -- 	When nonempty, shows the effects of |:substitute|, |:smagic|,
 -- 	|:snomagic| and user commands with the |:command-preview| flag as you
 -- 	type.
@@ -1874,8 +1870,8 @@ vim.opt.im = vim.opt.insertmode
 function vim.opt.insertmode:get()end
 
 -- `'isfname'`  `'isf'` 		string	(default for Windows:
--- 			     "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],:,@-@,!,~,="
--- 			    otherwise: "@,48-57,/,.,-,_,+,,,#,$,%,~,=")
+--                              "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],:,@-@,!,~,="
+--                             otherwise: "@,48-57,/,.,-,_,+,,,#,$,%,~,=")
 -- 			global
 -- 	The characters specified by this option are included in file names and
 -- 	path names.  Filenames are used for commands like "gf", "[i" and in
@@ -1932,8 +1928,8 @@ vim.opt.isf = vim.opt.isfname
 function vim.opt.isfname:get()end
 
 -- `'isident'`  `'isi'` 		string	(default for Windows:
--- 					   "@,48-57,_,128-167,224-235"
--- 				otherwise: "@,48-57,_,192-255")
+--                                            "@,48-57,_,128-167,224-235"
+--                                 otherwise: "@,48-57,_,192-255")
 -- 			global
 -- 	The characters given by this option are included in identifiers.
 -- 	Identifiers are used in recognizing environment variables and after a
@@ -1953,7 +1949,7 @@ vim.opt.isi = vim.opt.isident
 --- @return string[]
 function vim.opt.isident:get()end
 
--- `'iskeyword'`  `'isk'` 	string (default: @,48-57,_,192-255)
+-- `'iskeyword'`  `'isk'` 	string	(default "@,48-57,_,192-255")
 -- 			local to buffer
 -- 	Keywords are used in searching and recognizing with many commands:
 -- 	"w", "*", "[i", etc.  It is also used for "\k" in a |pattern|.  See
@@ -1976,7 +1972,7 @@ vim.opt.isk = vim.opt.iskeyword
 --- @return string[]
 function vim.opt.iskeyword:get()end
 
--- `'isprint'`  `'isp'` 	string	(default: "@,161-255")
+-- `'isprint'`  `'isp'` 		string	(default "@,161-255")
 -- 			global
 -- 	The characters given by this option are displayed directly on the
 -- 	screen.  It is also used for "\p" in a |pattern|.  The characters from
@@ -2196,7 +2192,7 @@ vim.opt.lnr = vim.opt.langnoremap
 --- @return boolean
 function vim.opt.langnoremap:get()end
 
--- `'langremap'`  `'lrm'` 	boolean (default off)
+-- `'langremap'`  `'lrm'` 	boolean	(default off)
 -- 			global
 -- 	When off, setting `'langmap'`  does not apply to characters resulting from
 -- 	a mapping.  If setting `'langmap'`  disables some of your mappings, make
@@ -2378,7 +2374,7 @@ vim.opt.list = false
 --- @return boolean
 function vim.opt.list:get()end
 
--- `'listchars'`  `'lcs'` 	string	(default: "tab:> ,trail:-,nbsp:+")
+-- `'listchars'`  `'lcs'` 	string	(default "tab:> ,trail:-,nbsp:+")
 -- 			global or local to window |global-local|
 -- 	Strings to use in `'list'`  mode and for the |:list| command.  It is a
 -- 	comma-separated list of string settings.
@@ -2518,7 +2514,7 @@ vim.opt.magic = true
 --- @return boolean
 function vim.opt.magic:get()end
 
--- `'makeef'`  `'mef'` 		string	(default: "")
+-- `'makeef'`  `'mef'` 		string	(default "")
 -- 			global
 -- 	Name of the errorfile for the |:make| command (see |:make_makeprg|)
 -- 	and the |:grep| command.
@@ -2753,7 +2749,7 @@ vim.opt.msm = vim.opt.mkspellmem
 --- @return string
 function vim.opt.mkspellmem:get()end
 
--- `'modeline'`  `'ml'` 		boolean	(default: on (off for root))
+-- `'modeline'`  `'ml'` 		boolean	(default on (off for root))
 -- 			local to buffer
 -- 	If `'modeline'`  is on `'modelines'`  gives the number of lines that is
 -- 	checked for set commands.  If `'modeline'`  is off or `'modelines'`  is zero
@@ -2767,7 +2763,7 @@ vim.opt.ml = vim.opt.modeline
 --- @return boolean
 function vim.opt.modeline:get()end
 
--- `'modelineexpr'`  `'mle'` 	boolean (default: off)
+-- `'modelineexpr'`  `'mle'` 	boolean	(default off)
 -- 			global
 -- 	When on allow some options that are an expression to be set in the
 -- 	modeline.  Check the option for whether it is affected by
@@ -2843,7 +2839,7 @@ vim.opt.mod = vim.opt.modified
 --- @return boolean
 function vim.opt.modified:get()end
 
--- `'more'` 			boolean	(default: on)
+-- `'more'` 			boolean	(default on)
 -- 			global
 -- 	When on, listings pause when the whole screen is filled.  You will get
 -- 	the |more-prompt|.  When this option is off there are no pauses, the
@@ -2858,7 +2854,6 @@ function vim.opt.more:get()end
 
 -- `'mouse'` 			string	(default "nvi")
 -- 			global
--- 
 -- 	Enables mouse support. For example, to enable the mouse in Normal mode
 -- 	and Visual mode: >
 -- 		:set mouse=nv
@@ -2991,7 +2986,7 @@ vim.opt.mousem = vim.opt.mousemodel
 --- @return string
 function vim.opt.mousemodel:get()end
 
--- `'mousemoveevent'`  `'mousemev'`   boolean	(default off)
+-- `'mousemoveevent'`  `'mousemev'` 	boolean	(default off)
 -- 			global
 -- 	When on, mouse move events are delivered to the input queue and are
 -- 	available for mapping. The default, off, avoids the mouse movement
@@ -3034,7 +3029,7 @@ vim.opt.mousescroll = "ver:3,hor:6"
 function vim.opt.mousescroll:get()end
 
 -- `'mouseshape'`  `'mouses'` 	string	(default "i:beam,r:beam,s:updown,sd:cross,
--- 					m:no,ml:up-arrow,v:rightup-arrow")
+--                                         m:no,ml:up-arrow,v:rightup-arrow")
 -- 			global
 -- 	This option tells Vim what the mouse pointer should look like in
 -- 	different modes.  The option is a comma-separated list of parts, much
@@ -3170,7 +3165,7 @@ function vim.opt.nrformats:get()end
 -- 
 -- 		`'nonu'`           `'nu'`             `'nonu'`           `'nu'` 
 -- 		`'nornu'`          `'nornu'`          `'rnu'`            `'rnu'` 
--- >
+-- 	>
 -- 	    |apple          |  1 apple      |  2 apple      |  2 apple
 -- 	    |pear           |  2 pear       |  1 pear       |  1 pear
 -- 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
@@ -3185,7 +3180,7 @@ vim.opt.nu = vim.opt.number
 --- @return boolean
 function vim.opt.number:get()end
 
--- `'numberwidth'`  `'nuw'` 	number	(default: 4)
+-- `'numberwidth'`  `'nuw'` 	number	(default 4)
 -- 			local to window
 -- 	Minimal number of columns to use for the line number.  Only relevant
 -- 	when the `'number'`  or `'relativenumber'`  option is set or printing lines
@@ -3206,7 +3201,7 @@ vim.opt.nuw = vim.opt.numberwidth
 --- @return number
 function vim.opt.numberwidth:get()end
 
--- `'omnifunc'`  `'ofu'` 	string	(default: empty)
+-- `'omnifunc'`  `'ofu'` 	string	(default "")
 -- 			local to buffer
 -- 	This option specifies a function to be used for Insert mode omni
 -- 	completion with CTRL-X CTRL-O. |i_CTRL-X_CTRL-O|
@@ -3244,7 +3239,7 @@ vim.opt.odev = vim.opt.opendevice
 --- @return boolean
 function vim.opt.opendevice:get()end
 
--- `'operatorfunc'`  `'opfunc'` 	string	(default: empty)
+-- `'operatorfunc'`  `'opfunc'` 	string	(default "")
 -- 			global
 -- 	This option specifies a function to be called by the |g@| operator.
 -- 	See |:map-operator| for more info and an example.  The value can be
@@ -3262,7 +3257,8 @@ vim.opt.opfunc = vim.opt.operatorfunc
 --- @return string
 function vim.opt.operatorfunc:get()end
 
--- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
+-- `'packpath'`  `'pp'` 		string	(default see `'runtimepath'` )
+-- 			global
 -- 	Directories used to find packages.
 -- 	See |packages| and |packages-runtimepath|.
 --- @class vim.opt.packpath: vim.Option,string[]
@@ -3344,7 +3340,7 @@ vim.opt.pm = vim.opt.patchmode
 --- @return string
 function vim.opt.patchmode:get()end
 
--- `'path'`  `'pa'` 		string	(default: ".,,")
+-- `'path'`  `'pa'` 		string	(default ".,,")
 -- 			global or local to buffer |global-local|
 -- 	This is a list of directories which will be searched when using the
 -- 	|gf|, [f, ]f, ^Wf, |:find|, |:sfind|, |:tabfind| and other commands,
@@ -3421,7 +3417,7 @@ vim.opt.pi = vim.opt.preserveindent
 --- @return boolean
 function vim.opt.preserveindent:get()end
 
--- `'previewheight'`  `'pvh'` 	number (default 12)
+-- `'previewheight'`  `'pvh'` 	number	(default 12)
 -- 			global
 -- 	Default height for a preview window.  Used for |:ptag| and associated
 -- 	commands.  Used for |CTRL-W_}| when no count is given.
@@ -3434,7 +3430,7 @@ vim.opt.pvh = vim.opt.previewheight
 --- @return number
 function vim.opt.previewheight:get()end
 
--- `'previewwindow'`  `'pvw'` 	boolean (default off)
+-- `'previewwindow'`  `'pvw'` 	boolean	(default off)
 -- 			local to window
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
@@ -3523,7 +3519,7 @@ vim.opt.pyx = vim.opt.pyxversion
 --- @return number
 function vim.opt.pyxversion:get()end
 
--- `'quickfixtextfunc'`  `'qftf'` 	string (default "")
+-- `'quickfixtextfunc'`  `'qftf'` 	string	(default "")
 -- 			global
 -- 	This option specifies a function to be used to get the text to display
 -- 	in the quickfix and location list windows.  This can be used to
@@ -3580,7 +3576,7 @@ vim.opt.ro = vim.opt.readonly
 --- @return boolean
 function vim.opt.readonly:get()end
 
--- `'redrawdebug'`  `'rdb'` 	string	(default `''` )
+-- `'redrawdebug'`  `'rdb'` 	string	(default "")
 -- 			global
 -- 	Flags to change the way redrawing works, for debugging purposes.
 -- 	Most useful with `'writedelay'`  set to some reasonable value.
@@ -3800,7 +3796,7 @@ vim.opt.ru = vim.opt.ruler
 --- @return boolean
 function vim.opt.ruler:get()end
 
--- `'rulerformat'`  `'ruf'` 	string	(default empty)
+-- `'rulerformat'`  `'ruf'` 	string	(default "")
 -- 			global
 -- 	When this option is not empty, it determines the content of the ruler
 -- 	string, as displayed for the `'ruler'`  option.
@@ -3821,23 +3817,23 @@ vim.opt.ruf = vim.opt.rulerformat
 --- @return string
 function vim.opt.rulerformat:get()end
 
--- `'runtimepath'`  `'rtp'` 	string	(default:     "$XDG_CONFIG_HOME/nvim,
--- 					       $XDG_CONFIG_DIRS[1]/nvim,
--- 					       $XDG_CONFIG_DIRS[2]/nvim,
--- 					       …
--- 					       $XDG_DATA_HOME/nvim[-data]/site,
--- 					       $XDG_DATA_DIRS[1]/nvim/site,
--- 					       $XDG_DATA_DIRS[2]/nvim/site,
--- 					       …
--- 					       $VIMRUNTIME,
--- 					       …
--- 					       $XDG_DATA_DIRS[2]/nvim/site/after,
--- 					       $XDG_DATA_DIRS[1]/nvim/site/after,
--- 					       $XDG_DATA_HOME/nvim[-data]/site/after,
--- 					       …
--- 					       $XDG_CONFIG_DIRS[2]/nvim/after,
--- 					       $XDG_CONFIG_DIRS[1]/nvim/after,
--- 					       $XDG_CONFIG_HOME/nvim/after")
+-- `'runtimepath'`  `'rtp'` 	string	(default "$XDG_CONFIG_HOME/nvim,
+--                                                $XDG_CONFIG_DIRS[1]/nvim,
+--                                                $XDG_CONFIG_DIRS[2]/nvim,
+--                                                …
+--                                                $XDG_DATA_HOME/nvim[-data]/site,
+--                                                $XDG_DATA_DIRS[1]/nvim/site,
+--                                                $XDG_DATA_DIRS[2]/nvim/site,
+--                                                …
+--                                                $VIMRUNTIME,
+--                                                …
+--                                                $XDG_DATA_DIRS[2]/nvim/site/after,
+--                                                $XDG_DATA_DIRS[1]/nvim/site/after,
+--                                                $XDG_DATA_HOME/nvim[-data]/site/after,
+--                                                …
+--                                                $XDG_CONFIG_DIRS[2]/nvim/after,
+--                                                $XDG_CONFIG_DIRS[1]/nvim/after,
+--                                                $XDG_CONFIG_HOME/nvim/after")
 -- 			global
 -- 	List of directories to be searched for these runtime files:
 -- 	  filetype.lua	filetypes |new-filetype|
@@ -3914,7 +3910,7 @@ vim.opt.rtp = vim.opt.runtimepath
 --- @return string[]
 function vim.opt.runtimepath:get()end
 
--- `'scroll'`  `'scr'` 		number	(default: half the window height)
+-- `'scroll'`  `'scr'` 		number	(default half the window height)
 -- 			local to window
 -- 	Number of lines to scroll with CTRL-U and CTRL-D commands.  Will be
 -- 	set to half the number of lines in the window when the window size
@@ -3932,7 +3928,7 @@ vim.opt.scr = vim.opt.scroll
 --- @return number
 function vim.opt.scroll:get()end
 
--- `'scrollback'`  `'scbk'` 	number	(default: 10000)
+-- `'scrollback'`  `'scbk'` 	number	(default 10000)
 -- 			local to buffer
 -- 	Maximum number of lines kept beyond the visible screen. Lines at the
 -- 	top are deleted if new lines exceed this limit.
@@ -3950,7 +3946,7 @@ vim.opt.scbk = vim.opt.scrollback
 --- @return number
 function vim.opt.scrollback:get()end
 
--- `'scrollbind'`  `'scb'` 	boolean  (default off)
+-- `'scrollbind'`  `'scb'` 	boolean	(default off)
 -- 			local to window
 -- 	See also |scroll-binding|.  When this option is set, the current
 -- 	window scrolls as other scrollbind windows (windows that also have
@@ -4114,8 +4110,7 @@ vim.opt.slm = vim.opt.selectmode
 --- @return string[]
 function vim.opt.selectmode:get()end
 
--- `'sessionoptions'`  `'ssop'` 	string	(default: "blank,buffers,curdir,folds,
--- 					       help,tabpages,winsize,terminal")
+-- `'sessionoptions'`  `'ssop'` 	string	(default "blank,buffers,curdir,folds,help,tabpages,winsize,terminal")
 -- 			global
 -- 	Changes the effect of the |:mksession| command.  It is a comma-
 -- 	separated list of words.  Each word enables saving and restoring
@@ -4164,8 +4159,8 @@ vim.opt.ssop = vim.opt.sessionoptions
 function vim.opt.sessionoptions:get()end
 
 -- `'shada'`  `'sd'` 		string	(default for
--- 				   Win32:  !,'100,<50,s10,h,rA:,rB:
--- 				   others: !,'100,<50,s10,h)
+--                                    Win32:  !,'100,<50,s10,h,rA:,rB:
+--                                    others: !,'100,<50,s10,h)
 -- 			global
 -- 	When non-empty, the shada file is read upon startup and written
 -- 	when exiting Vim (see |shada-file|).  The string should be a comma-
@@ -4286,7 +4281,7 @@ vim.opt.sd = vim.opt.shada
 --- @return string[]
 function vim.opt.shada:get()end
 
--- `'shadafile'`  `'sdf'` 	string	(default: "")
+-- `'shadafile'`  `'sdf'` 	string	(default "")
 -- 			global
 -- 	When non-empty, overrides the file name used for |shada| (viminfo).
 -- 	When equal to "NONE" no shada file will be read or written.
@@ -4359,7 +4354,7 @@ vim.opt.sh = vim.opt.shell
 --- @return string
 function vim.opt.shell:get()end
 
--- `'shellcmdflag'`  `'shcf'` 	string	(default: "-c"; Windows: "/s /c")
+-- `'shellcmdflag'`  `'shcf'` 	string	(default "-c"; Windows: "/s /c")
 -- 			global
 -- 	Flag passed to the shell to execute "!" and ":!" commands; e.g.,
 -- 	`bash.exe -c ls` or `cmd.exe /s /c "dir"`.  For MS-Windows, the
@@ -4420,8 +4415,8 @@ vim.opt.sp = vim.opt.shellpipe
 --- @return string
 function vim.opt.shellpipe:get()end
 
--- `'shellquote'`  `'shq'` 	string	(default: ""; Windows, when `'shell'` 
--- 					contains "sh" somewhere: "\"")
+-- `'shellquote'`  `'shq'` 	string	(default ""; Windows, when `'shell'` 
+--                                         contains "sh" somewhere: "\"")
 -- 			global
 -- 	Quoting character(s), put around the command passed to the shell, for
 -- 	the "!" and ":!" commands.  The redirection is kept outside of the
@@ -4519,7 +4514,7 @@ vim.opt.stmp = vim.opt.shelltemp
 --- @return boolean
 function vim.opt.shelltemp:get()end
 
--- `'shellxescape'`  `'sxe'` 	string	(default: "")
+-- `'shellxescape'`  `'sxe'` 	string	(default "")
 -- 			global
 -- 	When `'shellxquote'`  is set to "(" then the characters listed in this
 -- 	option will be escaped with a `'^'`  character.  This makes it possible
@@ -4533,7 +4528,7 @@ vim.opt.sxe = vim.opt.shellxescape
 --- @return string
 function vim.opt.shellxescape:get()end
 
--- `'shellxquote'`  `'sxq'` 	string	(default: "", Windows: "\"")
+-- `'shellxquote'`  `'sxq'` 	string	(default "", Windows: "\"")
 -- 			global
 -- 	Quoting character(s), put around the command passed to the shell, for
 -- 	the "!" and ":!" commands.  Includes the redirection.  See

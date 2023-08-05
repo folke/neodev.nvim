@@ -1,5 +1,10 @@
 ---@meta
 
+-- `'diff'` 			boolean	(default off)
+-- 			local to window
+-- 	Join the current window in the group of windows that shows differences
+-- 	between files.  See |diff-mode|.
+vim.wo.diff = false
 -- `'fillchars'`  `'fcs'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	Characters to fill the statuslines, vertical separators and special
@@ -67,18 +72,18 @@
 -- 	  lastline	NonText			|hl-NonText|
 vim.wo.fillchars = ""
 vim.wo.fcs = vim.wo.fillchars
--- `'foldcolumn'`  `'fdc'` 	string (default "0")
+-- `'foldcolumn'`  `'fdc'` 	string	(default "0")
 -- 			local to window
 -- 	When and how to draw the foldcolumn. Valid values are:
 -- 	    "auto":       resize to the minimum amount of folds to display.
 -- 	    "auto:[1-9]": resize to accommodate multiple folds up to the
 -- 			  selected level
---             0:            to disable foldcolumn
+-- 	    0:            to disable foldcolumn
 -- 	    "[1-9]":      to display a fixed number of columns
 -- 	See |folding|.
 vim.wo.foldcolumn = "0"
 vim.wo.fdc = vim.wo.foldcolumn
--- `'foldenable'`  `'fen'` 	boolean (default on)
+-- `'foldenable'`  `'fen'` 	boolean	(default on)
 -- 			local to window
 -- 	When off, all folds are open.  This option can be used to quickly
 -- 	switch between showing all text unfolded and viewing the text with
@@ -89,7 +94,7 @@ vim.wo.fdc = vim.wo.foldcolumn
 -- 	See |folding|.
 vim.wo.foldenable = true
 vim.wo.fen = vim.wo.foldenable
--- `'foldexpr'`  `'fde'` 	string (default: "0")
+-- `'foldexpr'`  `'fde'` 	string	(default "0")
 -- 			local to window
 -- 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
 -- 	for each line to obtain its fold level.  The context is set to the
@@ -105,7 +110,7 @@ vim.wo.fen = vim.wo.foldenable
 -- 	evaluating `'foldexpr'`  |textlock|.
 vim.wo.foldexpr = "0"
 vim.wo.fde = vim.wo.foldexpr
--- `'foldignore'`  `'fdi'` 	string (default: "#")
+-- `'foldignore'`  `'fdi'` 	string	(default "#")
 -- 			local to window
 -- 	Used only when `'foldmethod'`  is "indent".  Lines starting with
 -- 	characters in `'foldignore'`  will get their fold level from surrounding
@@ -113,7 +118,7 @@ vim.wo.fde = vim.wo.foldexpr
 -- 	The default "#" works well for C programs.  See |fold-indent|.
 vim.wo.foldignore = "#"
 vim.wo.fdi = vim.wo.foldignore
--- `'foldlevel'`  `'fdl'` 	number (default: 0)
+-- `'foldlevel'`  `'fdl'` 	number	(default 0)
 -- 			local to window
 -- 	Sets the fold level: Folds with a higher level will be closed.
 -- 	Setting this option to zero will close all folds.  Higher numbers will
@@ -122,7 +127,7 @@ vim.wo.fdi = vim.wo.foldignore
 -- 	See |fold-foldlevel|.
 vim.wo.foldlevel = 0
 vim.wo.fdl = vim.wo.foldlevel
--- `'foldmarker'`  `'fmr'` 	string (default: "{{{,}}}")
+-- `'foldmarker'`  `'fmr'` 	string	(default "{{{,}}}")
 -- 			local to window
 -- 	The start and end marker used when `'foldmethod'`  is "marker".  There
 -- 	must be one comma, which separates the start and end marker.  The
@@ -130,7 +135,7 @@ vim.wo.fdl = vim.wo.foldlevel
 -- 	See |fold-marker|.
 vim.wo.foldmarker = "{{{,}}}"
 vim.wo.fmr = vim.wo.foldmarker
--- `'foldmethod'`  `'fdm'` 	string (default: "manual")
+-- `'foldmethod'`  `'fdm'` 	string	(default "manual")
 -- 			local to window
 -- 	The kind of folding used for the current window.  Possible values:
 -- 	|fold-manual|	manual	    Folds are created manually.
@@ -141,7 +146,7 @@ vim.wo.fmr = vim.wo.foldmarker
 -- 	|fold-diff|	diff	    Fold text that is not changed.
 vim.wo.foldmethod = "manual"
 vim.wo.fdm = vim.wo.foldmethod
--- `'foldminlines'`  `'fml'` 	number (default: 1)
+-- `'foldminlines'`  `'fml'` 	number	(default 1)
 -- 			local to window
 -- 	Sets the number of screen lines above which a fold can be displayed
 -- 	closed.  Also for manually closed folds.  With the default value of
@@ -152,14 +157,14 @@ vim.wo.fdm = vim.wo.foldmethod
 -- 	than `'foldminlines'` , a following "zc" may close a containing fold.
 vim.wo.foldminlines = 1
 vim.wo.fml = vim.wo.foldminlines
--- `'foldnestmax'`  `'fdn'` 	number (default: 20)
+-- `'foldnestmax'`  `'fdn'` 	number	(default 20)
 -- 			local to window
 -- 	Sets the maximum nesting of folds for the "indent" and "syntax"
 -- 	methods.  This avoids that too many folds will be created.  Using more
 -- 	than 20 doesn't work, because the internal limit is 20.
 vim.wo.foldnestmax = 20
 vim.wo.fdn = vim.wo.foldnestmax
--- `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
+-- `'foldtext'`  `'fdt'` 	string	(default "foldtext()")
 -- 			local to window
 -- 	An expression which is used to specify the text displayed for a closed
 -- 	fold.  The context is set to the script where `'foldexpr'`  was set,
@@ -203,7 +208,7 @@ vim.wo.lbr = vim.wo.linebreak
 -- 	or `'wrapmargin'` ) when `'cpoptions'`  includes `'L'` .  See `'listchars'`  for
 -- 	changing the way tabs are displayed.
 vim.wo.list = false
--- `'listchars'`  `'lcs'` 	string	(default: "tab:> ,trail:-,nbsp:+")
+-- `'listchars'`  `'lcs'` 	string	(default "tab:> ,trail:-,nbsp:+")
 -- 			global or local to window |global-local|
 -- 	Strings to use in `'list'`  mode and for the |:list| command.  It is a
 -- 	comma-separated list of string settings.
@@ -320,7 +325,7 @@ vim.wo.lcs = vim.wo.listchars
 -- 
 -- 		`'nonu'`           `'nu'`             `'nonu'`           `'nu'` 
 -- 		`'nornu'`          `'nornu'`          `'rnu'`            `'rnu'` 
--- >
+-- 	>
 -- 	    |apple          |  1 apple      |  2 apple      |  2 apple
 -- 	    |pear           |  2 pear       |  1 pear       |  1 pear
 -- 	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
@@ -328,7 +333,7 @@ vim.wo.lcs = vim.wo.listchars
 -- <
 vim.wo.number = false
 vim.wo.nu = vim.wo.number
--- `'numberwidth'`  `'nuw'` 	number	(default: 4)
+-- `'numberwidth'`  `'nuw'` 	number	(default 4)
 -- 			local to window
 -- 	Minimal number of columns to use for the line number.  Only relevant
 -- 	when the `'number'`  or `'relativenumber'`  option is set or printing lines
@@ -342,7 +347,7 @@ vim.wo.nu = vim.wo.number
 -- 	The minimum value is 1, the maximum value is 20.
 vim.wo.numberwidth = 4
 vim.wo.nuw = vim.wo.numberwidth
--- `'previewwindow'`  `'pvw'` 	boolean (default off)
+-- `'previewwindow'`  `'pvw'` 	boolean	(default off)
 -- 			local to window
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
@@ -394,7 +399,7 @@ vim.wo.rl = vim.wo.rightleft
 -- 	The `'rightleft'`  option must be set for `'rightleftcmd'`  to take effect.
 vim.wo.rightleftcmd = "search"
 vim.wo.rlc = vim.wo.rightleftcmd
--- `'scroll'`  `'scr'` 		number	(default: half the window height)
+-- `'scroll'`  `'scr'` 		number	(default half the window height)
 -- 			local to window
 -- 	Number of lines to scroll with CTRL-U and CTRL-D commands.  Will be
 -- 	set to half the number of lines in the window when the window size
@@ -405,7 +410,7 @@ vim.wo.rlc = vim.wo.rightleftcmd
 -- 	height with ":set scroll=0".
 vim.wo.scroll = 0
 vim.wo.scr = vim.wo.scroll
--- `'scrollbind'`  `'scb'` 	boolean  (default off)
+-- `'scrollbind'`  `'scb'` 	boolean	(default off)
 -- 			local to window
 -- 	See also |scroll-binding|.  When this option is set, the current
 -- 	window scrolls as other scrollbind windows (windows that also have
@@ -436,9 +441,7 @@ vim.wo.so = vim.wo.scrolloff
 -- 			global or local to window |global-local|
 -- 	String to put at the start of lines that have been wrapped.  Useful
 -- 	values are "> " or "+++ ": >
--- 		:set showbreak=>\
--- <	Note the backslash to escape the trailing space.  It's easier like
--- 	this: >
+-- 		:let &showbreak = "> "
 -- 		:let &showbreak = '+++ '
 -- <	Only printable single-cell characters are allowed, excluding <Tab> and
 -- 	comma (in a future version the comma might be used to separate the
@@ -453,7 +456,7 @@ vim.wo.so = vim.wo.scrolloff
 -- <
 vim.wo.showbreak = ""
 vim.wo.sbr = vim.wo.showbreak
--- `'sidescrolloff'`  `'siso'` 	number (default 0)
+-- `'sidescrolloff'`  `'siso'` 	number	(default 0)
 -- 			global or local to window |global-local|
 -- 	The minimal number of screen columns to keep to the left and to the
 -- 	right of the cursor if `'nowrap'`  is set.  Setting this option to a
@@ -503,7 +506,7 @@ vim.wo.siso = vim.wo.sidescrolloff
 -- 	during line deletion.
 vim.wo.signcolumn = "auto"
 vim.wo.scl = vim.wo.signcolumn
--- `'smoothscroll'`  `'sms'` 	boolean  (default off)
+-- `'smoothscroll'`  `'sms'` 	boolean	(default off)
 -- 			local to window
 -- 	Scrolling works with screen lines.  When `'wrap'`  is set and the first
 -- 	line in the window wraps part of it may not be visible, as if it is
@@ -520,7 +523,7 @@ vim.wo.sms = vim.wo.smoothscroll
 -- 	When on spell checking will be done.  See |spell|.
 -- 	The languages are specified with `'spelllang'` .
 vim.wo.spell = false
--- `'statuscolumn'`  `'stc'` 	string	(default: empty)
+-- `'statuscolumn'`  `'stc'` 	string	(default "")
 -- 			local to window
 -- 	EXPERIMENTAL
 -- 	When non-empty, this option determines the content of the area to the
@@ -574,7 +577,7 @@ vim.wo.spell = false
 -- 	an expensive expression can negatively affect render performance.
 vim.wo.statuscolumn = ""
 vim.wo.stc = vim.wo.statuscolumn
--- `'statusline'`  `'stl'` 	string	(default empty)
+-- `'statusline'`  `'stl'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	When non-empty, this option determines the content of the status line.
 -- 	Also see |status-line|.
@@ -817,7 +820,7 @@ vim.wo.stl = vim.wo.statusline
 -- 	When combined with other words, "none" is ignored.
 vim.wo.virtualedit = ""
 vim.wo.ve = vim.wo.virtualedit
--- `'winbar'`  `'wbr'` 		string (default empty)
+-- `'winbar'`  `'wbr'` 		string	(default "")
 -- 			global or local to window |global-local|
 -- 	When non-empty, this option enables the window bar and determines its
 -- 	contents. The window bar is a bar that's shown at the top of every
@@ -834,7 +837,7 @@ vim.wo.ve = vim.wo.virtualedit
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
 vim.wo.winbar = ""
 vim.wo.wbr = vim.wo.winbar
--- `'winblend'`  `'winbl'` 		number	(default 0)
+-- `'winblend'`  `'winbl'` 	number	(default 0)
 -- 			local to window
 -- 	Enables pseudo-transparency for a floating window. Valid values are in
 -- 	the range of 0 for fully opaque window (disabled) to 100 for fully
@@ -858,7 +861,7 @@ vim.wo.wfh = vim.wo.winfixheight
 -- 	The width may be changed anyway when running out of room.
 vim.wo.winfixwidth = false
 vim.wo.wfw = vim.wo.winfixwidth
--- `'winhighlight'`  `'winhl'` 	string (default empty)
+-- `'winhighlight'`  `'winhl'` 	string	(default "")
 -- 			local to window
 -- 	Window-local highlights.  Comma-delimited list of highlight
 -- 	|group-name| pairs "{hl-from}:{hl-to},..." where each {hl-from} is
@@ -930,7 +933,7 @@ vim.bo.ai = vim.bo.autoindent
 -- <
 vim.bo.autoread = true
 vim.bo.ar = vim.bo.autoread
--- `'backupcopy'`  `'bkc'` 	string	(default: "auto")
+-- `'backupcopy'`  `'bkc'` 	string	(default "auto")
 -- 			global or local to buffer |global-local|
 -- 	When writing a file and a backup is made, this option tells how it's
 -- 	done.  This is a comma-separated list of words.
@@ -1043,7 +1046,7 @@ vim.bo.bin = vim.bo.binary
 -- 	don't see it when editing.  When you don't change the options, the BOM
 -- 	will be restored when writing the file.
 vim.bo.bomb = false
--- `'bufhidden'`  `'bh'` 	string (default: "")
+-- `'bufhidden'`  `'bh'` 	string	(default "")
 -- 			local to buffer
 -- 	This option specifies what happens when a buffer is no longer
 -- 	displayed in a window:
@@ -1066,7 +1069,7 @@ vim.bo.bomb = false
 -- 	special kinds of buffers.   See |special-buffers|.
 vim.bo.bufhidden = ""
 vim.bo.bh = vim.bo.bufhidden
--- `'buflisted'`  `'bl'` 	boolean (default: on)
+-- `'buflisted'`  `'bl'` 	boolean	(default on)
 -- 			local to buffer
 -- 	When this option is set, the buffer shows up in the buffer list.  If
 -- 	it is reset it is not used for ":bnext", "ls", the Buffers menu, etc.
@@ -1075,7 +1078,7 @@ vim.bo.bh = vim.bo.bufhidden
 -- 	But not when moving to a buffer with ":buffer".
 vim.bo.buflisted = true
 vim.bo.bl = vim.bo.buflisted
--- `'buftype'`  `'bt'` 		string (default: "")
+-- `'buftype'`  `'bt'` 		string	(default "")
 -- 			local to buffer
 -- 	The value of this option specifies the type of a buffer:
 -- 	  <empty>	normal buffer
@@ -1123,7 +1126,7 @@ vim.bo.bl = vim.bo.buflisted
 -- 	|FileWriteCmd| or |FileAppendCmd| autocommands.
 vim.bo.buftype = ""
 vim.bo.bt = vim.bo.buftype
--- `'channel'` 		number (default: 0)
+-- `'channel'` 		number	(default 0)
 -- 			local to buffer
 -- 	|channel| connected to the buffer, or 0 if no channel is connected.
 -- 	In a |:terminal| buffer this is the terminal channel.
@@ -1165,7 +1168,6 @@ vim.bo.cino = vim.bo.cinoptions
 -- 	Useful e.g. for working with the Qt framework that defines additional
 -- 	scope declarations "signals", "public slots" and "private slots": >
 -- 		set cinscopedecls+=signals,public\ slots,private\ slots
--- 
 -- <
 vim.bo.cinscopedecls = "public,protected,private"
 vim.bo.cinsd = vim.bo.cinscopedecls
@@ -1179,8 +1181,7 @@ vim.bo.cinsd = vim.bo.cinscopedecls
 -- 	"if,If,IF".
 vim.bo.cinwords = "if,else,while,do,for,switch"
 vim.bo.cinw = vim.bo.cinwords
--- `'comments'`  `'com'` 	string	(default
--- 				"s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
+-- `'comments'`  `'com'` 	string	(default "s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
 -- 			local to buffer
 -- 	A comma-separated list of strings that can start a comment line.  See
 -- 	|format-comments|.  See |option-backslash| about using backslashes to
@@ -1194,7 +1195,7 @@ vim.bo.com = vim.bo.comments
 -- 	add markers for folding, see |fold-marker|.
 vim.bo.commentstring = ""
 vim.bo.cms = vim.bo.commentstring
--- `'complete'`  `'cpt'` 	string	(default: ".,w,b,u,t")
+-- `'complete'`  `'cpt'` 	string	(default ".,w,b,u,t")
 -- 			local to buffer
 -- 	This option specifies how keyword completion |ins-completion| works
 -- 	when CTRL-P or CTRL-N are used.  It is also used for whole-line
@@ -1229,7 +1230,7 @@ vim.bo.cms = vim.bo.commentstring
 -- 	|i_CTRL-X_CTRL-I|, tags |i_CTRL-X_CTRL-]| and normal expansions).
 vim.bo.complete = ".,w,b,u,t"
 vim.bo.cpt = vim.bo.complete
--- `'completefunc'`  `'cfu'` 	string	(default: empty)
+-- `'completefunc'`  `'cfu'` 	string	(default "")
 -- 			local to buffer
 -- 	This option specifies a function to be used for Insert mode completion
 -- 	with CTRL-X CTRL-U. |i_CTRL-X_CTRL-U|
@@ -1354,7 +1355,7 @@ vim.bo.efm = vim.bo.errorformat
 -- 	on, use CTRL-V<Tab>.  See also |:retab| and |ins-expandtab|.
 vim.bo.expandtab = false
 vim.bo.et = vim.bo.expandtab
--- `'fileencoding'`  `'fenc'` 	string (default: "")
+-- `'fileencoding'`  `'fenc'` 	string	(default "")
 -- 			local to buffer
 -- 	File-content encoding for the current buffer. Conversion is done with
 -- 	iconv() or as specified with `'charconvert'` .
@@ -1395,8 +1396,7 @@ vim.bo.et = vim.bo.expandtab
 -- 	This option cannot be changed when `'modifiable'`  is off.
 vim.bo.fileencoding = ""
 vim.bo.fenc = vim.bo.fileencoding
--- `'fileformat'`  `'ff'` 	string (Windows default: "dos",
--- 				Unix default: "unix")
+-- `'fileformat'`  `'ff'` 	string	(default Windows: "dos", Unix: "unix")
 -- 			local to buffer
 -- 	This gives the <EOL> of the current buffer, which is used for
 -- 	reading/writing the buffer from/to a file:
@@ -1415,7 +1415,7 @@ vim.bo.fenc = vim.bo.fileencoding
 -- 	This option cannot be changed when `'modifiable'`  is off.
 vim.bo.fileformat = "unix"
 vim.bo.ff = vim.bo.fileformat
--- `'filetype'`  `'ft'` 		string (default: "")
+-- `'filetype'`  `'ft'` 		string	(default "")
 -- 			local to buffer
 -- 	When this option is set, the FileType autocommand event is triggered.
 -- 	All autocommands that match with the value of this option will be
@@ -1451,7 +1451,7 @@ vim.bo.ft = vim.bo.filetype
 -- 	See |eol-and-eof| for example settings.
 vim.bo.fixendofline = true
 vim.bo.fixeol = vim.bo.fixendofline
--- `'formatexpr'`  `'fex'` 	string (default "")
+-- `'formatexpr'`  `'fex'` 	string	(default "")
 -- 			local to buffer
 -- 	Expression which is evaluated to format a range of lines for the |gq|
 -- 	operator or automatic formatting (see `'formatoptions'` ).  When this
@@ -1492,7 +1492,7 @@ vim.bo.fixeol = vim.bo.fixendofline
 -- 	NOTE: This option is set to "" when `'compatible'`  is set.
 vim.bo.formatexpr = ""
 vim.bo.fex = vim.bo.formatexpr
--- `'formatlistpat'`  `'flp'` 	string (default: "^\s*\d\+[\]:.)}\t ]\s*")
+-- `'formatlistpat'`  `'flp'` 	string	(default "^\s*\d\+[\]:.)}\t ]\s*")
 -- 			local to buffer
 -- 	A pattern that is used to recognize a list header.  This is used for
 -- 	the "n" flag in `'formatoptions'` .
@@ -1505,7 +1505,7 @@ vim.bo.fex = vim.bo.formatexpr
 -- 	character and white space.
 vim.bo.formatlistpat = "^\\s*\\d\\+[\\]:.)}\\t ]\\s*"
 vim.bo.flp = vim.bo.formatlistpat
--- `'formatoptions'`  `'fo'` 	string (default: "tcqj")
+-- `'formatoptions'`  `'fo'` 	string	(default "tcqj")
 -- 			local to buffer
 -- 	This is a sequence of letters which describes how automatic
 -- 	formatting is to be done.  See |fo-table|.  Commas can be inserted for
@@ -1514,7 +1514,7 @@ vim.bo.flp = vim.bo.formatlistpat
 -- 	"+=" and "-=" feature of ":set" |add-option-flags|.
 vim.bo.formatoptions = "tcqj"
 vim.bo.fo = vim.bo.formatoptions
--- `'formatprg'`  `'fp'` 	string (default "")
+-- `'formatprg'`  `'fp'` 	string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	The name of an external program that will be used to format the lines
 -- 	selected with the |gq| operator.  The program must take the input on
@@ -1530,7 +1530,7 @@ vim.bo.fo = vim.bo.formatoptions
 vim.bo.formatprg = ""
 vim.bo.fp = vim.bo.formatprg
 -- `'grepprg'`  `'gp'` 		string	(default "grep -n ",
--- 				 Unix: "grep -n $* /dev/null")
+--                                  Unix: "grep -n $* /dev/null")
 -- 			global or local to buffer |global-local|
 -- 	Program to use for the |:grep| command.  This option may contain `'%'` 
 -- 	and `'#'`  characters, which are expanded like when used in a command-
@@ -1549,7 +1549,7 @@ vim.bo.fp = vim.bo.formatprg
 -- 	security reasons.
 vim.bo.grepprg = "grep -n $* /dev/null"
 vim.bo.gp = vim.bo.grepprg
--- `'iminsert'`  `'imi'` 	number (default 0)
+-- `'iminsert'`  `'imi'` 	number	(default 0)
 -- 			local to buffer
 -- 	Specifies whether :lmap or an Input Method (IM) is to be used in
 -- 	Insert mode.  Valid values:
@@ -1567,7 +1567,7 @@ vim.bo.gp = vim.bo.grepprg
 -- 	It is also used for the argument of commands like "r" and "f".
 vim.bo.iminsert = 0
 vim.bo.imi = vim.bo.iminsert
--- `'imsearch'`  `'ims'` 	number (default -1)
+-- `'imsearch'`  `'ims'` 	number	(default -1)
 -- 			local to buffer
 -- 	Specifies whether :lmap or an Input Method (IM) is to be used when
 -- 	entering a search pattern.  Valid values:
@@ -1687,7 +1687,7 @@ vim.bo.indk = vim.bo.indentkeys
 -- 	With `'noinfercase'`  the match is used as-is.
 vim.bo.infercase = false
 vim.bo.inf = vim.bo.infercase
--- `'iskeyword'`  `'isk'` 	string (default: @,48-57,_,192-255)
+-- `'iskeyword'`  `'isk'` 	string	(default "@,48-57,_,192-255")
 -- 			local to buffer
 -- 	Keywords are used in searching and recognizing with many commands:
 -- 	"w", "*", "[i", etc.  It is also used for "\k" in a |pattern|.  See
@@ -1811,7 +1811,7 @@ vim.bo.mp = vim.bo.makeprg
 -- 	the $VIMRUNTIME/plugin directory. |add-local-help|
 vim.bo.matchpairs = "(:),{:},[:]"
 vim.bo.mps = vim.bo.matchpairs
--- `'modeline'`  `'ml'` 		boolean	(default: on (off for root))
+-- `'modeline'`  `'ml'` 		boolean	(default on (off for root))
 -- 			local to buffer
 -- 	If `'modeline'`  is on `'modelines'`  gives the number of lines that is
 -- 	checked for set commands.  If `'modeline'`  is off or `'modelines'`  is zero
@@ -1880,7 +1880,7 @@ vim.bo.mod = vim.bo.modified
 -- 	recognized as octal or hex.
 vim.bo.nrformats = "bin,hex"
 vim.bo.nf = vim.bo.nrformats
--- `'omnifunc'`  `'ofu'` 	string	(default: empty)
+-- `'omnifunc'`  `'ofu'` 	string	(default "")
 -- 			local to buffer
 -- 	This option specifies a function to be used for Insert mode omni
 -- 	completion with CTRL-X CTRL-O. |i_CTRL-X_CTRL-O|
@@ -1894,7 +1894,7 @@ vim.bo.nf = vim.bo.nrformats
 -- 	security reasons.
 vim.bo.omnifunc = ""
 vim.bo.ofu = vim.bo.omnifunc
--- `'path'`  `'pa'` 		string	(default: ".,,")
+-- `'path'`  `'pa'` 		string	(default ".,,")
 -- 			global or local to buffer |global-local|
 -- 	This is a list of directories which will be searched when using the
 -- 	|gf|, [f, ]f, ^Wf, |:find|, |:sfind|, |:tabfind| and other commands,
@@ -1978,7 +1978,7 @@ vim.bo.qe = vim.bo.quoteescape
 -- 	See `'modifiable'`  for disallowing changes to the buffer.
 vim.bo.readonly = false
 vim.bo.ro = vim.bo.readonly
--- `'scrollback'`  `'scbk'` 	number	(default: 10000)
+-- `'scrollback'`  `'scbk'` 	number	(default 10000)
 -- 			local to buffer
 -- 	Maximum number of lines kept beyond the visible screen. Lines at the
 -- 	top are deleted if new lines exceed this limit.
@@ -2039,7 +2039,7 @@ vim.bo.si = vim.bo.smartindent
 -- 	to anything other than an empty string.
 vim.bo.softtabstop = 0
 vim.bo.sts = vim.bo.softtabstop
--- `'spellcapcheck'`  `'spc'` 	string	(default "[.?!]\_[\])'" \t]\+")
+-- `'spellcapcheck'`  `'spc'` 	string	(default "[.?!]\_[\])'"\t ]\+")
 -- 			local to buffer
 -- 	Pattern to locate the end of a sentence.  The following word will be
 -- 	checked to start with a capital letter.  If not then it is highlighted
@@ -2050,9 +2050,9 @@ vim.bo.sts = vim.bo.softtabstop
 -- 	including spaces and backslashes.
 -- 	To set this option automatically depending on the language, see
 -- 	|set-spc-auto|.
-vim.bo.spellcapcheck = "[.?!]\\_[\\])'\"\t ]\\+"
+vim.bo.spellcapcheck = "[.?!]\\_[\\])'\"\\t ]\\+"
 vim.bo.spc = vim.bo.spellcapcheck
--- `'spellfile'`  `'spf'` 	string	(default empty)
+-- `'spellfile'`  `'spf'` 	string	(default "")
 -- 			local to buffer
 -- 	Name of the word list file where words are added for the |zg| and |zw|
 -- 	commands.  It must end in ".{encoding}.add".  You need to include the
@@ -2138,7 +2138,7 @@ vim.bo.spo = vim.bo.spelloptions
 -- <
 vim.bo.suffixesadd = ""
 vim.bo.sua = vim.bo.suffixesadd
--- `'swapfile'`  `'swf'` 	boolean (default on)
+-- `'swapfile'`  `'swf'` 	boolean	(default on)
 -- 			local to buffer
 -- 	Use a swapfile for the buffer.  This option can be reset when a
 -- 	swapfile is not wanted for a specific buffer.  For example, with
@@ -2170,7 +2170,7 @@ vim.bo.swf = vim.bo.swapfile
 -- 	Set to zero to remove the limit.
 vim.bo.synmaxcol = 3000
 vim.bo.smc = vim.bo.synmaxcol
--- `'syntax'`  `'syn'` 		string	(default empty)
+-- `'syntax'`  `'syn'` 		string	(default "")
 -- 			local to buffer
 -- 	When this option is set, the syntax with this name is loaded, unless
 -- 	syntax highlighting has been switched off with ":syntax off".
@@ -2251,7 +2251,7 @@ vim.bo.ts = vim.bo.tabstop
 -- 	   smart	Ignore case unless an upper case letter is used
 vim.bo.tagcase = "followic"
 vim.bo.tc = vim.bo.tagcase
--- `'tagfunc'`  `'tfu'` 		string	(default: empty)
+-- `'tagfunc'`  `'tfu'` 		string	(default "")
 -- 			local to buffer
 -- 	This option specifies a function to be used to perform tag searches.
 -- 	The function gets the tag pattern and should return a List of matching
@@ -2310,7 +2310,7 @@ vim.bo.tw = vim.bo.textwidth
 -- 	reasons.
 vim.bo.thesaurus = ""
 vim.bo.tsr = vim.bo.thesaurus
--- `'thesaurusfunc'`  `'tsrfu'` 	string	(default: empty)
+-- `'thesaurusfunc'`  `'tsrfu'` 	string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	This option specifies a function to be used for thesaurus completion
 -- 	with CTRL-X CTRL-T. |i_CTRL-X_CTRL-T| See |compl-thesaurusfunc|.
@@ -2423,7 +2423,7 @@ vim.opt.ari = vim.opt.allowrevins
 --- @return boolean
 function vim.opt.allowrevins:get()end
 
--- `'ambiwidth'`  `'ambw'` 	string (default: "single")
+-- `'ambiwidth'`  `'ambw'` 	string	(default "single")
 -- 			global
 -- 	Tells Vim what to do with characters with East Asian Width Class
 -- 	Ambiguous (such as Euro, Registered Sign, Copyright Sign, Greek
@@ -2464,7 +2464,7 @@ vim.opt.ambw = vim.opt.ambiwidth
 --- @return string
 function vim.opt.ambiwidth:get()end
 
--- `'arabic'`  `'arab'` 		boolean (default off)
+-- `'arabic'`  `'arab'` 		boolean	(default off)
 -- 			local to window
 -- 	This option can be set to start editing Arabic text.
 -- 	Setting this option will:
@@ -2489,7 +2489,7 @@ vim.opt.arab = vim.opt.arabic
 --- @return boolean
 function vim.opt.arabic:get()end
 
--- `'arabicshape'`  `'arshape'` 	boolean (default on)
+-- `'arabicshape'`  `'arshape'` 	boolean	(default on)
 -- 			global
 -- 	When on and `'termbidi'`  is off, the required visual character
 -- 	corrections that need to take place for displaying the Arabic language
@@ -2512,7 +2512,7 @@ vim.opt.arshape = vim.opt.arabicshape
 --- @return boolean
 function vim.opt.arabicshape:get()end
 
--- `'autochdir'`  `'acd'` 	boolean (default off)
+-- `'autochdir'`  `'acd'` 	boolean	(default off)
 -- 			global
 -- 	When on, Vim will change the current working directory whenever you
 -- 	open a file, switch buffers, delete a buffer or open/close a window.
@@ -2693,7 +2693,7 @@ vim.opt.bk = vim.opt.backup
 --- @return boolean
 function vim.opt.backup:get()end
 
--- `'backupcopy'`  `'bkc'` 	string	(default: "auto")
+-- `'backupcopy'`  `'bkc'` 	string	(default "auto")
 -- 			global or local to buffer |global-local|
 -- 	When writing a file and a backup is made, this option tells how it's
 -- 	done.  This is a comma-separated list of words.
@@ -2839,9 +2839,9 @@ vim.opt.bex = vim.opt.backupext
 --- @return string
 function vim.opt.backupext:get()end
 
--- `'backupskip'`  `'bsk'` 	string	(default: "$TMPDIR/,$TEMP/*"
--- 				 Unix: "/tmp/,$TMP/"
--- 				 Mac: "/private/tmp/,$TMP/")
+-- `'backupskip'`  `'bsk'` 	string	(default "$TMPDIR/,$TEMP/*"
+--                                  Unix: "/tmp/,$TMP/"
+--                                  Mac: "/private/tmp/,$TMP/")
 -- 			global
 -- 	A list of file patterns.  When one of the patterns matches with the
 -- 	name of the file which is written, no backup file is created.  Both
@@ -2992,7 +2992,7 @@ vim.opt.brk = vim.opt.breakat
 --- @return string[]
 function vim.opt.breakat:get()end
 
--- `'breakindent'`  `'bri'` 	boolean (default off)
+-- `'breakindent'`  `'bri'` 	boolean	(default off)
 -- 			local to window
 -- 	Every wrapped line will continue visually indented (same amount of
 -- 	space as the beginning of that line), thus preserving horizontal blocks
@@ -3006,7 +3006,7 @@ vim.opt.bri = vim.opt.breakindent
 --- @return boolean
 function vim.opt.breakindent:get()end
 
--- `'breakindentopt'`  `'briopt'`  string (default empty)
+-- `'breakindentopt'`  `'briopt'` 	string	(default "")
 -- 			local to window
 -- 	Settings for `'breakindent'` . It can consist of the following optional
 -- 	items and must be separated by a comma:
@@ -3044,7 +3044,7 @@ vim.opt.briopt = vim.opt.breakindentopt
 --- @return string[]
 function vim.opt.breakindentopt:get()end
 
--- `'browsedir'`  `'bsdir'` 	string	(default: "last")
+-- `'browsedir'`  `'bsdir'` 	string	(default "last")
 -- 			global
 -- 	Which directory to use for the file browser:
 -- 	   last		Use same directory as with last file browser, where a
@@ -3061,7 +3061,7 @@ vim.opt.bsdir = vim.opt.browsedir
 --- @return string
 function vim.opt.browsedir:get()end
 
--- `'bufhidden'`  `'bh'` 	string (default: "")
+-- `'bufhidden'`  `'bh'` 	string	(default "")
 -- 			local to buffer
 -- 	This option specifies what happens when a buffer is no longer
 -- 	displayed in a window:
@@ -3091,7 +3091,7 @@ vim.opt.bh = vim.opt.bufhidden
 --- @return string
 function vim.opt.bufhidden:get()end
 
--- `'buflisted'`  `'bl'` 	boolean (default: on)
+-- `'buflisted'`  `'bl'` 	boolean	(default on)
 -- 			local to buffer
 -- 	When this option is set, the buffer shows up in the buffer list.  If
 -- 	it is reset it is not used for ":bnext", "ls", the Buffers menu, etc.
@@ -3107,7 +3107,7 @@ vim.opt.bl = vim.opt.buflisted
 --- @return boolean
 function vim.opt.buflisted:get()end
 
--- `'buftype'`  `'bt'` 		string (default: "")
+-- `'buftype'`  `'bt'` 		string	(default "")
 -- 			local to buffer
 -- 	The value of this option specifies the type of a buffer:
 -- 	  <empty>	normal buffer
@@ -3162,7 +3162,7 @@ vim.opt.bt = vim.opt.buftype
 --- @return string
 function vim.opt.buftype:get()end
 
--- `'casemap'`  `'cmp'` 		string	(default: "internal,keepascii")
+-- `'casemap'`  `'cmp'` 		string	(default "internal,keepascii")
 -- 			global
 -- 	Specifies details about changing the case of letters.  It may contain
 -- 	these words, separated by a comma:
@@ -3182,7 +3182,7 @@ vim.opt.cmp = vim.opt.casemap
 --- @return string[]
 function vim.opt.casemap:get()end
 
--- `'cdhome'`  `'cdh'` 		boolean	(default: off)
+-- `'cdhome'`  `'cdh'` 		boolean	(default off)
 -- 			global
 -- 	When on, |:cd|, |:tcd| and |:lcd| without an argument changes the
 -- 	current working directory to the |$HOME| directory like in Unix.
@@ -3197,7 +3197,7 @@ vim.opt.cdh = vim.opt.cdhome
 --- @return boolean
 function vim.opt.cdhome:get()end
 
--- `'cdpath'`  `'cd'` 		string	(default: equivalent to $CDPATH or ",,")
+-- `'cdpath'`  `'cd'` 		string	(default equivalent to $CDPATH or ",,")
 -- 			global
 -- 	This is a list of directories which will be searched when using the
 -- 	|:cd|, |:tcd| and |:lcd| commands, provided that the directory being
@@ -3223,7 +3223,7 @@ vim.opt.cd = vim.opt.cdpath
 --- @return string[]
 function vim.opt.cdpath:get()end
 
--- `'cedit'` 			string	(default: CTRL-F)
+-- `'cedit'` 			string	(default CTRL-F)
 -- 			global
 -- 	The key used in Command-line Mode to open the command-line window.
 -- 	Only non-printable keys are allowed.
@@ -3241,7 +3241,7 @@ vim.opt.cedit = "\6"
 --- @return string
 function vim.opt.cedit:get()end
 
--- `'channel'` 		number (default: 0)
+-- `'channel'` 		number	(default 0)
 -- 			local to buffer
 -- 	|channel| connected to the buffer, or 0 if no channel is connected.
 -- 	In a |:terminal| buffer this is the terminal channel.
@@ -3254,7 +3254,7 @@ vim.opt.channel = 0
 --- @return number
 function vim.opt.channel:get()end
 
--- `'charconvert'`  `'ccv'` 	string (default "")
+-- `'charconvert'`  `'ccv'` 	string	(default "")
 -- 			global
 -- 	An expression that is used for character encoding conversion.  It is
 -- 	evaluated when a file that is to be read or has been written has a
@@ -3354,7 +3354,6 @@ function vim.opt.cinoptions:get()end
 -- 	Useful e.g. for working with the Qt framework that defines additional
 -- 	scope declarations "signals", "public slots" and "private slots": >
 -- 		set cinscopedecls+=signals,public\ slots,private\ slots
--- 
 -- <
 --- @class vim.opt.cinscopedecls: vim.Option,string[]
 --- @operator add: vim.opt.cinscopedecls
@@ -3416,7 +3415,7 @@ vim.opt.cb = vim.opt.clipboard
 function vim.opt.clipboard:get()end
 
 -- `'cmdheight'`  `'ch'` 	number	(default 1)
--- 			global or local to tab page
+-- 			global or local to tab page |global-local|
 -- 	Number of screen lines to use for the command-line.  Helps avoiding
 -- 	|hit-enter| prompts.
 -- 	The value of this option is stored with the tab page, so that each tab
@@ -3498,8 +3497,7 @@ vim.opt.co = vim.opt.columns
 --- @return number
 function vim.opt.columns:get()end
 
--- `'comments'`  `'com'` 	string	(default
--- 				"s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
+-- `'comments'`  `'com'` 	string	(default "s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
 -- 			local to buffer
 -- 	A comma-separated list of strings that can start a comment line.  See
 -- 	|format-comments|.  See |option-backslash| about using backslashes to
@@ -3536,7 +3534,7 @@ vim.opt.cp = vim.opt.compatible
 --- @return boolean
 function vim.opt.compatible:get()end
 
--- `'complete'`  `'cpt'` 	string	(default: ".,w,b,u,t")
+-- `'complete'`  `'cpt'` 	string	(default ".,w,b,u,t")
 -- 			local to buffer
 -- 	This option specifies how keyword completion |ins-completion| works
 -- 	when CTRL-P or CTRL-N are used.  It is also used for whole-line
@@ -3578,7 +3576,7 @@ vim.opt.cpt = vim.opt.complete
 --- @return string[]
 function vim.opt.complete:get()end
 
--- `'completefunc'`  `'cfu'` 	string	(default: empty)
+-- `'completefunc'`  `'cfu'` 	string	(default "")
 -- 			local to buffer
 -- 	This option specifies a function to be used for Insert mode completion
 -- 	with CTRL-X CTRL-U. |i_CTRL-X_CTRL-U|
@@ -3597,7 +3595,7 @@ vim.opt.cfu = vim.opt.completefunc
 --- @return string
 function vim.opt.completefunc:get()end
 
--- `'completeopt'`  `'cot'` 	string	(default: "menu,preview")
+-- `'completeopt'`  `'cot'` 	string	(default "menu,preview")
 -- 			global
 -- 	A comma-separated list of options for Insert mode completion
 -- 	|ins-completion|.  The supported values are:
@@ -3636,7 +3634,7 @@ vim.opt.cot = vim.opt.completeopt
 --- @return string[]
 function vim.opt.completeopt:get()end
 
--- `'completeslash'`  `'csl'` 	string	(default: "")
+-- `'completeslash'`  `'csl'` 	string	(default "")
 -- 			local to buffer
 -- 			only for MS-Windows
 -- 	When this option is set it overrules `'shellslash'`  for completion:
@@ -3658,7 +3656,7 @@ vim.opt.csl = vim.opt.completeslash
 --- @return string
 function vim.opt.completeslash:get()end
 
--- `'concealcursor'`  `'cocu'` 	string (default: "")
+-- `'concealcursor'`  `'cocu'` 	string	(default "")
 -- 			local to window
 -- 	Sets the modes in which text in the cursor line can also be concealed.
 -- 	When the current mode is listed then concealing happens just like in
@@ -3684,7 +3682,7 @@ vim.opt.cocu = vim.opt.concealcursor
 --- @return string
 function vim.opt.concealcursor:get()end
 
--- `'conceallevel'`  `'cole'` 	number (default 0)
+-- `'conceallevel'`  `'cole'` 	number	(default 0)
 -- 			local to window
 -- 	Determine how text with the "conceal" syntax attribute |:syn-conceal|
 -- 	is shown:
@@ -3713,7 +3711,7 @@ vim.opt.cole = vim.opt.conceallevel
 --- @return number
 function vim.opt.conceallevel:get()end
 
--- `'confirm'`  `'cf'` 		boolean (default off)
+-- `'confirm'`  `'cf'` 		boolean	(default off)
 -- 			global
 -- 	When `'confirm'`  is on, certain operations that would normally
 -- 	fail because of unsaved changes to a buffer, e.g. ":q" and ":e",
@@ -3752,7 +3750,7 @@ vim.opt.ci = vim.opt.copyindent
 --- @return boolean
 function vim.opt.copyindent:get()end
 
--- `'cpoptions'`  `'cpo'` 	string	(default: "aABceFs_")
+-- `'cpoptions'`  `'cpo'` 	string	(default "aABceFs_")
 -- 			global
 -- 	A sequence of single character flags.  When a character is present
 -- 	this indicates Vi-compatible behavior.  This is used for things where
@@ -3993,7 +3991,7 @@ vim.opt.cpo = vim.opt.cpoptions
 --- @return string[]
 function vim.opt.cpoptions:get()end
 
--- `'cursorbind'`  `'crb'` 	boolean  (default off)
+-- `'cursorbind'`  `'crb'` 	boolean	(default off)
 -- 			local to window
 -- 	When this option is set, as the cursor in the current
 -- 	window moves other cursorbound windows (windows that also have
@@ -4045,7 +4043,7 @@ vim.opt.cul = vim.opt.cursorline
 --- @return boolean
 function vim.opt.cursorline:get()end
 
--- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
+-- `'cursorlineopt'`  `'culopt'` 	string	(default "both")
 -- 			local to window
 -- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
 -- 	Valid values:
@@ -4119,7 +4117,7 @@ vim.opt.def = vim.opt.define
 --- @return string
 function vim.opt.define:get()end
 
--- `'delcombine'`  `'deco'` 	boolean (default off)
+-- `'delcombine'`  `'deco'` 	boolean	(default off)
 -- 			global
 -- 	If editing Unicode and this option is set, backspace and Normal mode
 -- 	"x" delete each combining character on its own.  When it is off (the
@@ -4291,7 +4289,7 @@ function vim.opt.diffexpr:get()end
 -- 				hunks of up to 30 lines each, or a 3 buffer
 -- 				diff with hunks of up to 20 lines each.
 -- 
---                 algorithm:{text} Use the specified diff algorithm with the
+-- 		algorithm:{text} Use the specified diff algorithm with the
 -- 				internal diff engine. Currently supported
 -- 				algorithms are:
 -- 				myers      the default algorithm

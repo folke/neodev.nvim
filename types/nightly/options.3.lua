@@ -4,9 +4,7 @@
 -- 			global or local to window |global-local|
 -- 	String to put at the start of lines that have been wrapped.  Useful
 -- 	values are "> " or "+++ ": >
--- 		:set showbreak=>\
--- <	Note the backslash to escape the trailing space.  It's easier like
--- 	this: >
+-- 		:let &showbreak = "> "
 -- 		:let &showbreak = '+++ '
 -- <	Only printable single-cell characters are allowed, excluding <Tab> and
 -- 	comma (in a future version the comma might be used to separate the
@@ -28,7 +26,7 @@ vim.opt.sbr = vim.opt.showbreak
 --- @return string
 function vim.opt.showbreak:get()end
 
--- `'showcmd'`  `'sc'` 		boolean	(default: on)
+-- `'showcmd'`  `'sc'` 		boolean	(default on)
 -- 			global
 -- 	Show (partial) command in the last line of the screen.  Set this
 -- 	option off if your terminal is slow.
@@ -72,7 +70,7 @@ vim.opt.sloc = vim.opt.showcmdloc
 --- @return string
 function vim.opt.showcmdloc:get()end
 
--- `'showfulltag'`  `'sft'` 	boolean (default off)
+-- `'showfulltag'`  `'sft'` 	boolean	(default off)
 -- 			global
 -- 	When completing a word in insert mode (see |ins-completion|) from the
 -- 	tags file, show both the tag name and a tidied-up form of the search
@@ -117,7 +115,7 @@ vim.opt.sm = vim.opt.showmatch
 --- @return boolean
 function vim.opt.showmatch:get()end
 
--- `'showmode'`  `'smd'` 	boolean	(default: on)
+-- `'showmode'`  `'smd'` 	boolean	(default on)
 -- 			global
 -- 	If in Insert, Replace or Visual mode put a message on the last line.
 -- 	The |hl-ModeMsg| highlight group determines the highlighting.
@@ -166,7 +164,7 @@ vim.opt.ss = vim.opt.sidescroll
 --- @return number
 function vim.opt.sidescroll:get()end
 
--- `'sidescrolloff'`  `'siso'` 	number (default 0)
+-- `'sidescrolloff'`  `'siso'` 	number	(default 0)
 -- 			global or local to window |global-local|
 -- 	The minimal number of screen columns to keep to the left and to the
 -- 	right of the cursor if `'nowrap'`  is set.  Setting this option to a
@@ -298,7 +296,7 @@ vim.opt.sta = vim.opt.smarttab
 --- @return boolean
 function vim.opt.smarttab:get()end
 
--- `'smoothscroll'`  `'sms'` 	boolean  (default off)
+-- `'smoothscroll'`  `'sms'` 	boolean	(default off)
 -- 			local to window
 -- 	Scrolling works with screen lines.  When `'wrap'`  is set and the first
 -- 	line in the window wraps part of it may not be visible, as if it is
@@ -355,7 +353,7 @@ vim.opt.spell = false
 --- @return boolean
 function vim.opt.spell:get()end
 
--- `'spellcapcheck'`  `'spc'` 	string	(default "[.?!]\_[\])'" \t]\+")
+-- `'spellcapcheck'`  `'spc'` 	string	(default "[.?!]\_[\])'"\t ]\+")
 -- 			local to buffer
 -- 	Pattern to locate the end of a sentence.  The following word will be
 -- 	checked to start with a capital letter.  If not then it is highlighted
@@ -370,12 +368,12 @@ function vim.opt.spell:get()end
 --- @operator add: vim.opt.spellcapcheck
 --- @operator sub: vim.opt.spellcapcheck
 --- @operator pow: vim.opt.spellcapcheck
-vim.opt.spellcapcheck = "[.?!]\\_[\\])'\"\t ]\\+"
+vim.opt.spellcapcheck = "[.?!]\\_[\\])'\"\\t ]\\+"
 vim.opt.spc = vim.opt.spellcapcheck
 --- @return string
 function vim.opt.spellcapcheck:get()end
 
--- `'spellfile'`  `'spf'` 	string	(default empty)
+-- `'spellfile'`  `'spf'` 	string	(default "")
 -- 			local to buffer
 -- 	Name of the word list file where words are added for the |zg| and |zw|
 -- 	commands.  It must end in ".{encoding}.add".  You need to include the
@@ -618,7 +616,7 @@ vim.opt.sol = vim.opt.startofline
 --- @return boolean
 function vim.opt.startofline:get()end
 
--- `'statuscolumn'`  `'stc'` 	string	(default: empty)
+-- `'statuscolumn'`  `'stc'` 	string	(default "")
 -- 			local to window
 -- 	EXPERIMENTAL
 -- 	When non-empty, this option determines the content of the area to the
@@ -679,7 +677,7 @@ vim.opt.stc = vim.opt.statuscolumn
 --- @return string
 function vim.opt.statuscolumn:get()end
 
--- `'statusline'`  `'stl'` 	string	(default empty)
+-- `'statusline'`  `'stl'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	When non-empty, this option determines the content of the status line.
 -- 	Also see |status-line|.
@@ -935,7 +933,7 @@ vim.opt.sua = vim.opt.suffixesadd
 --- @return string[]
 function vim.opt.suffixesadd:get()end
 
--- `'swapfile'`  `'swf'` 	boolean (default on)
+-- `'swapfile'`  `'swf'` 	boolean	(default on)
 -- 			local to buffer
 -- 	Use a swapfile for the buffer.  This option can be reset when a
 -- 	swapfile is not wanted for a specific buffer.  For example, with
@@ -1017,7 +1015,7 @@ vim.opt.smc = vim.opt.synmaxcol
 --- @return number
 function vim.opt.synmaxcol:get()end
 
--- `'syntax'`  `'syn'` 		string	(default empty)
+-- `'syntax'`  `'syn'` 		string	(default "")
 -- 			local to buffer
 -- 	When this option is set, the syntax with this name is loaded, unless
 -- 	syntax highlighting has been switched off with ":syntax off".
@@ -1051,7 +1049,7 @@ vim.opt.syn = vim.opt.syntax
 --- @return string
 function vim.opt.syntax:get()end
 
--- `'tabline'`  `'tal'` 		string	(default empty)
+-- `'tabline'`  `'tal'` 		string	(default "")
 -- 			global
 -- 	When non-empty, this option determines the content of the tab pages
 -- 	line at the top of the Vim window.  When empty Vim will use a default
@@ -1162,7 +1160,7 @@ function vim.opt.tabstop:get()end
 -- 
 -- 	Linear searching is done anyway, for one file, when Vim finds a line
 -- 	at the start of the file indicating that it's not sorted: >
---    !_TAG_FILE_SORTED	0	/some comment/
+-- 	   !_TAG_FILE_SORTED	0	/some comment/
 -- <	[The whitespace before and after the `'0'`  must be a single <Tab>]
 -- 
 -- 	When a binary search was done and no match was found in any of the
@@ -1222,7 +1220,7 @@ vim.opt.tc = vim.opt.tagcase
 --- @return string
 function vim.opt.tagcase:get()end
 
--- `'tagfunc'`  `'tfu'` 		string	(default: empty)
+-- `'tagfunc'`  `'tfu'` 		string	(default "")
 -- 			local to buffer
 -- 	This option specifies a function to be used to perform tag searches.
 -- 	The function gets the tag pattern and should return a List of matching
@@ -1251,7 +1249,7 @@ vim.opt.tl = vim.opt.taglength
 --- @return number
 function vim.opt.taglength:get()end
 
--- `'tagrelative'`  `'tr'` 	boolean	(default: on)
+-- `'tagrelative'`  `'tr'` 	boolean	(default on)
 -- 			global
 -- 	If on and using a tags file in another directory, file names in that
 -- 	tags file are relative to the directory where the tags file is.
@@ -1310,7 +1308,7 @@ vim.opt.tgst = vim.opt.tagstack
 --- @return boolean
 function vim.opt.tagstack:get()end
 
--- `'termbidi'`  `'tbidi'` 	boolean (default off)
+-- `'termbidi'`  `'tbidi'` 	boolean	(default off)
 -- 			global
 -- 	The terminal is in charge of Bi-directionality of text (as specified
 -- 	by Unicode).  The terminal is also expected to do the required shaping
@@ -1338,7 +1336,7 @@ vim.opt.tenc = vim.opt.termencoding
 --- @return string
 function vim.opt.termencoding:get()end
 
--- `'termguicolors'`  `'tgc'` 	boolean (default off)
+-- `'termguicolors'`  `'tgc'` 	boolean	(default off)
 -- 			global
 -- 	Enables 24-bit RGB color in the |TUI|.  Uses "gui" |:highlight|
 -- 	attributes instead of "cterm" attributes. |guifg|
@@ -1352,7 +1350,7 @@ vim.opt.tgc = vim.opt.termguicolors
 --- @return boolean
 function vim.opt.termguicolors:get()end
 
--- `'termpastefilter'`  `'tpf'` 	string	(default: "BS,HT,ESC,DEL")
+-- `'termpastefilter'`  `'tpf'` 	string	(default "BS,HT,ESC,DEL")
 -- 			global
 -- 	A comma-separated list of options for specifying control characters
 -- 	to be removed from the text pasted into the terminal window. The
@@ -1431,7 +1429,7 @@ vim.opt.tsr = vim.opt.thesaurus
 --- @return string[]
 function vim.opt.thesaurus:get()end
 
--- `'thesaurusfunc'`  `'tsrfu'` 	string	(default: empty)
+-- `'thesaurusfunc'`  `'tsrfu'` 	string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	This option specifies a function to be used for thesaurus completion
 -- 	with CTRL-X CTRL-T. |i_CTRL-X_CTRL-T| See |compl-thesaurusfunc|.
@@ -1461,7 +1459,7 @@ vim.opt.top = vim.opt.tildeop
 --- @return boolean
 function vim.opt.tildeop:get()end
 
--- `'timeout'`  `'to'` 		boolean (default on)
+-- `'timeout'`  `'to'` 		boolean	(default on)
 -- 			global
 -- 	This option and `'timeoutlen'`  determine the behavior when part of a
 -- 	mapped key sequence has been received. For example, if <c-f> is
@@ -1571,7 +1569,7 @@ vim.opt.titlestring = ""
 --- @return string
 function vim.opt.titlestring:get()end
 
--- `'ttimeout'` 		boolean (default on)
+-- `'ttimeout'` 		boolean	(default on)
 -- 			global
 -- 	This option and `'ttimeoutlen'`  determine the behavior when part of a
 -- 	key code sequence has been received by the |TUI|.
@@ -1715,7 +1713,7 @@ vim.opt.ur = vim.opt.undoreload
 --- @return number
 function vim.opt.undoreload:get()end
 
--- `'updatecount'`  `'uc'` 	number	(default: 200)
+-- `'updatecount'`  `'uc'` 	number	(default 200)
 -- 			global
 -- 	After typing this many characters the swap file will be written to
 -- 	disk.  When zero, no swap file will be created at all (see chapter on
@@ -1833,7 +1831,7 @@ vim.opt.vbs = vim.opt.verbose
 --- @return number
 function vim.opt.verbose:get()end
 
--- `'verbosefile'`  `'vfile'` 	string	(default empty)
+-- `'verbosefile'`  `'vfile'` 	string	(default "")
 -- 			global
 -- 	When not empty all messages are written in a file with this name.
 -- 	When the file exists messages are appended.
@@ -1851,7 +1849,7 @@ vim.opt.vfile = vim.opt.verbosefile
 --- @return string
 function vim.opt.verbosefile:get()end
 
--- `'viewdir'`  `'vdir'` 	string	(default: "$XDG_STATE_HOME/nvim/view//")
+-- `'viewdir'`  `'vdir'` 	string	(default "$XDG_STATE_HOME/nvim/view//")
 -- 			global
 -- 	Name of the directory where to store files for |:mkview|.
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
@@ -1865,7 +1863,7 @@ vim.opt.vdir = vim.opt.viewdir
 --- @return string
 function vim.opt.viewdir:get()end
 
--- `'viewoptions'`  `'vop'` 	string	(default: "folds,cursor,curdir")
+-- `'viewoptions'`  `'vop'` 	string	(default "folds,cursor,curdir")
 -- 			global
 -- 	Changes the effect of the |:mkview| command.  It is a comma-separated
 -- 	list of words.  Each word enables saving and restoring something:
@@ -1967,7 +1965,7 @@ vim.opt.warn = true
 --- @return boolean
 function vim.opt.warn:get()end
 
--- `'whichwrap'`  `'ww'` 	string	(default: "b,s")
+-- `'whichwrap'`  `'ww'` 	string	(default "b,s")
 -- 			global
 -- 	Allow specified keys that move the cursor left/right to move to the
 -- 	previous/next line when the cursor is on the first/last character in
@@ -2004,7 +2002,7 @@ vim.opt.ww = vim.opt.whichwrap
 --- @return string[]
 function vim.opt.whichwrap:get()end
 
--- `'wildchar'`  `'wc'` 		number	(default: <Tab>)
+-- `'wildchar'`  `'wc'` 		number	(default <Tab>)
 -- 			global
 -- 	Character you have to type to start wildcard expansion in the
 -- 	command-line, as specified with `'wildmode'` .
@@ -2024,7 +2022,7 @@ vim.opt.wc = vim.opt.wildchar
 --- @return number
 function vim.opt.wildchar:get()end
 
--- `'wildcharm'`  `'wcm'` 	number	(default: none (0))
+-- `'wildcharm'`  `'wcm'` 	number	(default 0)
 -- 			global
 -- 	`'wildcharm'`  works exactly like `'wildchar'` , except that it is
 -- 	recognized when used inside a macro.  You can find "spare" command-line
@@ -2125,7 +2123,7 @@ vim.opt.wmnu = vim.opt.wildmenu
 --- @return boolean
 function vim.opt.wildmenu:get()end
 
--- `'wildmode'`  `'wim'` 	string	(default: "full")
+-- `'wildmode'`  `'wim'` 	string	(default "full")
 -- 			global
 -- 	Completion mode that is used for the character specified with
 -- 	`'wildchar'` .  It is a comma-separated list of up to four parts.  Each
@@ -2233,7 +2231,7 @@ vim.opt.wak = vim.opt.winaltkeys
 --- @return string
 function vim.opt.winaltkeys:get()end
 
--- `'winbar'`  `'wbr'` 		string (default empty)
+-- `'winbar'`  `'wbr'` 		string	(default "")
 -- 			global or local to window |global-local|
 -- 	When non-empty, this option enables the window bar and determines its
 -- 	contents. The window bar is a bar that's shown at the top of every
@@ -2257,7 +2255,7 @@ vim.opt.wbr = vim.opt.winbar
 --- @return string
 function vim.opt.winbar:get()end
 
--- `'winblend'`  `'winbl'` 		number	(default 0)
+-- `'winblend'`  `'winbl'` 	number	(default 0)
 -- 			local to window
 -- 	Enables pseudo-transparency for a floating window. Valid values are in
 -- 	the range of 0 for fully opaque window (disabled) to 100 for fully
@@ -2273,7 +2271,7 @@ vim.opt.winbl = vim.opt.winblend
 --- @return number
 function vim.opt.winblend:get()end
 
--- `'window'`  `'wi'` 		number  (default screen height - 1)
+-- `'window'`  `'wi'` 		number	(default screen height - 1)
 -- 			global
 -- 	Window height used for |CTRL-F| and |CTRL-B| when there is only one
 -- 	window and the value is smaller than `'lines'`  minus one.  The screen
@@ -2349,7 +2347,7 @@ vim.opt.wh = vim.opt.winheight
 --- @return number
 function vim.opt.winheight:get()end
 
--- `'winhighlight'`  `'winhl'` 	string (default empty)
+-- `'winhighlight'`  `'winhl'` 	string	(default "")
 -- 			local to window
 -- 	Window-local highlights.  Comma-delimited list of highlight
 -- 	|group-name| pairs "{hl-from}:{hl-to},..." where each {hl-from} is
