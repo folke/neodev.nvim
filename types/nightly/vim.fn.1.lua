@@ -3449,6 +3449,12 @@ function vim.fn.tempname() end
 --- @param opts? table<string, any>
 function vim.fn.termopen(cmd, opts) end
 
+-- Like |garbagecollect()|, but executed right away.  This must
+-- only be called directly to avoid any structure to exist
+-- internally, and |v:testing| must have been set before calling
+-- any function.
+function vim.fn.test_garbagecollect_now() end
+
 -- Return a list with information about timers.
 -- When {id} is given only information about this timer is
 -- returned.  When timer {id} does not exist an empty list is

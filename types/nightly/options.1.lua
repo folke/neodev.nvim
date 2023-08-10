@@ -1181,12 +1181,12 @@ vim.bo.cinsd = vim.bo.cinscopedecls
 -- 	"if,If,IF".
 vim.bo.cinwords = "if,else,while,do,for,switch"
 vim.bo.cinw = vim.bo.cinwords
--- `'comments'`  `'com'` 	string	(default "s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
+-- `'comments'`  `'com'` 	string	(default "s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-,fb:•")
 -- 			local to buffer
 -- 	A comma-separated list of strings that can start a comment line.  See
 -- 	|format-comments|.  See |option-backslash| about using backslashes to
 -- 	insert a space.
-vim.bo.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-"
+vim.bo.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-,fb:•"
 vim.bo.com = vim.bo.comments
 -- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
@@ -3497,7 +3497,7 @@ vim.opt.co = vim.opt.columns
 --- @return number
 function vim.opt.columns:get()end
 
--- `'comments'`  `'com'` 	string	(default "s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-")
+-- `'comments'`  `'com'` 	string	(default "s1:/,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-,fb:•")
 -- 			local to buffer
 -- 	A comma-separated list of strings that can start a comment line.  See
 -- 	|format-comments|.  See |option-backslash| about using backslashes to
@@ -3506,7 +3506,7 @@ function vim.opt.columns:get()end
 --- @operator add: vim.opt.comments
 --- @operator sub: vim.opt.comments
 --- @operator pow: vim.opt.comments
-vim.opt.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-"
+vim.opt.comments = "s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-,fb:•"
 vim.opt.com = vim.opt.comments
 --- @return string[]
 function vim.opt.comments:get()end
