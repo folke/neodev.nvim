@@ -1602,6 +1602,9 @@ function vim.fn.setpos(expr, list) end
 --     text  description of the error
 --     type  single-character error type, 'E', 'W', etc.
 --     valid  recognized error message
+--     user_data
+--     custom data associated with the item, can be
+--     any type.
 -- 
 -- The "col", "vcol", "nr", "type" and "text" entries are
 -- optional.  Either "lnum" or "pattern" entry can be used to
@@ -3647,8 +3650,9 @@ function vim.fn.type(expr) end
 -- Useful in combination with |:wundo| and |:rundo|.
 function vim.fn.undofile(name) end
 
--- Return the current state of the undo tree in a dictionary with
--- the following items:
+-- Return the current state of the undo tree for the current
+-- buffer, or for a specific buffer if {buf} is given.  The
+-- result is a dictionary with the following items:
 --   "seq_last"  The highest undo sequence number used.
 --   "seq_cur"  The sequence number of the current position in
 --     the undo tree.  This differs from "seq_last"
@@ -3688,7 +3692,8 @@ function vim.fn.undofile(name) end
 --   "alt"    Alternate entry.  This is again a List of undo
 --     blocks.  Each item may again have an "alt"
 --     item.
-function vim.fn.undotree() end
+--- @param buf? buffer
+function vim.fn.undotree(buf) end
 
 -- Remove second and succeeding copies of repeated adjacent
 -- {list} items in-place.  Returns {list}.  If you want a list

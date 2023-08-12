@@ -3037,6 +3037,9 @@ function vim.fn.getpos(expr) end
 --   text  description of the error
 --   type  type of the error, 'E', '1', etc.
 --   valid  |TRUE|: recognized error message
+--   user_data
+--     custom data associated with the item, can be
+--     any type.
 -- 
 -- When there is no error list or it's empty, an empty list is
 -- returned. Quickfix list entries with a non-existing buffer
