@@ -1,5 +1,23 @@
 ---@meta
 
+-- Return a string with a single character, which has the number
+-- value {expr}.  Examples: 
+-- ```vim
+--   echo nr2char(64)    " returns '@'
+--   echo nr2char(32)    " returns ' '
+-- ```
+-- Example for "utf-8": >vim
+--   echo nr2char(300)    " returns I with bow character
+-- <
+-- UTF-8 encoding is always used, {utf8} option has no effect,
+-- and exists only for backwards-compatibility.
+-- Note that a NUL character in the file is specified with
+-- nr2char(10), because NULs are represented with newline
+-- characters.  nr2char(0) is a real NUL and terminates the
+-- string, thus results in an empty string.
+--- @param utf8? any
+function vim.fn.nr2char(expr, utf8) end
+
 -- Bitwise OR on the two arguments.  The arguments are converted
 -- to a number.  A List, Dict or Float argument causes an error.
 -- Also see `and()` and `xor()`.

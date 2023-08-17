@@ -4518,6 +4518,8 @@ function vim.fn.luaeval(expr, expr1) end
 -- {expr1} must be a |List|, |Blob| or |Dictionary|.
 -- Replace each item in {expr1} with the result of evaluating
 -- {expr2}.  For a |Blob| each byte is replaced.
+-- If the item type changes you may want to use |mapnew()| to
+-- create a new List or Dictionary.
 -- 
 -- {expr2} must be a |string| or |Funcref|.
 -- 
@@ -4675,6 +4677,12 @@ function vim.fn.maparg(name, mode, abbr, dict) end
 --- @param mode? any
 --- @param abbr? any
 function vim.fn.mapcheck(name, mode, abbr) end
+
+-- Like |map()| but instead of replacing items in {expr1} a new
+-- List or Dictionary is created and returned.  {expr1} remains
+-- unchanged.  Items can still be changed by {expr2}, if you
+-- don't want that use |deepcopy()| first.
+function vim.fn.mapnew(expr1, expr2) end
 
 -- Restore a mapping from a dictionary returned by |maparg()|.
 -- {mode} and {abbr} should be the same as for the call to
@@ -5453,22 +5461,4 @@ function vim.fn.msgpackparse(data) end
 -- See also |prevnonblank()|.
 --- @param lnum number
 function vim.fn.nextnonblank(lnum) end
-
--- Return a string with a single character, which has the number
--- value {expr}.  Examples: 
--- ```vim
---   echo nr2char(64)    " returns '@'
---   echo nr2char(32)    " returns ' '
--- ```
--- Example for "utf-8": >vim
---   echo nr2char(300)    " returns I with bow character
--- <
--- UTF-8 encoding is always used, {utf8} option has no effect,
--- and exists only for backwards-compatibility.
--- Note that a NUL character in the file is specified with
--- nr2char(10), because NULs are represented with newline
--- characters.  nr2char(0) is a real NUL and terminates the
--- string, thus results in an empty string.
---- @param utf8? any
-function vim.fn.nr2char(expr, utf8) end
 
