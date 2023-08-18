@@ -1,5 +1,17 @@
 ---@meta
 
+-- Return the line number of the first line at or below {lnum}
+-- that is not blank.  Example: 
+-- ```vim
+--   if getline(nextnonblank(1)) =~ "Java" | endif
+-- ```
+-- When {lnum} is invalid or there is no non-blank line at or
+-- below it, zero is returned.
+-- {lnum} is used like with |getline()|.
+-- See also |prevnonblank()|.
+--- @param lnum number
+function vim.fn.nextnonblank(lnum) end
+
 -- Return a string with a single character, which has the number
 -- value {expr}.  Examples: 
 -- ```vim
@@ -692,9 +704,9 @@ function vim.fn.readdir(directory, expr) end
 function vim.fn.readfile(fname, type, max) end
 
 -- {func} is called for every item in {object}, which can be a
--- |List| or a |Blob|.  {func} is called with two arguments: the
--- result so far and current item.  After processing all items
--- the result is returned.
+-- |String|, |List| or a |Blob|.  {func} is called with two
+-- arguments: the result so far and current item.  After
+-- processing all items the result is returned.
 -- 
 -- {initial} is the initial result.  When omitted, the first item
 -- in {object} is used and {func} is first called for the second
@@ -706,6 +718,7 @@ function vim.fn.readfile(fname, type, max) end
 --   echo reduce([1, 3, 5], { acc, val -> acc + val })
 --   echo reduce(['x', 'y'], { acc, val -> acc .. val }, 'a')
 --   echo reduce(0z1122, { acc, val -> 2 * acc + val })
+--   echo reduce('xyz', { acc, val -> acc .. ',' .. val })
 -- ```
 --- @param func fun()
 --- @param initial? any
@@ -827,6 +840,10 @@ function vim.fn.resolve(filename) end
 -- {object} can be a |List| or a |Blob|.
 -- Returns {object}.
 -- Returns zero if {object} is not a List or a Blob.
+-- If you want an object to remain unmodified make a copy first: 
+-- ```vim
+--   let revlist = reverse(copy(mylist))
+-- ```
 function vim.fn.reverse(object) end
 
 -- Round off {expr} to the nearest integral value and return it
@@ -2525,15 +2542,16 @@ function vim.fn.sockconnect(mode, address, opts) end
 --   let sortedlist = sort(copy(mylist))
 -- 
 -- ```
--- When {func} is omitted, is empty or zero, then sort() uses the
+-- When {how} is omitted or is a string, then sort() uses the
 -- string representation of each item to sort on.  Numbers sort
 -- after Strings, |Lists| after Numbers.  For sorting text in the
 -- current buffer use |:sort|.
 -- 
--- When {func} is given and it is '1' or 'i' then case is
--- ignored.
+-- When {how} is given and it is 'i' then case is ignored.
+-- For backwards compatibility, the value one can be used to
+-- ignore case.  Zero means to not ignore case.
 -- 
--- When {func} is given and it is 'l' then the current collation
+-- When {how} is given and it is 'l' then the current collation
 -- locale is used for ordering. Implementation details: strcoll()
 -- is used to compare strings. See |:language| check or set the
 -- collation locale. |v:collate| can also be used to check the
@@ -2553,19 +2571,19 @@ function vim.fn.sockconnect(mode, address, opts) end
 --   ['n', 'o', 'O', 'p', 'z', 'ö'] ~
 -- This does not work properly on Mac.
 -- 
--- When {func} is given and it is 'n' then all items will be
+-- When {how} is given and it is 'n' then all items will be
 -- sorted numerical (Implementation detail: this uses the
 -- strtod() function to parse numbers, Strings, Lists, Dicts and
 -- Funcrefs will be considered as being 0).
 -- 
--- When {func} is given and it is 'N' then all items will be
+-- When {how} is given and it is 'N' then all items will be
 -- sorted numerical. This is like 'n' but a string containing
 -- digits will be used as the number they represent.
 -- 
--- When {func} is given and it is 'f' then all items will be
+-- When {how} is given and it is 'f' then all items will be
 -- sorted numerical. All values must be a Number or a Float.
 -- 
--- When {func} is a |Funcref| or a function name, this function
+-- When {how} is a |Funcref| or a function name, this function
 -- is called to compare items.  The function is invoked with two
 -- items as argument and must return zero if they are equal, 1 or
 -- bigger if the first one sorts after the second one, -1 or
@@ -2598,9 +2616,9 @@ function vim.fn.sockconnect(mode, address, opts) end
 --   eval mylist->sort({i1, i2 -> i1 - i2})
 -- <
 --- @param list any[]
---- @param func? fun()
+--- @param how? any
 --- @param dict? table<string, any>
-function vim.fn.sort(list, func, dict) end
+function vim.fn.sort(list, how, dict) end
 
 -- Return the sound-folded equivalent of {word}.  Uses the first
 -- language in 'spelllang' for the current window that supports
@@ -3935,9 +3953,12 @@ function vim.fn.values(dict) end
 --       returns the cursor position.  Differs from |'<| in
 --       that it's updated right away.
 -- 
--- If {list} is present and non-zero then virtcol() returns a List
--- with the first and last screen position occupied by the
+-- If {list} is present and non-zero then virtcol() returns a
+-- List with the first and last screen position occupied by the
 -- character.
+-- 
+-- With the optional {winid} argument the values are obtained for
+-- that window instead of the current window.
 -- 
 -- Note that only marks in the current file can be used.
 -- Examples: 
@@ -3952,14 +3973,15 @@ function vim.fn.values(dict) end
 -- 
 --   echo virtcol("'t")  " returns 6
 -- ```
--- Techo he first column is 1.  0 is returned for an error.
--- A echo more advanced example that echoes the maximum length of
+-- The first column is 1.  0 or [0, 0] is returned for an error.
+-- A more advanced example that echoes the maximum length of
 -- all lines: 
 -- ```vim
 --     echo max(map(range(1, line('$')), "virtcol([v:val, '$'])"))
 -- ```
 --- @param list? any[]
-function vim.fn.virtcol(expr, list) end
+--- @param winid? window
+function vim.fn.virtcol(expr, list, winid) end
 
 -- The result is a Number, which is the byte index of the
 -- character in window {winid} at buffer line {lnum} and virtual
