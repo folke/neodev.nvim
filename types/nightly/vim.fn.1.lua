@@ -836,11 +836,13 @@ vim.fn["repeat"] = function(expr, count) end
 -- path name) and also keeps a trailing path separator.
 function vim.fn.resolve(filename) end
 
--- Reverse the order of items in {object} in-place.
--- {object} can be a |List| or a |Blob|.
--- Returns {object}.
--- Returns zero if {object} is not a List or a Blob.
--- If you want an object to remain unmodified make a copy first: 
+-- Reverse the order of items in {object}.  {object} can be a
+-- |List|, a |Blob| or a |String|.  For a List and a Blob the
+-- items are reversed in-place and {object} is returned.
+-- For a String a new String is returned.
+-- Returns zero if {object} is not a List, Blob or a String.
+-- If you want a List or Blob to remain unmodified make a copy
+-- first: 
 -- ```vim
 --   let revlist = reverse(copy(mylist))
 -- ```
