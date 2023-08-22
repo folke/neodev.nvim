@@ -1309,7 +1309,7 @@ function uv.spawn(path, options, on_exit) end
 ---Sends the specified signal to the given process handle.
 ---
 ---@param process uv_process_t
----@param signum integer|uv.aliases.signals
+---@param signum? integer|uv.aliases.signals # (default: `"sigterm"`)
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.process_kill(process, signum) end
 uv_process_t.kill = uv.process_kill
@@ -1318,7 +1318,7 @@ uv_process_t.kill = uv.process_kill
 ---Sends the specified signal to the given PID.
 ---
 ---@param pid integer
----@param signum integer|uv.aliases.signals
+---@param signum? integer|uv.aliases.signals # (default: `"sigterm"`)
 ---@return 0|nil success, string? err_name, string? err_msg
 function uv.kill(pid, signum) end
 
@@ -3847,10 +3847,13 @@ function uv.os_getenv(name, size) end
 function uv.os_setenv(name, value) end
 
 ---
+---Unsets the environmental variable specified by `name`.
+---
 ---**Warning:** This function is not thread safe.
 ---
+---@param name string
 ---@return boolean|nil success, string? err_name, string? err_msg
-function uv.os_unsetenv() end
+function uv.os_unsetenv(name) end
 
 ---
 ---Returns all environmental variables as a dynamic table of names associated with
