@@ -685,11 +685,9 @@ local uv_timer_t = {}
 ---end
 ---```
 ---
----@return uv_timer_t|nil, string? err_name, string? err_msg
+---@return uv_timer_t
 ---@nodiscard
 function uv.new_timer() end
-
--- TODO: make sure that the above method can indeed return nil + error.
 
 ---
 ---Start the timer. `timeout` and `repeat_n` are in milliseconds.
