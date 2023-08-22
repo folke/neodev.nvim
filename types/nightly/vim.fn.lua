@@ -2965,7 +2965,7 @@ function vim.fn.getmarklist(buf) end
 --- @param win? window
 function vim.fn.getmatches(win) end
 
--- Returns a Dictionary with the last known position of the
+-- Returns a |Dictionary| with the last known position of the
 -- mouse.  This can be used in a mapping for a mouse click.  The
 -- items are:
 --   screenrow  screen row
@@ -5319,6 +5319,7 @@ function vim.fn.mkdir(name, flags, prot) end
 -- If [expr] is supplied and it evaluates to a non-zero Number or
 -- a non-empty String (|non-zero-arg|), then the full mode is
 -- returned, otherwise only the first letter is returned.
+-- Also see |state()|.
 -- 
 --    n      Normal
 --    no      Operator-pending
