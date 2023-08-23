@@ -72,7 +72,8 @@ function vim.fn.api_info() end
 -- {lnum} can be zero to insert a line before the first one.
 -- {lnum} is used like with |getline()|.
 -- Returns 1 for failure ({lnum} out of range or out of memory),
--- 0 for success.  Example: 
+-- 0 for success.  When {text} is an empty list zero is returned,
+-- no matter the value of {lnum}.  Example: 
 -- ```vim
 --   let failed = append(line('$'), "# THE END")
 --   let failed = append(0, ["Chapter 1", "the beginning"])
@@ -100,6 +101,8 @@ function vim.fn.append(lnum, text) end
 -- ```vim
 --   let failed = appendbufline(13, 0, "# THE START")
 -- ```
+-- However, when {text} is an empty list then no error is given
+-- for an invalid {lnum}, since {lnum} isn't actually used.
 --- @param buf buffer
 --- @param lnum number
 --- @param text string

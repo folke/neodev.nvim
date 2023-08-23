@@ -1458,9 +1458,10 @@ function vim.fn.serverstop(address) end
 -- 
 -- To insert lines use |appendbufline()|.
 -- 
--- {text} can be a string to set one line, or a list of strings
--- to set multiple lines.  If the list extends below the last
--- line then those lines are added.
+-- {text} can be a string to set one line, or a List of strings
+-- to set multiple lines.  If the List extends below the last
+-- line then those lines are added.  If the List is empty then
+-- nothing is changed and zero is returned.
 -- 
 -- For the use of {buf}, see |bufname()| above.
 -- 
@@ -1643,7 +1644,8 @@ function vim.fn.setfperm(fname, mode) end
 -- When {lnum} is just below the last line the {text} will be
 -- added below the last line.
 -- {text} can be any type or a List of any type, each item is
--- converted to a String.
+-- converted to a String.  When {text} is an empty List then
+-- nothing is changed and FALSE is returned.
 -- 
 -- If this succeeds, FALSE is returned.  If this fails (most likely
 -- because {lnum} is invalid) TRUE is returned.
