@@ -1016,7 +1016,7 @@ vim.opt.smc = vim.opt.synmaxcol
 function vim.opt.synmaxcol:get()end
 
 -- `'syntax'`  `'syn'` 		string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	When this option is set, the syntax with this name is loaded, unless
 -- 	syntax highlighting has been switched off with ":syntax off".
 -- 	Otherwise this option does not always reflect the current syntax (the
@@ -2292,7 +2292,7 @@ vim.opt.wi = vim.opt.window
 function vim.opt.window:get()end
 
 -- `'winfixheight'`  `'wfh'` 	boolean	(default off)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Keep the window height when windows are opened or closed and
 -- 	`'equalalways'`  is set.  Also for |CTRL-W_=|.  Set by default for the
 -- 	|preview-window| and |quickfix-window|.
@@ -2307,7 +2307,7 @@ vim.opt.wfh = vim.opt.winfixheight
 function vim.opt.winfixheight:get()end
 
 -- `'winfixwidth'`  `'wfw'` 	boolean	(default off)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Keep the window width when windows are opened or closed and
 -- 	`'equalalways'`  is set.  Also for |CTRL-W_=|.
 -- 	The width may be changed anyway when running out of room.

@@ -469,7 +469,7 @@ vim.opt.fic = vim.opt.fileignorecase
 function vim.opt.fileignorecase:get()end
 
 -- `'filetype'`  `'ft'` 		string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	When this option is set, the FileType autocommand event is triggered.
 -- 	All autocommands that match with the value of this option will be
 -- 	executed.  Thus the value of `'filetype'`  is used in place of the file
@@ -2808,7 +2808,7 @@ vim.opt.ma = vim.opt.modifiable
 function vim.opt.modifiable:get()end
 
 -- `'modified'`  `'mod'` 	boolean	(default off)
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	When on, the buffer is considered to be modified.  This option is set
 -- 	when:
 -- 	1. A change was made to the text since it was last written.  Using the
@@ -3431,7 +3431,7 @@ vim.opt.pvh = vim.opt.previewheight
 function vim.opt.previewheight:get()end
 
 -- `'previewwindow'`  `'pvw'` 	boolean	(default off)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
 -- 	|:ptag|, |:pedit|, etc.
@@ -3558,7 +3558,7 @@ vim.opt.qe = vim.opt.quoteescape
 function vim.opt.quoteescape:get()end
 
 -- `'readonly'`  `'ro'` 		boolean	(default off)
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	If on, writes fail unless you use a `'!'` .  Protects you from
 -- 	accidentally overwriting a file.  Default on when Vim is started
 -- 	in read-only mode ("vim -R") or when the executable is called "view".
@@ -3911,7 +3911,7 @@ vim.opt.rtp = vim.opt.runtimepath
 function vim.opt.runtimepath:get()end
 
 -- `'scroll'`  `'scr'` 		number	(default half the window height)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Number of lines to scroll with CTRL-U and CTRL-D commands.  Will be
 -- 	set to half the number of lines in the window when the window size
 -- 	changes.  This may happen when enabling the |status-line| or

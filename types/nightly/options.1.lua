@@ -348,7 +348,7 @@ vim.wo.nu = vim.wo.number
 vim.wo.numberwidth = 4
 vim.wo.nuw = vim.wo.numberwidth
 -- `'previewwindow'`  `'pvw'` 	boolean	(default off)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
 -- 	|:ptag|, |:pedit|, etc.
@@ -400,7 +400,7 @@ vim.wo.rl = vim.wo.rightleft
 vim.wo.rightleftcmd = "search"
 vim.wo.rlc = vim.wo.rightleftcmd
 -- `'scroll'`  `'scr'` 		number	(default half the window height)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Number of lines to scroll with CTRL-U and CTRL-D commands.  Will be
 -- 	set to half the number of lines in the window when the window size
 -- 	changes.  This may happen when enabling the |status-line| or
@@ -847,7 +847,7 @@ vim.wo.wbr = vim.wo.winbar
 vim.wo.winblend = 0
 vim.wo.winbl = vim.wo.winblend
 -- `'winfixheight'`  `'wfh'` 	boolean	(default off)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Keep the window height when windows are opened or closed and
 -- 	`'equalalways'`  is set.  Also for |CTRL-W_=|.  Set by default for the
 -- 	|preview-window| and |quickfix-window|.
@@ -855,7 +855,7 @@ vim.wo.winbl = vim.wo.winblend
 vim.wo.winfixheight = false
 vim.wo.wfh = vim.wo.winfixheight
 -- `'winfixwidth'`  `'wfw'` 	boolean	(default off)
--- 			local to window
+-- 			local to window  |special-local-window-option|
 -- 	Keep the window width when windows are opened or closed and
 -- 	`'equalalways'`  is set.  Also for |CTRL-W_=|.
 -- 	The width may be changed anyway when running out of room.
@@ -1047,7 +1047,7 @@ vim.bo.bin = vim.bo.binary
 -- 	will be restored when writing the file.
 vim.bo.bomb = false
 -- `'bufhidden'`  `'bh'` 	string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	This option specifies what happens when a buffer is no longer
 -- 	displayed in a window:
 -- 	  <empty>	follow the global `'hidden'`  option
@@ -1079,7 +1079,7 @@ vim.bo.bh = vim.bo.bufhidden
 vim.bo.buflisted = true
 vim.bo.bl = vim.bo.buflisted
 -- `'buftype'`  `'bt'` 		string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	The value of this option specifies the type of a buffer:
 -- 	  <empty>	normal buffer
 -- 	  acwrite	buffer will always be written with |BufWriteCmd|s
@@ -1416,7 +1416,7 @@ vim.bo.fenc = vim.bo.fileencoding
 vim.bo.fileformat = "unix"
 vim.bo.ff = vim.bo.fileformat
 -- `'filetype'`  `'ft'` 		string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	When this option is set, the FileType autocommand event is triggered.
 -- 	All autocommands that match with the value of this option will be
 -- 	executed.  Thus the value of `'filetype'`  is used in place of the file
@@ -1826,7 +1826,7 @@ vim.bo.ml = vim.bo.modeline
 vim.bo.modifiable = true
 vim.bo.ma = vim.bo.modifiable
 -- `'modified'`  `'mod'` 	boolean	(default off)
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	When on, the buffer is considered to be modified.  This option is set
 -- 	when:
 -- 	1. A change was made to the text since it was last written.  Using the
@@ -1967,7 +1967,7 @@ vim.bo.pi = vim.bo.preserveindent
 vim.bo.quoteescape = "\\"
 vim.bo.qe = vim.bo.quoteescape
 -- `'readonly'`  `'ro'` 		boolean	(default off)
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	If on, writes fail unless you use a `'!'` .  Protects you from
 -- 	accidentally overwriting a file.  Default on when Vim is started
 -- 	in read-only mode ("vim -R") or when the executable is called "view".
@@ -2171,7 +2171,7 @@ vim.bo.swf = vim.bo.swapfile
 vim.bo.synmaxcol = 3000
 vim.bo.smc = vim.bo.synmaxcol
 -- `'syntax'`  `'syn'` 		string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	When this option is set, the syntax with this name is loaded, unless
 -- 	syntax highlighting has been switched off with ":syntax off".
 -- 	Otherwise this option does not always reflect the current syntax (the
@@ -3062,7 +3062,7 @@ vim.opt.bsdir = vim.opt.browsedir
 function vim.opt.browsedir:get()end
 
 -- `'bufhidden'`  `'bh'` 	string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	This option specifies what happens when a buffer is no longer
 -- 	displayed in a window:
 -- 	  <empty>	follow the global `'hidden'`  option
@@ -3108,7 +3108,7 @@ vim.opt.bl = vim.opt.buflisted
 function vim.opt.buflisted:get()end
 
 -- `'buftype'`  `'bt'` 		string	(default "")
--- 			local to buffer
+-- 			local to buffer  |special-local-buffer-option|
 -- 	The value of this option specifies the type of a buffer:
 -- 	  <empty>	normal buffer
 -- 	  acwrite	buffer will always be written with |BufWriteCmd|s
