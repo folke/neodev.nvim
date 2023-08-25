@@ -3569,7 +3569,7 @@ function vim.fn.globpath(path, expr, nosuf, list, allinks) end
 --   clipboard  |clipboard| provider is available.
 --   fname_case  Case in file names matters (for Darwin and MS-Windows
 --       this is not present).
---                         gui_running  Nvim has a GUI.
+--   gui_running  Nvim has a GUI.
 --   iconv    Can use |iconv()| for conversion.
 --   linux    Linux system.
 --   mac    MacOS system.

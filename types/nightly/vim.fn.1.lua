@@ -2765,7 +2765,7 @@ function vim.fn.srand(expr) end
 -- ```vim
 --   if state('s') == ''
 --      " screen has not scrolled
--- 
+-- ```
 -- These characters indicate the state, generally indicating that
 -- something is busy:
 --     m  halfway a mapping, :normal command, feedkeys() or
@@ -2777,7 +2777,6 @@ function vim.fn.srand(expr) end
 --     c  callback invoked, including timer (repeats for
 --   recursiveness up to "ccc")
 --     s  screen has scrolled for messages
--- ```
 --- @param what? any
 function vim.fn.state(what) end
 
@@ -3414,7 +3413,6 @@ function vim.fn.synIDtrans(synID) end
 --   synconcealed(lnum, 4)   [1, 'X', 2]
 --   synconcealed(lnum, 5)   [1, 'X', 2]
 --   synconcealed(lnum, 6)   [0, '', 0]
--- <
 --- @param lnum number
 --- @param col number
 function vim.fn.synconcealed(lnum, col) end
