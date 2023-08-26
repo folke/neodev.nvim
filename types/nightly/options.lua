@@ -2251,8 +2251,9 @@ vim.go.mousemev = vim.go.mousemoveevent
 -- `'mousescroll'` 		string	(default "ver:3,hor:6")
 -- 			global
 -- 	This option controls the number of lines / columns to scroll by when
--- 	scrolling with a mouse. The option is a comma separated list of parts.
--- 	Each part consists of a direction and a count as follows:
+-- 	scrolling with a mouse wheel (|scroll-mouse-wheel|). The option is
+-- 	a comma-separated list. Each part consists of a direction and a count
+-- 	as follows:
 -- 		direction:count,direction:count
 -- 	Direction is one of either "hor" or "ver". "hor" controls horizontal
 -- 	scrolling and "ver" controls vertical scrolling. Count sets the amount
@@ -4275,20 +4276,3 @@ vim.wo.cuc = vim.wo.cursorcolumn
 -- 	easier to see the selected text.
 vim.wo.cursorline = false
 vim.wo.cul = vim.wo.cursorline
--- `'cursorlineopt'`  `'culopt'` 	string	(default "both")
--- 			local to window
--- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
--- 	Valid values:
--- 	"line"		Highlight the text line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"screenline"	Highlight only the screen line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"number"	Highlight the line number of the cursor with
--- 			CursorLineNr |hl-CursorLineNr|.
--- 
--- 	Special value:
--- 	"both"		Alias for the values "line,number".
--- 
--- 	"line" and "screenline" cannot be used together.
-vim.wo.cursorlineopt = "both"
-vim.wo.culopt = vim.wo.cursorlineopt
