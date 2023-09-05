@@ -31,7 +31,7 @@ function M.library(opts)
   end
 
   if opts.library.plugins then
-    ---@type table<string, boolean>
+    ---@type table<string, boolean>, table<string, boolean>
     local filter, blacklist
     if type(opts.library.plugins) == "table" then
       filter = {}
