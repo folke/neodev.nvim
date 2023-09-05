@@ -54,6 +54,8 @@ Plug 'folke/neodev.nvim'
     plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+    blacklist = {}, -- opposite of plugins list, neodev will not make these available as a workspace library
+    -- blacklist = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
   setup_jsonls = true, -- configures jsonls to provide completion for project specific .luarc.json files
   -- for your Neovim config directory, the config.library settings will be used as is

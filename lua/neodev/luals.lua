@@ -11,12 +11,12 @@ function M.library(opts)
     table.insert(ret, config.types())
   end
 
-  local function add(lib, filter)
+  local function add(lib, filter, blacklist)
     ---@diagnostic disable-next-line: param-type-mismatch
     for _, p in ipairs(vim.fn.expand(lib .. "/lua", false, true)) do
       local plugin_name = vim.fn.fnamemodify(p, ":h:t")
       p = vim.loop.fs_realpath(p)
-      if p and (not filter or filter[plugin_name]) then
+      if p and (not filter or filter[plugin_name]) and (not blacklist or not blacklist[plugin_name]) then
         if config.options.pathStrict then
           table.insert(ret, p)
         else
@@ -32,21 +32,27 @@ function M.library(opts)
 
   if opts.library.plugins then
     ---@type table<string, boolean>
-    local filter
+    local filter, blacklist
     if type(opts.library.plugins) == "table" then
       filter = {}
       for _, p in pairs(opts.library.plugins) do
         filter[p] = true
       end
     end
+    if type(opts.library.blacklist) == "table" then
+      blacklist = {}
+      for _, p in pairs(opts.library.blacklist) do
+        blacklist[p] = true
+      end
+    end
     for _, site in pairs(vim.split(vim.o.packpath, ",")) do
-      add(site .. "/pack/*/opt/*", filter)
-      add(site .. "/pack/*/start/*", filter)
+      add(site .. "/pack/*/opt/*", filter, blacklist)
+      add(site .. "/pack/*/start/*", filter, blacklist)
     end
     -- add support for lazy.nvim
     if package.loaded["lazy"] then
       for _, plugin in ipairs(require("lazy").plugins()) do
-        add(plugin.dir, filter)
+        add(plugin.dir, filter, blacklist)
       end
     end
   end
