@@ -858,6 +858,8 @@ function vim.api.nvim_buf_set_option() end
 -- Prefer |nvim_buf_set_lines()| if you are only adding or deleting entire
 -- lines.
 -- 
+-- Prefer |nvim_put()| if you want to insert text at the cursor position.
+-- 
 -- Attributes: ~
 --     not allowed when |textlock| is active
 -- 
@@ -871,6 +873,7 @@ function vim.api.nvim_buf_set_option() end
 -- 
 -- See also: ~
 --   • |nvim_buf_set_lines()|
+--   • |nvim_put()|
 --- @param buffer buffer
 --- @param start_row number
 --- @param start_col number
@@ -2532,7 +2535,9 @@ function vim.api.nvim_set_current_win(window) end
 --              • on_buf: called for each buffer being redrawn (before window
 --                callbacks) ["buf", bufnr, tick]
 --              • on_win: called when starting to redraw a specific window.
---                ["win", winid, bufnr, topline, botline_guess]
+--                botline_guess is an approximation that does not exceed the
+--                last line number. ["win", winid, bufnr, topline,
+--                botline_guess]
 --              • on_line: called for each buffer line being redrawn. (The
 --                interaction with fold lines is subject to change) ["win",
 --                winid, bufnr, row]

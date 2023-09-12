@@ -1,58 +1,5 @@
 ---@meta
 
--- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
--- 			global
--- 	List of directory names for the swap file, separated with commas.
--- 
--- 	Possible items:
--- 	- The swap file will be created in the first directory where this is
--- 	  possible.  If it is not possible in any directory, but last
--- 	  directory listed in the option does not exist, it is created.
--- 	- Empty means that no swap file will be used (recovery is
--- 	  impossible!) and no |E303| error will be given.
--- 	- A directory "." means to put the swap file in the same directory as
--- 	  the edited file.  On Unix, a dot is prepended to the file name, so
--- 	  it doesn't show in a directory listing.  On MS-Windows the "hidden"
--- 	  attribute is set and a dot prepended if possible.
--- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
--- 	  the swap file relative to where the edited file is.  The leading "."
--- 	  is replaced with the path name of the edited file.
--- 	- For Unix and Win32, if a directory ends in two path separators "//",
--- 	  the swap file name will be built from the complete path to the file
--- 	  with all path separators replaced by percent `'%'`  signs (including
--- 	  the colon following the drive letter on Win32). This will ensure
--- 	  file name uniqueness in the preserve directory.
--- 	  On Win32, it is also possible to end with "\\".  However, When a
--- 	  separating comma is following, you must use "//", since "\\" will
--- 	  include the comma in the file name. Therefore it is recommended to
--- 	  use `'//'` , instead of `'\\'` .
--- 	- Spaces after the comma are ignored, other spaces are considered part
--- 	  of the directory name.  To have a space at the start of a directory
--- 	  name, precede it with a backslash.
--- 	- To include a comma in a directory name precede it with a backslash.
--- 	- A directory name may end in an `':'`  or `'/'` .
--- 	- Environment variables are expanded |:set_env|.
--- 	- Careful with `'\'`  characters, type one before a space, type two to
--- 	  get one in the option (see |option-backslash|), for example: >
--- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <
--- 	Editing the same file twice will result in a warning.  Using "/tmp" on
--- 	is discouraged: if the system crashes you lose the swap file. And
--- 	others on the computer may be able to see the files.
--- 	Use |:set+=| and |:set-=| when adding or removing directories from the
--- 	list, this avoids problems if the Nvim default is changed.
--- 
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.directory: vim.Option,string[]
---- @operator add: vim.opt.directory
---- @operator sub: vim.opt.directory
---- @operator pow: vim.opt.directory
-vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
-vim.opt.dir = vim.opt.directory
---- @return string[]
-function vim.opt.directory:get()end
-
 -- `'display'`  `'dy'` 		string	(default "lastline")
 -- 			global
 -- 	Change the way text is displayed.  This is a comma-separated list of
@@ -522,7 +469,7 @@ vim.opt.fic = vim.opt.fileignorecase
 function vim.opt.fileignorecase:get()end
 
 -- `'filetype'`  `'ft'` 		string	(default "")
--- 			local to buffer  |special-local-buffer-option|
+-- 			local to buffer  |local-noglobal|
 -- 	When this option is set, the FileType autocommand event is triggered.
 -- 	All autocommands that match with the value of this option will be
 -- 	executed.  Thus the value of `'filetype'`  is used in place of the file
@@ -2861,7 +2808,7 @@ vim.opt.ma = vim.opt.modifiable
 function vim.opt.modifiable:get()end
 
 -- `'modified'`  `'mod'` 	boolean	(default off)
--- 			local to buffer  |special-local-buffer-option|
+-- 			local to buffer  |local-noglobal|
 -- 	When on, the buffer is considered to be modified.  This option is set
 -- 	when:
 -- 	1. A change was made to the text since it was last written.  Using the
@@ -3485,7 +3432,7 @@ vim.opt.pvh = vim.opt.previewheight
 function vim.opt.previewheight:get()end
 
 -- `'previewwindow'`  `'pvw'` 	boolean	(default off)
--- 			local to window  |special-local-window-option|
+-- 			local to window  |local-noglobal|
 -- 	Identifies the preview window.  Only one window can have this option
 -- 	set.  It's normally not set directly, but by using one of the commands
 -- 	|:ptag|, |:pedit|, etc.
@@ -3612,7 +3559,7 @@ vim.opt.qe = vim.opt.quoteescape
 function vim.opt.quoteescape:get()end
 
 -- `'readonly'`  `'ro'` 		boolean	(default off)
--- 			local to buffer  |special-local-buffer-option|
+-- 			local to buffer  |local-noglobal|
 -- 	If on, writes fail unless you use a `'!'` .  Protects you from
 -- 	accidentally overwriting a file.  Default on when Vim is started
 -- 	in read-only mode ("vim -R") or when the executable is called "view".
@@ -3965,7 +3912,7 @@ vim.opt.rtp = vim.opt.runtimepath
 function vim.opt.runtimepath:get()end
 
 -- `'scroll'`  `'scr'` 		number	(default half the window height)
--- 			local to window  |special-local-window-option|
+-- 			local to window  |local-noglobal|
 -- 	Number of lines to scroll with CTRL-U and CTRL-D commands.  Will be
 -- 	set to half the number of lines in the window when the window size
 -- 	changes.  This may happen when enabling the |status-line| or
@@ -4615,4 +4562,86 @@ vim.opt.shiftround = false
 vim.opt.sr = vim.opt.shiftround
 --- @return boolean
 function vim.opt.shiftround:get()end
+
+-- `'shiftwidth'`  `'sw'` 	number	(default 8)
+-- 			local to buffer
+-- 	Number of spaces to use for each step of (auto)indent.  Used for
+-- 	|`'cindent'` |, |>>|, |<<|, etc.
+-- 	When zero the `'tabstop'`  value will be used.  Use the |shiftwidth()|
+-- 	function to get the effective shiftwidth value.
+--- @class vim.opt.shiftwidth: vim.Option,number
+--- @operator add: vim.opt.shiftwidth
+--- @operator sub: vim.opt.shiftwidth
+--- @operator pow: vim.opt.shiftwidth
+vim.opt.shiftwidth = 8
+vim.opt.sw = vim.opt.shiftwidth
+--- @return number
+function vim.opt.shiftwidth:get()end
+
+-- `'shortmess'`  `'shm'` 	string	(default "filnxtToOCF")
+-- 			global
+-- 	This option helps to avoid all the |hit-enter| prompts caused by file
+-- 	messages, for example  with CTRL-G, and to avoid some other messages.
+-- 	It is a list of flags:
+-- 	 flag	meaning when present	~
+-- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
+-- 	  i	use "[noeol]" instead of "[Incomplete last line]"
+-- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
+-- 	  m	use "[+]" instead of "[Modified]"
+-- 	  n	use "[New]" instead of "[New File]"
+-- 	  r	use "[RO]" instead of "[readonly]"
+-- 	  w	use "[w]" instead of "written" for file write message
+-- 		and "[a]" instead of "appended" for ':w >> file' command
+-- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
+-- 		instead of "[unix format]" and "[mac]" instead of "[mac
+-- 		format]"
+-- 	  a	all of the above abbreviations
+-- 
+-- 	  o	overwrite message for writing a file with subsequent
+-- 		message for reading a file (useful for ":wn" or when
+-- 		`'autowrite'`  on)
+-- 	  O	message for reading a file overwrites any previous
+-- 		message;  also for quickfix message (e.g., ":cn")
+-- 	  s	don't give "search hit BOTTOM, continuing at TOP" or
+-- 		"search hit TOP, continuing at BOTTOM" messages; when using
+-- 		the search count do not show "W" after the count message (see
+-- 		S below)
+-- 	  t	truncate file message at the start if it is too long
+-- 		to fit on the command-line, "<" will appear in the left most
+-- 		column; ignored in Ex mode
+-- 	  T	truncate other messages in the middle if they are too
+-- 		long to fit on the command line; "..." will appear in the
+-- 		middle; ignored in Ex mode
+-- 	  W	don't give "written" or "[w]" when writing a file
+-- 	  A	don't give the "ATTENTION" message when an existing
+-- 		swap file is found
+-- 	  I	don't give the intro message when starting Vim,
+-- 		see |:intro|
+-- 	  c	don't give |ins-completion-menu| messages; for
+-- 		example, "-- XXX completion (YYY)", "match 1 of 2", "The only
+-- 		match", "Pattern not found", "Back at original", etc.
+-- 	  C	don't give messages while scanning for ins-completion
+-- 		items, for instance "scanning tags"
+-- 	  q	use "recording" instead of "recording @a"
+-- 	  F	don't give the file info when editing a file, like
+-- 		`:silent` was used for the command
+-- 	  S	do not show search count message when searching, e.g.
+-- 		"[1/5]"
+-- 
+-- 	This gives you the opportunity to avoid that a change between buffers
+-- 	requires you to hit <Enter>, but still gives as useful a message as
+-- 	possible for the space available.  To get the whole message that you
+-- 	would have got with `'shm'`  empty, use ":file!"
+-- 	Useful values:
+-- 	    shm=	No abbreviation of message.
+-- 	    shm=a	Abbreviation, but no loss of information.
+-- 	    shm=at	Abbreviation, and truncate message when necessary.
+--- @class vim.opt.shortmess: vim.Option,string[]
+--- @operator add: vim.opt.shortmess
+--- @operator sub: vim.opt.shortmess
+--- @operator pow: vim.opt.shortmess
+vim.opt.shortmess = "filnxtToOCF"
+vim.opt.shm = vim.opt.shortmess
+--- @return string[]
+function vim.opt.shortmess:get()end
 
