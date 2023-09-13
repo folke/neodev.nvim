@@ -5,6 +5,11 @@ vim.api = {}
 
 
 --- @param buffer buffer
+--- @param keys boolean
+--- @param dot boolean
+function vim.api.nvim__buf_debug_extmarks(buffer, keys, dot) end
+
+--- @param buffer buffer
 --- @param first number
 --- @param last number
 function vim.api.nvim__buf_redraw_range(buffer, first, last) end
@@ -415,6 +420,10 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- If `end` is less than `start`, traversal works backwards. (Useful with
 -- `limit`, to get the first marks prior to a given position.)
 -- 
+-- Note: when using extmark ranges (marks with a end_row/end_col position)
+-- the `overlap` option might be useful. Otherwise only the start position of
+-- an extmark will be considered.
+-- 
 -- Example: 
 -- ```lua
 --   local api = vim.api
@@ -445,6 +454,8 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --               • details: Whether to include the details dict
 --               • hl_name: Whether to include highlight group name instead
 --                 of id, true if omitted
+--               • overlap: Also include marks which overlap the range, even
+--                 if their start position is less than `start`
 --               • type: Filter marks by type: "highlight", "sign",
 --                 "virt_text" and "virt_lines"
 -- 
@@ -454,7 +465,7 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --- @param ns_id number
 --- @param start object
 --- @param end_ object
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return any[]
 function vim.api.nvim_buf_get_extmarks(buffer, ns_id, start, end_, opts) end
 
@@ -643,6 +654,11 @@ function vim.api.nvim_buf_line_count(buffer) end
 -- 
 -- Using the optional arguments, it is possible to use this to highlight a
 -- range of text, and also to associate virtual text to the mark.
+-- 
+-- If present, the position defined by `end_col` and `end_row` should be
+-- after the start position in order for the extmark to cover a range. An
+-- earlier end position is not an error, but then it behaves like an empty
+-- range (no highlighting).
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
