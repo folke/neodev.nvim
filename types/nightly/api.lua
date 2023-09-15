@@ -144,11 +144,15 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 
 -- Activates buffer-update events on a channel, or as Lua callbacks.
 -- 
--- Example (Lua): capture buffer updates in a global `events` variable (use "vim.print(events)" to see its contents): 
+-- Example (Lua): capture buffer updates in a global `events` variable (use
+-- "vim.print(events)" to see its contents): 
 -- ```lua
---   events = {}
---   vim.api.nvim_buf_attach(0, false, {
---     on_lines=function(...) table.insert(events, {...}) end})
+--     events = {}
+--     vim.api.nvim_buf_attach(0, false, {
+--       on_lines = function(...)
+--         table.insert(events, {...})
+--       end,
+--     })
 -- ```
 -- 
 -- Parameters: ~
@@ -413,8 +417,8 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- positions define the bounds). 0 and -1 are understood as (0,0) and (-1,-1)
 -- respectively, thus the following are equivalent: 
 -- ```lua
---   vim.api.nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
---   vim.api.nvim_buf_get_extmarks(0, my_ns, {0,0}, {-1,-1}, {})
+--     vim.api.nvim_buf_get_extmarks(0, my_ns, 0, -1, {})
+--     vim.api.nvim_buf_get_extmarks(0, my_ns, {0,0}, {-1,-1}, {})
 -- ```
 -- 
 -- If `end` is less than `start`, traversal works backwards. (Useful with
@@ -426,18 +430,18 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 -- 
 -- Example: 
 -- ```lua
---   local api = vim.api
---   local pos = api.nvim_win_get_cursor(0)
---   local ns  = api.nvim_create_namespace('my-plugin')
---   -- Create new extmark at line 1, column 1.
---   local m1  = api.nvim_buf_set_extmark(0, ns, 0, 0, {})
---   -- Create new extmark at line 3, column 1.
---   local m2  = api.nvim_buf_set_extmark(0, ns, 2, 0, {})
---   -- Get extmarks only from line 3.
---   local ms  = api.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
---   -- Get all marks in this buffer + namespace.
---   local all = api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
---   vim.print(ms)
+--     local api = vim.api
+--     local pos = api.nvim_win_get_cursor(0)
+--     local ns  = api.nvim_create_namespace('my-plugin')
+--     -- Create new extmark at line 1, column 1.
+--     local m1  = api.nvim_buf_set_extmark(0, ns, 0, 0, {})
+--     -- Create new extmark at line 3, column 1.
+--     local m2  = api.nvim_buf_set_extmark(0, ns, 2, 0, {})
+--     -- Get extmarks only from line 3.
+--     local ms  = api.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
+--     -- Get all marks in this buffer + namespace.
+--     local all = api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
+--     vim.print(ms)
 -- ```
 -- 
 -- Parameters: ~
@@ -1086,10 +1090,10 @@ function vim.api.nvim_create_augroup(name, opts) end
 --     })
 -- ```
 -- 
--- Note: `pattern` is NOT automatically expanded (unlike with |:autocmd|), thus names like
--- "$HOME" and "~" must be expanded explicitly: 
+-- Note: `pattern` is NOT automatically expanded (unlike with |:autocmd|),
+-- thus names like "$HOME" and "~" must be expanded explicitly: 
 -- ```lua
---   pattern = vim.fn.expand("~") .. "/some/path/*.py"
+--     pattern = vim.fn.expand("~") .. "/some/path/*.py"
 -- ```
 -- 
 -- Parameters: ~
@@ -1180,9 +1184,9 @@ function vim.api.nvim_create_namespace(name) end
 -- 
 -- Example: 
 -- ```vim
---    :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
---    :SayHello
---    Hello world!
+--     :call nvim_create_user_command('SayHello', 'echo "Hello world!"', {'bang': v:true})
+--     :SayHello
+--     Hello world!
 -- ```
 -- 
 -- Parameters: ~
@@ -1502,17 +1506,17 @@ function vim.api.nvim_get_all_options_info() end
 -- 
 -- These examples will get autocommands matching ALL the given criteria: 
 -- ```lua
---   -- Matches all criteria
---   autocommands = vim.api.nvim_get_autocmds({
---     group = "MyGroup",
---     event = {"BufEnter", "BufWinEnter"},
---     pattern = {"*.c", "*.h"}
---   })
+--     -- Matches all criteria
+--     autocommands = vim.api.nvim_get_autocmds({
+--       group = "MyGroup",
+--       event = {"BufEnter", "BufWinEnter"},
+--       pattern = {"*.c", "*.h"}
+--     })
 -- 
---   -- All commands from one group
---   autocommands = vim.api.nvim_get_autocmds({
---     group = "MyGroup",
---   })
+--     -- All commands from one group
+--     autocommands = vim.api.nvim_get_autocmds({
+--       group = "MyGroup",
+--     })
 -- ```
 -- 
 -- NOTE: When multiple patterns or events are provided, it will find all the
@@ -2084,6 +2088,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 -- ```lua
 --     vim.api.nvim_open_win(0, false,
 --       {relative='win', width=12, height=3, bufpos={100,10}})
+--     })
 -- ```
 -- 
 -- Attributes: ~

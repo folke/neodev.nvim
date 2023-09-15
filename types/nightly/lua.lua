@@ -16,19 +16,18 @@ function vim.call(func, ...) end
 -- 
 -- Examples: 
 -- ```lua
+--     vim.diff('a\n', 'b\nc\n')
+--     -- =>
+--     -- @@ -1 +1,2 @@
+--     -- -a
+--     -- +b
+--     -- +c
 -- 
---      vim.diff('a\n', 'b\nc\n')
---      -- =>
---      -- @ -1 +1,2 @
---      -- -a
---      -- +b
---      -- +c
--- 
---      vim.diff('a\n', 'b\nc\n', {result_type = 'indices'})
---      -- =>
---      -- {
---      --   {1, 1, 1, 2}
---      -- }
+--     vim.diff('a\n', 'b\nc\n', {result_type = 'indices'})
+--     -- =>
+--     -- {
+--     --   {1, 1, 1, 2}
+--     -- }
 -- ```
 -- 
 -- Parameters: ~
@@ -113,22 +112,21 @@ function vim.in_fast_event() end
 -- 
 -- Example: 
 -- ```lua
--- 
---  :lua vim.print(vim.json.decode('{"bar":[],"foo":{},"zub":null}'))
---  --> { bar = {}, foo = vim.empty_dict(), zub = vim.NIL }
--- 
+--     vim.print(vim.json.decode('{"bar":[],"foo":{},"zub":null}'))
+--     -- { bar = {}, foo = vim.empty_dict(), zub = vim.NIL }
 -- ```
---  Parameters: ~ • {str} Stringified JSON data. • {opts} Options map keys: •
--- luanil: { object: bool, array: bool } • `luanil.object=true` converts `null` in JSON objects to Lua `nil` instead of `vim.NIL` . • `luanil.array=true` converts `null` in JSON arrays to Lua `nil` instead of `vim.NIL` .
 -- 
 -- Parameters: ~
---   • {str}   (string)
---   • {opts}  table<string,|nil any
--- ```lua
+--   • {str}   (string) Stringified JSON data.
+--   • {opts}  table<string,any>|nil Options table with keys:
+--             • luanil: (table) Table with keys:
+--               • object: (boolean) When true, converts `null` in JSON
+--                 objects to Lua `nil` instead of |vim.NIL|.
+--               • array: (boolean) When true, converts `null` in JSON arrays
+--                 to Lua `nil` instead of |vim.NIL|.
 -- 
 -- Return: ~
 --     any
--- ```
 --- @param str string
 --- @param opts table<string, any>
 function vim.json.decode(str, opts) end
@@ -207,12 +205,11 @@ function vim.schedule(callback) end
 -- 
 -- Example: 
 -- ```lua
--- 
---      vim.spell.check("the quik brown fox")
---      -- =>
---      -- {
---      --     {'quik', 'bad', 5}
---      -- }
+--     vim.spell.check("the quik brown fox")
+--     -- =>
+--     -- {
+--     --     {'quik', 'bad', 5}
+--     -- }
 -- ```
 -- 
 -- Parameters: ~
@@ -248,14 +245,13 @@ function vim.str_byteindex(str, index, use_utf16) end
 -- 
 -- Examples: 
 -- ```lua
+--     -- The character 'æ' is stored as the bytes '\xc3\xa6' (using UTF-8)
 -- 
---  -- The character 'æ' is stored as the bytes '\xc3\xa6' (using UTF-8)
+--     -- Returns 0 because the index is pointing at the last byte of a character
+--     vim.str_utf_end('æ', 2)
 -- 
---  -- Returns 0 because the index is pointing at the last byte of a character
---  vim.str_utf_end('æ', 2)
--- 
---  -- Returns 1 because the index is pointing at the penultimate byte of a character
---  vim.str_utf_end('æ', 1)
+--     -- Returns 1 because the index is pointing at the penultimate byte of a character
+--     vim.str_utf_end('æ', 1)
 -- ```
 -- 
 -- Parameters: ~
@@ -289,14 +285,13 @@ function vim.str_utf_pos(str) end
 -- 
 -- Examples: 
 -- ```lua
+--     -- The character 'æ' is stored as the bytes '\xc3\xa6' (using UTF-8)
 -- 
---  -- The character 'æ' is stored as the bytes '\xc3\xa6' (using UTF-8)
+--     -- Returns 0 because the index is pointing at the first byte of a character
+--     vim.str_utf_start('æ', 1)
 -- 
---  -- Returns 0 because the index is pointing at the first byte of a character
---  vim.str_utf_start('æ', 1)
--- 
---  -- Returns -1 because the index is pointing at the second byte of a character
---  vim.str_utf_start('æ', 2)
+--     -- Returns -1 because the index is pointing at the second byte of a character
+--     vim.str_utf_start('æ', 2)
 -- ```
 -- 
 -- Parameters: ~
@@ -359,20 +354,19 @@ function vim.stricmp(a, b) end
 -- 
 -- Example (stub for a |ui-popupmenu| implementation): 
 -- ```lua
+--     ns = vim.api.nvim_create_namespace('my_fancy_pum')
 -- 
---    ns = vim.api.nvim_create_namespace('my_fancy_pum')
--- 
---    vim.ui_attach(ns, {ext_popupmenu=true}, function(event, ...)
---      if event == "popupmenu_show" then
---        local items, selected, row, col, grid = ...
---        print("display pum ", #items)
---      elseif event == "popupmenu_select" then
---        local selected = ...
---        print("selected", selected)
---      elseif event == "popupmenu_hide" then
---        print("FIN")
---      end
---    end)
+--     vim.ui_attach(ns, {ext_popupmenu=true}, function(event, ...)
+--       if event == "popupmenu_show" then
+--         local items, selected, row, col, grid = ...
+--         print("display pum ", #items)
+--       elseif event == "popupmenu_select" then
+--         local selected = ...
+--         print("selected", selected)
+--       elseif event == "popupmenu_hide" then
+--         print("FIN")
+--       end
+--     end)
 -- ```
 -- 
 -- Parameters: ~
@@ -402,27 +396,26 @@ function vim.ui_detach(ns) end
 -- 
 -- Examples: 
 -- ```lua
+--     ---
+--     -- Wait for 100 ms, allowing other events to process
+--     vim.wait(100, function() end)
 -- 
---  ---
---  -- Wait for 100 ms, allowing other events to process
---  vim.wait(100, function() end)
+--     ---
+--     -- Wait for 100 ms or until global variable set.
+--     vim.wait(100, function() return vim.g.waiting_for_var end)
 -- 
---  ---
---  -- Wait for 100 ms or until global variable set.
---  vim.wait(100, function() return vim.g.waiting_for_var end)
+--     ---
+--     -- Wait for 1 second or until global variable set, checking every ~500 ms
+--     vim.wait(1000, function() return vim.g.waiting_for_var end, 500)
 -- 
---  ---
---  -- Wait for 1 second or until global variable set, checking every ~500 ms
---  vim.wait(1000, function() return vim.g.waiting_for_var end, 500)
+--     ---
+--     -- Schedule a function to set a value in 100ms
+--     vim.defer_fn(function() vim.g.timer_result = true end, 100)
 -- 
---  ---
---  -- Schedule a function to set a value in 100ms
---  vim.defer_fn(function() vim.g.timer_result = true end, 100)
--- 
---  -- Would wait ten seconds if results blocked. Actually only waits  100 ms
---  if vim.wait(10000, function() return vim.g.timer_result end) then
---    print('Only waiting a little bit of time!')
---  end
+--     -- Would wait ten seconds if results blocked. Actually only waits  100 ms
+--     if vim.wait(10000, function() return vim.g.timer_result end) then
+--       print('Only waiting a little bit of time!')
+--     end
 -- ```
 -- 
 -- Parameters: ~
