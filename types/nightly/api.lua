@@ -87,6 +87,8 @@ function vim.api.nvim__id_float(flt) end
 --- @param col number
 function vim.api.nvim__inspect_cell(grid, row, col) end
 
+function vim.api.nvim__invalidate_glyph_cache() end
+
 function vim.api.nvim__runtime_inspect() end
 
 --- @param path string
@@ -2199,6 +2201,8 @@ function vim.api.nvim_open_term(buffer, opts) end
 --               • noautocmd: If true then no buffer-related autocommand
 --                 events such as |BufEnter|, |BufLeave| or |BufWinEnter| may
 --                 fire from calling this function.
+--               • fixed: If true when anchor is NW or SW, the float window
+--                 would be kept fixed even if the window would be truncated.
 -- 
 -- Return: ~
 --     Window handle, or 0 on error
