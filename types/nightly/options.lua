@@ -1658,9 +1658,8 @@ vim.go.icon = false
 vim.go.iconstring = ""
 -- `'ignorecase'`  `'ic'` 	boolean	(default off)
 -- 			global
--- 	Ignore case in search patterns.  Also used when searching in the tags
--- 	file.
--- 	Also see `'smartcase'`  and `'tagcase'` .
+-- 	Ignore case in search patterns, completion, and when searching the tags file.
+-- 	See also `'smartcase'`  and `'tagcase'` .
 -- 	Can be overruled by using "\c" or "\C" in the pattern, see
 -- 	|/ignorecase|.
 vim.go.ignorecase = false
@@ -1841,12 +1840,11 @@ vim.go.js = vim.go.joinspaces
 -- `'jumpoptions'`  `'jop'` 	string	(default "")
 -- 			global
 -- 	List of words that change the behavior of the |jumplist|.
--- 	  stack         Make the jumplist behave like the tagstack or like a
--- 	                web browser.  Relative location of entries in the
--- 			jumplist is preserved at the cost of discarding
--- 			subsequent entries when navigating backwards in the
--- 			jumplist and then jumping to a location.
--- 			|jumplist-stack|
+-- 	  stack         Make the jumplist behave like the tagstack.
+-- 			Relative location of entries in the jumplist is
+-- 			preserved at the cost of discarding subsequent entries
+-- 			when navigating backwards in the jumplist and then
+-- 			jumping to a location.  |jumplist-stack|
 -- 
 -- 	  view          When moving through the jumplist, |changelist|,
 -- 			|alternate-file| or using |mark-motions| try to
@@ -4276,3 +4274,20 @@ vim.wo.cuc = vim.wo.cursorcolumn
 -- 	easier to see the selected text.
 vim.wo.cursorline = false
 vim.wo.cul = vim.wo.cursorline
+-- `'cursorlineopt'`  `'culopt'` 	string	(default "both")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+vim.wo.cursorlineopt = "both"
+vim.wo.culopt = vim.wo.cursorlineopt

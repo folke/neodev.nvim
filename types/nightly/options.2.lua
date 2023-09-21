@@ -1562,9 +1562,8 @@ function vim.opt.iconstring:get()end
 
 -- `'ignorecase'`  `'ic'` 	boolean	(default off)
 -- 			global
--- 	Ignore case in search patterns.  Also used when searching in the tags
--- 	file.
--- 	Also see `'smartcase'`  and `'tagcase'` .
+-- 	Ignore case in search patterns, completion, and when searching the tags file.
+-- 	See also `'smartcase'`  and `'tagcase'` .
 -- 	Can be overruled by using "\c" or "\C" in the pattern, see
 -- 	|/ignorecase|.
 --- @class vim.opt.ignorecase: vim.Option,boolean
@@ -2025,12 +2024,11 @@ function vim.opt.joinspaces:get()end
 -- `'jumpoptions'`  `'jop'` 	string	(default "")
 -- 			global
 -- 	List of words that change the behavior of the |jumplist|.
--- 	  stack         Make the jumplist behave like the tagstack or like a
--- 	                web browser.  Relative location of entries in the
--- 			jumplist is preserved at the cost of discarding
--- 			subsequent entries when navigating backwards in the
--- 			jumplist and then jumping to a location.
--- 			|jumplist-stack|
+-- 	  stack         Make the jumplist behave like the tagstack.
+-- 			Relative location of entries in the jumplist is
+-- 			preserved at the cost of discarding subsequent entries
+-- 			when navigating backwards in the jumplist and then
+-- 			jumping to a location.  |jumplist-stack|
 -- 
 -- 	  view          When moving through the jumplist, |changelist|,
 -- 			|alternate-file| or using |mark-motions| try to

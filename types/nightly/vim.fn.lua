@@ -4157,7 +4157,7 @@ function vim.fn.jobpid(job) end
 -- Fails if the job was not started with `"pty":v:true`.
 function vim.fn.jobresize(job, width, height) end
 
--- Note: Prefer |vim.system()| in Lua.
+-- Note: Prefer |vim.system()| in Lua (unless using the `pty` option).
 -- 
 -- Spawns {cmd} as a job.
 -- If {cmd} is a List it runs directly (no 'shell').
