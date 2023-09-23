@@ -188,13 +188,13 @@ function vim.rpcnotify(channel, method, args, ...) end
 --- @param args any[]
 function vim.rpcrequest(channel, method, args, ...) end
 
--- Schedules {callback} to be invoked soon by the main event-loop. Useful to
--- avoid |textlock| or other temporary restrictions.
+-- Schedules {fn} to be invoked soon by the main event-loop. Useful to avoid
+-- |textlock| or other temporary restrictions.
 -- 
 -- Parameters: ~
---   • {callback}  fun()
---- @param callback fun()
-function vim.schedule(callback) end
+--   • {fn}  (function)
+--- @param fn fun()
+function vim.schedule(fn) end
 
 -- Check {str} for spelling errors. Similar to the Vimscript function
 -- |spellbadword()|.
