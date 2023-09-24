@@ -3111,7 +3111,6 @@ vim.go.sr = vim.go.shiftround
 -- 	messages, for example  with CTRL-G, and to avoid some other messages.
 -- 	It is a list of flags:
 -- 	 flag	meaning when present	~
--- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
 -- 	  i	use "[noeol]" instead of "[Incomplete last line]"
 -- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
 -- 	  m	use "[+]" instead of "[Modified]"

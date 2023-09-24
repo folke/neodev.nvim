@@ -13,8 +13,8 @@ vim.wo.diff = false
 -- 	and the value of that item:
 -- 
 -- 	  item		default		Used for ~
--- 	  stl		' ' or `'^'` 	statusline of the current window
--- 	  stlnc		' ' or `'='` 	statusline of the non-current windows
+-- 	  stl		' '		statusline of the current window
+-- 	  stlnc		' '		statusline of the non-current windows
 -- 	  wbr		' '		window bar
 -- 	  horiz		`'─'`  or `'-'` 	horizontal separators |:split|
 -- 	  horizup	`'┴'`  or `'-'` 	upwards facing horizontal separator
@@ -33,9 +33,7 @@ vim.wo.diff = false
 -- 	  eob		`'~'` 		empty lines at the end of a buffer
 -- 	  lastline	`'@'` 		`'display'`  contains lastline/truncate
 -- 
--- 	Any one that is omitted will fall back to the default.  For "stl" and
--- 	"stlnc" the space will be used when there is highlighting, `'^'`  or `'='` 
--- 	otherwise.
+-- 	Any one that is omitted will fall back to the default.
 -- 
 -- 	Note that "horiz", "horizup", "horizdown", "vertleft", "vertright" and
 -- 	"verthoriz" are only used when `'laststatus'`  is 3, since only vertical

@@ -508,8 +508,8 @@ function vim.opt.filetype:get()end
 -- 	and the value of that item:
 -- 
 -- 	  item		default		Used for ~
--- 	  stl		' ' or `'^'` 	statusline of the current window
--- 	  stlnc		' ' or `'='` 	statusline of the non-current windows
+-- 	  stl		' '		statusline of the current window
+-- 	  stlnc		' '		statusline of the non-current windows
 -- 	  wbr		' '		window bar
 -- 	  horiz		`'─'`  or `'-'` 	horizontal separators |:split|
 -- 	  horizup	`'┴'`  or `'-'` 	upwards facing horizontal separator
@@ -528,9 +528,7 @@ function vim.opt.filetype:get()end
 -- 	  eob		`'~'` 		empty lines at the end of a buffer
 -- 	  lastline	`'@'` 		`'display'`  contains lastline/truncate
 -- 
--- 	Any one that is omitted will fall back to the default.  For "stl" and
--- 	"stlnc" the space will be used when there is highlighting, `'^'`  or `'='` 
--- 	otherwise.
+-- 	Any one that is omitted will fall back to the default.
 -- 
 -- 	Note that "horiz", "horizup", "horizdown", "vertleft", "vertright" and
 -- 	"verthoriz" are only used when `'laststatus'`  is 3, since only vertical
@@ -4582,7 +4580,6 @@ function vim.opt.shiftwidth:get()end
 -- 	messages, for example  with CTRL-G, and to avoid some other messages.
 -- 	It is a list of flags:
 -- 	 flag	meaning when present	~
--- 	  f	use "(3 of 5)" instead of "(file 3 of 5)"
 -- 	  i	use "[noeol]" instead of "[Incomplete last line]"
 -- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
 -- 	  m	use "[+]" instead of "[Modified]"
