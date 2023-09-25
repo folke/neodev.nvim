@@ -567,9 +567,6 @@ function vim.api.nvim_buf_get_name(buffer) end
 --- @return number
 function vim.api.nvim_buf_get_offset(buffer, index) end
 
---- @return object
-function vim.api.nvim_buf_get_option() end
-
 -- Gets a range from the buffer.
 -- 
 -- This differs from |nvim_buf_get_lines()| in that it allows retrieving only
@@ -861,8 +858,6 @@ function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 --- @param buffer buffer
 --- @param name string
 function vim.api.nvim_buf_set_name(buffer, name) end
-
-function vim.api.nvim_buf_set_option() end
 
 -- Sets (replaces) a range in the buffer
 -- 
@@ -1757,12 +1752,6 @@ function vim.api.nvim_get_mode() end
 --     dict that maps from names to namespace ids.
 --- @return table<string, any>
 function vim.api.nvim_get_namespaces() end
-
---- @return object
-function vim.api.nvim_get_option() end
-
---- @return table<string, any>
-function vim.api.nvim_get_option_info() end
 
 -- Gets the option information for one option from arbitrary buffer or window
 -- 
@@ -2683,8 +2672,6 @@ function vim.api.nvim_set_hl_ns_fast(ns_id) end
 --- @param opts? table<string, any>
 function vim.api.nvim_set_keymap(mode, lhs, rhs, opts) end
 
-function vim.api.nvim_set_option() end
-
 -- Sets the value of an option. The behavior of this function matches that of
 -- |:set|: for global-local options, both the global and local value are set
 -- unless otherwise specified with {scope}.
@@ -2920,9 +2907,6 @@ function vim.api.nvim_win_get_height(window) end
 --- @return number
 function vim.api.nvim_win_get_number(window) end
 
---- @return object
-function vim.api.nvim_win_get_option() end
-
 -- Gets the window position in display cells. First position is zero.
 -- 
 -- Parameters: ~
@@ -3053,8 +3037,6 @@ function vim.api.nvim_win_set_height(window, height) end
 --- @param window window
 --- @param ns_id number
 function vim.api.nvim_win_set_hl_ns(window, ns_id) end
-
-function vim.api.nvim_win_set_option() end
 
 -- Sets a window-scoped (w:) variable
 -- 
