@@ -3105,22 +3105,17 @@ vim.go.sxq = vim.go.shellxquote
 -- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
 vim.go.shiftround = false
 vim.go.sr = vim.go.shiftround
--- `'shortmess'`  `'shm'` 	string	(default "filnxtToOCF")
+-- `'shortmess'`  `'shm'` 	string	(default "ltToOCF")
 -- 			global
 -- 	This option helps to avoid all the |hit-enter| prompts caused by file
 -- 	messages, for example  with CTRL-G, and to avoid some other messages.
 -- 	It is a list of flags:
 -- 	 flag	meaning when present	~
--- 	  i	use "[noeol]" instead of "[Incomplete last line]"
 -- 	  l	use "999L, 888B" instead of "999 lines, 888 bytes"
 -- 	  m	use "[+]" instead of "[Modified]"
--- 	  n	use "[New]" instead of "[New File]"
 -- 	  r	use "[RO]" instead of "[readonly]"
 -- 	  w	use "[w]" instead of "written" for file write message
 -- 		and "[a]" instead of "appended" for ':w >> file' command
--- 	  x	use "[dos]" instead of "[dos format]", "[unix]"
--- 		instead of "[unix format]" and "[mac]" instead of "[mac
--- 		format]"
 -- 	  a	all of the above abbreviations
 -- 
 -- 	  o	overwrite message for writing a file with subsequent
@@ -3162,7 +3157,7 @@ vim.go.sr = vim.go.shiftround
 -- 	    shm=	No abbreviation of message.
 -- 	    shm=a	Abbreviation, but no loss of information.
 -- 	    shm=at	Abbreviation, and truncate message when necessary.
-vim.go.shortmess = "filnxtToOCF"
+vim.go.shortmess = "ltToOCF"
 vim.go.shm = vim.go.shortmess
 -- `'showcmd'`  `'sc'` 		boolean	(default on)
 -- 			global
