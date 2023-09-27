@@ -2605,6 +2605,8 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 --              • cterm: cterm attribute map, like |highlight-args|. If not
 --                set, cterm attributes will match those from the attribute
 --                map documented above.
+--              • force: if true force update the highlight group when it
+--                exists.
 --- @param ns_id number
 --- @param name string
 --- @param val? table<string, any>
