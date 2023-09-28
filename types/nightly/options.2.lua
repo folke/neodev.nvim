@@ -3945,9 +3945,9 @@ function vim.opt.scrollback:get()end
 
 -- `'scrollbind'`  `'scb'` 	boolean	(default off)
 -- 			local to window
--- 	See also |scroll-binding|.  When this option is set, the current
--- 	window scrolls as other scrollbind windows (windows that also have
--- 	this option set) scroll.  This option is useful for viewing the
+-- 	See also |scroll-binding|.  When this option is set, scrolling the
+-- 	current window also scrolls other scrollbind windows (windows that
+-- 	also have this option set).  This option is useful for viewing the
 -- 	differences between two versions of a file, see `'diff'` .
 -- 	See |`'scrollopt'` | for options that determine how this option should be
 -- 	interpreted.
