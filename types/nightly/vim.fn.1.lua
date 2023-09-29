@@ -392,7 +392,7 @@ function vim.fn.prevnonblank(lnum) end
 -- ```vim
 --   echo printf("%s%1$s", "One", "Two")
 -- ```
---   E1400: Cannot mix positional and non-positional
+--   E1500: Cannot mix positional and non-positional
 --   arguments: %s%1$s
 -- 
 -- 
@@ -400,7 +400,7 @@ function vim.fn.prevnonblank(lnum) end
 -- ```vim
 --   echo printf("%3$s%1$s", "One", "Two", "Three")
 -- ```
---   E1401: format argument 2 unused in $-style
+--   E1501: format argument 2 unused in $-style
 --   format: %3$s%1$s
 -- 
 -- 
@@ -414,7 +414,7 @@ function vim.fn.prevnonblank(lnum) end
 -- ```vim
 --   echo printf("%1$d at width %2$ld is: %01$*2$d", 1, 2)
 -- ```
---   E1402: Positional argument 2 used as field
+--   E1502: Positional argument 2 used as field
 --   width reused as different type: long int/int
 -- 
 -- 
@@ -423,14 +423,14 @@ function vim.fn.prevnonblank(lnum) end
 -- ```vim
 --   echo printf("%1$d at width %2$d is: %01$3$d", 1, 2)
 -- ```
---   E1403: Positional argument 3 out of bounds:
+--   E1503: Positional argument 3 out of bounds:
 --   %1$d at width %2$d is: %01$3$d
 -- 
 -- Only the first error is reported: 
 -- ```vim
 --   echo printf("%01$3$d %4$d", 1, 2)
 -- ```
---   E1403: Positional argument 3 out of bounds:
+--   E1503: Positional argument 3 out of bounds:
 --   %01$3$d %4$d
 -- 
 -- 
@@ -444,7 +444,7 @@ function vim.fn.prevnonblank(lnum) end
 -- ```vim
 --   echo printf("%1$s %2$s %1$d", "One", "Two")
 -- ```
---   E1404: Positional argument 1 type used
+--   E1504: Positional argument 1 type used
 --   inconsistently: int/string
 -- 
 -- 
@@ -453,7 +453,7 @@ function vim.fn.prevnonblank(lnum) end
 -- ```vim
 --   echo printf("%1$d at width %2$d is: %01$*2$.3$d", 1, 2)
 -- ```
---   E1405: Invalid format specifier:
+--   E1505: Invalid format specifier:
 --   %1$d at width %2$d is: %01$*2$.3$d
 function vim.fn.printf(fmt, expr1, ...) end
 
