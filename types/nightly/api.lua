@@ -2192,6 +2192,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 --                 fire from calling this function.
 --               • fixed: If true when anchor is NW or SW, the float window
 --                 would be kept fixed even if the window would be truncated.
+--               • hide: If true the floating window will be hidden.
 -- 
 -- Return: ~
 --     Window handle, or 0 on error
