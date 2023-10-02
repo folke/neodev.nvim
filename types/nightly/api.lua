@@ -1698,6 +1698,21 @@ function vim.api.nvim_get_hl(ns_id, opts) end
 --- @return number
 function vim.api.nvim_get_hl_id_by_name(name) end
 
+-- Gets the active highlight namespace.
+-- 
+-- Parameters: ~
+--   • {opts}  Optional parameters
+--             • winid: (number) |window-ID| for retrieving a window's
+--               highlight namespace. A value of -1 is returned when
+--               |nvim_win_set_hl_ns()| has not been called for the window
+--               (or was called with a namespace of -1).
+-- 
+-- Return: ~
+--     Namespace id, or -1
+--- @param opts? table<string, any>
+--- @return number
+function vim.api.nvim_get_hl_ns(opts) end
+
 -- Gets a list of global (non-buffer-local) |mapping| definitions.
 -- 
 -- Parameters: ~

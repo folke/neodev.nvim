@@ -3671,13 +3671,13 @@ function vim.opt.completeslash:get()end
 -- 	you can see what you are doing.
 -- 	Keep in mind that the cursor position is not always where it's
 -- 	displayed.  E.g., when moving vertically it may change column.
---- @class vim.opt.concealcursor: vim.Option,string
+--- @class vim.opt.concealcursor: vim.Option,string[]
 --- @operator add: vim.opt.concealcursor
 --- @operator sub: vim.opt.concealcursor
 --- @operator pow: vim.opt.concealcursor
 vim.opt.concealcursor = ""
 vim.opt.cocu = vim.opt.concealcursor
---- @return string
+--- @return string[]
 function vim.opt.concealcursor:get()end
 
 -- `'conceallevel'`  `'cole'` 	number	(default 0)
