@@ -235,6 +235,7 @@ function vim.fn.prevnonblank(lnum) end
 -- using a {n$} positional argument specifier. See |printf-$|.
 -- 
 -- 
+-- 
 -- The conversion specifiers and their meanings are:
 -- 
 -- 
