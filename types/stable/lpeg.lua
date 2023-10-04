@@ -107,7 +107,7 @@ local Pattern = {}
 ---@param subject string
 ---@param init? integer
 ---
----@return integer|Capture
+---@return any ...
 ---
 ---😱 [Types](https://github.com/LuaCATS/lpeg/blob/main/library/lpeg.lua) incomplete or incorrect? 🙏 [Please contribute!](https://github.com/LuaCATS/lpeg/pulls)
 function lpeg.match(pattern, subject, init) end
@@ -147,7 +147,7 @@ function lpeg.match(pattern, subject, init) end
 ---@param subject string
 ---@param init? integer
 ---
----@return integer|Capture
+---@return any ...
 ---
 ---😱 [Types](https://github.com/LuaCATS/lpeg/blob/main/library/lpeg.lua) incomplete or incorrect? 🙏 [Please contribute!](https://github.com/LuaCATS/lpeg/pulls)
 function Pattern:match(subject, init) end
@@ -504,7 +504,7 @@ function lpeg.Cc(...) end
 ---```
 ---
 ---@param patt Pattern|string|number|boolean|table|function
----@param func fun(acc, newvalue)
+---@param func fun(acc, newvalue): (acc: any)
 ---
 ---@return Capture
 ---
