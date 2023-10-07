@@ -1867,7 +1867,7 @@ vim.opt.im = vim.opt.insertmode
 function vim.opt.insertmode:get()end
 
 -- `'isfname'`  `'isf'` 		string	(default for Windows:
---                              "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],:,@-@,!,~,="
+--                              "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],@-@,!,~,="
 --                             otherwise: "@,48-57,/,.,-,_,+,,,#,$,%,~,=")
 -- 			global
 -- 	The characters specified by this option are included in file names and

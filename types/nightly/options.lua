@@ -1737,7 +1737,7 @@ vim.go.is = vim.go.incsearch
 vim.go.insertmode = false
 vim.go.im = vim.go.insertmode
 -- `'isfname'`  `'isf'` 		string	(default for Windows:
---                              "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],:,@-@,!,~,="
+--                              "@,48-57,/,\,.,-,_,+,,,#,$,%,{,},[,],@-@,!,~,="
 --                             otherwise: "@,48-57,/,.,-,_,+,,,#,$,%,~,=")
 -- 			global
 -- 	The characters specified by this option are included in file names and

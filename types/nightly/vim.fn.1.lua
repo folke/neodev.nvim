@@ -234,8 +234,6 @@ function vim.fn.prevnonblank(lnum) end
 -- precision, the argument(s) to be used must also be specified
 -- using a {n$} positional argument specifier. See |printf-$|.
 -- 
--- 
--- 
 -- The conversion specifiers and their meanings are:
 -- 
 -- 
@@ -456,6 +454,13 @@ function vim.fn.prevnonblank(lnum) end
 -- ```
 --   E1505: Invalid format specifier:
 --   %1$d at width %2$d is: %01$*2$.3$d
+-- 
+-- 
+-- This internal error indicates that the logic to parse a
+-- positional format argument ran into a problem that couldn't be
+-- otherwise reported.  Please file a bug against Vim if you run
+-- into this, copying the exact format string and parameters that
+-- were used.
 function vim.fn.printf(fmt, expr1, ...) end
 
 -- Returns the effective prompt text for buffer {buf}.  {buf} can
