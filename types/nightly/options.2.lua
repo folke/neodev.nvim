@@ -610,7 +610,7 @@ function vim.opt.foldclose:get()end
 -- 	    "auto":       resize to the minimum amount of folds to display.
 -- 	    "auto:[1-9]": resize to accommodate multiple folds up to the
 -- 			  selected level
--- 	    0:            to disable foldcolumn
+-- 	    "0":          to disable foldcolumn
 -- 	    "[1-9]":      to display a fixed number of columns
 -- 	See |folding|.
 --- @class vim.opt.foldcolumn: vim.Option,string
@@ -3346,6 +3346,10 @@ function vim.opt.patchmode:get()end
 -- 	option may be relative or absolute.
 -- 	- Use commas to separate directory names: >
 -- 		:set path=.,/usr/local/include,/usr/include
+-- <	- Spaces can also be used to separate directory names.  To have a
+-- 	  space in a directory name, precede it with an extra backslash, and
+-- 	  escape the space: >
+-- 		:set path=.,/dir/with\\\ space
 -- <	- To include a comma in a directory name precede it with an extra
 -- 	  backslash: >
 -- 		:set path=.,/dir/with\\,comma
