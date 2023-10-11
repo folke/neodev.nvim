@@ -882,6 +882,12 @@ function vim.cmd.exusage(...)end
 -- show or set the current file name
 function vim.cmd.f(...)end
 
+-- close floating window
+function vim.cmd.fc(...)end
+
+-- close floating window
+function vim.cmd.fclose(...)end
+
 -- show or set the current file name
 function vim.cmd.file(...)end
 
