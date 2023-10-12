@@ -4007,8 +4007,9 @@ function vim.fn.indexof(object, expr, opts) end
 --   endfunction
 -- ```
 --- @param opts string|table<string, any>
+--- @param ...? string
 --- @return string
-function vim.fn.input(opts) end
+function vim.fn.input(opts, ...) end
 
 -- {textlist} must be a |List| of strings.  This |List| is
 -- displayed, one string per line.  The user will be prompted to
