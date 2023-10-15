@@ -1560,8 +1560,9 @@ function vim.opt.iconstring:get()end
 
 -- `'ignorecase'`  `'ic'` 	boolean	(default off)
 -- 			global
--- 	Ignore case in search patterns, completion, and when searching the tags file.
--- 	See also `'smartcase'`  and `'tagcase'` .
+-- 	Ignore case in search patterns, |cmdline-completion|, when
+-- 	searching in the tags file, and |expr-==|.
+-- 	Also see `'smartcase'`  and `'tagcase'` .
 -- 	Can be overruled by using "\c" or "\C" in the pattern, see
 -- 	|/ignorecase|.
 --- @class vim.opt.ignorecase: vim.Option,boolean
