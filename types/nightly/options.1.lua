@@ -1,5 +1,22 @@
 ---@meta
 
+-- `'cursorlineopt'`  `'culopt'` 	string	(default "both")
+-- 			local to window
+-- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
+-- 	Valid values:
+-- 	"line"		Highlight the text line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"screenline"	Highlight only the screen line of the cursor with
+-- 			CursorLine |hl-CursorLine|.
+-- 	"number"	Highlight the line number of the cursor with
+-- 			CursorLineNr |hl-CursorLineNr|.
+-- 
+-- 	Special value:
+-- 	"both"		Alias for the values "line,number".
+-- 
+-- 	"line" and "screenline" cannot be used together.
+vim.wo.cursorlineopt = "both"
+vim.wo.culopt = vim.wo.cursorlineopt
 -- `'diff'` 			boolean	(default off)
 -- 			local to window
 -- 	Join the current window in the group of windows that shows differences
@@ -4328,57 +4345,4 @@ vim.opt.digraph = false
 vim.opt.dg = vim.opt.digraph
 --- @return boolean
 function vim.opt.digraph:get()end
-
--- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
--- 			global
--- 	List of directory names for the swap file, separated with commas.
--- 
--- 	Possible items:
--- 	- The swap file will be created in the first directory where this is
--- 	  possible.  If it is not possible in any directory, but last
--- 	  directory listed in the option does not exist, it is created.
--- 	- Empty means that no swap file will be used (recovery is
--- 	  impossible!) and no |E303| error will be given.
--- 	- A directory "." means to put the swap file in the same directory as
--- 	  the edited file.  On Unix, a dot is prepended to the file name, so
--- 	  it doesn't show in a directory listing.  On MS-Windows the "hidden"
--- 	  attribute is set and a dot prepended if possible.
--- 	- A directory starting with "./" (or ".\" for MS-Windows) means to put
--- 	  the swap file relative to where the edited file is.  The leading "."
--- 	  is replaced with the path name of the edited file.
--- 	- For Unix and Win32, if a directory ends in two path separators "//",
--- 	  the swap file name will be built from the complete path to the file
--- 	  with all path separators replaced by percent `'%'`  signs (including
--- 	  the colon following the drive letter on Win32). This will ensure
--- 	  file name uniqueness in the preserve directory.
--- 	  On Win32, it is also possible to end with "\\".  However, When a
--- 	  separating comma is following, you must use "//", since "\\" will
--- 	  include the comma in the file name. Therefore it is recommended to
--- 	  use `'//'` , instead of `'\\'` .
--- 	- Spaces after the comma are ignored, other spaces are considered part
--- 	  of the directory name.  To have a space at the start of a directory
--- 	  name, precede it with a backslash.
--- 	- To include a comma in a directory name precede it with a backslash.
--- 	- A directory name may end in an `':'`  or `'/'` .
--- 	- Environment variables are expanded |:set_env|.
--- 	- Careful with `'\'`  characters, type one before a space, type two to
--- 	  get one in the option (see |option-backslash|), for example: >
--- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
--- <
--- 	Editing the same file twice will result in a warning.  Using "/tmp" on
--- 	is discouraged: if the system crashes you lose the swap file. And
--- 	others on the computer may be able to see the files.
--- 	Use |:set+=| and |:set-=| when adding or removing directories from the
--- 	list, this avoids problems if the Nvim default is changed.
--- 
--- 	This option cannot be set from a |modeline| or in the |sandbox|, for
--- 	security reasons.
---- @class vim.opt.directory: vim.Option,string[]
---- @operator add: vim.opt.directory
---- @operator sub: vim.opt.directory
---- @operator pow: vim.opt.directory
-vim.opt.directory = "/home/runner/.local/state/nvim/swap//"
-vim.opt.dir = vim.opt.directory
---- @return string[]
-function vim.opt.directory:get()end
 

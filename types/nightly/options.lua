@@ -2039,6 +2039,7 @@ vim.go.mco = vim.go.maxcombine
 -- 	Increasing this limit above 200 also changes the maximum for Ex
 -- 	command recursion, see |E169|.
 -- 	See also |:function|.
+-- 	Also used for maximum depth of callback functions.
 vim.go.maxfuncdepth = 100
 vim.go.mfd = vim.go.maxfuncdepth
 -- `'maxmapdepth'`  `'mmd'` 	number	(default 1000)
@@ -4273,20 +4274,3 @@ vim.wo.cuc = vim.wo.cursorcolumn
 -- 	easier to see the selected text.
 vim.wo.cursorline = false
 vim.wo.cul = vim.wo.cursorline
--- `'cursorlineopt'`  `'culopt'` 	string	(default "both")
--- 			local to window
--- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
--- 	Valid values:
--- 	"line"		Highlight the text line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"screenline"	Highlight only the screen line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"number"	Highlight the line number of the cursor with
--- 			CursorLineNr |hl-CursorLineNr|.
--- 
--- 	Special value:
--- 	"both"		Alias for the values "line,number".
--- 
--- 	"line" and "screenline" cannot be used together.
-vim.wo.cursorlineopt = "both"
-vim.wo.culopt = vim.wo.cursorlineopt
