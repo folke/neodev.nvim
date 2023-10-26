@@ -1043,7 +1043,7 @@ function vim.opt.swapfile:get()end
 -- 	This option controls the behavior when switching between buffers.
 -- 	This option is checked, when
 -- 	- jumping to errors with the |quickfix| commands (|:cc|, |:cn|, |:cp|,
--- 	  etc.)
+-- 	  etc.).
 -- 	- jumping to a tag using the |:stag| command.
 -- 	- opening a file using the |CTRL-W_f| or |CTRL-W_F| command.
 -- 	- jumping to a buffer using a buffer split command (e.g.  |:sbuffer|,
