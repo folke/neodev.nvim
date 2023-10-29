@@ -319,6 +319,8 @@ vim.go.cmp = vim.go.casemap
 -- 	current working directory to the |$HOME| directory like in Unix.
 -- 	When off, those commands just print the current directory name.
 -- 	On Unix this option has no effect.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.cdhome = false
 vim.go.cdh = vim.go.cdhome
 -- `'cdpath'`  `'cd'` 		string	(default equivalent to $CDPATH or ",,")
@@ -2109,7 +2111,8 @@ vim.go.mis = vim.go.menuitems
 -- <	If you have less than 512 Mbyte |:mkspell| may fail for some
 -- 	languages, no matter what you set `'mkspellmem'`  to.
 -- 
--- 	This option cannot be set from a |modeline| or in the |sandbox|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.mkspellmem = "460000,2000,500"
 vim.go.msm = vim.go.mkspellmem
 -- `'modelineexpr'`  `'mle'` 	boolean	(default off)
@@ -2363,6 +2366,8 @@ vim.go.opfunc = vim.go.operatorfunc
 -- 			global
 -- 	Directories used to find packages.
 -- 	See |packages| and |packages-runtimepath|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
@@ -2378,6 +2383,8 @@ vim.go.pt = vim.go.pastetoggle
 -- 			global
 -- 	Expression which is evaluated to apply a patch to a file and generate
 -- 	the resulting new version of the file.  See |diff-patchexpr|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.patchexpr = ""
 vim.go.pex = vim.go.patchexpr
 -- `'patchmode'`  `'pm'` 	string	(default "")
@@ -3086,6 +3093,8 @@ vim.go.stmp = vim.go.shelltemp
 -- 	When `'shellxquote'`  is set to "(" then the characters listed in this
 -- 	option will be escaped with a `'^'`  character.  This makes it possible
 -- 	to execute most external commands with cmd.exe.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.shellxescape = ""
 vim.go.sxe = vim.go.shellxescape
 -- `'shellxquote'`  `'sxq'` 	string	(default "", Windows: "\"")
@@ -3770,6 +3779,8 @@ vim.go.vbs = vim.go.verbose
 -- 	Setting `'verbosefile'`  to a new value is like making it empty first.
 -- 	The difference with |:redir| is that verbose messages are not
 -- 	displayed when `'verbosefile'`  is set.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.go.verbosefile = ""
 vim.go.vfile = vim.go.verbosefile
 -- `'viewdir'`  `'vdir'` 	string	(default "$XDG_STATE_HOME/nvim/view//")
@@ -4268,11 +4279,3 @@ vim.wo.crb = vim.wo.cursorbind
 -- <
 vim.wo.cursorcolumn = false
 vim.wo.cuc = vim.wo.cursorcolumn
--- `'cursorline'`  `'cul'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
--- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
--- 	When Visual mode is active the highlighting isn't used to make it
--- 	easier to see the selected text.
-vim.wo.cursorline = false
-vim.wo.cul = vim.wo.cursorline

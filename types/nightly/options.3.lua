@@ -1,5 +1,19 @@
 ---@meta
 
+-- `'shiftround'`  `'sr'` 	boolean	(default off)
+-- 			global
+-- 	Round indent to multiple of `'shiftwidth'` .  Applies to > and <
+-- 	commands.  CTRL-T and CTRL-D in Insert mode always round the indent to
+-- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
+--- @class vim.opt.shiftround: vim.Option,boolean
+--- @operator add: vim.opt.shiftround
+--- @operator sub: vim.opt.shiftround
+--- @operator pow: vim.opt.shiftround
+vim.opt.shiftround = false
+vim.opt.sr = vim.opt.shiftround
+--- @return boolean
+function vim.opt.shiftround:get()end
+
 -- `'shiftwidth'`  `'sw'` 	number	(default 8)
 -- 			local to buffer
 -- 	Number of spaces to use for each step of (auto)indent.  Used for
@@ -1304,6 +1318,8 @@ function vim.opt.tagcase:get()end
 -- 	function and an example.  The value can be the name of a function, a
 -- 	|lambda| or a |Funcref|. See |option-value-function| for more
 -- 	information.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.tagfunc: vim.Option,string
 --- @operator add: vim.opt.tagfunc
 --- @operator sub: vim.opt.tagfunc
@@ -1916,6 +1932,8 @@ function vim.opt.verbose:get()end
 -- 	Setting `'verbosefile'`  to a new value is like making it empty first.
 -- 	The difference with |:redir| is that verbose messages are not
 -- 	displayed when `'verbosefile'`  is set.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.verbosefile: vim.Option,string
 --- @operator add: vim.opt.verbosefile
 --- @operator sub: vim.opt.verbosefile

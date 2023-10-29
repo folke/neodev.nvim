@@ -1,5 +1,18 @@
 ---@meta
 
+-- `'digraph'`  `'dg'` 		boolean	(default off)
+-- 			global
+-- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
+-- 	{char2}.  See |digraphs|.
+--- @class vim.opt.digraph: vim.Option,boolean
+--- @operator add: vim.opt.digraph
+--- @operator sub: vim.opt.digraph
+--- @operator pow: vim.opt.digraph
+vim.opt.digraph = false
+vim.opt.dg = vim.opt.digraph
+--- @return boolean
+function vim.opt.digraph:get()end
+
 -- `'directory'`  `'dir'` 	string	(default "$XDG_STATE_HOME/nvim/swap//")
 -- 			global
 -- 	List of directory names for the swap file, separated with commas.
@@ -2790,7 +2803,8 @@ function vim.opt.menuitems:get()end
 -- <	If you have less than 512 Mbyte |:mkspell| may fail for some
 -- 	languages, no matter what you set `'mkspellmem'`  to.
 -- 
--- 	This option cannot be set from a |modeline| or in the |sandbox|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.mkspellmem: vim.Option,string
 --- @operator add: vim.opt.mkspellmem
 --- @operator sub: vim.opt.mkspellmem
@@ -3313,6 +3327,8 @@ function vim.opt.operatorfunc:get()end
 -- 			global
 -- 	Directories used to find packages.
 -- 	See |packages| and |packages-runtimepath|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.packpath: vim.Option,string[]
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath
@@ -3356,6 +3372,8 @@ function vim.opt.pastetoggle:get()end
 -- 			global
 -- 	Expression which is evaluated to apply a patch to a file and generate
 -- 	the resulting new version of the file.  See |diff-patchexpr|.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.patchexpr: vim.Option,string
 --- @operator add: vim.opt.patchexpr
 --- @operator sub: vim.opt.patchexpr
@@ -4575,6 +4593,8 @@ function vim.opt.shelltemp:get()end
 -- 	When `'shellxquote'`  is set to "(" then the characters listed in this
 -- 	option will be escaped with a `'^'`  character.  This makes it possible
 -- 	to execute most external commands with cmd.exe.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.shellxescape: vim.Option,string
 --- @operator add: vim.opt.shellxescape
 --- @operator sub: vim.opt.shellxescape
@@ -4603,18 +4623,4 @@ vim.opt.shellxquote = ""
 vim.opt.sxq = vim.opt.shellxquote
 --- @return string
 function vim.opt.shellxquote:get()end
-
--- `'shiftround'`  `'sr'` 	boolean	(default off)
--- 			global
--- 	Round indent to multiple of `'shiftwidth'` .  Applies to > and <
--- 	commands.  CTRL-T and CTRL-D in Insert mode always round the indent to
--- 	a multiple of `'shiftwidth'`  (this is Vi compatible).
---- @class vim.opt.shiftround: vim.Option,boolean
---- @operator add: vim.opt.shiftround
---- @operator sub: vim.opt.shiftround
---- @operator pow: vim.opt.shiftround
-vim.opt.shiftround = false
-vim.opt.sr = vim.opt.shiftround
---- @return boolean
-function vim.opt.shiftround:get()end
 

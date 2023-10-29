@@ -1,5 +1,13 @@
 ---@meta
 
+-- `'cursorline'`  `'cul'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
+-- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
+-- 	When Visual mode is active the highlighting isn't used to make it
+-- 	easier to see the selected text.
+vim.wo.cursorline = false
+vim.wo.cul = vim.wo.cursorline
 -- `'cursorlineopt'`  `'culopt'` 	string	(default "both")
 -- 			local to window
 -- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
@@ -2279,6 +2287,8 @@ vim.bo.tc = vim.bo.tagcase
 -- 	function and an example.  The value can be the name of a function, a
 -- 	|lambda| or a |Funcref|. See |option-value-function| for more
 -- 	information.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 vim.bo.tagfunc = ""
 vim.bo.tfu = vim.bo.tagfunc
 -- `'tags'`  `'tag'` 		string	(default "./tags;,tags")
@@ -3208,6 +3218,8 @@ function vim.opt.casemap:get()end
 -- 	current working directory to the |$HOME| directory like in Unix.
 -- 	When off, those commands just print the current directory name.
 -- 	On Unix this option has no effect.
+-- 	This option cannot be set from a |modeline| or in the |sandbox|, for
+-- 	security reasons.
 --- @class vim.opt.cdhome: vim.Option,boolean
 --- @operator add: vim.opt.cdhome
 --- @operator sub: vim.opt.cdhome
@@ -4334,17 +4346,4 @@ vim.opt.diffopt = "internal,filler,closeoff"
 vim.opt.dip = vim.opt.diffopt
 --- @return string[]
 function vim.opt.diffopt:get()end
-
--- `'digraph'`  `'dg'` 		boolean	(default off)
--- 			global
--- 	Enable the entering of digraphs in Insert mode with {char1} <BS>
--- 	{char2}.  See |digraphs|.
---- @class vim.opt.digraph: vim.Option,boolean
---- @operator add: vim.opt.digraph
---- @operator sub: vim.opt.digraph
---- @operator pow: vim.opt.digraph
-vim.opt.digraph = false
-vim.opt.dg = vim.opt.digraph
---- @return boolean
-function vim.opt.digraph:get()end
 
