@@ -2,6 +2,26 @@
 
 
 
+-- Decode a Base64 encoded string.
+-- 
+-- Parameters: ~
+--   • {str}  (string) Base64 encoded string
+-- 
+-- Return: ~
+--     (string) Decoded string
+--- @param str string
+function vim.base64.decode(str) end
+
+-- Encode {str} using Base64.
+-- 
+-- Parameters: ~
+--   • {str}  (string) String to encode
+-- 
+-- Return: ~
+--     (string) Encoded string
+--- @param str string
+function vim.base64.encode(str) end
+
 -- Invokes |vim-function| or |user-function| {func} with arguments {...}.
 -- See also |vim.fn|.
 -- Equivalent to: 
