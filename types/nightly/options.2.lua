@@ -605,10 +605,8 @@ function vim.opt.filetype:get()end
 -- 	default to single-byte alternatives.
 -- 
 -- 	Example: >
--- 	    :set fillchars=stl:^,stlnc:=,vert:│,fold:·,diff:-
--- <	This is similar to the default, except that these characters will also
--- 	be used when there is highlighting.
--- 
+-- 	    :set fillchars=stl:\ ,stlnc:\ ,vert:│,fold:·,diff:-
+-- <
 -- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
 -- 	single-byte and multibyte characters are supported.  But double-width
 -- 	characters are not supported.
