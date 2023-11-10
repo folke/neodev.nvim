@@ -4598,7 +4598,8 @@ function vim.fn.map(expr1, expr2) end
 -- When {dict} is omitted or zero: Return the rhs of mapping
 -- {name} in mode {mode}.  The returned String has special
 -- characters translated like in the output of the ":map" command
--- listing.
+-- listing. When {dict} is TRUE a dictionary is returned, see
+-- below. To get a list of all mappings see |maplist()|.
 -- 
 -- When there is no mapping for {name}, an empty String is
 -- returned if {dict} is FALSE, otherwise returns an empty Dict.
@@ -4645,9 +4646,16 @@ function vim.fn.map(expr1, expr2) end
 --          (|mapmode-ic|)
 --   "sid"       The script local ID, used for <sid> mappings
 --        (|<SID>|).  Negative for special contexts.
+--   "scriptversion"  The version of the script, always 1.
 --   "lnum"     The line number in "sid", zero if unknown.
 --   "nowait"   Do not wait for other, longer mappings.
 --        (|:map-<nowait>|).
+--   "abbr"     True if this is an |abbreviation|.
+--   "mode_bits" Nvim's internal binary representation of "mode".
+--        |mapset()| ignores this; only "mode" is used.
+--        See |maplist()| for usage examples. The values
+--        are from src/nvim/vim.h and may change in the
+--        future.
 -- 
 -- The dictionary can be used to restore a mapping with
 -- |mapset()|.
@@ -4701,15 +4709,61 @@ function vim.fn.maparg(name, mode, abbr, dict) end
 --- @param abbr? any
 function vim.fn.mapcheck(name, mode, abbr) end
 
+-- Returns a |List| of all mappings.  Each List item is a |Dict|,
+-- the same as what is returned by |maparg()|, see
+-- |mapping-dict|.  When {abbr} is there and it is |TRUE| use
+-- abbreviations instead of mappings.
+-- 
+-- Example to show all mappings with "MultiMatch" in rhs: 
+-- ```vim
+--   echo maplist()->filter({_, m ->
+--     \ match(get(m, 'rhs', ''), 'MultiMatch') >= 0
+--     \ })
+-- ```
+-- It can be tricky to find mappings for particular |:map-modes|.
+-- |mapping-dict|'s "mode_bits" can simplify this. For example,
+-- the mode_bits for Normal, Insert or Command-line modes are
+-- 0x19. To find all the mappings available in those modes you
+-- can do: 
+-- ```vim
+--   let saved_maps = []
+--   for m in maplist()
+--       if and(m.mode_bits, 0x19) != 0
+--     eval saved_maps->add(m)
+--       endif
+--   endfor
+--   echo saved_maps->mapnew({_, m -> m.lhs})
+-- ```
+-- The values of the mode_bits are defined in Nvim's
+-- src/nvim/vim.h file and they can be discovered at runtime
+-- using |:map-commands| and "maplist()". Example: 
+-- ```vim
+--   omap xyzzy <Nop>
+--   let op_bit = maplist()->filter(
+--       \ {_, m -> m.lhs == 'xyzzy'})[0].mode_bits
+--   ounmap xyzzy
+--   echo printf("Operator-pending mode bit: 0x%x", op_bit)
+-- ```
+--- @param abbr? any
+function vim.fn.maplist(abbr) end
+
 -- Like |map()| but instead of replacing items in {expr1} a new
 -- List or Dictionary is created and returned.  {expr1} remains
 -- unchanged.  Items can still be changed by {expr2}, if you
 -- don't want that use |deepcopy()| first.
 function vim.fn.mapnew(expr1, expr2) end
 
--- Restore a mapping from a dictionary returned by |maparg()|.
--- {mode} and {abbr} should be the same as for the call to
--- |maparg()|.
+-- Restore a mapping from a dictionary, possibly returned by
+-- |maparg()| or |maplist()|.  A buffer mapping, when dict.buffer
+-- is true, is set on the current buffer; it is up to the caller
+-- to ensure that the intended buffer is the current buffer. This
+-- feature allows copying mappings from one buffer to another.
+-- The dict.mode value may restore a single mapping that covers
+-- more than one mode, like with mode values of '!', ' ', "nox",
+-- or 'v'.
+-- 
+-- In the first form, {mode} and {abbr} should be the same as
+-- for the call to |maparg()|.
 -- {mode} is used to define the mode in which the mapping is set,
 -- not the "mode" entry in {dict}.
 -- Example for saving and restoring a mapping: 
@@ -4720,8 +4774,23 @@ function vim.fn.mapnew(expr1, expr2) end
 --   call mapset('n', 0, save_map)
 -- ```
 -- Note that if you are going to replace a map in several modes,
--- e.g. with `:map!`, you need to save the mapping for all of
--- them, since they can differ.
+-- e.g. with `:map!`, you need to save/restore the mapping for
+-- all of them, when they might differ.
+-- 
+-- In the second form, with {dict} as the only argument, mode
+-- and abbr are taken from the dict.
+-- Example: 
+-- ```vim
+--   let save_maps = maplist()->filter(
+--         \ {_, m -> m.lhs == 'K'})
+--   nnoremap K somethingelse
+--   cnoremap K somethingelse2
+--   " ...
+--   unmap K
+--   for d in save_maps
+--       call mapset(d)
+--   endfor
+-- ```
 --- @param dict table<string, any>
 function vim.fn.mapset(mode, abbr, dict) end
 
@@ -5395,82 +5464,4 @@ function vim.fn.mode(expr) end
 --- @param list any[]
 --- @param type? any
 function vim.fn.msgpackdump(list, type) end
-
--- Convert a |readfile()|-style list or a |Blob| to a list of
--- Vimscript objects.
--- Example: 
--- ```vim
---   let fname = expand('~/.config/nvim/shada/main.shada')
---   let mpack = readfile(fname, 'b')
---   let shada_objects = msgpackparse(mpack)
--- ```
--- This will read ~/.config/nvim/shada/main.shada file to
--- `shada_objects` list.
--- 
--- Limitations:
--- 1. Mapping ordering is not preserved unless messagepack
---    mapping is dumped using generic mapping
---    (|msgpack-special-map|).
--- 2. Since the parser aims to preserve all data untouched
---    (except for 1.) some strings are parsed to
---    |msgpack-special-dict| format which is not convenient to
---    use.
--- 
--- Some messagepack strings may be parsed to special
--- dictionaries. Special dictionaries are dictionaries which
--- 
--- 1. Contain exactly two keys: `_TYPE` and `_VAL`.
--- 2. `_TYPE` key is one of the types found in |v:msgpack_types|
---    variable.
--- 3. Value for `_VAL` has the following format (Key column
---    contains name of the key from |v:msgpack_types|):
--- 
--- Key  Value ~
--- nil  Zero, ignored when dumping.  Not returned by
---   |msgpackparse()| since |v:null| was introduced.
--- boolean  One or zero.  When dumping it is only checked that
---   value is a |Number|.  Not returned by |msgpackparse()|
---   since |v:true| and |v:false| were introduced.
--- integer  |List| with four numbers: sign (-1 or 1), highest two
---   bits, number with bits from 62nd to 31st, lowest 31
---   bits. I.e. to get actual number one will need to use
---   code like 
--- ```vim
---     _VAL[0] * ((_VAL[1] << 62)
---                & (_VAL[2] << 31)
---                & _VAL[3])
--- ```
---   Special dictionary with this type will appear in
---   |msgpackparse()| output under one of the following
---   circumstances:
---   1. |Number| is 32-bit and value is either above
---      INT32_MAX or below INT32_MIN.
---   2. |Number| is 64-bit and value is above INT64_MAX. It
---      cannot possibly be below INT64_MIN because msgpack
---      C parser does not support such values.
--- float  |Float|. This value cannot possibly appear in
---   |msgpackparse()| output.
--- string  |readfile()|-style list of strings. This value will
---   appear in |msgpackparse()| output if string contains
---   zero byte or if string is a mapping key and mapping is
---   being represented as special dictionary for other
---   reasons.
--- binary  |String|, or |Blob| if binary string contains zero
---   byte. This value cannot appear in |msgpackparse()|
---   output since blobs were introduced.
--- array  |List|. This value cannot appear in |msgpackparse()|
---   output.
--- 
--- map  |List| of |List|s with two items (key and value) each.
---   This value will appear in |msgpackparse()| output if
---   parsed mapping contains one of the following keys:
---   1. Any key that is not a string (including keys which
---      are binary strings).
---   2. String with NUL byte inside.
---   3. Duplicate key.
---   4. Empty key.
--- ext  |List| with two values: first is a signed integer
---   representing extension type. Second is
---   |readfile()|-style list of strings.
-function vim.fn.msgpackparse(data) end
 
