@@ -1216,7 +1216,7 @@ vim.go.fdls = vim.go.foldlevelstart
 -- 	set the `'foldclose'`  option to "all".
 vim.go.foldopen = "block,hor,mark,percent,quickfix,search,tag,undo"
 vim.go.fdo = vim.go.foldopen
--- `'fsync'`  `'fs'` 		boolean	(default off)
+-- `'fsync'`  `'fs'` 		boolean	(default on)
 -- 			global
 -- 	When on, the OS function fsync() will be called after saving a file
 -- 	(|:write|, |writefile()|, …), |swap-file|, |undo-persistence| and |shada-file|.
@@ -1232,7 +1232,7 @@ vim.go.fdo = vim.go.foldopen
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.fsync = false
+vim.go.fsync = true
 vim.go.fs = vim.go.fsync
 -- `'gdefault'`  `'gd'` 		boolean	(default off)
 -- 			global
@@ -3582,6 +3582,13 @@ vim.go.tgc = vim.go.termguicolors
 -- 	   C1	    Control characters 0x80...0x9F
 vim.go.termpastefilter = "BS,HT,ESC,DEL"
 vim.go.tpf = vim.go.termpastefilter
+-- `'termsync'` 		boolean	(default on)
+-- 			global
+-- 	If the host terminal supports it, buffer all screen updates
+-- 	made during a redraw cycle so that each screen is displayed in
+-- 	the terminal all at once. This can prevent tearing or flickering
+-- 	when the terminal updates faster than Nvim can redraw.
+vim.go.termsync = true
 vim.go.terse = false
 -- `'tildeop'`  `'top'` 		boolean	(default off)
 -- 			global
@@ -4266,15 +4273,3 @@ vim.wo.cole = vim.wo.conceallevel
 -- 	taken into account.
 vim.wo.cursorbind = false
 vim.wo.crb = vim.wo.cursorbind
--- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the screen column of the cursor with CursorColumn
--- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
--- 	slower.
--- 	If you only want the highlighting in the current window you can use
--- 	these autocommands: >
--- 		au WinLeave * set nocursorline nocursorcolumn
--- 		au WinEnter * set cursorline cursorcolumn
--- <
-vim.wo.cursorcolumn = false
-vim.wo.cuc = vim.wo.cursorcolumn

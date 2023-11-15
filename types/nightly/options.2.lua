@@ -1013,7 +1013,7 @@ vim.opt.fp = vim.opt.formatprg
 --- @return string
 function vim.opt.formatprg:get()end
 
--- `'fsync'`  `'fs'` 		boolean	(default off)
+-- `'fsync'`  `'fs'` 		boolean	(default on)
 -- 			global
 -- 	When on, the OS function fsync() will be called after saving a file
 -- 	(|:write|, |writefile()|, …), |swap-file|, |undo-persistence| and |shada-file|.
@@ -1033,7 +1033,7 @@ function vim.opt.formatprg:get()end
 --- @operator add: vim.opt.fsync
 --- @operator sub: vim.opt.fsync
 --- @operator pow: vim.opt.fsync
-vim.opt.fsync = false
+vim.opt.fsync = true
 vim.opt.fs = vim.opt.fsync
 --- @return boolean
 function vim.opt.fsync:get()end

@@ -1471,6 +1471,20 @@ vim.opt.tpf = vim.opt.termpastefilter
 --- @return string[]
 function vim.opt.termpastefilter:get()end
 
+-- `'termsync'` 		boolean	(default on)
+-- 			global
+-- 	If the host terminal supports it, buffer all screen updates
+-- 	made during a redraw cycle so that each screen is displayed in
+-- 	the terminal all at once. This can prevent tearing or flickering
+-- 	when the terminal updates faster than Nvim can redraw.
+--- @class vim.opt.termsync: vim.Option,boolean
+--- @operator add: vim.opt.termsync
+--- @operator sub: vim.opt.termsync
+--- @operator pow: vim.opt.termsync
+vim.opt.termsync = true
+--- @return boolean
+function vim.opt.termsync:get()end
+
 --- @class vim.opt.terse: vim.Option,boolean
 --- @operator add: vim.opt.terse
 --- @operator sub: vim.opt.terse

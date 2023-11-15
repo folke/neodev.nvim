@@ -1,5 +1,17 @@
 ---@meta
 
+-- `'cursorcolumn'`  `'cuc'` 	boolean	(default off)
+-- 			local to window
+-- 	Highlight the screen column of the cursor with CursorColumn
+-- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
+-- 	slower.
+-- 	If you only want the highlighting in the current window you can use
+-- 	these autocommands: >
+-- 		au WinLeave * set nocursorline nocursorcolumn
+-- 		au WinEnter * set cursorline cursorcolumn
+-- <
+vim.wo.cursorcolumn = false
+vim.wo.cuc = vim.wo.cursorcolumn
 -- `'cursorline'`  `'cul'` 	boolean	(default off)
 -- 			local to window
 -- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
