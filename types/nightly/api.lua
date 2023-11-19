@@ -412,8 +412,8 @@ function vim.api.nvim_buf_get_commands(buffer, opts) end
 --- @return any[]
 function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 
--- Gets |extmarks| in "traversal order" from a |charwise| region defined by
--- buffer positions (inclusive, 0-indexed |api-indexing|).
+-- Gets |extmarks| (including |signs|) in "traversal order" from a |charwise|
+-- region defined by buffer positions (inclusive, 0-indexed |api-indexing|).
 -- 
 -- Region can be given as (row,col) tuples, or valid extmark ids (whose
 -- positions define the bounds). 0 and -1 are understood as (0,0) and (-1,-1)
