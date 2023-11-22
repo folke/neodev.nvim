@@ -414,124 +414,124 @@ function vim.fn.prevnonblank(lnum) end
 -- used to indicate this. For instance: 
 -- ```vim
 -- 
---   #, c-format
---   msgid "%s returning %s"
---   msgstr "waarde %2$s komt terug van %1$s"
+--     #, c-format
+--     msgid "%s returning %s"
+--     msgstr "waarde %2$s komt terug van %1$s"
 -- ```
--- In this example, the sentence has its 2 string arguments reversed
--- in the output. 
+-- In this example, the sentence has its 2 string arguments
+-- reversed in the output. 
 -- ```vim
 -- 
---   echo printf(
---     "In The Netherlands, vim's creator's name is: %1$s %2$s",
---     "Bram", "Moolenaar")
+--     echo printf(
+--   "In The Netherlands, vim's creator's name is: %1$s %2$s",
+--   "Bram", "Moolenaar")
 -- ```
---   In The Netherlands, vim's creator's name is: Bram Moolenaar >vim
+--     In The Netherlands, vim's creator's name is: Bram Moolenaar >vim
 -- 
---   echo printf(
---     "In Belgium, vim's creator's name is: %2$s %1$s",
---     "Bram", "Moolenaar")
--- <      In Belgium, vim's creator's name is: Moolenaar Bram
+--     echo printf(
+--   "In Belgium, vim's creator's name is: %2$s %1$s",
+--   "Bram", "Moolenaar")
+-- <        In Belgium, vim's creator's name is: Moolenaar Bram
 -- 
 -- Width (and precision) can be specified using the '*' specifier.
 -- In this case, you must specify the field width position in the
 -- argument list. 
 -- ```vim
 -- 
---   echo printf("%1$3$d", 1, 2, 3)
+--     echo printf("%1$3$d", 1, 2, 3)
 -- ```
---   001 >vim
---   echo printf("%2$1$d", 1, 2, 3)
--- <        2 
+--     001 >vim
+--     echo printf("%2$1$d", 1, 2, 3)
+-- <          2 
 -- ```vim
---   echo printf("%3$2$d", 1, 2, 3)
+--     echo printf("%3$2$d", 1, 2, 3)
 -- ```
---   03 >vim
---   echo printf("%1$3$g", 1.4142, 2, 3)
--- <      1.414
+--     03 >vim
+--     echo printf("%1$3$g", 1.4142, 2, 3)
+-- <        1.414
 -- 
 -- You can mix specifying the width and/or precision directly
 -- and via positional arguments: 
 -- ```vim
 -- 
---   echo printf("%1$4.*2$f", 1.4142135, 6)
+--     echo printf("%1$4.*2$f", 1.4142135, 6)
 -- ```
---   1.414214 >vim
---   echo printf("%1$*2$.4f", 1.4142135, 6)
--- <      1.4142 
+--     1.414214 >vim
+--     echo printf("%1$*2$.4f", 1.4142135, 6)
+-- <        1.4142 
 -- ```vim
---   echo printf("%1$3$f", 1.4142135, 6, 2)
+--     echo printf("%1$3$f", 1.4142135, 6, 2)
 -- ```
---     1.41
+--       1.41
 -- 
 -- 
 -- You cannot mix positional and non-positional arguments: 
 -- ```vim
---   echo printf("%s%1$s", "One", "Two")
+--     echo printf("%s%1$s", "One", "Two")
 -- ```
---   E1500: Cannot mix positional and non-positional
---   arguments: %s%1$s
+--     E1500: Cannot mix positional and non-positional arguments:
+--     %s%1$s
 -- 
 -- 
 -- You cannot skip a positional argument in a format string: 
 -- ```vim
---   echo printf("%3$s%1$s", "One", "Two", "Three")
+--     echo printf("%3$s%1$s", "One", "Two", "Three")
 -- ```
---   E1501: format argument 2 unused in $-style
---   format: %3$s%1$s
+--     E1501: format argument 2 unused in $-style format:
+--     %3$s%1$s
 -- 
 -- 
 -- You can re-use a [field-width] (or [precision]) argument: 
 -- ```vim
---   echo printf("%1$d at width %2$d is: %01$*2$d", 1, 2)
+--     echo printf("%1$d at width %2$d is: %01$*2$d", 1, 2)
 -- ```
---   1 at width 2 is: 01
+--     1 at width 2 is: 01
 -- 
 -- However, you can't use it as a different type: 
 -- ```vim
---   echo printf("%1$d at width %2$ld is: %01$*2$d", 1, 2)
+--     echo printf("%1$d at width %2$ld is: %01$*2$d", 1, 2)
 -- ```
---   E1502: Positional argument 2 used as field
---   width reused as different type: long int/int
+--     E1502: Positional argument 2 used as field width reused as
+--     different type: long int/int
 -- 
 -- 
 -- When a positional argument is used, but not the correct number
 -- or arguments is given, an error is raised: 
 -- ```vim
---   echo printf("%1$d at width %2$d is: %01$3$d", 1, 2)
+--     echo printf("%1$d at width %2$d is: %01$3$d", 1, 2)
 -- ```
---   E1503: Positional argument 3 out of bounds:
---   %1$d at width %2$d is: %01$3$d
+--     E1503: Positional argument 3 out of bounds: %1$d at width
+--     %2$d is: %01$3$d
 -- 
 -- Only the first error is reported: 
 -- ```vim
---   echo printf("%01$3$d %4$d", 1, 2)
+--     echo printf("%01$3$d %4$d", 1, 2)
 -- ```
---   E1503: Positional argument 3 out of bounds:
---   %01$3$d %4$d
+--     E1503: Positional argument 3 out of bounds: %01$3$d
+--     %4$d
 -- 
 -- 
 -- A positional argument can be used more than once: 
 -- ```vim
---   echo printf("%1$s %2$s %1$s", "One", "Two")
+--     echo printf("%1$s %2$s %1$s", "One", "Two")
 -- ```
---   One Two One
+--     One Two One
 -- 
 -- However, you can't use a different type the second time: 
 -- ```vim
---   echo printf("%1$s %2$s %1$d", "One", "Two")
+--     echo printf("%1$s %2$s %1$d", "One", "Two")
 -- ```
---   E1504: Positional argument 1 type used
---   inconsistently: int/string
+--     E1504: Positional argument 1 type used inconsistently:
+--     int/string
 -- 
 -- 
 -- Various other errors that lead to a format string being
 -- wrongly formatted lead to: 
 -- ```vim
---   echo printf("%1$d at width %2$d is: %01$*2$.3$d", 1, 2)
+--     echo printf("%1$d at width %2$d is: %01$*2$.3$d", 1, 2)
 -- ```
---   E1505: Invalid format specifier:
---   %1$d at width %2$d is: %01$*2$.3$d
+--     E1505: Invalid format specifier: %1$d at width %2$d is:
+--     %01$*2$.3$d
 -- 
 -- 
 -- This internal error indicates that the logic to parse a
