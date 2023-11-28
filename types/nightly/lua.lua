@@ -414,6 +414,8 @@ function vim.ui_detach(ns) end
 -- milliseconds (default 200). Nvim still processes other events during this
 -- time.
 -- 
+-- Cannot be called while in an |api-fast| event.
+-- 
 -- Examples: 
 -- ```lua
 --     ---
@@ -445,8 +447,7 @@ function vim.ui_detach(ns) end
 --   • {interval}   (integer|nil) (Approximate) number of milliseconds to
 --                  wait between polls
 --   • {fast_only}  (boolean|nil) If true, only |api-fast| events will be
---                  processed. If called from while in an |api-fast| event,
---                  will automatically be set to `true`.
+--                  processed.
 -- 
 -- Return: ~
 --     boolean, nil|-1|-2
