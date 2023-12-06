@@ -224,7 +224,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --   • |api-buffer-updates-lua|
 --- @param buffer buffer
 --- @param send_buffer boolean
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return boolean
 function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 
@@ -367,7 +367,7 @@ function vim.api.nvim_buf_del_var(buffer, name) end
 --               • force: Force deletion and ignore unsaved changes.
 --               • unload: Unloaded only, do not delete. See |:bunload|
 --- @param buffer buffer
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 function vim.api.nvim_buf_delete(buffer, opts) end
 
 -- Gets a changed tick of a buffer
@@ -410,7 +410,7 @@ function vim.api.nvim_buf_get_commands(buffer, opts) end
 --- @param buffer buffer
 --- @param ns_id number
 --- @param id number
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return any[]
 function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 
@@ -594,7 +594,7 @@ function vim.api.nvim_buf_get_offset(buffer, index) end
 --- @param start_col number
 --- @param end_row number
 --- @param end_col number
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return string[]
 function vim.api.nvim_buf_get_text(buffer, start_row, start_col, end_row, end_col, opts) end
 
@@ -854,7 +854,7 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 --- @param name string
 --- @param line number
 --- @param col number
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return boolean
 function vim.api.nvim_buf_set_mark(buffer, name, line, col, opts) end
 
@@ -1754,7 +1754,7 @@ function vim.api.nvim_get_keymap(mode) end
 --   • |nvim_buf_set_mark()|
 --   • |nvim_del_mark()|
 --- @param name string
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return any[]
 function vim.api.nvim_get_mark(name, opts) end
 
@@ -2064,7 +2064,7 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 -- Return: ~
 --     Channel id, or 0 on error
 --- @param buffer buffer
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return number
 function vim.api.nvim_open_term(buffer, opts) end
 
@@ -2303,7 +2303,7 @@ function vim.api.nvim_out_write(str) end
 --         • "topleft": |:topleft|.
 --         • "botright": |:botright|.
 --- @param str string
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 --- @return table<string, any>
 function vim.api.nvim_parse_cmd(str, opts) end
 
@@ -2483,7 +2483,7 @@ function vim.api.nvim_replace_termcodes(str, from_part, do_lt, special) end
 --- @param item number
 --- @param insert boolean
 --- @param finish boolean
---- @param opts table<string, any>
+--- @param opts? table<string, any>
 function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 
 -- Sets the current buffer.
