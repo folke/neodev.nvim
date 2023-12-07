@@ -3558,6 +3558,10 @@ vim.go.tenc = vim.go.termencoding
 -- 	Enables 24-bit RGB color in the |TUI|.  Uses "gui" |:highlight|
 -- 	attributes instead of "cterm" attributes. |guifg|
 -- 	Requires an ISO-8613-3 compatible terminal.
+-- 
+-- 	Nvim will automatically attempt to determine if the host terminal
+-- 	supports 24-bit color and will enable this option if it does
+-- 	(unless explicitly disabled by the user).
 vim.go.termguicolors = false
 vim.go.tgc = vim.go.termguicolors
 -- `'termpastefilter'`  `'tpf'` 	string	(default "BS,HT,ESC,DEL")

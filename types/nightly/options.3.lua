@@ -1427,6 +1427,10 @@ function vim.opt.termencoding:get()end
 -- 	Enables 24-bit RGB color in the |TUI|.  Uses "gui" |:highlight|
 -- 	attributes instead of "cterm" attributes. |guifg|
 -- 	Requires an ISO-8613-3 compatible terminal.
+-- 
+-- 	Nvim will automatically attempt to determine if the host terminal
+-- 	supports 24-bit color and will enable this option if it does
+-- 	(unless explicitly disabled by the user).
 --- @class vim.opt.termguicolors: vim.Option,boolean
 --- @operator add: vim.opt.termguicolors
 --- @operator sub: vim.opt.termguicolors

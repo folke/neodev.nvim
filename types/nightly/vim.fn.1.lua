@@ -72,7 +72,6 @@
 --      are binary strings).
 --   2. String with NUL byte inside.
 --   3. Duplicate key.
---   4. Empty key.
 -- ext  |List| with two values: first is a signed integer
 --   representing extension type. Second is
 --   |readfile()|-style list of strings.
