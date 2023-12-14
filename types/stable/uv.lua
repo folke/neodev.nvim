@@ -777,11 +777,12 @@ local uv_prepare_t = {}
 ---Creates and initializes a new `uv_prepare_t`.
 ---Returns the Lua userdata wrapping it.
 ---
----@return uv_prepare_t|nil, string? err_name, string? err_msg
+---@return uv_prepare_t
 ---@nodiscard
 function uv.new_prepare() end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- confirmed to never return error see libuv/unix/loop-watcher
 
 ---
 ---Start the handle with the given callback.
@@ -819,11 +820,12 @@ local uv_check_t = {}
 ---
 ---Creates and initializes a new `uv_check_t`. Returns the Lua userdata wrapping it.
 ---
----@return uv_check_t|nil, string? err_name, string? err_msg
+---@return uv_check_t
 ---@nodiscard
 function uv.new_check() end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- confirmed to never error see libuv/unix/loop-watcher
 
 ---
 ---Start the handle with the given callback.
@@ -869,11 +871,12 @@ local uv_idle_t = {}
 ---
 ---Creates and initializes a new `uv_idle_t`. Returns the Lua userdata wrapping it.
 ---
----@return uv_idle_t|nil, string? err_name, string? err_msg
+---@return uv_idle_t
 ---@nodiscard
 function uv.new_idle() end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- confirmed to never error see libuv/unix/loop-watcher
 
 ---
 ---Start the handle with the given callback.
@@ -925,6 +928,9 @@ local uv_async_t = {}
 function uv.new_async(callback) end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- seems like this can technically fail when loop.async_io_watcher.fd is -1
+-- but not sure if that is ever practically true for luv
+-- TODO: Luv code suggests that a callback is required, the docs seem to be wrong.
 
 ---
 ---Wakeup the event loop and call the async handle's callback.
@@ -1140,6 +1146,8 @@ local uv_signal_t = {}
 function uv.new_signal() end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- see uv_signal_init and uv__make_pipe, it will only fail if pipe2 fails
+-- I belive it is very unlikely it would ever error for this call, but it is theortically possible 
 
 ---
 ---Start the handle with the given callback, watching for the given signal.
@@ -1906,11 +1914,12 @@ local uv_pipe_t = {}
 ---handle passing between processes.
 ---
 ---@param ipc boolean|nil
----@return uv_pipe_t|nil, string? err_name, string? err_msg
+---@return uv_pipe_t
 ---@nodiscard
 function uv.new_pipe(ipc) end
 
 -- TODO: make sure the above method can indeed return nil + error message.
+-- confirmed to never return error.
 
 ---
 ---Open an existing file descriptor or `uv_handle_t` as a pipe.
@@ -2419,11 +2428,12 @@ local uv_fs_event_t = {}
 ---Creates and initializes a new `uv_fs_event_t`.
 ---Returns the Lua userdata wrapping it.
 ---
----@return uv_fs_event_t|nil, string? err_name, string? err_msg
+---@return uv_fs_event_t
 ---@nodiscard
 function uv.new_fs_event() end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- confirmed to never return error see libuv/unix/linux-inotify (kqueue/sunos etc)
 
 ---
 ---Start the handle with the given callback, which will watch the specified path
@@ -2472,6 +2482,7 @@ local uv_fs_poll_t = {}
 function uv.new_fs_poll() end
 
 -- TODO: make sure that the above methof can indeed return nil + error.
+-- confirmed to never return error see libuv/fs-poll#uv_fs_poll_init
 
 ---
 ---Check the file at `path` for changes every `interval` milliseconds.
@@ -3443,6 +3454,7 @@ local luv_work_ctx_t = {}
 function uv.new_work(work_callback, after_work_callback) end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- confirmed to never return error see luv/work.c#luv_new_work
 
 ---
 ---Queues a work request which will run `work_callback` in a new Lua state in a
@@ -3520,15 +3532,16 @@ local luv_thread_t = {}
 ---@param options? {stack_size?: integer}
 ---@param entry fun(...: T)|string
 ---@vararg T # varargs passed to `entry`
----@return luv_thread_t?, string? err_name, string? err_msg
+---@return luv_thread_t
 function uv.new_thread(options, entry, ...) end
 ---@generic T: uv.aliases.threadargs
 ---@param entry fun(...: T)|string
 ---@vararg T # varargs passed to `entry`
----@return luv_thread_t?, string? err_name, string? err_msg
+---@return luv_thread_t
 function uv.new_thread(entry, ...) end
 
 -- TODO: make sure that the above method can indeed return nil + error.
+-- confirmed to not return error see luv/thread.c#luv_new_thread
 
 ---
 ---Returns a boolean indicating whether two threads are the same. This function is
