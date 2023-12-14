@@ -2477,7 +2477,7 @@ local uv_fs_poll_t = {}
 ---Creates and initializes a new `uv_fs_poll_t`.
 ---Returns the Lua userdata wrapping it.
 ---
----@return uv_fs_poll_t|nil, string? err_name, string? err_msg
+---@return uv_fs_poll_t
 ---@nodiscard
 function uv.new_fs_poll() end
 
@@ -3532,16 +3532,16 @@ local luv_thread_t = {}
 ---@param options? {stack_size?: integer}
 ---@param entry fun(...: T)|string
 ---@vararg T # varargs passed to `entry`
----@return luv_thread_t
+---@return luv_thread_t?, string? err_name, string? err_msg
 function uv.new_thread(options, entry, ...) end
 ---@generic T: uv.aliases.threadargs
 ---@param entry fun(...: T)|string
 ---@vararg T # varargs passed to `entry`
----@return luv_thread_t
+---@return luv_thread_t?, string? err_name, string? err_msg
 function uv.new_thread(entry, ...) end
 
 -- TODO: make sure that the above method can indeed return nil + error.
--- confirmed to not return error see luv/thread.c#luv_new_thread
+-- new_thread may fail if pthread fails.
 
 ---
 ---Returns a boolean indicating whether two threads are the same. This function is
