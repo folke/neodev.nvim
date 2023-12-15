@@ -2428,12 +2428,12 @@ local uv_fs_event_t = {}
 ---Creates and initializes a new `uv_fs_event_t`.
 ---Returns the Lua userdata wrapping it.
 ---
----@return uv_fs_event_t
+---@return uv_fs_event_t|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.new_fs_event() end
 
 -- TODO: make sure that the above method can indeed return nil + error.
--- confirmed to never return error see libuv/unix/linux-inotify (kqueue/sunos etc)
+-- can fail in case the feature is not supported, see unix/no-fsevents.c
 
 ---
 ---Start the handle with the given callback, which will watch the specified path
