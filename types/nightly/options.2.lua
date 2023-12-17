@@ -1050,9 +1050,9 @@ function vim.opt.fsync:get()end
 -- 		:s///g		  subst. one	  subst. all
 -- 		:s///gg		  subst. all	  subst. one
 -- 
--- 	DEPRECATED: Setting this option may break plugins that are not aware
--- 	of this option.  Also, many users get confused that adding the /g flag
--- 	has the opposite effect of that it normally does.
+-- 	NOTE: Setting this option may break plugins that rely on the default
+-- 	behavior of the `'g'`  flag. This will also make the `'g'`  flag have the
+-- 	opposite effect of that documented in |:s_g|.
 --- @class vim.opt.gdefault: vim.Option,boolean
 --- @operator add: vim.opt.gdefault
 --- @operator sub: vim.opt.gdefault

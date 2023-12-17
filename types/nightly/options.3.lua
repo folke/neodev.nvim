@@ -1992,24 +1992,6 @@ vim.opt.vop = vim.opt.viewoptions
 --- @return string[]
 function vim.opt.viewoptions:get()end
 
---- @class vim.opt.viminfo: vim.Option,string[]
---- @operator add: vim.opt.viminfo
---- @operator sub: vim.opt.viminfo
---- @operator pow: vim.opt.viminfo
-vim.opt.viminfo = ""
-vim.opt.vi = vim.opt.viminfo
---- @return string[]
-function vim.opt.viminfo:get()end
-
---- @class vim.opt.viminfofile: vim.Option,string[]
---- @operator add: vim.opt.viminfofile
---- @operator sub: vim.opt.viminfofile
---- @operator pow: vim.opt.viminfofile
-vim.opt.viminfofile = ""
-vim.opt.vif = vim.opt.viminfofile
---- @return string[]
-function vim.opt.viminfofile:get()end
-
 -- `'virtualedit'`  `'ve'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	A comma-separated list of these words:

@@ -2657,7 +2657,7 @@ function vim.opt.autowriteall:get()end
 -- 	See |:hi-normal| if you want to set the background color explicitly.
 -- 
 -- 	When a color scheme is loaded (the "g:colors_name" variable is set)
--- 	setting `'background'`  will cause the color scheme to be reloaded.  If
+-- 	changing `'background'`  will cause the color scheme to be reloaded.  If
 -- 	the color scheme adjusts to the value of `'background'`  this will work.
 -- 	However, if the color scheme sets `'background'`  itself the effect may
 -- 	be undone.  First delete the "g:colors_name" variable when needed.
@@ -2667,13 +2667,9 @@ function vim.opt.autowriteall:get()end
 -- 		:if $TERM ==# "xterm"
 -- 		:  set background=dark
 -- 		:endif
--- <	When this option is set, the default settings for the highlight groups
+-- <	When this option is changed, the default settings for the highlight groups
 -- 	will change.  To use other settings, place ":highlight" commands AFTER
 -- 	the setting of the `'background'`  option.
--- 	This option is also used in the "$VIMRUNTIME/syntax/syntax.vim" file
--- 	to select the colors for syntax highlighting.  After changing this
--- 	option, you must load syntax.vim again to see the result.  This can be
--- 	done with ":syntax on".
 --- @class vim.opt.background: vim.Option,string
 --- @operator add: vim.opt.background
 --- @operator sub: vim.opt.background
@@ -3663,6 +3659,10 @@ function vim.opt.completefunc:get()end
 -- 	  noselect  Do not select a match in the menu, force the user to
 -- 		    select one from the menu. Only works in combination with
 -- 		    "menu" or "menuone".
+-- 
+-- 	   popup    Show extra information about the currently selected
+-- 		    completion in a popup window.  Only works in combination
+-- 		    with "menu" or "menuone".  Overrides "preview".
 --- @class vim.opt.completeopt: vim.Option,string[]
 --- @operator add: vim.opt.completeopt
 --- @operator sub: vim.opt.completeopt
