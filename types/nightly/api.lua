@@ -1959,7 +1959,7 @@ function vim.api.nvim_input(keys) end
 -- 
 -- Parameters: ~
 --   • {button}    Mouse button: one of "left", "right", "middle", "wheel",
---                 "move".
+--                 "move", "x1", "x2".
 --   • {action}    For ordinary buttons, one of "press", "drag", "release".
 --                 For the wheel, one of "up", "down", "left", "right".
 --                 Ignored for "move".
