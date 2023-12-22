@@ -2041,6 +2041,7 @@ vim.go.mco = vim.go.maxcombine
 -- 	Increasing this limit above 200 also changes the maximum for Ex
 -- 	command recursion, see |E169|.
 -- 	See also |:function|.
+-- 	Also used for maximum depth of callback functions.
 vim.go.maxfuncdepth = 100
 vim.go.mfd = vim.go.maxfuncdepth
 -- `'maxmapdepth'`  `'mmd'` 	number	(default 1000)
