@@ -6,7 +6,7 @@
 -- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
 -- 	slower.
 -- 	If you only want the highlighting in the current window you can use
--- 	these autocommands: >
+-- 	these autocommands: >vim
 -- 		au WinLeave * set nocursorline nocursorcolumn
 -- 		au WinEnter * set cursorline cursorcolumn
 -- <
@@ -80,8 +80,8 @@ vim.wo.diff = false
 -- 	"vert", "vertleft", "vertright", "verthoriz", "foldsep" and "fold"
 -- 	default to single-byte alternatives.
 -- 
--- 	Example: >
--- 	    :set fillchars=stl:\ ,stlnc:\ ,vert:│,fold:·,diff:-
+-- 	Example: >vim
+-- 	    set fillchars=stl:\ ,stlnc:\ ,vert:│,fold:·,diff:-
 -- <
 -- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
 -- 	single-byte and multibyte characters are supported.  But double-width
@@ -234,8 +234,8 @@ vim.wo.lbr = vim.wo.linebreak
 -- 
 -- 	The cursor is displayed at the start of the space a Tab character
 -- 	occupies, not at the end as usual in Normal mode.  To get this cursor
--- 	position while displaying Tabs with spaces, use: >
--- 		:set list lcs=tab:\ \
+-- 	position while displaying Tabs with spaces, use: >vim
+-- 		set list lcs=tab:\ \
 -- <
 -- 	Note that list mode will also affect formatting (set with `'textwidth'` 
 -- 	or `'wrapmargin'` ) when `'cpoptions'`  includes `'L'` .  See `'listchars'`  for
@@ -288,8 +288,8 @@ vim.wo.list = false
 -- 	  lead:c	Character to show for leading spaces.  When omitted,
 -- 			leading spaces are blank.  Overrides the "space" and
 -- 			"multispace" settings for leading spaces.  You can
--- 			combine it with "tab:", for example: >
--- 				:set listchars+=tab:>-,lead:.
+-- 			combine it with "tab:", for example: >vim
+-- 				set listchars+=tab:>-,lead:.
 -- <
 -- 
 -- 	  leadmultispace:c...
@@ -325,17 +325,17 @@ vim.wo.list = false
 -- 	The characters `':'`  and `','`  should not be used.  UTF-8 characters can
 -- 	be used.  All characters must be single width.
 -- 
--- 	Each character can be specified as hex: >
+-- 	Each character can be specified as hex: >vim
 -- 		set listchars=eol:\\x24
 -- 		set listchars=eol:\\u21b5
 -- 		set listchars=eol:\\U000021b5
 -- <	Note that a double backslash is used.  The number of hex characters
 -- 	must be exactly 2 for \\x, 4 for \\u and 8 for \\U.
 -- 
--- 	Examples: >
--- 	    :set lcs=tab:>-,trail:-
--- 	    :set lcs=tab:>-,eol:<,nbsp:%
--- 	    :set lcs=extends:>,precedes:<
+-- 	Examples: >vim
+-- 	    set lcs=tab:>-,trail:-
+-- 	    set lcs=tab:>-,eol:<,nbsp:%
+-- 	    set lcs=extends:>,precedes:<
 -- <	|hl-NonText| highlighting will be used for "eol", "extends" and
 -- 	"precedes". |hl-Whitespace| for "nbsp", "space", "tab", "multispace",
 -- 	"lead" and "trail".
@@ -464,7 +464,7 @@ vim.wo.scb = vim.wo.scrollbind
 -- 	in the middle of the window (except at the start or end of the file or
 -- 	when long lines wrap).
 -- 	After using the local value, go back the global value with one of
--- 	these two: >
+-- 	these two: >vim
 -- 		setlocal scrolloff<
 -- 		setlocal scrolloff=-1
 -- <	For scrolling horizontally see `'sidescrolloff'` .
@@ -473,9 +473,9 @@ vim.wo.so = vim.wo.scrolloff
 -- `'showbreak'`  `'sbr'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	String to put at the start of lines that have been wrapped.  Useful
--- 	values are "> " or "+++ ": >
--- 		:let &showbreak = "> "
--- 		:let &showbreak = '+++ '
+-- 	values are "> " or "+++ ": >vim
+-- 		let &showbreak = "> "
+-- 		let &showbreak = '+++ '
 -- <	Only printable single-cell characters are allowed, excluding <Tab> and
 -- 	comma (in a future version the comma might be used to separate the
 -- 	part that is shown at the end and at the start of a line).
@@ -484,8 +484,8 @@ vim.wo.so = vim.wo.scrolloff
 -- 	If you want the `'showbreak'`  to appear in between line numbers, add the
 -- 	"n" flag to `'cpoptions'` .
 -- 	A window-local value overrules a global value.  If the global value is
--- 	set and you want no value in the current window use NONE: >
--- 		:setlocal showbreak=NONE
+-- 	set and you want no value in the current window use NONE: >vim
+-- 		setlocal showbreak=NONE
 -- <
 vim.wo.showbreak = ""
 vim.wo.sbr = vim.wo.showbreak
@@ -500,16 +500,16 @@ vim.wo.sbr = vim.wo.showbreak
 -- 	horizontally centered in the window, as long as one does not come too
 -- 	close to the beginning of the line.
 -- 	After using the local value, go back the global value with one of
--- 	these two: >
+-- 	these two: >vim
 -- 		setlocal sidescrolloff<
 -- 		setlocal sidescrolloff=-1
 -- <
 -- 	Example: Try this together with `'sidescroll'`  and `'listchars'`  as
 -- 		 in the following example to never allow the cursor to move
--- 		 onto the "extends" character: >
+-- 		 onto the "extends" character: >vim
 -- 
--- 		 :set nowrap sidescroll=1 listchars=extends:>,precedes:<
--- 		 :set sidescrolloff=1
+-- 		 set nowrap sidescroll=1 listchars=extends:>,precedes:<
+-- 		 set sidescrolloff=1
 -- <
 vim.wo.sidescrolloff = 0
 vim.wo.siso = vim.wo.sidescrolloff
@@ -582,21 +582,21 @@ vim.wo.spell = false
 -- 
 -- 	Examples: >vim
 -- 		" Relative number with bar separator and click handlers:
--- 		:set statuscolumn=%@SignCb@%s%=%T%@NumCb@%r│%T
+-- 		set statuscolumn=%@SignCb@%s%=%T%@NumCb@%r│%T
 -- 
 -- 		" Right aligned relative cursor line number:
--- 		:let &stc='%=%{v:relnum?v:relnum:v:lnum} '
+-- 		let &stc='%=%{v:relnum?v:relnum:v:lnum} '
 -- 
 -- 		" Line numbers in hexadecimal for non wrapped part of lines:
--- 		:let &stc='%=%{v:virtnum>0?"":printf("%x",v:lnum)} '
+-- 		let &stc='%=%{v:virtnum>0?"":printf("%x",v:lnum)} '
 -- 
 -- 		" Human readable line numbers with thousands separator:
--- 		:let &stc=`'%{substitute(v:lnum,"\\d\\zs\\ze\\'` 
+-- 		let &stc=`'%{substitute(v:lnum,"\\d\\zs\\ze\\'` 
 -- 			   . `'%(\\d\\d\\d\\)\\+$",",","g")}'` 
 -- 
 -- 		" Both relative and absolute line numbers with different
 -- 		" highlighting for odd and even relative numbers:
--- 		:let &stc=`'%#NonText#%{&nu?v:lnum:""}'`  .
+-- 		let &stc=`'%#NonText#%{&nu?v:lnum:""}'`  .
 -- 		 '%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}' .
 -- 		 '%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}'
 -- 
@@ -616,8 +616,8 @@ vim.wo.stc = vim.wo.statuscolumn
 -- 	be given as "%%".
 -- 
 -- 	When the option starts with "%!" then it is used as an expression,
--- 	evaluated and the result is used as the option value.  Example: >
--- 		:set statusline=%!MyStatusLine()
+-- 	evaluated and the result is used as the option value.  Example: >vim
+-- 		set statusline=%!MyStatusLine()
 -- <	The  variable will be set to the |window-ID| of the
 -- 	window that the status line belongs to.
 -- 	The result can contain %{} items that will be evaluated too.
@@ -698,7 +698,7 @@ vim.wo.stc = vim.wo.statuscolumn
 -- 	      return value of expr contains "%" items they will get expanded.
 -- 	      The expression can contain the "}" character, the end of
 -- 	      expression is denoted by "%}".
--- 	      For example: >
+-- 	      For example: >vim
 -- 		func! Stl_filename() abort
 -- 		    return "%t"
 -- 		endfunc
@@ -765,8 +765,8 @@ vim.wo.stc = vim.wo.statuscolumn
 -- 	When all items in a group becomes an empty string (i.e. flags that are
 -- 	not set) and a minwid is not set for the group, the whole group will
 -- 	become empty.  This will make a group like the following disappear
--- 	completely from the statusline when none of the flags are set. >
--- 		:set statusline=...%(\ [%M%R%H]%)...
+-- 	completely from the statusline when none of the flags are set. >vim
+-- 		set statusline=...%(\ [%M%R%H]%)...
 -- <	Beware that an expression is evaluated each and every time the status
 -- 	line is displayed.
 -- 
@@ -797,23 +797,23 @@ vim.wo.stc = vim.wo.statuscolumn
 -- 	edit your vimrc or whatever with "vim --clean" to get it right.
 -- 
 -- 	Examples:
--- 	Emulate standard status line with `'ruler'`  set >
--- 	  :set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
--- <	Similar, but add ASCII value of char under the cursor (like "ga") >
--- 	  :set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
--- <	Display byte count and byte value, modified flag in red. >
--- 	  :set statusline=%<%f%=\ [%1%n%R%H]\ %-19(%3l,%02c%03V%)%O`'%02b'` 
--- 	  :hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
--- <	Display a ,GZ flag if a compressed file is loaded >
--- 	  :set statusline=...%r%{VarExists(`'b:gzflag'` ,'\ [GZ]')}%h...
--- <	In the |:autocmd|'s: >
--- 	  :let b:gzflag = 1
--- <	And: >
--- 	  :unlet b:gzflag
--- <	And define this function: >
--- 	  :function VarExists(var, val)
--- 	  :    if exists(a:var) | return a:val | else | return `''`  | endif
--- 	  :endfunction
+-- 	Emulate standard status line with `'ruler'`  set >vim
+-- 	  set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+-- <	Similar, but add ASCII value of char under the cursor (like "ga") >vim
+-- 	  set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
+-- <	Display byte count and byte value, modified flag in red. >vim
+-- 	  set statusline=%<%f%=\ [%1%n%R%H]\ %-19(%3l,%02c%03V%)%O`'%02b'` 
+-- 	  hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
+-- <	Display a ,GZ flag if a compressed file is loaded >vim
+-- 	  set statusline=...%r%{VarExists(`'b:gzflag'` ,'\ [GZ]')}%h...
+-- <	In the |:autocmd|'s: >vim
+-- 	  let b:gzflag = 1
+-- <	And: >vim
+-- 	  unlet b:gzflag
+-- <	And define this function: >vim
+-- 	  function VarExists(var, val)
+-- 	      if exists(a:var) | return a:val | else | return `''`  | endif
+-- 	  endfunction
 -- <
 vim.wo.statusline = ""
 vim.wo.stl = vim.wo.statusline
@@ -904,7 +904,7 @@ vim.wo.wfw = vim.wo.winfixwidth
 -- 	the popupmenu are determined by the current window.  Highlights in the
 -- 	message area cannot be overridden.
 -- 
--- 	Example: show a different color for non-current windows: >
+-- 	Example: show a different color for non-current windows: >vim
 -- 		set winhighlight=Normal:MyNormal,NormalNC:MyNormalNC
 -- <
 vim.wo.winhighlight = ""
@@ -920,9 +920,9 @@ vim.wo.winhl = vim.wo.winhighlight
 -- 	horizontally.
 -- 	The line will be broken in the middle of a word if necessary.  See
 -- 	`'linebreak'`  to get the break at a word boundary.
--- 	To make scrolling horizontally a bit more useful, try this: >
--- 		:set sidescroll=5
--- 		:set listchars+=precedes:<,extends:>
+-- 	To make scrolling horizontally a bit more useful, try this: >vim
+-- 		set sidescroll=5
+-- 		set listchars+=precedes:<,extends:>
 -- <	See `'sidescroll'` , `'listchars'`  and |wrap-off|.
 -- 	This option can't be set from a |modeline| when the `'diff'`  option is
 -- 	on.
@@ -955,8 +955,8 @@ vim.bo.ai = vim.bo.autoindent
 -- 	from before it was deleted.  When it appears again then it is read.
 -- 	|timestamp|
 -- 	If this option has a local value, use this command to switch back to
--- 	using the global value: >
--- 		:set autoread<
+-- 	using the global value: >vim
+-- 		set autoread<
 -- <
 vim.bo.autoread = true
 vim.bo.ar = vim.bo.autoread
@@ -1193,7 +1193,7 @@ vim.bo.cino = vim.bo.cinoptions
 -- 			local to buffer
 -- 	Keywords that are interpreted as a C++ scope declaration by |cino-g|.
 -- 	Useful e.g. for working with the Qt framework that defines additional
--- 	scope declarations "signals", "public slots" and "private slots": >
+-- 	scope declarations "signals", "public slots" and "private slots": >vim
 -- 		set cinscopedecls+=signals,public\ slots,private\ slots
 -- <
 vim.bo.cinscopedecls = "public,protected,private"
@@ -1236,8 +1236,8 @@ vim.bo.cms = vim.bo.commentstring
 -- 	k	scan the files given with the `'dictionary'`  option
 -- 	kspell  use the currently active spell checking |spell|
 -- 	k{dict}	scan the file {dict}.  Several "k" flags can be given,
--- 		patterns are valid too.  For example: >
--- 			:set cpt=k/usr/dict/*,k~/spanish
+-- 		patterns are valid too.  For example: >vim
+-- 			set cpt=k/usr/dict/*,k~/spanish
 -- <	s	scan the files given with the `'thesaurus'`  option
 -- 	s{tsr}	scan the file {tsr}.  Several "s" flags can be given, patterns
 -- 		are valid too.
@@ -1301,7 +1301,7 @@ vim.bo.ci = vim.bo.copyindent
 -- <	If the function is defined with `func_name : function() {...`: >
 -- 	        ^\s[:]\sfunction\s*(
 -- <	When using the ":set" command, you need to double the backslashes!
--- 	To avoid that use `:let` with a single quote string: >
+-- 	To avoid that use `:let` with a single quote string: >vim
 -- 		let &l:define = `'^\s=\s*function('` 
 -- <
 vim.bo.define = ""
@@ -1454,11 +1454,11 @@ vim.bo.ff = vim.bo.fileformat
 -- 	this use the ":filetype on" command. |:filetype|
 -- 	Setting this option to a different value is most useful in a modeline,
 -- 	for a file for which the file type is not automatically recognized.
--- 	Example, for in an IDL file: >
+-- 	Example, for in an IDL file: >c
 -- 		/* vim: set filetype=idl : */
 -- <	|FileType| |filetypes|
 -- 	When a dot appears in the value then this separates two filetype
--- 	names.  Example: >
+-- 	names.  Example: >c
 -- 		/* vim: set filetype=c.doxygen : */
 -- <	This will use the "c" filetype first, then the "doxygen" filetype.
 -- 	This works both for filetype plugins and for syntax files.  More than
@@ -1492,8 +1492,8 @@ vim.bo.fixeol = vim.bo.fixendofline
 -- 		      automatic formatting.  This can be empty.  Don't insert
 -- 		      it yet!
 -- 
--- 	Example: >
--- 		:set formatexpr=mylang#Format()
+-- 	Example: >vim
+-- 		set formatexpr=mylang#Format()
 -- <	This will invoke the mylang#Format() function in the
 -- 	autoload/mylang.vim file in `'runtimepath'` . |autoload|
 -- 
@@ -1507,7 +1507,7 @@ vim.bo.fixeol = vim.bo.fixendofline
 -- 	the internal format mechanism.
 -- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
--- 	the script ID (|local-function|). Example: >
+-- 	the script ID (|local-function|). Example: >vim
 -- 		set formatexpr=s:MyFormatExpr()
 -- 		set formatexpr=<SID>SomeFormatExpr()
 -- <	Otherwise, the expression is evaluated in the context of the script
@@ -1567,8 +1567,8 @@ vim.bo.fp = vim.bo.formatprg
 -- 	will be included.  Environment variables are expanded |:set_env|.  See
 -- 	|option-backslash| about including spaces and backslashes.
 -- 	When your "grep" accepts the "-H" argument, use this to make ":grep"
--- 	also work well with a single file: >
--- 		:set grepprg=grep\ -nH
+-- 	also work well with a single file: >vim
+-- 		set grepprg=grep\ -nH
 -- <	Special value: When `'grepprg'`  is set to "internal" the |:grep| command
 -- 	works like |:vimgrep|, |:lgrep| like |:lvimgrep|, |:grepadd| like
 -- 	|:vimgrepadd| and |:lgrepadd| like |:lvimgrepadd|.
@@ -1586,8 +1586,8 @@ vim.bo.gp = vim.bo.grepprg
 -- 		1	:lmap is ON and IM is off
 -- 		2	:lmap is off and IM is ON
 -- 	To always reset the option to zero when leaving Insert mode with <Esc>
--- 	this can be used: >
--- 		:inoremap <ESC> <ESC>:set iminsert=0<CR>
+-- 	this can be used: >vim
+-- 		inoremap <ESC> <ESC>:set iminsert=0<CR>
 -- <	This makes :lmap and IM turn off automatically when leaving Insert
 -- 	mode.
 -- 	Note that this option changes when using CTRL-^ in Insert mode
@@ -1628,20 +1628,20 @@ vim.bo.inc = vim.bo.include
 -- `'includeexpr'`  `'inex'` 	string	(default "")
 -- 			local to buffer
 -- 	Expression to be used to transform the string found with the `'include'` 
--- 	option to a file name.  Mostly useful to change "." to "/" for Java: >
--- 		:setlocal includeexpr=substitute(v:fname,`'\\.'` ,`'/'` ,`'g'` )
+-- 	option to a file name.  Mostly useful to change "." to "/" for Java: >vim
+-- 		setlocal includeexpr=substitute(v:fname,`'\\.'` ,`'/'` ,`'g'` )
 -- <	The "v:fname" variable will be set to the file name that was detected.
 -- 	Note the double backslash: the `:set` command first halves them, then
 -- 	one remains in the value, where "\." matches a dot literally.  For
--- 	simple character replacements `tr()` avoids the need for escaping: >
--- 		:setlocal includeexpr=tr(v:fname,`'.'` ,`'/'` )
+-- 	simple character replacements `tr()` avoids the need for escaping: >vim
+-- 		setlocal includeexpr=tr(v:fname,`'.'` ,`'/'` )
 -- <
 -- 	Also used for the |gf| command if an unmodified file name can't be
 -- 	found.  Allows doing "gf" on the name after an `'include'`  statement.
 -- 	Also used for |<cfile>|.
 -- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
--- 	the script ID (|local-function|). Example: >
+-- 	the script ID (|local-function|). Example: >vim
 -- 		setlocal includeexpr=s:MyIncludeExpr(v:fname)
 -- 		setlocal includeexpr=<SID>SomeIncludeExpr(v:fname)
 -- <	Otherwise, the expression is evaluated in the context of the script
@@ -1668,7 +1668,7 @@ vim.bo.inex = vim.bo.includeexpr
 -- 	when the expression is evaluated (but it may be moved around).
 -- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
--- 	the script ID (|local-function|). Example: >
+-- 	the script ID (|local-function|). Example: >vim
 -- 		set indentexpr=s:MyIndentExpr()
 -- 		set indentexpr=<SID>SomeIndentExpr()
 -- <	Otherwise, the expression is evaluated in the context of the script
@@ -1682,8 +1682,8 @@ vim.bo.inex = vim.bo.includeexpr
 -- 	The evaluation of the expression must not have side effects!  It must
 -- 	not change the text, jump to another window, etc.  Afterwards the
 -- 	cursor position is always restored, thus the cursor may be moved.
--- 	Normally this option would be set to call a function: >
--- 		:set indentexpr=GetMyIndent()
+-- 	Normally this option would be set to call a function: >vim
+-- 		set indentexpr=GetMyIndent()
 -- <	Error messages will be suppressed, unless the `'debug'`  option contains
 -- 	"msg".
 -- 	See |indent-expression|.
@@ -1752,9 +1752,9 @@ vim.bo.kmp = vim.bo.keymap
 -- 	When "man" or "man -s" is used, Vim will automatically translate
 -- 	a [count] for the "K" command to a section number.
 -- 	See |option-backslash| about including spaces and backslashes.
--- 	Example: >
--- 		:set keywordprg=man\ -s
--- 		:set keywordprg=:Man
+-- 	Example: >vim
+-- 		set keywordprg=man\ -s
+-- 		set keywordprg=:Man
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.bo.keywordprg = ":Man"
@@ -1797,8 +1797,8 @@ vim.bo.lw = vim.bo.lispwords
 -- 
 -- 	This would be mostly useful when you use MS-Windows.  If iconv is
 -- 	enabled, setting `'makeencoding'`  to "char" has the same effect as
--- 	setting to the system locale encoding.  Example: >
--- 		:set makeencoding=char	" system locale is used
+-- 	setting to the system locale encoding.  Example: >vim
+-- 		set makeencoding=char	" system locale is used
 -- <
 vim.bo.makeencoding = ""
 vim.bo.menc = vim.bo.makeencoding
@@ -1812,11 +1812,11 @@ vim.bo.menc = vim.bo.makeencoding
 -- 	about including spaces and backslashes.
 -- 	Note that a `'|'`  must be escaped twice: once for ":set" and once for
 -- 	the interpretation of a command.  When you use a filter called
--- 	"myfilter" do it like this: >
--- 	    :set makeprg=gmake\ \\\|\ myfilter
+-- 	"myfilter" do it like this: >vim
+-- 	    set makeprg=gmake\ \\\|\ myfilter
 -- <	The placeholder "$*" can be given (even multiple times) to specify
--- 	where the arguments will be included, for example: >
--- 	    :set makeprg=latex\ \\\\nonstopmode\ \\\\input\\{$*}
+-- 	where the arguments will be included, for example: >vim
+-- 	    set makeprg=latex\ \\\\nonstopmode\ \\\\input\\{$*}
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 vim.bo.makeprg = "make"
@@ -1829,12 +1829,12 @@ vim.bo.mp = vim.bo.makeprg
 -- 	jump between two double quotes.
 -- 	The characters must be separated by a colon.
 -- 	The pairs must be separated by a comma.  Example for including `'<'`  and
--- 	`'>'`  (for HTML): >
--- 		:set mps+=<:>
+-- 	`'>'`  (for HTML): >vim
+-- 		set mps+=<:>
 -- 
 -- <	A more exotic example, to jump between the `'='`  and `';'`  in an
--- 	assignment, useful for languages like C and Java: >
--- 		:au FileType c,cpp,java set mps+==:;
+-- 	assignment, useful for languages like C and Java: >vim
+-- 		au FileType c,cpp,java set mps+==:;
 -- 
 -- <	For a more advanced way of using "%", see the matchit.vim plugin in
 -- 	the $VIMRUNTIME/plugin directory. |add-local-help|
@@ -1930,30 +1930,30 @@ vim.bo.ofu = vim.bo.omnifunc
 -- 	provided that the file being searched for has a relative path (not
 -- 	starting with "/", "./" or "../").  The directories in the `'path'` 
 -- 	option may be relative or absolute.
--- 	- Use commas to separate directory names: >
--- 		:set path=.,/usr/local/include,/usr/include
+-- 	- Use commas to separate directory names: >vim
+-- 		set path=.,/usr/local/include,/usr/include
 -- <	- Spaces can also be used to separate directory names.  To have a
 -- 	  space in a directory name, precede it with an extra backslash, and
--- 	  escape the space: >
--- 		:set path=.,/dir/with\\\ space
+-- 	  escape the space: >vim
+-- 		set path=.,/dir/with\\\ space
 -- <	- To include a comma in a directory name precede it with an extra
--- 	  backslash: >
--- 		:set path=.,/dir/with\\,comma
--- <	- To search relative to the directory of the current file, use: >
--- 		:set path=.
+-- 	  backslash: >vim
+-- 		set path=.,/dir/with\\,comma
+-- <	- To search relative to the directory of the current file, use: >vim
+-- 		set path=.
 -- <	- To search in the current directory use an empty string between two
--- 	  commas: >
--- 		:set path=,,
+-- 	  commas: >vim
+-- 		set path=,,
 -- <	- A directory name may end in a `':'`  or `'/'` .
 -- 	- Environment variables are expanded |:set_env|.
 -- 	- When using |netrw.vim| URLs can be used.  For example, adding
 -- 	  "https://www.vim.org" will make ":find index.html" work.
 -- 	- Search upwards and downwards in a directory tree using "*", "" and
 -- 	  ";".  See |file-searching| for info and syntax.
--- 	- Careful with `'\'`  characters, type two to get one in the option: >
--- 		:set path=.,c:\\include
--- <	  Or just use `'/'`  instead: >
--- 		:set path=.,c:/include
+-- 	- Careful with `'\'`  characters, type two to get one in the option: >vim
+-- 		set path=.,c:\\include
+-- <	  Or just use `'/'`  instead: >vim
+-- 		set path=.,c:/include
 -- <	Don't forget "." or files won't even be found in the same directory as
 -- 	the file!
 -- 	The maximum length is limited.  How much depends on the system, mostly
@@ -1962,14 +1962,14 @@ vim.bo.ofu = vim.bo.omnifunc
 -- 	`'path'` , see |:checkpath|.
 -- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
 -- 	directories from the list.  This avoids problems when a future version
--- 	uses another default.  To remove the current directory use: >
--- 		:set path-=
--- <	To add the current directory use: >
--- 		:set path+=
+-- 	uses another default.  To remove the current directory use: >vim
+-- 		set path-=
+-- <	To add the current directory use: >vim
+-- 		set path+=
 -- <	To use an environment variable, you probably need to replace the
 -- 	separator.  Here is an example to append $INCL, in which directory
--- 	names are separated with a semi-colon: >
--- 		:let &path = &path .. "," .. substitute($INCL, `';'` , `','` , `'g'` )
+-- 	names are separated with a semi-colon: >vim
+-- 		let &path = &path .. "," .. substitute($INCL, `';'` , `','` , `'g'` )
 -- <	Replace the `';'`  with a `':'`  or whatever separator is used.  Note that
 -- 	this doesn't work when $INCL contains a comma or white space.
 vim.bo.path = ".,,"
@@ -2113,7 +2113,7 @@ vim.bo.spf = vim.bo.spellfile
 -- `'spelllang'`  `'spl'` 	string	(default "en")
 -- 			local to buffer
 -- 	A comma-separated list of word list names.  When the `'spell'`  option is
--- 	on spellchecking will be done for these languages.  Example: >
+-- 	on spellchecking will be done for these languages.  Example: >vim
 -- 		set spelllang=en_us,nl,medical
 -- <	This means US English, Dutch and medical words are recognized.  Words
 -- 	that are not recognized will be highlighted.
@@ -2166,8 +2166,8 @@ vim.bo.spo = vim.bo.spelloptions
 -- `'suffixesadd'`  `'sua'` 	string	(default "")
 -- 			local to buffer
 -- 	Comma-separated list of suffixes, which are used when searching for a
--- 	file for the "gf", "[I", etc. commands.  Example: >
--- 		:set suffixesadd=.java
+-- 	file for the "gf", "[I", etc. commands.  Example: >vim
+-- 		set suffixesadd=.java
 -- <
 vim.bo.suffixesadd = ""
 vim.bo.sua = vim.bo.suffixesadd
@@ -2210,19 +2210,19 @@ vim.bo.smc = vim.bo.synmaxcol
 -- 	Otherwise this option does not always reflect the current syntax (the
 -- 	b:current_syntax variable does).
 -- 	This option is most useful in a modeline, for a file which syntax is
--- 	not automatically recognized.  Example, in an IDL file: >
+-- 	not automatically recognized.  Example, in an IDL file: >c
 -- 		/* vim: set syntax=idl : */
 -- <	When a dot appears in the value then this separates two filetype
--- 	names.  Example: >
+-- 	names.  Example: >c
 -- 		/* vim: set syntax=c.doxygen : */
 -- <	This will use the "c" syntax first, then the "doxygen" syntax.
 -- 	Note that the second one must be prepared to be loaded as an addition,
 -- 	otherwise it will be skipped.  More than one dot may appear.
--- 	To switch off syntax highlighting for the current file, use: >
--- 		:set syntax=OFF
+-- 	To switch off syntax highlighting for the current file, use: >vim
+-- 		set syntax=OFF
 -- <	To switch syntax highlighting on according to the current value of the
--- 	`'filetype'`  option: >
--- 		:set syntax=ON
+-- 	`'filetype'`  option: >vim
+-- 		set syntax=ON
 -- <	What actually happens when setting the `'syntax'`  option is that the
 -- 	Syntax autocommand event is triggered with the value as argument.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
@@ -2374,13 +2374,13 @@ vim.bo.udf = vim.bo.undofile
 -- 	is kept in memory, higher numbers will cause more memory to be used.
 -- 	Nevertheless, a single change can already use a large amount of memory.
 -- 	Set to 0 for Vi compatibility: One level of undo and "u" undoes
--- 	itself: >
+-- 	itself: >vim
 -- 		set ul=0
 -- <	But you can also get Vi compatibility by including the `'u'`  flag in
 -- 	`'cpoptions'` , and still be able to use CTRL-R to repeat undo.
 -- 	Also see |undo-two-ways|.
 -- 	Set to -1 for no undo at all.  You might want to do this only for the
--- 	current buffer: >
+-- 	current buffer: >vim
 -- 		setlocal ul=-1
 -- <	This helps when you run out of memory for a single change.
 -- 
@@ -2399,8 +2399,8 @@ vim.bo.ul = vim.bo.undolevels
 -- 
 -- 	For example, when editing assembly language files where statements
 -- 	start in the 9th column and comments in the 41st, it may be useful
--- 	to use the following: >
--- 		:set varsofttabstop=8,32,8
+-- 	to use the following: >vim
+-- 		set varsofttabstop=8,32,8
 -- <	This will set soft tabstops with 8 and 8 + 32 spaces, and 8 more
 -- 	for every column thereafter.
 -- 
@@ -2412,8 +2412,8 @@ vim.bo.vsts = vim.bo.varsofttabstop
 -- 			local to buffer
 -- 	A list of the number of spaces that a <Tab> in the file counts for,
 -- 	separated by commas.  Each value corresponds to one tab, with the
--- 	final value applying to all subsequent tabs. For example: >
--- 		:set vartabstop=4,20,10,8
+-- 	final value applying to all subsequent tabs. For example: >vim
+-- 		set vartabstop=4,20,10,8
 -- <	This will make the first tab 4 spaces wide, the second 20 spaces,
 -- 	the third 10 spaces, and all following tabs 8 spaces.
 -- 
@@ -2594,8 +2594,8 @@ function vim.opt.autoindent:get()end
 -- 	from before it was deleted.  When it appears again then it is read.
 -- 	|timestamp|
 -- 	If this option has a local value, use this command to switch back to
--- 	using the global value: >
--- 		:set autoread<
+-- 	using the global value: >vim
+-- 		set autoread<
 -- <
 --- @class vim.opt.autoread: vim.Option,boolean
 --- @operator add: vim.opt.autoread
@@ -2663,10 +2663,10 @@ function vim.opt.autowriteall:get()end
 -- 	be undone.  First delete the "g:colors_name" variable when needed.
 -- 
 -- 	Normally this option would be set in the vimrc file.  Possibly
--- 	depending on the terminal name.  Example: >
--- 		:if $TERM ==# "xterm"
--- 		:  set background=dark
--- 		:endif
+-- 	depending on the terminal name.  Example: >vim
+-- 		if $TERM ==# "xterm"
+-- 		  set background=dark
+-- 		endif
 -- <	When this option is changed, the default settings for the highlight groups
 -- 	will change.  To use other settings, place ":highlight" commands AFTER
 -- 	the setting of the `'background'`  option.
@@ -2825,12 +2825,12 @@ function vim.opt.backupcopy:get()end
 -- 	  use `'//'` , instead of `'\\'` .
 -- 	- Environment variables are expanded |:set_env|.
 -- 	- Careful with `'\'`  characters, type one before a space, type two to
--- 	  get one in the option (see |option-backslash|), for example: >
--- 	    :set bdir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
+-- 	  get one in the option (see |option-backslash|), for example: >vim
+-- 	    set bdir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
 -- <
 -- 	See also `'backup'`  and `'writebackup'`  options.
--- 	If you want to hide your backup files on Unix, consider this value: >
--- 		:set backupdir=./.backup,~/.backup,.,/tmp
+-- 	If you want to hide your backup files on Unix, consider this value: >vim
+-- 		set backupdir=./.backup,~/.backup,.,/tmp
 -- <	You must create a ".backup" directory in each directory and in your
 -- 	home directory for this to work properly.
 -- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
@@ -2858,8 +2858,8 @@ function vim.opt.backupdir:get()end
 -- 
 -- 	If you like to keep a lot of backups, you could use a BufWritePre
 -- 	autocommand to change `'backupext'`  just before writing the file to
--- 	include a timestamp. >
--- 		:au BufWritePre * let &bex = `'-'`  .. strftime("%Y%b%d%X") .. `'~'` 
+-- 	include a timestamp. >vim
+-- 		au BufWritePre * let &bex = `'-'`  .. strftime("%Y%b%d%X") .. `'~'` 
 -- <	Use `'backupdir'`  to put the backup in a different directory.
 --- @class vim.opt.backupext: vim.Option,string
 --- @operator add: vim.opt.backupext
@@ -2889,7 +2889,7 @@ function vim.opt.backupext:get()end
 -- 
 -- 	Note that environment variables are not expanded.  If you want to use
 -- 	$HOME you must expand it explicitly, e.g.: >vim
--- 		:let &backupskip = escape(expand(`'$HOME'` ), `'\'` ) .. `'/tmp/*'` 
+-- 		let &backupskip = escape(expand(`'$HOME'` ), `'\'` ) .. `'/tmp/*'` 
 -- 
 -- <	Note that the default also makes sure that "crontab -e" works (when a
 -- 	backup would be made by renaming the original file crontab won't see
@@ -3242,8 +3242,8 @@ function vim.opt.cdhome:get()end
 -- 	in the current directory first.
 -- 	If the default value taken from $CDPATH is not what you want, include
 -- 	a modified version of the following command in your vimrc file to
--- 	override it: >
--- 	  :let &cdpath = `','`  .. substitute(substitute($CDPATH, '[, ]', `'\\\0'` , `'g'` ), `':'` , `','` , `'g'` )
+-- 	override it: >vim
+-- 	  let &cdpath = `','`  .. substitute(substitute($CDPATH, '[, ]', `'\\\0'` , `'g'` ), `':'` , `','` , `'g'` )
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 -- 	(parts of `'cdpath'`  can be passed to the shell to expand file names).
@@ -3261,9 +3261,9 @@ function vim.opt.cdpath:get()end
 -- 	The key used in Command-line Mode to open the command-line window.
 -- 	Only non-printable keys are allowed.
 -- 	The key can be specified as a single character, but it is difficult to
--- 	type.  The preferred way is to use the <> notation.  Examples: >
--- 		:exe "set cedit=\<C-Y>"
--- 		:exe "set cedit=\<Esc>"
+-- 	type.  The preferred way is to use the <> notation.  Examples: >vim
+-- 		exe "set cedit=\<C-Y>"
+-- 		exe "set cedit=\<Esc>"
 -- <	|Nvi| also has this option, but it only uses the first character.
 -- 	See |cmdwin|.
 --- @class vim.opt.cedit: vim.Option,string
@@ -3305,7 +3305,7 @@ function vim.opt.channel:get()end
 -- 	Conversion between "latin1", "unicode", "ucs-2", "ucs-4" and "utf-8"
 -- 	is done internally by Vim, `'charconvert'`  is not used for this.
 -- 	Also used for Unicode conversion.
--- 	Example: >
+-- 	Example: >vim
 -- 		set charconvert=CharConvert()
 -- 		fun CharConvert()
 -- 		  system("recode "
@@ -3385,7 +3385,7 @@ function vim.opt.cinoptions:get()end
 -- 			local to buffer
 -- 	Keywords that are interpreted as a C++ scope declaration by |cino-g|.
 -- 	Useful e.g. for working with the Qt framework that defines additional
--- 	scope declarations "signals", "public slots" and "private slots": >
+-- 	scope declarations "signals", "public slots" and "private slots": >vim
 -- 		set cinscopedecls+=signals,public\ slots,private\ slots
 -- <
 --- @class vim.opt.cinscopedecls: vim.Option,string[]
@@ -3490,11 +3490,11 @@ function vim.opt.cmdwinheight:get()end
 -- 	highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
 -- 	text.  Will make screen redrawing slower.
 -- 	The screen column can be an absolute number, or a number preceded with
--- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
+-- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >vim
 -- 
--- 		:set cc=+1	  " highlight column after `'textwidth'` 
--- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
--- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+-- 		set cc=+1	  " highlight column after `'textwidth'` 
+-- 		set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
+-- 		hi ColorColumn ctermbg=lightgrey guibg=lightgrey
 -- <
 -- 	When `'textwidth'`  is zero then the items with `'-'`  and `'+'`  are not used.
 -- 	A maximum of 256 columns are highlighted.
@@ -3518,8 +3518,8 @@ function vim.opt.colorcolumn:get()end
 -- 	number of columns of the display, the display may be messed up.  For
 -- 	the GUI it is always possible and Vim limits the number of columns to
 -- 	what fits on the screen.  You can use this command to get the widest
--- 	window possible: >
--- 		:set columns=9999
+-- 	window possible: >vim
+-- 		set columns=9999
 -- <	Minimum value is 12, maximum value is 10000.
 --- @class vim.opt.columns: vim.Option,number
 --- @operator add: vim.opt.columns
@@ -3581,8 +3581,8 @@ function vim.opt.compatible:get()end
 -- 	k	scan the files given with the `'dictionary'`  option
 -- 	kspell  use the currently active spell checking |spell|
 -- 	k{dict}	scan the file {dict}.  Several "k" flags can be given,
--- 		patterns are valid too.  For example: >
--- 			:set cpt=k/usr/dict/*,k~/spanish
+-- 		patterns are valid too.  For example: >vim
+-- 			set cpt=k/usr/dict/*,k~/spanish
 -- <	s	scan the files given with the `'thesaurus'`  option
 -- 	s{tsr}	scan the file {tsr}.  Several "s" flags can be given, patterns
 -- 		are valid too.
@@ -4053,7 +4053,7 @@ function vim.opt.cursorbind:get()end
 -- 	|hl-CursorColumn|.  Useful to align text.  Will make screen redrawing
 -- 	slower.
 -- 	If you only want the highlighting in the current window you can use
--- 	these autocommands: >
+-- 	these autocommands: >vim
 -- 		au WinLeave * set nocursorline nocursorcolumn
 -- 		au WinEnter * set cursorline cursorcolumn
 -- <
@@ -4143,7 +4143,7 @@ function vim.opt.debug:get()end
 -- <	If the function is defined with `func_name : function() {...`: >
 -- 	        ^\s[:]\sfunction\s*(
 -- <	When using the ":set" command, you need to double the backslashes!
--- 	To avoid that use `:let` with a single quote string: >
+-- 	To avoid that use `:let` with a single quote string: >vim
 -- 		let &l:define = `'^\s=\s*function('` 
 -- <
 --- @class vim.opt.define: vim.Option,string
@@ -4337,11 +4337,11 @@ function vim.opt.diffexpr:get()end
 -- 				patience   patience diff algorithm
 -- 				histogram  histogram diff algorithm
 -- 
--- 	Examples: >
--- 		:set diffopt=internal,filler,context:4
--- 		:set diffopt=
--- 		:set diffopt=internal,filler,foldcolumn:3
--- 		:set diffopt-=internal  " do NOT use the internal diff parser
+-- 	Examples: >vim
+-- 		set diffopt=internal,filler,context:4
+-- 		set diffopt=
+-- 		set diffopt=internal,filler,foldcolumn:3
+-- 		set diffopt-=internal  " do NOT use the internal diff parser
 -- <
 --- @class vim.opt.diffopt: vim.Option,string[]
 --- @operator add: vim.opt.diffopt

@@ -93,9 +93,9 @@ function vim.opt.shortmess:get()end
 -- `'showbreak'`  `'sbr'` 	string	(default "")
 -- 			global or local to window |global-local|
 -- 	String to put at the start of lines that have been wrapped.  Useful
--- 	values are "> " or "+++ ": >
--- 		:let &showbreak = "> "
--- 		:let &showbreak = '+++ '
+-- 	values are "> " or "+++ ": >vim
+-- 		let &showbreak = "> "
+-- 		let &showbreak = '+++ '
 -- <	Only printable single-cell characters are allowed, excluding <Tab> and
 -- 	comma (in a future version the comma might be used to separate the
 -- 	part that is shown at the end and at the start of a line).
@@ -104,8 +104,8 @@ function vim.opt.shortmess:get()end
 -- 	If you want the `'showbreak'`  to appear in between line numbers, add the
 -- 	"n" flag to `'cpoptions'` .
 -- 	A window-local value overrules a global value.  If the global value is
--- 	set and you want no value in the current window use NONE: >
--- 		:setlocal showbreak=NONE
+-- 	set and you want no value in the current window use NONE: >vim
+-- 		setlocal showbreak=NONE
 -- <
 --- @class vim.opt.showbreak: vim.Option,string
 --- @operator add: vim.opt.showbreak
@@ -265,16 +265,16 @@ function vim.opt.sidescroll:get()end
 -- 	horizontally centered in the window, as long as one does not come too
 -- 	close to the beginning of the line.
 -- 	After using the local value, go back the global value with one of
--- 	these two: >
+-- 	these two: >vim
 -- 		setlocal sidescrolloff<
 -- 		setlocal sidescrolloff=-1
 -- <
 -- 	Example: Try this together with `'sidescroll'`  and `'listchars'`  as
 -- 		 in the following example to never allow the cursor to move
--- 		 onto the "extends" character: >
+-- 		 onto the "extends" character: >vim
 -- 
--- 		 :set nowrap sidescroll=1 listchars=extends:>,precedes:<
--- 		 :set sidescrolloff=1
+-- 		 set nowrap sidescroll=1 listchars=extends:>,precedes:<
+-- 		 set sidescrolloff=1
 -- <
 --- @class vim.opt.sidescrolloff: vim.Option,number
 --- @operator add: vim.opt.sidescrolloff
@@ -492,7 +492,7 @@ function vim.opt.spellfile:get()end
 -- `'spelllang'`  `'spl'` 	string	(default "en")
 -- 			local to buffer
 -- 	A comma-separated list of word list names.  When the `'spell'`  option is
--- 	on spellchecking will be done for these languages.  Example: >
+-- 	on spellchecking will be done for these languages.  Example: >vim
 -- 		set spelllang=en_us,nl,medical
 -- <	This means US English, Dutch and medical words are recognized.  Words
 -- 	that are not recognized will be highlighted.
@@ -616,8 +616,8 @@ function vim.opt.spelloptions:get()end
 -- 			`'verbose'`  option to a non-zero value.
 -- 
 -- 	Only one of "best", "double" or "fast" may be used.  The others may
--- 	appear several times in any order.  Example: >
--- 		:set sps=file:~/.config/nvim/sugg,best,expr:MySuggest()
+-- 	appear several times in any order.  Example: >vim
+-- 		set sps=file:~/.config/nvim/sugg,best,expr:MySuggest()
 -- <
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
@@ -732,21 +732,21 @@ function vim.opt.startofline:get()end
 -- 
 -- 	Examples: >vim
 -- 		" Relative number with bar separator and click handlers:
--- 		:set statuscolumn=%@SignCb@%s%=%T%@NumCb@%r│%T
+-- 		set statuscolumn=%@SignCb@%s%=%T%@NumCb@%r│%T
 -- 
 -- 		" Right aligned relative cursor line number:
--- 		:let &stc='%=%{v:relnum?v:relnum:v:lnum} '
+-- 		let &stc='%=%{v:relnum?v:relnum:v:lnum} '
 -- 
 -- 		" Line numbers in hexadecimal for non wrapped part of lines:
--- 		:let &stc='%=%{v:virtnum>0?"":printf("%x",v:lnum)} '
+-- 		let &stc='%=%{v:virtnum>0?"":printf("%x",v:lnum)} '
 -- 
 -- 		" Human readable line numbers with thousands separator:
--- 		:let &stc=`'%{substitute(v:lnum,"\\d\\zs\\ze\\'` 
+-- 		let &stc=`'%{substitute(v:lnum,"\\d\\zs\\ze\\'` 
 -- 			   . `'%(\\d\\d\\d\\)\\+$",",","g")}'` 
 -- 
 -- 		" Both relative and absolute line numbers with different
 -- 		" highlighting for odd and even relative numbers:
--- 		:let &stc=`'%#NonText#%{&nu?v:lnum:""}'`  .
+-- 		let &stc=`'%#NonText#%{&nu?v:lnum:""}'`  .
 -- 		 '%=%{&rnu&&(v:lnum%2)?"\ ".v:relnum:""}' .
 -- 		 '%#LineNr#%{&rnu&&!(v:lnum%2)?"\ ".v:relnum:""}'
 -- 
@@ -773,8 +773,8 @@ function vim.opt.statuscolumn:get()end
 -- 	be given as "%%".
 -- 
 -- 	When the option starts with "%!" then it is used as an expression,
--- 	evaluated and the result is used as the option value.  Example: >
--- 		:set statusline=%!MyStatusLine()
+-- 	evaluated and the result is used as the option value.  Example: >vim
+-- 		set statusline=%!MyStatusLine()
 -- <	The  variable will be set to the |window-ID| of the
 -- 	window that the status line belongs to.
 -- 	The result can contain %{} items that will be evaluated too.
@@ -855,7 +855,7 @@ function vim.opt.statuscolumn:get()end
 -- 	      return value of expr contains "%" items they will get expanded.
 -- 	      The expression can contain the "}" character, the end of
 -- 	      expression is denoted by "%}".
--- 	      For example: >
+-- 	      For example: >vim
 -- 		func! Stl_filename() abort
 -- 		    return "%t"
 -- 		endfunc
@@ -922,8 +922,8 @@ function vim.opt.statuscolumn:get()end
 -- 	When all items in a group becomes an empty string (i.e. flags that are
 -- 	not set) and a minwid is not set for the group, the whole group will
 -- 	become empty.  This will make a group like the following disappear
--- 	completely from the statusline when none of the flags are set. >
--- 		:set statusline=...%(\ [%M%R%H]%)...
+-- 	completely from the statusline when none of the flags are set. >vim
+-- 		set statusline=...%(\ [%M%R%H]%)...
 -- <	Beware that an expression is evaluated each and every time the status
 -- 	line is displayed.
 -- 
@@ -954,23 +954,23 @@ function vim.opt.statuscolumn:get()end
 -- 	edit your vimrc or whatever with "vim --clean" to get it right.
 -- 
 -- 	Examples:
--- 	Emulate standard status line with `'ruler'`  set >
--- 	  :set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
--- <	Similar, but add ASCII value of char under the cursor (like "ga") >
--- 	  :set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
--- <	Display byte count and byte value, modified flag in red. >
--- 	  :set statusline=%<%f%=\ [%1%n%R%H]\ %-19(%3l,%02c%03V%)%O`'%02b'` 
--- 	  :hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
--- <	Display a ,GZ flag if a compressed file is loaded >
--- 	  :set statusline=...%r%{VarExists(`'b:gzflag'` ,'\ [GZ]')}%h...
--- <	In the |:autocmd|'s: >
--- 	  :let b:gzflag = 1
--- <	And: >
--- 	  :unlet b:gzflag
--- <	And define this function: >
--- 	  :function VarExists(var, val)
--- 	  :    if exists(a:var) | return a:val | else | return `''`  | endif
--- 	  :endfunction
+-- 	Emulate standard status line with `'ruler'`  set >vim
+-- 	  set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+-- <	Similar, but add ASCII value of char under the cursor (like "ga") >vim
+-- 	  set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
+-- <	Display byte count and byte value, modified flag in red. >vim
+-- 	  set statusline=%<%f%=\ [%1%n%R%H]\ %-19(%3l,%02c%03V%)%O`'%02b'` 
+-- 	  hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
+-- <	Display a ,GZ flag if a compressed file is loaded >vim
+-- 	  set statusline=...%r%{VarExists(`'b:gzflag'` ,'\ [GZ]')}%h...
+-- <	In the |:autocmd|'s: >vim
+-- 	  let b:gzflag = 1
+-- <	And: >vim
+-- 	  unlet b:gzflag
+-- <	And define this function: >vim
+-- 	  function VarExists(var, val)
+-- 	      if exists(a:var) | return a:val | else | return `''`  | endif
+-- 	  endfunction
 -- <
 --- @class vim.opt.statusline: vim.Option,string
 --- @operator add: vim.opt.statusline
@@ -1005,8 +1005,8 @@ function vim.opt.suffixes:get()end
 -- `'suffixesadd'`  `'sua'` 	string	(default "")
 -- 			local to buffer
 -- 	Comma-separated list of suffixes, which are used when searching for a
--- 	file for the "gf", "[I", etc. commands.  Example: >
--- 		:set suffixesadd=.java
+-- 	file for the "gf", "[I", etc. commands.  Example: >vim
+-- 		set suffixesadd=.java
 -- <
 --- @class vim.opt.suffixesadd: vim.Option,string[]
 --- @operator add: vim.opt.suffixesadd
@@ -1106,19 +1106,19 @@ function vim.opt.synmaxcol:get()end
 -- 	Otherwise this option does not always reflect the current syntax (the
 -- 	b:current_syntax variable does).
 -- 	This option is most useful in a modeline, for a file which syntax is
--- 	not automatically recognized.  Example, in an IDL file: >
+-- 	not automatically recognized.  Example, in an IDL file: >c
 -- 		/* vim: set syntax=idl : */
 -- <	When a dot appears in the value then this separates two filetype
--- 	names.  Example: >
+-- 	names.  Example: >c
 -- 		/* vim: set syntax=c.doxygen : */
 -- <	This will use the "c" syntax first, then the "doxygen" syntax.
 -- 	Note that the second one must be prepared to be loaded as an addition,
 -- 	otherwise it will be skipped.  More than one dot may appear.
--- 	To switch off syntax highlighting for the current file, use: >
--- 		:set syntax=OFF
+-- 	To switch off syntax highlighting for the current file, use: >vim
+-- 		set syntax=OFF
 -- <	To switch syntax highlighting on according to the current value of the
--- 	`'filetype'`  option: >
--- 		:set syntax=ON
+-- 	`'filetype'`  option: >vim
+-- 		set syntax=ON
 -- <	What actually happens when setting the `'syntax'`  option is that the
 -- 	Syntax autocommand event is triggered with the value as argument.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
@@ -1653,13 +1653,13 @@ function vim.opt.titleold:get()end
 -- 	expanded according to the rules used for `'statusline'` .
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
 -- 
--- 	Example: >
--- 	    :auto BufEnter * let &titlestring = hostname() .. "/" .. expand("%:p")
--- 	    :set title titlestring=%<%F%=%l/%L-%P titlelen=70
+-- 	Example: >vim
+-- 	    auto BufEnter * let &titlestring = hostname() .. "/" .. expand("%:p")
+-- 	    set title titlestring=%<%F%=%l/%L-%P titlelen=70
 -- <	The value of `'titlelen'`  is used to align items in the middle or right
 -- 	of the available space.
--- 	Some people prefer to have the file name first: >
--- 	    :set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
+-- 	Some people prefer to have the file name first: >vim
+-- 	    set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
 -- <	Note the use of "%{ }" and an expression to get the path of the file,
 -- 	without the file name.  The "%( %)" constructs are used to add a
 -- 	separating space only when needed.
@@ -1773,13 +1773,13 @@ function vim.opt.undofile:get()end
 -- 	is kept in memory, higher numbers will cause more memory to be used.
 -- 	Nevertheless, a single change can already use a large amount of memory.
 -- 	Set to 0 for Vi compatibility: One level of undo and "u" undoes
--- 	itself: >
+-- 	itself: >vim
 -- 		set ul=0
 -- <	But you can also get Vi compatibility by including the `'u'`  flag in
 -- 	`'cpoptions'` , and still be able to use CTRL-R to repeat undo.
 -- 	Also see |undo-two-ways|.
 -- 	Set to -1 for no undo at all.  You might want to do this only for the
--- 	current buffer: >
+-- 	current buffer: >vim
 -- 		setlocal ul=-1
 -- <	This helps when you run out of memory for a single change.
 -- 
@@ -1863,8 +1863,8 @@ function vim.opt.updatetime:get()end
 -- 
 -- 	For example, when editing assembly language files where statements
 -- 	start in the 9th column and comments in the 41st, it may be useful
--- 	to use the following: >
--- 		:set varsofttabstop=8,32,8
+-- 	to use the following: >vim
+-- 		set varsofttabstop=8,32,8
 -- <	This will set soft tabstops with 8 and 8 + 32 spaces, and 8 more
 -- 	for every column thereafter.
 -- 
@@ -1883,8 +1883,8 @@ function vim.opt.varsofttabstop:get()end
 -- 			local to buffer
 -- 	A list of the number of spaces that a <Tab> in the file counts for,
 -- 	separated by commas.  Each value corresponds to one tab, with the
--- 	final value applying to all subsequent tabs. For example: >
--- 		:set vartabstop=4,20,10,8
+-- 	final value applying to all subsequent tabs. For example: >vim
+-- 		set vartabstop=4,20,10,8
 -- <	This will make the first tab 4 spaces wide, the second 20 spaces,
 -- 	the third 10 spaces, and all following tabs 8 spaces.
 -- 
@@ -2068,8 +2068,8 @@ function vim.opt.warn:get()end
 -- 		 ~    "~"	 Normal
 -- 		 [    <Left>	 Insert and Replace
 -- 		 ]    <Right>	 Insert and Replace
--- 	For example: >
--- 		:set ww=<,>,[,]
+-- 	For example: >vim
+-- 		set ww=<,>,[,]
 -- <	allows wrap only when cursor keys are used.
 -- 	When the movement keys are used in combination with a delete or change
 -- 	operator, the <EOL> also counts for a character.  This makes "3h"
@@ -2100,8 +2100,8 @@ function vim.opt.whichwrap:get()end
 -- 	Some keys will not work, such as CTRL-C, <CR> and Enter.
 -- 	<Esc> can be used, but hitting it twice in a row will still exit
 -- 	command-line as a failsafe measure.
--- 	Although `'wc'`  is a number option, you can set it to a special key: >
--- 		:set wc=<Tab>
+-- 	Although `'wc'`  is a number option, you can set it to a special key: >vim
+-- 		set wc=<Tab>
 -- <
 --- @class vim.opt.wildchar: vim.Option,number
 --- @operator add: vim.opt.wildchar
@@ -2118,9 +2118,9 @@ function vim.opt.wildchar:get()end
 -- 	recognized when used inside a macro.  You can find "spare" command-line
 -- 	keys suitable for this option by looking at |ex-edit-index|.  Normally
 -- 	you'll never actually type `'wildcharm'` , just use it in mappings that
--- 	automatically invoke completion mode, e.g.: >
--- 		:set wcm=<C-Z>
--- 		:cnoremap ss so $vim/sessions/*.vim<C-Z>
+-- 	automatically invoke completion mode, e.g.: >vim
+-- 		set wcm=<C-Z>
+-- 		cnoremap ss so $vim/sessions/*.vim<C-Z>
 -- <	Then after typing :ss you can use CTRL-P & CTRL-N.
 --- @class vim.opt.wildcharm: vim.Option,number
 --- @operator add: vim.opt.wildcharm
@@ -2139,8 +2139,8 @@ function vim.opt.wildcharm:get()end
 -- 	|globpath()| unless a flag is passed to disable this.
 -- 	The pattern is used like with |:autocmd|, see |autocmd-pattern|.
 -- 	Also see `'suffixes'` .
--- 	Example: >
--- 		:set wildignore=.obj
+-- 	Example: >vim
+-- 		set wildignore=.obj
 -- <	The use of |:set+=| and |:set-=| is preferred when adding or removing
 -- 	a pattern from the list.  This avoids problems when a future version
 -- 	uses another default.
@@ -2202,9 +2202,9 @@ function vim.opt.wildignorecase:get()end
 -- 			  completion.
 -- 
 -- 	If you want <Left> and <Right> to move the cursor instead of selecting
--- 	a different match, use this: >
--- 		:cnoremap <Left> <Space><BS><Left>
--- 		:cnoremap <Right> <Space><BS><Right>
+-- 	a different match, use this: >vim
+-- 		cnoremap <Left> <Space><BS><Left>
+-- 		cnoremap <Right> <Space><BS><Right>
 -- <
 -- 	|hl-WildMenu| highlights the current match.
 --- @class vim.opt.wildmenu: vim.Option,boolean
@@ -2249,16 +2249,16 @@ function vim.opt.wildmenu:get()end
 -- 			and sort buffers by time last used (other than the
 -- 			current buffer).
 -- 
--- 	Examples: >
--- 		:set wildmode=full
--- <	Complete first full match, next match, etc.  (the default) >
--- 		:set wildmode=longest,full
--- <	Complete longest common string, then each full match >
--- 		:set wildmode=list:full
--- <	List all matches and complete each full match >
--- 		:set wildmode=list,full
--- <	List all matches without completing, then each full match >
--- 		:set wildmode=longest,list
+-- 	Examples: >vim
+-- 		set wildmode=full
+-- <	Complete first full match, next match, etc.  (the default) >vim
+-- 		set wildmode=longest,full
+-- <	Complete longest common string, then each full match >vim
+-- 		set wildmode=list:full
+-- <	List all matches and complete each full match >vim
+-- 		set wildmode=list,full
+-- <	List all matches without completing, then each full match >vim
+-- 		set wildmode=longest,list
 -- <	Complete longest common string, then list alternatives.
 -- 	More info here: |cmdline-completion|.
 --- @class vim.opt.wildmode: vim.Option,string[]
@@ -2424,7 +2424,7 @@ function vim.opt.winfixwidth:get()end
 -- 	Other windows will be only `'winminheight'`  high.  This has the drawback
 -- 	that ":all" will create only two windows.  To avoid "vim -o 1 2 3 4"
 -- 	to create only two windows, set the option after startup is done,
--- 	using the |VimEnter| event: >
+-- 	using the |VimEnter| event: >vim
 -- 		au VimEnter * set winheight=999
 -- <	Minimum value is 1.
 -- 	The height is not adjusted after one of the commands that change the
@@ -2456,7 +2456,7 @@ function vim.opt.winheight:get()end
 -- 	the popupmenu are determined by the current window.  Highlights in the
 -- 	message area cannot be overridden.
 -- 
--- 	Example: show a different color for non-current windows: >
+-- 	Example: show a different color for non-current windows: >vim
 -- 		set winhighlight=Normal:MyNormal,NormalNC:MyNormalNC
 -- <
 --- @class vim.opt.winhighlight: vim.Option,table<string, string>
@@ -2540,9 +2540,9 @@ function vim.opt.winwidth:get()end
 -- 	horizontally.
 -- 	The line will be broken in the middle of a word if necessary.  See
 -- 	`'linebreak'`  to get the break at a word boundary.
--- 	To make scrolling horizontally a bit more useful, try this: >
--- 		:set sidescroll=5
--- 		:set listchars+=precedes:<,extends:>
+-- 	To make scrolling horizontally a bit more useful, try this: >vim
+-- 		set sidescroll=5
+-- 		set listchars+=precedes:<,extends:>
 -- <	See `'sidescroll'` , `'listchars'`  and |wrap-off|.
 -- 	This option can't be set from a |modeline| when the `'diff'`  option is
 -- 	on.
