@@ -638,9 +638,6 @@ vim.go.cf = vim.go.confirm
 -- 			protection against a file unexpectedly created by
 -- 			someone else.  Vi didn't complain about this.
 -- 
--- 		p	Vi compatible Lisp indenting.  When not present, a
--- 			slightly better algorithm is used.
--- 
 -- 		P	When included, a ":write" command that appends to a
 -- 			file will set the file name for the current buffer, if
 -- 			the current buffer doesn't have a file name yet and
