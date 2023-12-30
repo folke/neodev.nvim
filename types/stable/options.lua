@@ -1226,7 +1226,7 @@ vim.go.fdls = vim.go.foldlevelstart
 -- 	set the `'foldclose'`  option to "all".
 vim.go.foldopen = "block,hor,mark,percent,quickfix,search,tag,undo"
 vim.go.fdo = vim.go.foldopen
--- `'fsync'`  `'fs'` 		boolean	(default off)
+-- `'fsync'`  `'fs'` 		boolean	(default on)
 -- 			global
 -- 	When on, the OS function fsync() will be called after saving a file
 -- 	(|:write|, |writefile()|, …), |swap-file|, |undo-persistence| and |shada-file|.
@@ -1242,7 +1242,7 @@ vim.go.fdo = vim.go.foldopen
 -- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
-vim.go.fsync = false
+vim.go.fsync = true
 vim.go.fs = vim.go.fsync
 -- `'gdefault'`  `'gd'` 		boolean	(default off)
 -- 			global
