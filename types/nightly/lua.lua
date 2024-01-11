@@ -54,9 +54,9 @@ function vim.call(func, ...) end
 --   • {a}     (string) First string to compare
 --   • {b}     (string) Second string to compare
 --   • {opts}  table<string,any> Optional parameters:
---             • `on_hunk` (callback): Invoked for each hunk in the diff. Return a
---               negative number to cancel the callback for any remaining
---               hunks. Args:
+--             • `on_hunk` (callback): Invoked for each hunk in the diff.
+--               Return a negative number to cancel the callback for any
+--               remaining hunks. Args:
 --               • `start_a` (integer): Start line of hunk in {a}.
 --               • `count_a` (integer): Hunk size in {a}.
 --               • `start_b` (integer): Start line of hunk in {b}.
@@ -236,7 +236,8 @@ function vim.schedule(fn) end
 --   • {str}  (string)
 -- 
 -- Return: ~
---     `{[1]: string, [2]: string, [3]: string}[]` List of tuples with three items:
+--     `{[1]: string, [2]: string, [3]: string}[]` List of tuples with three
+--     items:
 --     • The badly spelled word.
 --     • The type of the spelling error: "bad" spelling mistake "rare" rare
 --       word "local" word only valid in another region "caps" word should
