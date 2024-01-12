@@ -5,20 +5,20 @@
 -- Decode a Base64 encoded string.
 -- 
 -- Parameters: ~
---   • {str}  (string) Base64 encoded string
+--   • {str}  (`string`) Base64 encoded string
 -- 
 -- Return: ~
---     (string) Decoded string
+--     (`string`) Decoded string
 --- @param str string
 function vim.base64.decode(str) end
 
 -- Encode {str} using Base64.
 -- 
 -- Parameters: ~
---   • {str}  (string) String to encode
+--   • {str}  (`string`) String to encode
 -- 
 -- Return: ~
---     (string) Encoded string
+--     (`string`) Encoded string
 --- @param str string
 function vim.base64.encode(str) end
 
@@ -51,9 +51,9 @@ function vim.call(func, ...) end
 -- ```
 -- 
 -- Parameters: ~
---   • {a}     (string) First string to compare
---   • {b}     (string) Second string to compare
---   • {opts}  table<string,any> Optional parameters:
+--   • {a}     (`string`) First string to compare
+--   • {b}     (`string`) Second string to compare
+--   • {opts}  (`table<string,any>`) Optional parameters:
 --             • `on_hunk` (callback): Invoked for each hunk in the diff.
 --               Return a negative number to cancel the callback for any
 --               remaining hunks. Args:
@@ -92,7 +92,7 @@ function vim.call(func, ...) end
 --               the internal diff library.
 -- 
 -- Return: ~
---     string|table|nil See {opts.result_type}. `nil` if {opts.on_hunk} is
+--     (`string|table?`) See {opts.result_type}. `nil` if {opts.on_hunk} is
 --     given.
 --- @param opts table<string, any>
 function vim.diff(a, b, opts) end
@@ -104,13 +104,13 @@ function vim.diff(a, b, opts) end
 -- ":Man 3 iconv".
 -- 
 -- Parameters: ~
---   • {str}   (string) Text to convert
---   • {from}  (number) Encoding of {str}
---   • {to}    (number) Target encoding
---   • {opts}  table<string,any>|nil
+--   • {str}   (`string`) Text to convert
+--   • {from}  (`number`) Encoding of {str}
+--   • {to}    (`number`) Target encoding
+--   • {opts}  (`table<string,any>?`)
 -- 
 -- Return: ~
---     (string|nil) Converted string if conversion succeeds, `nil` otherwise.
+--     (`string?`) Converted string if conversion succeeds, `nil` otherwise.
 --- @param str string
 --- @param from number
 --- @param to number
@@ -137,8 +137,8 @@ function vim.in_fast_event() end
 -- ```
 -- 
 -- Parameters: ~
---   • {str}   (string) Stringified JSON data.
---   • {opts}  table<string,any>|nil Options table with keys:
+--   • {str}   (`string`) Stringified JSON data.
+--   • {opts}  (`table<string,any>?`) Options table with keys:
 --             • luanil: (table) Table with keys:
 --               • object: (boolean) When true, converts `null` in JSON
 --                 objects to Lua `nil` instead of |vim.NIL|.
@@ -146,7 +146,7 @@ function vim.in_fast_event() end
 --                 to Lua `nil` instead of |vim.NIL|.
 -- 
 -- Return: ~
---     any
+--     (`any`)
 --- @param str string
 --- @param opts table<string, any>
 function vim.json.decode(str, opts) end
@@ -154,16 +154,16 @@ function vim.json.decode(str, opts) end
 -- Encodes (or "packs") Lua object {obj} as JSON in a Lua string.
 -- 
 -- Parameters: ~
---   • {obj}  any
+--   • {obj}  (`any`)
 -- 
 -- Return: ~
---     (string)
+--     (`string`)
 function vim.json.encode(obj) end
 
 -- Decodes (or "unpacks") the msgpack-encoded {str} to a Lua object.
 -- 
 -- Parameters: ~
---   • {str}  (string)
+--   • {str}  (`string`)
 --- @param str string
 function vim.mpack.decode(str) end
 
@@ -175,10 +175,10 @@ function vim.mpack.encode(obj) end
 -- They can be controlled with flags, see |/magic| and |/ignorecase|.
 -- 
 -- Parameters: ~
---   • {re}  (string)
+--   • {re}  (`string`)
 -- 
 -- Return: ~
---     vim.regex
+--     (`vim.regex`)
 function vim.regex(re) end
 
 -- Sends {event} to {channel} via |RPC| and returns immediately. If {channel}
@@ -187,10 +187,10 @@ function vim.regex(re) end
 -- This function also works in a fast callback |lua-loop-callbacks|.
 -- 
 -- Parameters: ~
---   • {channel}  (integer)
---   • {method}   (string)
---   • {args}     any[]|nil
---   • {...}      any|nil
+--   • {channel}  (`integer`)
+--   • {method}   (`string`)
+--   • {args}     (`any[]?`)
+--   • {...}      (`any?`)
 --- @param args any[]
 function vim.rpcnotify(channel, method, args, ...) end
 
@@ -201,10 +201,10 @@ function vim.rpcnotify(channel, method, args, ...) end
 -- special value
 -- 
 -- Parameters: ~
---   • {channel}  (integer)
---   • {method}   (string)
---   • {args}     any[]|nil
---   • {...}      any|nil
+--   • {channel}  (`integer`)
+--   • {method}   (`string`)
+--   • {args}     (`any[]?`)
+--   • {...}      (`any?`)
 --- @param args any[]
 function vim.rpcrequest(channel, method, args, ...) end
 
@@ -212,7 +212,7 @@ function vim.rpcrequest(channel, method, args, ...) end
 -- |textlock| or other temporary restrictions.
 -- 
 -- Parameters: ~
---   • {fn}  (function)
+--   • {fn}  (`function`)
 --- @param fn fun()
 function vim.schedule(fn) end
 
@@ -233,11 +233,11 @@ function vim.schedule(fn) end
 -- ```
 -- 
 -- Parameters: ~
---   • {str}  (string)
+--   • {str}  (`string`)
 -- 
 -- Return: ~
---     `{[1]: string, [2]: string, [3]: string}[]` List of tuples with three
---     items:
+--     (`{[1]: string, [2]: string, [3]: string}[]`) List of tuples with
+--     three items:
 --     • The badly spelled word.
 --     • The type of the spelling error: "bad" spelling mistake "rare" rare
 --       word "local" word only valid in another region "caps" word should
@@ -254,9 +254,9 @@ function vim.spell.check(str) end
 -- sequence.
 -- 
 -- Parameters: ~
---   • {str}        (string)
---   • {index}      (number)
---   • {use_utf16}  any|nil
+--   • {str}        (`string`)
+--   • {index}      (`number`)
+--   • {use_utf16}  (`any?`)
 --- @param str string
 --- @param index number
 function vim.str_byteindex(str, index, use_utf16) end
@@ -276,11 +276,11 @@ function vim.str_byteindex(str, index, use_utf16) end
 -- ```
 -- 
 -- Parameters: ~
---   • {str}    (string)
---   • {index}  (number)
+--   • {str}    (`string`)
+--   • {index}  (`number`)
 -- 
 -- Return: ~
---     (number)
+--     (`number`)
 --- @param str string
 --- @param index number
 function vim.str_utf_end(str, index) end
@@ -291,10 +291,10 @@ function vim.str_utf_end(str, index) end
 -- Embedded NUL bytes are treated as terminating the string.
 -- 
 -- Parameters: ~
---   • {str}  (string)
+--   • {str}  (`string`)
 -- 
 -- Return: ~
---     (table)
+--     (`table`)
 --- @param str string
 function vim.str_utf_pos(str) end
 
@@ -316,11 +316,11 @@ function vim.str_utf_pos(str) end
 -- ```
 -- 
 -- Parameters: ~
---   • {str}    (string)
---   • {index}  (number)
+--   • {str}    (`string`)
+--   • {index}  (`number`)
 -- 
 -- Return: ~
---     (number)
+--     (`number`)
 --- @param str string
 --- @param index number
 function vim.str_utf_start(str, index) end
@@ -334,12 +334,12 @@ function vim.str_utf_start(str, index) end
 -- that sequence.
 -- 
 -- Parameters: ~
---   • {str}    (string)
---   • {index}  (number|nil)
+--   • {str}    (`string`)
+--   • {index}  (`number?`)
 -- 
 -- Return (multiple): ~
---     (integer) UTF-32 index
---     (integer) UTF-16 index
+--     (`integer`) UTF-32 index
+--     (`integer`) UTF-16 index
 --- @param str string
 --- @param index number
 function vim.str_utfindex(str, index) end
@@ -347,12 +347,12 @@ function vim.str_utfindex(str, index) end
 -- Compares strings case-insensitively.
 -- 
 -- Parameters: ~
---   • {a}  (string)
---   • {b}  (string)
+--   • {a}  (`string`)
+--   • {b}  (`string`)
 -- 
 -- Return: ~
---     0|1|-1 if strings are equal, {a} is greater than {b} or {a} is lesser
---     than {b}, respectively.
+--     (`0|1|-1`) if strings are equal, {a} is greater than {b} or {a} is
+--     lesser than {b}, respectively.
 function vim.stricmp(a, b) end
 
 -- Attach to ui events, similar to |nvim_ui_attach()| but receive events as
@@ -391,11 +391,9 @@ function vim.stricmp(a, b) end
 -- ```
 -- 
 -- Parameters: ~
---   • {ns}        (integer)
---   • {options}   table<string, any
--- ```lua
---   • {callback}  fun()
--- ```
+--   • {ns}        (`integer`)
+--   • {options}   (`table<string, any>`)
+--   • {callback}  (`fun()`)
 --- @param ns number
 --- @param options table<string, any>
 --- @param callback fun()
@@ -405,7 +403,7 @@ function vim.ui_attach(ns, options, callback) end
 -- namespace {ns}.
 -- 
 -- Parameters: ~
---   • {ns}  (integer)
+--   • {ns}  (`integer`)
 --- @param ns number
 function vim.ui_detach(ns) end
 
@@ -442,16 +440,16 @@ function vim.ui_detach(ns) end
 -- ```
 -- 
 -- Parameters: ~
---   • {time}       (integer) Number of milliseconds to wait
---   • {callback}   fun():|nil boolean Optional callback. Waits until
+--   • {time}       (`integer`) Number of milliseconds to wait
+--   • {callback}   (`fun(): boolean?`) Optional callback. Waits until
 --                  {callback} returns true
---   • {interval}   (integer|nil) (Approximate) number of milliseconds to
---                  wait between polls
---   • {fast_only}  (boolean|nil) If true, only |api-fast| events will be
+--   • {interval}   (`integer?`) (Approximate) number of milliseconds to wait
+--                  between polls
+--   • {fast_only}  (`boolean?`) If true, only |api-fast| events will be
 --                  processed.
 -- 
 -- Return: ~
---     boolean, nil|-1|-2
+--     (`boolean, -1|-2?`)
 --     • If {callback} returns `true` during the {time}: `true, nil`
 --     • If {callback} never returns `true` during the {time}: `false, -1`
 --     • If {callback} is interrupted during the {time}: `false, -2`
