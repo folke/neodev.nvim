@@ -4794,7 +4794,7 @@ function vim.fn.mapnew(expr1, expr2) end
 --   endfor
 -- ```
 --- @param dict table<string, any>
-function vim.fn.mapset(mode, abbr, dict) end
+function vim.fn.mapset(dict) end
 
 -- When {expr} is a |List| then this returns the index of the
 -- first item where {pat} matches.  Each item is used as a
