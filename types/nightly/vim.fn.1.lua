@@ -1,5 +1,136 @@
 ---@meta
 
+-- Create directory {name}.
+-- 
+-- When {flags} is present it must be a string.  An empty string
+-- has no effect.
+-- 
+-- If {flags} contains "p" then intermediate directories are
+-- created as necessary.
+-- 
+-- If {flags} contains "D" then {name} is deleted at the end of
+-- the current function, as with: 
+-- ```vim
+--   defer delete({name}, 'd')
+-- ```
+-- If {flags} contains "R" then {name} is deleted recursively at
+-- the end of the current function, as with: 
+-- ```vim
+--   defer delete({name}, 'rf')
+-- ```
+-- Note that when {name} has more than one part and "p" is used
+-- some directories may already exist.  Only the first one that
+-- is created and what it contains is scheduled to be deleted.
+-- E.g. when using: 
+-- ```vim
+--   call mkdir('subdir/tmp/autoload', 'pR')
+-- ```
+-- and "subdir" already exists then "subdir/tmp" will be
+-- scheduled for deletion, like with: 
+-- ```vim
+--   defer delete('subdir/tmp', 'rf')
+-- ```
+-- If {prot} is given it is used to set the protection bits of
+-- the new directory.  The default is 0o755 (rwxr-xr-x: r/w for
+-- the user, readable for others).  Use 0o700 to make it
+-- unreadable for others.
+-- 
+-- {prot} is applied for all parts of {name}.  Thus if you create
+-- /tmp/foo/bar then /tmp/foo will be created with 0o700. Example: 
+-- ```vim
+--   call mkdir($HOME .. "/tmp/foo/bar", "p", 0o700)
+-- 
+-- ```
+-- This function is not available in the |sandbox|.
+-- 
+-- If you try to create an existing directory with {flags} set to
+-- "p" mkdir() will silently exit.
+-- 
+-- The function result is a Number, which is TRUE if the call was
+-- successful or FALSE if the directory creation failed or partly
+-- failed.
+--- @param flags? any
+--- @param prot? any
+function vim.fn.mkdir(name, flags, prot) end
+
+-- Return a string that indicates the current mode.
+-- If [expr] is supplied and it evaluates to a non-zero Number or
+-- a non-empty String (|non-zero-arg|), then the full mode is
+-- returned, otherwise only the first letter is returned.
+-- Also see |state()|.
+-- 
+--    n      Normal
+--    no      Operator-pending
+--    nov      Operator-pending (forced charwise |o_v|)
+--    noV      Operator-pending (forced linewise |o_V|)
+--    noCTRL-V Operator-pending (forced blockwise |o_CTRL-V|)
+--     CTRL-V is one character
+--    niI      Normal using |i_CTRL-O| in |Insert-mode|
+--    niR      Normal using |i_CTRL-O| in |Replace-mode|
+--    niV      Normal using |i_CTRL-O| in |Virtual-Replace-mode|
+--    nt      Normal in |terminal-emulator| (insert goes to
+--     Terminal mode)
+--    ntT      Normal using |t_CTRL-\_CTRL-O| in |Terminal-mode|
+--    v      Visual by character
+--    vs      Visual by character using |v_CTRL-O| in Select mode
+--    V      Visual by line
+--    Vs      Visual by line using |v_CTRL-O| in Select mode
+--    CTRL-V   Visual blockwise
+--    CTRL-Vs  Visual blockwise using |v_CTRL-O| in Select mode
+--    s      Select by character
+--    S      Select by line
+--    CTRL-S   Select blockwise
+--    i      Insert
+--    ic      Insert mode completion |compl-generic|
+--    ix      Insert mode |i_CTRL-X| completion
+--    R      Replace |R|
+--    Rc      Replace mode completion |compl-generic|
+--    Rx      Replace mode |i_CTRL-X| completion
+--    Rv      Virtual Replace |gR|
+--    Rvc      Virtual Replace mode completion |compl-generic|
+--    Rvx      Virtual Replace mode |i_CTRL-X| completion
+--    c      Command-line editing
+--    cr      Command-line editing overstrike mode |c_<Insert>|
+--    cv      Vim Ex mode |gQ|
+--    cvr      Vim Ex mode while in overstrike mode |c_<Insert>|
+--    r      Hit-enter prompt
+--    rm      The -- more -- prompt
+--    r?      A |:confirm| query of some sort
+--    !      Shell or external command is executing
+--    t      Terminal mode: keys go to the job
+-- 
+-- This is useful in the 'statusline' option or RPC calls. In
+-- most other places it always returns "c" or "n".
+-- Note that in the future more modes and more specific modes may
+-- be added. It's better not to compare the whole string but only
+-- the leading character(s).
+-- Also see |visualmode()|.
+--- @param expr? any
+function vim.fn.mode(expr) end
+
+-- Convert a list of Vimscript objects to msgpack. Returned value is a
+-- |readfile()|-style list. When {type} contains "B", a |Blob| is
+-- returned instead. Example: 
+-- ```vim
+--   call writefile(msgpackdump([{}]), 'fname.mpack', 'b')
+-- ```
+-- or, using a |Blob|: >vim
+--   call writefile(msgpackdump([{}], 'B'), 'fname.mpack')
+-- <
+-- This will write the single 0x80 byte to a `fname.mpack` file
+-- (dictionary with zero items is represented by 0x80 byte in
+-- messagepack).
+-- 
+-- Limitations:
+-- 1. |Funcref|s cannot be dumped.
+-- 2. Containers that reference themselves cannot be dumped.
+-- 3. Dictionary keys are always dumped as STR strings.
+-- 4. Other strings and |Blob|s are always dumped as BIN strings.
+-- 5. Points 3. and 4. do not apply to |msgpack-special-dict|s.
+--- @param list any[]
+--- @param type? any
+function vim.fn.msgpackdump(list, type) end
+
 -- Convert a |readfile()|-style list or a |Blob| to a list of
 -- Vimscript objects.
 -- Example: 
