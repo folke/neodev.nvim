@@ -92,7 +92,7 @@ local uv = {}
 
 ---@alias uv.aliases.buffer string|string[]
 
----@alias uv.aliases.threadargs userdata|string|number|boolean|nil
+---@alias uv.aliases.threadargs userdata|string|number|boolean|nil # numbers of argument limited to 9.
 
 
 
@@ -1260,10 +1260,11 @@ function uv.disable_stdio_inheritance() end
 ---
 ---The `options` table accepts the following fields:
 ---
---- - `options.args` - Command line arguments as a list of string. The first
----string should be the path to the program. On Windows, this uses CreateProcess
----which concatenates the arguments into a string. This can cause some strange
----errors. (See `options.verbatim` below for Windows.)
+--- - `options.args` - Command line arguments as a list of strings. The first
+---  string should *not* be the path to the program, since that is already
+---  provided via `path`. On Windows, this uses CreateProcess which concatenates
+---  the arguments into a string. This can cause some strange errors
+---  (see `options.verbatim` below for Windows).
 ---
 --- - `options.stdio` - Set the file descriptors that will be made available to
 ---  the child process. The convention is that the first entries are stdin, stdout,
@@ -1549,146 +1550,146 @@ local uv_tcp_t = {}
 ---|'"packet"'
 
 ---@alias uv.aliases.network_protocols
----|'"ip"'         # internet protocol, pseudo protocol number
----|'"hopopt"'     # hop-by-hop options for ipv6
----|'"icmp"'       # internet control message protocol
----|'"igmp"'       # internet group management protocol
----|'"ggp"'        # gateway-gateway protocol
----|'"ipv4"'       # IPv4 encapsulation
----|'"st"'         # ST datagram mode
----|'"tcp"'        # transmission control protocol
----|'"cbt"'        # CBT, Tony Ballardie <A.Ballardie@cs.ucl.ac.uk>
----|'"egp"'        # exterior gateway protocol
----|'"igp"'        # any private interior gateway (Cisco: for IGRP)
----|'"bbn-rcc"'    # BBN RCC Monitoring
----|'"nvp"'        # Network Voice Protocol
----|'"pup"'        # PARC universal packet protocol
----|'"argus"'      # ARGUS (deprecated)
----|'"emcon"'      # EMCON
----|'"xnet"'       # Cross Net Debugger
----|'"chaos"'      # Chaos
----|'"udp"'        # user datagram protocol
----|'"mux"'        # Multiplexing protocol
----|'"dcn"'        # DCN Measurement Subsystems
----|'"hmp"'        # host monitoring protocol
----|'"prm"'        # packet radio measurement protocol
----|'"xns-idp"'    # Xerox NS IDP
----|'"trunk-1"'    # Trunk-1
----|'"trunk-2"'    # Trunk-2
----|'"leaf-1"'     # Leaf-1
----|'"leaf-2"'     # Leaf-2
----|'"rdp"'        # "reliable datagram" protocol
----|'"irtp"'       # Internet Reliable Transaction Protocol
----|'"iso-tp4"'    # ISO Transport Protocol Class 4
----|'"netblt"'     # Bulk Data Transfer Protocol
----|'"mfe-nsp"'    # MFE Network Services Protocol
----|'"merit-inp"'  # MERIT Internodal Protocol
----|'"dccp"'       # Datagram Congestion Control Protocol
----|'"3pc"'        # Third Party Connect Protocol
----|'"idpr"'       # Inter-Domain Policy Routing Protocol
----|'"xtp"'        # Xpress Tranfer Protocol
----|'"ddp"'        # Datagram Delivery Protocol
----|'"idpr-cmtp"'  # IDPR Control Message Transport Proto
----|'"tp++"'       # TP++ Transport Protocol
----|'"il"'         # IL Transport Protocol
----|'"ipv6"'       # IPv6 encapsulation
----|'"sdrp"'       # Source Demand Routing Protocol
----|'"ipv6-route"' # Routing Header for IPv6
----|'"ipv6-frag"'  # Fragment Header for IPv6
----|'"idrp"'       # Inter-Domain Routing Protocol
----|'"rsvp"'       # Resource ReSerVation Protocol
----|'"gre"'        # Generic Routing Encapsulation
----|'"dsr"'        # Dynamic Source Routing Protocol
----|'"bna"'        # BNA
----|'"esp"'        # Encap Security Payload
----|'"ipv6-crypt"' # Encryption Header for IPv6 (not in official list)
----|'"ah"'         # Authentication Header
----|'"ipv6-auth"'  # Authentication Header for IPv6 (not in official list)
----|'"i-nlsp"'     # Integrated Net Layer Security TUBA
----|'"swipe"'      # IP with Encryption
----|'"narp"'       # NBMA Address Resolution Protocol
----|'"mobile"'     # IP Mobility
----|'"tlsp"'       # Transport Layer Security Protocol
----|'"skip"'       # SKIP
----|'"ipv6-icmp"'  # ICMP for IPv6
----|'"ipv6-nonxt"' # No Next Header for IPv6
----|'"ipv6-opts"'  # Destination Options for IPv6
----|'"#"'          # any host internal protocol
----|'"cftp"'       # CFTP
----|'"#"'          # any local network
----|'"sat-expak"'  # SATNET and Backroom EXPAK
----|'"kryptolan"'  # Kryptolan
----|'"rvd"'        # MIT Remote Virtual Disk Protocol
----|'"ippc"'       # Internet Pluribus Packet Core
----|'"#"'          # any distributed file system
----|'"sat-mon"'    # SATNET Monitoring
----|'"visa"'       # VISA Protocol
----|'"ipcv"'       # Internet Packet Core Utility
----|'"cpnx"'       # Computer Protocol Network Executive
----|'"cphb"'       # Computer Protocol Heart Beat
----|'"wsn"'        # Wang Span Network
----|'"pvp"'        # Packet Video Protocol
----|'"br-sat-mon"' # Backroom SATNET Monitoring
----|'"sun-nd"'     # SUN ND PROTOCOL-Temporary
----|'"wb-mon"'     # WIDEBAND Monitoring
----|'"wb-expak"'   # WIDEBAND EXPAK
----|'"iso-ip"'     # ISO Internet Protocol
----|'"vmtp"'       # Versatile Message Transport
----|'"secure-vmtp"' # SECURE-VMTP
----|'"vines"'      # VINES
----|'"ttp"'        # TTP
----|'"nsfnet-igp"' # NSFNET-IGP
----|'"dgp"'        # Dissimilar Gateway Protocol
----|'"tcf"'        # TCF
----|'"eigrp"'      # Enhanced Interior Routing Protocol (Cisco)
----|'"ospf"'       # Open Shortest Path First IGP
----|'"sprite-rpc"' # Sprite RPC Protocol
----|'"larp"'       # Locus Address Resolution Protocol
----|'"mtp"'        # Multicast Transport Protocol
----|'"ax.25"'      # AX.25 Frames
----|'"ipip"'       # Yet Another IP encapsulation
----|'"micp"'       # Mobile Internetworking Control Pro.
----|'"scc-sp"'     # Semaphore Communications Sec. Pro.
----|'"etherip"'    # Ethernet-within-IP Encapsulation
----|'"encap"'      # Yet Another IP encapsulation
----|'"#"'          # any private encryption scheme
----|'"gmtp"'       # GMTP
----|'"ifmp"'       # Ipsilon Flow Management Protocol
----|'"pnni"'       # PNNI over IP
----|'"pim"'        # Protocol Independent Multicast
----|'"aris"'       # ARIS
----|'"scps"'       # SCPS
----|'"qnx"'        # QNX
----|'"a/n"'        # Active Networks
----|'"ipcomp"'     # IP Payload Compression Protocol
----|'"snp"'        # Sitara Networks Protocol
----|'"compaq-peer"' # Compaq Peer Protocol
----|'"ipx-in-ip"'  # IPX in IP
----|'"vrrp"'       # Virtual Router Redundancy Protocol
----|'"pgm"'        # PGM Reliable Transport Protocol
----|'"#"'          # any 0-hop protocol
----|'"l2tp"'       # Layer Two Tunneling Protocol
----|'"ddx"'        # D-II Data Exchange
----|'"iatp"'        # Interactive Agent Transfer Protocol
----|'"stp"'        # Schedule Transfer
----|'"srp"'        # SpectraLink Radio Protocol
----|'"uti"'        # UTI
----|'"smp"'        # Simple Message Protocol
----|'"sm"'         # SM (deprecated)
----|'"ptp"'        # Performance Transparency Protocol
----|'"isis"'       # ISIS over IPv4
----|'"crtp"'       # Combat Radio Transport Protocol
----|'"crudp"'      # Combat Radio User Datagram
----|'"sps"'        # Secure Packet Shield
----|'"pipe"'       # Private IP Encapsulation within IP
----|'"sctp"'       # Stream Control Transmission Protocol
----|'"fc"'         # Fibre Channel
+---|'"ip"'              # internet protocol, pseudo protocol number
+---|'"hopopt"'          # hop-by-hop options for ipv6
+---|'"icmp"'            # internet control message protocol
+---|'"igmp"'            # internet group management protocol
+---|'"ggp"'             # gateway-gateway protocol
+---|'"ipv4"'            # IPv4 encapsulation
+---|'"st"'              # ST datagram mode
+---|'"tcp"'             # transmission control protocol
+---|'"cbt"'             # CBT, Tony Ballardie <A.Ballardie@cs.ucl.ac.uk>
+---|'"egp"'             # exterior gateway protocol
+---|'"igp"'             # any private interior gateway (Cisco: for IGRP)
+---|'"bbn-rcc"'         # BBN RCC Monitoring
+---|'"nvp"'             # Network Voice Protocol
+---|'"pup"'             # PARC universal packet protocol
+---|'"argus"'           # ARGUS (deprecated)
+---|'"emcon"'           # EMCON
+---|'"xnet"'            # Cross Net Debugger
+---|'"chaos"'           # Chaos
+---|'"udp"'             # user datagram protocol
+---|'"mux"'             # Multiplexing protocol
+---|'"dcn"'             # DCN Measurement Subsystems
+---|'"hmp"'             # host monitoring protocol
+---|'"prm"'             # packet radio measurement protocol
+---|'"xns-idp"'         # Xerox NS IDP
+---|'"trunk-1"'         # Trunk-1
+---|'"trunk-2"'         # Trunk-2
+---|'"leaf-1"'          # Leaf-1
+---|'"leaf-2"'          # Leaf-2
+---|'"rdp"'             # "reliable datagram" protocol
+---|'"irtp"'            # Internet Reliable Transaction Protocol
+---|'"iso-tp4"'         # ISO Transport Protocol Class 4
+---|'"netblt"'          # Bulk Data Transfer Protocol
+---|'"mfe-nsp"'         # MFE Network Services Protocol
+---|'"merit-inp"'       # MERIT Internodal Protocol
+---|'"dccp"'            # Datagram Congestion Control Protocol
+---|'"3pc"'             # Third Party Connect Protocol
+---|'"idpr"'            # Inter-Domain Policy Routing Protocol
+---|'"xtp"'             # Xpress Tranfer Protocol
+---|'"ddp"'             # Datagram Delivery Protocol
+---|'"idpr-cmtp"'       # IDPR Control Message Transport Proto
+---|'"tp++"'            # TP++ Transport Protocol
+---|'"il"'              # IL Transport Protocol
+---|'"ipv6"'            # IPv6 encapsulation
+---|'"sdrp"'            # Source Demand Routing Protocol
+---|'"ipv6-route"'      # Routing Header for IPv6
+---|'"ipv6-frag"'       # Fragment Header for IPv6
+---|'"idrp"'            # Inter-Domain Routing Protocol
+---|'"rsvp"'            # Resource ReSerVation Protocol
+---|'"gre"'             # Generic Routing Encapsulation
+---|'"dsr"'             # Dynamic Source Routing Protocol
+---|'"bna"'             # BNA
+---|'"esp"'             # Encap Security Payload
+---|'"ipv6-crypt"'      # Encryption Header for IPv6 (not in official list)
+---|'"ah"'              # Authentication Header
+---|'"ipv6-auth"'       # Authentication Header for IPv6 (not in official list)
+---|'"i-nlsp"'          # Integrated Net Layer Security TUBA
+---|'"swipe"'           # IP with Encryption
+---|'"narp"'            # NBMA Address Resolution Protocol
+---|'"mobile"'          # IP Mobility
+---|'"tlsp"'            # Transport Layer Security Protocol
+---|'"skip"'            # SKIP
+---|'"ipv6-icmp"'       # ICMP for IPv6
+---|'"ipv6-nonxt"'      # No Next Header for IPv6
+---|'"ipv6-opts"'       # Destination Options for IPv6
+---|'"#"'               # any host internal protocol
+---|'"cftp"'            # CFTP
+---|'"#"'               # any local network
+---|'"sat-expak"'       # SATNET and Backroom EXPAK
+---|'"kryptolan"'       # Kryptolan
+---|'"rvd"'             # MIT Remote Virtual Disk Protocol
+---|'"ippc"'            # Internet Pluribus Packet Core
+---|'"#"'               # any distributed file system
+---|'"sat-mon"'         # SATNET Monitoring
+---|'"visa"'            # VISA Protocol
+---|'"ipcv"'            # Internet Packet Core Utility
+---|'"cpnx"'            # Computer Protocol Network Executive
+---|'"cphb"'            # Computer Protocol Heart Beat
+---|'"wsn"'             # Wang Span Network
+---|'"pvp"'             # Packet Video Protocol
+---|'"br-sat-mon"'      # Backroom SATNET Monitoring
+---|'"sun-nd"'          # SUN ND PROTOCOL-Temporary
+---|'"wb-mon"'          # WIDEBAND Monitoring
+---|'"wb-expak"'        # WIDEBAND EXPAK
+---|'"iso-ip"'          # ISO Internet Protocol
+---|'"vmtp"'            # Versatile Message Transport
+---|'"secure-vmtp"'     # SECURE-VMTP
+---|'"vines"'           # VINES
+---|'"ttp"'             # TTP
+---|'"nsfnet-igp"'      # NSFNET-IGP
+---|'"dgp"'             # Dissimilar Gateway Protocol
+---|'"tcf"'             # TCF
+---|'"eigrp"'           # Enhanced Interior Routing Protocol (Cisco)
+---|'"ospf"'            # Open Shortest Path First IGP
+---|'"sprite-rpc"'      # Sprite RPC Protocol
+---|'"larp"'            # Locus Address Resolution Protocol
+---|'"mtp"'             # Multicast Transport Protocol
+---|'"ax.25"'           # AX.25 Frames
+---|'"ipip"'            # Yet Another IP encapsulation
+---|'"micp"'            # Mobile Internetworking Control Pro.
+---|'"scc-sp"'          # Semaphore Communications Sec. Pro.
+---|'"etherip"'         # Ethernet-within-IP Encapsulation
+---|'"encap"'           # Yet Another IP encapsulation
+---|'"#"'               # any private encryption scheme
+---|'"gmtp"'            # GMTP
+---|'"ifmp"'            # Ipsilon Flow Management Protocol
+---|'"pnni"'            # PNNI over IP
+---|'"pim"'             # Protocol Independent Multicast
+---|'"aris"'            # ARIS
+---|'"scps"'            # SCPS
+---|'"qnx"'             # QNX
+---|'"a/n"'             # Active Networks
+---|'"ipcomp"'          # IP Payload Compression Protocol
+---|'"snp"'             # Sitara Networks Protocol
+---|'"compaq-peer"'     # Compaq Peer Protocol
+---|'"ipx-in-ip"'       # IPX in IP
+---|'"vrrp"'            # Virtual Router Redundancy Protocol
+---|'"pgm"'             # PGM Reliable Transport Protocol
+---|'"#"'               # any 0-hop protocol
+---|'"l2tp"'            # Layer Two Tunneling Protocol
+---|'"ddx"'             # D-II Data Exchange
+---|'"iatp"'            # Interactive Agent Transfer Protocol
+---|'"stp"'             # Schedule Transfer
+---|'"srp"'             # SpectraLink Radio Protocol
+---|'"uti"'             # UTI
+---|'"smp"'             # Simple Message Protocol
+---|'"sm"'              # SM (deprecated)
+---|'"ptp"'             # Performance Transparency Protocol
+---|'"isis"'            # ISIS over IPv4
+---|'"crtp"'            # Combat Radio Transport Protocol
+---|'"crudp"'           # Combat Radio User Datagram
+---|'"sps"'             # Secure Packet Shield
+---|'"pipe"'            # Private IP Encapsulation within IP
+---|'"sctp"'            # Stream Control Transmission Protocol
+---|'"fc"'              # Fibre Channel
 ---|'"mobility-header"' # Mobility Header
----|'"manet"'      # MANET Protocols
----|'"hip"'        # Host Identity Protocol
----|'"shim6"'      # Shim6 Protocol
----|'"wesp"'       # Wrapped Encapsulating Security Payload
----|'"rohc"'       # Robust Header Compression
+---|'"manet"'           # MANET Protocols
+---|'"hip"'             # Host Identity Protocol
+---|'"shim6"'           # Shim6 Protocol
+---|'"wesp"'            # Wrapped Encapsulating Security Payload
+---|'"rohc"'            # Robust Header Compression
 
 ---@alias uv.aliases.tcp_socket_type
 ---|>'"stream"'
@@ -1908,6 +1909,10 @@ local uv_pipe_t = {}
 
 ---@alias uv.aliases.pipe_rtn {read: integer, write: integer}
 
+-- TODO: seems like a typo in the field name upstream
+
+---@alias uv.aliases.pipe_2_flags {no_trunate: boolean}
+
 ---
 ---Creates and initializes a new `uv_pipe_t`. Returns the Lua userdata wrapping
 ---it. The `ipc` argument is a boolean to indicate if this pipe will be used for
@@ -2053,6 +2058,55 @@ uv_pipe_t.chmod = uv.pipe_chmod
 ---@return uv.aliases.pipe_rtn|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.pipe(read_flags, write_flags) end
+
+---
+---Bind the pipe to a file path (Unix) or a name (Windows).
+---
+---`Flags`:
+---
+--- - If `type(flags)` is `number`, it must be `0` or `uv.constants.PIPE_NO_TRUNCATE`.
+--- - If `type(flags)` is `table`, it must be `{}` or `{ no_trunate = true|false }`.
+--- - If `type(flags)` is `nil`, it use default value `0`.
+--- - Returns `EINVAL` for unsupported flags without performing the bind operation.
+---
+---Supports Linux abstract namespace sockets. namelen must include the leading '\0' byte but not the trailing nul byte.
+---
+---**Note**:
+---1. Paths on Unix get truncated to sizeof(sockaddr_un.sun_path) bytes,
+---typically between 92 and 108 bytes.
+---2. New in version 1.46.0.
+---
+---@param pipe uv_pipe_t
+---@param name string
+---@param flags integer|uv.aliases.pipe_2_flags|nil # (default: 0)
+---@return 0|nil success, string? err_name, string? err_msg
+function uv.pipe_bind2(pipe, name, flags) end
+uv_pipe_t.bind2 = uv.pipe_bind2
+
+---
+---Connect to the Unix domain socket or the named pipe.
+---
+---`Flags`:
+---
+--- - If `type(flags)` is `number`, it must be `0` or `uv.constants.PIPE_NO_TRUNCATE`.
+--- - If `type(flags)` is `table`, it must be `{}` or `{ no_trunate = true|false }`.
+--- - If `type(flags)` is `nil`, it use default value `0`.
+--- - Returns `EINVAL` for unsupported flags without performing the bind operation.
+---
+---Supports Linux abstract namespace sockets. namelen must include the leading nul byte but not the trailing nul byte.
+---
+---**Note**:
+---1. Paths on Unix get truncated to sizeof(sockaddr_un.sun_path) bytes,
+---typically between 92 and 108 bytes.
+---2. New in version 1.46.0.
+---
+---@param pipe uv_pipe_t
+---@param name string
+---@param flags integer|uv.aliases.pipe_2_flags|nil # (default: 0)
+---@param callback fun(err?: string)|nil
+---@return uv_connect_t|nil stream, string? err_name, string? err_msg
+function uv.pipe_connect2(pipe, name, flags, callback) end
+uv_pipe_t.connect2 = uv.pipe_connect2
 
 
 
@@ -2481,7 +2535,7 @@ local uv_fs_poll_t = {}
 ---@nodiscard
 function uv.new_fs_poll() end
 
--- TODO: make sure that the above methof can indeed return nil + error.
+-- TODO: make sure that the above method can indeed return nil + error.
 -- confirmed to never return error see libuv/fs-poll#uv_fs_poll_init
 
 ---
@@ -3375,7 +3429,7 @@ function uv.fs_opendir(path, entries, callback) end
 function uv.fs_opendir(path, entries) end
 
 ---
----Iterates over the directory stream `uv_dir_t` returned by a successful
+---Iterates over the directory stream `luv_dir_t` returned by a successful
 ---`uv.fs_opendir()` call. A table of data tables is returned where the number
 ---of entries `n` is equal to or less than the `entries` parameter used in
 ---the associated `uv.fs_opendir()` call.
@@ -3521,12 +3575,16 @@ function uv.getnameinfo(address) end
 ---@section Threading and synchronization utilities
 local luv_thread_t = {}
 
+---@alias uv.aliases.thread_affinity {[integer]: boolean}
+
 ---
 ---Creates and initializes a `luv_thread_t` (not `uv_thread_t`). Returns the Lua
 ---userdata wrapping it and asynchronously executes `entry`, which can be
 ---either a Lua function or a string containing Lua code or bytecode dumped from a function. Additional arguments `...`
 ---are passed to the `entry` function and an optional `options` table may be
 ---provided. Currently accepted `option` fields are `stack_size`.
+---
+---**Note** unsafe, please make sure the thread end of life before Lua state close.
 ---
 ---@generic T: uv.aliases.threadargs
 ---@param options? {stack_size?: integer}
@@ -3554,9 +3612,67 @@ function uv.thread_equal(thread, other_thread) end
 luv_thread_t.equal = uv.thread_equal
 
 ---
+---Sets the specified thread's affinity setting.
+---
+---`affinity` must be a table where each of the keys are a CPU number and the
+---values are booleans that represent whether the `thread` should be eligible to
+---run on that CPU. If the length of the `affinity` table is not greater than or
+---equal to `uv.cpumask_size()`, any CPU numbers missing from the table will have
+---their affinity set to `false`. If setting the affinity of more than
+---`uv.cpumask_size()` CPUs is desired, `affinity` must be an array-like table
+---with no gaps, since `#affinity` will be used as the `cpumask_size` if it is
+---greater than `uv.cpumask_size()`.
+---
+---If `get_old_affinity` is `true`, the previous affinity settings for the `thread`
+---will be returned. Otherwise, `true` is returned after a successful call.
+---
+---**Note:** Thread affinity setting is not atomic on Windows. Unsupported on macOS.
+---
+---@param thread luv_thread_t
+---@param affinity uv.aliases.thread_affinity
+---@param get_old_affinity? boolean
+---@return boolean|uv.aliases.thread_affinity|nil, string? err_name, string? err_msg
+function uv.thread_setaffinity(thread, affinity, get_old_affinity) end
+luv_thread_t.setaffinity = uv.thread_setaffinity
+
+-- TODO: the above probably needs to use overloads for the different returns.
+-- TODO: the overload with the table return needs a @nodiscard.
+
+---
+---Gets the specified thread's affinity setting.
+---
+---If `mask_size` is provided, it must be greater than or equal to
+---`uv.cpumask_size()`. If the `mask_size` parameter is omitted, then the return
+---of `uv.cpumask_size()` will be used. Returns an array-like table where each of
+---the keys correspond to a CPU number and the values are booleans that represent
+---whether the `thread` is eligible to run on that CPU.
+---
+---**Note:** Thread affinity getting is not atomic on Windows. Unsupported on macOS.
+---
+---@param thread luv_thread_t
+---@param mask_size? integer
+---@return table?, string? err_name, string? err_msg
+---@nodiscard
+function uv.thread_getaffinity(thread, mask_size) end
+luv_thread_t.getaffinity = uv.thread_getaffinity
+
+---
+---Gets the CPU number on which the calling thread is running.
+---
+---**Note:** The first CPU will be returned as the number 1, not 0. This allows for
+---the number to correspond with the table keys used in `uv.thread_getaffinity` and
+---`uv.thread_setaffinity`.
+---
+---@return integer?, string? err_name, string? err_msg
+---@nodiscard
+function uv.thread_getcpu() end
+luv_thread_t.getcpu = uv.thread_getcpu
+
+---
 ---Returns the handle for the thread in which this is called.
 ---
 ---@return luv_thread_t
+---@nodiscard
 function uv.thread_self() end
 
 ---
@@ -3589,6 +3705,8 @@ function uv.sleep(msec) end
 ---@alias uv.aliases.cpu_info {[integer]: {modal: string, speed: number, times: {user: number, nice: number, sys: number, idle: number, irq: number}}}
 
 ---@alias uv.aliases.interface_addresses {[string]: {ip: string, family: uv.aliases.network_family, netmask: string, internal: boolean, mac: string}}
+
+---@alias uv.aliases.clock_gettime_rtn {sec: integer, nsec: integer}
 
 ---
 ---Returns the executable path.
@@ -3650,6 +3768,16 @@ function uv.get_free_memory() end
 function uv.get_constrained_memory() end
 
 ---
+---Gets the amount of free memory that is still available to the process (in
+---bytes). This differs from `uv.get_free_memory()` in that it takes into account
+---any limits imposed by the OS. If there is no such constraint, or the constraint
+---is unknown, the amount returned will be identical to `uv.get_free_memory()`.
+---
+---@return number
+---@nodiscard
+function uv.get_available_memory() end
+
+---
 ---Returns the resident set size (RSS) for the current process.
 ---
 ---@return integer|nil, string? err_name, string? err_msg
@@ -3683,6 +3811,14 @@ function uv.available_parallelism() end
 ---@return uv.aliases.cpu_info|nil, string? err_name, string? err_msg
 ---@nodiscard
 function uv.cpu_info() end
+
+---
+---Returns the maximum size of the mask used for process/thread affinities, or
+---`ENOTSUP` if affinities are not supported on the current platform.
+---
+---@return integer|nil, string? err_name, string? err_msg
+---@nodiscard
+function uv.cpumask_size() end
 
 ---
 ---**Deprecated:** Please use `uv.os_getpid()` instead.
@@ -3735,6 +3871,21 @@ function uv.setgid(id) end
 ---@return integer
 ---@nodiscard
 function uv.hrtime() end
+
+---
+---Obtain the current system time from a high-resolution real-time or monotonic
+---clock source. `clock_id` can be the string `"monotonic"` or `"realtime"`.
+---
+---The real-time clock counts from the UNIX epoch (1970-01-01) and is subject
+---to time adjustments; it can jump back in time.
+---
+---The monotonic clock counts from an arbitrary point in the past and never
+---jumps back in time.
+---
+---@param clock_id string
+---@return uv.aliases.clock_gettime_rtn?, string? err_name, string? err_msg
+---@nodiscard
+function uv.clock_gettime(clock_id) end
 
 ---
 ---Returns the current system uptime in seconds.
@@ -3967,6 +4118,8 @@ function uv.translate_sys_error(errcode) end
 ---@source metrics.c
 ---
 
+---@alias uv.aliases.metric_info_rtn {loop_count: integer, events: integer, events_waiting: integer}
+
 ---
 ---Retrieve the amount of time the event loop has been idle in the kernel’s event
 ---provider (e.g. `epoll_wait`). The call is thread safe.
@@ -3981,6 +4134,15 @@ function uv.translate_sys_error(errcode) end
 ---@nodiscard
 function uv.metrics_idle_time() end
 
+---
+---Get the metrics table from current set of event loop metrics. It is recommended
+---to retrieve these metrics in a `prepare` callback (see `uv.new_prepare`,
+---`uv.prepare_start`) in order to make sure there are no inconsistencies with the
+---metrics counters.
+---
+---@return uv.aliases.metric_info_rtn
+---@nodiscard
+function uv.metrics_info() end
 
 
 -- [[ constants ]]
