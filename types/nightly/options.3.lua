@@ -729,6 +729,9 @@ function vim.opt.startofline:get()end
 -- 		      when drawing the actual buffer line, and positive when
 -- 		      drawing the wrapped part of a buffer line.
 -- 
+-- 	When using |v:relnum|, keep in mind that cursor movement by itself will
+-- 	not cause the `'statuscolumn'`  to update unless |`'relativenumber'` | is set.
+-- 
 -- 	NOTE: The %@ click execute function item is supported as well but the
 -- 	specified function will be the same for each row in the same column.
 -- 	It cannot be switched out through a dynamic `'statuscolumn'`  format, the
