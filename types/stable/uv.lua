@@ -1909,9 +1909,7 @@ local uv_pipe_t = {}
 
 ---@alias uv.aliases.pipe_rtn {read: integer, write: integer}
 
--- TODO: seems like a typo in the field name upstream
-
----@alias uv.aliases.pipe_2_flags {no_trunate: boolean}
+---@alias uv.aliases.pipe_2_flags {no_truncate: boolean}
 
 ---
 ---Creates and initializes a new `uv_pipe_t`. Returns the Lua userdata wrapping
