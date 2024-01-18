@@ -571,7 +571,7 @@ function vim.opt.filetype:get()end
 -- 	Characters to fill the statuslines, vertical separators and special
 -- 	lines in the window.
 -- 	It is a comma-separated list of items.  Each item has a name, a colon
--- 	and the value of that item:
+-- 	and the value of that item: |E1511|
 -- 
 -- 	  item		default		Used for ~
 -- 	  stl		' '		statusline of the current window
@@ -609,7 +609,7 @@ function vim.opt.filetype:get()end
 -- <
 -- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
 -- 	single-byte and multibyte characters are supported.  But double-width
--- 	characters are not supported.
+-- 	characters are not supported. |E1512|
 -- 
 -- 	The highlighting used for these items:
 -- 	  item		highlight group ~

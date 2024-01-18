@@ -47,7 +47,7 @@ vim.wo.diff = false
 -- 	Characters to fill the statuslines, vertical separators and special
 -- 	lines in the window.
 -- 	It is a comma-separated list of items.  Each item has a name, a colon
--- 	and the value of that item:
+-- 	and the value of that item: |E1511|
 -- 
 -- 	  item		default		Used for ~
 -- 	  stl		' '		statusline of the current window
@@ -85,7 +85,7 @@ vim.wo.diff = false
 -- <
 -- 	For the "stl", "stlnc", "foldopen", "foldclose" and "foldsep" items
 -- 	single-byte and multibyte characters are supported.  But double-width
--- 	characters are not supported.
+-- 	characters are not supported. |E1512|
 -- 
 -- 	The highlighting used for these items:
 -- 	  item		highlight group ~
@@ -568,7 +568,7 @@ vim.wo.spell = false
 -- 	The `'statuscolumn'`  width follows that of the default columns and
 -- 	adapts to the |`'numberwidth'` |, |`'signcolumn'` | and |`'foldcolumn'` | option
 -- 	values (regardless of whether the sign and fold items are present).
--- 	Aditionally, the `'statuscolumn'`  grows with the size of the evaluated
+-- 	Additionally, the `'statuscolumn'`  grows with the size of the evaluated
 -- 	format string, up to a point (following the maximum size of the default
 -- 	fold, sign and number columns). Shrinking only happens when the number
 -- 	of lines in a buffer changes, or the `'statuscolumn'`  option is set.
