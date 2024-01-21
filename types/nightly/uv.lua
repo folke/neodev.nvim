@@ -83,7 +83,7 @@
 ---  metamethod
 ---- `buffer`: a `string` or a sequential `table` of `string`s
 ---- `threadargs`: variable arguments (`...`) of type `nil`, `boolean`, `number`,
----  `string`, or `userdata`
+---  `string`, or `userdata`, numbers of argument limited to 9.
 ---
 ---@namespace
 ---@class uv
@@ -378,30 +378,30 @@ function uv.walk(callback) end
 local uv_req_t = {}
 
 ---@alias uv.aliases.req_struct_name
----|'unknown'     0
----|'req'         1
----|'connect'     2
----|'write'       3
----|'shutdown'    4
----|'udp_send'    5
----|'fs'          6
----|'work'        7
----|'getaddrinfo' 8
----|'getnameinfo' 9
----|'random'      10
+---|'unknown'     # 0
+---|'req'         # 1
+---|'connect'     # 2
+---|'write'       # 3
+---|'shutdown'    # 4
+---|'udp_send'    # 5
+---|'fs'          # 6
+---|'work'        # 7
+---|'getaddrinfo' # 8
+---|'getnameinfo' # 9
+---|'random'      # 10
 
 ---@alias uv.aliases.req_struct_type
----|0   unknown
----|1   req
----|2   connect
----|3   write
----|4   shutdown
----|5   udp_send
----|6   fs
----|7   work
----|8   getaddrinfo
----|9   getnameinfo
----|10  random
+---|0   # unknown
+---|1   # req
+---|2   # connect
+---|3   # write
+---|4   # shutdown
+---|5   # udp_send
+---|6   # fs
+---|7   # work
+---|8   # getaddrinfo
+---|9   # getnameinfo
+---|10  # random
 
 ---
 ---Cancel a pending request. Fails if the request is executing or has finished
@@ -444,44 +444,44 @@ local uv_handle_t = {}
 ---|uv_fs_poll_t
 
 ---@alias uv.aliases.handle_struct_name
----|'unknown'   0
----|'"async"'   1
----|'check'     2
----|'fs_event'  3
----|'fs_poll'   4
----|'handle'    5
----|'idle'      6
----|'pipe'      7
----|'poll'      8
----|'prepare'   9
----|'process'   10
----|'stream'    11
----|'tcp'       12
----|'timer'     13
----|'tty'       14
----|'udp'       15
----|'signal'    16
----|'file'      17
+---|'unknown'   # 0
+---|'"async"'   # 1
+---|'check'     # 2
+---|'fs_event'  # 3
+---|'fs_poll'   # 4
+---|'handle'    # 5
+---|'idle'      # 6
+---|'pipe'      # 7
+---|'poll'      # 8
+---|'prepare'   # 9
+---|'process'   # 10
+---|'stream'    # 11
+---|'tcp'       # 12
+---|'timer'     # 13
+---|'tty'       # 14
+---|'udp'       # 15
+---|'signal'    # 16
+---|'file'      # 17
 
 ---@alias uv.aliases.handle_struct_type
----|0   unknown
----|1   async
----|2   check
----|3   fs_event
----|4   fs_poll
----|5   handle
----|6   idle
----|7   pipe
----|8   poll
----|9   prepare
----|10  process
----|11  stream
----|12  tcp
----|13  timer
----|14  tty
----|15  udp
----|16  signal
----|17  file
+---|0   # unknown
+---|1   # async
+---|2   # check
+---|3   # fs_event
+---|4   # fs_poll
+---|5   # handle
+---|6   # idle
+---|7   # pipe
+---|8   # poll
+---|9   # prepare
+---|10  # process
+---|11  # stream
+---|12  # tcp
+---|13  # timer
+---|14  # tty
+---|15  # udp
+---|16  # signal
+---|17  # file
 
 ---
 ---Returns `true` if the handle is active, `false` if it's inactive. What "active”
@@ -1101,41 +1101,41 @@ uv_poll_t.stop = uv.poll_stop
 local uv_signal_t = {}
 
 ---@alias uv.aliases.signals
----| "sigabrt"    Abort signal from abort(3)
----| "sigalrm"    Timer signal from alarm(2)
----| "sigbus"     Bus error (bad memory access)
----| "sigchld"    Child stopped or terminated
----| "sigcont"    Continue if stopped
----| "sigfpe"     Floating-point exception
----| "sighup"     Hangup detected on controlling terminal or death of controlling process
----| "sigill"     Illegal Instruction
----| "sigint"     Interrupt from keyboard
----| "sigio"      I/O now possible (4.2BSD)
----| "sigiot"     IOT trap. A synonym for sigabrt
----| "sigkill"    Kill signal
----| "sigpipe"    Broken pipe: write to pipe with no readers; see pipe(7)
----| "sigpoll"    Pollable event (Sys V); synonym for sigIO
----| "sigprof"    Profiling timer expired
----| "sigpwr"     Power failure (System V)
----| "sigquit"    Quit from keyboard
----| "sigsegv"    Invalid memory reference
----| "sigstkflt"  Stack fault on coprocessor
----| "sigstop"    Stop process
----| "sigtstp"    Stop typed at terminal
----| "sigsys"     Bad system call (SVr4); see also seccomp(2)
----| "sigterm"    Termination signal
----| "sigtrap"    Trace/breakpoint trap
----| "sigttin"    Terminal input for background process
----| "sigttou"    Terminal output for background process
----| "sigurg"     Urgent condition on socket (4.2BSD)
----| "sigusr1"    User-defined signal 1
----| "sigusr2"    User-defined signal 2
----| "sigvtalrm"  Virtual alarm clock (4.2BSD)
----| "sigxcpu"    CPU time limit exceeded (4.2BSD); see setrlimit(2)
----| "sigxfsz"    File size limit exceeded (4.2BSD);see setrlimit(2)
----| "sigwinch"   Window resize signal (4.3BSD, Sun)
----| "sigbreak"   CTRL + BREAK has been pressed
----| "siglost"    File lock lost
+---| "sigabrt"    # Abort signal from abort(3)
+---| "sigalrm"    # Timer signal from alarm(2)
+---| "sigbus"     # Bus error (bad memory access)
+---| "sigchld"    # Child stopped or terminated
+---| "sigcont"    # Continue if stopped
+---| "sigfpe"     # Floating-point exception
+---| "sighup"     # Hangup detected on controlling terminal or death of controlling process
+---| "sigill"     # Illegal Instruction
+---| "sigint"     # Interrupt from keyboard
+---| "sigio"      # I/O now possible (4.2BSD)
+---| "sigiot"     # IOT trap. A synonym for sigabrt
+---| "sigkill"    # Kill signal
+---| "sigpipe"    # Broken pipe: write to pipe with no readers; see pipe(7)
+---| "sigpoll"    # Pollable event (Sys V); synonym for sigIO
+---| "sigprof"    # Profiling timer expired
+---| "sigpwr"     # Power failure (System V)
+---| "sigquit"    # Quit from keyboard
+---| "sigsegv"    # Invalid memory reference
+---| "sigstkflt"  # Stack fault on coprocessor
+---| "sigstop"    # Stop process
+---| "sigtstp"    # Stop typed at terminal
+---| "sigsys"     # Bad system call (SVr4); see also seccomp(2)
+---| "sigterm"    # Termination signal
+---| "sigtrap"    # Trace/breakpoint trap
+---| "sigttin"    # Terminal input for background process
+---| "sigttou"    # Terminal output for background process
+---| "sigurg"     # Urgent condition on socket (4.2BSD)
+---| "sigusr1"    # User-defined signal 1
+---| "sigusr2"    # User-defined signal 2
+---| "sigvtalrm"  # Virtual alarm clock (4.2BSD)
+---| "sigxcpu"    # CPU time limit exceeded (4.2BSD); see setrlimit(2)
+---| "sigxfsz"    # File size limit exceeded (4.2BSD);see setrlimit(2)
+---| "sigwinch"   # Window resize signal (4.3BSD, Sun)
+---| "sigbreak"   # CTRL + BREAK has been pressed
+---| "siglost"    # File lock lost
 
 ---
 ---Creates and initializes a new `uv_signal_t`.
