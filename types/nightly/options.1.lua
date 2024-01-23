@@ -210,6 +210,9 @@ vim.wo.fdn = vim.wo.foldnestmax
 -- 
 -- 	It is not allowed to change text or jump to another window while
 -- 	evaluating `'foldtext'`  |textlock|.
+-- 
+-- 	When set to an empty string, foldtext is disabled, and the line
+-- 	is displayed normally with highlighting and no line wrapping.
 vim.wo.foldtext = "foldtext()"
 vim.wo.fdt = vim.wo.foldtext
 -- `'linebreak'`  `'lbr'` 	boolean	(default off)

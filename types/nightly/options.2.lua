@@ -897,6 +897,9 @@ function vim.opt.foldopen:get()end
 -- 
 -- 	It is not allowed to change text or jump to another window while
 -- 	evaluating `'foldtext'`  |textlock|.
+-- 
+-- 	When set to an empty string, foldtext is disabled, and the line
+-- 	is displayed normally with highlighting and no line wrapping.
 --- @class vim.opt.foldtext: vim.Option,string
 --- @operator add: vim.opt.foldtext
 --- @operator sub: vim.opt.foldtext
