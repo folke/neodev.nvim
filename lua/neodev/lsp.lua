@@ -77,6 +77,23 @@ function M.on_new_config(config, root_dir)
       and config.settings.Lua.workspace.ignoreDir
     or {}
 
+  config.handlers = config.handlers or {}
+  config.handlers["workspace/configuration"] = config.handlers["workspace/configuration"]
+    or function(err, result, ctx, cfg)
+      local ret = vim.lsp.handlers["workspace/configuration"](err, result, ctx, cfg)
+      -- when scopeUri is not set, then the requested config is for the fallback scope
+      -- Don't set workspace libraries for the fallback scope
+      -- Thanks to: https://github.com/LuaLS/lua-language-server/issues/1596#issuecomment-1855087288
+      for i, item in ipairs(result.items) do
+        if type(ret[i]) == "table" then
+          if not item.scopeUri and ret[i].workspace then
+            ret[i].workspace.library = nil
+          end
+        end
+      end
+      return ret
+    end
+
   if opts.library.enabled then
     config.settings =
       vim.tbl_deep_extend("force", config.settings or {}, require("neodev.luals").setup(opts, config.settings).settings)
