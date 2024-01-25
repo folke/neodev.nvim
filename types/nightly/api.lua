@@ -788,6 +788,9 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 drawn by a UI. When set, the UI will receive win_extmark
 --                 events. Note: the mark is positioned by virt_text
 --                 attributes. Can be used together with virt_text.
+--               • url: A URL to associate with this extmark. In the TUI, the
+--                 OSC 8 control sequence is used to generate a clickable
+--                 hyperlink to this URL.
 -- 
 -- Return: ~
 --     Id of the created/updated extmark
