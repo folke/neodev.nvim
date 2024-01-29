@@ -2318,6 +2318,8 @@ function vim.fn.get(func, what) end
 --   bufnr    Buffer number.
 --   changed    TRUE if the buffer is modified.
 --   changedtick  Number of changes made to the buffer.
+--   command    TRUE if the buffer belongs to the
+--       command-line window |cmdwin|.
 --   hidden    TRUE if the buffer is hidden.
 --   lastused  Timestamp in seconds, like
 --       |localtime()|, when the buffer was
