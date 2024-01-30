@@ -2863,6 +2863,15 @@ function vim.api.nvim_tabpage_list_wins(tabpage) end
 --- @param value object
 function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 
+-- Sets the current window in a tabpage
+-- 
+-- Parameters: ~
+--   • {tabpage}  Tabpage handle, or 0 for current tabpage
+--   • {win}      Window handle, must already belong to {tabpage}
+--- @param tabpage tabpage
+--- @param win window
+function vim.api.nvim_tabpage_set_win(tabpage, win) end
+
 -- Calls a function with window as temporary current window.
 -- 
 -- Attributes: ~
