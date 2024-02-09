@@ -1600,6 +1600,9 @@ function vim.api.nvim_get_autocmds(opts) end
 
 -- Gets information about a channel.
 -- 
+-- Parameters: ~
+--   • {chan}  channel_id, or 0 for current channel
+-- 
 -- Return: ~
 --     Dictionary describing a channel, with these keys:
 --     • "id" Channel id.
