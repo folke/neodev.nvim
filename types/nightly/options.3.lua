@@ -67,7 +67,7 @@ function vim.opt.shiftwidth:get()end
 -- 		match", "Pattern not found", "Back at original", etc.
 -- 	  C	don't give messages while scanning for ins-completion
 -- 		items, for instance "scanning tags"
--- 	  q	use "recording" instead of "recording @a"
+-- 	  q	do not show "recording @a" when recording a macro
 -- 	  F	don't give the file info when editing a file, like
 -- 		`:silent` was used for the command
 -- 	  S	do not show search count message when searching, e.g.
