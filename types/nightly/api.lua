@@ -255,8 +255,7 @@ function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 --               only)
 -- 
 -- Return: ~
---     Return value of function. NB: will deepcopy Lua values currently, use
---     upvalues to send Lua references in and out.
+--     Return value of function.
 --- @param buffer buffer
 --- @param fun fun()
 --- @return object
@@ -2907,8 +2906,7 @@ function vim.api.nvim_tabpage_set_win(tabpage, win) end
 --               only)
 -- 
 -- Return: ~
---     Return value of function. NB: will deepcopy Lua values currently, use
---     upvalues to send Lua references in and out.
+--     Return value of function.
 -- 
 -- See also: ~
 --   • |win_execute()|
