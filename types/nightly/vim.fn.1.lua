@@ -1,5 +1,17 @@
 ---@meta
 
+-- Return the minimum value of all items in {expr}. Example: 
+-- ```vim
+--   echo min([apples, pears, oranges])
+-- 
+-- ```
+-- {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
+-- it returns the minimum of all values in the Dictionary.
+-- If {expr} is neither a List nor a Dictionary, or one of the
+-- items in {expr} cannot be used as a Number this results in
+-- an error.  An empty |List| or |Dictionary| results in zero.
+function vim.fn.min(expr) end
+
 -- Create directory {name}.
 -- 
 -- When {flags} is present it must be a string.  An empty string

@@ -3237,6 +3237,44 @@ function vim.fn.getreg(regname, p1, list) end
 --- @param regname? any
 function vim.fn.getreginfo(regname) end
 
+-- Returns the list of strings from {pos1} to {pos2} as if it's
+-- selected in visual mode of {type}.
+-- For possible values of {pos1} and {pos2} see |line()|.
+-- {type} is the selection type:
+--   "v" for |charwise| mode
+--   "V" for |linewise| mode
+--   "<CTRL-V>" for |blockwise-visual| mode
+-- You can get the last selection type by |visualmode()|.
+-- If Visual mode is active, use |mode()| to get the Visual mode
+-- (e.g., in a |:vmap|).
+-- This function uses the line and column number from the
+-- specified position.
+-- It is useful to get text starting and ending in different
+-- columns, such as |charwise-visual| selection.
+-- 
+-- Note that:
+-- - Order of {pos1} and {pos2} doesn't matter, it will always
+--   return content from the upper left position to the lower
+--   right position.
+-- - If 'virtualedit' is enabled and selection is past the end of
+--   line, resulting lines are filled with blanks.
+-- - If the selection starts or ends in the middle of a multibyte
+--   character, it is not included but its selected part is
+--   substituted with spaces.
+-- - If {pos1} or {pos2} equals "v" (see |line()|) and it is not in
+--   |visual-mode|, an empty list is returned.
+-- - If {pos1}, {pos2} or {type} is an invalid string, an empty
+--   list is returned.
+-- - If {pos1} or {pos2} is a mark in different buffer, an empty
+--   list is returned.
+-- 
+-- Examples: 
+-- ```vim
+--   :xnoremap <CR>
+--   \ <Cmd>echom getregion('v', '.', mode())<CR>
+-- ```
+function vim.fn.getregion(pos1, pos2, type) end
+
 -- The result is a String, which is type of register {regname}.
 -- The value will be one of:
 --     "v"      for |charwise| text
@@ -5448,16 +5486,4 @@ function vim.fn.menu_get(path, modes) end
 -- ```
 --- @param mode? any
 function vim.fn.menu_info(name, mode) end
-
--- Return the minimum value of all items in {expr}. Example: 
--- ```vim
---   echo min([apples, pears, oranges])
--- 
--- ```
--- {expr} can be a |List| or a |Dictionary|.  For a Dictionary,
--- it returns the minimum of all values in the Dictionary.
--- If {expr} is neither a List nor a Dictionary, or one of the
--- items in {expr} cannot be used as a Number this results in
--- an error.  An empty |List| or |Dictionary| results in zero.
-function vim.fn.min(expr) end
 
