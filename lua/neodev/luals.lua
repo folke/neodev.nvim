@@ -7,7 +7,7 @@ function M.library(opts)
   opts = config.merge(opts)
   local ret = {}
 
-  if opts.library.types then
+  if opts.library.types and vim.fn.has("nvim-0.10") == 0 then
     table.insert(ret, config.types())
   end
 
