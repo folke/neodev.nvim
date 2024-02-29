@@ -32,9 +32,14 @@ vim.lpeg = require("lpeg")
 vim.g = {}
 ---@type table<string,any>
 vim.v = {}
----@type table<number,table<string, any>>
+
+---@class ScopedVariables
+---@field [number] table<string, any>
+---@field [string] any
+
+---@type ScopedVariables
 vim.b = {}
----@type table<number,table<string, any>>
+---@type ScopedVariables
 vim.w = {}
----@type table<number,table<string, any>>
+---@type ScopedVariables
 vim.t = {}
