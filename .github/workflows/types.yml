@@ -24,15 +24,9 @@ jobs:
           chmod a+x ./nvim.appimage
           ./nvim.appimage --appimage-extract
           echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
-      - name: Clone Neovim's repo and run gen_vimdoc.py
-        run: |
-          git clone --depth=1 https://github.com/neovim/neovim.git ./data/neovim
-          cd ./data/neovim
-          python3 ./scripts/gen_vimdoc.py
       - name: Generate new docs
         run: |
           nvim --version
-          cp ./data/neovim/runtime/doc/*.mpack ./data/
           nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/neodev/build/init.lua" --cmd q
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
