@@ -105,18 +105,20 @@ end
 function M.build()
   M.clean()
   M.uv()
-  M.lpeg()
-
   M.alias()
   M.commands()
 
-  Options.build()
+  if vim.fn.has("nvim-0.10") == 0 then
+    M.lpeg()
 
-  M.api()
+    Options.build()
 
-  -- M.write("luv", Docs.luv())
-  M.write("lua", Docs.lua())
-  M.write("vim.fn", Docs.functions())
+    M.api()
+
+    -- M.write("luv", Docs.luv())
+    M.write("lua", Docs.lua())
+    M.write("vim.fn", Docs.functions())
+  end
 end
 
 M.build()
