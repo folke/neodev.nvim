@@ -82,6 +82,7 @@ function M.on_new_config(config, root_dir)
     config.handlers["workspace/configuration"] = config.handlers["workspace/configuration"]
       or function(err, result, ctx, cfg)
         local ret = vim.lsp.handlers["workspace/configuration"](err, result, ctx, cfg)
+        ret = vim.deepcopy(ret)
         -- when scopeUri is not set, then the requested config is for the fallback scope
         -- Don't set workspace libraries for the fallback scope
         -- Thanks to: https://github.com/LuaLS/lua-language-server/issues/1596#issuecomment-1855087288
