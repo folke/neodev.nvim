@@ -21,9 +21,15 @@ function M.fetch(url)
 end
 
 function M.is_nvim_config()
+  local exrc_pattern = { '.nvim.lua', '.nvimrc', '.exrc' }
   local path = vim.loop.fs_realpath(vim.api.nvim_buf_get_name(0))
   if path then
     path = vim.fs.normalize(path)
+    for _, pattern in ipairs(exrc_pattern) do
+      if vim.fs.basename(path) == pattern then
+        return true
+      end
+    end
     local config_root = vim.loop.fs_realpath(vim.fn.stdpath("config")) or vim.fn.stdpath("config")
     config_root = vim.fs.normalize(config_root)
     return path:find(config_root, 1, true) == 1
