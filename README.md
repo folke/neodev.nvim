@@ -1,3 +1,10 @@
+> [!WARNING]  
+> Development of **neodev.nvim** is now **EOL**.
+> If you're on **Neovim >= 0.10**, then I highly suggest you to use [lazydev.nvim](https://github.com/folke/lazydev.nvim)
+> It's a much faster and better replacement for neodev.
+
+--- 
+
 # 💻 neodev.nvim
 
 Neovim setup for init.lua and plugin development with full signature help, docs and
