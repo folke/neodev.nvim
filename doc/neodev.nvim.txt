@@ -1,4 +1,4 @@
-*neodev.nvim.txt*        For Neovim >= 0.8.0        Last change: 2024 March 29
+*neodev.nvim.txt*         For Neovim >= 0.8.0        Last change: 2024 June 01
 
 ==============================================================================
 Table of Contents                              *neodev.nvim-table-of-contents*
@@ -10,6 +10,12 @@ Table of Contents                              *neodev.nvim-table-of-contents*
   - Configuration                      |neodev.nvim-neodev.nvim-configuration|
   - Setup                                      |neodev.nvim-neodev.nvim-setup|
 2. Links                                                   |neodev.nvim-links|
+
+  [!WARNING] Development of **neodev.nvim** is now **EOL**. If you’re on
+  **Neovim >= 0.10**, then I highly suggest you to use lazydev.nvim
+  <https://github.com/folke/lazydev.nvim> It’s a much faster and better
+  replacement for neodev.
+------------------------------------------------------------------------------
 
 ==============================================================================
 1. neodev.nvim                                       *neodev.nvim-neodev.nvim*
