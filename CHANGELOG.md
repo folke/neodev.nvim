@@ -1,5 +1,38 @@
 # Changelog
 
+## [3.0.0](https://github.com/folke/neodev.nvim/compare/v2.5.2...v3.0.0) (2024-06-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* soft deprecate neodev.nvim
+* neodev.nvim is now EOL
+
+### Features
+
+* added lpeg types ([4233305](https://github.com/folke/neodev.nvim/commit/4233305906767488d3cec31b3a02287d99886e08))
+* added vim.iter, vim.version and vim.secure. Fixes [#153](https://github.com/folke/neodev.nvim/issues/153) ([76bdb81](https://github.com/folke/neodev.nvim/commit/76bdb81a3cd45ff0f42c7d427e3e67fe6e39593c))
+
+
+### Bug Fixes
+
+* add some types back for nightly since not everything is typed yet in core ([f54ec26](https://github.com/folke/neodev.nvim/commit/f54ec266b8328661e880e22b2690cc2234222842))
+* correctly type vim.iter. See [#153](https://github.com/folke/neodev.nvim/issues/153) ([5136343](https://github.com/folke/neodev.nvim/commit/5136343889f068fda32467cefd41029ca6bdf4d9))
+* deepcopy lsp config before unsetting library for fallback scopes. Fixes [#190](https://github.com/folke/neodev.nvim/issues/190) ([1c5dc3e](https://github.com/folke/neodev.nvim/commit/1c5dc3efce40ee419f573088543299194edde8ca))
+* only skip workspace libraries when needed and extend original config ([e7ca4a2](https://github.com/folke/neodev.nvim/commit/e7ca4a2ea0da5e39a639c08c3edb352b9355f09e))
+* soft deprecate neodev.nvim ([dcd0ddd](https://github.com/folke/neodev.nvim/commit/dcd0ddda1e3b6939a5de3e59940dc34b780f423f))
+* use Neovim distributed types on Neovim &gt;= 0.10, instead of neodev ([b354c38](https://github.com/folke/neodev.nvim/commit/b354c3810f8f3a954f9d5ef8c1706451a27a4964))
+
+
+### Performance Improvements
+
+* **luals:** don't add workspace library for the fallback scope ([c6be05a](https://github.com/folke/neodev.nvim/commit/c6be05aab078827e51aabdc64cc9fba7c06d27b7))
+
+
+### Documentation
+
+* neodev.nvim is now EOL ([0b28e42](https://github.com/folke/neodev.nvim/commit/0b28e42d2385a8bd58d10b272498dbc058c518c7))
+
 ## [2.5.2](https://github.com/folke/neodev.nvim/compare/v2.5.1...v2.5.2) (2023-03-24)
 
 
