@@ -11,6 +11,9 @@ M.defaults = {
     plugins = true, -- installed opt or start plugins in packpath
     -- you can also specify the list of plugins to make available as a workspace library
     -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+    ---@type string[]
+    blacklist = {}, -- opposite of plugins list, neodev will not make these available as a workspace library
+    -- blacklist = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
   },
   setup_jsonls = true, -- configures jsonls to provide completion for .luarc.json files
   -- for your neovim config directory, the config.library settings will be used as is
