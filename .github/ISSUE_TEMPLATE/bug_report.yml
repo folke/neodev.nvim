@@ -75,7 +75,7 @@ body:
         -- install plugins
         local plugins = {
           "folke/tokyonight.nvim",
-          "folke/neodev.nvim",
+          { "folke/neodev.nvim", opts = {} },
           -- add any other plugins here
         }
         require("lazy").setup(plugins, {
